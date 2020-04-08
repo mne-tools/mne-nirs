@@ -1,0 +1,48 @@
+MNE-NIRS: Near-Infrared Spectroscopy Analysis
+=============================================
+
+.. image:: https://img.shields.io/badge/docs-master-brightgreen
+    :target: https://rob-luke.github.io/mne-nirs
+    
+.. image:: https://travis-ci.com/rob-luke/mne-nirs.svg?branch=master
+    :target: https://travis-ci.com/rob-luke/mne-nirs
+ 
+.. image:: https://ci.appveyor.com/api/projects/status/6cwalwgr0utp46nf/branch/master?svg=true
+    :target: https://ci.appveyor.com/project/rob-luke/mne-nirs/branch/master
+
+
+**MNE-NIRS** is an `MNE <https://mne.tools>`_ compatible NIRS processing package. 
+
+MNE has support for some common analysis procedures (see `tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_), this package adds additional helper functions, algorithms, and plotting. Functionality that is widely used from this package may be merged in to MNE.
+
+
+Documentation
+-------------
+
+Documentation for this project is hosted `here <https://rob-luke.github.io/mne-nirs>`_.
+
+
+Examples
+--------
+
+Coming soon...
+
+
+Contributing
+------------
+
+Contributions are welcome. This package tries to adhere to the same  `standards as MNE <https://mne.tools/stable/install/contributing.html>`_.
+
+
+
+
+
+Acknowledgements
+----------------
+
+This package is built on top of many other great packages. These should be acknowledged if you use this package.
+
+MNE: https://mne.tools/dev/overview/cite.html
+
+PyBIDS: https://github.com/bids-standard/pybids#how-to-cite
+
