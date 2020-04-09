@@ -28,6 +28,6 @@ Coming soon...
 Contributing
 ------------
 
-Contributions are welcome. This package tries to adhere to the same  `standards as MNE <https://mne.tools/stable/install/contributing.html>`_().
+Contributions are welcome. This package tries to adhere to the same  `standards as MNE <https://mne.tools/stable/install/contributing.html>`_.
 
 
