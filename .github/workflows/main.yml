@@ -10,4 +10,4 @@ jobs:
       - uses: actions/checkout@v1
       - uses: ricardochaves/python-lint@master
         with:
-          python-root-list: "tests"
+          python-root-list: "mne_nirs"
