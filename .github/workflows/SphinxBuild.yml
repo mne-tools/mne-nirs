@@ -20,7 +20,7 @@ jobs:
     # ===============================
     - name: Commit documentation changes
       run: |
-        git clone git@github.com:rob-luke/mne-nirs.git --branch gh-pages --single-branch gh-pages
+        git clone https://github.com/rob-luke/mne-nirs.git --branch gh-pages --single-branch gh-pages
         cp -r doc/_build/html/* gh-pages/
         cd gh-pages
         git config --local user.email "action@github.com"
