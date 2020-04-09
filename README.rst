@@ -1,12 +1,15 @@
 MNE-NIRS: Near-Infrared Spectroscopy Analysis
 =============================================
 
+.. image:: https://img.shields.io/badge/docs-master-brightgreen
+    :target: https://rob-luke.github.io/mne-nirs
+    
 .. image:: https://travis-ci.com/rob-luke/mne-nirs.svg?branch=master
     :target: https://travis-ci.com/rob-luke/mne-nirs
  
-.. image:: https://img.shields.io/badge/docs-master-brightgreen
-    :target: https://rob-luke.github.io/mne-nirs
-  
+.. image:: https://ci.appveyor.com/api/projects/status/6cwalwgr0utp46nf/branch/master?svg=true
+    :target: https://ci.appveyor.com/project/rob-luke/mne-nirs/branch/master
+
 
 **mne-nirs** is an MNE compatible NIRS processing package. 
 
