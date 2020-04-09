@@ -7,7 +7,7 @@ Welcome to mne-nirs's documentation!
 ========================================
 
 This project is a reference implementation to anyone who wishes to develop
-projects based from MNE. Robs test edit.
+projects based from MNE. Robs test edit. Again.
 
 .. toctree::
    :maxdepth: 2
