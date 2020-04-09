@@ -1,0 +1,21 @@
+name: "Pull Request Lint Check"
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Python Code Quality and Lint
+      uses: ricardochaves/python-lint@v1.1.0
+      with:
+        use-pylint: false
+        use-pycodestyle: true
+        use-flake8: false
+        use-black: false
+        use-mypy: false
+        use-isort: false
+        # Extra options: pycodestyle $(extra-pycodestyle-options) $(python-root-list)
+        extra-pycodestyle-options: --ignore=E501,W504
