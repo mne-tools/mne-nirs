@@ -1,18 +1,36 @@
-name: Autopep 8
-
-on: [pull_request]
+name: lint
+on: pull_request
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
 
+  autopep8:
+    # Check if the PR is not raised by this workflow and is not from a fork
+    if: startsWith(github.head_ref, 'autopep8-patches') == false && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-      with:
-        fetch-depth: 1
-    - uses: creyD/action_autopep8@master
-      with:
-        dependencies: 'requirements.txt'
-        branch: ${{ github.head_ref }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v1
+      - name: autopep8
+        id: autopep8
+        uses: peter-evans/autopep8@v1.1.0
+        with:
+          args: --exit-code --recursive --in-place --aggressive --aggressive .
+      - name: Set autopep8 branch name
+        id: vars
+        run: echo ::set-output name=branch-name::"autopep8-patches/$GITHUB_HEAD_REF"
+      - name: Create Pull Request
+        if: steps.autopep8.outputs.exit-code == 2
+        uses: peter-evans/create-pull-request@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: autopep8 action fixes
+          author-email: peter-evans@users.noreply.github.com
+          author-name: Peter Evans
+          title: Fixes by autopep8 action
+          body: This is an auto-generated PR with fixes by autopep8.
+          labels: autopep8, automated pr
+          reviewers: peter-evans
+          branch: ${{ steps.vars.outputs.branch-name }}
+          branch-suffix: none
+      - name: Fail if autopep8 made changes
+        if: steps.autopep8.outputs.exit-code == 2
+        run: exit 1
