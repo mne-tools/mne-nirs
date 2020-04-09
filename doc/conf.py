@@ -82,6 +82,7 @@ copyright = u'2016, Vighnesh Birodkar'
 # built documents.
 #
 # The short X.Y version.
+sys.path.append("../")
 from mne_nirs import __version__
 version = __version__
 # The full version, including alpha/beta/rc tags.
