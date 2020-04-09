@@ -21,3 +21,13 @@ Documentation for this project is hosted `here <https://rob-luke.github.io/mne-n
 
 Examples
 --------
+
+Coming soon...
+
+
+Contributing
+------------
+
+Contributions are welcome. This package tries to adhere to the same  `standards as MNE <https://mne.tools/stable/install/contributing.html>`_().
+
+
