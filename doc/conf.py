@@ -120,7 +120,7 @@ exclude_patterns = ['_build', '_templates']
 pygments_style = 'sphinx'
 
 # Custom style
-html_style = 'css/project-template.css'
+# html_style = 'css/project-template.css'
 
 # A list of ignored prefixes for module index sorting.
 # modindex_common_prefix = []
