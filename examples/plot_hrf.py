@@ -25,12 +25,24 @@ fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
 raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir, verbose=True).load_data()
 raw_intensity = raw_intensity.pick(picks=[0])
 
+
+###############################################################################
+# Display boxcar of experiment
+# ----------------------------
+#
+# Add some text here.
+
+s = mne_nirs.create_boxcar(raw_intensity)
+plt.plot(s)
+plt.xlim(0, 3000)
+
+
 ###############################################################################
 # Examine the expected haemodynamic response
 # ------------------------------------------
 #
 # Add some text here.
 
-s = mne_nirs.create_boxcar(raw_intensity)
+s = mne_nirs.create_hrf(raw_intensity)
 plt.plot(s)
 plt.xlim(0, 3000)
