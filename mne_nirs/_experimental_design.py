@@ -40,7 +40,6 @@ def create_boxcar(raw, event_id=None, stim_dur=5):
     return s
 
 
-
 def create_hrf(raw, event_id=None, stim_dur=5):
     """
     Calculate expected haemodynamic response function.
