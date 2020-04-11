@@ -13,7 +13,7 @@ MNE-NIRS: Near-Infrared Spectroscopy Analysis
 
 **MNE-NIRS** is an `MNE <https://mne.tools>`_ compatible NIRS processing package. 
 
-MNE already has support for most common analysis procedures (see `tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_), this package adds additional helper functions, algorithms, and plotting. Functionality that is widely used from this package may be merged in to MNE.
+MNE has support for some common analysis procedures (see `tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_), this package adds additional helper functions, algorithms, and plotting. Functionality that is widely used from this package may be merged in to MNE.
 
 
 Documentation
