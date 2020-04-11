@@ -3,11 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to mne-nirs's documentation!
-========================================
+MNE-NIRS Documentation
+======================
 
-This project is a reference implementation to anyone who wishes to develop
-projects based from MNE. Robs test edit. Again. Test. Comeon. WOrk
 
 .. toctree::
    :maxdepth: 2
@@ -34,19 +32,19 @@ projects based from MNE. Robs test edit. Again. Test. Comeon. WOrk
 `Getting started <quick_start.html>`_
 -------------------------------------
 
-Information regarding this template and how to modify it for your own project.
+How to install and verify MNE-NIRS is working.
 
 `User Guide <user_guide.html>`_
 -------------------------------
 
-An example of narrative documentation.
+A basic overview of MNE-NIRS.
 
 `API Documentation <api.html>`_
 -------------------------------
 
-An example of API documentation.
+API documentation.
 
 `Examples <auto_examples/index.html>`_
 --------------------------------------
 
-A set of examples. It complements the `User Guide <user_guide.html>`_.
+A set of examples.
