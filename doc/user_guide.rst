@@ -2,12 +2,12 @@
 
 .. _user_guide:
 
-=======================================
-User guide: create your own mne project
-=======================================
+========================================
+User guide: Basic MNE-NIRS functionality
+========================================
 
-Some title
-----------
+Introduction
+------------
 
 This is an example on how to import :meth:`mne_nirs.foo`::
 
