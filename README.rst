@@ -1,6 +1,10 @@
 MNE-NIRS: Near-Infrared Spectroscopy Analysis
 =============================================
 
+UNDER DEVELOPMENT. Please check back in the coming weeks.
+--------------
+
+
 .. image:: https://img.shields.io/badge/docs-master-brightgreen
     :target: https://rob-luke.github.io/mne-nirs
     
