@@ -9,10 +9,8 @@ User guide: Basic MNE-NIRS functionality
 Introduction
 ------------
 
-This is an example on how to import :meth:`mne_nirs.foo`::
+This is an example on how to import MNE-NIRS
 
-    >>> from mne_nirs import foo
-
-Once imported, you can call it::
-
-    >>> print(foo())
+    >>> import mne
+    >>> import mne_nirs
+    >>> # Do further processing. See examples for more details
