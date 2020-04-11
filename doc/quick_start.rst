@@ -12,15 +12,6 @@ For illustration purposes we want to create a ``mne-foo`` project
 named ``mnefoo``. Here is a table of the naming of this project and
 the project you will create:
 
-+---------------+----------------------+------------------------+
-|               | tis project          | your resulting project |
-+---------------+----------------------+------------------------+
-|repo name      | mne-project-template | mne-foo                |
-+---------------+----------------------+------------------------+
-|package name   | mne_nirs          | mnefoo                 |
-+---------------+----------------------+------------------------+
-|import example | import mne_nirs   | import mnefoo          |
-+---------------+----------------------+------------------------+
 
 
 1. Download and setup your repository
@@ -37,7 +28,7 @@ information with you own. We provide you with a convenient script to speed up
 the process, but you can also do it manually.
 
 1.1.1 bootstrap your mne project using a convenience script
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Open your favorite editor and change ``PKG_NAME``, ``PYTHON_NAME``, 
 and ``GH_NAME`` in ``mne_project_template_bootstrap.sh`` with your own
 information. Then run the bootsrap script::
@@ -45,7 +36,7 @@ information. Then run the bootsrap script::
    $ bash  mne_project_template_bootstrap.sh
 
 1.1.2 Update your project manually
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Replace all occurrences of ``mne_nirs`` and ``mne-nirs``
 with the name of you own contribution. You can find all the occurrences using
 the following command::
@@ -145,16 +136,3 @@ integration system. Basically, the following systems are set:
 
 .. _Travis: https://travis-ci.com/getting_started
 
-Publish your package
-====================
-
-.. _PyPi: https://packaging.python.org/tutorials/packaging-projects/
-.. _conda-foge: https://conda-forge.org/
-
-You can make your package available through PyPi_ and conda-forge_. Refer to
-the associated documentation to be able to upload your packages such that
-it will be installable with ``pip`` and ``conda``. Once published, it will
-be possible to install your package with the following commands::
-
-    $ pip install mne-foo
-    $ conda install -c conda-forge mne-foo
