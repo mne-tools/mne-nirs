@@ -11,6 +11,6 @@ MNE-Template
 
 .. autosummary::
    :toctree: generated/
-   :template: class.rst
+   :template: function.rst
 
-   Some text
+   foo
