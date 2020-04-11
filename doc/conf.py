@@ -1,4 +1,4 @@
-Y# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 #
 # project-template documentation build configuration file, created by
 # sphinx-quickstart on Mon Jan 18 14:44:12 2016.
