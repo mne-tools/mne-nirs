@@ -42,7 +42,7 @@ A basic overview of MNE-NIRS.
 `API Documentation <api.html>`_
 -------------------------------
 
-API documentation.
+MNE-NIRS API documentation.
 
 `Examples <auto_examples/index.html>`_
 --------------------------------------
