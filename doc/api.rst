@@ -15,6 +15,7 @@ Experimental Design
    :template: function.rst
 
    create_boxcar
+   create_hrf
 
 
 Plotting
@@ -23,5 +24,3 @@ Plotting
 .. autosummary::
    :toctree: generated/
    :template: function.rst
-
-   foo
