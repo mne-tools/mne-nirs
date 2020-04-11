@@ -21,17 +21,20 @@ jobs:
           args: --exit-code --recursive --in-place --aggressive --aggressive .
 
       # Commit the change to the PR branch
-      - name: Commit to the PR branch
+      - name: Create Pull Request
         if: steps.autopep8.outputs.exit-code == 2
-        run: |
-          git config --global user.name 'actions-bot'
-          git config --global user.email '58130806+actions-bot@users.noreply.github.com'
-          git commit -am "[autopep8-command] fixes"
-          git push
-      - name: Add reaction
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-pull-request@v1
         with:
-          token: ${{ secrets.ACTIONS_BOT_TOKEN }}
-          repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
-          comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
-          reaction-type: hooray
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: autopep8 action fixes
+          author-email: peter-evans@users.noreply.github.com
+          author-name: Peter Evans
+          title: Fixes by autopep8 action
+          body: This is an auto-generated PR with fixes by autopep8.
+          labels: autopep8, automated pr
+          reviewers: peter-evans
+          branch: ${{ steps.vars.outputs.branch-name }}
+          branch-suffix: none
+      - name: Fail if autopep8 made changes
+        if: steps.autopep8.outputs.exit-code == 2
+        run: exit 1
