@@ -1,13 +1,26 @@
-####################
-project-template API
-####################
+############
+MNE-NIRS API
+############
 
-This is an example on how to document the API of your own project.
+API for MNE-NIRS module.
 
 .. currentmodule:: mne_nirs
 
-MNE-Template
-============
+MNE-NIRS
+========
+
+Experimental Design
+-------------------
+
+.. autosummary::
+   :toctree: generated/
+   :template: function.rst
+
+   foo
+
+
+Plotting
+--------
 
 .. autosummary::
    :toctree: generated/
