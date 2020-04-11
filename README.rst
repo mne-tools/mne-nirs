@@ -34,3 +34,15 @@ Contributing
 Contributions are welcome. This package tries to adhere to the same  `standards as MNE <https://mne.tools/stable/install/contributing.html>`_.
 
 
+
+
+
+Acknowledgements
+----------------
+
+This package is built on top of many other great packages. These should be acknowledged if you use this package.
+
+MNE: https://mne.tools/dev/overview/cite.html
+
+PyBIDS:https://github.com/bids-standard/pybids#how-to-cite
+
