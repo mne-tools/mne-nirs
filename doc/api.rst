@@ -13,4 +13,4 @@ MNE-Template
    :toctree: generated/
    :template: class.rst
 
-   Some text
+   foo
