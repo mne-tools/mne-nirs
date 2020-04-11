@@ -2,6 +2,9 @@
 This is a module to be used as a reference for building other modules
 """
 
+import numpy as np
+import mne
+
 
 def foo():
     """
@@ -17,12 +20,12 @@ def foo():
 def create_boxcar(raw, event_id=None, stim_dur=5):
     from scipy import signal
     from bids.analysis import hrf
-    bc = signal.boxcar(round(raw.info['sfreq']*stim_dur))
+    bc = signal.boxcar(round(raw.info['sfreq'] * stim_dur))
     events, ids = mne.events_from_annotations(raw, event_id=event_id)
     s = np.zeros((len(raw.times), len(ids)))
-    h0 = hrf._gamma_difference_hrf(raw.info['sfreq'], time_length = 32, delay=4)
+    h0 = hrf._gamma_difference_hrf(raw.info['sfreq'], time_length=32, delay=4)
     for idx, id in enumerate(ids):
-        id_idx = [e[2] == idx+1 for e in events]
+        id_idx = [e[2] == idx + 1 for e in events]
         id_evt = events[id_idx]
         event_samples = [e[0] for e in id_evt]
         s[event_samples, idx] = 1.
