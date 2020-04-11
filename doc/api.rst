@@ -14,7 +14,7 @@ Experimental Design
    :toctree: generated/
    :template: function.rst
 
-   foo
+   create_boxcar
 
 
 Plotting

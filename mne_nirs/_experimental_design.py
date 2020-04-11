@@ -18,6 +18,15 @@ def foo():
 
 
 def create_boxcar(raw, event_id=None, stim_dur=5):
+    """
+    Create a boxcar of the experiment.
+
+    **NOTE:** This is just a holder function while I figure out
+    how to get github actions working.
+
+    :return: array
+        Returns an array for each trigger channel.
+    """
     from scipy import signal
     from bids.analysis import hrf
     bc = signal.boxcar(round(raw.info['sfreq'] * stim_dur))
