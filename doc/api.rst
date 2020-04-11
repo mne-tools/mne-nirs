@@ -6,8 +6,6 @@ API for MNE-NIRS module.
 
 .. currentmodule:: mne_nirs
 
-MNE-NIRS
-========
 
 Experimental Design
 -------------------
