@@ -108,31 +108,3 @@ The documentation is built with the following commands::
     $ cd doc
     $ make html
 
-3. Setup the continuous integration
------------------------------------
-
-The project template already contains configuration files of the continuous
-integration system. Basically, the following systems are set:
-
-* Travis_ CI is used to test the package in Linux. We provide you with an
-  initial ``.travis.yml`` configuration file. So you only need to create
-  a Travis account, activate own repository and trigger a build.
-
-* AppVeyor is used to test the package in Windows. You need to activate
-  AppVeyor for your own repository. Refer to the AppVeyor documentation.
-
-* Circle CI is used to check if the documentation is generated properly. You
-  need to activate Circle CI for your own repository. Refer to the Circle CI
-  documentation.
-
-* ReadTheDocs is used to build and host the documentation. You need to activate
-  ReadTheDocs for your own repository. Refer to the ReadTheDocs documentation.
-
-* CodeCov for tracking the code coverage of the package. You need to activate
-  CodeCov for you own repository.
-
-* PEP8Speaks for automatically checking the PEP8 compliance of your project for
-  each Pull Request.
-
-.. _Travis: https://travis-ci.com/getting_started
-
