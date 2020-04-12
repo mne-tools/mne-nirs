@@ -29,7 +29,11 @@ Documentation for this project is hosted `here <https://rob-luke.github.io/mne-n
 Examples
 --------
 
-Coming soon...
+- MNE examples:
+    - `Basic pipeline <https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html#sphx-glr-auto-tutorials-preprocessing-plot-70-fnirs-processing-py>`_.
+    - `Artifact rejection <https://mne.tools/dev/auto_examples/preprocessing/plot_fnirs_artifact_removal.html#ex-fnirs-artifacts>`_.
+- MNE-NIRS examples:
+    - `Overview <https://rob-luke.github.io/mne-nirs/auto_examples/index.html>`_.
 
 
 Contributing
