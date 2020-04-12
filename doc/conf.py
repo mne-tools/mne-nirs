@@ -40,7 +40,7 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
-    'sphinx.ext.viewcode',
+    'sphinx.ext.linkcode',
     'sphinx_gallery.gen_gallery',
     'numpydoc',
 ]
