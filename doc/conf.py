@@ -319,7 +319,9 @@ sphinx_gallery_conf = {
     'doc_module': 'mne_nirs',
     'backreferences_dir': os.path.join('generated'),
     'reference_url': {
-        'mne_nirs': None}
+        'mne_nirs': None},
+    'download_all_examples': False,
+    'show_memory': True
 }
 
 
