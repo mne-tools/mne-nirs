@@ -23,4 +23,4 @@ This is an example on how to import MNE-NIRS.
     >>> import mne_nirs
     >>> # This should not display any errors
 
-For further usage see examples _`example <auto_examples/index.html>`_
+For further usage see examples.

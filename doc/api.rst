@@ -1,8 +1,6 @@
-############
-MNE-NIRS API
-############
-
-API for MNE-NIRS module.
+##########
+Module API
+##########
 
 .. currentmodule:: mne_nirs
 

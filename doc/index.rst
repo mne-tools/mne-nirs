@@ -21,7 +21,6 @@ This is a library to assist in processing near-infrared spectroscopy data with M
    :hidden:
    :caption: Documentation
 
-   user_guide
    api
 
 .. toctree::
