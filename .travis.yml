@@ -9,11 +9,9 @@ cache:
 
 matrix:
   include:
-    - env: PYTHON_VERSION="3.5" NUMPY_VERSION="1.13.1" SCIPY_VERSION="0.19.1"
-           SKLEARN_VERSION="0.19.1"
-    - env: PYTHON_VERSION="3.6" NUMPY_VERSION="1.13.1" SCIPY_VERSION="0.19.1"
-           SKLEARN_VERSION="0.19.1"
     - env: PYTHON_VERSION="3.7" NUMPY_VERSION="*" SCIPY_VERSION="*"
+           SKLEARN_VERSION="*"
+    - env: PYTHON_VERSION="3.8" NUMPY_VERSION="*" SCIPY_VERSION="*"
            SKLEARN_VERSION="*"
 
 install:
@@ -28,7 +26,7 @@ install:
   - conda create -n testenv --yes python=$PYTHON_VERSION pip
   - source activate testenv
   - conda install --yes numpy==$NUMPY_VERSION scipy==$SCIPY_VERSION scikit-learn==$SKLEARN_VERSION nose pytest pytest-cov
-  - pip install codecov
+  - pip install codecov pybids
   - pip install .
 
 script:
