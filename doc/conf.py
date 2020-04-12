@@ -76,7 +76,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'mne-nirs'
-copyright = u'2016, Robert Luke'
+copyright = u'2020, Robert Luke'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
