@@ -1,10 +1,8 @@
 """
 .. _tut-fnirs-cui:
 
-Plot experiment expected haemodynamic response
-==============================================
-
-
+Examine the effect of signal enhancement approaches
+===================================================
 
 .. contents:: Page contents
    :local:
@@ -19,19 +17,16 @@ import matplotlib.pyplot as plt
 import mne
 import mne_nirs
 
+
+###############################################################################
+# Import and preprocess data
+# --------------------------
+#
+# This code is exactly the same as the first sections in the MNE tutorial.
+
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
 raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir, verbose=True).load_data()
-
-
-###############################################################################
-# Selecting channels appropriate for detecting neural responses
-# -------------------------------------------------------------
-#
-# First we remove channels that are too close together (short channels) to
-# detect a neural response (less than 1 cm distance between optodes).
-# To achieve this we pick all the channels that are not considered to be short.
-
 picks = mne.pick_types(raw_intensity.info, meg=False, fnirs=True)
 dists = mne.preprocessing.nirs.source_detector_distances(
     raw_intensity.info, picks=picks)
@@ -40,18 +35,6 @@ raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
 raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
 raw_haemo = raw_haemo.filter(0.05, 0.7, h_trans_bandwidth=0.2,
                              l_trans_bandwidth=0.02)
-
-###############################################################################
-# Extract epochs
-# --------------
-#
-# Now that the signal has been converted to relative haemoglobin concentration,
-# and the unwanted heart rate component has been removed, we can extract epochs
-# related to each of the experimental conditions.
-#
-# First we extract the events of interest and visualise them to ensure they are
-# correct.
-
 events, _ = mne.events_from_annotations(raw_haemo, event_id={'1.0': 1,
                                                              '2.0': 2,
                                                              '3.0': 3})
@@ -59,9 +42,11 @@ event_dict = {'Control': 1, 'Tapping/Left': 2, 'Tapping/Right': 3}
 
 
 ###############################################################################
-# Next we define the range of our epochs, the rejection criteria,
-# baseline correction, and extract the epochs. We visualise the log of which
-# epochs were dropped.
+# Extract epochs with no additional processing
+# --------------------------------------------
+#
+# First we extract the epochs with no additional processing
+# this result should be the same as the MNE tutorial.
 
 reject_criteria = dict(hbo=80e-6)
 tmin, tmax = -5, 15
@@ -83,10 +68,10 @@ for condition in evoked_dict:
 
 
 ###############################################################################
-# Apply anti correlation
-# ----------------------------------
+# Apply negative correlation enhancment algorithm
+# -----------------------------------------------
 #
-# Apply Cui et. al. 2010
+# Apply Cui et. al. 2010 and extract epochs.
 
 raw_anti = mne_nirs.signal_enhancement.enhance_negative_correlation(raw_haemo)
 
@@ -94,7 +79,7 @@ epochs_anti = mne.Epochs(raw_anti, events, event_id=event_dict,
                          tmin=tmin, tmax=tmax,
                          reject=reject_criteria, reject_by_annotation=True,
                          proj=True, baseline=(None, 0), preload=True,
-                         detrend=1, verbose=True)
+                         detrend=None, verbose=True)
 
 evoked_dict_anti = {'Tapping/HbO': epochs_anti['Tapping'].average(picks='hbo'),
                     'Tapping/HbR': epochs_anti['Tapping'].average(picks='hbr'),
@@ -110,7 +95,7 @@ for condition in evoked_dict_anti:
 # Plot two approaches for comparison
 # ----------------------------------
 #
-# Plot figures
+# Plot the average epochs with and without Cui 2010 applied.
 
 fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(15, 6))
 
