@@ -6,23 +6,13 @@ import numpy as np
 import mne
 
 
-def foo():
-    """
-    Just a test.
-
-    :return: str
-        Return foo
-    """
-    print(2 * 2)
-    return 'foo'
-
-
 def create_boxcar(raw, event_id=None, stim_dur=5):
     """
     Create a boxcar of the experiment.
 
-    **NOTE:** This is just a holder function while I figure out
-    how to get github actions working.
+      .. warning:: The naming of this function may change. Use with caution.
+                   This is just a place holder while I get the documentation\
+                   up and running.
 
     :return: array
         Returns an array for each trigger channel.
@@ -44,8 +34,9 @@ def create_hrf(raw, event_id=None, stim_dur=5):
     """
     Calculate expected haemodynamic response function.
 
-    **NOTE:** This is just a holder function while I figure out
-    how to get github actions working.
+      .. warning:: The naming of this function may change. Use with caution.
+                   This is just a place holder while I get the documentation\
+                   up and running.
 
     :return: array
         Returns an array for each trigger channel.
