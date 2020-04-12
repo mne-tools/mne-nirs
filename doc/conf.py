@@ -75,7 +75,7 @@ plot_gallery = 'True'
 master_doc = 'index'
 
 # General information about the project.
-project = u'mne-nirs'
+project = u'MNE-NIRS'
 copyright = u'2020, Robert Luke'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -139,6 +139,16 @@ html_theme = 'bootstrap'
 # further.  For a list of options available for each theme, see the
 # documentation.
 # html_theme_options = {}
+html_theme_options = {
+    'navbar_sidebarrel': False,
+    'navbar_links': [
+        ("Examples", "auto_examples/index"),
+        ("Getting started", "quick_start"),
+        ("API", "api"),
+        ("GitHub", "https://github.com/rob-luke/mne-nirs", True)
+    ],
+    'bootswatch_theme': "lumen"
+}
 
 # Add any paths that contain custom themes here, relative to this directory.
 html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
@@ -211,7 +221,7 @@ html_static_path = ['_static']
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'project-templatedoc'
+htmlhelp_basename = 'mnenirsdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------

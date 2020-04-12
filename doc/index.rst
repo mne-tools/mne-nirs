@@ -3,8 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-MNE-NIRS Documentation
-======================
+MNE-NIRS
+========
+
+This is a library to assist in processing near-infrared spectroscopy data with MNE.
 
 
 .. toctree::
@@ -33,11 +35,6 @@ MNE-NIRS Documentation
 -------------------------------------
 
 How to install and verify MNE-NIRS is working.
-
-`User Guide <user_guide.html>`_
--------------------------------
-
-A basic overview of MNE-NIRS.
 
 `API Documentation <api.html>`_
 -------------------------------
