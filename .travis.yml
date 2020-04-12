@@ -28,6 +28,7 @@ install:
   - conda install --yes numpy==$NUMPY_VERSION scipy==$SCIPY_VERSION scikit-learn==$SKLEARN_VERSION nose pytest pytest-cov
   - pip install codecov pybids
   - pip install .
+  - python -c 'import mne; mne.datasets.fnirs_motor.data_path(verbose=True)';
 
 script:
   - mkdir for_test
