@@ -11,14 +11,12 @@ Plot experiment expected haemodynamic response
    :depth: 2
 
 """
-# sphinx_gallery_thumbnail_number = 1
 
 import os
 import matplotlib.pyplot as plt
 import mne
 
 import mne_nirs
-
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')

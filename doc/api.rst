@@ -16,9 +16,17 @@ Experimental Design
    create_hrf
 
 
-Plotting
---------
+Signal Enhancment
+-----------------
+
+
+.. currentmodule:: mne_nirs.signal_enhancement
+
+.. automodule:: mne_nirs.signal_enhancement
+   :no-members:
+   :no-inherited-members:
 
 .. autosummary::
    :toctree: generated/
-   :template: function.rst
+
+   enhance_negative_correlation
