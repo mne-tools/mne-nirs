@@ -31,8 +31,8 @@ def enhance_negative_correlation(raw):
     raw = raw.copy().load_data()
     _validate_type(raw, BaseRaw, 'raw')
 
-    hbo_channels =pick_types(raw.info, fnirs='hbo')
-    hbr_channels =pick_types(raw.info, fnirs='hbr')
+    hbo_channels = pick_types(raw.info, fnirs='hbo')
+    hbr_channels = pick_types(raw.info, fnirs='hbr')
 
     if (not len(hbo_channels)) & (not len(hbr_channels)):
         raise RuntimeError('enhance_negative_correlation should '
@@ -55,7 +55,8 @@ def enhance_negative_correlation(raw):
 
         alpha = hbo_std / hbr_std
 
-        raw._data[hbo_channels[idx]] = 0.5*(hbo-alpha*hbr)
-        raw._data[hbr_channels[idx]] = -(1/alpha)*raw._data[hbo_channels[idx]]
+        raw._data[hbo_channels[idx]] = 0.5 * (hbo - alpha * hbr)
+        raw._data[hbr_channels[idx]] = -(1 / alpha) * \
+            raw._data[hbo_channels[idx]]
 
     return raw

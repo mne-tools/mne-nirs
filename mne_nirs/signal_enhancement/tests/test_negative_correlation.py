@@ -9,7 +9,7 @@ import numpy as np
 from numpy.testing import assert_almost_equal
 
 from mne.datasets.testing import data_path
-from mne.io import read_raw_nirx, BaseRaw, read_raw_fif
+from mne.io import read_raw_nirx
 from mne.preprocessing.nirs import optical_density, beer_lambert_law
 from mne.datasets import testing
 
@@ -43,4 +43,3 @@ def test_beer_lambert(fname, tmpdir):
     assert_almost_equal(np.corrcoef(raw_post._data[0],
                                     raw_post._data[1])[1, 0], -1)
     assert np.abs(np.corrcoef(raw_post._data[0], raw_post._data[3])[1, 0]) > 0
-

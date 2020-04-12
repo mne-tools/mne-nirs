@@ -128,4 +128,4 @@ mne.viz.plot_compare_evokeds(evoked_dict_anti, combine="mean", ci=0.95,
                              ylim=dict(hbo=[-10, 13]))
 
 for column, condition in enumerate(['Original Data', 'Cui Enhanced Data']):
-        axes[column].set_title('{}'.format(condition))
+    axes[column].set_title('{}'.format(condition))
