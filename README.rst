@@ -1,8 +1,8 @@
 MNE-NIRS: Near-Infrared Spectroscopy Analysis
 =============================================
 
-UNDER DEVELOPMENT. Please check back in the coming weeks.
---------------
+UNDER DEVELOPMENT. Please check back over the coming weeks.
+-----------------------------------------------------------
 
 
 .. image:: https://img.shields.io/badge/docs-master-brightgreen
@@ -33,7 +33,7 @@ Examples
     - `Basic pipeline <https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html#sphx-glr-auto-tutorials-preprocessing-plot-70-fnirs-processing-py>`_.
     - `Artifact rejection <https://mne.tools/dev/auto_examples/preprocessing/plot_fnirs_artifact_removal.html#ex-fnirs-artifacts>`_.
 - MNE-NIRS examples:
-    - `Overview <https://rob-luke.github.io/mne-nirs/auto_examples/index.html>`_.
+    - `Haemodynamic responses <https://rob-luke.github.io/mne-nirs/auto_examples/index.html>`_.
     - `Signal enhancement <https://rob-luke.github.io/mne-nirs/auto_examples/plot_20_cui.html>`_.
     
 
