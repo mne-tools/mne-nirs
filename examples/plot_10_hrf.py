@@ -30,7 +30,7 @@ raw_intensity = raw_intensity.pick(picks=[0])
 #
 # Add some text here.
 
-s = mne_nirs.create_boxcar(raw_intensity)
+s = mne_nirs.experimental_design.create_boxcar(raw_intensity)
 plt.plot(s)
 plt.xlim(0, 3000)
 
@@ -41,6 +41,6 @@ plt.xlim(0, 3000)
 #
 # Add some text here.
 
-s = mne_nirs.create_hrf(raw_intensity)
+s = mne_nirs.experimental_design.create_hrf(raw_intensity)
 plt.plot(s)
 plt.xlim(0, 3000)

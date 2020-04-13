@@ -8,9 +8,14 @@ Module API
 Experimental Design
 -------------------
 
+.. currentmodule:: mne_nirs.experimental_design
+
+.. automodule:: mne_nirs.experimental_design
+   :no-members:
+   :no-inherited-members:
+
 .. autosummary::
    :toctree: generated/
-   :template: function.rst
 
    create_boxcar
    create_hrf
