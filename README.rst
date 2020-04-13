@@ -34,7 +34,8 @@ Examples
     - `Artifact rejection <https://mne.tools/dev/auto_examples/preprocessing/plot_fnirs_artifact_removal.html#ex-fnirs-artifacts>`_.
 - MNE-NIRS examples:
     - `Overview <https://rob-luke.github.io/mne-nirs/auto_examples/index.html>`_.
-
+    - `Signal enhancement <https://rob-luke.github.io/mne-nirs/auto_examples/plot_20_cui.html>`_.
+    
 
 Contributing
 ------------
