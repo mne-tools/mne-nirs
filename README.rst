@@ -23,7 +23,7 @@ MNE has support for some common analysis procedures (see `tutorial <https://mne.
 Documentation
 -------------
 
-Documentation for this project is hosted `here <https://rob-luke.github.io/mne-nirs>`_.
+Documentation for this project is hosted `here <https://mne-tools.github.io/mne-nirs>`_.
 
 
 Examples
@@ -33,8 +33,8 @@ Examples
     - `Basic pipeline <https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html#sphx-glr-auto-tutorials-preprocessing-plot-70-fnirs-processing-py>`_.
     - `Artifact rejection <https://mne.tools/dev/auto_examples/preprocessing/plot_fnirs_artifact_removal.html#ex-fnirs-artifacts>`_.
 - MNE-NIRS examples:
-    - `Haemodynamic responses <https://rob-luke.github.io/mne-nirs/auto_examples/index.html>`_.
-    - `Signal enhancement <https://rob-luke.github.io/mne-nirs/auto_examples/plot_20_cui.html>`_.
+    - `Haemodynamic responses <https://mne-tools.github.io/mne-nirs/auto_examples/index.html>`_.
+    - `Signal enhancement <https://mne-tools.github.io/mne-nirs/auto_examples/plot_20_cui.html>`_.
     
 
 Contributing
