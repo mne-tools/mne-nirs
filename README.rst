@@ -6,7 +6,7 @@ UNDER DEVELOPMENT. Please check back over the coming weeks.
 
 
 .. image:: https://img.shields.io/badge/docs-master-brightgreen
-    :target: https://rob-luke.github.io/mne-nirs
+    :target: https://mne.tools/mne-nirs/
     
 .. image:: https://travis-ci.com/rob-luke/mne-nirs.svg?branch=master
     :target: https://travis-ci.com/rob-luke/mne-nirs
