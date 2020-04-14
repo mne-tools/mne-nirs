@@ -9,38 +9,27 @@ MNE-NIRS
 This is a library to assist in processing near-infrared spectroscopy data with MNE.
 
 
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   :caption: Getting Started
 
-   quick_start
+Installation
+------------
 
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   :caption: Documentation
+This package is not registered. Run the code below to install the latest
+version from github.
 
-   api
+.. code:: bash
 
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   :caption: Tutorial - Examples
+    >>> pip install https://codeload.github.com/rob-luke/mne-nirs/zip/master
 
-   auto_examples/index
 
-`Getting started <quick_start.html>`_
--------------------------------------
+To load MNE-NIRS add these lines to your script.
 
-How to install and verify MNE-NIRS is working.
+.. code:: python
 
-`API Documentation <api.html>`_
--------------------------------
+    >>> import mne
+    >>> import mne_nirs
 
-MNE-NIRS API documentation.
 
-`Examples <auto_examples/index.html>`_
---------------------------------------
+Usage
+-----
 
-A set of examples.
+See the `examples <auto_examples/index.html>`_ and `API documentation <api.html>`_.

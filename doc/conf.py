@@ -144,7 +144,6 @@ html_theme_options = {
     'navbar_sidebarrel': False,
     'navbar_links': [
         ("Examples", "auto_examples/index"),
-        ("Getting started", "quick_start"),
         ("API", "api"),
         ("GitHub", "https://github.com/rob-luke/mne-nirs", True)
     ],
