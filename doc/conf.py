@@ -145,7 +145,7 @@ html_theme_options = {
     'navbar_links': [
         ("Examples", "auto_examples/index"),
         ("API", "api"),
-        ("GitHub", "https://github.com/rob-luke/mne-nirs", True)
+        ("GitHub", "https://github.com/mne-tools/mne-nirs", True)
     ],
     'bootswatch_theme': "lumen"
 }

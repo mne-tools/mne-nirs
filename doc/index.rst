@@ -18,7 +18,7 @@ version from github.
 
 .. code:: bash
 
-    >>> pip install https://codeload.github.com/rob-luke/mne-nirs/zip/master
+    >>> pip install https://codeload.github.com/mne-tools/mne-nirs/zip/master
 
 
 To load MNE-NIRS add these lines to your script.
