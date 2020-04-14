@@ -8,8 +8,8 @@ UNDER DEVELOPMENT. Please check back over the coming weeks.
 .. image:: https://img.shields.io/badge/docs-master-brightgreen
     :target: https://mne.tools/mne-nirs/
     
-.. image:: https://travis-ci.com/mne.tools/mne-nirs.svg?branch=master
-    :target: https://travis-ci.com/mne.tools/mne-nirs
+.. image:: https://travis-ci.com/mne-tools/mne-nirs.svg?branch=master
+    :target: https://travis-ci.com/mne-tools/mne-nirs
  
 .. image:: https://ci.appveyor.com/api/projects/status/6f3autsjogk9yx0u/branch/master?svg=true
     :target: https://ci.appveyor.com/project/mne.tools/mne-nirs/branch/master
