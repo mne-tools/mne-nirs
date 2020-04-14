@@ -4,16 +4,11 @@ MNE-NIRS: Near-Infrared Spectroscopy Analysis
 UNDER DEVELOPMENT. Please check back over the coming weeks.
 -----------------------------------------------------------
 
-
 .. image:: https://img.shields.io/badge/docs-master-brightgreen
     :target: https://mne.tools/mne-nirs/
     
 .. image:: https://travis-ci.com/mne-tools/mne-nirs.svg?branch=master
     :target: https://travis-ci.com/mne-tools/mne-nirs
- 
-.. image:: https://ci.appveyor.com/api/projects/status/6f3autsjogk9yx0u/branch/master?svg=true
-    :target: https://ci.appveyor.com/project/mne.tools/mne-nirs/branch/master
-
 
 **MNE-NIRS** is an `MNE <https://mne.tools>`_ compatible near-infrared spectroscopy processing package. 
 
@@ -35,15 +30,12 @@ Examples
 - MNE-NIRS examples:
     - `Haemodynamic responses <https://mne-tools.github.io/mne-nirs/auto_examples/index.html>`_.
     - `Signal enhancement <https://mne-tools.github.io/mne-nirs/auto_examples/plot_20_cui.html>`_.
-    
+
 
 Contributing
 ------------
 
 Contributions are welcome. This package tries to adhere to the same  `standards as MNE <https://mne.tools/stable/install/contributing.html>`_.
-
-
-
 
 
 Acknowledgements
@@ -54,4 +46,3 @@ This package is built on top of many other great packages. These should be ackno
 MNE: https://mne.tools/dev/overview/cite.html
 
 PyBIDS: https://github.com/bids-standard/pybids#how-to-cite
-
