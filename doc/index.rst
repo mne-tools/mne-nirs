@@ -6,7 +6,7 @@
 MNE-NIRS
 ========
 
-This is a library to assist in processing near-infrared spectroscopy data with MNE.
+This is a library to assist with processing near-infrared spectroscopy data with MNE.
 
 
 
