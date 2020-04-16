@@ -57,8 +57,10 @@ def create_first_level_design_matrix(raw, stim_dur=1.,
     dm = make_first_level_design_matrix(frame_times, events,
                                         drift_model=drift_model,
                                         drift_order=drift_order,
-                                        hrf_model=hrf_model, min_onset=min_onset,
-                                        high_pass=high_pass, add_regs=add_regs,
+                                        hrf_model=hrf_model,
+                                        min_onset=min_onset,
+                                        high_pass=high_pass,
+                                        add_regs=add_regs,
                                         oversampling=oversampling,
                                         add_reg_names=add_reg_names,
                                         fir_delays=fir_delays)
@@ -91,7 +93,8 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=100,
     labels : array
         A map of values on voxels used to identify the corresponding model.
     glm_estimates : dict
-        Keys correspond to the different labels values values are RegressionResults instances corresponding to the voxels.
+        Keys correspond to the different labels values values are
+        RegressionResults instances corresponding to the voxels.
     """
     from nistats.first_level_model import run_glm
 
@@ -103,8 +106,8 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=100,
 
 
 def plot_GLM_topo(raw, labels, glm_estimates, design_matrix,
-                   requested_conditions=None,
-                   figsize=(12, 7), sphere=None):
+                  requested_conditions=None,
+                  figsize=(12, 7), sphere=None):
     """
     Plot topomap of NIRS GLM data.
 
@@ -150,8 +153,8 @@ def plot_GLM_topo(raw, labels, glm_estimates, design_matrix,
                              ncols=len(requested_conditions),
                              figsize=figsize)
 
-    estimates = estimates[:,
-                [c in requested_conditions for c in design_matrix.columns]]
+    estimates = estimates[:, [c in requested_conditions
+                              for c in design_matrix.columns]]
 
     design_matrix = design_matrix[requested_conditions]
 

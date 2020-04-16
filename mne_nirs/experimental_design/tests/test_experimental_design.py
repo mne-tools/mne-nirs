@@ -5,6 +5,8 @@
 import os
 import mne
 import mne_nirs
+from mne_nirs.experimental_design import create_first_level_design_matrix,\
+    plot_GLM_topo, run_GLM
 
 
 def test_create_boxcar():
@@ -22,7 +24,7 @@ def test_create_design():
     raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir,
                                          verbose=True).load_data()
     raw_intensity.crop(0, 200)
-    new_des = [des for des in raw_intensity.annotations.description];
+    new_des = [des for des in raw_intensity.annotations.description]
     new_des = ['A' if x == "1.0" else x for x in new_des]
     new_des = ['B' if x == "2.0" else x for x in new_des]
     new_des = ['C' if x == "3.0" else x for x in new_des]
@@ -30,7 +32,7 @@ def test_create_design():
                             raw_intensity.annotations.duration, new_des)
     raw_intensity.set_annotations(annot)
 
-    design_matrix = mne_nirs.experimental_design.create_first_level_design_matrix(raw_intensity)
+    design_matrix = create_first_level_design_matrix(raw_intensity)
 
     picks = mne.pick_types(raw_intensity.info, meg=False, fnirs=True)
     dists = mne.preprocessing.nirs.source_detector_distances(
@@ -38,5 +40,5 @@ def test_create_design():
     raw_intensity.pick(picks[dists > 0.01])
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
-    labels, glm_estimates = mne_nirs.experimental_design.run_GLM(raw_haemo, design_matrix)
-    mne_nirs.experimental_design.plot_GLM_topo(raw_haemo, labels, glm_estimates, design_matrix)
+    labels, glm_estimates = run_GLM(raw_haemo, design_matrix)
+    plot_GLM_topo(raw_haemo, labels, glm_estimates, design_matrix)
