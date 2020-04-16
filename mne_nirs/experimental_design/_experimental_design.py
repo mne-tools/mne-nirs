@@ -158,6 +158,9 @@ def plot_GLM_topo(raw, labels, glm_estimates, design_matrix,
 
     design_matrix = design_matrix[requested_conditions]
 
+    vmax = np.max(np.abs(estimates))
+    vmin = vmax * -1.
+
     for t_idx, t in enumerate(types):
 
         picks = mne.io.pick._picks_to_idx(raw.info, t, exclude=[],
@@ -172,8 +175,8 @@ def plot_GLM_topo(raw, labels, glm_estimates, design_matrix,
                 mne.viz.topomap.plot_topomap(estimates[picks, idx], pos,
                                              extrapolate='local',
                                              names=ch_names,
-                                             vmin=np.min(estimates),
-                                             vmax=np.max(estimates),
+                                             vmin=vmin,
+                                             vmax=vmax,
                                              axes=axes[t_idx, idx],
                                              show=False,
                                              sphere=sphere)

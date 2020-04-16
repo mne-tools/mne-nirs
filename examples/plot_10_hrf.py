@@ -12,6 +12,12 @@ It is basically a wrapper over Nistats. https://nistats.github.io/
 
 This is written quite poorly, read with caution.
 
+Currently the analysis is only being run on the first third of the measurement
+to meet github actions memory constraints. Either swtich to another CI with more memory
+or solve this issue.
+
+But this means the results are noiser than the MNE fnirs tutorial.
+
 .. contents:: Page contents
    :local:
    :depth: 2
@@ -39,7 +45,7 @@ fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
 raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir,
                                      verbose=True).load_data()
-raw_intensity.crop(0, 2000)
+raw_intensity.crop(tmax=1400)
 
 
 ###############################################################################
