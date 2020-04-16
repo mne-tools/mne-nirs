@@ -4,9 +4,10 @@ Module API
 
 .. currentmodule:: mne_nirs
 
+.. toctree::
 
-Experimental Design
--------------------
+Experimental Design and Analysis
+--------------------------------
 
 .. currentmodule:: mne_nirs.experimental_design
 
@@ -17,8 +18,11 @@ Experimental Design
 .. autosummary::
    :toctree: generated/
 
+   create_first_level_design_matrix
+   run_GLM
+   plot_GLM_topo
+
    create_boxcar
-   create_hrf
 
 
 Signal Enhancment
