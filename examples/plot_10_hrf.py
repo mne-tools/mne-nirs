@@ -4,19 +4,16 @@
 Haeomodynamic response analsys
 ==============================
 
-This is a work in progress document.
+This document is a work in progress.
+It is a first attempt to add GLM analysis to MNE processing of NIRS data.
 
-This is a first attempt to add GLM analysis to MNE processing of NIRS data.
-
-It is basically a wrapper over Nistats. https://nistats.github.io/
-
-This is written quite poorly, read with caution.
+This is basically a wrapper over Nistats. https://nistats.github.io/ .
+It is written quite poorly, read with caution.
 
 Currently the analysis is only being run on the first third of the measurement
-to meet github actions memory constraints. Either swtich to another CI with more memory
-or solve this issue.
-
-But this means the results are noiser than the MNE fnirs tutorial.
+to meet github actions memory constraints.
+I need to E=either swtich to another CI with more memory or solve this issue.
+This means the results are noisier than the MNE fnirs tutorial.
 
 .. contents:: Page contents
    :local:
@@ -36,8 +33,8 @@ from mne_nirs.experimental_design import create_first_level_design_matrix, run_G
 # Import raw NIRS data
 # --------------------
 #
-# Import the motor tapping data also used in MNE tutorial and crop to speed
-# up computation time.
+# Import the motor tapping data also used in MNE tutorial.
+# Crop to meet github memory constraints.
 # See https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html for
 # epoching style analysis.
 
