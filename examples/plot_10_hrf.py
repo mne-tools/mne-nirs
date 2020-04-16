@@ -7,13 +7,15 @@ Haeomodynamic response analysis
 This document is a work in progress.
 It is a first attempt to add GLM analysis to MNE processing of NIRS data.
 
-This is basically a wrapper over Nistats. https://nistats.github.io/ .
-It is written quite poorly, read with caution.
+This is basically a wrapper over the excellent Nistats. https://nistats.github.io/ .
 
 Currently the analysis is only being run on the first third of the measurement
 to meet github actions memory constraints.
 I need to E=either swtich to another CI with more memory or solve this issue.
 This means the results are noisier than the MNE fnirs tutorial.
+
+This document quite poorly written, read with caution.
+
 
 .. contents:: Page contents
    :local:
