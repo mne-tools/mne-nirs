@@ -35,7 +35,7 @@ Examples
 Contributing
 ------------
 
-Contributions are welcome. This package tries to adhere to the same  `standards as MNE <https://mne.tools/stable/install/contributing.html>`_.
+Contributions are welcome (more than welcome!). Contributions can be feature requests, improved documentation, bug reports, code improvements, new code, etc. Anything will be appreciated. *Note*: this package tries to adhere to the same  `standards as MNE <https://mne.tools/stable/install/contributing.html>`_.
 
 
 Acknowledgements
