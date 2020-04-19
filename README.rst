@@ -46,3 +46,5 @@ This package is built on top of many other great packages. These should be ackno
 MNE: https://mne.tools/dev/overview/cite.html
 
 PyBIDS: https://github.com/bids-standard/pybids#how-to-cite
+
+Nilearn: http://nilearn.github.io/authors.html#citing
