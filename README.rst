@@ -9,6 +9,9 @@ UNDER DEVELOPMENT. Please check back over the coming weeks.
     
 .. image:: https://travis-ci.com/mne-tools/mne-nirs.svg?branch=master
     :target: https://travis-ci.com/mne-tools/mne-nirs
+    
+.. image:: https://codecov.io/gh/mne-tools/mne-nirs/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/mne-tools/mne-nirs
 
 **MNE-NIRS** is an `MNE <https://mne.tools>`_ compatible near-infrared spectroscopy processing package. 
 
@@ -44,7 +47,5 @@ Acknowledgements
 This package is built on top of many other great packages. These should be acknowledged if you use this package.
 
 MNE: https://mne.tools/dev/overview/cite.html
-
-PyBIDS: https://github.com/bids-standard/pybids#how-to-cite
 
 Nilearn: http://nilearn.github.io/authors.html#citing
