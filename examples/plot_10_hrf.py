@@ -7,11 +7,12 @@ Haeomodynamic response analysis
 This document is a work in progress.
 It is a first attempt to add GLM analysis to MNE processing of NIRS data.
 
-This is basically a wrapper over the excellent Nistats. https://nistats.github.io/ .
+This is basically a wrapper over the excellent Nilearn stats.
+https://github.com/nilearn/nilearn/tree/master/nilearn/stats .
 
 Currently the analysis is only being run on the first third of the measurement
 to meet github actions memory constraints.
-I need to E=either swtich to another CI with more memory or solve this issue.
+I need to either swtich to another CI with more memory or solve this issue.
 This means the results are noisier than the MNE fnirs tutorial.
 
 This document quite poorly written, read with caution.
@@ -23,12 +24,19 @@ This document quite poorly written, read with caution.
 
 """
 
+
+# Authors: Robert Luke <mail@robertluke.net>
+#
+# License: BSD (3-clause)
+
 import os
 import matplotlib.pyplot as plt
 import mne
 import mne_nirs
 
-from mne_nirs.experimental_design import create_first_level_design_matrix, run_GLM, plot_GLM_topo
+from mne_nirs.experimental_design import \
+    create_first_level_design_matrix, run_GLM, plot_GLM_topo
+from nilearn.reporting import plot_design_matrix
 
 
 ###############################################################################
@@ -37,8 +45,6 @@ from mne_nirs.experimental_design import create_first_level_design_matrix, run_G
 #
 # Import the motor tapping data also used in MNE tutorial.
 # Crop to meet github memory constraints.
-# See https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html for
-# epoching style analysis.
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
@@ -54,11 +60,12 @@ raw_intensity.crop(tmax=1400)
 # Here I update the annotation names and remove annotations that indicated
 # the experiment began and finished.
 
-new_des = [des for des in raw_intensity.annotations.description];
+new_des = [des for des in raw_intensity.annotations.description]
 new_des = ['Control' if x == "1.0" else x for x in new_des]
 new_des = ['Tapping/Left' if x == "2.0" else x for x in new_des]
 new_des = ['Tapping/Right' if x == "3.0" else x for x in new_des]
-annot = mne.Annotations(raw_intensity.annotations.onset, raw_intensity.annotations.duration, new_des)
+annot = mne.Annotations(raw_intensity.annotations.onset,
+                        raw_intensity.annotations.duration, new_des)
 raw_intensity.set_annotations(annot)
 raw_intensity.annotations.crop(35, 2967)
 
@@ -89,7 +96,8 @@ raw_haemo = raw_haemo.filter(0.05, 0.7, h_trans_bandwidth=0.2,
 
 events, _ = mne.events_from_annotations(raw_haemo)
 event_dict = {'Control': 1, 'Tapping/Left': 2, 'Tapping/Right': 3}
-mne.viz.plot_events(events, event_id=event_dict,  sfreq=raw_haemo.info['sfreq'])
+mne.viz.plot_events(events, event_id=event_dict,
+                    sfreq=raw_haemo.info['sfreq'])
 
 ###############################################################################
 #
@@ -120,9 +128,8 @@ design_matrix = create_first_level_design_matrix(raw_intensity,
 ###############################################################################
 #
 # And we display a summary of the design matrix
-# using standard Nistats reporting functions.
+# using standard Nilearn reporting functions.
 
-from nistats.reporting import plot_design_matrix
 plot_design_matrix(design_matrix)
 
 
@@ -139,7 +146,6 @@ plt.xlabel("Time (s)")
 plt.ylabel("Amplitude")
 
 
-
 ###############################################################################
 # Fit GLM to estimate response
 # ----------------------------
@@ -153,14 +159,17 @@ labels, glm_estimates = run_GLM(raw_haemo.copy().pick(picks=range(2)),
 
 ###############################################################################
 #
-# We then display the results. Note that the control condition sits around zero.
+# We then display the results. Note that the control condition sits
+# around zero.
 # And that the HbO is positive and larger than the HbR, this is to be expected.
-# Further, we note that for this channel the response to tapping on the right hand
-# is larger than the left. And the values are similar to what is seen in
-# the epoching tutorial.
+# Further, we note that for this channel the response to tapping on the
+# right hand is larger than the left. And the values are similar to what
+# is seen in the epoching tutorial.
 
-plt.scatter(design_matrix.columns[:3], glm_estimates[labels[0]].theta[:3] * 1e6)
-plt.scatter(design_matrix.columns[:3], glm_estimates[labels[1]].theta[:3] * 1e6)
+plt.scatter(design_matrix.columns[:3],
+            glm_estimates[labels[0]].theta[:3] * 1e6)
+plt.scatter(design_matrix.columns[:3],
+            glm_estimates[labels[1]].theta[:3] * 1e6)
 plt.xlabel("Experiment Condition")
 plt.ylabel("Haemoglobin (μM)")
 plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
@@ -169,13 +178,14 @@ plt.show()
 
 
 ###############################################################################
-# View GLM results for all sensors
+# View GLM resufvlts for all sensors
 # --------------------------------
 #
-# Lastly we run the GLM analysis on all sensors and plot the result on a toppmap.
+# Lastly we run the GLM analysis on all sensors and plot the result on a
+# toppmap.
 # We see the same result as in the MNE tutorial that activation is largest
-# contralateral to the tapping side. Also note that HbR tends to be the negative
-# of HbO as expected.
+# contralateral to the tapping side. Also note that HbR tends to be the
+# negative sof HbO as expected.
 
 labels, glm_estimates = run_GLM(raw_haemo, design_matrix)
 plot_GLM_topo(raw_haemo, labels, glm_estimates, design_matrix,
