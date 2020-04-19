@@ -61,7 +61,7 @@ def test_create_boxcar():
 
 def test_create_design():
     raw_intensity = _load_dataset()
-    raw_intensity.crop(0, 300)  # Keep the test fast
+    raw_intensity.crop(450, 600)  # Keep the test fast
     design_matrix = create_first_level_design_matrix(raw_intensity,
                                                      drift_order=1,
                                                      drift_model='polynomial')
@@ -74,7 +74,7 @@ def test_create_design():
 
 def test_run_GLM():
     raw_intensity = _load_dataset()
-    raw_intensity.crop(400, 500)  # Keep the test fast
+    raw_intensity.crop(450, 600)  # Keep the test fast
     design_matrix = create_first_level_design_matrix(raw_intensity,
                                                      drift_order=1,
                                                      drift_model='polynomial')
@@ -95,7 +95,7 @@ def test_run_GLM():
 def test_run_plot_GLM_topo():
     mne.viz.set_3d_backend('pyvista')
     raw_intensity = _load_dataset()
-    raw_intensity.crop(400, 600)  # Keep the test fast
+    raw_intensity.crop(450, 600)  # Keep the test fast
 
     design_matrix = create_first_level_design_matrix(raw_intensity,
                                                      drift_order=1,

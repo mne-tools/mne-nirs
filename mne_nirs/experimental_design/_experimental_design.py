@@ -7,7 +7,8 @@ import mne
 
 
 def create_first_level_design_matrix(raw, stim_dur=1.,
-                                     hrf_model='glover', drift_model='cosine',
+                                     hrf_model='glover',
+                                     drift_model='polynomial',
                                      high_pass=0.01, drift_order=1,
                                      fir_delays=[0], add_regs=None,
                                      add_reg_names=None, min_onset=-24,
@@ -113,21 +114,19 @@ def plot_GLM_topo(raw, labels, glm_estimates, design_matrix,
 
       .. warning:: Work in progress: I am trying to think on the best API.
 
-      .. warning:: TODO: best method for plotting on specified components?
-
     Parameters
     ----------
     raw : instance of Raw
         Haemoglobin data.
     labels : array
         A map of values on voxels used to identify the corresponding model.
-    requested_conditions : array
-        Which conditions should be displayed.
     glm_estimates : dict
         Keys correspond to the different labels values values are
         RegressionResults instances corresponding to the voxels.
     design_matrix : DataFrame
         As specified in Nilearn
+    requested_conditions : array
+        Which conditions should be displayed.
     figsize : TODO: Remove this, how does MNE ususally deal with this?
     sphere : As specified in MNE
 
