@@ -121,6 +121,8 @@ def plot_GLM_topo(raw, labels, glm_estimates, design_matrix,
         Haemoglobin data.
     labels : array
         A map of values on voxels used to identify the corresponding model.
+    requested_conditions : array
+        Which conditions should be displayed.
     glm_estimates : dict
         Keys correspond to the different labels values values are
         RegressionResults instances corresponding to the voxels.
