@@ -93,7 +93,6 @@ def test_run_GLM():
 
 
 def test_run_plot_GLM_topo():
-    mne.viz.set_3d_backend('pyvista')
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
 
