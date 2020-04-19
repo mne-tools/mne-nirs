@@ -2,44 +2,51 @@
 #
 # License: BSD (3-clause)
 
-import os.path as op
-
-import pytest
+import os
+import mne
+import mne_nirs
 import numpy as np
-from numpy.testing import assert_almost_equal
-
-from mne.datasets.testing import data_path
-from mne.io import read_raw_nirx
-from mne.preprocessing.nirs import optical_density, beer_lambert_law
-from mne.datasets import testing
-
-from mne_nirs.signal_enhancement import enhance_negative_correlation
 
 
-fname_nirx_15_0 = op.join(data_path(download=False),
-                          'NIRx', 'nirx_15_0_recording')
-fname_nirx_15_2 = op.join(data_path(download=False),
-                          'NIRx', 'nirx_15_2_recording')
-fname_nirx_15_2_short = op.join(data_path(download=False),
-                                'NIRx', 'nirx_15_2_recording_w_short')
+def _load_dataset():
+    """Load data and tidy it a bit"""
+    fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
+    fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
+    raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir,
+                                         verbose=True).load_data()
+
+    raw_intensity.annotations.crop(raw_intensity.annotations.onset[0],
+                                   raw_intensity.annotations.onset[-1])
+
+    new_des = [des for des in raw_intensity.annotations.description]
+    new_des = ['A' if x == "1.0" else x for x in new_des]
+    new_des = ['B' if x == "2.0" else x for x in new_des]
+    new_des = ['C' if x == "3.0" else x for x in new_des]
+    annot = mne.Annotations(raw_intensity.annotations.onset,
+                            raw_intensity.annotations.duration, new_des)
+    raw_intensity.set_annotations(annot)
+
+    picks = mne.pick_types(raw_intensity.info, meg=False, fnirs=True)
+    dists = mne.preprocessing.nirs.source_detector_distances(
+        raw_intensity.info, picks=picks)
+    raw_intensity.pick(picks[dists > 0.01])
+
+    assert 'fnirs_raw' in raw_intensity
+    assert len(np.unique(raw_intensity.annotations.description)) == 4
+
+    return raw_intensity
 
 
-@testing.requires_testing_data
-@pytest.mark.parametrize('fname', ([fname_nirx_15_2_short, fname_nirx_15_2,
-                                    fname_nirx_15_0]))
-def test_beer_lambert(fname, tmpdir):
-    """Test converting NIRX files."""
-    raw = read_raw_nirx(fname)
-    with pytest.raises(RuntimeError, match='run on haemoglobin'):
-        enhance_negative_correlation(raw)
-    raw = optical_density(raw)
-    with pytest.raises(RuntimeError, match='run on haemoglobin'):
-        enhance_negative_correlation(raw)
-    raw = beer_lambert_law(raw)
-    assert 'hbo' in raw
-    assert 'hbr' in raw
-    raw_post = enhance_negative_correlation(raw)
+def test_cui():
+    raw_intensity = _load_dataset()
+    raw_intensity = raw_intensity.pick(picks=range(2))  # Keep the test fast
+    raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
+    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
+    raw_anti = mne_nirs.signal_enhancement.enhance_negative_correlation(
+        raw_haemo)
+    assert np.abs(np.corrcoef(raw_haemo._data[0],
+                              raw_haemo._data[1])[0, 1]) < 1
 
-    assert_almost_equal(np.corrcoef(raw_post._data[0],
-                                    raw_post._data[1])[1, 0], -1)
-    assert np.abs(np.corrcoef(raw_post._data[0], raw_post._data[3])[1, 0]) > 0
+    np.testing.assert_almost_equal(np.corrcoef(raw_anti._data[0],
+                                   raw_anti._data[1])[0, 1],
+                                   -1)
