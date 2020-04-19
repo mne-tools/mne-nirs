@@ -9,6 +9,9 @@ UNDER DEVELOPMENT. Please check back over the coming weeks.
     
 .. image:: https://travis-ci.com/mne-tools/mne-nirs.svg?branch=master
     :target: https://travis-ci.com/mne-tools/mne-nirs
+    
+.. image:: https://codecov.io/gh/mne-tools/mne-nirs/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/mne-tools/mne-nirs
 
 **MNE-NIRS** is an `MNE <https://mne.tools>`_ compatible near-infrared spectroscopy processing package. 
 
