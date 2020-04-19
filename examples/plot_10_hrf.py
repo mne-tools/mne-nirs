@@ -7,11 +7,11 @@ Haeomodynamic response analysis
 This document is a work in progress.
 It is a first attempt to add GLM analysis to MNE processing of NIRS data.
 
-This is basically a wrapper over the excellent Nistats. https://nistats.github.io/ .
+This is basically a wrapper over the excellent Nilearn stats. https://github.com/nilearn/nilearn/tree/master/nilearn/stats .
 
 Currently the analysis is only being run on the first third of the measurement
 to meet github actions memory constraints.
-I need to E=either swtich to another CI with more memory or solve this issue.
+I need to either swtich to another CI with more memory or solve this issue.
 This means the results are noisier than the MNE fnirs tutorial.
 
 This document quite poorly written, read with caution.
@@ -22,6 +22,11 @@ This document quite poorly written, read with caution.
    :depth: 2
 
 """
+
+
+# Authors: Robert Luke <mail@robertluke.net>
+#
+# License: BSD (3-clause)
 
 import os
 import matplotlib.pyplot as plt
@@ -120,9 +125,9 @@ design_matrix = create_first_level_design_matrix(raw_intensity,
 ###############################################################################
 #
 # And we display a summary of the design matrix
-# using standard Nistats reporting functions.
+# using standard Nilearn reporting functions.
 
-from nistats.reporting import plot_design_matrix
+from nilearn.reporting import plot_design_matrix
 plot_design_matrix(design_matrix)
 
 

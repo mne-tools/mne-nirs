@@ -16,7 +16,7 @@ def create_first_level_design_matrix(raw, stim_dur=1.,
     Generate a design matrix for the experiment.
 
     This is a wrapper function for
-    nistats.design_matrix.make_first_level_design_matrix.
+    nilearn.stats.first_level_model.make_first_level_design_matrix.
 
       .. warning:: Work in progress: I am trying to think on the best API.
 
@@ -27,26 +27,26 @@ def create_first_level_design_matrix(raw, stim_dur=1.,
     stim_dur : Number
         The length of your stimulus.
         TODO: Make this be independent per event id
-    hrf_model : As specified in Nistats
-    drift_model : As specified in Nistats
-    high_pass : As specified in Nistats. Actually its not documented there.
-    drift_order : As specified in Nistats
-    fir_delays : As specified in Nistats
-    add_regs : As specified in Nistats
-    min_onset : As specified in Nistats
-    oversampling : As specified in Nistats
+    hrf_model : As specified in Nilearn
+    drift_model : As specified in Nilearn
+    high_pass : As specified in Nilearn. Actually its not documented there.
+    drift_order : As specified in Nilearn
+    fir_delays : As specified in Nilearn
+    add_regs : As specified in Nilearn
+    min_onset : As specified in Nilearn
+    oversampling : As specified in Nilearn
 
     Returns
     -------
     dm : Design matrix
-        As specified in Nistats.
+        As specified in Nilearn.
     """
-    from nistats.design_matrix import make_first_level_design_matrix
+    from nilearn.stats.first_level_model import make_first_level_design_matrix
     from pandas import DataFrame
 
     frame_times = raw.times
 
-    # Create events for nistats
+    # Create events for nilearn
     conditions = raw.annotations.description
     onsets = raw.annotations.onset
     duration = stim_dur * np.ones(len(conditions))
@@ -73,7 +73,7 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=100,
     """
     Run GLM on data using supplied design matrix.
 
-    This is a wrapper function for nistats.first_level_model.run_glm.
+    This is a wrapper function for nilearn.stats.first_level_model.run_glm.
 
       .. warning:: Work in progress: I am trying to think on the best API.
 
@@ -81,12 +81,12 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=100,
     ----------
     raw : instance of Raw
         Haemoglobin data.
-    design_matrix : as specified in nistats
+    design_matrix : as specified in Nilearn
         Design matrix of experiment.
-    noise_model : As specified in Nistats
-    bins : As specified in Nistats
-    n_jobs : As specified in Nistats
-    verbose : As specified in Nistats
+    noise_model : As specified in Nilearn
+    bins : As specified in Nilearn
+    n_jobs : As specified in Nilearn
+    verbose : As specified in Nilearn
 
     Returns
     -------
@@ -96,7 +96,7 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=100,
         Keys correspond to the different labels values values are
         RegressionResults instances corresponding to the voxels.
     """
-    from nistats.first_level_model import run_glm
+    from nilearn.stats.first_level_model import run_glm
 
     labels, glm_estimates = run_glm(raw._data.T, design_matrix.values,
                                     noise_model=noise_model, bins=bins,
@@ -125,7 +125,7 @@ def plot_GLM_topo(raw, labels, glm_estimates, design_matrix,
         Keys correspond to the different labels values values are
         RegressionResults instances corresponding to the voxels.
     design_matrix : DataFrame
-        As specified in Nistats
+        As specified in Nilearn
     figsize : TODO: Remove this, how does MNE ususally deal with this?
     sphere : As specified in MNE
 
