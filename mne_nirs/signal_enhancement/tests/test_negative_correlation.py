@@ -50,4 +50,3 @@ def test_cui():
     np.testing.assert_almost_equal(np.corrcoef(raw_anti._data[0],
                                    raw_anti._data[1])[0, 1],
                                    -1)
-
