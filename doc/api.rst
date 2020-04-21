@@ -25,8 +25,8 @@ Experimental Design and Analysis
    create_boxcar
 
 
-Signal Enhancment
------------------
+Signal Enhancement
+------------------
 
 
 .. currentmodule:: mne_nirs.signal_enhancement
@@ -39,3 +39,19 @@ Signal Enhancment
    :toctree: generated/
 
    enhance_negative_correlation
+
+
+Visualisation
+------------------
+
+
+.. currentmodule:: mne_nirs.visualisation
+
+.. automodule:: mne_nirs.visualisation
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
+   plot_nirs_source_detector
