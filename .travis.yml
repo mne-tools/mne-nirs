@@ -1,34 +1,92 @@
-dist: trusty
-sudo: false
-
-language: python
-
+language: generic
+dist: xenial
 cache:
-  directories:
-  - $HOME/.cache/pip
+  pip: true
+addons:
+  apt:
+    packages:
+      - libxkbcommon-x11-0
+env:
+    # TRAVIS_PYTHON_VERSION is only needed for neo's setup.py
+    # OPENBLAS_NUM_THREADS=1 avoid slowdowns:
+    # https://github.com/xianyi/OpenBLAS/issues/731
+    global: PYTHON_VERSION=3.7 DISPLAY=:99.0 MNE_LOGGING_LEVEL=warning
+            TRAVIS_PYTHON_VERSION=3.7 CONDA_VERSION=">=4.3.27"
+            OPENBLAS_NUM_THREADS=1
 
 matrix:
-  include:
-    - env: PYTHON_VERSION="3.7" NUMPY_VERSION="*" SCIPY_VERSION="*"
-           SKLEARN_VERSION="*"
-    - env: PYTHON_VERSION="3.8" NUMPY_VERSION="*" SCIPY_VERSION="*"
-           SKLEARN_VERSION="*"
+    include:
+        # Linux
+        - os: linux
+          env: CONDA_ENV="environment.yml"
+
+        # OSX conda
+        - os: osx
+          env: CONDA_ENV="environment.yml"
+
+
+# Setup anaconda
+before_install:
+    - if [ "${TRAVIS_OS_NAME}" == "linux" ]; then
+        /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 1400x900x24 -ac +extension GLX +render -noreset;
+      fi;
+    - if [ -z "$CONDA_ENV" ] && [ -z "$CONDA_DEPENDENCIES" ]; then
+        pip uninstall -yq numpy;
+        pip install -f "https://7933911d6844c6c53a7d-47bd50c35cd79bd838daf386af554a83.ssl.cf2.rackcdn.com" --pre numpy scipy;
+        pip install vtk;
+        pip install $PIP_DEPENDENCIES;
+        pip install --upgrade -r requirements.txt;
+      else
+        git clone https://github.com/astropy/ci-helpers.git;
+        source ci-helpers/travis/setup_conda.sh;
+        if [ ! -z "$CONDA_ENV" ]; then
+          conda activate base;
+          conda env update --file $CONDA_ENV;
+          pip uninstall -yq mne;
+        fi;
+      fi
+    # Always install these via pip so we get the latest possible versions (testing bugfixes)
+    - pip install --upgrade "pytest<5.4" pytest-sugar pytest-cov pytest-mock pytest-timeout codecov
+    - if [ "${DEPS}" != "minimal" ]; then
+        pip install nitime;
+      fi
+    # Don't source mne_setup_sh here because changing PATH etc. can't be done in a script
+    - if [ "${DEPS}" != "minimal" ]; then
+        export MNE_ROOT="${PWD}/minimal_cmds";
+        export PATH=${MNE_ROOT}/bin:$PATH;
+        if [ "${TRAVIS_OS_NAME}" == "linux" ]; then
+          curl https://staff.washington.edu/larsoner/minimal_cmds.tar.gz | tar xz;
+          export LD_LIBRARY_PATH=${MNE_ROOT}/lib:$LD_LIBRARY_PATH;
+          export NEUROMAG2FT_ROOT="${PWD}/minimal_cmds/bin";
+          export FREESURFER_HOME="${PWD}/minimal_cmds";
+          export MNE_SKIP_FS_FLASH_CALL=1;
+        else
+          curl https://staff.washington.edu/larsoner/minimal_cmds_osx.tar.gz | tar xz;
+          export DYLD_LIBRARY_PATH=${MNE_ROOT}/lib:$DYLD_LIBRARY_PATH;
+        fi;
+        mne_surf2bem --version;
+      fi;
 
 install:
-  # install miniconda
-  - deactivate
-  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
-  - MINICONDA_PATH=/home/travis/miniconda
-  - chmod +x miniconda.sh && ./miniconda.sh -b -p $MINICONDA_PATH
-  - export PATH=$MINICONDA_PATH/bin:$PATH
-  - conda update --yes conda
-  # create the testing environment
-  - conda create -n testenv --yes python=$PYTHON_VERSION pip
-  - source activate testenv
-  - conda install --yes numpy==$NUMPY_VERSION scipy==$SCIPY_VERSION scikit-learn==$SKLEARN_VERSION nose pytest pytest-cov matplotlib
-  - pip install codecov
-  - pip install git+https://github.com/nilearn/nilearn.git
-  - pip install .
+    # Rvm overrides cd with a function so that it can hook into it to run
+    # some scripts, see https://github.com/travis-ci/travis-ci/issues/8703
+    - if [ "${TRAVIS_OS_NAME}" == "osx" ]; then
+        unset -f cd;
+      fi;
+    # Suppress the parallel outputs for logging cleanliness
+    - python setup.py build
+    - python setup.py install
+    - mne sys_info
+    - python -c "import numpy; numpy.show_config()"
+    - SRC_DIR=$(pwd)
+    - cd ~
+    # Trigger download of testing data
+    - if [ "${DEPS}" != "minimal" ]; then
+        python -c 'import mne; mne.datasets.testing.data_path(verbose=True)';
+      fi;
+    - cd ${SRC_DIR}
+    - pip uninstall -y nilearn
+    - pip install git+https://github.com/nilearn/nilearn.git
 
 script:
   - mkdir for_test
