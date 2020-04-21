@@ -7,7 +7,7 @@ import mne_nirs
 import numpy as np
 from mne.utils import (requires_pysurfer, traits_test)		
 
-mne.viz.set_3d_backend('pyvista')		 mne.viz.set_3d_backend('pyvista')
+mne.viz.set_3d_backend('pyvista')
 
  
 @requires_pysurfer		
