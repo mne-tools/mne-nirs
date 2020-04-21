@@ -5,10 +5,13 @@
 import mne
 import mne_nirs
 import numpy as np
+from mne.utils import (requires_pysurfer, traits_test)		
 
-mne.viz.set_3d_backend('pyvista')
+mne.viz.set_3d_backend('pyvista')		 mne.viz.set_3d_backend('pyvista')
 
-
+ 
+@requires_pysurfer		
+@traits_test
 def test_plot_nirs_source_detector():
     data_path = mne.datasets.testing.data_path()
     subjects_dir = mne.datasets.sample.data_path() + '/subjects'
