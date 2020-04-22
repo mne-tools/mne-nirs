@@ -1,4 +1,4 @@
-"""NIRS specific plotting functions."""
+"""Statistical analysis."""
 
 # Authors: Robert Luke <mail@robertluke.net>
 #
