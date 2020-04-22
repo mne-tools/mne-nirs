@@ -34,8 +34,10 @@ import matplotlib.pyplot as plt
 import mne
 import mne_nirs
 
-from mne_nirs.experimental_design import \
-    create_first_level_design_matrix, run_GLM, plot_GLM_topo
+from mne_nirs.experimental_design import create_first_level_design_matrix
+from mne_nirs.statistics import run_GLM
+from mne_nirs.visualisation import plot_GLM_topo
+
 from nilearn.reporting import plot_design_matrix
 
 
