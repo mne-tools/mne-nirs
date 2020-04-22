@@ -6,8 +6,7 @@ import os
 import mne
 import mne_nirs
 import numpy as np
-from mne_nirs.experimental_design import create_first_level_design_matrix,\
-    plot_GLM_topo, run_GLM
+from mne_nirs.experimental_design import create_first_level_design_matrix
 
 
 def _load_dataset():
@@ -70,43 +69,3 @@ def test_create_design():
     # Number of columns is number of conditions plus the drift plus constant
     assert design_matrix.shape[1] ==\
         len(np.unique(raw_intensity.annotations.description)) + 2
-
-
-def test_run_GLM():
-    raw_intensity = _load_dataset()
-    raw_intensity.crop(450, 600)  # Keep the test fast
-    design_matrix = create_first_level_design_matrix(raw_intensity,
-                                                     drift_order=1,
-                                                     drift_model='polynomial')
-    raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
-    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
-    labels, glm_estimates = run_GLM(raw_haemo, design_matrix)
-
-    assert len(labels) == len(raw_haemo.ch_names)
-
-    # the estimates are nested. so cycle through to check correct number
-    # are generated
-    num = 0
-    for est in glm_estimates:
-        num += glm_estimates[est].theta.shape[1]
-    assert num == len(raw_haemo.ch_names)
-
-
-def test_run_plot_GLM_topo():
-    raw_intensity = _load_dataset()
-    raw_intensity.crop(450, 600)  # Keep the test fast
-
-    design_matrix = create_first_level_design_matrix(raw_intensity,
-                                                     drift_order=1,
-                                                     drift_model='polynomial')
-    raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
-    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
-    labels, glm_estimates = run_GLM(raw_haemo, design_matrix)
-    fig = plot_GLM_topo(raw_haemo, labels, glm_estimates, design_matrix)
-    # 5 conditions (A,B,C,Drift,Constant) * two chroma
-    assert len(fig.axes) == 10
-
-    fig = plot_GLM_topo(raw_haemo, labels, glm_estimates, design_matrix,
-                        requested_conditions=['A', 'B'])
-    # Two conditions * two chroma
-    assert len(fig.axes) == 4

@@ -19,9 +19,6 @@ Experimental Design and Analysis
    :toctree: generated/
 
    create_first_level_design_matrix
-   run_GLM
-   plot_GLM_topo
-
    create_boxcar
 
 
@@ -41,6 +38,23 @@ Signal Enhancement
    enhance_negative_correlation
 
 
+
+Statistics
+----------
+
+
+.. currentmodule:: mne_nirs.statistics
+
+.. automodule:: mne_nirs.statistics
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
+   run_GLM
+
+
 Visualisation
 ------------------
 
@@ -55,3 +69,4 @@ Visualisation
    :toctree: generated/
 
    plot_nirs_source_detector
+   plot_GLM_topo

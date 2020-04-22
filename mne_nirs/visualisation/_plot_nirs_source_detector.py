@@ -1,4 +1,7 @@
-"""Functions to visualise NIRS data."""
+# Authors: Robert Luke <mail@robertluke.net>
+#
+# License: BSD (3-clause)
+
 
 import numpy as np
 
