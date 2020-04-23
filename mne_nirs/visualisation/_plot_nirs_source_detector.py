@@ -105,8 +105,6 @@ def plot_nirs_source_detector(data, info=None, radius=0.001,
 
     .. versionadded:: 0.15
     """
-    import matplotlib.pyplot as plt
-
     # Determine range of values for creating colormap
     vmin = np.min(data)
     vmax = np.max(data)
