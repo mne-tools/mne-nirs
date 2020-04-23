@@ -6,6 +6,7 @@ import os
 import mne
 import mne_nirs
 import numpy as np
+import pytest
 
 
 def _load_dataset():
@@ -39,8 +40,14 @@ def _load_dataset():
 
 def test_cui():
     raw_intensity = _load_dataset()
-    raw_intensity = raw_intensity.pick(picks=range(2))  # Keep the test fast
+    raw_intensity = raw_intensity.pick(picks=range(8))  # Keep the test fast
+    with pytest.raises(RuntimeError, match="run on haemoglobin"):
+        _ = mne_nirs.signal_enhancement.enhance_negative_correlation(
+            raw_intensity)
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
+    with pytest.raises(RuntimeError, match="run on haemoglobin"):
+        _ = mne_nirs.signal_enhancement.enhance_negative_correlation(
+            raw_od)
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
     raw_anti = mne_nirs.signal_enhancement.enhance_negative_correlation(
         raw_haemo)
@@ -50,3 +57,11 @@ def test_cui():
     np.testing.assert_almost_equal(np.corrcoef(raw_anti._data[0],
                                    raw_anti._data[1])[0, 1],
                                    -1)
+
+    d1 = raw_haemo.copy().pick(picks=range(3))
+    with pytest.raises(RuntimeError, match="Same number of hbo and hbr"):
+        _ = mne_nirs.signal_enhancement.enhance_negative_correlation(d1)
+
+    d1 = raw_haemo.copy().pick(picks=[0, 2, 1, 5])
+    with pytest.raises(RuntimeError, match="must alternate"):
+        _ = mne_nirs.signal_enhancement.enhance_negative_correlation(d1)

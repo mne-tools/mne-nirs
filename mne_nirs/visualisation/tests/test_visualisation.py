@@ -32,6 +32,26 @@ def test_plot_nirs_source_detector():
         subjects_dir=subjects_dir,
         verbose=True)
 
+    mne_nirs.visualisation.plot_nirs_source_detector(
+        100.0 + np.random.randn(len(raw.ch_names)),
+        raw.info, show_axes=True,
+        subject='fsaverage',
+        trans='fsaverage',
+        surfaces=['brain'],
+        fnirs=False,
+        subjects_dir=subjects_dir,
+        verbose=True)
+
+    mne_nirs.visualisation.plot_nirs_source_detector(
+        100.0 + np.random.randn(len(raw.ch_names)),
+        raw.info, show_axes=True,
+        subject='fsaverage',
+        trans='fsaverage',
+        surfaces=['brain'],
+        fnirs=False, cmap='viridis',
+        subjects_dir=subjects_dir,
+        verbose=True)
+
 
 def test_run_plot_GLM_topo():
     raw_intensity = _load_dataset()
