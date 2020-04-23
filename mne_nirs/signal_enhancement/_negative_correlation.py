@@ -38,6 +38,9 @@ def enhance_negative_correlation(raw):
         raise RuntimeError('enhance_negative_correlation should '
                            'be run on haemoglobin data.')
 
+    if len(hbo_channels) != len(hbr_channels):
+        raise RuntimeError('Same number of hbo and hbr channels required.')
+
     for idx in range(len(hbo_channels)):
         if raw.info['chs'][hbo_channels[idx]]['ch_name'][:-4] != \
                 raw.info['chs'][hbr_channels[idx]]['ch_name'][:-4]:
