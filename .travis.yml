@@ -81,9 +81,6 @@ install:
     - SRC_DIR=$(pwd)
     - cd ~
     # Trigger download of testing data
-    - if [ "${DEPS}" != "minimal" ]; then
-        python -c 'import mne; mne.datasets.testing.data_path(verbose=True)';
-      fi;
     - cd ${SRC_DIR}
     - pip uninstall -y nilearn
     - pip install git+https://github.com/nilearn/nilearn.git
