@@ -73,8 +73,8 @@ raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
 # Here we create the expected model neural response function using the data
 # and plot the frequency spectrum.
 #
-# We note there is a peak at 0.03 which corresponds to approximately 30 seconds
-# which is the average inter stimulus interval for this experiment.
+# We note there is a peak at 0.03 which corresponds approximately to
+# the repetition rate of the experiment.
 
 design_matrix = create_first_level_design_matrix(raw_haemo, drift_order=0)
 
@@ -95,11 +95,16 @@ hrf.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log',
 #
 # Next we plot the PSD of the raw data.
 #
-# Here we rescale the data to fit in the final figure.
+# Note the increased activity around 1 Hz. .... Heart rate ....
+#
+# Discuss low frequency....
 #
 # TODO: I would like to find a nicer way to fit everything in one plot.
 # Could I use a left y axis for the real data?
+#
+# TODO: Find a way not to have to rescale the data to fit in plot
 
+# rescale data to fit in plot. TODO: fix this
 raw_haemo._data = raw_haemo._data * 1e-2
 raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log')
 
@@ -128,6 +133,10 @@ epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, color='g', xscale='log')
 # --------------------
 #
 # Next we plot the filter response.
+#
+# Basic description of filters and link to MNE tut...
+#
+# Discuss with specific relation to NIRS.
 
 filter_params = mne.filter.create_filter(
     raw_haemo.get_data(), raw_haemo.info['sfreq'],
@@ -145,6 +154,10 @@ mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
 #
 # Next we overlay all figures on the same figure to see how the
 # different components relate.
+#
+# We note that the heart rate...
+#
+# We see that ...
 
 
 fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
