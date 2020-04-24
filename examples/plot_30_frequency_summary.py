@@ -7,7 +7,7 @@ NIRS Frequency and Filter Commentary
 In this example we discuss frequency and filters in the context
 of NIRS analysis.
 We examine the interplay between the expected brain response based
-on experimental design and our model of how the brain reacts to stimuli,
+on experimental design and our model of how the brain reacts to stimuli:,
 the actual data measured during an experiment, and the filtering
 that is applied to the data.
 
@@ -63,11 +63,7 @@ raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
 # First we extract the expected HRF function from
 # the data. See :ref:`_tut-fnirs-hrf` for more details on this analysis.
 
-design_matrix = create_first_level_design_matrix(raw_haemo,
-                                                 hrf_model='spm', stim_dur=5.0,
-                                                 drift_order=0,
-                                                 drift_model='polynomial')
-
+design_matrix = create_first_level_design_matrix(raw_haemo, drift_order=0)
 
 # This is a bit of a hack.
 # Overwrite the first NIRS channel with the expected response.
