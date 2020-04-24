@@ -24,6 +24,7 @@ that is applied to the data.
 import os
 import mne
 import numpy as np
+import matplotlib.pyplot as plt
 from mne_nirs.experimental_design import create_first_level_design_matrix
 
 
@@ -138,4 +139,4 @@ fig.legend(leg_lines, ['Theoretical HRF', 'Measured Data',
 fig.axes[0].set_ylabel('Filter Magnitude (dB) [invalid for other lines]')
 fig.axes[0].set_title('')
 
-fig.show()
+plt.show()
