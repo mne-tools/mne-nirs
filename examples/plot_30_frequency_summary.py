@@ -57,11 +57,11 @@ raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
 
 
 ###############################################################################
-# Extract expected HRF from data
+# Expected haemodynamic response
 # ------------------------------
 #
 # First we extract the expected HRF function from
-# the data. See :ref:`_tut-fnirs-hrf` for more details on this analysis.
+# the data. See :ref:`tut-fnirs-hrf` for more details on this analysis.
 
 design_matrix = create_first_level_design_matrix(raw_haemo, drift_order=0)
 
@@ -72,7 +72,7 @@ hrf = raw_haemo.copy().pick(picks=[0])
 hrf._data[0] = 1e-6 * (design_matrix['Tapping/Left'] +
                        design_matrix['Tapping/Right']).T
 
-fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
+hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
                                      color='r', show=False)
 
 
@@ -81,17 +81,10 @@ fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
 # ----------------------
 #
 # Next we plot the PSD of the raw data.
-# Here we rescale the data to fit in the figure.
-#
-# TODO: Find a nice way to show this data with correct scale, perhaps a left
-# y axis scale.
+# Here we rescale the data to fit in the final figure.
 
 raw_haemo._data = raw_haemo._data * 1e-2
-
-fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
-                                     color='r', show=False)
-raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2,
-                                           ax=fig.axes, show=False)
+raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2)
 
 
 ###############################################################################
@@ -99,7 +92,6 @@ raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2,
 # -----------------
 #
 # Next we plot the PSD of the epoched data.
-
 
 events, _ = mne.events_from_annotations(raw_haemo)
 event_dict = {'Tapping/Left': 1, 'Tapping/Right': 2}
@@ -111,13 +103,7 @@ epochs = mne.Epochs(raw_haemo, events, event_id=event_dict,
                     proj=True, baseline=(None, 0), preload=True,
                     detrend=None, verbose=True)
 
-
-fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
-                                     color='r', show=False)
-raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2,
-                                           ax=fig.axes, show=False)
-epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, ax=fig.axes,
-                                        show=False, color='g')
+epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, color='g')
 
 
 ###############################################################################
@@ -131,23 +117,17 @@ filter_params = mne.filter.create_filter(
     l_freq=0.01, h_freq=0.4,
     h_trans_bandwidth=0.2, l_trans_bandwidth=0.005)
 
-
-fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
-                                     color='r', show=False)
-raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2,
-                                           ax=fig.axes, show=False)
-epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, ax=fig.axes,
-                                        show=False, color='g')
 mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
                           flim=(0.005, 2), fscale='log', gain=False,
-                          plot='magnitude', axes=fig.axes, show=False)
+                          plot='magnitude')
 
 
 ###############################################################################
 # Discussion
 # ----------
 #
-# Next we plot the filter response.
+# Next we overlay all figures on the same figure to see how the
+# different components relate.
 
 
 fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
