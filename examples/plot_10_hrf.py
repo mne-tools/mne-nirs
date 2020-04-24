@@ -1,8 +1,8 @@
 """
-.. _tut-fnirs-processing:
+.. _tut-fnirs-hrf:
 
-Haeomodynamic response analysis
-===============================
+Haeomodynamic response function analysis
+========================================
 
 This document is a work in progress.
 It is a first attempt to add GLM analysis to MNE processing of NIRS data.
@@ -12,7 +12,6 @@ https://github.com/nilearn/nilearn/tree/master/nilearn/stats .
 
 Currently the analysis is only being run on the first third of the measurement
 to meet github actions memory constraints.
-I need to either swtich to another CI with more memory or solve this issue.
 This means the results are noisier than the MNE fnirs tutorial.
 
 This document quite poorly written, read with caution.

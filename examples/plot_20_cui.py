@@ -1,14 +1,22 @@
 """
 .. _tut-fnirs-cui:
 
-Examine the effect of signal enhancement approaches
-===================================================
+Signal enhancement techniques
+=============================
+
+In this document we investigate the effect of different signal enhancement
+techniques for NIRS data.
 
 .. contents:: Page contents
    :local:
    :depth: 2
 
 """
+
+
+# Authors: Robert Luke <mail@robertluke.net>
+#
+# License: BSD (3-clause)
 
 import os
 
