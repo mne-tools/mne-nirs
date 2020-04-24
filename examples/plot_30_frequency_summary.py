@@ -24,7 +24,6 @@ that is applied to the data.
 import os
 import mne
 import numpy as np
-import matplotlib.pyplot as plt
 from mne_nirs.experimental_design import create_first_level_design_matrix
 
 
@@ -88,7 +87,10 @@ fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
 # y axis scale.
 
 raw_haemo._data = raw_haemo._data * 1e-2
-fig = raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2,
+
+fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
+                                     color='r', show=False)
+raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2,
                                            ax=fig.axes, show=False)
 
 
@@ -108,7 +110,13 @@ epochs = mne.Epochs(raw_haemo, events, event_id=event_dict,
                     reject=reject_criteria, reject_by_annotation=True,
                     proj=True, baseline=(None, 0), preload=True,
                     detrend=None, verbose=True)
-fig = epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, ax=fig.axes,
+
+
+fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
+                                     color='r', show=False)
+raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2,
+                                           ax=fig.axes, show=False)
+epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, ax=fig.axes,
                                         show=False, color='g')
 
 
@@ -122,7 +130,15 @@ filter_params = mne.filter.create_filter(
     raw_haemo.get_data(), raw_haemo.info['sfreq'],
     l_freq=0.01, h_freq=0.4,
     h_trans_bandwidth=0.2, l_trans_bandwidth=0.005)
-fig = mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
+
+
+fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
+                                     color='r', show=False)
+raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2,
+                                           ax=fig.axes, show=False)
+epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, ax=fig.axes,
+                                        show=False, color='g')
+mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
                           flim=(0.005, 2), fscale='log', gain=False,
                           plot='magnitude', axes=fig.axes, show=False)
 
@@ -133,10 +149,19 @@ fig = mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
 #
 # Next we plot the filter response.
 
+
+fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
+                                     color='r', show=False)
+raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2,
+                                           ax=fig.axes, show=False)
+epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, ax=fig.axes,
+                                        show=False, color='g')
+mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
+                          flim=(0.005, 2), fscale='log', gain=False,
+                          plot='magnitude', axes=fig.axes, show=False)
+
 leg_lines = [line for line in fig.axes[0].lines if line.get_linestyle() == '-']
 fig.legend(leg_lines, ['Theoretical HRF', 'Measured Data',
                        'Epoched Data', 'Filter Response'])
 fig.axes[0].set_ylabel('Filter Magnitude (dB) [invalid for other lines]')
 fig.axes[0].set_title('')
-
-plt.show()
