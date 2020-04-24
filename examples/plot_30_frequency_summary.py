@@ -167,7 +167,7 @@ raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2,
 epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, ax=fig.axes,
                                         show=False, color='g')
 mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
-                          flim=(0.0005, 2), fscale='log', gain=False,
+                          flim=(0.003, 2), fscale='log', gain=False,
                           plot='magnitude', axes=fig.axes, show=False)
 
 leg_lines = [line for line in fig.axes[0].lines if line.get_linestyle() == '-']
