@@ -11,6 +11,9 @@ on experimental design and our model of how the brain reacts to stimuli:,
 the actual data measured during an experiment, and the filtering
 that is applied to the data.
 
+This is a work in progress. I am just getting the figures correct
+before I fill in the text.
+
 .. contents:: Page contents
    :local:
    :depth: 2
@@ -57,11 +60,21 @@ raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
 
 
 ###############################################################################
-# Expected haemodynamic response
-# ------------------------------
+# Model neural response
+# ---------------------
 #
-# First we extract the expected HRF function from
-# the data. See :ref:`tut-fnirs-hrf` for more details on this analysis.
+# We know the when each stimulus was presented to the lister (see Annotations)
+# and we have a model of how we expect the brain to react to each
+# stimulus presentation (add wikipedia HRF link).
+# From this information we can build a model of how we expect the brain
+# to be active during this experiment.
+# See :ref:`tut-fnirs-hrf` for more details on this analysis.
+#
+# Here we create the expected model neural response function using the data
+# and plot the frequency spectrum.
+#
+# We note there is a peak at 0.03 which corresponds to approximately 30 seconds
+# which is the average inter stimulus interval for this experiment.
 
 design_matrix = create_first_level_design_matrix(raw_haemo, drift_order=0)
 
@@ -81,7 +94,11 @@ hrf.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log',
 # ----------------------
 #
 # Next we plot the PSD of the raw data.
+#
 # Here we rescale the data to fit in the final figure.
+#
+# TODO: I would like to find a nicer way to fit everything in one plot.
+# Could I use a left y axis for the real data?
 
 raw_haemo._data = raw_haemo._data * 1e-2
 raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log')
@@ -141,7 +158,7 @@ mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
                           plot='magnitude', axes=fig.axes, show=False)
 
 leg_lines = [line for line in fig.axes[0].lines if line.get_linestyle() == '-']
-fig.legend(leg_lines, ['Theoretical HRF', 'Measured Data',
+fig.legend(leg_lines, ['Model Response', 'Measured Data',
                        'Epoched Data', 'Filter Response'])
 fig.axes[0].set_ylabel('Filter Magnitude (dB) [invalid for other lines]')
 fig.axes[0].set_title('')
