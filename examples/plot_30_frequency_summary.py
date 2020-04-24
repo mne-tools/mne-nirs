@@ -72,7 +72,7 @@ hrf = raw_haemo.copy().pick(picks=[0])
 hrf._data[0] = 1e-6 * (design_matrix['Tapping/Left'] +
                        design_matrix['Tapping/Right']).T
 
-hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
+hrf.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log',
                                      color='r', show=False)
 
 
@@ -84,7 +84,7 @@ hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
 # Here we rescale the data to fit in the final figure.
 
 raw_haemo._data = raw_haemo._data * 1e-2
-raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2)
+raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log')
 
 
 ###############################################################################
@@ -103,7 +103,7 @@ epochs = mne.Epochs(raw_haemo, events, event_id=event_dict,
                     proj=True, baseline=(None, 0), preload=True,
                     detrend=None, verbose=True)
 
-epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, color='g')
+epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, color='g', xscale='log')
 
 
 ###############################################################################
