@@ -1,8 +1,8 @@
 """
 .. _tut-fnirs-freq:
 
-NIRS Frequency and Filter Commentary
-====================================
+Frequency and Filter Commentary
+===============================
 
 In this example we discuss frequency and filters in the context
 of NIRS analysis.
@@ -38,7 +38,7 @@ from mne_nirs.experimental_design import create_first_level_design_matrix
 # so will not be described in detail here.
 # We read in the data, annotate the triggers, remove the control condition,
 # convert to haemoglobin concentration. See
-# https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html#
+# https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
@@ -167,7 +167,7 @@ raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2,
 epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, ax=fig.axes,
                                         show=False, color='g')
 mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
-                          flim=(0.005, 2), fscale='log', gain=False,
+                          flim=(0.0005, 2), fscale='log', gain=False,
                           plot='magnitude', axes=fig.axes, show=False)
 
 leg_lines = [line for line in fig.axes[0].lines if line.get_linestyle() == '-']
