@@ -97,6 +97,10 @@ hrf.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log',
 #
 # Note the increased activity around 1 Hz. .... Heart rate ....
 #
+# Discuss Mayer waves...
+#
+# Discuss breathing rate...
+#
 # Discuss low frequency....
 #
 # TODO: I would like to find a nicer way to fit everything in one plot.
@@ -155,17 +159,21 @@ mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
 # Finally we overlay all lines on the same figure to see how the
 # different components relate.
 #
-# We note that the filter cutoff above 0.4 Hz attenuates the heart rate signal
-# which is situated around 1 Hz.
+# First, note that the filter cutoff above 0.4 Hz attenuates
+# the unwanted heart rate component which is situated around 1 Hz.
 #
-# The breathing rate / Mayer waves around 0.1 Hz are in the same range as
-# the expected model response, so are not attenuated by the filter. However,
-# as the experiment was designed with a randomised inter stimulus interval
-# the act of epoching and averaging the data removes these unwanted components.
+# Next we observe in the measured data that the breathing rate / Mayer waves
+# situated around 0.1 Hz are in the same range as
+# the expected peak in the model response.
+# For this reason the filter does not attenuate these frequencies.
+# However, as the experiment was designed with a randomised inter
+# stimulus interval the act of epoching and averaging the data
+# removes these unwanted components and they are not visible in the
+# epoched data.
 #
 # The filter attenuates low frequency components in the signal. We observe that
-# the expected model response has reduced below 0.015 Hz, so filtering below
-# 0.01 should not overly affect the signal of interest.
+# the expected model response has reduced content below 0.015 Hz,
+# so filtering below 0.01 should not overly affect the signal of interest.
 
 fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
                                      color='r', show=False)
