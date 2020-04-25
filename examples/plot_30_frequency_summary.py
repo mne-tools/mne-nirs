@@ -152,13 +152,20 @@ mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
 # Discussion
 # ----------
 #
-# Next we overlay all figures on the same figure to see how the
+# Finally we overlay all lines on the same figure to see how the
 # different components relate.
 #
-# We note that the heart rate...
+# We note that the filter cutoff above 0.4 Hz attenuates the heart rate signal
+# which is situated around 1 Hz.
 #
-# We see that ...
-
+# The breathing rate / Mayer waves around 0.1 Hz are in the same range as
+# the expected model response, so are not attenuated by the filter. However,
+# as the experiment was designed with a randomised inter stimulus interval
+# the act of epoching and averaging the data removes these unwanted components.
+#
+# The filter attenuates low frequency components in the signal. We observe that
+# the expected model response has reduced below 0.015 Hz, so filtering below
+# 0.01 should not overly affect the signal of interest.
 
 fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
                                      color='r', show=False)
