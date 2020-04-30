@@ -60,7 +60,9 @@ jobs:
               python -m pip install --user --upgrade --progress-bar off -r requirements.txt
               python -m pip install --user --upgrade --progress-bar off --pre sphinx
               python -m pip install --user --upgrade --progress-bar off ipython sphinx_fontawesome sphinx_bootstrap_theme memory_profiler "https://github.com/sphinx-gallery/sphinx-gallery/archive/master.zip"
-              python -m pip install --user --upgrade seaborn 
+              python -m pip install --user --upgrade --progress-bar off seaborn 
+              pip uninstall -y nilearn
+              python -m pip install --user --upgrade --progress-bar off https://github.com/nilearn/nilearn/archive/master.zip
               python -m pip install --user -e .
 
         - save_cache:
