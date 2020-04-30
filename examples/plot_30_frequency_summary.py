@@ -144,7 +144,7 @@ epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, color='g', xscale='log')
 
 filter_params = mne.filter.create_filter(
     raw_haemo.get_data(), raw_haemo.info['sfreq'],
-    l_freq=0.01, h_freq=0.4,
+    l_freq=0.03, h_freq=0.4,
     h_trans_bandwidth=0.2, l_trans_bandwidth=0.005)
 
 mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
