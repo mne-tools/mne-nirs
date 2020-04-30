@@ -65,7 +65,8 @@ raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
 #
 # We know the when each stimulus was presented to the lister (see Annotations)
 # and we have a model of how we expect the brain to react to each
-# stimulus presentation (add wikipedia HRF link).
+# stimulus presentation
+# (https://en.wikipedia.org/wiki/Haemodynamic_response).
 # From this information we can build a model of how we expect the brain
 # to be active during this experiment.
 # See :ref:`tut-fnirs-hrf` for more details on this analysis.
@@ -76,7 +77,7 @@ raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
 # We note there is a peak at 0.03 which corresponds approximately to
 # the repetition rate of the experiment.
 
-design_matrix = create_first_level_design_matrix(raw_haemo, drift_order=0)
+design_matrix = create_first_level_design_matrix(raw_haemo, drift_order=0, stim_dur=5.)
 
 # This is a bit of a hack.
 # Overwrite the first NIRS channel with the expected response.
@@ -84,9 +85,8 @@ design_matrix = create_first_level_design_matrix(raw_haemo, drift_order=0)
 hrf = raw_haemo.copy().pick(picks=[0])
 hrf._data[0] = 1e-6 * (design_matrix['Tapping/Left'] +
                        design_matrix['Tapping/Right']).T
-
 hrf.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log',
-                                     color='r', show=False)
+                               color='r', show=False)
 
 
 ###############################################################################
@@ -95,14 +95,12 @@ hrf.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log',
 #
 # Next we plot the PSD of the raw data.
 #
-# Note the increased activity around 1 Hz. .... Heart rate ....
-#
-# Discuss Mayer waves...
-#
-# Discuss breathing rate...
-#
-# Discuss low frequency....
-#
+# Note the increased activity around 1 Hz, this is the heart rate.
+# We also see an increase in activity around 0.1 Hz, this is likely
+# Mayer waves (https://en.wikipedia.org/wiki/Mayer_waves).
+# There is also a small bump around 0.3 Hz that is likely the breathing rate.
+
+
 # TODO: I would like to find a nicer way to fit everything in one plot.
 # Could I use a left y axis for the real data?
 #
@@ -118,6 +116,10 @@ raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log')
 # -----------------
 #
 # Next we plot the PSD of the epoched data.
+#
+# The act of averaging the epochs removes some of the systemic components that
+# are not time locked to the stimulus. However, the large heart rate component
+# is still visible.
 
 events, _ = mne.events_from_annotations(raw_haemo)
 event_dict = {'Tapping/Left': 1, 'Tapping/Right': 2}
@@ -137,19 +139,19 @@ epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, color='g', xscale='log')
 # --------------------
 #
 # Next we plot the filter response.
+# For an introduction to filtering see
+# https://mne.tools/stable/auto_tutorials/discussions/plot_background_filtering.html
 #
-# Basic description of filters and link to MNE tut...
-#
-# Discuss with specific relation to NIRS.
+# This filter will be designed to remove the heart rate component that remained
+# after epoching.
 
 filter_params = mne.filter.create_filter(
     raw_haemo.get_data(), raw_haemo.info['sfreq'],
-    l_freq=0.03, h_freq=0.4,
-    h_trans_bandwidth=0.2, l_trans_bandwidth=0.005)
+    l_freq=None, h_freq=0.4, h_trans_bandwidth=0.2)
 
 mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
-                          flim=(0.005, 2), fscale='log', gain=False,
-                          plot='magnitude')
+                    flim=(0.005, 2), fscale='log', gain=False,
+                    plot='magnitude')
 
 
 ###############################################################################
@@ -170,20 +172,16 @@ mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
 # stimulus interval the act of epoching and averaging the data
 # removes these unwanted components and they are not visible in the
 # epoched data.
-#
-# The filter attenuates low frequency components in the signal. We observe that
-# the expected model response has reduced content below 0.015 Hz,
-# so filtering below 0.01 should not overly affect the signal of interest.
 
 fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
                                      color='r', show=False)
 raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2,
-                                           ax=fig.axes, show=False)
+                                     ax=fig.axes, show=False)
 epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, ax=fig.axes,
-                                        show=False, color='g')
+                                  show=False, color='g')
 mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
-                          flim=(0.003, 2), fscale='log', gain=False,
-                          plot='magnitude', axes=fig.axes, show=False)
+                    flim=(0.005, 2), fscale='log', gain=False,
+                    plot='magnitude', axes=fig.axes, show=False)
 
 leg_lines = [line for line in fig.axes[0].lines if line.get_linestyle() == '-']
 fig.legend(leg_lines, ['Model Response', 'Measured Data',
