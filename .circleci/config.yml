@@ -80,6 +80,18 @@ jobs:
                python -c "import mne; mne.set_config('MNE_LOGGING_LEVEL', 'info')"
                python -c "import mne; level = mne.get_config('MNE_LOGGING_LEVEL'); assert level.lower() == 'info', repr(level)"
 
+        # Build docs
+        - run:
+            name: make html
+            command: |
+              cd doc;
+              make html;
+
+
+        # Save the outputs
+        - store_artifacts:
+            path: doc/_build/html/
+            destination: dev
 
 workflows:
   version: 2
