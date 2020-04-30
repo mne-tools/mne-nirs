@@ -7,12 +7,14 @@ Frequency and Filter Commentary
 In this example we discuss frequency and filters in the context
 of NIRS analysis.
 We examine the interplay between the expected brain response based
-on experimental design and our model of how the brain reacts to stimuli:,
+on experimental design and our model of how the brain reacts to stimuli,
 the actual data measured during an experiment, and the filtering
 that is applied to the data.
 
-This is a work in progress. I am just getting the figures correct
-before I fill in the text.
+.. warning::
+
+    This is a work in progress. Suggestions of improvements are
+    appreciated. I am finalising the code, then will fix the text.
 
 .. contents:: Page contents
    :local:
@@ -34,11 +36,16 @@ from mne_nirs.experimental_design import create_first_level_design_matrix
 # Import and preprocess data
 # --------------------------
 #
-# This code is similar to the first sections in the MNE tutorial,
-# so will not be described in detail here.
 # We read in the data, annotate the triggers, remove the control condition,
-# convert to haemoglobin concentration. See
-# https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html
+# convert to haemoglobin concentration. 
+# 
+# .. sidebar:: Alternative
+#
+#     This code is similar to the first sections in the MNE tutorial,
+#     so will not be described in detail here.
+#     Please see
+#     https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html
+#     for a detailed introduction to processing NIRS with MNE.
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
