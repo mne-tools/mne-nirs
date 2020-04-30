@@ -5,7 +5,7 @@ Signal enhancement techniques
 =============================
 
 In this document we investigate the effect of different signal enhancement
-techniques for NIRS data.
+techniques on NIRS data.
 
 .. contents:: Page contents
    :local:
@@ -31,6 +31,9 @@ import mne_nirs
 # --------------------------
 #
 # This code is exactly the same as the first sections in the MNE tutorial.
+# See
+# https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html
+# for more details.
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
@@ -53,7 +56,7 @@ event_dict = {'Control': 1, 'Tapping/Left': 2, 'Tapping/Right': 3}
 # Extract epochs with no additional processing
 # --------------------------------------------
 #
-# First we extract the epochs with no additional processing
+# First we extract the epochs with no additional processing,
 # this result should be the same as the MNE tutorial.
 
 reject_criteria = dict(hbo=80e-6)
