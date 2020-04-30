@@ -59,8 +59,10 @@ jobs:
               python -m pip install --user --upgrade --progress-bar off https://github.com/larsoner/mayavi/zipball/vtk9
               python -m pip install --user --upgrade --progress-bar off -r requirements.txt
               python -m pip install --user --upgrade --progress-bar off --pre sphinx
-              python -m pip install --user --upgrade --progress-bar off ipython sphinx_fontawesome sphinx_bootstrap_theme memory_profiler "https://github.com/sphinx-gallery/sphinx-gallery/archive/master.zip"
+              python -m pip install --user --upgrade --progress-bar off ipython sphinx_fontawesome sphinx_bootstrap_theme PySide memory_profiler "https://github.com/sphinx-gallery/sphinx-gallery/archive/master.zip"
               python -m pip install --user --upgrade seaborn
+              python -m pip install --user --upgrade pyqt5<5.14 pyqt5-sip sip
+              python -m pip install --user --upgrade PySide
               python -m pip install --user -e .
 
         - save_cache:
