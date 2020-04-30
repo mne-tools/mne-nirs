@@ -1,7 +1,4 @@
-name: "Circle CI Docs Artifact"
-on: 
-- pull_request
-
+on: [status]
 jobs:
   circleci_artifacts_redirector_job:
     runs-on: ubuntu-latest
