@@ -14,7 +14,10 @@ Currently the analysis is only being run on the first third of the measurement
 to meet github actions memory constraints.
 This means the results are noisier than the MNE fnirs tutorial.
 
-This document quite poorly written, read with caution.
+
+.. warning::
+      This is a work in progress. Suggestions of improvements are
+      appreciated. I am finalising the code, then will fix the text.
 
 
 .. contents:: Page contents
