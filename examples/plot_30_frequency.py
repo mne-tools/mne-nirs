@@ -11,10 +11,8 @@ on experimental design and our model of how the brain reacts to stimuli,
 the actual data measured during an experiment, and the filtering
 that is applied to the data.
 
-.. warning::
-
-    This is a work in progress. Suggestions of improvements are
-    appreciated. I am finalising the code, then will fix the text.
+This is a work in progress. Suggestions of improvements are
+appreciated. I am finalising the code, then will fix the text.
 
 .. contents:: Page contents
    :local:
