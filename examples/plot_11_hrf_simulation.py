@@ -88,7 +88,7 @@ print(error)
 
 
 tmp_raw = raw.copy()
-tmp_raw._data += np.random.randn(tmp_raw._data.shape[1]) * 1.e-6 * std
+tmp_raw._data += np.random.randn(tmp_raw._data.shape[1]) * 1.e-6
 tmp_raw.plot(duration=600)
 
 ###############################################################################
