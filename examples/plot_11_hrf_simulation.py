@@ -86,18 +86,30 @@ print(error)
 #
 # Some text.
 
+
+tmp_raw = raw.copy()
+tmp_raw._data += np.random.randn(tmp_raw._data.shape[1]) * 1.e-6 * std
+tmp_raw.plot(duration=600)
+
+###############################################################################
+# Evaluate how estimate error relates to added noise 
+# --------------------------------------------------
+#
+# Some text.
+
+
 noise_std = []
 error = []
 
 for std in [0.1, 0.5, 1., 2., 5., 10.]:
+    for repeat in range(10):      
 
-    tmp_raw = raw.copy()
+        tmp_raw = raw.copy()
+        tmp_raw._data += np.random.randn(tmp_raw._data.shape[1]) * 1.e-6 * std
 
-    tmp_raw._data += np.random.randn(tmp_raw._data.shape[1]) * 1.e-6 * std
+        labels, glm_estimates = run_GLM(tmp_raw, design_matrix)
 
-    labels, glm_estimates = run_GLM(tmp_raw, design_matrix)
+        noise_std.append(np.std(tmp_raw._data))
+        error.append(glm_estimates[labels[0]].theta[0] - amplitude * 1.e-6)
 
-    noise_std.append(np.std(tmp_raw._data))
-    error.append(glm_estimates[labels[0]].theta[0] - amplitude * 1.e-6)
-
-plt.plot(noise_std, error)
+plt.scatter(noise_std, np.abs(error))
