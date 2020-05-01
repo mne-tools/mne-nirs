@@ -171,7 +171,7 @@ mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
 # First, note that the filter cutoff above 0.4 Hz attenuates
 # the unwanted heart rate component which is situated around 1 Hz.
 #
-# Next we observe in the measured data that the breathing rate / Mayer waves
+# Next we observe in the measured data that the Mayer waves
 # situated around 0.1 Hz are in the same range as
 # the expected peak in the model response.
 # For this reason the filter does not attenuate these frequencies.
