@@ -97,7 +97,7 @@ for std in [0.1, 0.5, 1., 2., 5., 10.]:
 
     labels, glm_estimates = run_GLM(tmp_raw, design_matrix)
 
-    noise_std.append(np.std(raw._data))
+    noise_std.append(np.std(tmp_raw._data))
     error.append(glm_estimates[labels[0]].theta[0] - amplitude * 1.e-6)
 
 plt.plot(noise_std, error)
