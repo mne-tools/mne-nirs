@@ -21,16 +21,11 @@ Simulate a signal and then run analysis on it.
 #
 # License: BSD (3-clause)
 
-import mne
 import mne_nirs
-import matplotlib
-matplotlib.use('Qt5Agg')
 import matplotlib.pylab as plt
 import numpy as np
-import os
 from mne_nirs.experimental_design import create_first_level_design_matrix
 from mne_nirs.statistics import run_GLM
-from mne_nirs.visualisation import plot_GLM_topo
 from nilearn.reporting import plot_design_matrix
 
 
@@ -82,3 +77,27 @@ print(glm_estimates[labels[0]].theta)
 error = glm_estimates[labels[0]].theta[0] - amplitude * 1.e-6
 
 print(error)
+
+
+
+###############################################################################
+# Simulate analysis with noisy data
+# ---------------------------------
+#
+# Some text.
+
+noise_std = []
+error = []
+
+for std in [0.1, 0.5, 1., 2., 5., 10.]:
+
+    tmp_raw = raw.copy()
+
+    tmp_raw._data += np.random.randn(tmp_raw._data.shape[1]) * 1.e-6 * std
+
+    labels, glm_estimates = run_GLM(tmp_raw, design_matrix)
+
+    noise_std.append(np.std(raw._data))
+    error.append(glm_estimates[labels[0]].theta[0] - amplitude * 1.e-6)
+
+plt.plot(noise_std, error)
