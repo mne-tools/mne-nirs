@@ -38,14 +38,12 @@ from mne_nirs.experimental_design import create_first_level_design_matrix
 #
 # We read in the data, annotate the triggers, remove the control condition,
 # convert to haemoglobin concentration. 
-# 
-# .. sidebar:: Alternative
 #
-#     This code is similar to the first sections in the MNE tutorial,
-#     so will not be described in detail here.
-#     Please see
-#     https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html
-#     for a detailed introduction to processing NIRS with MNE.
+# This code is similar to the first sections in the MNE tutorial,
+# so will not be described in detail here.
+# Please see
+# https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html
+# for a detailed introduction to processing NIRS with MNE.
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
