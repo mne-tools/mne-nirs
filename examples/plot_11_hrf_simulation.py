@@ -76,10 +76,6 @@ labels, glm_estimates = run_GLM(raw, design_matrix)
 print(glm_estimates[labels[0]].theta)
 
 
-
-
-
-
 ###############################################################################
 # Simulate noisy NIRS data
 # ------------------------
