@@ -43,7 +43,7 @@ np.random.seed(0)
 sfreq = 3.
 amp = 4.
 
-raw = mne_nirs.simulation.simulate_block_design(
+raw = mne_nirs.simulation.simulate_nirs_raw(
     sfreq=sfreq, sig_dur=60 * 5, amplitude=amp, isi_min=15., isi_max=45.)
 raw.plot(duration=600, show_scrollbars=False)
 
@@ -106,7 +106,7 @@ error = []
 
 for std in np.arange(1, 10):
     for repeat in range(5):
-        raw = mne_nirs.simulation.simulate_block_design(
+        raw = mne_nirs.simulation.simulate_nirs_raw(
             sfreq=sfreq, sig_dur=60 * 10, amplitude=amp)
         raw._data += np.random.randn(raw._data.shape[1]) * 1.e-6 * std
 
@@ -144,7 +144,7 @@ std = 3
 for repeat in range(20):
     for slen in [3., 11., 20.]:
 
-        raw = mne_nirs.simulation.simulate_block_design(
+        raw = mne_nirs.simulation.simulate_nirs_raw(
             stim_dur=5., sfreq=sfreq, sig_dur=60 * slen, amplitude=amp)
         raw._data += np.random.randn(raw._data.shape[1]) * 1.e-6 * std
 

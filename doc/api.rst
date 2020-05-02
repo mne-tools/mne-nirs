@@ -80,4 +80,4 @@ Simulation
 .. autosummary::
    :toctree: generated/
 
-   simulate_block_design
+   simulate_nirs_raw

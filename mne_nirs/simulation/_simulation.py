@@ -7,9 +7,9 @@ from mne import Annotations, create_info
 from mne.io import RawArray
 
 
-def simulate_block_design(sfreq=3., amplitude=1.,
-                          sig_dur=300., stim_dur=5.,
-                          isi_min=15., isi_max=45.):
+def simulate_nirs_raw(sfreq=3., amplitude=1.,
+                      sig_dur=300., stim_dur=5.,
+                      isi_min=15., isi_max=45.):
     """
     Create simulated data.
 

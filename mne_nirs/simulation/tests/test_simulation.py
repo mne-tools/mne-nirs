@@ -5,6 +5,6 @@
 import mne_nirs
 
 
-def test_simulate_block_design():
-    raw = mne_nirs.simulation.simulate_block_design()
+def test_simulate_NIRS():
+    raw = mne_nirs.simulation.simulate_nirs_raw()
     assert 'hbo' in raw
