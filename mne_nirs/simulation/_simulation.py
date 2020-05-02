@@ -8,23 +8,32 @@ from mne.io import RawArray
 
 
 def simulate_nirs_data(fs=3., signal_length_s=300.,
-                       isi_min=15., isi_max=45., stim_dur=5.,
-                       amplitude=1.):
+                       isi_min=15., isi_max=45.,
+                       stim_dur=5., amplitude=1.):
     """
     Create simulated data.
 
+      .. warning:: Work in progress: I am trying to think on the best API.
+
     Parameters
     ----------
-    raw : instance of Raw
-        Haemoglobin data.
+    fs : Number
+        The sample rate. TODO: What terminology does MNE for this?
+    signal_length_s : Number
+        The length of the signal to generate in seconds.
+    isi_min : Number
+        The minimum duration of the inter stimulus interval in seconds.
+    isi_max : Number
+        The maximum duration of the inter stimulus interval in seconds.
+    stim_dur : Number
+        The length of the stimulus to generate in seconds.
+    amplitude : Number
+        The amplitude of the signal to simulate in uM.
 
     Returns
     -------
     raw : instance of Raw
-        The modified raw instance.
-
-    events : DataFrame
-        Dataframe containing event information.
+        The generated raw instance.
     """
     from nilearn.stats.first_level_model import make_first_level_design_matrix
     from pandas import DataFrame
