@@ -4,4 +4,4 @@
 #
 # License: BSD (3-clause)
 
-from ._simulation import simulate_nirs_data
+from ._simulation import simulate_block_design
