@@ -10,7 +10,7 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=100,
 
     This is a wrapper function for nilearn.stats.first_level_model.run_glm.
 
-      .. warning:: Work in progress: I am trying to think on the best API.
+      .. warning:: The inputs to this function will change to match nilearn.
 
     Parameters
     ----------

@@ -19,7 +19,7 @@ def create_first_level_design_matrix(raw, stim_dur=1.,
     This is a wrapper function for
     nilearn.stats.first_level_model.make_first_level_design_matrix.
 
-      .. warning:: Work in progress: I am trying to think on the best API.
+      .. warning:: The inputs to this function will change to match nilearn.
 
     Parameters
     ----------
