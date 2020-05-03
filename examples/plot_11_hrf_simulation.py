@@ -73,7 +73,8 @@ fig = plot_design_matrix(design_matrix)
 
 labels, glm_estimates = run_GLM(raw, design_matrix)
 
-print(glm_estimates[labels[0]].theta)
+print("Estimate:", glm_estimates[labels[0]].theta[0],
+      "  MSE:", glm_estimates[labels[0]].MSE)
 
 
 ###############################################################################
@@ -87,10 +88,14 @@ print(glm_estimates[labels[0]].theta)
 # the estimate error.
 
 raw._data += np.random.randn(raw._data.shape[1]) * 1.e-6 * 3.
-raw.plot(duration=600, show_scrollbars=False)
-labels, glm_estimates = run_GLM(raw, design_matrix)
-error = glm_estimates[labels[0]].theta[0] - amp * 1.e-6
-print(error)
+
+plt.plot(raw.times, glm_estimates[labels[0]].predicted)
+plt.plot(raw.times, raw.get_data().T, alpha=0.3)
+plt.xlabel("Time (s)")
+plt.legend(["GLM Estimate", "Simulated Data"])
+
+print("Estimate:", glm_estimates[labels[0]].theta[0],
+      "  MSE:", glm_estimates[labels[0]].MSE)
 
 
 ###############################################################################
