@@ -6,20 +6,18 @@ import numpy as np
 import mne
 
 
-def create_first_level_design_matrix(raw, stim_dur=1.,
-                                     hrf_model='glover',
-                                     drift_model='polynomial',
-                                     high_pass=0.01, drift_order=1,
-                                     fir_delays=[0], add_regs=None,
-                                     add_reg_names=None, min_onset=-24,
-                                     oversampling=50):
+def make_first_level_design_matrix(raw, stim_dur=1.,
+                                   hrf_model='glover',
+                                   drift_model='cosine',
+                                   high_pass=0.01, drift_order=1,
+                                   fir_delays=[0], add_regs=None,
+                                   add_reg_names=None, min_onset=-24,
+                                   oversampling=50):
     """
     Generate a design matrix for the experiment.
 
     This is a wrapper function for
     nilearn.stats.first_level_model.make_first_level_design_matrix.
-
-      .. warning:: The inputs to this function will change to match nilearn.
 
     Parameters
     ----------
@@ -27,14 +25,36 @@ def create_first_level_design_matrix(raw, stim_dur=1.,
         Haemoglobin data.
     stim_dur : Number
         The length of your stimulus.
-        TODO: Make this be independent per event id
-    hrf_model : As specified in Nilearn
-    drift_model : As specified in Nilearn
-    high_pass : As specified in Nilearn. Actually its not documented there.
-    drift_order : As specified in Nilearn
-    fir_delays : As specified in Nilearn
-    add_regs : As specified in Nilearn
-    min_onset : As specified in Nilearn
+    hrf_model : {'spm', 'spm + derivative', 'spm + derivative + dispersion',
+        'glover', 'glover + derivative', 'glover + derivative + dispersion',
+        'fir', None}, optional,
+        Specifies the hemodynamic response function
+    drift_model : {'polynomial', 'cosine', None}, optional
+        Specifies the desired drift model,
+    period_cut : float, optional
+        Cut period of the high-pass filter in seconds.
+        Used only if drift_model is 'cosine'.
+    drift_order : int, optional
+        Order of the drift model (in case it is polynomial).
+    fir_delays : array of shape(n_onsets) or list, optional,
+        In case of FIR design, yields the array of delays used in the FIR
+        model (in scans).
+    add_regs : array of shape(n_frames, n_add_reg), optional
+        additional user-supplied regressors, e.g. data driven noise regressors
+        or seed based regressors.
+    add_reg_names : list of (n_add_reg,) strings, optional
+        If None, while add_regs was provided, these will be termed
+        'reg_%i', i = 0..n_add_reg - 1
+    min_onset : float, optional
+        Minimal onset relative to frame_times[0] (in seconds)
+        events that start before frame_times[0] + min_onset are not considered.
+    oversampling: int, optional,
+        Oversampling factor used in temporal convolutions.
+    Returns
+    -------
+    design_matrix : DataFrame instance,
+        holding the computed design matrix, the index being the frames_times
+        and each column a regressor.
     oversampling : As specified in Nilearn
 
     Returns

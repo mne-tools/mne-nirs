@@ -30,7 +30,7 @@ that is applied to the data.
 import os
 import mne
 import numpy as np
-from mne_nirs.experimental_design import create_first_level_design_matrix
+from mne_nirs.experimental_design import make_first_level_design_matrix
 
 
 ###############################################################################
@@ -83,7 +83,7 @@ raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
 # We note there is a peak at 0.03 which corresponds approximately to
 # the repetition rate of the experiment.
 
-design_matrix = create_first_level_design_matrix(
+design_matrix = make_first_level_design_matrix(
     raw_haemo, drift_order=0, stim_dur=5.)
 
 # This is a bit of a hack.

@@ -10,18 +10,21 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=100,
 
     This is a wrapper function for nilearn.stats.first_level_model.run_glm.
 
-      .. warning:: The inputs to this function will change to match nilearn.
-
     Parameters
     ----------
     raw : instance of Raw
-        Haemoglobin data.
+        The haemoglobin data.
     design_matrix : as specified in Nilearn
-        Design matrix of experiment.
-    noise_model : As specified in Nilearn
-    bins : As specified in Nilearn
-    n_jobs : As specified in Nilearn
-    verbose : As specified in Nilearn
+        The design matrix.
+    noise_model : {'ar1', 'ols'}, optional
+        The temporal variance model. Defaults to 'ar1'.
+    bins : : int, optional
+        Maximum number of discrete bins for the AR(1) coef histogram.
+    n_jobs : int, optional
+        The number of CPUs to use to do the computation. -1 means
+        'all CPUs'.
+    verbose : int, optional
+        The verbosity level. Defaut is 0
 
     Returns
     -------

@@ -36,7 +36,7 @@ import matplotlib.pyplot as plt
 import mne
 import mne_nirs
 
-from mne_nirs.experimental_design import create_first_level_design_matrix
+from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_GLM
 from mne_nirs.visualisation import plot_GLM_topo
 
@@ -123,10 +123,10 @@ plt.xlabel("Time (s)")
 # In this example we use the standard SPM haemodynamic response function and
 # include a first order polynomial drift.
 
-design_matrix = create_first_level_design_matrix(raw_intensity,
-                                                 hrf_model='spm', stim_dur=5.0,
-                                                 drift_order=1,
-                                                 drift_model='polynomial')
+design_matrix = make_first_level_design_matrix(raw_intensity,
+                                               hrf_model='spm', stim_dur=5.0,
+                                               drift_order=1,
+                                               drift_model='polynomial')
 
 
 ###############################################################################
