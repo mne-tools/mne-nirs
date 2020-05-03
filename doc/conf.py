@@ -311,6 +311,8 @@ intersphinx_mapping = {
     'numpy': ('https://docs.scipy.org/doc/numpy/', None),
     'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
     'matplotlib': ('https://matplotlib.org/', None),
+    'mne': ('https://mne.tools/stable', None),
+    'nilearn': ('http://nilearn.github.io/', None),
     'sklearn': ('http://scikit-learn.org/stable', None)
 }
 
