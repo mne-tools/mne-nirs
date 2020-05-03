@@ -88,6 +88,7 @@ print("Estimate:", glm_estimates[labels[0]].theta[0],
 # the estimate error.
 
 raw._data += np.random.randn(raw._data.shape[1]) * 1.e-6 * 3.
+labels, glm_estimates = run_GLM(raw, design_matrix)
 
 plt.plot(raw.times, glm_estimates[labels[0]].predicted)
 plt.plot(raw.times, raw.get_data().T, alpha=0.3)
