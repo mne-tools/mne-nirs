@@ -25,4 +25,4 @@ def test_run_GLM():
     assert num == len(raw.ch_names)
 
     # Check the estimate is correct within 10% error
-    assert abs(glm_estimates[labels[0]].theta[0]- 1.e-6) < 0.1e-6
+    assert abs(glm_estimates[labels[0]].theta[0] - 1.e-6) < 0.1e-6
