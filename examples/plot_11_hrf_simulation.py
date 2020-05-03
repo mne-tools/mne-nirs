@@ -67,9 +67,9 @@ fig = plot_design_matrix(design_matrix)
 # Now we can run the GLM analysis on the clean data.
 # The design matrix had three columns, so we get an estimate for our simulated
 # event, the first order drift, and the constant.
-# We see that the estimate of the first component is 4e-6, or 4 uM.
-# Which is the amplitude we used in the simulation.
-# Consequently the error is zero.
+# We see that the estimate of the first component is 4e-6 (4 uM),
+# which was the amplitude we used in the simulation.
+# We also see that the mean square error of the model fit is close to zero.
 
 labels, glm_estimates = run_GLM(raw, design_matrix)
 
@@ -82,10 +82,10 @@ print("Estimate:", glm_estimates[labels[0]].theta[0],
 # ------------------------
 #
 # Real data has noise. Here we add white noise with a standard deviation
-# of 3 uM, this value is small compared to real data, but suffices for
-# this demo.
-# We then use the GLM approach to estimate the response size and report
-# the estimate error.
+# of 3 uM, this noise is not realistic, 
+# but suffices for this demo.
+# We plot the noisy data and the GLM fitted model.
+# We report the model estimate and mean square error of the fit.
 
 raw._data += np.random.randn(raw._data.shape[1]) * 1.e-6 * 3.
 labels, glm_estimates = run_GLM(raw, design_matrix)
