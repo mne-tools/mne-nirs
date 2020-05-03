@@ -312,7 +312,7 @@ intersphinx_mapping = {
     'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
     'matplotlib': ('https://matplotlib.org/', None),
     'mne': ('https://mne.tools/stable', None),
-    'nilearn': ('http://nilearn.github.io/', None),
+    'nilearn': ('http://nilearn.github.io/reference', None),
     'sklearn': ('http://scikit-learn.org/stable', None)
 }
 
