@@ -3,16 +3,16 @@
 # License: BSD (3-clause)
 
 
-from mne_nirs.experimental_design import create_first_level_design_matrix
+from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_GLM
 from mne_nirs.simulation import simulate_nirs_raw
 
 
 def test_run_GLM():
     raw = simulate_nirs_raw(sig_dur=200, stim_dur=5.)
-    design_matrix = create_first_level_design_matrix(raw, stim_dur=5.,
-                                                     drift_order=1,
-                                                     drift_model='polynomial')
+    design_matrix = make_first_level_design_matrix(raw, stim_dur=5.,
+                                                   drift_order=1,
+                                                   drift_model='polynomial')
     labels, glm_estimates = run_GLM(raw, design_matrix)
 
     assert len(labels) == len(raw.ch_names)

@@ -25,7 +25,7 @@ on response amplitude estimates, and the effect of measurement length.
 import mne_nirs
 import matplotlib.pylab as plt
 import numpy as np
-from mne_nirs.experimental_design import create_first_level_design_matrix
+from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_GLM
 from nilearn.reporting import plot_design_matrix
 import seaborn as sns
@@ -55,9 +55,9 @@ raw.plot(duration=600, show_scrollbars=False)
 # data. We use the nilearn plotting function to visualise the design matrix.
 # For more details on this procedure see :ref:`tut-fnirs-hrf`.
 
-design_matrix = create_first_level_design_matrix(raw, stim_dur=5.0,
-                                                 drift_order=1,
-                                                 drift_model='polynomial')
+design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
+                                               drift_order=1,
+                                               drift_model='polynomial')
 fig = plot_design_matrix(design_matrix)
 
 ###############################################################################
@@ -110,7 +110,7 @@ for std in np.arange(1, 10):
             sfreq=sfreq, sig_dur=60 * 10, amplitude=amp)
         raw._data += np.random.randn(raw._data.shape[1]) * 1.e-6 * std
 
-        design_matrix = create_first_level_design_matrix(
+        design_matrix = make_first_level_design_matrix(
             raw, stim_dur=5.0, drift_order=1, drift_model='polynomial')
 
         labels, glm_estimates = run_GLM(raw, design_matrix)
@@ -148,7 +148,7 @@ for repeat in range(20):
             stim_dur=5., sfreq=sfreq, sig_dur=60 * slen, amplitude=amp)
         raw._data += np.random.randn(raw._data.shape[1]) * 1.e-6 * std
 
-        design_matrix = create_first_level_design_matrix(
+        design_matrix = make_first_level_design_matrix(
             raw, stim_dur=5.0, drift_order=1, drift_model='polynomial')
 
         labels, glm_estimates = run_GLM(raw, design_matrix)

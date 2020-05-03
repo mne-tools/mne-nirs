@@ -6,7 +6,7 @@ import os
 import mne
 import mne_nirs
 import numpy as np
-from mne_nirs.experimental_design import create_first_level_design_matrix
+from mne_nirs.experimental_design import make_first_level_design_matrix
 
 
 def _load_dataset():
@@ -61,9 +61,9 @@ def test_create_boxcar():
 def test_create_design():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
-    design_matrix = create_first_level_design_matrix(raw_intensity,
-                                                     drift_order=1,
-                                                     drift_model='polynomial')
+    design_matrix = make_first_level_design_matrix(raw_intensity,
+                                                   drift_order=1,
+                                                   drift_model='polynomial')
 
     assert design_matrix.shape[0] == raw_intensity._data.shape[1]
     # Number of columns is number of conditions plus the drift plus constant
