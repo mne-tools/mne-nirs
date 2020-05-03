@@ -25,7 +25,6 @@ Experimental Design and Analysis
 Signal Enhancement
 ------------------
 
-
 .. currentmodule:: mne_nirs.signal_enhancement
 
 .. automodule:: mne_nirs.signal_enhancement
@@ -38,10 +37,8 @@ Signal Enhancement
    enhance_negative_correlation
 
 
-
 Statistics
 ----------
-
 
 .. currentmodule:: mne_nirs.statistics
 
@@ -58,7 +55,6 @@ Statistics
 Visualisation
 ------------------
 
-
 .. currentmodule:: mne_nirs.visualisation
 
 .. automodule:: mne_nirs.visualisation
@@ -70,3 +66,18 @@ Visualisation
 
    plot_nirs_source_detector
    plot_GLM_topo
+
+
+Simulation
+----------
+
+.. currentmodule:: mne_nirs.simulation
+
+.. automodule:: mne_nirs.simulation
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
+   simulate_nirs_raw

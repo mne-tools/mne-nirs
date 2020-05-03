@@ -1,8 +1,8 @@
 """
 .. _tut-fnirs-hrf:
 
-Haeomodynamic response function analysis
-========================================
+GLM Analysis (Measured Data)
+============================
 
 This document is a work in progress.
 It is a first attempt to add GLM analysis to MNE processing of NIRS data.

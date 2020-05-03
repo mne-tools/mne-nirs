@@ -38,7 +38,7 @@ from mne_nirs.experimental_design import create_first_level_design_matrix
 # --------------------------
 #
 # We read in the data, annotate the triggers, remove the control condition,
-# convert to haemoglobin concentration. 
+# convert to haemoglobin concentration.
 #
 # This code is similar to the first sections in the MNE tutorial,
 # so will not be described in detail here.
@@ -83,7 +83,8 @@ raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
 # We note there is a peak at 0.03 which corresponds approximately to
 # the repetition rate of the experiment.
 
-design_matrix = create_first_level_design_matrix(raw_haemo, drift_order=0, stim_dur=5.)
+design_matrix = create_first_level_design_matrix(
+    raw_haemo, drift_order=0, stim_dur=5.)
 
 # This is a bit of a hack.
 # Overwrite the first NIRS channel with the expected response.
@@ -137,7 +138,8 @@ epochs = mne.Epochs(raw_haemo, events, event_id=event_dict,
                     proj=True, baseline=(None, 0), preload=True,
                     detrend=None, verbose=True)
 
-epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, color='g', xscale='log')
+epochs.pick(picks='hbo').plot_psd(average=True, fmax=2,
+                                  color='g', xscale='log')
 
 
 ###############################################################################
