@@ -29,7 +29,7 @@ from mne_nirs.experimental_design import create_first_level_design_matrix
 from mne_nirs.statistics import run_GLM
 from nilearn.reporting import plot_design_matrix
 import seaborn as sns
-np.random.seed(0)
+np.random.seed(1)
 
 ###############################################################################
 # Simulate noise free NIRS data
