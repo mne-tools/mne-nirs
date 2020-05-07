@@ -12,6 +12,9 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+
+import multiprocessing as mp
+mp.set_start_method('forkserver')
 import sys
 import sphinx_bootstrap_theme
 from distutils.version import LooseVersion
@@ -20,6 +23,7 @@ import os
 
 sys.path.append("../")
 from mne_nirs import __version__  # noqa: E402
+
 
 
 # If extensions (or modules to document with autodoc) are in another directory,
