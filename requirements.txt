@@ -1,3 +1,4 @@
+
 numpy
 scipy
 matplotlib
@@ -21,10 +22,11 @@ pytest-xdist
 joblib
 psutil
 dipy
+vtk -f "https://vtk.org/download"
 https://github.com/numpy/numpydoc/archive/master.zip
-mayavi
+https://github.com/enthought/mayavi/archive/master.zip
 PySurfer[save_movie]
-https://github.com/nilearn/nilearn/archive/master.zip
+nilearn
 neo
 xlrd
 pydocstyle
