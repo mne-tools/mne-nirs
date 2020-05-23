@@ -227,6 +227,6 @@ for column, min_isi in enumerate([0, 5, 15, 30, 45]):
 
                 axes[row, column].set_title('ISI: {}-{} seconds'.
                                             format(min_isi, max_isi))
-                axes[row, column].set_ylim(-150, 20)
+                axes[row, column].set_ylim(80, 20)
                 axes[row, column].axvline(x=0.01, linestyle=":", color='red')
     axes[4, column].set_xlabel("Frequency (Hz)")
