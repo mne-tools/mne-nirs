@@ -29,8 +29,11 @@ that is applied to the data.
 
 import os
 import mne
+import mne_nirs
 import numpy as np
+import matplotlib.pyplot as plt
 from mne_nirs.experimental_design import make_first_level_design_matrix
+from mne_nirs.simulation import simulate_nirs_raw
 
 
 ###############################################################################
@@ -196,3 +199,34 @@ fig.legend(leg_lines, ['Model Response', 'Measured Data',
                        'Epoched Data', 'Filter Response'])
 fig.axes[0].set_ylabel('Filter Magnitude (dB) [invalid for other lines]')
 fig.axes[0].set_title('')
+
+
+
+###############################################################################
+# Understanding the relation between stimulus presentation and response
+# ---------------------------------------------------------------------
+#
+# Here we look at the effect of the interstimulus interval on the
+# expected haemodynamic response. We vary the maximum and minimum
+# interval over which the ISI is selected. Three repeats are plotted per
+# ISI to illustrate the random selection.
+
+fig, axes = plt.subplots(nrows=5, ncols=5, figsize=(20, 20))
+for column, min_isi in enumerate([0, 5, 15, 30, 45]):
+    for row, max_isi in enumerate([0, 5, 15, 30, 45]):
+        if max_isi >= min_isi:
+            for rep in range(3):
+                raw = simulate_nirs_raw(sfreq=4., sig_dur=60 * 15,
+                                        amplitude=1., stim_dur=5.,
+                                        isi_min=min_isi, isi_max=max_isi)
+                raw._data[0] = raw._data[0] - np.mean(raw._data[0])
+                raw.pick(picks='hbo').plot_psd(average=True, fmax=2,
+                                               ax=axes[row, column],
+                                               show=False, color='k',
+                                               xscale='log')
+
+                axes[row, column].set_title('ISI: {}-{} seconds'.
+                                            format(min_isi, max_isi))
+                axes[row, column].set_ylim(-150, 20)
+                axes[row, column].axvline(x=0.01, linestyle=":", color='red')
+    axes[4, column].set_xlabel("Frequency (Hz)")
