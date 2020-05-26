@@ -91,7 +91,7 @@ print("Estimate:", glm_est[labels[0]].theta[0],
 # First take a copy of noise free data for comparison
 raw_noise_free = raw.copy()
 
-raw._data += np.random.randn(raw._data.shape[1]) * 1.e-6 * 3.
+raw._data += np.random.normal(0, 3.e-6, raw._data.shape)
 labels, glm_est = run_GLM(raw, design_matrix)
 
 plt.plot(raw.times, raw_noise_free.get_data().T)
