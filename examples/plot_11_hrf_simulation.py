@@ -22,6 +22,7 @@ on response amplitude estimates, and the effect of measurement length.
 #
 # License: BSD (3-clause)
 
+import mne
 import mne_nirs
 import matplotlib.pylab as plt
 import numpy as np
@@ -71,15 +72,15 @@ fig = plot_design_matrix(design_matrix)
 # which was the amplitude we used in the simulation.
 # We also see that the mean square error of the model fit is close to zero.
 
-labels, glm_estimates = run_GLM(raw, design_matrix)
+labels, glm_est = run_GLM(raw, design_matrix)
 
-print("Estimate:", glm_estimates[labels[0]].theta[0],
-      "  MSE:", glm_estimates[labels[0]].MSE)
+print("Estimate:", glm_est[labels[0]].theta[0],
+      "  MSE:", glm_est[labels[0]].MSE)
 
 
 ###############################################################################
-# Simulate noisy NIRS data
-# ------------------------
+# Simulate noisy NIRS data (white)
+# --------------------------------
 #
 # Real data has noise. Here we add white noise with a standard deviation
 # of 3 uM, this noise is not realistic, 
@@ -87,16 +88,45 @@ print("Estimate:", glm_estimates[labels[0]].theta[0],
 # We plot the noisy data and the GLM fitted model.
 # We report the model estimate and mean square error of the fit.
 
+# First take a copy of noise free data for comparison
+raw_noise_free = raw.copy()
+
 raw._data += np.random.randn(raw._data.shape[1]) * 1.e-6 * 3.
-labels, glm_estimates = run_GLM(raw, design_matrix)
+labels, glm_est = run_GLM(raw, design_matrix)
 
-plt.plot(raw.times, glm_estimates[labels[0]].predicted)
+plt.plot(raw.times, raw_noise_free.get_data().T)
 plt.plot(raw.times, raw.get_data().T, alpha=0.3)
+plt.plot(raw.times, glm_est[labels[0]].theta[0] * design_matrix["A"].values)
 plt.xlabel("Time (s)")
-plt.legend(["GLM Estimate", "Simulated Data"])
+plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 
-print("Estimate:", glm_estimates[labels[0]].theta[0],
-      "  MSE:", glm_estimates[labels[0]].MSE)
+print("Estimate:", glm_est[labels[0]].theta[0],
+      "  MSE:", glm_est[labels[0]].MSE)
+
+
+###############################################################################
+# Simulate noisy NIRS data (colored)
+# ----------------------------------
+#
+# Here we add colored noise.
+
+raw = raw_noise_free.copy()
+cov = mne.Covariance(np.ones(1)*1e-11, raw.ch_names,
+                     raw.info['bads'], raw.info['projs'], nfree=0)
+raw = mne.simulation.add_noise(raw, cov,
+                               iir_filter=[1. , -0.58853134, -0.29575669,
+                                           -0.52246482,  0.38735476,
+                                           0.02428681])
+labels, glm_est = run_GLM(raw, design_matrix)
+
+plt.plot(raw.times, raw_noise_free.get_data().T)
+plt.plot(raw.times, raw.get_data().T, alpha=0.3)
+plt.plot(raw.times, glm_est[labels[0]].theta[0] * design_matrix["A"].values)
+plt.xlabel("Time (s)")
+plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
+
+print("Estimate:", glm_est[labels[0]].theta[0],
+      "  MSE:", glm_est[labels[0]].MSE)
 
 
 ###############################################################################
