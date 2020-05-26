@@ -32,6 +32,7 @@ import mne
 import mne_nirs
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.simulation import simulate_nirs_raw
 
@@ -207,26 +208,33 @@ fig.axes[0].set_title('')
 # ---------------------------------------------------------------------
 #
 # Here we look at the effect of the interstimulus interval on the
-# expected haemodynamic response. We vary the maximum and minimum
-# interval over which the ISI is selected. Three repeats are plotted per
+# expected haemodynamic response. We choose a few different
+# maximum and minimum
+# values for the ISI. Two repeats are plotted per
 # ISI to illustrate the random selection.
+# Some common high pass filter values from literature are shown in red.
 
-fig, axes = plt.subplots(nrows=5, ncols=5, figsize=(20, 20))
-for column, min_isi in enumerate([0, 5, 15, 30, 45]):
-    for row, max_isi in enumerate([0, 5, 15, 30, 45]):
-        if max_isi >= min_isi:
-            for rep in range(3):
-                raw = simulate_nirs_raw(sfreq=4., sig_dur=60 * 15,
-                                        amplitude=1., stim_dur=5.,
-                                        isi_min=min_isi, isi_max=max_isi)
-                raw._data[0] = raw._data[0] - np.mean(raw._data[0])
-                raw.pick(picks='hbo').plot_psd(average=True, fmax=2,
-                                               ax=axes[row, column],
-                                               show=False, color='k',
-                                               xscale='log')
 
-                axes[row, column].set_title('ISI: {}-{} seconds'.
-                                            format(min_isi, max_isi))
-                axes[row, column].set_ylim(-80, 20)
-                axes[row, column].axvline(x=0.01, linestyle=":", color='red')
-    axes[4, column].set_xlabel("Frequency (Hz)")
+sm = plt.cm.ScalarMappable(cmap='viridis', norm=plt.Normalize(vmin=0, vmax=60))
+fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(20, 10))
+for rep in range(2):
+    for column, min_isi in enumerate([9, 15]):
+        for row, max_isi in enumerate([14, 30, 45, 60]):
+            if max_isi >= min_isi:
+                if max_isi >= min_isi:
+                    raw = simulate_nirs_raw(sfreq=4., sig_dur=60 * 60,
+                                            amplitude=1., stim_dur=5.,
+                                            isi_min=min_isi, isi_max=max_isi)
+                    raw._data[0] = raw._data[0] - np.mean(raw._data[0])
+                    raw.pick(picks='hbo').plot_psd(
+                        average=True, fmax=2, ax=axes[rep, column],
+                        show=False, color=sm.cmap(sm.norm(max_isi)),
+                        xscale='log')
+                    axes[rep, column].set_ylim(-60, 20)
+                    axes[rep, column].set_title('ISI: {} (s) to Max ISI'.
+                                                format(min_isi))
+                    for filt in [0.01, 0.02, 0.05]:
+                        axes[rep, column].axvline(x=filt,
+                                                  linestyle=":", color='red')
+        axes[1, column].set_xlabel("Frequency (Hz)")
+    plt.colorbar(sm, ax=axes[rep, 1], label='Max ISI (s)')
