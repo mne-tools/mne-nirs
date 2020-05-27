@@ -5,8 +5,8 @@ GLM Analysis (Simulated Data)
 =============================
 
 In this example we simulate a block design NIRS experiment and analyse
-the simulated signal. We investigate the effect additive noise has
-on response amplitude estimates, and the effect of measurement length.
+the simulated signal. We investigate the effect additive noise and
+measurement length has on response amplitude estimates.
 
 .. warning::
       This is a work in progress. Suggestions of improvements are
@@ -32,6 +32,7 @@ from nilearn.reporting import plot_design_matrix
 import seaborn as sns
 np.random.seed(1)
 
+
 ###############################################################################
 # Simulate noise free NIRS data
 # -----------------------------
@@ -40,6 +41,7 @@ np.random.seed(1)
 # block design. The inter stimulus interval of the stimuli is uniformly
 # selected between 15 and 45 seconds.
 # The amplitude of the simulated signal is 4 uMol and the sample rate is 3 Hz.
+# The simulated signal is plotted below.
 
 sfreq = 3.
 amp = 4.
@@ -47,6 +49,7 @@ amp = 4.
 raw = mne_nirs.simulation.simulate_nirs_raw(
     sfreq=sfreq, sig_dur=60 * 5, amplitude=amp, isi_min=15., isi_max=45.)
 raw.plot(duration=600, show_scrollbars=False)
+
 
 ###############################################################################
 # Create design matrix
@@ -61,11 +64,12 @@ design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
                                                drift_model='polynomial')
 fig = plot_design_matrix(design_matrix)
 
+
 ###############################################################################
 # Estimate response on clean data
 # -------------------------------
 #
-# Now we can run the GLM analysis on the clean data.
+# We can run the GLM analysis on the clean data.
 # The design matrix had three columns, so we get an estimate for our simulated
 # event, the first order drift, and the constant.
 # We see that the estimate of the first component is 4e-6 (4 uM),
@@ -82,16 +86,18 @@ print("Estimate:", glm_est[labels[0]].theta[0],
 # Simulate noisy NIRS data (white)
 # --------------------------------
 #
-# Real data has noise. Here we add white noise with a standard deviation
-# of 3 uM, this noise is not realistic, 
-# but suffices for this demo.
-# We plot the noisy data and the GLM fitted model.
-# We report the model estimate and mean square error of the fit.
+# Real data has noise. Here we add white noise, this noise is not realistic
+# but serves as a reference point for evaluating the estimation process.
+# We run the GLM analysis exactly as in the previous section
+# and plot the noisy data and the GLM fitted model.
+# The model estimate of the amplitude is reported reported
+# along with the mean square error of the fit, which matches closely to the
+# noise we added.
 
 # First take a copy of noise free data for comparison
 raw_noise_free = raw.copy()
 
-raw._data += np.random.normal(0, np.sqrt(4e-12), raw._data.shape)
+raw._data += np.random.normal(0, np.sqrt(1e-11), raw._data.shape)
 labels, glm_est = run_GLM(raw, design_matrix)
 
 plt.plot(raw.times, raw_noise_free.get_data().T)
@@ -108,7 +114,10 @@ print("Estimate:", glm_est[labels[0]].theta[0],
 # Simulate noisy NIRS data (colored)
 # ----------------------------------
 #
-# Here we add colored noise.
+# Here we add colored noise which better matches what is seen with real data.
+# Again, the same GLM procedure is run.
+# The estimate is reported below, and even though the signal was difficuly to
+# observe in the raw data, the GLM analysis has extracted an accurate estimate.
 
 raw = raw_noise_free.copy()
 cov = mne.Covariance(np.ones(1)*1e-11, raw.ch_names,
