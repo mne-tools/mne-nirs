@@ -62,7 +62,8 @@ raw.plot(duration=600, show_scrollbars=False)
 design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
                                                drift_order=1,
                                                drift_model='polynomial')
-fig = plot_design_matrix(design_matrix)
+fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
+fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
 ###############################################################################
@@ -120,11 +121,11 @@ print("Estimate:", glm_est[labels[0]].theta[0],
 # observe in the raw data, the GLM analysis has extracted an accurate estimate.
 
 raw = raw_noise_free.copy()
-cov = mne.Covariance(np.ones(1)*1e-11, raw.ch_names,
+cov = mne.Covariance(np.ones(1) * 1e-11, raw.ch_names,
                      raw.info['bads'], raw.info['projs'], nfree=0)
 raw = mne.simulation.add_noise(raw, cov,
-                               iir_filter=[1. , -0.58853134, -0.29575669,
-                                           -0.52246482,  0.38735476,
+                               iir_filter=[1., -0.58853134, -0.29575669,
+                                           -0.52246482, 0.38735476,
                                            0.02428681])
 labels, glm_est = run_GLM(raw, design_matrix)
 
