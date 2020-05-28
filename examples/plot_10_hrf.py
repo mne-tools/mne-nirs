@@ -127,15 +127,14 @@ design_matrix = make_first_level_design_matrix(raw_intensity,
                                                hrf_model='spm', stim_dur=5.0,
                                                drift_order=1,
                                                drift_model='polynomial')
-fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
-fig = plot_design_matrix(design_matrix, ax=ax1)
 
 ###############################################################################
 #
 # And we display a summary of the design matrix
 # using standard Nilearn reporting functions.
 
-plot_design_matrix(design_matrix)
+fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
+fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
 ###############################################################################
