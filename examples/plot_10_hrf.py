@@ -48,7 +48,7 @@ from nilearn.reporting import plot_design_matrix
 # --------------------
 #
 # Import the motor tapping data also used in MNE tutorial.
-# Crop to meet github memory constraints.
+# Resample to meet github memory constraints.
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
