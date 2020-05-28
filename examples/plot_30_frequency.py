@@ -218,8 +218,8 @@ fig.axes[0].set_title('')
 sm = plt.cm.ScalarMappable(cmap='viridis', norm=plt.Normalize(vmin=0, vmax=60))
 fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(20, 10))
 for rep in range(2):
-    for column, min_isi in enumerate([9, 15]):
-        for row, max_isi in enumerate([14, 30, 45, 60]):
+    for column, min_isi in enumerate([0, 15]):
+        for row, max_isi in enumerate([15, 30, 45, 60]):
             if max_isi >= min_isi:
                 if max_isi >= min_isi:
                     raw = simulate_nirs_raw(sfreq=4., sig_dur=60 * 60,
