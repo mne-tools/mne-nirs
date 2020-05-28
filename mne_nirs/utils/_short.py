@@ -10,8 +10,7 @@ import mne
 
 def get_short_channels(raw, max_dist=0.01):
     """
-    Return a raw object containing only channels with a source detector
-    separation less than specified.
+    Return channels with a short source detector separation.
 
     Parameters
     ----------
@@ -41,8 +40,7 @@ def get_short_channels(raw, max_dist=0.01):
 
 def get_long_channels(raw, min_dist=0.01):
     """
-    Return a raw object containing only channels with a source detector
-    separation greater than specified.
+    Return channels with a long source detector separation.
 
 
     Parameters
