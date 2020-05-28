@@ -53,7 +53,7 @@ def get_long_channels(raw, min_dist=0.01):
     Returns
     -------
     raw : instance of Raw
-        Raw instance with only short channels.
+        Raw instance with only long channels.
     """
 
     long_chans = raw.copy().load_data()
