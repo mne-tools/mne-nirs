@@ -81,3 +81,19 @@ Simulation
    :toctree: generated/
 
    simulate_nirs_raw
+
+
+Utilities
+---------
+
+.. currentmodule:: mne_nirs.utils
+
+.. automodule:: mne_nirs.utils
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
+   get_short_channels
+   get_long_channels
