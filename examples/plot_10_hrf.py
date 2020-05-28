@@ -88,8 +88,6 @@ dists = mne.preprocessing.nirs.source_detector_distances(
 raw_intensity.pick(picks[dists > 0.01])
 raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
 raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
-raw_haemo = raw_haemo.filter(0.05, 0.7, h_trans_bandwidth=0.2,
-                             l_trans_bandwidth=0.02)
 
 
 ###############################################################################
