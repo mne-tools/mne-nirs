@@ -1,8 +1,8 @@
 MNE-NIRS: Near-Infrared Spectroscopy Analysis
 =============================================
 
-UNDER DEVELOPMENT. Please check back over the coming weeks.
------------------------------------------------------------
+UNDER DEVELOPMENT. The API is still in development, feedback is appreciated.
+----------------------------------------------------------------------------
 
 .. image:: https://img.shields.io/badge/docs-master-brightgreen
     :target: https://mne.tools/mne-nirs/
@@ -28,11 +28,13 @@ Examples
 --------
 
 - MNE examples:
-    - `Basic pipeline <https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html#sphx-glr-auto-tutorials-preprocessing-plot-70-fnirs-processing-py>`_.
-    - `Artifact rejection <https://mne.tools/dev/auto_examples/preprocessing/plot_fnirs_artifact_removal.html#ex-fnirs-artifacts>`_.
+    - `Basic waveform analysis pipeline <https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html#sphx-glr-auto-tutorials-preprocessing-plot-70-fnirs-processing-py>`_.
+    - `Artifact rejection discussion <https://mne.tools/dev/auto_examples/preprocessing/plot_fnirs_artifact_removal.html#ex-fnirs-artifacts>`_.
 - MNE-NIRS examples:
-    - `Haemodynamic responses <https://mne-tools.github.io/mne-nirs/auto_examples/index.html>`_.
+    - `Simulated haemodynamic response GLM analysis <https://mne.tools/mne-nirs/auto_examples/plot_11_hrf_simulation.html>`_.
+    - `Measured haemodynamic response GLM analysis <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_.
     - `Signal enhancement <https://mne-tools.github.io/mne-nirs/auto_examples/plot_20_cui.html>`_.
+    - `Frequency and filtering <https://mne.tools/mne-nirs/auto_examples/plot_30_frequency.html>`_.
 
 
 Contributing
@@ -49,3 +51,6 @@ This package is built on top of many other great packages. These should be ackno
 MNE: https://mne.tools/dev/overview/cite.html
 
 Nilearn: http://nilearn.github.io/authors.html#citing
+
+Please also cite me. There is not currently a paper specifically on MNE-NIRS, so please find a 
+`relevant paper of mine to cite from here <https://scholar.google.com/citations?user=LngqH5sAAAAJ&hl=en>`_.
