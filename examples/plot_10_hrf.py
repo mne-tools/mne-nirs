@@ -4,21 +4,21 @@
 GLM Analysis (Measured Data)
 ============================
 
-This document is a work in progress.
-It is a first attempt to add GLM analysis to MNE processing of NIRS data.
+In this example we analyse a real measured multichannel fNIRS
+experiment (see :ref:`tut-fnirs-hrf-sim` for a simplified simulated
+analysis). The experiment consists of three conditions
+1) tapping on the left hand,
+2) tapping on the right hand,
+3) a control condition where the participant does nothing.
+We use a GLM analysis to examine the neural activity linked
+to the different tapping conditions.
 
-This is basically a wrapper over the excellent Nilearn stats.
-https://github.com/nilearn/nilearn/tree/master/nilearn/stats .
-
-Currently the analysis is only being run on the first third of the measurement
-to meet github actions memory constraints.
-This means the results are noisier than the MNE fnirs tutorial.
-
+The GLM analysis is a wrapper over the excellent
+`Nilearn stats <https://github.com/nilearn/nilearn/tree/master/nilearn/stats>`_.
 
 .. warning::
       This is a work in progress. Suggestions of improvements are
       appreciated. I am finalising the code, then will fix the text.
-
 
 .. contents:: Page contents
    :local:
@@ -49,13 +49,22 @@ from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide
 # Import raw NIRS data
 # --------------------
 #
-# Import the motor tapping data also used in MNE tutorial.
-# Resample to meet github memory constraints.
+# First we import the motor tapping data, this data is 
+# described and used in the also used in the
+# `MNE fNIRS tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
+#
+# .. sidebar:: Data description
+#
+#    Optodes were placed over the motor cortex using the standard NIRX motor
+#    montage, but with 8 short channels added.
+#    .. image:: https://images.app.goo.gl/StNfXy7doh85XV7D6
+#
+# After reading the data we resample down to 1Hz
+# to meet github memory constraints.
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
-raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir,
-                                     verbose=True).load_data()
+raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
 raw_intensity.resample(1.0)
 
 
