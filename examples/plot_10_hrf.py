@@ -42,6 +42,7 @@ from mne_nirs.statistics import run_GLM
 from mne_nirs.visualisation import plot_GLM_topo
 
 from nilearn.reporting import plot_design_matrix
+from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide
 
 
 ###############################################################################
@@ -218,7 +219,6 @@ plot_GLM_topo(raw_haemo, labels, glm_est, design_matrix,
 #       at the start of their name to indicate they are not public functions
 #       and have no promise they will be here next week.
 
-from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide
 
 df = _GLM_to_tidy_long(raw_haemo, labels, glm_est, design_matrix)
 df = _tidy_long_to_wide(df)
@@ -233,14 +233,16 @@ df = _tidy_long_to_wide(df)
 # motor cortex, so we dont expect 100% of channels to detect responses to
 # the tapping, but we do expect 5% or less for the false positive rate.
 
-fp_rate = np.sum(df.query("condition in ['Control']")["Sig"]) / \
-          len((df.query("condition in ['Control']")["Sig"]))
+fp_rate = np.sum(df.query("condition in ['Control']")["Significant"]) / \
+    len((df.query("condition in ['Control']")["Significant"]))
 
-tp_left_rate = np.sum(df.query("condition in ['Tapping/Left']")["Sig"]) / \
-               len((df.query("condition in ['Tapping/Left']")["Sig"]))
+tp_left_rate = np.sum(
+    df.query("condition in ['Tapping/Left']")["Significant"]) / \
+    len((df.query("condition in ['Tapping/Left']")["Significant"]))
 
-tp_right_rate = np.sum(df.query("condition in ['Tapping/Right']")["Sig"]) / \
-                len((df.query("condition in ['Tapping/Right']")["Sig"]))
+tp_right_rate = np.sum(
+    df.query("condition in ['Tapping/Right']")["Significant"]) / \
+    len((df.query("condition in ['Tapping/Right']")["Significant"]))
 
 print("False positive rate:", 100. * fp_rate, "(%)")
 print("True positive rate (left):", 100. * tp_left_rate, "(%)")
