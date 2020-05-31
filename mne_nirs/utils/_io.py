@@ -1,6 +1,7 @@
 import pandas as pd
 from scipy import stats
 import numpy as np
+import re
 
 
 def _GLM_to_tidy_long(data, labels, glm_estimates, design_matrix):
@@ -51,13 +52,16 @@ def _GLM_to_tidy_long(data, labels, glm_estimates, design_matrix):
     return df
 
 
-def _tidy_long_to_wide(d):
+def _tidy_long_to_wide(d, expand_output=True):
     d = d.set_index(['ch_name', 'condition'])
     d = d.pivot_table(columns='variable', values='value',
                       index=['ch_name', 'condition'])
-    d["Sig"] = d["p"] < 0.05
     d.reset_index(inplace=True)
-    d.loc[["hbo" in s for s in d["ch_name"]], 'Chroma'] = "HbO"
-    d.loc[["hbr" in s for s in d["ch_name"]], 'Chroma'] = "HbR"
+
+    if expand_output:
+        d["Source"] = [re.search('S(\d+)_D(\d+) (\w+)', ch).group(1) for ch in d["ch_name"]]
+        d["Detector"] = [re.search('S(\d+)_D(\d+) (\w+)', ch).group(2) for ch in d["ch_name"]]
+        d["Chroma"] = [re.search('S(\d+)_D(\d+) (\w+)', ch).group(3) for ch in d["ch_name"]]
+        d["Significant"] = d["p"] < 0.05
 
     return d
