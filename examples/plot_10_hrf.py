@@ -229,7 +229,9 @@ df = _tidy_long_to_wide(df)
 # ---------------------------------------
 #
 # We can query the exported data frames to determine the true and false
-# positive rates.
+# positive rates. Note: optodes cover a greater region than just the
+# motor cortex, so we dont expect 100% of channels to detect responses to
+# the tapping, but we do expect 5% or less for the false positive rate.
 
 fp_rate = np.sum(df.query("condition in ['Control']")["Sig"]) / \
           len((df.query("condition in ['Control']")["Sig"]))
