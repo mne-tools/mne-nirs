@@ -59,9 +59,12 @@ def _tidy_long_to_wide(d, expand_output=True):
     d.reset_index(inplace=True)
 
     if expand_output:
-        d["Source"] = [re.search('S(\d+)_D(\d+) (\w+)', ch).group(1) for ch in d["ch_name"]]
-        d["Detector"] = [re.search('S(\d+)_D(\d+) (\w+)', ch).group(2) for ch in d["ch_name"]]
-        d["Chroma"] = [re.search('S(\d+)_D(\d+) (\w+)', ch).group(3) for ch in d["ch_name"]]
+        d["Source"] = [re.search('S(\d+)_D(\d+) (\w+)', ch).group(1)
+                       for ch in d["ch_name"]]
+        d["Detector"] = [re.search('S(\d+)_D(\d+) (\w+)', ch).group(2)
+                         for ch in d["ch_name"]]
+        d["Chroma"] = [re.search('S(\d+)_D(\d+) (\w+)', ch).group(3)
+                       for ch in d["ch_name"]]
         d["Significant"] = d["p"] < 0.05
 
     return d
