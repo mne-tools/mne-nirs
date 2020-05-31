@@ -17,7 +17,7 @@ def test_io():
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
     fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
     raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
-    raw_intensity.resample(1.0)
+    raw_intensity.resample(0.2)
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
     raw_haemo = mne_nirs.utils.get_long_channels(raw_haemo)
@@ -31,7 +31,6 @@ def test_io():
     df = _GLM_to_tidy_long(raw_haemo, labels, glm_est, design_matrix)
     df = _tidy_long_to_wide(df)
     assert df.shape == (48, 11)
-    print(df)
     assert set(df.columns) == {'ch_name', 'condition', 'df', 'mse', 'p', 't',
                                'theta', 'Source', 'Detector', 'Chroma',
                                'Significant'}
