@@ -49,15 +49,18 @@ from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide
 # Import raw NIRS data
 # --------------------
 #
-# First we import the motor tapping data, this data is 
-# described and used in the also used in the
-# `MNE fNIRS tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
-#
 # .. sidebar:: Data description
 #
 #    Optodes were placed over the motor cortex using the standard NIRX motor
-#    montage, but with 8 short channels added.
-#    .. image:: https://images.app.goo.gl/StNfXy7doh85XV7D6
+#    montage, but with 8 short channels added. 
+#    A sound was presented to indicate which hand the participant should tap.
+#    Participants taped their thumb to fingers for 5s.
+#    Conditions were presented in a random order with a randomised inter
+#    stimulus interval.
+#
+# First we import the motor tapping data, this data is 
+# described and used in the also used in the
+# `MNE fNIRS tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
 #
 # After reading the data we resample down to 1Hz
 # to meet github memory constraints.
@@ -177,6 +180,13 @@ plt.ylabel("Amplitude")
 ###############################################################################
 # Fit GLM to estimate response
 # ----------------------------
+#
+# .. sidebar:: Relevant literature
+#
+#    Huppert TJ. Commentary on the statistical properties of noise and its 
+#    implication on general linear models in functional near-infrared 
+#    spectroscopy. Neurophotonics. 2016;3(1):010401.
+#    doi:10.1117/1.NPh.3.1.010401
 #
 # We run a GLM fit for the data and experiment matrix.
 # First we analyse just the first two channels which correspond HbO and HbR
