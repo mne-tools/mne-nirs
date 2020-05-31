@@ -84,7 +84,6 @@ raw_intensity.annotations.crop(35, 2967)
 
 raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
 raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
-raw_haemo = mne_nirs.utils.get_long_channels(raw_haemo)
 
 short_chans = mne_nirs.utils.get_short_channels(raw_haemo)
 raw_haemo = mne_nirs.utils.get_long_channels(raw_haemo)
