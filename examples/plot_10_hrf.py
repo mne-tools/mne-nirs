@@ -78,16 +78,12 @@ raw_intensity.annotations.crop(35, 2967)
 # Preprocess NIRS data
 # --------------------
 #
-# Convert the raw data to haemoglobin concentration and bandpass filter.
+# Convert the raw data to haemoglobin concentration and keep just long
+# channels which should contain neural responses.
 
-
-picks = mne.pick_types(raw_intensity.info, meg=False, fnirs=True)
-
-dists = mne.preprocessing.nirs.source_detector_distances(
-    raw_intensity.info, picks=picks)
-raw_intensity.pick(picks[dists > 0.01])
 raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
 raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
+raw_haemo = mne_nirs.utils.get_long_channels(raw_haemo)
 
 
 ###############################################################################

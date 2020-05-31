@@ -44,12 +44,10 @@ import mne_nirs
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
 raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir, verbose=True).load_data()
-picks = mne.pick_types(raw_intensity.info, meg=False, fnirs=True)
-dists = mne.preprocessing.nirs.source_detector_distances(
-    raw_intensity.info, picks=picks)
-raw_intensity.pick(picks[dists > 0.01])
 raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
 raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
+raw_haemo = mne_nirs.utils.get_long_channels(raw_haemo)
+
 raw_haemo = raw_haemo.filter(0.05, 0.7, h_trans_bandwidth=0.2,
                              l_trans_bandwidth=0.02)
 events, _ = mne.events_from_annotations(raw_haemo, event_id={'1.0': 1,
