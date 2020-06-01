@@ -14,7 +14,7 @@ We use a GLM analysis to examine the neural activity associated with
 the different tapping conditions.
 An alternative epoching style analysis on the same data can be
 viewed in the
-`MNE documentations <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
+`MNE documentation <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
 
 The GLM analysis is a wrapper over the excellent
 `Nilearn stats <https://github.com/nilearn/nilearn/tree/master/nilearn/stats>`_.
