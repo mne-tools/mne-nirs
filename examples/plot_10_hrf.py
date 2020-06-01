@@ -259,7 +259,7 @@ plt.hlines([0.0], 0, 2)
 
 ###############################################################################
 #
-# We can also view the contriubution from the other fitted factors.
+# We can also view the contriubution from the drift and constant factors.
 
 
 plt.scatter(design_matrix.columns[3:7], glm_est[labels[0]].theta[3:7] * 1e6)
@@ -267,27 +267,28 @@ plt.scatter(design_matrix.columns[3:7], glm_est[labels[1]].theta[3:7] * 1e6)
 plt.xlabel("Model Component")
 plt.ylabel("Estimated contribution")
 plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
-plt.hlines([0.0], 0, 4)
+plt.hlines([0.0], 0, 3)
 
 
 ###############################################################################
 #
-# We can also view the contriubution from the other fitted factors.
+# And we can examine the contriubution from our short channel regression.
 
-plt.scatter(design_matrix.columns[7:], glm_est[labels[0]].theta[7:] * 1e6)
-plt.scatter(design_matrix.columns[7:], glm_est[labels[1]].theta[7:] * 1e6)
+plt.scatter(design_matrix.columns[7:], glm_est[labels[0]].theta[7:])
+plt.scatter(design_matrix.columns[7:], glm_est[labels[1]].theta[7:])
 plt.xlabel("Model Component")
 plt.ylabel("Estimated contribution")
 plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
-plt.hlines([0.0], 0, 4)
+plt.hlines([0.0], 0, 1)
 
 ###############################################################################
 # View GLM results for all sensors
 # --------------------------------
 #
-# Lastly we run the GLM analysis on all sensors and plot the result on a
-# toppmap.
-# We see the same result as in the MNE tutorial that activation is largest
+# Lastly we can run the GLM analysis on all sensors and plot the result on a
+# topomap.
+# We see the same result as in the MNE tutorial,
+# that activation is largest
 # contralateral to the tapping side. Also note that HbR tends to be the
 # negative sof HbO as expected.
 
