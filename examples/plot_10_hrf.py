@@ -61,7 +61,8 @@ from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide
 #
 #    Optodes were placed over the motor cortex using the standard NIRX motor
 #    montage, but with 8 short channels added (see their web page for details). 
-#    To view the sensor locations run `raw_intensity.plot_sensors()`.
+#    To view the sensor locations run
+#    :python:`raw_intensity.plot_sensors()`.
 #    A sound was presented to indicate which hand the participant should tap.
 #    Participants taped their thumb to fingers for 5s.
 #    Conditions were presented in a random order with a randomised inter
@@ -180,14 +181,15 @@ plt.ylabel("Amplitude")
 
 
 ###############################################################################
+#
+# Fit GLM to estimate response
+# ----------------------------
+#
 # .. sidebar:: Relevant literature
 #
 #    Huppert TJ. Commentary on the statistical properties of noise and its 
 #    implication on general linear models in functional near-infrared 
 #    spectroscopy. Neurophotonics. 2016;3(1)
-#
-# Fit GLM to estimate response
-# ----------------------------
 #
 # We run a GLM fit for the data and experiment matrix.
 # First we analyse just the first two channels which correspond HbO and HbR
