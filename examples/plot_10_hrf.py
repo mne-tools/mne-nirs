@@ -42,8 +42,8 @@ from mne_nirs.statistics import run_GLM
 from mne_nirs.visualisation import plot_GLM_topo
 
 from nilearn.reporting import plot_design_matrix
-from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide,
-      get_short_channels, get_long_channels
+from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide,\
+    get_short_channels, get_long_channels
 
 
 ###############################################################################
@@ -61,7 +61,7 @@ from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide,
 #    :class: success
 #
 #    Optodes were placed over the motor cortex using the standard NIRX motor
-#    montage, but with 8 short channels added (see their web page for details). 
+#    montage, but with 8 short channels added (see their web page for details).
 #    To view the sensor locations run
 #    `raw_intensity.plot_sensors()`.
 #    A sound was presented to indicate which hand the participant should tap.
@@ -109,7 +109,7 @@ raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
 #    negatives in functional near-infrared spectroscopy: issues, challenges,
 #    and the way forward." Neurophotonics 3.3 (2016): 031405.
 #
-# We then split the data in to 
+# We then split the data in to
 # short channels which predominantly contain systemic responses and
 # long channels which have both neural and systemic contriubtions.
 
@@ -137,7 +137,7 @@ mne.viz.plot_events(events, event_id=event_dict,
 ###############################################################################
 #
 # The previous plot did not illustrate the duration that an event lasted for.
-# Alternatively, we can view the experiment using a boxcar plot, where the 
+# Alternatively, we can view the experiment using a boxcar plot, where the
 # line is raised for the duration of the stimulus/condition.
 
 s = mne_nirs.experimental_design.create_boxcar(raw_haemo)
@@ -206,8 +206,8 @@ plt.ylabel("Amplitude")
 #
 # .. sidebar:: Relevant literature
 #
-#    Huppert TJ. Commentary on the statistical properties of noise and its 
-#    implication on general linear models in functional near-infrared 
+#    Huppert TJ. Commentary on the statistical properties of noise and its
+#    implication on general linear models in functional near-infrared
 #    spectroscopy. Neurophotonics. 2016;3(1)
 #
 # We run a GLM fit for the data and experiment matrix.
