@@ -257,8 +257,8 @@ labels, glm_est = run_GLM(data_subset, design_matrix)
 # right hand is larger than the left. And the values are similar to what
 # is seen in the epoching tutorial.
 
-plt.scatter(design_matrix.columns[:3], glm_est[labels[0]].theta[:3])
-plt.scatter(design_matrix.columns[:3], glm_est[labels[1]].theta[:3])
+plt.scatter(design_matrix.columns[:3], glm_est[labels[0]].theta[:3] * 1e6)
+plt.scatter(design_matrix.columns[:3], glm_est[labels[1]].theta[:3] * 1e6)
 plt.xlabel("Experiment Condition")
 plt.ylabel("Haemoglobin (μM)")
 plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
@@ -269,8 +269,8 @@ plt.hlines([0.0], 0, 2)
 #
 # We can also view the contriubution from the drift and constant factors.
 
-plt.scatter(design_matrix.columns[3:7], glm_est[labels[0]].theta[3:7])
-plt.scatter(design_matrix.columns[3:7], glm_est[labels[1]].theta[3:7])
+plt.scatter(design_matrix.columns[3:7], glm_est[labels[0]].theta[3:7] * 1e6)
+plt.scatter(design_matrix.columns[3:7], glm_est[labels[1]].theta[3:7] * 1e6)
 plt.xlabel("Model Component")
 plt.ylabel("Estimated contribution")
 plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
