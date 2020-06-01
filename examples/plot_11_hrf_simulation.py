@@ -140,35 +140,28 @@ print("Estimate:", glm_est[labels[0]].theta[0],
 
 
 ###############################################################################
-# How does estimate error vary with added noise?
-# ----------------------------------------------
+# How does increasing the measurement length affect estimation accuracy?
+# ----------------------------------------------------------------------
 #
 # Now we can vary the amount of noise added and observe how this affects
 # the amplitude estimate.
-# Here we observe that as the noise is increased the estimate error increases.
 
-noise_std = []
-error = []
+raw = mne_nirs.simulation.simulate_nirs_raw(
+    sfreq=sfreq, sig_dur=60 * 30, amplitude=amp, isi_min=15., isi_max=45.)
+cov = mne.Covariance(np.ones(1) * 1e-11, raw.ch_names,
+                     raw.info['bads'], raw.info['projs'], nfree=0)
+raw = mne.simulation.add_noise(raw, cov,
+                               iir_filter=[1., -0.58853134, -0.29575669,
+                                           -0.52246482, 0.38735476,
+                                           0.02428681])
+labels, glm_est = run_GLM(raw, design_matrix)
 
-for std in np.arange(1, 10):
-    for repeat in range(5):
-        raw = mne_nirs.simulation.simulate_nirs_raw(
-            sfreq=sfreq, sig_dur=60 * 10, amplitude=amp)
-        raw._data += np.random.randn(raw._data.shape[1]) * 1.e-6 * std
+plt.plot(raw.times, raw_noise_free.get_data().T)
+plt.plot(raw.times, raw.get_data().T, alpha=0.3)
+plt.plot(raw.times, glm_est[labels[0]].theta[0] * design_matrix["A"].values)
+plt.xlabel("Time (s)")
+plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 
-        design_matrix = make_first_level_design_matrix(
-            raw, stim_dur=5.0, drift_order=1, drift_model='polynomial')
+print("Estimate:", glm_est[labels[0]].theta[0],
+      "  MSE:", glm_est[labels[0]].MSE)
 
-        labels, glm_estimates = run_GLM(raw, design_matrix)
-
-        noise_std.append(np.std(raw._data))
-        error_abs = glm_estimates[labels[0]].theta[0] - amp * 1.e-6
-        error_percentage = error_abs / (amp * 1.e-6)
-        error.append(error_percentage * 100)
-
-sns.scatterplot(noise_std, error)
-plt.xlabel("Std of signal + noise")
-plt.ylabel("Estimate error (%)")
-plt.ylim(-30, 30)
-plt.hlines(np.mean(error), 0.1e-5, 1e-5, linestyles='dashed')
-plt.vlines(3.e-6, -100, 100, linestyles='dashed')
