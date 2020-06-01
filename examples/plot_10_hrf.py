@@ -16,11 +16,11 @@ An alternative epoching style analysis on the same data can be
 viewed in the
 `MNE documentation <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
 
-The GLM analysis is a wrapper over the excellent
+This GLM analysis is a wrapper over the excellent
 `Nilearn stats <https://github.com/nilearn/nilearn/tree/master/nilearn/stats>`_.
 
 .. warning::
-      This is a work in progress. Suggestions and comments are appreciated.
+      This is a work in progress. Comments are appreciated. To provide feedback please create a github issue.
 
 .. contents:: Page contents
    :local:
@@ -114,7 +114,7 @@ raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
 #
 # We then split the data in to
 # short channels which predominantly contain systemic responses and
-# long channels which have both neural and systemic contriubtions.
+# long channels which have both neural and systemic contributions.
 
 short_chs = get_short_channels(raw_haemo)
 raw_haemo = get_long_channels(raw_haemo)
@@ -210,7 +210,7 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # Examine expected response
 # -------------------------
 #
-# The matrices above can be a bit abstract, as they encompase multiple 
+# The matrices above can be a bit abstract as they encompase multiple 
 # conditons and regressors.
 # Instead we can examine a single condition.
 # Here we observe the boxcar function for a single condition,
@@ -218,7 +218,7 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # We also view the expected neural response using the HRF specified above,
 # we observe that each time a stimulus is presented there is an expected
 # brain response that lags the stimulus onset and consists of a large positive
-# response followed by an undershoot.
+# component followed by an undershoot.
 
 s = mne_nirs.experimental_design.create_boxcar(raw_intensity)
 plt.plot(raw_intensity.times, s[:, 1])
@@ -257,8 +257,8 @@ labels, glm_est = run_GLM(data_subset, design_matrix)
 # right hand is larger than the left. And the values are similar to what
 # is seen in the epoching tutorial.
 
-plt.scatter(design_matrix.columns[:3], glm_est[labels[0]].theta[:3] * 1e6)
-plt.scatter(design_matrix.columns[:3], glm_est[labels[1]].theta[:3] * 1e6)
+plt.scatter(design_matrix.columns[:3], glm_est[labels[0]].theta[:3])
+plt.scatter(design_matrix.columns[:3], glm_est[labels[1]].theta[:3])
 plt.xlabel("Experiment Condition")
 plt.ylabel("Haemoglobin (μM)")
 plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
@@ -321,7 +321,10 @@ plot_GLM_topo(raw_haemo, labels, glm_est, design_matrix,
 #    Wickham, Hadley. "Tidy data." Journal of Statistical Software 59.10 (2014): 1-23.
 #
 # Here we export the data in a tidy pandas data frame. Data is exported in
-# long format by default, but can be converted to wide format.
+# long format by default.
+# A helper function is also provided to convert the long data to wide format.
+# The long to wide conversion also adds some additonal derived data, such as
+# if a significant response (p<0.05) was observed.
 
 
 df = _GLM_to_tidy_long(raw_haemo, labels, glm_est, design_matrix)
