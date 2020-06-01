@@ -4,7 +4,7 @@
 GLM Analysis (Measured Data)
 ============================
 
-In this example we analyse a real measured multichannel fNIRS
+In this example we analyse data from a real multichannel fNIRS
 experiment (see :ref:`tut-fnirs-hrf-sim` for a simplified simulated
 analysis). The experiment consists of three conditions
 1) tapping on the left hand,
@@ -78,8 +78,8 @@ raw_intensity.resample(1.0)
 # Clean up annotations before analysis
 # ------------------------------------
 #
-# Here I update the annotation names and remove annotations that indicated
-# the experiment began and finished.
+# Here we update the annotations by assigning names to each trigger number
+# and remove annotations that indicated when the experiment began and finished.
 
 new_des = [des for des in raw_intensity.annotations.description]
 new_des = ['Control' if x == "1.0" else x for x in new_des]
@@ -95,8 +95,16 @@ raw_intensity.annotations.crop(35, 2967)
 # Preprocess NIRS data
 # --------------------
 #
-# Convert the raw data to haemoglobin concentration and keep just long
-# channels which should contain neural responses.
+# .. sidebar:: Relevant literature
+#
+#    Tachtsidis, Ilias, and Felix Scholkmann. "False positives and false
+#    negatives in functional near-infrared spectroscopy: issues, challenges,
+#    and the way forward." Neurophotonics 3.3 (2016): 031405.
+#
+# Next we convert the raw data to haemoglobin concentration.
+# We then split the data in to 
+# short channels which predominantly contain systemic responses and
+# long channels which have both neural and systemic contriubtions.
 
 raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
 raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
@@ -109,7 +117,12 @@ raw_haemo = mne_nirs.utils.get_long_channels(raw_haemo)
 # View experiment events
 # ----------------------
 #
-# First we view the experiment using MNEs plot events.
+# Next we examine the timing and order of events in this experiment.
+# There are several options for how to view event information.
+# The first option is to use MNE's plot events command.
+# Here each dot represents when an event started.
+# We observe that the order of conditions was randomised and the time between
+# events is also randomised.
 
 events, _ = mne.events_from_annotations(raw_haemo)
 event_dict = {'Control': 1, 'Tapping/Left': 2, 'Tapping/Right': 3}
@@ -119,13 +132,15 @@ mne.viz.plot_events(events, event_id=event_dict,
 
 ###############################################################################
 #
-# Next we view the same information but displayed as a block design.
+# The previous plot did not illustrate the duration that an event lasted for.
+# Alternatively, we can view the experiment using a boxcar plot, where the 
+# line is raised for the duration of the stimulus/condition.
 
 s = mne_nirs.experimental_design.create_boxcar(raw_haemo)
 fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(15, 6))
 plt.plot(raw_haemo.times, s, axes=axes)
 plt.legend(["Control", "Left", "Right"], loc="upper right")
-plt.xlabel("Time (s)")
+plt.xlabel("Time (s)");
 
 
 ###############################################################################
