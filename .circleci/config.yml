@@ -64,6 +64,7 @@ jobs:
               pip uninstall -y nilearn mne
               python -m pip install --user --upgrade --progress-bar off https://github.com/nilearn/nilearn/archive/master.zip
               python -m pip install --user --upgrade --progress-bar off https://codeload.github.com/mne-tools/mne-python/zip/master
+              python -m pip install --user --upgrade --progress-bar off https://codeload.github.com/larsoner/sphinx-bootstrap-divs/zip/master
               python -m pip install --user -e .
 
         - save_cache:
