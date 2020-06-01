@@ -317,7 +317,6 @@ plot_GLM_topo(raw_haemo, labels, glm_est, design_matrix,
 #
 # .. sidebar:: Relevant literature
 #
-#    The format of data adheres to principles from...  
 #    Wickham, Hadley. "Tidy data." Journal of Statistical Software 59.10 (2014): 1-23.
 #
 # Here we export the data in a tidy pandas data frame. Data is exported in
