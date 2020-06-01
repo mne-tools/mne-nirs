@@ -12,6 +12,9 @@ analysis). The experiment consists of three conditions
 3) a control condition where the participant does nothing.
 We use a GLM analysis to examine the neural activity associated with
 the different tapping conditions.
+An alternative epoching style analysis on the same data can be
+viewed in the
+`MNE documentations <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
 
 The GLM analysis is a wrapper over the excellent
 `Nilearn stats <https://github.com/nilearn/nilearn/tree/master/nilearn/stats>`_.
@@ -222,8 +225,8 @@ plt.ylabel("Amplitude")
 
 ###############################################################################
 #
-# Fit GLM to estimate response
-# ----------------------------
+# Fit GLM and obtain response estimates for each experimental condition
+# ---------------------------------------------------------------------
 #
 # .. sidebar:: Relevant literature
 #
@@ -256,11 +259,9 @@ plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 plt.hlines([0.0], 0, 2)
 
 
-
 ###############################################################################
 #
 # We can also view the contriubution from the drift and constant factors.
-
 
 plt.scatter(design_matrix.columns[3:7], glm_est[labels[0]].theta[3:7] * 1e6)
 plt.scatter(design_matrix.columns[3:7], glm_est[labels[1]].theta[3:7] * 1e6)
@@ -281,9 +282,10 @@ plt.ylabel("Estimated contribution")
 plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 plt.hlines([0.0], 0, 1)
 
+
 ###############################################################################
-# View GLM results for all sensors
-# --------------------------------
+# View GLM results for all sensors and view topographic distribution
+# ------------------------------------------------------------------
 #
 # Lastly we can run the GLM analysis on all sensors and plot the result on a
 # topomap.
