@@ -321,9 +321,10 @@ plot_GLM_topo(raw_haemo, labels, glm_est, design_matrix,
 #
 # Here we export the data in a tidy pandas data frame. Data is exported in
 # long format by default.
-# A helper function is also provided to convert the long data to wide format.
+# However, a helper function is also provided to convert the long data to wide format.
 # The long to wide conversion also adds some additonal derived data, such as
-# if a significant response (p<0.05) was observed.
+# if a significant response (p<0.05) was observed, which sensor and detector is
+# in the channel, which chroma, etc.
 
 
 df = _GLM_to_tidy_long(raw_haemo, labels, glm_est, design_matrix)
