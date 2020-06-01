@@ -20,8 +20,7 @@ The GLM analysis is a wrapper over the excellent
 `Nilearn stats <https://github.com/nilearn/nilearn/tree/master/nilearn/stats>`_.
 
 .. warning::
-      This is a work in progress. Suggestions of improvements are
-      appreciated. I am finalising the code, then will fix the text.
+      This is a work in progress. Suggestions and comments are appreciated.
 
 .. contents:: Page contents
    :local:
@@ -211,8 +210,15 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # Examine expected response
 # -------------------------
 #
-# We can also look at a single experimental condition with a boxcar
-# function representing the stimulus, and the expected neural response.
+# The matrices above can be a bit abstract, as they encompase multiple 
+# conditons and regressors.
+# Instead we can examine a single condition.
+# Here we observe the boxcar function for a single condition,
+# this illustrates when the stimulus was active.
+# We also view the expected neural response using the HRF specified above,
+# we observe that each time a stimulus is presented there is an expected
+# brain response that lags the stimulus onset and consists of a large positive
+# response followed by an undershoot.
 
 s = mne_nirs.experimental_design.create_boxcar(raw_intensity)
 plt.plot(raw_intensity.times, s[:, 1])
@@ -225,8 +231,8 @@ plt.ylabel("Amplitude")
 
 ###############################################################################
 #
-# Fit GLM and obtain response estimates for each experimental condition
-# ---------------------------------------------------------------------
+# Fit GLM to subset of data and estimate response for each experimental condition
+# -------------------------------------------------------------------------------
 #
 # .. sidebar:: Relevant literature
 #
@@ -284,8 +290,8 @@ plt.hlines([0.0], 0, 1)
 
 
 ###############################################################################
-# View GLM results for all sensors and view topographic distribution
-# ------------------------------------------------------------------
+# Fit GLM to all data and view topographic distribution
+# -----------------------------------------------------
 #
 # Lastly we can run the GLM analysis on all sensors and plot the result on a
 # topomap.
@@ -308,6 +314,14 @@ plot_GLM_topo(raw_haemo, labels, glm_est, design_matrix,
 #       likely to change. These functions are marked with an underscore (_)
 #       at the start of their name to indicate they are not public functions
 #       and have no promise they will be here next week.
+#
+# .. sidebar:: Relevant literature
+#
+#    The format of data adheres to principles from...  
+#    Wickham, Hadley. "Tidy data." Journal of Statistical Software 59.10 (2014): 1-23.
+#
+# Here we export the data in a tidy pandas data frame. Data is exported in
+# long format by default, but can be converted to wide format.
 
 
 df = _GLM_to_tidy_long(raw_haemo, labels, glm_est, design_matrix)
