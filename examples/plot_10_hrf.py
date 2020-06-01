@@ -42,7 +42,8 @@ from mne_nirs.statistics import run_GLM
 from mne_nirs.visualisation import plot_GLM_topo
 
 from nilearn.reporting import plot_design_matrix
-from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide
+from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide,
+      get_short_channels, get_long_channels
 
 
 ###############################################################################
@@ -94,6 +95,13 @@ raw_intensity.annotations.crop(35, 2967)
 ###############################################################################
 # Preprocess NIRS data
 # --------------------
+# Next we convert the raw data to haemoglobin concentration.
+
+raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
+raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
+
+
+###############################################################################
 #
 # .. sidebar:: Relevant literature
 #
@@ -101,16 +109,12 @@ raw_intensity.annotations.crop(35, 2967)
 #    negatives in functional near-infrared spectroscopy: issues, challenges,
 #    and the way forward." Neurophotonics 3.3 (2016): 031405.
 #
-# Next we convert the raw data to haemoglobin concentration.
 # We then split the data in to 
 # short channels which predominantly contain systemic responses and
 # long channels which have both neural and systemic contriubtions.
 
-raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
-raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
-
-short_chans = mne_nirs.utils.get_short_channels(raw_haemo)
-raw_haemo = mne_nirs.utils.get_long_channels(raw_haemo)
+short_chs = get_short_channels(raw_haemo)
+raw_haemo = get_long_channels(raw_haemo)
 
 
 ###############################################################################
@@ -163,10 +167,10 @@ design_matrix = make_first_level_design_matrix(raw_intensity,
 # Next we add the mean of the short channels to the design matrix
 # as these channels contain systemic but not neural responses.
 
-design_matrix["ShortHbO"] = np.mean(short_chans.copy().pick(
+design_matrix["ShortHbO"] = np.mean(short_chs.copy().pick(
                                     picks="hbo").get_data(), axis=0)
 
-design_matrix["ShortHbR"] = np.mean(short_chans.copy().pick(
+design_matrix["ShortHbR"] = np.mean(short_chs.copy().pick(
                                     picks="hbr").get_data(), axis=0)
 
 
