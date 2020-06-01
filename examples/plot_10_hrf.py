@@ -270,6 +270,10 @@ plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 plt.hlines([0.0], 0, 4)
 
 
+###############################################################################
+#
+# We can also view the contriubution from the other fitted factors.
+
 plt.scatter(design_matrix.columns[7:], glm_est[labels[0]].theta[7:] * 1e6)
 plt.scatter(design_matrix.columns[7:], glm_est[labels[1]].theta[7:] * 1e6)
 plt.xlabel("Model Component")
