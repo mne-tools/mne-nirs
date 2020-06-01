@@ -62,7 +62,7 @@ from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide
 #    Optodes were placed over the motor cortex using the standard NIRX motor
 #    montage, but with 8 short channels added (see their web page for details). 
 #    To view the sensor locations run
-#    :python:`raw_intensity.plot_sensors()`.
+#    `raw_intensity.plot_sensors()`.
 #    A sound was presented to indicate which hand the participant should tap.
 #    Participants taped their thumb to fingers for 5s.
 #    Conditions were presented in a random order with a randomised inter
@@ -195,7 +195,8 @@ plt.ylabel("Amplitude")
 # First we analyse just the first two channels which correspond HbO and HbR
 # of a single source detector pair.
 
-labels, glm_est = run_GLM(raw_haemo.copy().pick(picks=range(2)), design_matrix)
+data_subset = raw_haemo.copy().pick(picks=range(2))
+labels, glm_est = run_GLM(data_subset, design_matrix)
 
 
 ###############################################################################
