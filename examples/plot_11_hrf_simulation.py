@@ -156,11 +156,10 @@ raw = mne.simulation.add_noise(raw, cov,
                                            0.02428681])
 labels, glm_est = run_GLM(raw, design_matrix)
 
-plt.plot(raw.times, raw_noise_free.get_data().T)
 plt.plot(raw.times, raw.get_data().T, alpha=0.3)
 plt.plot(raw.times, glm_est[labels[0]].theta[0] * design_matrix["A"].values)
 plt.xlabel("Time (s)")
-plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
+plt.legend(["Noisy Data", "GLM Estimate"])
 
 print("Estimate:", glm_est[labels[0]].theta[0],
       "  MSE:", glm_est[labels[0]].MSE)
