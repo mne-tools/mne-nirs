@@ -160,11 +160,15 @@ plt.xlabel("Time (s)");
 #    and 
 #    `design matrix examples <https://5712-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/04_glm_first_level_models/plot_design_matrix.html>`_.
 #
-# Next we create a model of our expected neural response to fit the data to.
-# We model the expected neural response using the SPM haemodynamic response
-# function combined with the known stimulus events (as described above).
+# Next we create a model to fit our data to.
+# The model consists of various components to model different things we assume
+# contribute to the measured signal.
+# We model the expected neural response for each experimental condition
+# using the SPM haemodynamic response
+# function combined with the known stimulus event times and durations
+# (as described above).
 # We also include a third order polynomial drift and constant to model
-# slow fluctuations in the data and a constant DC shift in the signal.
+# slow fluctuations in the data and a constant DC shift.
 
 design_matrix = make_first_level_design_matrix(raw_intensity,
                                                hrf_model='spm', stim_dur=5.0,
@@ -174,9 +178,10 @@ design_matrix = make_first_level_design_matrix(raw_intensity,
 
 ###############################################################################
 #
-# We also addthe mean of the short channels to the design matrix.
+# We also add the mean of the short channels to the design matrix.
 # In theory these channels contain only systemic components, so including
 # them in the design matrix allows us to estimate the neural component
+# related to each experimental condition
 # uncontaminated by systemic effects.
 
 design_matrix["ShortHbO"] = np.mean(short_chs.copy().pick(
