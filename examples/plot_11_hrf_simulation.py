@@ -127,6 +127,9 @@ raw = mne.simulation.add_noise(raw, cov,
                                iir_filter=[1., -0.58853134, -0.29575669,
                                            -0.52246482, 0.38735476,
                                            0.02428681])
+design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
+                                               drift_order=1,
+                                               drift_model='polynomial')
 labels, glm_est = run_GLM(raw, design_matrix)
 
 plt.plot(raw.times, raw_noise_free.get_data().T)
