@@ -4,21 +4,23 @@
 GLM Analysis (Measured Data)
 ============================
 
-This document is a work in progress.
-It is a first attempt to add GLM analysis to MNE processing of NIRS data.
+In this example we analyse data from a real multichannel fNIRS
+experiment (see :ref:`tut-fnirs-hrf-sim` for a simplified simulated
+analysis). The experiment consists of three conditions
+1) tapping on the left hand,
+2) tapping on the right hand,
+3) a control condition where the participant does nothing.
+We use a GLM analysis to examine the neural activity associated with
+the different tapping conditions.
+An alternative epoching style analysis on the same data can be
+viewed in the
+`MNE documentation <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
 
-This is basically a wrapper over the excellent Nilearn stats.
-https://github.com/nilearn/nilearn/tree/master/nilearn/stats .
-
-Currently the analysis is only being run on the first third of the measurement
-to meet github actions memory constraints.
-This means the results are noisier than the MNE fnirs tutorial.
-
+This GLM analysis is a wrapper over the excellent
+`Nilearn stats <https://github.com/nilearn/nilearn/tree/master/nilearn/stats>`_.
 
 .. warning::
-      This is a work in progress. Suggestions of improvements are
-      appreciated. I am finalising the code, then will fix the text.
-
+      This is a work in progress. Comments are appreciated. To provide feedback please create a github issue.
 
 .. contents:: Page contents
    :local:
@@ -42,6 +44,7 @@ from mne_nirs.statistics import run_GLM
 from mne_nirs.visualisation import plot_GLM_topo
 
 from nilearn.reporting import plot_design_matrix
+from mne_nirs.utils import get_long_channels, get_short_channels
 from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide
 
 
@@ -49,13 +52,28 @@ from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide
 # Import raw NIRS data
 # --------------------
 #
-# Import the motor tapping data also used in MNE tutorial.
-# Resample to meet github memory constraints.
+# First we import the motor tapping data, this data is also
+# described and used in the
+# `MNE fNIRS tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
+#
+# After reading the data we resample down to 1Hz
+# to meet github memory constraints.
+#
+# .. collapse:: Data description (click to expand)
+#    :class: success
+#
+#    Optodes were placed over the motor cortex using the standard NIRX motor
+#    montage, but with 8 short channels added (see their web page for details).
+#    To view the sensor locations run
+#    `raw_intensity.plot_sensors()`.
+#    A sound was presented to indicate which hand the participant should tap.
+#    Participants taped their thumb to fingers for 5s.
+#    Conditions were presented in a random order with a randomised inter
+#    stimulus interval.
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
-raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir,
-                                     verbose=True).load_data()
+raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
 raw_intensity.resample(1.0)
 
 
@@ -63,8 +81,9 @@ raw_intensity.resample(1.0)
 # Clean up annotations before analysis
 # ------------------------------------
 #
-# Here I update the annotation names and remove annotations that indicated
-# the experiment began and finished.
+# Next we update the annotations by assigning names to each trigger ID.
+# Then we crop the recording to the section containing our
+# experimental conditions.
 
 new_des = [des for des in raw_intensity.annotations.description]
 new_des = ['Control' if x == "1.0" else x for x in new_des]
@@ -79,24 +98,40 @@ raw_intensity.annotations.crop(35, 2967)
 ###############################################################################
 # Preprocess NIRS data
 # --------------------
-#
-# Convert the raw data to haemoglobin concentration and keep just long
-# channels which should contain neural responses.
+# Next we convert the raw data to haemoglobin concentration.
 
 raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
 raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
 
-short_chans = mne_nirs.utils.get_short_channels(raw_haemo)
-raw_haemo = mne_nirs.utils.get_long_channels(raw_haemo)
+
+###############################################################################
+#
+# .. sidebar:: Relevant literature
+#
+#    Tachtsidis, Ilias, and Felix Scholkmann. "False positives and false
+#    negatives in functional near-infrared spectroscopy: issues, challenges,
+#    and the way forward." Neurophotonics 3.3 (2016): 031405.
+#
+# We then split the data in to
+# short channels which predominantly contain systemic responses and
+# long channels which have both neural and systemic contributions.
+
+short_chs = get_short_channels(raw_haemo)
+raw_haemo = get_long_channels(raw_haemo)
 
 
 ###############################################################################
 # View experiment events
 # ----------------------
 #
-# First we view the experiment using MNEs plot events.
+# Next we examine the timing and order of events in this experiment.
+# There are several options for how to view event information.
+# The first option is to use MNE's plot events command.
+# Here each dot represents when an event started.
+# We observe that the order of conditions was randomised and the time between
+# events is also randomised.
 
-events, _ = mne.events_from_annotations(raw_haemo)
+events, _ = mne.events_from_annotations(raw_haemo, verbose=False)
 event_dict = {'Control': 1, 'Tapping/Left': 2, 'Tapping/Right': 3}
 mne.viz.plot_events(events, event_id=event_dict,
                     sfreq=raw_haemo.info['sfreq'])
@@ -104,23 +139,38 @@ mne.viz.plot_events(events, event_id=event_dict,
 
 ###############################################################################
 #
-# Next we view the same information but displayed as a block design.
+# The previous plot did not illustrate the duration that an event lasted for.
+# Alternatively, we can view the experiment using a boxcar plot, where the
+# line is raised for the duration of the stimulus/condition.
 
 s = mne_nirs.experimental_design.create_boxcar(raw_haemo)
 fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(15, 6))
 plt.plot(raw_haemo.times, s, axes=axes)
 plt.legend(["Control", "Left", "Right"], loc="upper right")
-plt.xlabel("Time (s)")
+plt.xlabel("Time (s)");
 
 
 ###############################################################################
 # Create design matrix
 # --------------------
 #
-# This analysis specifies the experiment using a design matrix which
-# is created and plotted below.
-# In this example we use the standard SPM haemodynamic response function and
-# include a third order polynomial drift.
+# .. sidebar:: Relevant literature
+#
+#    For further discussion on design matrices see
+#    the NILearn examples. Specifically the 
+#    `first level model <https://5712-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/plot_first_level_model_details.html>`_
+#    and 
+#    `design matrix examples <https://5712-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/04_glm_first_level_models/plot_design_matrix.html>`_.
+#
+# Next we create a model to fit our data to.
+# The model consists of various components to model different things we assume
+# contribute to the measured signal.
+# We model the expected neural response for each experimental condition
+# using the SPM haemodynamic response
+# function combined with the known stimulus event times and durations
+# (as described above).
+# We also include a third order polynomial drift and constant to model
+# slow fluctuations in the data and a constant DC shift.
 
 design_matrix = make_first_level_design_matrix(raw_intensity,
                                                hrf_model='spm', stim_dur=5.0,
@@ -130,13 +180,16 @@ design_matrix = make_first_level_design_matrix(raw_intensity,
 
 ###############################################################################
 #
-# Next we add the mean of the short channels to the design matrix
-# as these channels contain systemic but not neural responses.
+# We also add the mean of the short channels to the design matrix.
+# In theory these channels contain only systemic components, so including
+# them in the design matrix allows us to estimate the neural component
+# related to each experimental condition
+# uncontaminated by systemic effects.
 
-design_matrix["ShortHbO"] = np.mean(short_chans.copy().pick(
+design_matrix["ShortHbO"] = np.mean(short_chs.copy().pick(
                                     picks="hbo").get_data(), axis=0)
 
-design_matrix["ShortHbR"] = np.mean(short_chans.copy().pick(
+design_matrix["ShortHbR"] = np.mean(short_chs.copy().pick(
                                     picks="hbr").get_data(), axis=0)
 
 
@@ -144,6 +197,10 @@ design_matrix["ShortHbR"] = np.mean(short_chans.copy().pick(
 #
 # And we display a summary of the design matrix
 # using standard Nilearn reporting functions.
+# The first three columns represent the SPM HRF convolved with our stimulus
+# event information.
+# The next columns illustrate the drift and constant components.
+# The last columns illustrate the short channel signals.
 
 fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
 fig = plot_design_matrix(design_matrix, ax=ax1)
@@ -153,8 +210,15 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # Examine expected response
 # -------------------------
 #
-# We can also look at a single experimental condition with a boxcar
-# function representing the stimulus, and the expected neural response.
+# The matrices above can be a bit abstract as they encompase multiple 
+# conditons and regressors.
+# Instead we can examine a single condition.
+# Here we observe the boxcar function for a single condition,
+# this illustrates when the stimulus was active.
+# We also view the expected neural response using the HRF specified above,
+# we observe that each time a stimulus is presented there is an expected
+# brain response that lags the stimulus onset and consists of a large positive
+# component followed by an undershoot.
 
 s = mne_nirs.experimental_design.create_boxcar(raw_intensity)
 plt.plot(raw_intensity.times, s[:, 1])
@@ -166,14 +230,22 @@ plt.ylabel("Amplitude")
 
 
 ###############################################################################
-# Fit GLM to estimate response
-# ----------------------------
+#
+# Fit GLM to subset of data and estimate response for each experimental condition
+# -------------------------------------------------------------------------------
+#
+# .. sidebar:: Relevant literature
+#
+#    Huppert TJ. Commentary on the statistical properties of noise and its
+#    implication on general linear models in functional near-infrared
+#    spectroscopy. Neurophotonics. 2016;3(1)
 #
 # We run a GLM fit for the data and experiment matrix.
 # First we analyse just the first two channels which correspond HbO and HbR
 # of a single source detector pair.
 
-labels, glm_est = run_GLM(raw_haemo.copy().pick(picks=range(2)), design_matrix)
+data_subset = raw_haemo.copy().pick(picks=range(2))
+labels, glm_est = run_GLM(data_subset, design_matrix)
 
 
 ###############################################################################
@@ -191,16 +263,40 @@ plt.xlabel("Experiment Condition")
 plt.ylabel("Haemoglobin (μM)")
 plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 plt.hlines([0.0], 0, 2)
-plt.show()
 
 
 ###############################################################################
-# View GLM results for all sensors
-# --------------------------------
 #
-# Lastly we run the GLM analysis on all sensors and plot the result on a
-# toppmap.
-# We see the same result as in the MNE tutorial that activation is largest
+# We can also view the contriubution from the drift and constant factors.
+
+plt.scatter(design_matrix.columns[3:7], glm_est[labels[0]].theta[3:7] * 1e6)
+plt.scatter(design_matrix.columns[3:7], glm_est[labels[1]].theta[3:7] * 1e6)
+plt.xlabel("Model Component")
+plt.ylabel("Estimated contribution")
+plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
+plt.hlines([0.0], 0, 3)
+
+
+###############################################################################
+#
+# And we can examine the contriubution from our short channel regression.
+
+plt.scatter(design_matrix.columns[7:], glm_est[labels[0]].theta[7:])
+plt.scatter(design_matrix.columns[7:], glm_est[labels[1]].theta[7:])
+plt.xlabel("Model Component")
+plt.ylabel("Estimated contribution")
+plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
+plt.hlines([0.0], 0, 1)
+
+
+###############################################################################
+# Fit GLM to all data and view topographic distribution
+# -----------------------------------------------------
+#
+# Lastly we can run the GLM analysis on all sensors and plot the result on a
+# topomap.
+# We see the same result as in the MNE tutorial,
+# that activation is largest
 # contralateral to the tapping side. Also note that HbR tends to be the
 # negative sof HbO as expected.
 
@@ -218,6 +314,17 @@ plot_GLM_topo(raw_haemo, labels, glm_est, design_matrix,
 #       likely to change. These functions are marked with an underscore (_)
 #       at the start of their name to indicate they are not public functions
 #       and have no promise they will be here next week.
+#
+# .. sidebar:: Relevant literature
+#
+#    Wickham, Hadley. "Tidy data." Journal of Statistical Software 59.10 (2014): 1-23.
+#
+# Here we export the data in a tidy pandas data frame. Data is exported in
+# long format by default.
+# However, a helper function is also provided to convert the long data to wide format.
+# The long to wide conversion also adds some additonal derived data, such as
+# if a significant response (p<0.05) was observed, which sensor and detector is
+# in the channel, which chroma, etc.
 
 
 df = _GLM_to_tidy_long(raw_haemo, labels, glm_est, design_matrix)
