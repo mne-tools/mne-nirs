@@ -10,8 +10,8 @@ analysis). The experiment consists of three conditions
 1) tapping on the left hand,
 2) tapping on the right hand,
 3) a control condition where the participant does nothing.
-We use a GLM analysis to examine the neural activity linked
-to the different tapping conditions.
+We use a GLM analysis to examine the neural activity associated with
+the different tapping conditions.
 
 The GLM analysis is a wrapper over the excellent
 `Nilearn stats <https://github.com/nilearn/nilearn/tree/master/nilearn/stats>`_.
@@ -79,8 +79,9 @@ raw_intensity.resample(1.0)
 # Clean up annotations before analysis
 # ------------------------------------
 #
-# Here we update the annotations by assigning names to each trigger number
-# and remove annotations that indicated when the experiment began and finished.
+# Next we update the annotations by assigning names to each trigger ID.
+# Then we crop the recording to the section containing our
+# experimental conditions.
 
 new_des = [des for des in raw_intensity.annotations.description]
 new_des = ['Control' if x == "1.0" else x for x in new_des]
@@ -128,7 +129,7 @@ raw_haemo = get_long_channels(raw_haemo)
 # We observe that the order of conditions was randomised and the time between
 # events is also randomised.
 
-events, _ = mne.events_from_annotations(raw_haemo)
+events, _ = mne.events_from_annotations(raw_haemo, verbose=False)
 event_dict = {'Control': 1, 'Tapping/Left': 2, 'Tapping/Right': 3}
 mne.viz.plot_events(events, event_id=event_dict,
                     sfreq=raw_haemo.info['sfreq'])
@@ -151,10 +152,19 @@ plt.xlabel("Time (s)");
 # Create design matrix
 # --------------------
 #
-# This analysis specifies the experiment using a design matrix which
-# is created and plotted below.
-# In this example we use the standard SPM haemodynamic response function and
-# include a third order polynomial drift.
+# .. sidebar:: Relevant literature
+#
+#    For more complete discussion on design matrices and the available options
+#    view the NILearn examples. Specifically the 
+#    `first level model example <https://5712-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/plot_first_level_model_details.html>`_
+#    and 
+#    `design matriux examples <https://5712-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/04_glm_first_level_models/plot_design_matrix.html>`_.
+#
+# Next we create a model of our expected neural response to fit the data to.
+# We model the expected neural response using the SPM haemodynamic response
+# function combined with the known stimulus events (as described above).
+# We also include a third order polynomial drift and constant to model
+# slow fluctuations in the data and a constant DC shift in the signal.
 
 design_matrix = make_first_level_design_matrix(raw_intensity,
                                                hrf_model='spm', stim_dur=5.0,
@@ -164,8 +174,10 @@ design_matrix = make_first_level_design_matrix(raw_intensity,
 
 ###############################################################################
 #
-# Next we add the mean of the short channels to the design matrix
-# as these channels contain systemic but not neural responses.
+# We also addthe mean of the short channels to the design matrix.
+# In theory these channels contain only systemic components, so including
+# them in the design matrix allows us to estimate the neural component
+# uncontaminated by systemic effects.
 
 design_matrix["ShortHbO"] = np.mean(short_chs.copy().pick(
                                     picks="hbo").get_data(), axis=0)
@@ -178,6 +190,10 @@ design_matrix["ShortHbR"] = np.mean(short_chs.copy().pick(
 #
 # And we display a summary of the design matrix
 # using standard Nilearn reporting functions.
+# The first three columns represent the SPM HRF convolved with our stimulus
+# event information.
+# The next columns illustrate the drift and constant components.
+# The last columns illustrate the short channel signals.
 
 fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
 fig = plot_design_matrix(design_matrix, ax=ax1)
@@ -233,8 +249,20 @@ plt.xlabel("Experiment Condition")
 plt.ylabel("Haemoglobin (μM)")
 plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 plt.hlines([0.0], 0, 2)
-plt.show()
 
+
+
+###############################################################################
+#
+# We can also view the contriubution from the other fitted factors.
+
+
+plt.scatter(design_matrix.columns[3:], glm_est[labels[0]].theta[3:] * 1e6)
+plt.scatter(design_matrix.columns[3:], glm_est[labels[1]].theta[3:] * 1e6)
+plt.xlabel("Model Component")
+plt.ylabel("Estimated contribution")
+plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
+plt.hlines([0.0], 0, 4)
 
 ###############################################################################
 # View GLM results for all sensors
