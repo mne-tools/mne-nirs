@@ -49,7 +49,15 @@ from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide
 # Import raw NIRS data
 # --------------------
 #
-# .. sidebar:: Data description
+# First we import the motor tapping data, this data is 
+# described and used in the also used in the
+# `MNE fNIRS tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
+#
+# After reading the data we resample down to 1Hz
+# to meet github memory constraints.
+#
+# .. collapse:: Data description
+#    :class: success
 #
 #    Optodes were placed over the motor cortex using the standard NIRX motor
 #    montage, but with 8 short channels added. 
@@ -57,13 +65,6 @@ from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide
 #    Participants taped their thumb to fingers for 5s.
 #    Conditions were presented in a random order with a randomised inter
 #    stimulus interval.
-#
-# First we import the motor tapping data, this data is 
-# described and used in the also used in the
-# `MNE fNIRS tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
-#
-# After reading the data we resample down to 1Hz
-# to meet github memory constraints.
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
