@@ -154,11 +154,11 @@ plt.xlabel("Time (s)");
 #
 # .. sidebar:: Relevant literature
 #
-#    For more complete discussion on design matrices and the available options
-#    view the NILearn examples. Specifically the 
-#    `first level model example <https://5712-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/plot_first_level_model_details.html>`_
+#    For further discussion on design matrices see
+#    the NILearn examples. Specifically the 
+#    `first level model <https://5712-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/plot_first_level_model_details.html>`_
 #    and 
-#    `design matriux examples <https://5712-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/04_glm_first_level_models/plot_design_matrix.html>`_.
+#    `design matrix examples <https://5712-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/04_glm_first_level_models/plot_design_matrix.html>`_.
 #
 # Next we create a model of our expected neural response to fit the data to.
 # We model the expected neural response using the SPM haemodynamic response
@@ -257,8 +257,16 @@ plt.hlines([0.0], 0, 2)
 # We can also view the contriubution from the other fitted factors.
 
 
-plt.scatter(design_matrix.columns[3:], glm_est[labels[0]].theta[3:] * 1e6)
-plt.scatter(design_matrix.columns[3:], glm_est[labels[1]].theta[3:] * 1e6)
+plt.scatter(design_matrix.columns[3:7], glm_est[labels[0]].theta[3:7] * 1e6)
+plt.scatter(design_matrix.columns[3:7], glm_est[labels[1]].theta[3:7] * 1e6)
+plt.xlabel("Model Component")
+plt.ylabel("Estimated contribution")
+plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
+plt.hlines([0.0], 0, 4)
+
+
+plt.scatter(design_matrix.columns[7:], glm_est[labels[0]].theta[7:] * 1e6)
+plt.scatter(design_matrix.columns[7:], glm_est[labels[1]].theta[7:] * 1e6)
 plt.xlabel("Model Component")
 plt.ylabel("Estimated contribution")
 plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
