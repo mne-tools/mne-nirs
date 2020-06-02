@@ -81,7 +81,7 @@ labels, glm_est = run_GLM(raw, design_matrix)
 
 print("Estimate:", glm_est[labels[0]].theta[0],
       "  MSE:", glm_est[labels[0]].MSE,
-      "  Error:", glm_est[labels[0]].theta[0] - amp*1e-6)
+      "  Error (uM):", 1e6*(glm_est[labels[0]].theta[0] - amp*1e-6))
 
 
 ###############################################################################
@@ -111,7 +111,7 @@ plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 
 print("Estimate:", glm_est[labels[0]].theta[0],
       "  MSE:", glm_est[labels[0]].MSE,
-      "  Error:", glm_est[labels[0]].theta[0] - amp*1e-6)
+      "  Error (uM):", 1e6*(glm_est[labels[0]].theta[0] - amp*1e-6))
 
 
 ###############################################################################
@@ -144,7 +144,7 @@ plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 
 print("Estimate:", glm_est[labels[0]].theta[0],
       "  MSE:", glm_est[labels[0]].MSE,
-      "  Error:", glm_est[labels[0]].theta[0] - amp*1e-6)
+      "  Error (uM):", 1e6*(glm_est[labels[0]].theta[0] - amp*1e-6))
 
 
 ###############################################################################
@@ -176,5 +176,5 @@ plt.legend(["Noisy Data", "GLM Estimate"])
 
 print("Estimate:", glm_est[labels[0]].theta[0],
       "  MSE:", glm_est[labels[0]].MSE,
-      "  Error:", glm_est[labels[0]].theta[0] - amp*1e-6)
+      "  Error (uM):", 1e6*(glm_est[labels[0]].theta[0] - amp*1e-6))
 
