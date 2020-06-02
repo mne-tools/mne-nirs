@@ -4,7 +4,7 @@
 GLM Analysis (Simulated Data)
 =============================
 
-In this example we simulate a block design NIRS experiment and analyse
+In this example we simulate a block design fNIRS experiment and analyse
 the simulated signal. We investigate the effect additive noise and
 measurement length has on response amplitude estimates.
 
@@ -48,7 +48,7 @@ amp = 4.
 
 raw = mne_nirs.simulation.simulate_nirs_raw(
     sfreq=sfreq, sig_dur=60 * 5, amplitude=amp, isi_min=15., isi_max=45.)
-raw.plot(duration=600, show_scrollbars=False)
+raw.plot(duration=300, show_scrollbars=False)
 
 
 ###############################################################################
@@ -70,7 +70,7 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # Estimate response on clean data
 # -------------------------------
 #
-# We can run the GLM analysis on the clean data.
+# Here we run the GLM analysis on the clean data.
 # The design matrix had three columns, so we get an estimate for our simulated
 # event, the first order drift, and the constant.
 # We see that the estimate of the first component is 4e-6 (4 uM),
@@ -80,7 +80,8 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 labels, glm_est = run_GLM(raw, design_matrix)
 
 print("Estimate:", glm_est[labels[0]].theta[0],
-      "  MSE:", glm_est[labels[0]].MSE)
+      "  MSE:", glm_est[labels[0]].MSE,
+      "  Error (uM):", 1e6*(glm_est[labels[0]].theta[0] - amp*1e-6))
 
 
 ###############################################################################
@@ -91,9 +92,8 @@ print("Estimate:", glm_est[labels[0]].theta[0],
 # but serves as a reference point for evaluating the estimation process.
 # We run the GLM analysis exactly as in the previous section
 # and plot the noisy data and the GLM fitted model.
-# The model estimate of the amplitude is reported reported
-# along with the mean square error of the fit, which matches closely to the
-# noise we added.
+# We print the response estimate and see that is close, but not exactly correct,
+# we observe the mean square error is similar to the added noise.
 
 # First take a copy of noise free data for comparison
 raw_noise_free = raw.copy()
@@ -101,14 +101,16 @@ raw_noise_free = raw.copy()
 raw._data += np.random.normal(0, np.sqrt(1e-11), raw._data.shape)
 labels, glm_est = run_GLM(raw, design_matrix)
 
-plt.plot(raw.times, raw_noise_free.get_data().T)
-plt.plot(raw.times, raw.get_data().T, alpha=0.3)
-plt.plot(raw.times, glm_est[labels[0]].theta[0] * design_matrix["A"].values)
+plt.plot(raw.times, raw_noise_free.get_data().T * 1e6)
+plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
+plt.plot(raw.times, glm_est[labels[0]].theta[0] * design_matrix["A"].values * 1e6)
 plt.xlabel("Time (s)")
+plt.ylabel("Haemoglobin (uM)")
 plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 
 print("Estimate:", glm_est[labels[0]].theta[0],
-      "  MSE:", glm_est[labels[0]].MSE)
+      "  MSE:", glm_est[labels[0]].MSE,
+      "  Error (uM):", 1e6*(glm_est[labels[0]].theta[0] - amp*1e-6))
 
 
 ###############################################################################
@@ -119,6 +121,7 @@ print("Estimate:", glm_est[labels[0]].theta[0],
 # Again, the same GLM procedure is run.
 # The estimate is reported below, and even though the signal was difficuly to
 # observe in the raw data, the GLM analysis has extracted an accurate estimate.
+# However, the error is greater for the colored than white noise. 
 
 raw = raw_noise_free.copy()
 cov = mne.Covariance(np.ones(1) * 1e-11, raw.ch_names,
@@ -127,48 +130,64 @@ raw = mne.simulation.add_noise(raw, cov,
                                iir_filter=[1., -0.58853134, -0.29575669,
                                            -0.52246482, 0.38735476,
                                            0.02428681])
+design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
+                                               drift_order=1,
+                                               drift_model='polynomial')
 labels, glm_est = run_GLM(raw, design_matrix)
 
-plt.plot(raw.times, raw_noise_free.get_data().T)
-plt.plot(raw.times, raw.get_data().T, alpha=0.3)
-plt.plot(raw.times, glm_est[labels[0]].theta[0] * design_matrix["A"].values)
+plt.plot(raw.times, raw_noise_free.get_data().T * 1e6)
+plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
+plt.plot(raw.times, glm_est[labels[0]].theta[0] * design_matrix["A"].values * 1e6)
 plt.xlabel("Time (s)")
+plt.ylabel("Haemoglobin (uM)")
 plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 
 print("Estimate:", glm_est[labels[0]].theta[0],
-      "  MSE:", glm_est[labels[0]].MSE)
+      "  MSE:", glm_est[labels[0]].MSE,
+      "  Error (uM):", 1e6*(glm_est[labels[0]].theta[0] - amp*1e-6))
 
 
 ###############################################################################
-# How does estimate error vary with added noise?
-# ----------------------------------------------
+# How does increasing the measurement length affect estimation accuracy?
+# ----------------------------------------------------------------------
 #
-# Now we can vary the amount of noise added and observe how this affects
-# the amplitude estimate.
-# Here we observe that as the noise is increased the estimate error increases.
+# The easiest way to reduce error in your response estimate is to collect more
+# data. Here we simulated increasing the recording time to 30 minutes.
+# We run the same analysis and observe that the error is reduced from
+# approximately 0.6 uM for 5 minutes of data to 0.25 uM for 30 minutes of data.
 
-noise_std = []
-error = []
+raw = mne_nirs.simulation.simulate_nirs_raw(
+    sfreq=sfreq, sig_dur=60 * 30, amplitude=amp, isi_min=15., isi_max=45.)
+cov = mne.Covariance(np.ones(1) * 1e-11, raw.ch_names,
+                     raw.info['bads'], raw.info['projs'], nfree=0)
+raw = mne.simulation.add_noise(raw, cov,
+                               iir_filter=[1., -0.58853134, -0.29575669,
+                                           -0.52246482, 0.38735476,
+                                           0.02428681])
 
-for std in np.arange(1, 10):
-    for repeat in range(5):
-        raw = mne_nirs.simulation.simulate_nirs_raw(
-            sfreq=sfreq, sig_dur=60 * 10, amplitude=amp)
-        raw._data += np.random.randn(raw._data.shape[1]) * 1.e-6 * std
+design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
+                                               drift_order=1,
+                                               drift_model='polynomial')
+labels, glm_est = run_GLM(raw, design_matrix)
 
-        design_matrix = make_first_level_design_matrix(
-            raw, stim_dur=5.0, drift_order=1, drift_model='polynomial')
+plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
+plt.plot(raw.times, glm_est[labels[0]].theta[0] * design_matrix["A"].values * 1e6)
+plt.xlabel("Time (s)")
+plt.ylabel("Haemoglobin (uM)")
+plt.legend(["Noisy Data", "GLM Estimate"])
 
-        labels, glm_estimates = run_GLM(raw, design_matrix)
+print("Estimate:", glm_est[labels[0]].theta[0],
+      "  MSE:", glm_est[labels[0]].MSE,
+      "  Error (uM):", 1e6*(glm_est[labels[0]].theta[0] - amp*1e-6))
 
-        noise_std.append(np.std(raw._data))
-        error_abs = glm_estimates[labels[0]].theta[0] - amp * 1.e-6
-        error_percentage = error_abs / (amp * 1.e-6)
-        error.append(error_percentage * 100)
 
-sns.scatterplot(noise_std, error)
-plt.xlabel("Std of signal + noise")
-plt.ylabel("Estimate error (%)")
-plt.ylim(-30, 30)
-plt.hlines(np.mean(error), 0.1e-5, 1e-5, linestyles='dashed')
-plt.vlines(3.e-6, -100, 100, linestyles='dashed')
+###############################################################################
+# Conclusion?
+# -----------
+#
+# In this example we have generated a noise free signal containing simulated
+# haemodynamic responses. We were then able to accurately estimate the amplitude
+# of the simulated signal. We then added noise and illustrated that the
+# estimate provided by the GLM was correct, but contained some error. We
+# observed that as the measurement time was increased that the estmate
+# error decreased.
