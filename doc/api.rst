@@ -18,7 +18,7 @@ Experimental Design and Analysis
 .. autosummary::
    :toctree: generated/
 
-   create_first_level_design_matrix
+   make_first_level_design_matrix
    create_boxcar
 
 
