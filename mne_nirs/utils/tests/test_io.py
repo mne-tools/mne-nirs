@@ -20,7 +20,7 @@ def test_io():
     raw_intensity.resample(0.2)
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
-    raw_haemo = mne_nirs.utils.get_long_channels(raw_haemo)
+    raw_haemo = mne_nirs.channels.get_long_channels(raw_haemo)
     raw_haemo.pick(picks=range(num_chans))
     design_matrix = make_first_level_design_matrix(raw_intensity,
                                                    hrf_model='spm',

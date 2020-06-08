@@ -8,7 +8,7 @@ import mne
 import numpy as np
 
 from mne.preprocessing.nirs import source_detector_distances
-from mne_nirs.utils import get_long_channels, get_short_channels
+from mne_nirs.channels import get_long_channels, get_short_channels
 
 
 def test_short_extraction():

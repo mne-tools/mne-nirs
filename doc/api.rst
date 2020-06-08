@@ -83,12 +83,12 @@ Simulation
    simulate_nirs_raw
 
 
-Utilities
----------
+Channels
+--------
 
-.. currentmodule:: mne_nirs.utils
+.. currentmodule:: mne_nirs.channels
 
-.. automodule:: mne_nirs.utils
+.. automodule:: mne_nirs.channels
    :no-members:
    :no-inherited-members:
 
@@ -97,3 +97,4 @@ Utilities
 
    get_short_channels
    get_long_channels
+   roi_picks

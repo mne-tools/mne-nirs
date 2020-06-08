@@ -30,6 +30,7 @@ import matplotlib.pyplot as plt
 
 import mne
 import mne_nirs
+from mne_nirs.channels import roi_picks
 
 
 ###############################################################################
@@ -46,7 +47,7 @@ fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
 raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir, verbose=True).load_data()
 raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
 raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
-raw_haemo = mne_nirs.utils.get_long_channels(raw_haemo)
+raw_haemo = mne_nirs.channels.get_long_channels(raw_haemo)
 
 raw_haemo = raw_haemo.filter(0.05, 0.7, h_trans_bandwidth=0.2,
                              l_trans_bandwidth=0.02)
@@ -129,3 +130,34 @@ mne.viz.plot_compare_evokeds(evoked_dict_anti, combine="mean", ci=0.95,
 
 for column, condition in enumerate(['Original Data', 'Cui Enhanced Data']):
     axes[column].set_title('{}'.format(condition))
+
+
+###############################################################################
+# Plot trials for each approach
+# -----------------------------
+#
+# Plot the epoch image for each approach. First we specify the source
+# detector pairs for analysis.
+
+left_sd_pairs = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 3],
+                 [2, 4], [3, 2], [3, 3], [4, 3], [4, 4]]
+right_sd_pairs = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7],
+                  [6, 8], [7, 6], [7, 7], [8, 7], [8, 8]]
+
+groups = dict(Left_ROI=roi_picks(raw_anti.pick(picks='hbo'), left_sd_pairs),
+              Right_ROI=roi_picks(raw_anti.pick(picks='hbo'), right_sd_pairs))
+
+
+###############################################################################
+# First we plot the epochs for the unprocessed data.
+
+epochs['Tapping'].pick(picks='hbo').plot_image(combine='mean',
+                                                    group_by=groups)
+
+
+###############################################################################
+# New we plot the epochs for the data processed with the Cui anti correlation
+# method.
+
+epochs_anti['Tapping'].pick(picks='hbo').plot_image(combine='mean',
+                                                    group_by=groups)
