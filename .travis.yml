@@ -77,7 +77,7 @@ install:
     - pip install https://codeload.github.com/mne-tools/mne-python/zip/master
     - python setup.py build
     - python setup.py install
-    - mne sys_info
+    - QT_QPA_PLATFORM=offscreen mne sys_info
     - python -c "import numpy; numpy.show_config()"
     - SRC_DIR=$(pwd)
     - cd ~
