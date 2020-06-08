@@ -83,8 +83,8 @@ Simulation
    simulate_nirs_raw
 
 
-Channel
--------
+Channels
+--------
 
 .. currentmodule:: mne_nirs.channels
 
@@ -97,3 +97,4 @@ Channel
 
    get_short_channels
    get_long_channels
+   roi_picks

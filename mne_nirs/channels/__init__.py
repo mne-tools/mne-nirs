@@ -5,3 +5,4 @@
 # License: BSD (3-clause)
 
 from ._short import get_short_channels, get_long_channels
+from ._roi import roi_picks
