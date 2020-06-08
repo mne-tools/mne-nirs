@@ -32,10 +32,11 @@ dependencies:
 - vtk
 - imageio>=2.6.1
 - pip:
-  - mne
+  - https://codeload.github.com/mne-tools/mne-python/zip/master
   - https://github.com/numpy/numpydoc/archive/master.zip
   - imageio-ffmpeg>=0.4.1
   - pyvista>=0.24
+  - pyvistaqt
   - mayavi
   - PySurfer[save_movie]
   - dipy --only-binary dipy
