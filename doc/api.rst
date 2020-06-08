@@ -83,12 +83,12 @@ Simulation
    simulate_nirs_raw
 
 
-Utilities
----------
+Channel
+-------
 
-.. currentmodule:: mne_nirs.utils
+.. currentmodule:: mne_nirs.channels
 
-.. automodule:: mne_nirs.utils
+.. automodule:: mne_nirs.channels
    :no-members:
    :no-inherited-members:
 

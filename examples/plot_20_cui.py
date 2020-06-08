@@ -46,7 +46,7 @@ fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
 raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir, verbose=True).load_data()
 raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
 raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
-raw_haemo = mne_nirs.utils.get_long_channels(raw_haemo)
+raw_haemo = mne_nirs.channels.get_long_channels(raw_haemo)
 
 raw_haemo = raw_haemo.filter(0.05, 0.7, h_trans_bandwidth=0.2,
                              l_trans_bandwidth=0.02)

@@ -44,7 +44,7 @@ from mne_nirs.statistics import run_GLM
 from mne_nirs.visualisation import plot_GLM_topo
 
 from nilearn.reporting import plot_design_matrix
-from mne_nirs.utils import get_long_channels, get_short_channels
+from mne_nirs.channels import get_long_channels, get_short_channels
 from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide
 
 
