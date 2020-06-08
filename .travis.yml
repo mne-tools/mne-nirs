@@ -74,6 +74,8 @@ install:
         unset -f cd;
       fi;
     # Suppress the parallel outputs for logging cleanliness
+    - pip uninstall -yq mne
+    - pip install https://codeload.github.com/mne-tools/mne-python/zip/master
     - python setup.py build
     - python setup.py install
     - mne sys_info
