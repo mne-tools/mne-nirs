@@ -74,7 +74,6 @@ install:
         unset -f cd;
       fi;
     # Suppress the parallel outputs for logging cleanliness
-    - pip uninstall -yq mne
     - pip install https://codeload.github.com/mne-tools/mne-python/zip/master
     - python setup.py build
     - python setup.py install
@@ -90,7 +89,7 @@ install:
 script:
   - mkdir for_test
   - cd for_test
-  - pytest -v --cov=mne_nirs --pyargs mne_nirs
+  - QT_QPA_PLATFORM=offscreen pytest -v --cov=mne_nirs --pyargs mne_nirs
 
 after_success:
   - cp .coverage $TRAVIS_BUILD_DIR
