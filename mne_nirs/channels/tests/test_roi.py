@@ -40,7 +40,9 @@ def test_roi_picks():
     assert len(picks) == 6
 
     # Test usage for ROI downstream functions
-    group_by = dict(Left_ROI=picks_pair_to_idx(raw, [[1, 1], [1, 2], [5, 13]]),
-                    Right_ROI=picks_pair_to_idx(raw, [[3, 3], [3, 11], [6, 8]]))
+    group_by = dict(Left_ROI=picks_pair_to_idx(raw, [[1, 1], [1, 2],
+                                                     [5, 13]]),
+                    Right_ROI=picks_pair_to_idx(raw, [[3, 3], [3, 11],
+                                                      [6, 8]]))
     assert group_by['Left_ROI'] == [0, 1, 2, 3, 34, 35]
     assert group_by['Right_ROI'] == [18, 19, 20, 21, 40, 41]
