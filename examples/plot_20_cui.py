@@ -30,7 +30,7 @@ import matplotlib.pyplot as plt
 
 import mne
 import mne_nirs
-from mne_nirs.channels import roi_picks
+from mne_nirs.channels import picks_pair_to_idx
 
 
 ###############################################################################
@@ -139,13 +139,13 @@ for column, condition in enumerate(['Original Data', 'Cui Enhanced Data']):
 # Plot the epoch image for each approach. First we specify the source
 # detector pairs for analysis.
 
-left_sd_pairs = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 3],
-                 [2, 4], [3, 2], [3, 3], [4, 3], [4, 4]]
-right_sd_pairs = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7],
-                  [6, 8], [7, 6], [7, 7], [8, 7], [8, 8]]
+left = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 3],
+        [2, 4], [3, 2], [3, 3], [4, 3], [4, 4]]
+right = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7],
+         [6, 8], [7, 6], [7, 7], [8, 7], [8, 8]]
 
-groups = dict(Left_ROI=roi_picks(raw_anti.pick(picks='hbo'), left_sd_pairs),
-              Right_ROI=roi_picks(raw_anti.pick(picks='hbo'), right_sd_pairs))
+groups = dict(Left_ROI=picks_pair_to_idx(raw_anti.pick(picks='hbo'), left),
+              Right_ROI=picks_pair_to_idx(raw_anti.pick(picks='hbo'), right))
 
 
 ###############################################################################
