@@ -30,7 +30,7 @@ import matplotlib.pyplot as plt
 
 import mne
 import mne_nirs
-from mne_nirs.channels import roi_picks
+from mne_nirs.channels import picks_pair_to_idx
 
 
 ###############################################################################
@@ -144,8 +144,8 @@ left_sd_pairs = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 3],
 right_sd_pairs = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7],
                   [6, 8], [7, 6], [7, 7], [8, 7], [8, 8]]
 
-groups = dict(Left_ROI=roi_picks(raw_anti.pick(picks='hbo'), left_sd_pairs),
-              Right_ROI=roi_picks(raw_anti.pick(picks='hbo'), right_sd_pairs))
+groups = dict(Left_ROI=picks_pair_to_idx(raw_anti.pick(picks='hbo'), left_sd_pairs),
+              Right_ROI=picks_pair_to_idx(raw_anti.pick(picks='hbo'), right_sd_pairs))
 
 
 ###############################################################################

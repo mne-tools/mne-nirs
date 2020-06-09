@@ -7,7 +7,7 @@ import numpy as np
 from mne.utils import warn
 
 
-def roi_picks(raw, sd_pairs, on_missing='error'):
+def picks_pair_to_idx(raw, sd_pairs, on_missing='error'):
     """
     Return a list of picks for specified source detector pairs.
 

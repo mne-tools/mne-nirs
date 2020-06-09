@@ -97,4 +97,4 @@ Channels
 
    get_short_channels
    get_long_channels
-   roi_picks
+   picks_pair_to_idx
