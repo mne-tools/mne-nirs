@@ -4,6 +4,7 @@ import numpy as np
 import re
 from mne.utils import warn
 
+
 def _GLM_to_tidy_long(data, labels, glm_estimates, design_matrix):
 
     theta_estimates = np.zeros((len(labels), len(design_matrix.columns)))
