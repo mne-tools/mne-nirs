@@ -77,11 +77,11 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # which was the amplitude we used in the simulation.
 # We also see that the mean square error of the model fit is close to zero.
 
-labels, glm_est = run_GLM(raw, design_matrix)
+glm_est = run_GLM(raw, design_matrix)
 
-print("Estimate:", glm_est[labels[0]].theta[0],
-      "  MSE:", glm_est[labels[0]].MSE,
-      "  Error (uM):", 1e6*(glm_est[labels[0]].theta[0] - amp*1e-6))
+print("Estimate:", glm_est['Simulated'].theta[0],
+      "  MSE:", glm_est['Simulated'].MSE,
+      "  Error (uM):", 1e6*(glm_est['Simulated'].theta[0] - amp*1e-6))
 
 
 ###############################################################################
@@ -99,18 +99,18 @@ print("Estimate:", glm_est[labels[0]].theta[0],
 raw_noise_free = raw.copy()
 
 raw._data += np.random.normal(0, np.sqrt(1e-11), raw._data.shape)
-labels, glm_est = run_GLM(raw, design_matrix)
+glm_est = run_GLM(raw, design_matrix)
 
 plt.plot(raw.times, raw_noise_free.get_data().T * 1e6)
 plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
-plt.plot(raw.times, glm_est[labels[0]].theta[0] * design_matrix["A"].values * 1e6)
+plt.plot(raw.times, glm_est['Simulated'].theta[0] * design_matrix["A"].values * 1e6)
 plt.xlabel("Time (s)")
 plt.ylabel("Haemoglobin (uM)")
 plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 
-print("Estimate:", glm_est[labels[0]].theta[0],
-      "  MSE:", glm_est[labels[0]].MSE,
-      "  Error (uM):", 1e6*(glm_est[labels[0]].theta[0] - amp*1e-6))
+print("Estimate:", glm_est['Simulated'].theta[0],
+      "  MSE:", glm_est['Simulated'].MSE,
+      "  Error (uM):", 1e6*(glm_est['Simulated'].theta[0] - amp*1e-6))
 
 
 ###############################################################################
@@ -121,7 +121,7 @@ print("Estimate:", glm_est[labels[0]].theta[0],
 # Again, the same GLM procedure is run.
 # The estimate is reported below, and even though the signal was difficuly to
 # observe in the raw data, the GLM analysis has extracted an accurate estimate.
-# However, the error is greater for the colored than white noise. 
+# However, the error is greater for the colored than white noise.
 
 raw = raw_noise_free.copy()
 cov = mne.Covariance(np.ones(1) * 1e-11, raw.ch_names,
@@ -133,18 +133,18 @@ raw = mne.simulation.add_noise(raw, cov,
 design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
                                                drift_order=1,
                                                drift_model='polynomial')
-labels, glm_est = run_GLM(raw, design_matrix)
+glm_est = run_GLM(raw, design_matrix)
 
 plt.plot(raw.times, raw_noise_free.get_data().T * 1e6)
 plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
-plt.plot(raw.times, glm_est[labels[0]].theta[0] * design_matrix["A"].values * 1e6)
+plt.plot(raw.times, glm_est['Simulated'].theta[0] * design_matrix["A"].values * 1e6)
 plt.xlabel("Time (s)")
 plt.ylabel("Haemoglobin (uM)")
 plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 
-print("Estimate:", glm_est[labels[0]].theta[0],
-      "  MSE:", glm_est[labels[0]].MSE,
-      "  Error (uM):", 1e6*(glm_est[labels[0]].theta[0] - amp*1e-6))
+print("Estimate:", glm_est['Simulated'].theta[0],
+      "  MSE:", glm_est['Simulated'].MSE,
+      "  Error (uM):", 1e6*(glm_est['Simulated'].theta[0] - amp*1e-6))
 
 
 ###############################################################################
@@ -168,17 +168,17 @@ raw = mne.simulation.add_noise(raw, cov,
 design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
                                                drift_order=1,
                                                drift_model='polynomial')
-labels, glm_est = run_GLM(raw, design_matrix)
+glm_est = run_GLM(raw, design_matrix)
 
 plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
-plt.plot(raw.times, glm_est[labels[0]].theta[0] * design_matrix["A"].values * 1e6)
+plt.plot(raw.times, glm_est['Simulated'].theta[0] * design_matrix["A"].values * 1e6)
 plt.xlabel("Time (s)")
 plt.ylabel("Haemoglobin (uM)")
 plt.legend(["Noisy Data", "GLM Estimate"])
 
-print("Estimate:", glm_est[labels[0]].theta[0],
-      "  MSE:", glm_est[labels[0]].MSE,
-      "  Error (uM):", 1e6*(glm_est[labels[0]].theta[0] - amp*1e-6))
+print("Estimate:", glm_est['Simulated'].theta[0],
+      "  MSE:", glm_est['Simulated'].MSE,
+      "  Error (uM):", 1e6*(glm_est['Simulated'].theta[0] - amp*1e-6))
 
 
 ###############################################################################

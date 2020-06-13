@@ -4,4 +4,4 @@
 #
 # License: BSD (3-clause)
 
-from ._run_GLM import run_GLM
+from ._run_GLM import run_GLM, compute_contrast
