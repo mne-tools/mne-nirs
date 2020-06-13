@@ -340,17 +340,9 @@ df = _tidy_long_to_wide(df)
 # motor cortex, so we dont expect 100% of channels to detect responses to
 # the tapping, but we do expect 5% or less for the false positive rate.
 
-fp_rate = np.sum(df.query("condition in ['Control']")["Significant"]) / \
-    len((df.query("condition in ['Control']")["Significant"]))
-
-tp_left_rate = np.sum(
-    df.query("condition in ['Tapping/Left']")["Significant"]) / \
-    len((df.query("condition in ['Tapping/Left']")["Significant"]))
-
-tp_right_rate = np.sum(
-    df.query("condition in ['Tapping/Right']")["Significant"]) / \
-    len((df.query("condition in ['Tapping/Right']")["Significant"]))
-
-print("False positive rate:", 100. * fp_rate, "(%)")
-print("True positive rate (left):", 100. * tp_left_rate, "(%)")
-print("True positive rate (right):", 100. * tp_right_rate, "(%)")
+(df
+ .query('condition in ["Control", "Tapping/Left", "Tapping/Right"]')
+ .groupby(['condition', 'Chroma'])
+ .agg(['mean'])
+ .drop(['df', 'mse', 'p', 't'], 1)
+ )
