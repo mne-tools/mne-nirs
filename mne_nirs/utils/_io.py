@@ -2,6 +2,7 @@ import pandas as pd
 from scipy import stats
 import numpy as np
 import re
+from mne.utils import warn
 
 
 def _GLM_to_tidy_long(data, labels, glm_estimates, design_matrix):
@@ -21,8 +22,9 @@ def _GLM_to_tidy_long(data, labels, glm_estimates, design_matrix):
         for cond_idx, cond in enumerate(design_matrix.columns):
             t_estimates[idx, cond_idx] = glm_estimates[lab].t(
                 column=cond_idx)[matching_idx]
-            p_estimates[idx, cond_idx] = 1 - stats.t.cdf(
-                t_estimates[idx, cond_idx], df=df_estimates[idx, cond_idx])
+            p_estimates[idx, cond_idx] = 2 * stats.t.cdf(
+                -1.0 * np.abs(t_estimates[idx, cond_idx]),
+                df=df_estimates[idx, cond_idx])
 
     df = pd.DataFrame()
 
@@ -59,12 +61,15 @@ def _tidy_long_to_wide(d, expand_output=True):
     d.reset_index(inplace=True)
 
     if expand_output:
-        d["Source"] = [re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(1)
-                       for ch in d["ch_name"]]
-        d["Detector"] = [re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(2)
-                         for ch in d["ch_name"]]
-        d["Chroma"] = [re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(3)
-                       for ch in d["ch_name"]]
+        try:
+            d["Source"] = [re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(1)
+                           for ch in d["ch_name"]]
+            d["Detector"] = [re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(2)
+                             for ch in d["ch_name"]]
+            d["Chroma"] = [re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(3)
+                           for ch in d["ch_name"]]
+        except AttributeError:
+            warn("Non standard source detector names used")
         d["Significant"] = d["p"] < 0.05
 
     return d
