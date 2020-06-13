@@ -67,7 +67,7 @@ def _tidy_long_to_wide(d, expand_output=True):
                              for ch in d["ch_name"]]
             d["Chroma"] = [re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(3)
                            for ch in d["ch_name"]]
-        except:
+        except AttributeError:
             warn("Non standard source detector names used")
         d["Significant"] = d["p"] < 0.05
 
