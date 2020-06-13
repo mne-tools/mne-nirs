@@ -27,8 +27,8 @@ def test_io():
                                                    stim_dur=5.0,
                                                    drift_order=3,
                                                    drift_model='polynomial')
-    labels, glm_est = run_GLM(raw_haemo, design_matrix)
-    df = _GLM_to_tidy_long(raw_haemo, labels, glm_est, design_matrix)
+    glm_est = run_GLM(raw_haemo, design_matrix)
+    df = _GLM_to_tidy_long(raw_haemo, glm_est, design_matrix)
     df = _tidy_long_to_wide(df)
     assert df.shape == (48, 11)
     assert set(df.columns) == {'ch_name', 'condition', 'df', 'mse', 'p', 't',

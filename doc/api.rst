@@ -50,6 +50,7 @@ Statistics
    :toctree: generated/
 
    run_GLM
+   compute_contrast
 
 
 Visualisation

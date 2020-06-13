@@ -62,12 +62,12 @@ def test_run_plot_GLM_topo():
                                                    drift_model='polynomial')
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
-    labels, glm_estimates = run_GLM(raw_haemo, design_matrix)
-    fig = plot_GLM_topo(raw_haemo, labels, glm_estimates, design_matrix)
-    # 5 conditions (A,B,C,Drift,Constant) * two chroma
-    assert len(fig.axes) == 10
+    glm_estimates = run_GLM(raw_haemo, design_matrix)
+    fig = plot_GLM_topo(raw_haemo, glm_estimates, design_matrix)
+    # 5 conditions (A,B,C,Drift,Constant) * two chroma + 2xcolorbar
+    assert len(fig.axes) == 12
 
-    fig = plot_GLM_topo(raw_haemo, labels, glm_estimates, design_matrix,
+    fig = plot_GLM_topo(raw_haemo, glm_estimates, design_matrix,
                         requested_conditions=['A', 'B'])
-    # Two conditions * two chroma
-    assert len(fig.axes) == 4
+    # Two conditions * two chroma + 2xcolorbar
+    assert len(fig.axes) == 6

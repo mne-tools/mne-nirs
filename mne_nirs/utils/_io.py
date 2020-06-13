@@ -5,23 +5,24 @@ import re
 from mne.utils import warn
 
 
-def _GLM_to_tidy_long(data, labels, glm_estimates, design_matrix):
+def _GLM_to_tidy_long(data, glm_est, design_matrix):
 
-    theta_estimates = np.zeros((len(labels), len(design_matrix.columns)))
-    t_estimates = np.zeros((len(labels), len(design_matrix.columns)))
-    df_estimates = np.zeros((len(labels), len(design_matrix.columns)))
-    p_estimates = np.zeros((len(labels), len(design_matrix.columns)))
-    mse_estimates = np.zeros((len(labels), len(design_matrix.columns)))
+    if not (data.ch_names == list(glm_est.keys())):
+        warn("MNE data structure does not match regression results")
 
-    for idx, lab in enumerate(labels):
-        matching_labels = np.where(([lab == l for l in labels]))
-        matching_idx = np.where([idx == ml for ml in matching_labels])[1]
-        theta_estimates[idx, :] = glm_estimates[lab].theta[:, matching_idx].T
-        df_estimates[idx, :] = glm_estimates[lab].df_model
-        mse_estimates[idx, :] = glm_estimates[lab].MSE[0]
+    theta_estimates = np.zeros((len(glm_est), len(design_matrix.columns)))
+    t_estimates = np.zeros((len(glm_est), len(design_matrix.columns)))
+    df_estimates = np.zeros((len(glm_est), len(design_matrix.columns)))
+    p_estimates = np.zeros((len(glm_est), len(design_matrix.columns)))
+    mse_estimates = np.zeros((len(glm_est), len(design_matrix.columns)))
+
+    for idx, name in enumerate(glm_est.keys()):
+        theta_estimates[idx, :] = glm_est[name].theta.T
+        df_estimates[idx, :] = glm_est[name].df_model
+        mse_estimates[idx, :] = glm_est[name].MSE[0]
         for cond_idx, cond in enumerate(design_matrix.columns):
-            t_estimates[idx, cond_idx] = glm_estimates[lab].t(
-                column=cond_idx)[matching_idx]
+            t_estimates[idx, cond_idx] = glm_est[name].t(
+                column=cond_idx)
             p_estimates[idx, cond_idx] = 2 * stats.t.cdf(
                 -1.0 * np.abs(t_estimates[idx, cond_idx]),
                 df=df_estimates[idx, cond_idx])

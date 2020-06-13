@@ -245,8 +245,7 @@ plt.ylabel("Amplitude")
 # of a single source detector pair.
 
 data_subset = raw_haemo.copy().pick(picks=range(2))
-labels, glm_est = run_GLM(data_subset, design_matrix)
-
+glm_est = run_GLM(data_subset, design_matrix)
 
 ###############################################################################
 #
@@ -257,36 +256,12 @@ labels, glm_est = run_GLM(data_subset, design_matrix)
 # right hand is larger than the left. And the values are similar to what
 # is seen in the epoching tutorial.
 
-plt.scatter(design_matrix.columns[:3], glm_est[labels[0]].theta[:3] * 1e6)
-plt.scatter(design_matrix.columns[:3], glm_est[labels[1]].theta[:3] * 1e6)
+plt.scatter(design_matrix.columns[:3], glm_est['S1_D1 hbo'].theta[:3] * 1e6)
+plt.scatter(design_matrix.columns[:3], glm_est['S1_D1 hbr'].theta[:3] * 1e6)
 plt.xlabel("Experiment Condition")
 plt.ylabel("Haemoglobin (μM)")
 plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 plt.hlines([0.0], 0, 2)
-
-
-###############################################################################
-#
-# We can also view the contriubution from the drift and constant factors.
-
-plt.scatter(design_matrix.columns[3:7], glm_est[labels[0]].theta[3:7] * 1e6)
-plt.scatter(design_matrix.columns[3:7], glm_est[labels[1]].theta[3:7] * 1e6)
-plt.xlabel("Model Component")
-plt.ylabel("Estimated contribution")
-plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
-plt.hlines([0.0], 0, 3)
-
-
-###############################################################################
-#
-# And we can examine the contriubution from our short channel regression.
-
-plt.scatter(design_matrix.columns[7:], glm_est[labels[0]].theta[7:])
-plt.scatter(design_matrix.columns[7:], glm_est[labels[1]].theta[7:])
-plt.xlabel("Model Component")
-plt.ylabel("Estimated contribution")
-plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
-plt.hlines([0.0], 0, 1)
 
 
 ###############################################################################
@@ -300,9 +275,27 @@ plt.hlines([0.0], 0, 1)
 # contralateral to the tapping side. Also note that HbR tends to be the
 # negative sof HbO as expected.
 
-labels, glm_est = run_GLM(raw_haemo, design_matrix)
-plot_GLM_topo(raw_haemo, labels, glm_est, design_matrix,
-              requested_conditions=['Tapping/Left', 'Tapping/Right'])
+glm_est = run_GLM(raw_haemo, design_matrix)
+plot_GLM_topo(raw_haemo, glm_est, design_matrix,
+              requested_conditions=['Tapping/Left',
+                                    'Tapping/Right'])
+
+
+###############################################################################
+#
+# Compute contrasts
+# -----------------
+#
+# We can also define a contrast as described in
+# `Nilearn docs <https://5874-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/04_glm_first_level_models/plot_localizer_surface_analysis.html>`_
+# and plot it.
+
+contrast_matrix = np.eye(design_matrix.shape[1])
+basic_conts = dict([(column, contrast_matrix[i])
+                   for i, column in enumerate(design_matrix.columns)])
+contrast_LvR = basic_conts['Tapping/Right'] - basic_conts['Tapping/Left']
+contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
+mne_nirs.visualisation.plot_GLM_contrast_topo(raw_haemo, contrast)
 
 
 ###############################################################################
@@ -327,7 +320,7 @@ plot_GLM_topo(raw_haemo, labels, glm_est, design_matrix,
 # in the channel, which chroma, etc.
 
 
-df = _GLM_to_tidy_long(raw_haemo, labels, glm_est, design_matrix)
+df = _GLM_to_tidy_long(raw_haemo, glm_est, design_matrix)
 df = _tidy_long_to_wide(df)
 
 
