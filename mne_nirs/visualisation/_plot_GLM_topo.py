@@ -93,7 +93,7 @@ def plot_GLM_topo(raw, glm_estimates, design_matrix,
         cax1 = ax1_divider.append_axes("right", size="7%", pad="2%")
         cbar = mpl.colorbar.ColorbarBase(cax1, cmap=cmap, norm=norm,
                                          orientation='vertical')
-        cbar.set_label('Haemoglobin (uV)', rotation=270)
+        cbar.set_label('Haemoglobin (uM)', rotation=270)
 
     return fig
 
@@ -163,6 +163,6 @@ def plot_GLM_contrast_topo(raw, contrast,
     cax1 = ax1_divider.append_axes("right", size="7%", pad="2%")
     cbar = mpl.colorbar.ColorbarBase(cax1, cmap=cmap, norm=norm,
                                      orientation='vertical')
-    cbar.set_label('Haemoglobin (uV)', rotation=270)
+    cbar.set_label('Haemoglobin (uM)', rotation=270)
 
     return fig
