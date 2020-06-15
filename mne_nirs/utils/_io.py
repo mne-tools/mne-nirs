@@ -3,9 +3,53 @@ from scipy import stats
 import numpy as np
 import re
 from mne.utils import warn
+import nilearn
 
 
 def _GLM_to_tidy_long(data, glm_est, design_matrix):
+
+    if isinstance(glm_est, dict):
+        if isinstance(glm_est[list(glm_est.keys())[0]],
+                      nilearn.stats.regression.RegressionResults):
+            df = _tidy_RegressionResults(data, glm_est, design_matrix)
+
+    elif isinstance(glm_est, nilearn.stats.contrasts.Contrast):
+        df = _tidy_Contrast(data, glm_est, design_matrix)
+
+    else:
+        warn("Unknown GLM result type")
+
+    return df
+
+
+def _tidy_Contrast(data, glm_est, design_matrix):
+    df = pd.DataFrame()
+    for idx, ch in enumerate(data.ch_names):
+        df = df.append({'ch_name': ch,
+                        'ContrastType': glm_est.contrast_type,
+                        'variable': "effect",
+                        'value': glm_est.effect[0][idx]},
+                        ignore_index=True)
+        df = df.append({'ch_name': ch,
+                        'ContrastType': glm_est.contrast_type,
+                        'variable': "p_value",
+                        'value': glm_est.p_value()[idx]},
+                        ignore_index=True)
+        df = df.append({'ch_name': ch,
+                        'ContrastType': glm_est.contrast_type,
+                        'variable': "stat",
+                        'value': glm_est.stat()[idx]},
+                        ignore_index=True)
+        df = df.append({'ch_name': ch,
+                        'ContrastType': glm_est.contrast_type,
+                        'variable': "z_score",
+                        'value': glm_est.z_score()[idx]},
+                        ignore_index=True)
+    return df
+
+
+
+def _tidy_RegressionResults(data, glm_est, design_matrix):
 
     if not (data.ch_names == list(glm_est.keys())):
         warn("MNE data structure does not match regression results")
@@ -44,7 +88,7 @@ def _GLM_to_tidy_long(data, glm_est, design_matrix):
                             'value': df_estimates[ch_idx][cond_idx]},
                            ignore_index=True)
             df = df.append({'ch_name': ch, 'condition': cond,
-                            'variable': "p",
+                            'variable': "p_value",
                             'value': p_estimates[ch_idx][cond_idx]},
                            ignore_index=True)
             df = df.append({'ch_name': ch, 'condition': cond,
@@ -56,9 +100,18 @@ def _GLM_to_tidy_long(data, glm_est, design_matrix):
 
 
 def _tidy_long_to_wide(d, expand_output=True):
-    d = d.set_index(['ch_name', 'condition'])
+
+    indices = ['ch_name']
+    if 'condition' in d.columns:
+        # Regression results have a column condition
+        indices.append('condition')
+    if 'ContrastType' in d.columns:
+        # Regression results have a column condition
+        indices.append('ContrastType')
+
+    d = d.set_index(indices)
     d = d.pivot_table(columns='variable', values='value',
-                      index=['ch_name', 'condition'])
+                      index=indices)
     d.reset_index(inplace=True)
 
     if expand_output:
@@ -71,6 +124,6 @@ def _tidy_long_to_wide(d, expand_output=True):
                            for ch in d["ch_name"]]
         except AttributeError:
             warn("Non standard source detector names used")
-        d["Significant"] = d["p"] < 0.05
+        d["Significant"] = d["p_value"] < 0.05
 
     return d

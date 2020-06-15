@@ -6,6 +6,7 @@
 import os
 import mne
 import mne_nirs
+import numpy as np
 
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide
@@ -31,8 +32,30 @@ def test_io():
     df = _GLM_to_tidy_long(raw_haemo, glm_est, design_matrix)
     df = _tidy_long_to_wide(df)
     assert df.shape == (48, 11)
-    assert set(df.columns) == {'ch_name', 'condition', 'df', 'mse', 'p', 't',
-                               'theta', 'Source', 'Detector', 'Chroma',
+    assert set(df.columns) == {'ch_name', 'condition', 'df', 'mse', 'p_value',
+                               't', 'theta', 'Source', 'Detector', 'Chroma',
                                'Significant'}
     num_conds = 8  # triggers (1, 2, 3, 15) + 3 drifts + constant
     assert df.shape[0] == num_chans * num_conds
+
+    contrast_matrix = np.eye(design_matrix.shape[1])
+    basic_conts = dict([(column, contrast_matrix[i])
+                        for i, column in enumerate(design_matrix.columns)])
+    contrast_LvR = basic_conts['2.0'] - basic_conts['3.0']
+
+    contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
+    df = _GLM_to_tidy_long(raw_haemo, contrast, design_matrix)
+    df = _tidy_long_to_wide(df)
+    assert df.shape == (6, 10)
+    assert set(df.columns) == {'ch_name', 'ContrastType', 'z_score', 'stat',
+                               'p_value', 'effect', 'Source', 'Detector',
+                               'Chroma', 'Significant'}
+
+    contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR,
+                                                    contrast_type='F')
+    df = _GLM_to_tidy_long(raw_haemo, contrast, design_matrix)
+    df = _tidy_long_to_wide(df)
+    assert df.shape == (6, 10)
+    assert set(df.columns) == {'ch_name', 'ContrastType', 'z_score', 'stat',
+                               'p_value', 'effect', 'Source', 'Detector',
+                               'Chroma', 'Significant'}
