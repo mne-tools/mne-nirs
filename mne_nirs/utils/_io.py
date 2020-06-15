@@ -29,24 +29,23 @@ def _tidy_Contrast(data, glm_est, design_matrix):
                         'ContrastType': glm_est.contrast_type,
                         'variable': "effect",
                         'value': glm_est.effect[0][idx]},
-                        ignore_index=True)
+                       ignore_index=True)
         df = df.append({'ch_name': ch,
                         'ContrastType': glm_est.contrast_type,
                         'variable': "p_value",
                         'value': glm_est.p_value()[idx]},
-                        ignore_index=True)
+                       ignore_index=True)
         df = df.append({'ch_name': ch,
                         'ContrastType': glm_est.contrast_type,
                         'variable': "stat",
                         'value': glm_est.stat()[idx]},
-                        ignore_index=True)
+                       ignore_index=True)
         df = df.append({'ch_name': ch,
                         'ContrastType': glm_est.contrast_type,
                         'variable': "z_score",
                         'value': glm_est.z_score()[idx]},
-                        ignore_index=True)
+                       ignore_index=True)
     return df
-
 
 
 def _tidy_RegressionResults(data, glm_est, design_matrix):
