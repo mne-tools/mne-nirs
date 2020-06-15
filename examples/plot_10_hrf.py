@@ -289,6 +289,8 @@ plot_GLM_topo(raw_haemo, glm_est, design_matrix,
 # We can also define a contrast as described in
 # `Nilearn docs <https://5874-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/04_glm_first_level_models/plot_localizer_surface_analysis.html>`_
 # and plot it.
+# Here we contrast the response to tapping on the left hand with the response
+# from tapping on the right hand.
 
 contrast_matrix = np.eye(design_matrix.shape[1])
 basic_conts = dict([(column, contrast_matrix[i])
@@ -337,5 +339,5 @@ df = _tidy_long_to_wide(df)
  .query('condition in ["Control", "Tapping/Left", "Tapping/Right"]')
  .groupby(['condition', 'Chroma'])
  .agg(['mean'])
- .drop(['df', 'mse', 'p', 't'], 1)
+ .drop(['df', 'mse', 'p_value', 't'], 1)
  )
