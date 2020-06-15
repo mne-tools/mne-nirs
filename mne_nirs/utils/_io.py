@@ -6,15 +6,37 @@ from mne.utils import warn
 import nilearn
 
 
-def _GLM_to_tidy_long(data, glm_est, design_matrix):
+def GLM_to_tidy_long(raw, statistic, design_matrix):
+    """
+    Exports GLM regression or contrast results in tidy format.
 
-    if isinstance(glm_est, dict):
-        if isinstance(glm_est[list(glm_est.keys())[0]],
+    Creates a long pandas data frame from regression results or contrast
+    as computed by run_GLM or compute_contrast.
+
+    Parameters
+    ----------
+    raw : MNE.Raw
+        Instance of MNE raw.
+    statistic : nilearn data,
+        Either dict of nilearn.stats.regression.RegressionResults as returned
+        by run_GLM, or nilearn.stats.contrasts.Contrast as returned by
+        compute_contrast.
+    design_matrix : DataFrame
+        As specified in Nilearn
+
+    Returns
+    -------
+    df : Tidy data frame,
+        Data from statistic object in tidy data form.
+    """
+
+    if isinstance(statistic, dict):
+        if isinstance(statistic[list(statistic.keys())[0]],
                       nilearn.stats.regression.RegressionResults):
-            df = _tidy_RegressionResults(data, glm_est, design_matrix)
+            df = _tidy_RegressionResults(raw, statistic, design_matrix)
 
-    elif isinstance(glm_est, nilearn.stats.contrasts.Contrast):
-        df = _tidy_Contrast(data, glm_est, design_matrix)
+    elif isinstance(statistic, nilearn.stats.contrasts.Contrast):
+        df = _tidy_Contrast(raw, statistic, design_matrix)
 
     else:
         warn("Unknown GLM result type")

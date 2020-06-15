@@ -45,7 +45,7 @@ from mne_nirs.visualisation import plot_GLM_topo
 
 from nilearn.reporting import plot_design_matrix
 from mne_nirs.channels import get_long_channels, get_short_channels
-from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide
+from mne_nirs.utils._io import GLM_to_tidy_long, _tidy_long_to_wide
 
 
 ###############################################################################
@@ -322,7 +322,7 @@ mne_nirs.visualisation.plot_GLM_contrast_topo(raw_haemo, contrast)
 # in the channel, which chroma, etc.
 
 
-df = _GLM_to_tidy_long(raw_haemo, glm_est, design_matrix)
+df = GLM_to_tidy_long(raw_haemo, glm_est, design_matrix)
 df = _tidy_long_to_wide(df)
 
 

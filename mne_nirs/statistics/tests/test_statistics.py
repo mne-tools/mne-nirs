@@ -11,7 +11,7 @@ from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_GLM
 from mne_nirs.simulation import simulate_nirs_raw
 from mne_nirs.channels import get_short_channels, get_long_channels
-from mne_nirs.utils._io import _GLM_to_tidy_long, _tidy_long_to_wide
+from mne_nirs.utils._io import GLM_to_tidy_long, _tidy_long_to_wide
 
 
 def test_run_GLM():
@@ -59,7 +59,7 @@ def test_GLM_system_test():
     design_matrix["ShortHbR"] = np.mean(short_chs.copy().pick(
         picks="hbr").get_data(), axis=0)
     glm_est = run_GLM(raw_haemo, design_matrix)
-    df = _GLM_to_tidy_long(raw_haemo, glm_est, design_matrix)
+    df = GLM_to_tidy_long(raw_haemo, glm_est, design_matrix)
     df = _tidy_long_to_wide(df)
     a = (df
          .query('condition in ["Control"]')
