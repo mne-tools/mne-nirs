@@ -41,11 +41,11 @@ import numpy as np
 
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_GLM
-from mne_nirs.visualisation import plot_GLM_topo
+from mne_nirs.visualisation import plot_glm_topo
 
 from nilearn.reporting import plot_design_matrix
 from mne_nirs.channels import get_long_channels, get_short_channels
-from mne_nirs.utils._io import GLM_to_tidy_long, _tidy_long_to_wide
+from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
 
 
 ###############################################################################
@@ -276,7 +276,7 @@ plt.hlines([0.0], 0, 2)
 # negative sof HbO as expected.
 
 glm_est = run_GLM(raw_haemo, design_matrix)
-plot_GLM_topo(raw_haemo, glm_est, design_matrix,
+plot_glm_topo(raw_haemo, glm_est, design_matrix,
               requested_conditions=['Tapping/Left',
                                     'Tapping/Right'])
 
@@ -297,7 +297,7 @@ basic_conts = dict([(column, contrast_matrix[i])
                    for i, column in enumerate(design_matrix.columns)])
 contrast_LvR = basic_conts['Tapping/Right'] - basic_conts['Tapping/Left']
 contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
-mne_nirs.visualisation.plot_GLM_contrast_topo(raw_haemo, contrast)
+mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
 
 
 ###############################################################################
@@ -322,7 +322,7 @@ mne_nirs.visualisation.plot_GLM_contrast_topo(raw_haemo, contrast)
 # in the channel, which chroma, etc.
 
 
-df = GLM_to_tidy_long(raw_haemo, glm_est, design_matrix)
+df = glm_to_tidy(raw_haemo, glm_est, design_matrix)
 df = _tidy_long_to_wide(df)
 
 

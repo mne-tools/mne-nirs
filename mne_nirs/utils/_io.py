@@ -6,7 +6,7 @@ from mne.utils import warn
 import nilearn
 
 
-def GLM_to_tidy_long(raw, statistic, design_matrix):
+def glm_to_tidy(raw, statistic, design_matrix):
     """
     Exports GLM regression or contrast results in tidy format.
 

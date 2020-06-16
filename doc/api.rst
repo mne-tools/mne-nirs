@@ -68,8 +68,8 @@ Visualisation
    :toctree: generated/
 
    plot_nirs_source_detector
-   plot_GLM_topo
-   plot_GLM_contrast_topo
+   plot_glm_topo
+   plot_glm_contrast_topo
 
 
 Simulation
@@ -116,4 +116,4 @@ Utilities
 .. autosummary::
    :toctree: generated/
 
-   GLM_to_tidy_long
+   glm_to_tidy

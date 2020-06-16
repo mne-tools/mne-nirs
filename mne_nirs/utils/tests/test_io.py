@@ -9,7 +9,7 @@ import mne_nirs
 import numpy as np
 
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.utils._io import GLM_to_tidy_long, _tidy_long_to_wide
+from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
 from mne_nirs.statistics import run_GLM
 
 
@@ -29,7 +29,7 @@ def test_io():
                                                    drift_order=3,
                                                    drift_model='polynomial')
     glm_est = run_GLM(raw_haemo, design_matrix)
-    df = GLM_to_tidy_long(raw_haemo, glm_est, design_matrix)
+    df = glm_to_tidy(raw_haemo, glm_est, design_matrix)
     df = _tidy_long_to_wide(df)
     assert df.shape == (48, 11)
     assert set(df.columns) == {'ch_name', 'condition', 'df', 'mse', 'p_value',
@@ -44,7 +44,7 @@ def test_io():
     contrast_LvR = basic_conts['2.0'] - basic_conts['3.0']
 
     contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
-    df = GLM_to_tidy_long(raw_haemo, contrast, design_matrix)
+    df = glm_to_tidy(raw_haemo, contrast, design_matrix)
     df = _tidy_long_to_wide(df)
     assert df.shape == (6, 10)
     assert set(df.columns) == {'ch_name', 'ContrastType', 'z_score', 'stat',
@@ -53,7 +53,7 @@ def test_io():
 
     contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR,
                                                     contrast_type='F')
-    df = GLM_to_tidy_long(raw_haemo, contrast, design_matrix)
+    df = glm_to_tidy(raw_haemo, contrast, design_matrix)
     df = _tidy_long_to_wide(df)
     assert df.shape == (6, 10)
     assert set(df.columns) == {'ch_name', 'ContrastType', 'z_score', 'stat',

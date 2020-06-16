@@ -8,7 +8,7 @@ import mne
 from mne.utils import warn
 
 
-def plot_GLM_topo(raw, glm_estimates, design_matrix,
+def plot_glm_topo(raw, glm_estimates, design_matrix,
                   requested_conditions=None,
                   figsize=(12, 7), sphere=None):
     """
@@ -98,7 +98,7 @@ def plot_GLM_topo(raw, glm_estimates, design_matrix,
     return fig
 
 
-def plot_GLM_contrast_topo(raw, contrast,
+def plot_glm_contrast_topo(raw, contrast,
                            figsize=(12, 7), sphere=None):
     """
     Plot topomap of NIRS GLM data.

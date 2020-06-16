@@ -5,4 +5,4 @@
 # License: BSD (3-clause)
 
 from . import _io
-from ._io import GLM_to_tidy_long
+from ._io import glm_to_tidy
