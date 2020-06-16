@@ -30,16 +30,18 @@ def GLM_to_tidy_long(raw, statistic, design_matrix):
         Data from statistic object in tidy data form.
     """
 
-    if isinstance(statistic, dict):
-        if isinstance(statistic[list(statistic.keys())[0]],
-                      nilearn.stats.regression.RegressionResults):
-            df = _tidy_RegressionResults(raw, statistic, design_matrix)
+    if isinstance(statistic, dict) and \
+            isinstance(statistic[list(statistic.keys())[0]],
+                       nilearn.stats.regression.RegressionResults):
+        df = _tidy_RegressionResults(raw, statistic, design_matrix)
 
     elif isinstance(statistic, nilearn.stats.contrasts.Contrast):
         df = _tidy_Contrast(raw, statistic, design_matrix)
 
     else:
-        warn("Unknown GLM result type")
+        raise ValueError(
+            'Unknown statistic type. Expected dict of RegressionResults '
+            'or Contrast type.')
 
     return df
 
