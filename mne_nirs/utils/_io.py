@@ -3,25 +3,93 @@ from scipy import stats
 import numpy as np
 import re
 from mne.utils import warn
+import nilearn
 
 
-def _GLM_to_tidy_long(data, labels, glm_estimates, design_matrix):
+def glm_to_tidy(raw, statistic, design_matrix):
+    """
+    Exports GLM regression or contrast results in tidy format.
 
-    theta_estimates = np.zeros((len(labels), len(design_matrix.columns)))
-    t_estimates = np.zeros((len(labels), len(design_matrix.columns)))
-    df_estimates = np.zeros((len(labels), len(design_matrix.columns)))
-    p_estimates = np.zeros((len(labels), len(design_matrix.columns)))
-    mse_estimates = np.zeros((len(labels), len(design_matrix.columns)))
+    Creates a long pandas data frame from regression results or contrast
+    as computed by run_GLM or compute_contrast.
 
-    for idx, lab in enumerate(labels):
-        matching_labels = np.where(([lab == l for l in labels]))
-        matching_idx = np.where([idx == ml for ml in matching_labels])[1]
-        theta_estimates[idx, :] = glm_estimates[lab].theta[:, matching_idx].T
-        df_estimates[idx, :] = glm_estimates[lab].df_model
-        mse_estimates[idx, :] = glm_estimates[lab].MSE[0]
+    Parameters
+    ----------
+    raw : MNE.Raw
+        Instance of MNE raw.
+    statistic : nilearn data,
+        Either dict of nilearn.stats.regression.RegressionResults as returned
+        by run_GLM, or nilearn.stats.contrasts.Contrast as returned by
+        compute_contrast.
+    design_matrix : DataFrame
+        As specified in Nilearn
+
+    Returns
+    -------
+    df : Tidy data frame,
+        Data from statistic object in tidy data form.
+    """
+
+    if isinstance(statistic, dict) and \
+            isinstance(statistic[list(statistic.keys())[0]],
+                       nilearn.stats.regression.RegressionResults):
+        df = _tidy_RegressionResults(raw, statistic, design_matrix)
+
+    elif isinstance(statistic, nilearn.stats.contrasts.Contrast):
+        df = _tidy_Contrast(raw, statistic, design_matrix)
+
+    else:
+        raise ValueError(
+            'Unknown statistic type. Expected dict of RegressionResults '
+            'or Contrast type.')
+
+    return df
+
+
+def _tidy_Contrast(data, glm_est, design_matrix):
+    df = pd.DataFrame()
+    for idx, ch in enumerate(data.ch_names):
+        df = df.append({'ch_name': ch,
+                        'ContrastType': glm_est.contrast_type,
+                        'variable': "effect",
+                        'value': glm_est.effect[0][idx]},
+                       ignore_index=True)
+        df = df.append({'ch_name': ch,
+                        'ContrastType': glm_est.contrast_type,
+                        'variable': "p_value",
+                        'value': glm_est.p_value()[idx]},
+                       ignore_index=True)
+        df = df.append({'ch_name': ch,
+                        'ContrastType': glm_est.contrast_type,
+                        'variable': "stat",
+                        'value': glm_est.stat()[idx]},
+                       ignore_index=True)
+        df = df.append({'ch_name': ch,
+                        'ContrastType': glm_est.contrast_type,
+                        'variable': "z_score",
+                        'value': glm_est.z_score()[idx]},
+                       ignore_index=True)
+    return df
+
+
+def _tidy_RegressionResults(data, glm_est, design_matrix):
+
+    if not (data.ch_names == list(glm_est.keys())):
+        warn("MNE data structure does not match regression results")
+
+    theta_estimates = np.zeros((len(glm_est), len(design_matrix.columns)))
+    t_estimates = np.zeros((len(glm_est), len(design_matrix.columns)))
+    df_estimates = np.zeros((len(glm_est), len(design_matrix.columns)))
+    p_estimates = np.zeros((len(glm_est), len(design_matrix.columns)))
+    mse_estimates = np.zeros((len(glm_est), len(design_matrix.columns)))
+
+    for idx, name in enumerate(glm_est.keys()):
+        theta_estimates[idx, :] = glm_est[name].theta.T
+        df_estimates[idx, :] = glm_est[name].df_model
+        mse_estimates[idx, :] = glm_est[name].MSE[0]
         for cond_idx, cond in enumerate(design_matrix.columns):
-            t_estimates[idx, cond_idx] = glm_estimates[lab].t(
-                column=cond_idx)[matching_idx]
+            t_estimates[idx, cond_idx] = glm_est[name].t(
+                column=cond_idx)
             p_estimates[idx, cond_idx] = 2 * stats.t.cdf(
                 -1.0 * np.abs(t_estimates[idx, cond_idx]),
                 df=df_estimates[idx, cond_idx])
@@ -43,7 +111,7 @@ def _GLM_to_tidy_long(data, labels, glm_estimates, design_matrix):
                             'value': df_estimates[ch_idx][cond_idx]},
                            ignore_index=True)
             df = df.append({'ch_name': ch, 'condition': cond,
-                            'variable': "p",
+                            'variable': "p_value",
                             'value': p_estimates[ch_idx][cond_idx]},
                            ignore_index=True)
             df = df.append({'ch_name': ch, 'condition': cond,
@@ -55,9 +123,18 @@ def _GLM_to_tidy_long(data, labels, glm_estimates, design_matrix):
 
 
 def _tidy_long_to_wide(d, expand_output=True):
-    d = d.set_index(['ch_name', 'condition'])
+
+    indices = ['ch_name']
+    if 'condition' in d.columns:
+        # Regression results have a column condition
+        indices.append('condition')
+    if 'ContrastType' in d.columns:
+        # Regression results have a column condition
+        indices.append('ContrastType')
+
+    d = d.set_index(indices)
     d = d.pivot_table(columns='variable', values='value',
-                      index=['ch_name', 'condition'])
+                      index=indices)
     d.reset_index(inplace=True)
 
     if expand_output:
@@ -70,6 +147,6 @@ def _tidy_long_to_wide(d, expand_output=True):
                            for ch in d["ch_name"]]
         except AttributeError:
             warn("Non standard source detector names used")
-        d["Significant"] = d["p"] < 0.05
+        d["Significant"] = d["p_value"] < 0.05
 
     return d

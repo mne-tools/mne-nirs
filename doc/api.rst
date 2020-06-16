@@ -1,3 +1,5 @@
+:orphan:
+
 ##########
 Module API
 ##########
@@ -50,6 +52,7 @@ Statistics
    :toctree: generated/
 
    run_GLM
+   compute_contrast
 
 
 Visualisation
@@ -65,7 +68,8 @@ Visualisation
    :toctree: generated/
 
    plot_nirs_source_detector
-   plot_GLM_topo
+   plot_glm_topo
+   plot_glm_contrast_topo
 
 
 Simulation
@@ -98,3 +102,18 @@ Channels
    get_short_channels
    get_long_channels
    picks_pair_to_idx
+
+
+Utilities
+---------
+
+.. currentmodule:: mne_nirs.utils
+
+.. automodule:: mne_nirs.utils
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
+   glm_to_tidy
