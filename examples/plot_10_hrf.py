@@ -52,7 +52,7 @@ from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
 # Import raw NIRS data
 # --------------------
 #
-# First we import the motor tapping data, this data is also
+# First we import the motor tapping data, these data are also
 # described and used in the
 # `MNE fNIRS tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
 #
