@@ -37,7 +37,7 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=100,
     """
     from nilearn.stats.first_level_model import run_glm
 
-    picks = _picks_to_idx(raw.info, 'fnirs', exclude=[], allow_empty=True)
+    picks = _picks_to_idx(raw.info, 'fnirs', exclude= [], allow_empty=True)
     ch_names = raw.ch_names
 
     results = dict()
