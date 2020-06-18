@@ -38,7 +38,7 @@ def get_short_channels(raw, max_dist=0.01):
     return short_chans
 
 
-def get_long_channels(raw, min_dist=0.01):
+def get_long_channels(raw, min_dist=0.01, max_dist=0.04):
     """
     Return channels with a long source detector separation.
 
@@ -49,6 +49,8 @@ def get_long_channels(raw, min_dist=0.01):
         The haemoglobin data.
     min_dist : number
         Minimum distance of returned channel.
+    max_dist : number
+        Maximum distance of returned channel.
 
     Returns
     -------
@@ -65,5 +67,6 @@ def get_long_channels(raw, min_dist=0.01):
 
     dists = source_detector_distances(long_chans.info, picks=picks)
     long_chans.pick(picks[dists > min_dist])
+    long_chans.pick(picks[dists < max_dist])
 
     return long_chans
