@@ -62,7 +62,7 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
     dm : Design matrix
         As specified in Nilearn.
     """
-    from nilearn.stats.first_level_model import make_first_level_design_matrix
+    from nilearn.glm.first_level import make_first_level_design_matrix
     from pandas import DataFrame
 
     frame_times = raw.times

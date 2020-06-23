@@ -27,7 +27,7 @@ def test_run_GLM():
     assert abs(glm_estimates["Simulated"].theta[0] - 1.e-6) < 0.1e-6
 
     # ensure we return the same type as nilearn to encourage compatibility
-    _, ni_est = nilearn.stats.first_level_model.run_glm(
+    _, ni_est = nilearn.glm.first_level.run_glm(
         raw.get_data(0).T, design_matrix.values)
     assert type(ni_est) == type(glm_estimates)
 
