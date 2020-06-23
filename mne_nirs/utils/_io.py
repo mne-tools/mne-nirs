@@ -82,6 +82,7 @@ def _tidy_RegressionResults(data, glm_est, design_matrix):
     df_estimates = np.zeros((len(glm_est), len(design_matrix.columns)))
     p_estimates = np.zeros((len(glm_est), len(design_matrix.columns)))
     mse_estimates = np.zeros((len(glm_est), len(design_matrix.columns)))
+    se_estimates = np.zeros((len(glm_est), len(design_matrix.columns)))
 
     for idx, name in enumerate(glm_est.keys()):
         theta_estimates[idx, :] = glm_est[name].theta.T
@@ -93,6 +94,8 @@ def _tidy_RegressionResults(data, glm_est, design_matrix):
             p_estimates[idx, cond_idx] = 2 * stats.t.cdf(
                 -1.0 * np.abs(t_estimates[idx, cond_idx]),
                 df=df_estimates[idx, cond_idx])
+            se_estimates[idx, cond_idx] = np.sqrt(np.diag(
+                glm_est[name].vcov()))[cond_idx]
 
     df = pd.DataFrame()
 
@@ -117,6 +120,10 @@ def _tidy_RegressionResults(data, glm_est, design_matrix):
             df = df.append({'ch_name': ch, 'condition': cond,
                             'variable': "mse",
                             'value': mse_estimates[ch_idx][cond_idx]},
+                           ignore_index=True)
+            df = df.append({'ch_name': ch, 'condition': cond,
+                            'variable': "se",
+                            'value': se_estimates[ch_idx][cond_idx]},
                            ignore_index=True)
 
     return df
