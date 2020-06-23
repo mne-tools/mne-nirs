@@ -24,7 +24,7 @@ Documentation
 Documentation for this project is hosted `here <https://mne-tools.github.io/mne-nirs>`_.
 
 
-Examples
+Exampless
 --------
 
 - MNE examples:
