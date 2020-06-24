@@ -35,7 +35,7 @@ def simulate_nirs_raw(sfreq=3., amplitude=1.,
     raw : instance of Raw
         The generated raw instance.
     """
-    from nilearn.stats.first_level_model import make_first_level_design_matrix
+    from nilearn.glm.first_level import make_first_level_design_matrix
     from pandas import DataFrame
 
     frame_times = np.arange(sig_dur * sfreq) / sfreq

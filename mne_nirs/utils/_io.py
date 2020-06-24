@@ -32,10 +32,10 @@ def glm_to_tidy(raw, statistic, design_matrix):
 
     if isinstance(statistic, dict) and \
             isinstance(statistic[list(statistic.keys())[0]],
-                       nilearn.stats.regression.RegressionResults):
+                       nilearn.glm.regression.RegressionResults):
         df = _tidy_RegressionResults(raw, statistic, design_matrix)
 
-    elif isinstance(statistic, nilearn.stats.contrasts.Contrast):
+    elif isinstance(statistic, nilearn.glm.contrasts.Contrast):
         df = _tidy_Contrast(raw, statistic, design_matrix)
 
     else:
