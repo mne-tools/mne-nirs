@@ -66,7 +66,6 @@ def get_long_channels(raw, min_dist=0.01, max_dist=0.04):
         raise RuntimeError('Short channel extraction for NIRS signals only.')
 
     dists = source_detector_distances(long_chans.info, picks=picks)
-    long_chans.pick(picks[dists > min_dist])
-    long_chans.pick(picks[dists < max_dist])
+    long_chans.pick(picks[(dists > min_dist) & (dists < max_dist)])
 
     return long_chans
