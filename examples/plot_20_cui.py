@@ -145,9 +145,9 @@ right = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7],
          [6, 8], [7, 6], [7, 7], [8, 7], [8, 8]]
 
 groups = dict(Left_ROI=picks_pair_to_idx(raw_anti.pick(picks='hbo'), left,
-                                         on_missing=‘warning’),
+                                         on_missing='warning'),
               Right_ROI=picks_pair_to_idx(raw_anti.pick(picks='hbo'), right,
-                                         on_missing=‘warning’))
+                                         on_missing='warning'))
 
 
 ###############################################################################
