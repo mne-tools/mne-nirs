@@ -35,7 +35,7 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=100,
         Keys correspond to the different labels values values are
         RegressionResults instances corresponding to the voxels.
     """
-    from nilearn.stats.first_level_model import run_glm
+    from nilearn.glm.first_level import run_glm
 
     picks = _picks_to_idx(raw.info, 'fnirs', exclude=[], allow_empty=True)
     ch_names = raw.ch_names
@@ -73,6 +73,6 @@ def compute_contrast(glm_est, contrast, contrast_type=None):
         Yields the statistics of the contrast (effects, variance, p-values).
     """
 
-    from nilearn.stats.contrasts import compute_contrast as _cc
+    from nilearn.glm.contrasts import compute_contrast as _cc
     return _cc(np.array(list(glm_est.keys())), glm_est, contrast,
                contrast_type=contrast_type)
