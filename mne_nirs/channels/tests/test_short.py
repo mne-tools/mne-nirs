@@ -48,7 +48,7 @@ def test_long_extraction():
     assert original_num_channels == 56
 
     long_num_channels = len(long_chans.ch_names)
-    assert long_num_channels == 56 - 28
+    assert long_num_channels == 56 - 16
 
     new_lens = source_detector_distances(long_chans.info)
     assert np.min(new_lens) >= 0.01
