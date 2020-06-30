@@ -45,8 +45,8 @@ def test_simulate_NIRS():
     df = _tidy_long_to_wide(df)
 
     assert df.query("condition in ['Control']")['theta'].values[0] == \
-           pytest.approx(0)
+        pytest.approx(0)
     assert df.query("condition in ['Cond_A']")['theta'].values[0] == \
-           pytest.approx(2e-6)
+        pytest.approx(2e-6)
     assert df.query("condition in ['Cond_B']")['theta'].values[0] == \
-           pytest.approx(4e-6)
+        pytest.approx(4e-6)

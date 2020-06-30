@@ -9,7 +9,8 @@ from mne.io import RawArray
 
 def simulate_nirs_raw(sfreq=3., amplitude=1., annot_desc='A',
                       sig_dur=300., stim_dur=5.,
-                      isi_min=15., isi_max=45.):
+                      isi_min=15., isi_max=45.,
+                      ch_name='Simulated'):
     """
     Create simulated data.
 
@@ -31,6 +32,8 @@ def simulate_nirs_raw(sfreq=3., amplitude=1., annot_desc='A',
         The minimum duration of the inter stimulus interval in seconds.
     isi_max : Number
         The maximum duration of the inter stimulus interval in seconds.
+    ch_name : String
+        Channel name to be used in returned raw instance.
 
     Returns
     -------
@@ -76,7 +79,7 @@ def simulate_nirs_raw(sfreq=3., amplitude=1., annot_desc='A',
 
     annotations = Annotations(onsets, durations, conditions)
 
-    info = create_info(ch_names=['Simulated'], sfreq=sfreq, ch_types=['hbo'])
+    info = create_info(ch_names=[ch_name], sfreq=sfreq, ch_types=['hbo'])
 
     for idx, annot in enumerate(annot_desc):
         if annot in dm.columns:
