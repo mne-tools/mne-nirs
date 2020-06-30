@@ -53,6 +53,7 @@ Statistics
 
    run_GLM
    compute_contrast
+   glm_region_of_interest
 
 
 Visualisation

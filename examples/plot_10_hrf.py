@@ -301,6 +301,34 @@ mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
 
 
 ###############################################################################
+# Or alternatively we can calculate the responses across regions of interest.
+
+left = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 3],
+        [2, 4], [3, 2], [3, 3], [4, 3], [4, 4]]
+right = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7],
+         [6, 8], [7, 6], [7, 7], [8, 7], [8, 8]]
+
+from mne_nirs.channels import picks_pair_to_idx
+from mne_nirs.statistics import glm_region_of_interest
+import pandas as pd
+
+groups = dict(Left_ROI=picks_pair_to_idx(raw_haemo, left),
+              Right_ROI=picks_pair_to_idx(raw_haemo, right))
+
+df = pd.DataFrame()
+for idx, col in enumerate(design_matrix.columns[:3]):
+    df = df.append(glm_region_of_interest(glm_est, groups, idx, col))
+df
+
+
+###############################################################################
+# And we can visualise these summary statistics.
+
+import seaborn as sns
+sns.scatterplot(x="Condition", y="theta", hue="Chroma", style="ROI", s=100, data=df)
+
+
+###############################################################################
 # Export Results
 # ---------------
 #
@@ -314,13 +342,13 @@ mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
 #
 #    Wickham, Hadley. "Tidy data." Journal of Statistical Software 59.10 (2014): 1-23.
 #
-# Here we export the data in a tidy pandas data frame. Data is exported in
-# long format by default.
+# Here we export the data in a tidy pandas data frame.
+# We export the GLM results for every channel and condition.
+# Data is exported in long format by default.
 # However, a helper function is also provided to convert the long data to wide format.
 # The long to wide conversion also adds some additonal derived data, such as
 # if a significant response (p<0.05) was observed, which sensor and detector is
 # in the channel, which chroma, etc.
-
 
 df = glm_to_tidy(raw_haemo, glm_est, design_matrix)
 df = _tidy_long_to_wide(df)
