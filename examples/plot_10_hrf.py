@@ -85,14 +85,19 @@ raw_intensity.resample(1.0)
 # Then we crop the recording to the section containing our
 # experimental conditions.
 
+original_annotations = raw_intensity.annotations
 new_des = [des for des in raw_intensity.annotations.description]
 new_des = ['Control' if x == "1.0" else x for x in new_des]
 new_des = ['Tapping/Left' if x == "2.0" else x for x in new_des]
 new_des = ['Tapping/Right' if x == "3.0" else x for x in new_des]
-annot = mne.Annotations(raw_intensity.annotations.onset,
-                        raw_intensity.annotations.duration, new_des)
+keepers = [n == 'Control' or
+           n == "Tapping/Left" or
+           n == "Tapping/Right" for n in new_des]
+idxs = np.array(np.where(keepers)[0])
+annot = mne.Annotations(original_annotations.onset[idxs],
+                        original_annotations.duration[idxs] * 5., 
+                        np.array([new_des[idx] for idx in np.where(keepers)[0]]))
 raw_intensity.set_annotations(annot)
-raw_intensity.annotations.crop(35, 2967)
 
 
 ###############################################################################
