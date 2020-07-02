@@ -300,7 +300,7 @@ plot_glm_topo(raw_haemo, glm_est, design_matrix,
 contrast_matrix = np.eye(design_matrix.shape[1])
 basic_conts = dict([(column, contrast_matrix[i])
                    for i, column in enumerate(design_matrix.columns)])
-contrast_LvR = basic_conts['Tapping/Right'] - basic_conts['Tapping/Left']
+contrast_LvR = basic_conts['Tapping/Left'] - basic_conts['Tapping/Right']
 contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
 mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
 
