@@ -178,7 +178,7 @@ plt.xlabel("Time (s)");
 # slow fluctuations in the data and a constant DC shift.
 
 design_matrix = make_first_level_design_matrix(raw_haemo,
-                                               hrf_model='spm', stim_dur=5.0,
+                                               hrf_model='spm', stim_dur=1.0,
                                                drift_order=3,
                                                drift_model='polynomial')
 
