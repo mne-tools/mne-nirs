@@ -79,4 +79,3 @@ def glm_region_of_interest(stats, group_by, cond_idx, cond_name):
 
 def _se(d):
     return np.sqrt(np.diag(d.vcov())) * 1e6
-
