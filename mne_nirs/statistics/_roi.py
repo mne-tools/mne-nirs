@@ -7,25 +7,19 @@ def glm_region_of_interest(stats, group_by, cond_idx, cond_name):
 
     Parameters
     ----------
-    raw : instance of Raw
-        The haemoglobin data.
-    sd_pairs : list of lists
-        List of source detector pairs. For example, to request the picks for
-        channels comprising of source 1 detector 4 and source 13
-        detector 4 you would specify [[1, 4], [13, 4]].
-    on_missing : str
-        What to do if one or several requested source detector are not found
-        in the recording.
-        Valid keys are 'error' | 'warning' | 'ignore'
-        Default is 'error'. If on_missing is 'warning' it will proceed but
-        warn, if 'ignore' it will proceed silently. Note.
-        If none of the event ids are found in the data, an error will be
-        automatically generated irrespective of this parameter.
+    stats : ???
+        Need to write.
+    group_by : ???
+        Need to write.
+    cond_idx : ???
+        Need to write.
+    cond_idx : ???
+        Need to write.
 
     Returns
     -------
-    picks : list of integers
-        List of picks corresponding to requested source detector pairs.
+    stats : DataFrame
+        GLM statistics for region of interest.
     """
     from scipy import stats as ss
     import pandas as pd
