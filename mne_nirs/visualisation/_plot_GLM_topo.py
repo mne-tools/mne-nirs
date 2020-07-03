@@ -128,46 +128,59 @@ def plot_glm_contrast_topo(raw, contrast,
     """
 
     import matplotlib.pyplot as plt
-
     import matplotlib as mpl
     from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
 
+    # Extract types. One subplot is created per type (hbo/hbr)
     types = np.unique(raw.get_channel_types())
 
-    fig, axes = plt.subplots(nrows=1,
-                             ncols=len(types),
-                             figsize=figsize)
-
+    # Extract values to plot and rescale to uM
     estimates = contrast.effect[0]
     estimates = estimates * 1e6
 
+    # Create subplots for figures
+    fig, axes = plt.subplots(nrows=1,
+                             ncols=len(types),
+                             figsize=figsize)
+    # Create limits for colorbar
     vmax = np.max(np.abs(estimates))
     vmin = vmax * -1.
     cmap = mpl.cm.RdBu_r
     norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
 
     for t_idx, t in enumerate(types):
+        # Extract just the channels corresponding to the type to plot
         picks = mne.io.pick._picks_to_idx(raw.info, t, exclude=[],
                                           allow_empty=True)
         raw_subset = raw.copy().pick(picks=picks)
 
+        # Extract positions of channels for plotting
         _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
             mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
 
+        # Deal with case when only a single chroma is available
+        if len(types) == 1:
+            ax = axes
+        else:
+            ax = axes[t_idx]
+
+        # Plot the topomap
         mne.viz.topomap.plot_topomap(estimates[picks], pos,
                                      extrapolate='local',
                                      names=ch_names,
                                      vmin=vmin,
                                      vmax=vmax,
-                                     axes=axes[t_idx],
+                                     axes=ax,
                                      show=False,
                                      sphere=sphere)
-        axes[t_idx].set_title(t)
+        # Set the title for this type
+        ax.set_title(t)
 
-    ax1_divider = make_axes_locatable(axes[-1])
+    # Create a single colorbar for all types based on limits above
+    ax1_divider = make_axes_locatable(ax)
     cax1 = ax1_divider.append_axes("right", size="7%", pad="2%")
     cbar = mpl.colorbar.ColorbarBase(cax1, cmap=cmap, norm=norm,
                                      orientation='vertical')
-    cbar.set_label('Haemoglobin (uM)', rotation=270)
+    cbar.set_label('Contrast Effect', rotation=270)
 
     return fig

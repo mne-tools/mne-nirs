@@ -85,14 +85,19 @@ raw_intensity.resample(1.0)
 # Then we crop the recording to the section containing our
 # experimental conditions.
 
+original_annotations = raw_intensity.annotations
 new_des = [des for des in raw_intensity.annotations.description]
 new_des = ['Control' if x == "1.0" else x for x in new_des]
 new_des = ['Tapping/Left' if x == "2.0" else x for x in new_des]
 new_des = ['Tapping/Right' if x == "3.0" else x for x in new_des]
-annot = mne.Annotations(raw_intensity.annotations.onset,
-                        raw_intensity.annotations.duration, new_des)
+keepers = [n == 'Control' or
+           n == "Tapping/Left" or
+           n == "Tapping/Right" for n in new_des]
+idxs = np.array(np.where(keepers)[0])
+annot = mne.Annotations(original_annotations.onset[idxs],
+                        original_annotations.duration[idxs] * 5., 
+                        np.array([new_des[idx] for idx in np.where(keepers)[0]]))
 raw_intensity.set_annotations(annot)
-raw_intensity.annotations.crop(35, 2967)
 
 
 ###############################################################################
@@ -172,7 +177,7 @@ plt.xlabel("Time (s)");
 # We also include a third order polynomial drift and constant to model
 # slow fluctuations in the data and a constant DC shift.
 
-design_matrix = make_first_level_design_matrix(raw_intensity,
+design_matrix = make_first_level_design_matrix(raw_haemo,
                                                hrf_model='spm', stim_dur=5.0,
                                                drift_order=3,
                                                drift_model='polynomial')
@@ -295,7 +300,7 @@ plot_glm_topo(raw_haemo, glm_est, design_matrix,
 contrast_matrix = np.eye(design_matrix.shape[1])
 basic_conts = dict([(column, contrast_matrix[i])
                    for i, column in enumerate(design_matrix.columns)])
-contrast_LvR = basic_conts['Tapping/Right'] - basic_conts['Tapping/Left']
+contrast_LvR = basic_conts['Tapping/Left'] - basic_conts['Tapping/Right']
 contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
 mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
 
