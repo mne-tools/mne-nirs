@@ -90,3 +90,23 @@ def test_run_plot_GLM_contrast_topo():
     contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
     fig = mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
     assert len(fig.axes) == 3
+
+
+def test_run_plot_GLM_contrast_topo_single_chroma():
+    raw_intensity = _load_dataset()
+    raw_intensity.crop(450, 600)  # Keep the test fast
+
+    design_matrix = make_first_level_design_matrix(raw_intensity,
+                                                   drift_order=1,
+                                                   drift_model='polynomial')
+    raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
+    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
+    raw_haemo = raw_haemo.pick(picks='hbo')
+    glm_est = run_GLM(raw_haemo, design_matrix)
+    contrast_matrix = np.eye(design_matrix.shape[1])
+    basic_conts = dict([(column, contrast_matrix[i])
+                        for i, column in enumerate(design_matrix.columns)])
+    contrast_LvR = basic_conts['A'] - basic_conts['B']
+    contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
+    fig = mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
+    assert len(fig.axes) == 2

@@ -153,20 +153,26 @@ def plot_glm_contrast_topo(raw, contrast,
         _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
             mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
 
+        # Deal with case when only a single chroma is available
+        if len(types) == 1:
+            ax = axes
+        else:
+            ax = axes[t_idx]
+
         # Plot the topomap
         mne.viz.topomap.plot_topomap(estimates[picks], pos,
                                      extrapolate='local',
                                      names=ch_names,
                                      vmin=vmin,
                                      vmax=vmax,
-                                     axes=axes[t_idx],
+                                     axes=ax,
                                      show=False,
                                      sphere=sphere)
         # Set the title for this type
-        axes[t_idx].set_title(t)
+        ax.set_title(t)
 
     # Create a single colorbar for all types based on limits above
-    ax1_divider = make_axes_locatable(axes[-1])
+    ax1_divider = make_axes_locatable(ax)
     cax1 = ax1_divider.append_axes("right", size="7%", pad="2%")
     cbar = mpl.colorbar.ColorbarBase(cax1, cmap=cmap, norm=norm,
                                      orientation='vertical')
