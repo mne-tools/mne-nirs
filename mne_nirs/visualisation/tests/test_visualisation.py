@@ -110,4 +110,3 @@ def test_run_plot_GLM_contrast_topo_single_chroma():
     contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
     fig = mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
     assert len(fig.axes) == 2
-
