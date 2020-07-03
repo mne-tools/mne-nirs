@@ -31,10 +31,10 @@ def test_io():
     glm_est = run_GLM(raw_haemo, design_matrix)
     df = glm_to_tidy(raw_haemo, glm_est, design_matrix)
     df = _tidy_long_to_wide(df)
-    assert df.shape == (48, 11)
+    assert df.shape == (48, 12)
     assert set(df.columns) == {'ch_name', 'condition', 'df', 'mse', 'p_value',
                                't', 'theta', 'Source', 'Detector', 'Chroma',
-                               'Significant'}
+                               'Significant', 'se'}
     num_conds = 8  # triggers (1, 2, 3, 15) + 3 drifts + constant
     assert df.shape[0] == num_chans * num_conds
 
