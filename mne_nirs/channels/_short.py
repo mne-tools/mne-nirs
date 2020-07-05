@@ -17,7 +17,7 @@ def get_short_channels(raw, max_dist=0.01):
     raw : instance of Raw
         The haemoglobin data.
     max_dist : number
-        Maximum distance of returned channel.
+        Maximum distance of returned channel (m).
 
     Returns
     -------

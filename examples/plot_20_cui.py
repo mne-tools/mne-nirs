@@ -108,12 +108,42 @@ for condition in evoked_dict_anti:
 
 
 ###############################################################################
+# Apply short channel correction
+# ------------------------------
+#
+# Apply Scholkmann et al 2014 and extract epochs.
+
+od_corrected = mne_nirs.signal_enhancement.short_channel_regression(raw_od)
+raw_haemo = mne.preprocessing.nirs.beer_lambert_law(od_corrected)
+raw_haemo = mne_nirs.channels.get_long_channels(raw_haemo)
+
+raw_haemo = raw_haemo.filter(0.05, 0.7, h_trans_bandwidth=0.2,
+                             l_trans_bandwidth=0.02)
+
+epochs_corr = mne.Epochs(raw_haemo, events, event_id=event_dict,
+                         tmin=tmin, tmax=tmax,
+                         reject=reject_criteria, reject_by_annotation=True,
+                         proj=True, baseline=(None, 0), preload=True,
+                         detrend=None, verbose=True)
+
+evoked_dict_corr = {
+    'Tapping/HbO': epochs_corr['Tapping'].average(picks='hbo'),
+    'Tapping/HbR': epochs_corr['Tapping'].average(picks='hbr'),
+    'Control/HbO': epochs_corr['Control'].average(picks='hbo'),
+    'Control/HbR': epochs_corr['Control'].average(picks='hbr')}
+
+# Rename channels until the encoding of frequency in ch_name is fixed
+for condition in evoked_dict_corr:
+    evoked_dict_corr[condition].rename_channels(lambda x: x[:-4])
+
+
+###############################################################################
 # Plot two approaches for comparison
 # ----------------------------------
 #
 # Plot the average epochs with and without Cui 2010 applied.
 
-fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(15, 6))
+fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(15, 6))
 
 color_dict = dict(HbO='#AA3377', HbR='b')
 styles_dict = dict(Control=dict(linestyle='dashed'))
@@ -121,14 +151,21 @@ styles_dict = dict(Control=dict(linestyle='dashed'))
 mne.viz.plot_compare_evokeds(evoked_dict, combine="mean", ci=0.95,
                              axes=axes[0], colors=color_dict,
                              styles=styles_dict,
-                             ylim=dict(hbo=[-10, 13]))
+                             ylim=dict(hbo=[-10, 15]))
 
 mne.viz.plot_compare_evokeds(evoked_dict_anti, combine="mean", ci=0.95,
                              axes=axes[1], colors=color_dict,
                              styles=styles_dict,
-                             ylim=dict(hbo=[-10, 13]))
+                             ylim=dict(hbo=[-10, 15]))
 
-for column, condition in enumerate(['Original Data', 'Cui Enhanced Data']):
+mne.viz.plot_compare_evokeds(evoked_dict_corr, combine="mean", ci=0.95,
+                             axes=axes[2], colors=color_dict,
+                             styles=styles_dict,
+                             ylim=dict(hbo=[-10, 15]))
+
+for column, condition in enumerate(['Original Data',
+                                    'With Enhanced Anticorrelation',
+                                    'With Short Regression']):
     axes[column].set_title('{}'.format(condition))
 
 
@@ -162,4 +199,12 @@ epochs['Tapping'].pick(picks='hbo').plot_image(combine='mean',
 # method.
 
 epochs_anti['Tapping'].pick(picks='hbo').plot_image(combine='mean',
+                                                    group_by=groups)
+
+
+
+###############################################################################
+# New we plot the epochs for the data processed with the short regression.
+
+epochs_corr['Tapping'].pick(picks='hbo').plot_image(combine='mean',
                                                     group_by=groups)
