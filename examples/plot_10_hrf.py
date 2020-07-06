@@ -34,17 +34,20 @@ This GLM analysis is a wrapper over the excellent
 # License: BSD (3-clause)
 
 import os
+import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
+
 import mne
 import mne_nirs
-import numpy as np
 
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import run_GLM
+from mne_nirs.statistics import run_GLM, glm_region_of_interest
 from mne_nirs.visualisation import plot_glm_topo
+from mne_nirs.channels import (get_long_channels, get_short_channels,
+                               picks_pair_to_idx)
 
 from nilearn.reporting import plot_design_matrix
-from mne_nirs.channels import get_long_channels, get_short_channels
 from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
 
 
@@ -252,6 +255,7 @@ plt.ylabel("Amplitude")
 data_subset = raw_haemo.copy().pick(picks=range(2))
 glm_est = run_GLM(data_subset, design_matrix)
 
+
 ###############################################################################
 #
 # We then display the results. Note that the control condition sits
@@ -287,6 +291,25 @@ plot_glm_topo(raw_haemo, glm_est, design_matrix,
 
 
 ###############################################################################
+# Analyse regions of interest
+# ---------------------------
+#
+# Or alternatively we can summarise the responses across regions of interest.
+
+left = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 3],
+        [2, 4], [3, 2], [3, 3], [4, 3], [4, 4]]
+right = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7],
+         [6, 8], [7, 6], [7, 7], [8, 7], [8, 8]]
+
+groups = dict(Left_ROI=picks_pair_to_idx(raw_haemo, left),
+              Right_ROI=picks_pair_to_idx(raw_haemo, right))
+
+df = pd.DataFrame()
+for idx, col in enumerate(design_matrix.columns[:3]):
+    df = df.append(glm_region_of_interest(glm_est, groups, idx, col))
+
+
+###############################################################################
 #
 # Compute contrasts
 # -----------------
@@ -303,27 +326,6 @@ basic_conts = dict([(column, contrast_matrix[i])
 contrast_LvR = basic_conts['Tapping/Left'] - basic_conts['Tapping/Right']
 contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
 mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
-
-
-###############################################################################
-# Or alternatively we can calculate the responses across regions of interest.
-
-left = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 3],
-        [2, 4], [3, 2], [3, 3], [4, 3], [4, 4]]
-right = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7],
-         [6, 8], [7, 6], [7, 7], [8, 7], [8, 8]]
-
-from mne_nirs.channels import picks_pair_to_idx
-from mne_nirs.statistics import glm_region_of_interest
-import pandas as pd
-
-groups = dict(Left_ROI=picks_pair_to_idx(raw_haemo, left),
-              Right_ROI=picks_pair_to_idx(raw_haemo, right))
-
-df = pd.DataFrame()
-for idx, col in enumerate(design_matrix.columns[:3]):
-    df = df.append(glm_region_of_interest(glm_est, groups, idx, col))
-df
 
 
 ###############################################################################
