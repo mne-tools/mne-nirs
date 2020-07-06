@@ -312,6 +312,13 @@ df
 
 
 ###############################################################################
+# And we can visualise these summary statistics.
+
+import seaborn as sns
+sns.scatterplot(x="Condition", y="theta", hue="Chroma", style="ROI", s=100, data=df)
+
+
+###############################################################################
 #
 # Compute contrasts
 # -----------------
@@ -328,13 +335,6 @@ basic_conts = dict([(column, contrast_matrix[i])
 contrast_LvR = basic_conts['Tapping/Left'] - basic_conts['Tapping/Right']
 contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
 mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
-
-
-###############################################################################
-# And we can visualise these summary statistics.
-
-import seaborn as sns
-sns.scatterplot(x="Condition", y="theta", hue="Chroma", style="ROI", s=100, data=df)
 
 
 ###############################################################################
