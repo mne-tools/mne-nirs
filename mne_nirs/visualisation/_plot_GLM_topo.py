@@ -77,6 +77,11 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
         _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
             mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
 
+        if sum(["x" in ch for ch in ch_names]):
+            warn("Channels were merged")
+            keeps = np.array(np.where(["x" not in ch for ch in ch_names])[0])
+            picks = picks[keeps]
+
         for idx, label in enumerate(design_matrix.columns):
             if label in requested_conditions:
                 mne.viz.topomap.plot_topomap(estimates[picks, idx], pos,

@@ -13,6 +13,10 @@ from mne_nirs.simulation import simulate_nirs_raw
 from mne_nirs.channels import get_short_channels, get_long_channels
 from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
 
+from mne_nirs.channels import picks_pair_to_idx
+from mne_nirs.statistics import glm_region_of_interest
+import pandas as pd
+
 
 def test_run_GLM():
     raw = simulate_nirs_raw(sig_dur=200, stim_dur=5.)
@@ -79,3 +83,17 @@ def test_GLM_system_test():
     assert a["Significant"].values[1] > 0.7
     assert a["Significant"].values[2] > 0.7
     assert a["Significant"].values[3] > 0.7
+
+    left = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 3],
+            [2, 4], [3, 2], [3, 3], [4, 3], [4, 4]]
+    right = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7],
+             [6, 8], [7, 6], [7, 7], [8, 7], [8, 8]]
+
+    groups = dict(Left_ROI=picks_pair_to_idx(raw_haemo, left),
+                  Right_ROI=picks_pair_to_idx(raw_haemo, right))
+
+    df = pd.DataFrame()
+    for idx, col in enumerate(design_matrix.columns[:3]):
+        df = df.append(glm_region_of_interest(glm_est, groups, idx, col))
+
+    assert df.shape == (12, 8)
