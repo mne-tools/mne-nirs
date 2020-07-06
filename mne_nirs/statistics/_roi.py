@@ -7,19 +7,24 @@ def glm_region_of_interest(stats, group_by, cond_idx, cond_name):
 
     Parameters
     ----------
-    stats : ???
+    stats : dict
         Need to write.
-    group_by : ???
-        Need to write.
-    cond_idx : ???
-        Need to write.
-    cond_idx : ???
-        Need to write.
+    group_by : dict
+        Specifies which channels are aggregated into a single ROI.
+        The dict key will be used as the ROI label and the dict
+        values must be lists of picks (either channel names or integer indices
+        of ``epochs.ch_names``). For example::
+            group_by=dict(Left_ROI=[1, 2, 3, 4], Right_ROI=[5, 6, 7, 8])
+        Note that within a dict entry all channels must have the same type.
+    cond_idx : integer
+        Index of condition of interest.
+    cond_idx : String
+        Name to be used for condition.
 
     Returns
     -------
     stats : DataFrame
-        GLM statistics for region of interest.
+        Statistics for each ROI.
     """
     from scipy import stats as ss
     import pandas as pd
