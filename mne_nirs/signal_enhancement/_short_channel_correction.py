@@ -34,7 +34,7 @@ def short_channel_regression(raw, max_dist=0.01):
     raw : instance of Raw
         Haemoglobin data.
     max_dist : number
-        Maximum distance of returned channel (m).
+        Channels less than this distance are considered short (m).
 
     Returns
     -------
