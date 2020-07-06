@@ -294,7 +294,8 @@ plot_glm_topo(raw_haemo, glm_est, design_matrix,
 # Analyse regions of interest
 # ---------------------------
 #
-# Or alternatively we can summarise the responses across regions of interest.
+# Or alternatively we can summarise the responses across regions of interest
+# for each condition.
 
 left = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 3],
         [2, 4], [3, 2], [3, 3], [4, 3], [4, 4]]
@@ -307,6 +308,7 @@ groups = dict(Left_ROI=picks_pair_to_idx(raw_haemo, left),
 df = pd.DataFrame()
 for idx, col in enumerate(design_matrix.columns[:3]):
     df = df.append(glm_region_of_interest(glm_est, groups, idx, col))
+df
 
 
 ###############################################################################
