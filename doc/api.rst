@@ -37,6 +37,7 @@ Signal Enhancement
    :toctree: generated/
 
    enhance_negative_correlation
+   short_channel_regression
 
 
 Statistics
