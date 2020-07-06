@@ -64,7 +64,7 @@ event_dict = {'Control': 1, 'Tapping/Left': 2, 'Tapping/Right': 3}
 # First we extract the epochs with no additional processing,
 # this result should be the same as the MNE tutorial.
 
-reject_criteria = dict(hbo=80e-6)
+reject_criteria = dict(hbo=100e-6)
 tmin, tmax = -5, 15
 
 epochs = mne.Epochs(raw_haemo, events, event_id=event_dict,
@@ -138,8 +138,8 @@ for condition in evoked_dict_corr:
 
 
 ###############################################################################
-# Plot two approaches for comparison
-# ----------------------------------
+# Plot approaches for comparison
+# ------------------------------
 #
 # Plot the average epochs with and without Cui 2010 applied.
 
@@ -170,41 +170,89 @@ for column, condition in enumerate(['Original Data',
 
 
 ###############################################################################
-# Plot trials for each approach
-# -----------------------------
+# Plot hemisphere for each approach
+# ---------------------------------
 #
 # Plot the epoch image for each approach. First we specify the source
 # detector pairs for analysis.
 
-left = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 3],
-        [2, 4], [3, 2], [3, 3], [4, 3], [4, 4]]
-right = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7],
-         [6, 8], [7, 6], [7, 7], [8, 7], [8, 8]]
+left = [[1, 3], [2, 3], [1, 2], [4, 3]]
+right = [[5, 7], [6, 7], [5, 6], [8, 7]]
 
 groups = dict(Left_ROI=picks_pair_to_idx(raw_anti.pick(picks='hbo'), left,
                                          on_missing='warning'),
               Right_ROI=picks_pair_to_idx(raw_anti.pick(picks='hbo'), right,
                                          on_missing='warning'))
 
+evoked_dict = {
+    'Left/HbO': epochs['Tapping/Left'].average(picks='hbo'),
+    'Left/HbR': epochs['Tapping/Left'].average(picks='hbr'),
+    'Right/HbO': epochs['Tapping/Right'].average(picks='hbo'),
+    'Right/HbR': epochs['Tapping/Right'].average(picks='hbr')}
+for condition in evoked_dict:
+    evoked_dict[condition].rename_channels(lambda x: x[:-4])
 
-###############################################################################
-# First we plot the epochs for the unprocessed data.
+evoked_dict_anti = {
+    'Left/HbO': epochs_anti['Tapping/Left'].average(picks='hbo'),
+    'Left/HbR': epochs_anti['Tapping/Left'].average(picks='hbr'),
+    'Right/HbO': epochs_anti['Tapping/Right'].average(picks='hbo'),
+    'Right/HbR': epochs_anti['Tapping/Right'].average(picks='hbr')}
+for condition in evoked_dict_anti:
+    evoked_dict_anti[condition].rename_channels(lambda x: x[:-4])
 
-epochs['Tapping'].pick(picks='hbo').plot_image(combine='mean',
-                                                    group_by=groups)
+evoked_dict_corr = {
+    'Left/HbO': epochs_corr['Tapping/Left'].average(picks='hbo'),
+    'Left/HbR': epochs_corr['Tapping/Left'].average(picks='hbr'),
+    'Right/HbO': epochs_corr['Tapping/Right'].average(picks='hbo'),
+    'Right/HbR': epochs_corr['Tapping/Right'].average(picks='hbr')}
+for condition in evoked_dict_corr:
+    evoked_dict_corr[condition].rename_channels(lambda x: x[:-4])
 
 
-###############################################################################
-# New we plot the epochs for the data processed with the Cui anti correlation
-# method.
+color_dict = dict(HbO='#AA3377', HbR='b')
+styles_dict = dict(Left=dict(linestyle='dashed'))
 
-epochs_anti['Tapping'].pick(picks='hbo').plot_image(combine='mean',
-                                                    group_by=groups)
+fig, axes = plt.subplots(nrows=3, ncols=2, figsize=(15, 16))
 
+mne.viz.plot_compare_evokeds(evoked_dict, combine="mean", ci=0.95,
+                             picks=groups['Left_ROI'],
+                             axes=axes[0, 0], colors=color_dict,
+                             styles=styles_dict,
+                             ylim=dict(hbo=[-10, 15]))
 
+mne.viz.plot_compare_evokeds(evoked_dict, combine="mean", ci=0.95,
+                             picks=groups['Right_ROI'],
+                             axes=axes[0, 1], colors=color_dict,
+                             styles=styles_dict,
+                             ylim=dict(hbo=[-10, 15]))
 
-###############################################################################
-# New we plot the epochs for the data processed with the short regression.
+mne.viz.plot_compare_evokeds(evoked_dict_anti, combine="mean", ci=0.95,
+                             picks=groups['Left_ROI'],
+                             axes=axes[1, 0], colors=color_dict,
+                             styles=styles_dict,
+                             ylim=dict(hbo=[-10, 15]))
 
-epochs_corr['Tapping'].pick(picks='hbo').plot_image(combine='mean',
-                                                    group_by=groups)
+mne.viz.plot_compare_evokeds(evoked_dict_anti, combine="mean", ci=0.95,
+                             picks=groups['Right_ROI'],
+                             axes=axes[1, 1], colors=color_dict,
+                             styles=styles_dict,
+                             ylim=dict(hbo=[-10, 15]))
+
+mne.viz.plot_compare_evokeds(evoked_dict_corr, combine="mean", ci=0.95,
+                             picks=groups['Left_ROI'],
+                             axes=axes[2, 0], colors=color_dict,
+                             styles=styles_dict,
+                             ylim=dict(hbo=[-10, 15]))
+
+mne.viz.plot_compare_evokeds(evoked_dict_corr, combine="mean", ci=0.95,
+                             picks=groups['Right_ROI'],
+                             axes=axes[2, 1], colors=color_dict,
+                             styles=styles_dict,
+                             ylim=dict(hbo=[-10, 15]))
+
+for row, condition in enumerate(['Original',
+                                 'Anticorrelation',
+                                 'Short Regression']):
+    for column, hemi in enumerate(['Left', 'Right']):
+        axes[row, column].set_title('{}: {}'.format(condition, hemi))
+
