@@ -13,12 +13,21 @@ from mne.preprocessing.nirs import source_detector_distances
 
 def short_channel_regression(raw, max_dist=0.01):
     """
-    Modified Beer–Lambert law with short channel regression.
+    Short channel regression based on nearest channel.
 
-    From Measuring tissue hemodynamics and oxygenation by continuous-wave
-    functional near-infrared spectroscopy - how robust are the different
-    calculation methods against movement artifacts?
-    Scholkmann, Felix ; Metz, Andreas Jaakko ; Wolf, Martin
+    Fabbri, Francesco, et al. "Optical measurements of absorption changes in
+    two-layered diffusive media."
+    Physics in Medicine & Biology 49.7 (2004): 1183.
+
+    Saager, Rolf B., and Andrew J. Berger. "Direct characterization and
+    removal of interfering absorption trends in two-layer turbid media."
+    JOSA A 22.9 (2005): 1874-1882.
+
+    Scholkmann, Felix, Andreas Jaakko Metz, and Martin Wolf.
+    "Measuring tissue hemodynamics and oxygenation by continuous-wave
+    functional near-infrared spectroscopy—how robust are the different
+    calculation methods against movement artifacts?."
+    Physiological measurement 35.4 (2014): 717.
 
     Parameters
     ----------
