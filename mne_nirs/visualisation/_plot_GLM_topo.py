@@ -173,7 +173,7 @@ def plot_glm_contrast_topo(raw, contrast,
                                      axes=ax,
                                      show=False,
                                      sphere=sphere)
-        # Sets axes title     
+        # Sets axes title
         if t == 'hbo':
             ax.set_title('Oxyheamoglobin')
         elif t == 'hbr':
