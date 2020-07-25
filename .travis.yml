@@ -54,11 +54,7 @@ before_install:
     - if [ "${DEPS}" != "minimal" ]; then
         pip install nitime;
       fi
-    # Don't source mne_setup_sh here because changing PATH etc. can't be done in a script
-    - if [ "${DEPS}" != "minimal" ]; then
-        source tools/get_minimal_commands.sh;
-        mne_surf2bem --version;
-      fi;
+
 
 install:
     # Rvm overrides cd with a function so that it can hook into it to run
