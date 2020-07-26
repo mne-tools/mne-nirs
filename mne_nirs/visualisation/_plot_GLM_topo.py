@@ -175,9 +175,11 @@ def plot_glm_contrast_topo(raw, contrast,
                                      sphere=sphere)
         # Sets axes title
         if t == 'hbo':
-            ax.set_title('Oxyheamoglobin')
+            ax.set_title('Oxyhaemoglobin')
         elif t == 'hbr':
-            ax.set_title('Deoxyheamoglobin')
+            ax.set_title('Deoxyhaemoglobin')
+        else:
+            ax.set_title(t)
 
     # Create a single colorbar for all types based on limits above
     ax1_divider = make_axes_locatable(ax)
