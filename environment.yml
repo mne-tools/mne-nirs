@@ -1,5 +1,5 @@
 
-name: mne
+name: mne-nirs
 channels:
 - defaults
 dependencies:
@@ -26,7 +26,7 @@ dependencies:
 - tqdm
 - spyder-kernels
 - pip:
-  - mne
+  - https://github.com/mne-tools/mne-python/archive/master.zip
   - imageio-ffmpeg>=0.4.1
   - vtk>=9.0.1
   - pyvista>=0.24
@@ -35,7 +35,7 @@ dependencies:
   - PySurfer[save_movie]
   - dipy --only-binary dipy
   - nibabel
-  - nilearn
+  - https://github.com/nilearn/nilearn/archive/master.zip
   - neo
   - python-picard
   - PyQt5>=5.10,<5.14; platform_system == "Darwin"
