@@ -119,3 +119,20 @@ Utilities
    :toctree: generated/
 
    glm_to_tidy
+
+
+
+
+Input/Output
+------------
+
+.. currentmodule:: mne_nirs.io
+
+.. automodule:: mne_nirs.io
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
+   write_raw_snirf

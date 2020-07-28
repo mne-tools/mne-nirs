@@ -75,6 +75,8 @@ install:
     - cd ${SRC_DIR}
     - pip uninstall -y nilearn
     - pip install git+https://github.com/nilearn/nilearn.git
+    - pip uninstall -y mne
+    - pip install git+https://github.com/mne-tools/mne-python.git
 
 script:
   - mkdir for_test
