@@ -12,8 +12,6 @@ from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_GLM
 from mne_nirs.visualisation import plot_glm_topo
 
-mne.viz.set_3d_backend('pyvista')
-
 
 @requires_pysurfer
 @traits_test
