@@ -46,7 +46,6 @@ before_install:
         if [ ! -z "$CONDA_ENV" ]; then
           conda env update --file $CONDA_ENV
           conda activate mne-nirs
-          pip uninstall -yq mne
         fi
       fi
     # Always install these via pip so we get the latest possible versions (testing bugfixes)
@@ -65,8 +64,6 @@ install:
     # Suppress the parallel outputs for logging cleanliness
     - python setup.py build
     - python setup.py install
-    - pip uninstall -y mne
-    - pip install git+https://github.com/mne-tools/mne-python.git
     - mne sys_info
     - python -c "import numpy; numpy.show_config()"
     - SRC_DIR=$(pwd)
