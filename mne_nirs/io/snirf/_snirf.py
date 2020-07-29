@@ -108,3 +108,13 @@ def write_raw_snirf(raw, fname):
                 stims[idx, :] = [raw.annotations.onset[trg], 5.0,
                                  raw.annotations.duration[trg]]
             f.create_dataset('/nirs/' + key + '/data', data=stims)
+
+        # Add non standard (but allowed) custom metadata tags
+        if 'middle_name' in raw.info["subject_info"]:
+            f.create_dataset("nirs/metaDataTags/middleName",
+                             data=[raw.info["subject_info"]['middle_name'].
+                             encode('UTF-8')])
+        if 'last_name' in raw.info["subject_info"]:
+            f.create_dataset("nirs/metaDataTags/lastName",
+                             data=[raw.info["subject_info"]['last_name'].
+                             encode('UTF-8')])
