@@ -45,8 +45,7 @@ before_install:
         source ci-helpers/travis/setup_conda.sh
         if [ ! -z "$CONDA_ENV" ]; then
           conda env update --file $CONDA_ENV
-          conda activate mne
-          pip uninstall -yq mne
+          conda activate mne-nirs
         fi
       fi
     # Always install these via pip so we get the latest possible versions (testing bugfixes)
