@@ -111,10 +111,8 @@ def write_raw_snirf(raw, fname):
 
         # Add non standard (but allowed) custom metadata tags
         if 'middle_name' in raw.info["subject_info"]:
-            f.create_dataset("nirs/metaDataTags/middleName",
-                             data=[raw.info["subject_info"]['middle_name'].
-                             encode('UTF-8')])
+            mname = [raw.info["subject_info"]['middle_name'].encode('UTF-8')]
+            f.create_dataset("nirs/metaDataTags/middleName", data=mname)
         if 'last_name' in raw.info["subject_info"]:
-            f.create_dataset("nirs/metaDataTags/lastName",
-                             data=[raw.info["subject_info"]['last_name'].
-                             encode('UTF-8')])
+            lname = [raw.info["subject_info"]['last_name'].encode('UTF-8')]
+            f.create_dataset("nirs/metaDataTags/lastName", data=lname)
