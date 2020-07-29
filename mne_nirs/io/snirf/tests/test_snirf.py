@@ -77,4 +77,10 @@ def test_snirf_write(tmpdir):
     assert_allclose(raw.get_data(), raw_orig.get_data())
 
     # Check info object is the same
-    assert object_diff(raw.info, raw_orig.info) == ""
+    obj_diff = object_diff(raw.info, raw_orig.info)
+    num_diffs = 0
+    for line in obj_diff.splitlines():
+        if (not 'logno' in line) and (not 'scanno' in line):
+            num_diffs += 1
+            print(line)
+    assert num_diffs == 0
