@@ -126,9 +126,9 @@ Utilities
 Input/Output
 ------------
 
-.. currentmodule:: mne_nirs.io
+.. currentmodule:: mne_nirs.io.snirf
 
-.. automodule:: mne_nirs.io
+.. automodule:: mne_nirs.io.snirf
    :no-members:
    :no-inherited-members:
 
