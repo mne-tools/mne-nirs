@@ -109,6 +109,23 @@ def write_raw_snirf(raw, fname):
                                  raw.annotations.duration[trg]]
             f.create_dataset('/nirs/' + key + '/data', data=stims)
 
+        # Store probe landmarks
+        if raw.info['dig'] is not None:
+            print("Storing dig")
+            diglocs = np.empty((len(raw.info['dig']), 3))
+            digname = list()
+            for idx, dig in enumerate(raw.info['dig']):
+                ident = mch(r"\d+ \(FIFFV_POINT_(\w+)\)",
+                            str(dig.get("ident")))
+                if ident is not None:
+                    digname.append(ident[1])
+                else:
+                    digname.append(str(dig.get("ident")))
+                diglocs[idx, :] = dig.get("r")
+            digname = [d.encode('UTF-8') for d in digname]
+            f.create_dataset("nirs/probe/landmarkPos3D", data=diglocs)
+            f.create_dataset("nirs/probe/landmarkLabels", data=digname)
+
         # Add non standard (but allowed) custom metadata tags
         if 'middle_name' in raw.info["subject_info"]:
             mname = [raw.info["subject_info"]['middle_name'].encode('UTF-8')]
