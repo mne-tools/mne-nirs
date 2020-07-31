@@ -19,7 +19,7 @@ def test_short_extraction():
     short_chans = get_short_channels(raw_intensity)
 
     original_num_channels = len(raw_intensity.ch_names)
-    assert original_num_channels == 56
+    assert original_num_channels == 26
 
     short_num_channels = len(short_chans.ch_names)
     assert short_num_channels == 16  # There are 8 SDs in this set * hbo/hbr
