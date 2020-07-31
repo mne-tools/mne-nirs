@@ -46,6 +46,7 @@ before_install:
         if [ ! -z "$CONDA_ENV" ]; then
           conda env update --file $CONDA_ENV
           conda activate mne-nirs
+          pip uninstall -yq mne_nirs
         fi
       fi
     # Always install these via pip so we get the latest possible versions (testing bugfixes)
