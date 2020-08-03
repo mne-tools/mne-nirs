@@ -3,7 +3,7 @@
 # License: BSD (3-clause)
 
 import h5py as h5py
-from re import match as mch
+import re
 import numpy as np
 from mne.io.pick import _picks_to_idx
 
@@ -35,9 +35,12 @@ def write_raw_snirf(raw, fname):
         # Extract info from file names
         rgx = r'S(\d+)_D(\d+) (\d+)'
         chs = raw.info['chs']
-        sources = [float(mch(rgx, r['ch_name']).groups()[0]) for r in chs]
-        detectors = [float(mch(rgx, r['ch_name']).groups()[1]) for r in chs]
-        wavelengths = [float(mch(rgx, r['ch_name']).groups()[2]) for r in chs]
+        sources = [float(re.match(rgx, r['ch_name']).groups()[0])
+                   for r in chs]
+        detectors = [float(re.match(rgx, r['ch_name']).groups()[1])
+                     for r in chs]
+        wavelengths = [float(re.match(rgx, r['ch_name']).groups()[2])
+                       for r in chs]
 
         # Create info summary and recode
         sources_sorted = np.sort(np.unique(sources))
@@ -114,8 +117,8 @@ def write_raw_snirf(raw, fname):
             diglocs = np.empty((len(raw.info['dig']), 3))
             digname = list()
             for idx, dig in enumerate(raw.info['dig']):
-                ident = mch(r"\d+ \(FIFFV_POINT_(\w+)\)",
-                            str(dig.get("ident")))
+                ident = re.match(r"\d+ \(FIFFV_POINT_(\w+)\)",
+                                 str(dig.get("ident")))
                 if ident is not None:
                     digname.append(ident[1])
                 else:
