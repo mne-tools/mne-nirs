@@ -133,5 +133,5 @@ def write_raw_snirf(raw, fname):
             lname = [raw.info["subject_info"]['last_name'].encode('UTF-8')]
             f.create_dataset("nirs/metaDataTags/lastName", data=lname)
         if 'sex' in raw.info["subject_info"]:
-            sex = [raw.info["subject_info"]['sex']]
-            f.create_dataset("nirs/metaDataTags/sex", data=sex)
+            sex = str(int(raw.info["subject_info"]['sex'])).encode('UTF-8')
+            f.create_dataset("nirs/metaDataTags/sex", data=[sex])
