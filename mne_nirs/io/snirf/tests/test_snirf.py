@@ -39,7 +39,7 @@ def test_snirf_write(fname, tmpdir):
                     [float(d) for d in raw_orig.annotations.description])
     assert_allclose(raw.annotations.duration, raw_orig.annotations.duration)
 
-    # # Check data is the same
+    # Check data is the same
     assert_allclose(raw.get_data(), raw_orig.get_data())
 
     # Check info object is the same
