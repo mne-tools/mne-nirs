@@ -44,10 +44,9 @@ def test_snirf_write(fname, tmpdir):
 
     # Check info object is the same
     obj_diff = object_diff(raw.info, raw_orig.info)
-    num_diffs = 0
+    diffs = ''
     for line in obj_diff.splitlines():
         if ('logno' not in line) and ('scanno' not in line):
             # logno and scanno are not used in processing
-            num_diffs += 1
-            print(line)
-    assert num_diffs == 0
+            diffs += f'\n{line}'
+    assert diffs == ''
