@@ -84,4 +84,4 @@ def test_snirf_write(tmpdir):
             num_diffs += 1
             print(line)
     # TODO: Set to zero before requesting merge
-    assert num_diffs < 3
+    assert num_diffs == 0

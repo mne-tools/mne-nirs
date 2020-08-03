@@ -111,7 +111,6 @@ def write_raw_snirf(raw, fname):
 
         # Store probe landmarks
         if raw.info['dig'] is not None:
-            print("Storing dig")
             diglocs = np.empty((len(raw.info['dig']), 3))
             digname = list()
             for idx, dig in enumerate(raw.info['dig']):
