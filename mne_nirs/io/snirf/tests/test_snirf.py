@@ -19,6 +19,7 @@ fname_nirx_15_2 = op.join(data_path(download=False),
 fname_nirx_15_2_short = op.join(data_path(download=False),
                                 'NIRx', 'nirx_15_2_recording_w_short')
 
+
 @requires_h5py
 @requires_testing_data
 @pytest.mark.parametrize('fname', (
