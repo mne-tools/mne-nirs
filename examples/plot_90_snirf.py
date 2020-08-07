@@ -4,19 +4,18 @@
 SNIRF Handling With MNE
 =======================
 
-SNIRF is a file format for storing NIRS data. The protocol is produced
-by the society for functional near infrared spectroscopy. In this tutorial
-we demonstrate how to convert your MNE data to SNIRF and also how to read
-SNIRF files.
-
 .. sidebar:: .nirs files
 
    If you wish to process your .nirs files in MNE use the official snirf
    converter to create .snirf file.
    See https://github.com/fNIRS/snirf_homer3
 
+SNIRF is a file format for storing NIRS data. The protocol is produced
+by the society for functional near infrared spectroscopy. In this tutorial
+we demonstrate how to convert your MNE data to SNIRF and also how to read
+SNIRF files.
 
-Read the protocol over at https://github.com/fNIRS/snirf/blob/master/snirf_specification.md
+Read the SNIRF protocol over at https://github.com/fNIRS/snirf/blob/master/snirf_specification.md
 
 .. contents:: Page contents
    :local:
