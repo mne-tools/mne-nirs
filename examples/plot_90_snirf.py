@@ -1,8 +1,8 @@
 """
 .. _tut-fnirs-snirf:
 
-SNIRF Handling With MNE
-=======================
+SNIRF Support in MNE
+====================
 
 .. sidebar:: .nirs files
 
