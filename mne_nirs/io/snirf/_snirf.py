@@ -9,7 +9,7 @@ from mne.io.pick import _picks_to_idx
 
 
 def write_raw_snirf(raw, fname):
-    """Writer for a continuous wave SNIRF data.
+    """Writer for continuous wave SNIRF data.
 
     Parameters
     ----------
