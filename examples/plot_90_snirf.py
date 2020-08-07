@@ -10,12 +10,12 @@ SNIRF Support in MNE
    converter to create .snirf file.
    See https://github.com/fNIRS/snirf_homer3
 
-SNIRF is a file format for storing NIRS data. The protocol is produced
+SNIRF is a file format for storing NIRS data. The specification is maintained
 by the society for functional near infrared spectroscopy. In this tutorial
 we demonstrate how to convert your MNE data to SNIRF and also how to read
 SNIRF files.
 
-Read the SNIRF protocol over at https://github.com/fNIRS/snirf/blob/master/snirf_specification.md
+Read the SNIRF protocol over at https://github.com/fNIRS/snirf
 
 .. contents:: Page contents
    :local:
@@ -39,9 +39,7 @@ from numpy.testing import assert_allclose
 # Import raw NIRS data from vendor
 # --------------------------------
 #
-# First we import the motor tapping data, these data are also
-# described and used in the
-# `MNE fNIRS tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
+# First we import some example data recorded with a NIRX device.
 
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
