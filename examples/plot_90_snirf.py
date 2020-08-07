@@ -30,7 +30,9 @@ Read the SNIRF protocol over at https://github.com/fNIRS/snirf
 
 import os
 import mne
-import mne_nirs
+
+from mne.io import read_raw_nirx, read_raw_snirf
+from mne_nirs.io import write_raw_snirf
 from numpy.testing import assert_allclose
 
 
@@ -44,7 +46,7 @@ from numpy.testing import assert_allclose
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
-raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
+raw_intensity = read_raw_nirx(fnirs_raw_dir).load_data()
 
 
 ###############################################################################
@@ -53,7 +55,7 @@ raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
 #
 # Now we can write this data back to disk in the SNIRF format.
 
-mne_nirs.io.snirf.write_raw_snirf(raw_intensity, 'test_raw.snirf')
+write_raw_snirf(raw_intensity, 'test_raw.snirf')
 
 
 ###############################################################################
@@ -62,7 +64,7 @@ mne_nirs.io.snirf.write_raw_snirf(raw_intensity, 'test_raw.snirf')
 # 
 # Next we can read back the snirf file.
 
-snirf_intensity = mne.io.read_raw_snirf('test_raw.snirf')
+snirf_intensity = read_raw_snirf('test_raw.snirf')
 
 
 ###############################################################################
