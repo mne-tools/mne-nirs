@@ -53,9 +53,7 @@ raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
 # Write data as SNIRF
 # -------------------
 #
-# Next we update the annotations by assigning names to each trigger ID.
-# Then we crop the recording to the section containing our
-# experimental conditions.
+# Now we can write this data back to disk in the SNIRF format.
 
 mne_nirs.io.snirf.write_raw_snirf(raw_intensity, 'test_raw.snirf')
 
@@ -63,8 +61,8 @@ mne_nirs.io.snirf.write_raw_snirf(raw_intensity, 'test_raw.snirf')
 ###############################################################################
 # Read back SNIRF file
 # --------------------
-# Next we can read back the SNIRF data.
-#
+# 
+# Next we can read back the snirf file.
 
 snirf_intensity = mne.io.read_raw_snirf('test_raw.snirf')
 
@@ -72,8 +70,8 @@ snirf_intensity = mne.io.read_raw_snirf('test_raw.snirf')
 ###############################################################################
 # Compare files
 # -------------
-# Finally we can compare the data and metadata has not be modified from the
-# original to the SNIRF format.
-#
+# 
+# Finally we can compare the data of the original to the SNIRF format and
+# ensure that the values are the same.
 
 assert_allclose(raw_intensity.get_data(), snirf_intensity.get_data())
