@@ -7,8 +7,8 @@ GLM Analysis (Measured Data)
 In this example we analyse data from a real multichannel fNIRS
 experiment (see :ref:`tut-fnirs-hrf-sim` for a simplified simulated
 analysis). The experiment consists of three conditions
-1) tapping on the left hand,
-2) tapping on the right hand,
+1) tapping with the left hand,
+2) tapping with the right hand,
 3) a control condition where the participant does nothing.
 We use a GLM analysis to examine the neural activity associated with
 the different tapping conditions.
@@ -70,7 +70,7 @@ from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
 #    To view the sensor locations run
 #    `raw_intensity.plot_sensors()`.
 #    A sound was presented to indicate which hand the participant should tap.
-#    Participants taped their thumb to fingers for 5s.
+#    Participants tapped their thumb to their fingers for 5s.
 #    Conditions were presented in a random order with a randomised inter
 #    stimulus interval.
 
@@ -259,8 +259,8 @@ glm_est = run_GLM(data_subset, design_matrix)
 ###############################################################################
 #
 # We then display the results. Note that the control condition sits
-# around zero.
-# And that the HbO is positive and larger than the HbR, this is to be expected.
+# around zero
+# and that the HbO is positive and larger than the HbR, this is to be expected.
 # Further, we note that for this channel the response to tapping on the
 # right hand is larger than the left. And the values are similar to what
 # is seen in the epoching tutorial.
