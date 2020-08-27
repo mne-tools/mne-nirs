@@ -44,13 +44,13 @@ jobs:
               fc-cache -f
 
         # This command differs from MNE-Python by just installing requirements_doc.txt, which greatly speeds up install time
+        # We also don't check PyQt5 because it's not actually installed
         - run:
             name: Get Python running
             command: |
               python -m pip install --user --upgrade --progress-bar off pip setuptools
               python -m pip install --user --upgrade --progress-bar off --pre sphinx
               python -m pip install --user --upgrade --progress-bar off -r requirements_doc.txt
-              python -m pip uninstall -yq pysurfer mayavi
               python -m pip install --user -e .
 
         - save_cache:
@@ -59,13 +59,13 @@ jobs:
               - ~/.cache/pip
 
         # Look at what we have and fail early if there is some library conflict
+        # (remove irrelevant lines compared to MNE-Python)
         - run:
             name: Check installation
             command: |
                which python
                QT_DEBUG_PLUGINS=1 mne sys_info
                python -c "import numpy; numpy.show_config()"
-               LIBGL_DEBUG=verbose python -c "import pyvistaqt; pyvistaqt.BackgroundPlotter(show=True)"
                python -c "import mne; mne.set_config('MNE_USE_CUDA', 'false')"  # this is needed for the config tutorial
                python -c "import mne; mne.set_config('MNE_LOGGING_LEVEL', 'info')"
                python -c "import mne; level = mne.get_config('MNE_LOGGING_LEVEL'); assert level.lower() == 'info', repr(level)"
