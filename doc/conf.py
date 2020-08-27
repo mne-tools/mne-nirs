@@ -328,10 +328,10 @@ sphinx_gallery_conf = {
     'reference_url': {
         'mne_nirs': None},
     'download_all_examples': False,
-    'show_memory': True
+    'show_memory': True,
 }
 
 
 def setup(app):
     # a copy button to copy snippet of code from the documentation
-    app.add_javascript('js/copybutton.js')
+    app.add_js_file('js/copybutton.js')
