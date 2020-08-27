@@ -53,10 +53,6 @@ jobs:
               python -m pip uninstall -yq pysurfer mayavi
               python -m pip install --user -e .
 
-        - run:
-            name: Check PyQt5
-            command: LD_DEBUG=libs python -c "from PyQt5.QtWidgets import QApplication, QWidget; app = QApplication([])"
-
         - save_cache:
             key: pip-cache
             paths:
