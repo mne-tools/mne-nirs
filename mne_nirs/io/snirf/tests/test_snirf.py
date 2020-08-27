@@ -13,11 +13,12 @@ from mne_nirs.io.snirf import write_raw_snirf
 
 
 fname_nirx_15_0 = op.join(data_path(download=False),
-                          'NIRx', 'nirx_15_0_recording')
+                          'NIRx', 'nirscout', 'nirx_15_0_recording')
 fname_nirx_15_2 = op.join(data_path(download=False),
-                          'NIRx', 'nirx_15_2_recording')
+                          'NIRx', 'nirscout', 'nirx_15_2_recording')
 fname_nirx_15_2_short = op.join(data_path(download=False),
-                                'NIRx', 'nirx_15_2_recording_w_short')
+                                'NIRx', 'nirscout',
+                                'nirx_15_2_recording_w_short')
 
 
 @requires_h5py
