@@ -5,6 +5,7 @@ channels:
 dependencies:
 - python>=3.8
 - pip
+- h5py
 - pip:
   - https://github.com/mne-tools/mne-python/archive/master.zip
   - https://github.com/mne-tools/mne-nirs/archive/master.zip
