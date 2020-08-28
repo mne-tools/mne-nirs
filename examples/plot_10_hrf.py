@@ -314,8 +314,8 @@ df
 ###############################################################################
 # And we can visualise these summary statistics.
 
-import seaborn as sns
-sns.scatterplot(x="Condition", y="theta", hue="Chroma", style="ROI", s=100, data=df)
+# import seaborn as sns
+# sns.scatterplot(x="Condition", y="theta", hue="Chroma", style="ROI", s=100, data=df)
 
 
 ###############################################################################
