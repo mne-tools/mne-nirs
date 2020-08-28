@@ -17,9 +17,9 @@ from mne_nirs.visualisation import plot_glm_topo
 @traits_test
 def test_plot_nirs_source_detector_pyvista():
     mne.viz.set_3d_backend('pyvista')
-    data_path = mne.datasets.testing.data_path()
+    data_path = mne.datasets.testing.data_path() + '/NIRx/nirscout'
     subjects_dir = mne.datasets.sample.data_path() + '/subjects'
-    raw = mne.io.read_raw_nirx(data_path + '/NIRx/nirx_15_2_recording_w_short')
+    raw = mne.io.read_raw_nirx(data_path + '/nirx_15_2_recording_w_short')
 
     mne_nirs.visualisation.plot_nirs_source_detector(
         np.random.randn(len(raw.ch_names)),
@@ -37,9 +37,9 @@ def test_plot_nirs_source_detector_pyvista():
 @traits_test
 def test_plot_nirs_source_detector_mayavi():
     mne.viz.set_3d_backend('mayavi')
-    data_path = mne.datasets.testing.data_path()
+    data_path = mne.datasets.testing.data_path() + '/NIRx/nirscout'
     subjects_dir = mne.datasets.sample.data_path() + '/subjects'
-    raw = mne.io.read_raw_nirx(data_path + '/NIRx/nirx_15_2_recording_w_short')
+    raw = mne.io.read_raw_nirx(data_path + '/nirx_15_2_recording_w_short')
 
     mne_nirs.visualisation.plot_nirs_source_detector(
         np.random.randn(len(raw.ch_names)),
