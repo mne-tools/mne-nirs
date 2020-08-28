@@ -295,7 +295,7 @@ plot_glm_topo(raw_haemo, glm_est, design_matrix,
 # ---------------------------
 #
 # Or alternatively we can summarise the responses across regions of interest
-# for each condition.
+# for each condition. And you can plot it with your favorite software.
 
 left = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 3],
         [2, 4], [3, 2], [3, 3], [4, 3], [4, 4]]
@@ -311,11 +311,7 @@ for idx, col in enumerate(design_matrix.columns[:3]):
 df
 
 
-###############################################################################
-# And we can visualise these summary statistics.
 
-# import seaborn as sns
-# sns.scatterplot(x="Condition", y="theta", hue="Chroma", style="ROI", s=100, data=df)
 
 
 ###############################################################################
