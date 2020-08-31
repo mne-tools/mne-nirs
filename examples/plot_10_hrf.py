@@ -165,7 +165,7 @@ plt.xlabel("Time (s)");
 # .. sidebar:: Relevant literature
 #
 #    For further discussion on design matrices see
-#    the NILearn examples. Specifically the 
+#    the Nilearn examples. Specifically the 
 #    `first level model <https://5712-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/plot_first_level_model_details.html>`_
 #    and 
 #    `design matrix examples <https://5712-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/04_glm_first_level_models/plot_design_matrix.html>`_.
@@ -175,7 +175,7 @@ plt.xlabel("Time (s)");
 # contribute to the measured signal.
 # We model the expected neural response for each experimental condition
 # using the SPM haemodynamic response
-# function combined with the known stimulus event times and durations
+# function (HRF) combined with the known stimulus event times and durations
 # (as described above).
 # We also include a third order polynomial drift and constant to model
 # slow fluctuations in the data and a constant DC shift.
@@ -249,7 +249,7 @@ plt.ylabel("Amplitude")
 #    spectroscopy. Neurophotonics. 2016;3(1)
 #
 # We run a GLM fit for the data and experiment matrix.
-# First we analyse just the first two channels which correspond HbO and HbR
+# First we analyse just the first two channels which correspond to HbO and HbR
 # of a single source detector pair.
 
 data_subset = raw_haemo.copy().pick(picks=range(2))
@@ -282,7 +282,7 @@ plt.hlines([0.0], 0, 2)
 # We see the same result as in the MNE tutorial,
 # that activation is largest
 # contralateral to the tapping side. Also note that HbR tends to be the
-# negative sof HbO as expected.
+# negative of HbO as expected.
 
 glm_est = run_GLM(raw_haemo, design_matrix)
 plot_glm_topo(raw_haemo, glm_est, design_matrix,
