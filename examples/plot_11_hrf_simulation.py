@@ -93,6 +93,7 @@ print("Estimate:", glm_est['Simulated'].theta[0],
 # and plot the noisy data and the GLM fitted model.
 # We print the response estimate and see that is close, but not exactly correct,
 # we observe the mean square error is similar to the added noise.
+# Note that the clean data plot is so similar to the GLM estimate that it is hard to see unless zoomed in. 
 
 # First take a copy of noise free data for comparison
 raw_noise_free = raw.copy()
