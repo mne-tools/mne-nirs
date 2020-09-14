@@ -3,6 +3,7 @@
 #          simplified BSD-3 license
 
 import os.path as op
+import datetime
 from numpy.testing import assert_allclose
 import pytest
 
@@ -43,11 +44,15 @@ def test_snirf_write(fname, tmpdir):
     # Check data is the same
     assert_allclose(raw.get_data(), raw_orig.get_data())
 
+    assert abs(raw_orig.info["meas_date"] - raw.info["meas_date"]) < \
+           datetime.timedelta(seconds=1)
+
     # Check info object is the same
     obj_diff = object_diff(raw.info, raw_orig.info)
     diffs = ''
     for line in obj_diff.splitlines():
-        if ('logno' not in line) and ('scanno' not in line):
+        if ('logno' not in line) and ('scanno' not in line) and\
+                ('datetime mismatch' not in line):
             # logno and scanno are not used in processing
             diffs += f'\n{line}'
     assert diffs == ''

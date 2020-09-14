@@ -32,6 +32,17 @@ def write_raw_snirf(raw, fname):
         f.create_dataset("/nirs/data1/dataTimeSeries", data=raw.get_data().T)
         f.create_dataset("/nirs/data1/time", data=raw.times)
 
+        # Store measurement date and time
+        datestr = raw.info["meas_date"].strftime("%Y-%m-%d")
+        timestr = raw.info["meas_date"].strftime("%H:%M:%SZ")
+        birthstr = '{0:02d}-{1:02d}-{2:02d}'.format(
+            raw.info["subject_info"]['birthday'][0],
+            raw.info["subject_info"]['birthday'][1],
+            raw.info["subject_info"]['birthday'][2])
+        f.create_dataset("nirs/metaDataTags/MeasurementDate", data=datestr)
+        f.create_dataset("nirs/metaDataTags/MeasurementTime", data=timestr)
+        f.create_dataset("nirs/metaDataTags/DateOfBirth", data=birthstr)
+
         # Extract info from file names
         rgx = r'S(\d+)_D(\d+) (\d+)'
         chs = raw.info['chs']
