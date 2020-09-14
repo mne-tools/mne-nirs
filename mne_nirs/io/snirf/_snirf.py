@@ -39,9 +39,12 @@ def write_raw_snirf(raw, fname):
             raw.info["subject_info"]['birthday'][0],
             raw.info["subject_info"]['birthday'][1],
             raw.info["subject_info"]['birthday'][2])
-        f.create_dataset("nirs/metaDataTags/MeasurementDate", data=[datestr.encode('UTF-8')])
-        f.create_dataset("nirs/metaDataTags/MeasurementTime", data=[timestr.encode('UTF-8')])
-        f.create_dataset("nirs/metaDataTags/DateOfBirth", data=[birthstr.encode('UTF-8')])
+        f.create_dataset("nirs/metaDataTags/"
+                         "MeasurementDate", data=[datestr.encode('UTF-8')])
+        f.create_dataset("nirs/metaDataTags/"
+                         "MeasurementTime", data=[timestr.encode('UTF-8')])
+        f.create_dataset("nirs/metaDataTags/"
+                         "DateOfBirth", data=[birthstr.encode('UTF-8')])
 
         # Extract info from file names
         rgx = r'S(\d+)_D(\d+) (\d+)'
