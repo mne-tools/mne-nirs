@@ -61,7 +61,7 @@ new_des = ['Tapping/Right' if x == "3.0" else x for x in new_des]
 annot = mne.Annotations(raw_intensity.annotations.onset,
                         raw_intensity.annotations.duration * 5., new_des)
 raw_intensity.set_annotations(annot)
-raw_intensity.annotations.crop(60, 2967)
+raw_intensity.crop(60, 2967)
 raw_intensity.annotations.delete(
     np.where([d == 'Control' for d in raw_intensity.annotations.description]))
 

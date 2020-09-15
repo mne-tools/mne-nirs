@@ -16,8 +16,7 @@ def _load_dataset():
     raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir,
                                          verbose=True).load_data()
 
-    raw_intensity.annotations.crop(raw_intensity.annotations.onset[0],
-                                   raw_intensity.annotations.onset[-1])
+    raw_intensity.crop(0, raw_intensity.annotations.onset[-1])
 
     new_des = [des for des in raw_intensity.annotations.description]
     new_des = ['A' if x == "1.0" else x for x in new_des]
@@ -32,7 +31,7 @@ def _load_dataset():
         raw_intensity.info, picks=picks)
     raw_intensity.pick(picks[dists > 0.01])
 
-    assert 'fnirs_raw' in raw_intensity
+    assert 'fnirs_cw_amplitude' in raw_intensity
     assert len(np.unique(raw_intensity.annotations.description)) == 4
 
     return raw_intensity

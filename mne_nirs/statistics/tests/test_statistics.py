@@ -48,7 +48,7 @@ def test_GLM_system_test():
     annot = mne.Annotations(raw_intensity.annotations.onset,
                             raw_intensity.annotations.duration, new_des)
     raw_intensity.set_annotations(annot)
-    raw_intensity.annotations.crop(35, 2967)
+    raw_intensity.crop(0, 2967)
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
     short_chs = get_short_channels(raw_haemo)
