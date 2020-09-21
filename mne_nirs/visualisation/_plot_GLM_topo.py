@@ -215,6 +215,7 @@ def plot_glm_group_topo(raw, group_est,
         else:
             warn("MNE data structure does not match regression results")
 
+
     estimates = group_est[value].values
 
     if value == "coef":
@@ -254,6 +255,7 @@ def plot_glm_group_topo(raw, group_est,
     _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
         mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
     estimates, ch_names = _merge_ch_data(estimates, t, ch_names)
+
 
     if sum(["x" in ch for ch in ch_names]):
         warn("Channels were merged")

@@ -13,6 +13,7 @@ Group Level GLM
    Santosa, H., Zhai, X., Fishburn, F., & Huppert, T. (2018).
    The NIRS brain AnalyzIR toolbox. Algorithms, 11(5), 73.
 
+<<<<<<< HEAD
 This is an example of a group level GLM based fNIRS analysis in MNE.
 
 Individual level example analysis of this data is described in the
@@ -23,6 +24,9 @@ So this example will skim over the individual level details
 and focus on the group level aspect of analysis.
 Instead here we describe how to process multiple measurements,
 and summarise the group level effects as summary statistics and visually.
+=======
+This is an example of group level analysis in MNE.
+>>>>>>> be0eef0... Create group analysis demo
 
 The data used in this example is available `at this location <https://github.com/rob-luke/BIDS-NIRS-Tapping>`_.
 It is an finger tapping example and is briefly described below.
@@ -32,6 +36,16 @@ The example dataset is in
 format and therefore already contains
 information about triggers, condition names, etc.
 
+<<<<<<< HEAD
+=======
+Individual level example analysis of this data is described in the
+`MNE fNIRS waveform tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_
+and the
+`MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_.
+So this example will skim over the individual level details
+and focus on the group level aspect of analysis.
+
+>>>>>>> be0eef0... Create group analysis demo
 
 .. collapse:: Data description (click to expand)
    :class: success
@@ -80,6 +94,7 @@ import statsmodels.formula.api as smf
 # Import Plotting Library
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+
 from lets_plot import *
 LetsPlot.setup_html()
 
@@ -110,6 +125,7 @@ LetsPlot.setup_html()
 
 def individual_analysis(bids_path, ID):
 
+
     raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
 
     # Convert signal to haemoglobin and resample
@@ -119,6 +135,7 @@ def individual_analysis(bids_path, ID):
 
     # Cut out just the short channels for creating a GLM repressor
     sht_chans = get_short_channels(raw_haemo)
+
     raw_haemo = get_long_channels(raw_haemo)
 
     # Create a design matrix
@@ -128,6 +145,7 @@ def individual_analysis(bids_path, ID):
     design_matrix["ShortHbO"] = np.mean(sht_chans.copy().pick(picks="hbo").get_data(), axis=0)
     design_matrix["ShortHbR"] = np.mean(sht_chans.copy().pick(picks="hbr").get_data(), axis=0)
 
+
     # Run GLM
     glm_est = run_GLM(raw_haemo, design_matrix)
 
@@ -135,6 +153,7 @@ def individual_analysis(bids_path, ID):
     # List the channel pairs manually
     left = [[4, 3], [1, 3], [3, 3], [1, 2], [2, 3], [1, 1]]
     right = [[6, 7], [5, 7], [7, 7], [5, 6], [6, 7], [5, 5]]
+
     # Then generate the correct indices for each pair
     groups = dict(
         Left_Hemisphere=pair_to_idx(raw_haemo, left, on_missing='ignore'),
@@ -144,6 +163,7 @@ def individual_analysis(bids_path, ID):
     cha = glm_to_tidy(raw_haemo, glm_est, design_matrix)
     cha = _tidy_long_to_wide(cha)
     cha["ID"] = ID  # Add the participant ID to the dataframe
+
 
     # Compute region of interest results from channel data
     roi = pd.DataFrame()
@@ -257,6 +277,7 @@ grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Rig
 
 roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
                         grp_results, groups=grp_results["ID"]).fit(method='nm')
+
 roi_model.summary()
 
 
@@ -336,6 +357,7 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
                     ch_model_df.query("condition in ['Tapping/Right']"),
                     colorbar=True, axes=axes[1, 1],
                     vmin=-10, vmax=0, cmap=mpl.cm.Blues_r)
+
 
 
 ###############################################################################

@@ -14,6 +14,7 @@ def summary_to_dataframe(summary):
     return results
 
 
+
 def expand_summary_dataframe(summary):
     '''Expand dataframe index column in to individual columns'''
 
