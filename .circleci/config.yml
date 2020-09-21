@@ -72,11 +72,18 @@ jobs:
 
         # Build docs
         - run:
+            name: Download data
+            command: |
+              cd examples;
+              git clone --depth 1 https://github.com/rob-luke/BIDS-NIRS-Tapping.git;
+
+
+        # Build docs
+        - run:
             name: make html
             command: |
               cd doc;
               make html;
-
 
         # Save the outputs
         - store_artifacts:

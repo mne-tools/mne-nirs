@@ -191,3 +191,79 @@ def plot_glm_contrast_topo(raw, contrast,
     cbar.set_label('Contrast Effect', rotation=270)
 
     return fig
+
+
+def plot_glm_group_topo(raw, group_est,
+                        value="coef",
+                        axes=None, sphere=None,
+                        colorbar=True,
+                        cmap=None, threshold=False,
+                        vmin=None, vmax=None):
+    import matplotlib.pyplot as plt
+    import matplotlib as mpl
+    from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
+
+    if not (raw.ch_names == list(group_est["ch_name"].values)):
+        warn("MNE data structure does not match regression results")
+
+    estimates = group_est[value].values
+
+    if value == "coef":
+        estimates = estimates * 1.e6
+
+    if threshold:
+        p = group_est["P>|z|"].values
+        t = p > 0.05
+        estimates[t] = 0.
+        print(t)
+
+    assert len(np.unique(group_est["Chroma"])) == 1, "Only one Chroma allowed"
+
+    assert len(
+        np.unique(group_est["condition"])) == 1, "Only one condition allowed"
+
+    t = np.unique(group_est["Chroma"])
+    c = np.unique(group_est["condition"])[0]
+
+    if axes is None:
+        fig, axes = plt.subplots(nrows=1,
+                                 ncols=1,
+                                 figsize=(12, 7))
+
+    if vmax is None:
+        vmax = np.max(np.abs(estimates))
+    if vmin is None:
+        vmin = vmax * -1.
+    if cmap is None:
+        cmap = mpl.cm.RdBu_r
+    norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
+
+    raw_subset = raw.copy()
+
+    _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
+        mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
+
+    if sum(["x" in ch for ch in ch_names]):
+        warn("Channels were merged")
+        # keeps = np.array(np.where(["x" not in ch for ch in ch_names])[0])
+        # picks = picks[keeps]
+
+    mne.viz.topomap.plot_topomap(estimates, pos,
+                                 extrapolate='local',
+                                 names=ch_names,
+                                 vmin=vmin,
+                                 vmax=vmax,
+                                 cmap=cmap,
+                                 axes=axes,
+                                 show=False,
+                                 sphere=sphere)
+    axes.set_title(c)
+
+    if colorbar:
+        ax1_divider = make_axes_locatable(axes)
+        cax1 = ax1_divider.append_axes("right", size="7%", pad="2%")
+        cbar = mpl.colorbar.ColorbarBase(cax1, cmap=cmap, norm=norm,
+                                         orientation='vertical')
+        cbar.set_label(value, rotation=270)
+
+    return axes

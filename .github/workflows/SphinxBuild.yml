@@ -15,7 +15,9 @@ jobs:
     - shell: bash -el {0}
       run: |
         cp requirements_doc.txt doc/requirements.txt
-    # Standard drop-in approach that should work for most people.
+    - shell: bash -el {0}
+      run: |
+        git clone --depth 1 https://github.com/rob-luke/BIDS-NIRS-Tapping.git examples/BIDS-NIRS-Tapping
     - uses: ammaraskar/sphinx-action@master
       with:
         docs-folder: "doc/"

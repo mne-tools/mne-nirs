@@ -10,6 +10,9 @@ jobs:
     - shell: bash -el {0}
       run: |
         cp requirements_doc.txt doc/requirements.txt
+    - shell: bash -el {0}
+      run: |
+        git clone --depth 1 https://github.com/rob-luke/BIDS-NIRS-Tapping.git examples/BIDS-NIRS-Tapping
     - uses: ammaraskar/sphinx-action@master
       with:
         docs-folder: "doc/"
