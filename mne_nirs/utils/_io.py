@@ -97,34 +97,40 @@ def _tidy_RegressionResults(data, glm_est, design_matrix):
             se_estimates[idx, cond_idx] = np.sqrt(np.diag(
                 glm_est[name].vcov()))[cond_idx]
 
-    df = pd.DataFrame()
-
+    list_vals = [0] * ((len(data.ch_names) *
+                        len(design_matrix.columns) * 6))
+    idx = 0
     for ch_idx, ch in enumerate(data.ch_names):
         for cond_idx, cond in enumerate(design_matrix.columns):
-            df = df.append({'ch_name': ch, 'condition': cond,
-                            'variable': "theta",
-                            'value': theta_estimates[ch_idx][cond_idx]},
-                           ignore_index=True)
-            df = df.append({'ch_name': ch, 'condition': cond,
-                            'variable': "t",
-                            'value': t_estimates[ch_idx][cond_idx]},
-                           ignore_index=True)
-            df = df.append({'ch_name': ch, 'condition': cond,
-                            'variable': "df",
-                            'value': df_estimates[ch_idx][cond_idx]},
-                           ignore_index=True)
-            df = df.append({'ch_name': ch, 'condition': cond,
-                            'variable': "p_value",
-                            'value': p_estimates[ch_idx][cond_idx]},
-                           ignore_index=True)
-            df = df.append({'ch_name': ch, 'condition': cond,
-                            'variable': "mse",
-                            'value': mse_estimates[ch_idx][cond_idx]},
-                           ignore_index=True)
-            df = df.append({'ch_name': ch, 'condition': cond,
-                            'variable': "se",
-                            'value': se_estimates[ch_idx][cond_idx]},
-                           ignore_index=True)
+            list_vals[0 + idx] = {'ch_name': ch, 'condition': cond,
+                                  'variable': "theta",
+                                  'value': theta_estimates[ch_idx][cond_idx]}
+            list_vals[1 + idx] = {'ch_name': ch, 'condition': cond,
+                                  'variable': "t",
+                                  'value': t_estimates[ch_idx][cond_idx]}
+            list_vals[2 + idx] = {'ch_name': ch, 'condition': cond,
+                                  'variable': "df",
+                                  'value': df_estimates[ch_idx][cond_idx]}
+            list_vals[3 + idx] = {'ch_name': ch, 'condition': cond,
+                                  'variable': "p_value",
+                                  'value': p_estimates[ch_idx][cond_idx]}
+            list_vals[4 + idx] = {'ch_name': ch,
+                                  'condition': cond,
+                                  'variable': "mse",
+                                  'value': mse_estimates[ch_idx][cond_idx]}
+            list_vals[5 + idx] = {'ch_name': ch, 'condition': cond,
+                                  'variable': "se",
+                                  'value': se_estimates[ch_idx][cond_idx]}
+            idx += 6
+
+    dict_vals, i = {}, 0
+    for entry in list_vals:
+        dict_vals[i] = {"ch_name": entry['ch_name'],
+                        "condition": entry['condition'],
+                        "variable": entry['variable'],
+                        "value": entry['value']}
+        i = i + 1
+    df = pd.DataFrame.from_dict(dict_vals, "index")
 
     return df
 
