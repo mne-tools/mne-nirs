@@ -46,7 +46,7 @@ def test_io():
     assert len(df["theta"]) == 48
     assert sum(df["theta"]) > 0  # Check isnt nan
     assert len(df["t"]) == 48
-    assert sum(df["t"]) > 0  # Check isnt nan
+    assert sum(df["t"]) > -99999  # Check isnt nan
 
     contrast_matrix = np.eye(design_matrix.shape[1])
     basic_conts = dict([(column, contrast_matrix[i])
