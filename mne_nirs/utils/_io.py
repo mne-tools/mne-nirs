@@ -163,4 +163,3 @@ def _tidy_long_to_wide(d, expand_output=True):
         d["Significant"] = d["p_value"] < 0.05
 
     return d
-
