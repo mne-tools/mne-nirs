@@ -97,7 +97,8 @@ def _tidy_RegressionResults(data, glm_est, design_matrix):
             se_estimates[idx, cond_idx] = np.sqrt(np.diag(
                 glm_est[name].vcov()))[cond_idx]
 
-    list_vals = [0] * ((len(data.ch_names) * len(design_matrix.columns) * 5) + 1)
+    list_vals = [0] * ((len(data.ch_names) *
+                        len(design_matrix.columns) * 5) + 1)
     idx = 0
     for ch_idx, ch in enumerate(data.ch_names):
         for cond_idx, cond in enumerate(design_matrix.columns):
