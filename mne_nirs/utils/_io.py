@@ -98,7 +98,7 @@ def _tidy_RegressionResults(data, glm_est, design_matrix):
                 glm_est[name].vcov()))[cond_idx]
 
     list_vals = [0] * ((len(data.ch_names) *
-                        len(design_matrix.columns) * 5) + 1)
+                        len(design_matrix.columns) * 6))
     idx = 0
     for ch_idx, ch in enumerate(data.ch_names):
         for cond_idx, cond in enumerate(design_matrix.columns):
@@ -121,7 +121,7 @@ def _tidy_RegressionResults(data, glm_est, design_matrix):
             list_vals[5 + idx] = {'ch_name': ch, 'condition': cond,
                                   'variable': "se",
                                   'value': se_estimates[ch_idx][cond_idx]}
-            idx += 5
+            idx += 6
 
     dict_vals, i = {}, 0
     for entry in list_vals:
