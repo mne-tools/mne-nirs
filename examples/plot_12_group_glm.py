@@ -13,7 +13,6 @@ Group Level GLM
    Santosa, H., Zhai, X., Fishburn, F., & Huppert, T. (2018).
    The NIRS brain AnalyzIR toolbox. Algorithms, 11(5), 73.
 
-<<<<<<< HEAD
 This is an example of a group level GLM based fNIRS analysis in MNE.
 
 Individual level example analysis of this data is described in the
@@ -24,9 +23,6 @@ So this example will skim over the individual level details
 and focus on the group level aspect of analysis.
 Instead here we describe how to process multiple measurements,
 and summarise the group level effects as summary statistics and visually.
-=======
-This is an example of group level analysis in MNE.
->>>>>>> be0eef0... Create group analysis demo
 
 The data used in this example is available `at this location <https://github.com/rob-luke/BIDS-NIRS-Tapping>`_.
 It is an finger tapping example and is briefly described below.
@@ -36,16 +32,12 @@ The example dataset is in
 format and therefore already contains
 information about triggers, condition names, etc.
 
-<<<<<<< HEAD
-=======
 Individual level example analysis of this data is described in the
 `MNE fNIRS waveform tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_
 and the
 `MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_.
 So this example will skim over the individual level details
 and focus on the group level aspect of analysis.
-
->>>>>>> be0eef0... Create group analysis demo
 
 .. collapse:: Data description (click to expand)
    :class: success
@@ -124,7 +116,6 @@ LetsPlot.setup_html()
 # BIDS structure, so are automatically obtained when importing the data.
 
 def individual_analysis(bids_path, ID):
-
 
     raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
 
