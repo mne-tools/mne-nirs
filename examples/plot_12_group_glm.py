@@ -90,7 +90,7 @@ LetsPlot.setup_html()
 # `MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_.
 # So this example will skim over the individual level details.
 
-def analysis(bids_path, ID):
+def individual_analysis(bids_path, ID):
 
     raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
 
@@ -151,7 +151,7 @@ def analysis(bids_path, ID):
 df_roi = pd.DataFrame()  # Store region of interest results
 df_cha = pd.DataFrame()  # Store channel level results
 
-for sub in range(1, 6):
+for sub in range(1, 6):  # Loop from first to fifth subject
     ID = '%02d' % sub  # Tidy the subject name
 
     # Create path to file based on experiment info
@@ -159,11 +159,11 @@ for sub in range(1, 6):
                          datatype="nirs", suffix="nirs", extension=".snirf")
 
     # Analyse data and return both ROI and channel results
-    roi, cha, raw_haemo = analysis(bids_path, ID)
+    roi, channel, raw_haemo = individual_analysis(bids_path, ID)
 
     # Append individual results to all participants
     df_roi = df_roi.append(roi)
-    df_cha = df_cha.append(cha)
+    df_cha = df_cha.append(channel)
 
 
 ###############################################################################
