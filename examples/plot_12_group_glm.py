@@ -81,6 +81,10 @@ from mne_nirs.visualisation import plot_glm_group_topo
 from mne_bids import BIDSPath, read_raw_bids
 
 # Import StatsModels
+<<<<<<< HEAD
+=======
+from statsmodels.formula.api import rlm
+>>>>>>> 2b1db77... Simplify robust models
 import statsmodels.formula.api as smf
 
 # Import Plotting Library
@@ -105,6 +109,7 @@ LetsPlot.setup_html()
 #
 # First we define the analysis that will be applied to each file.
 # This is a GLM analysis as described in the
+<<<<<<< HEAD
 # `MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_,
 # so this example will skim over the individual level details.
 #
@@ -114,6 +119,14 @@ LetsPlot.setup_html()
 # We return the raw object, and data frames for the computed results.
 # Information about channels, triggers and their meanings are stored in the
 # BIDS structure, so are automatically obtained when importing the data.
+=======
+# `MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_
+# so this example will skim over the individual level details.
+#
+# The analysis extracts a response estimate for each region of interest and
+# each condition and returns the results as a dataframe with the participant
+# ID.
+>>>>>>> 2b1db77... Simplify robust models
 
 def individual_analysis(bids_path, ID):
 
@@ -154,13 +167,17 @@ def individual_analysis(bids_path, ID):
     cha = glm_to_tidy(raw_haemo, glm_est, design_matrix)
     cha = _tidy_long_to_wide(cha)
     cha["ID"] = ID  # Add the participant ID to the dataframe
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2b1db77... Simplify robust models
 
     # Compute region of interest results from channel data
     roi = pd.DataFrame()
     for idx, col in enumerate(design_matrix.columns):
         roi = roi.append(glm_region_of_interest(glm_est, groups, idx, col))
     roi["ID"] = ID  # Add the participant ID to the dataframe
+<<<<<<< HEAD
 
     # Contrast left vs right tapping
     contrast_matrix = np.eye(design_matrix.shape[1])
@@ -175,6 +192,8 @@ def individual_analysis(bids_path, ID):
     cha["theta"] = [t * 1.e6 for t in cha["theta"]]
     roi["theta"] = [t * 1.e6 for t in roi["theta"]]
     con["effect"] = [t * 1.e6 for t in con["effect"]]
+=======
+>>>>>>> 2b1db77... Simplify robust models
 
     return raw_haemo, roi, cha, con
 
@@ -186,7 +205,11 @@ def individual_analysis(bids_path, ID):
 # Next we loop through the five measurements and run the individual analysis
 # on each. We append the individual results in to a large dataframe that
 # will contain the results from all measurements. We create a group dataframe
+<<<<<<< HEAD
 # for both the region of interest, channel level, and contrast results.
+=======
+# for both the region of interest and channel level results.
+>>>>>>> 2b1db77... Simplify robust models
 
 df_roi = pd.DataFrame()  # To store region of interest results
 df_cha = pd.DataFrame()  # To store channel level results
