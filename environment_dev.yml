@@ -31,8 +31,6 @@ dependencies:
   - mne>=0.21.0
   - https://github.com/mne-tools/mne-nirs/archive/master.zip
   - imageio-ffmpeg>=0.4.1
-  - https://github.com/enthought/mayavi/archive/master.zip
-  - PySurfer[save_movie]
   - dipy --only-binary dipy
   - nibabel
   - https://github.com/nilearn/nilearn/archive/master.zip
