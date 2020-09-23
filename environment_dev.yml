@@ -2,6 +2,7 @@
 name: mne-nirs
 channels:
 - defaults
+- conda-forge
 dependencies:
 - python>=3.8
 - pip
@@ -25,13 +26,11 @@ dependencies:
 - imageio
 - tqdm
 - spyder-kernels
+- vtk
 - pip:
   - mne>=0.21.0
   - https://github.com/mne-tools/mne-nirs/archive/master.zip
   - imageio-ffmpeg>=0.4.1
-  - vtk>=9.0.1
-  - pyvista>=0.24
-  - pyvistaqt
   - https://github.com/enthought/mayavi/archive/master.zip
   - PySurfer[save_movie]
   - dipy --only-binary dipy
@@ -39,5 +38,3 @@ dependencies:
   - https://github.com/nilearn/nilearn/archive/master.zip
   - neo
   - python-picard
-  - PyQt5>=5.10,<5.14; platform_system == "Darwin"
-  - PyQt5>=5.10; platform_system != "Darwin"
