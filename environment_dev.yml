@@ -1,0 +1,39 @@
+
+name: mne-nirs
+channels:
+- defaults
+- conda-forge
+dependencies:
+- python>=3.8
+- pip
+- numpy
+- scipy
+- matplotlib
+- numba
+- pandas
+- xlrd
+- scikit-learn
+- h5py
+- pillow
+- statsmodels
+- jupyter
+- joblib
+- psutil
+- numexpr
+- traits
+- pyface
+- traitsui
+- imageio
+- tqdm
+- spyder-kernels
+- pytest
+- vtk
+- pip:
+  - mne>=0.21.0
+  - https://github.com/mne-tools/mne-nirs/archive/master.zip
+  - imageio-ffmpeg>=0.4.1
+  - dipy --only-binary dipy
+  - nibabel
+  - https://github.com/nilearn/nilearn/archive/master.zip
+  - neo
+  - python-picard
