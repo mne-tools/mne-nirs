@@ -89,3 +89,15 @@ workflows:
   default:
     jobs:
       - build_docs
+
+  weekly:
+    jobs:
+      - build_docs
+    triggers:
+      - schedule:
+          # "At 00:00 on Sunday" should be often enough
+          cron: "0 0 * * 0"
+          filters:
+            branches:
+              only:
+                - master
