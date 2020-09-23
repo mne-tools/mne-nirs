@@ -74,6 +74,7 @@ from mne_bids import BIDSPath, read_raw_bids
 
 # Import StatsModels
 from statsmodels.formula.api import rlm
+import statsmodels.formula.api as smf
 
 # Import Plotting Library
 import matplotlib.pyplot as plt
@@ -85,10 +86,14 @@ LetsPlot.setup_html()
 # Define analysis
 # ---------------
 #
-# The analysis to be applied to each file.
-# The details of this analysis are described in the
-# `MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_.
-# So this example will skim over the individual level details.
+# First we define the analysis that will be applied to each file.
+# This is a GLM analysis as described in the
+# `MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_
+# so this example will skim over the individual level details.
+#
+# The analysis extracts a response estimate for each region of interest and
+# each condition and returns the results as a dataframe with the participant
+# ID.
 
 def individual_analysis(bids_path, ID):
 
@@ -129,15 +134,13 @@ def individual_analysis(bids_path, ID):
     # Output channel metrics
     cha = glm_to_tidy(raw_haemo, glm_est, design_matrix)
     cha = _tidy_long_to_wide(cha)
-    cha["ID"] = ID
+    cha["ID"] = ID  # Add the participant ID to the dataframe
 
     # Compute region of interest results from channel data
     roi = pd.DataFrame()
     for idx, col in enumerate(design_matrix.columns):
         roi = roi.append(glm_region_of_interest(glm_est, groups, idx, col))
-
-    # Add some additional info to dataframe thats useful in later model
-    roi["ID"] = ID
+    roi["ID"] = ID  # Add the participant ID to the dataframe
 
     return roi, cha, raw_haemo
 
@@ -146,7 +149,10 @@ def individual_analysis(bids_path, ID):
 # Run analysis
 # ------------
 #
-# Run analysis for each participant and create dataframe with results.
+# Next we loop through the five measurements and run the individual analysis
+# on each. We append the individual results in to a large dataframe that
+# will contain the results from all measurements. We create a group dataframe
+# for both the region of interest and channel level results.
 
 df_roi = pd.DataFrame()  # Store region of interest results
 df_cha = pd.DataFrame()  # Store channel level results
@@ -170,7 +176,11 @@ for sub in range(1, 6):  # Loop from first to fifth subject
 # Individual results
 # ------------------
 #
-# Display individual data.
+# First we visualise the results from each individual to ensure the
+# data values look reasonable.
+# Here we see that we have data from five participants, we plot just the HbO
+# values and observe they are in the expect range.
+
 
 grp_results = df_roi.query("Condition in ['Control', 'Tapping/Left', 'Tapping/Right']")
 grp_results = grp_results.query("Chroma in ['hbo']")
@@ -186,12 +196,26 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 # Group results
 # -------------
 #
-# Calculate group level model.
+# .. sidebar:: Relevant literature
+#
+#    For a summary of the robust linear model see
+#    https://www.statsmodels.org/stable/mixed_linear.html
+#
+#    For a summary of these models in the context of fNIRS see section 3.5 of:
+#    Santosa, H., Zhai, X., Fishburn, F., & Huppert, T. (2018).
+#    The NIRS brain AnalyzIR toolbox. Algorithms, 11(5), 73.
+#
+# Next we use a linear mixed effects model to understand the relation between
+# condition and our response estimate (theta) for each ROI and chromophore.
+# Alternatively, you could export the dataframe `df_roi.to_csv()` and
+# analyse in your favorite stats program.
+#
+# Here we examine the effect of ROI, condition and chroma,
+# controlling for participant.
 
 grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
 
-roi_model = rlm('theta ~ -1 + ROI:Condition:Chroma', grp_results,
-                groups=grp_results["ID"]).fit()
+roi_model = rlm('theta ~ -1 + ROI:Condition:Chroma', grp_results).fit()
 
 roi_model.summary()
 
@@ -200,7 +224,12 @@ roi_model.summary()
 # Visualise group results
 # -----------------------
 #
-# Display group level model.
+# Now we can summarise the output of the second level model.
+# This figure shows that control condition has small not significant
+# responses for both HbO and HbR in both hemispheres.
+# Whereas clear significant responses are show for the two tapping conditions.
+# We also observe the it is the contralateral hemisphere that has the
+# larger response for each tapping condition.
 
 as_df = statsmodels_to_results(roi_model)
 
@@ -224,8 +253,7 @@ fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 5),
 ch_summary = df_cha.query("condition in ['Tapping/Left', 'Tapping/Right']")
 ch_summary = ch_summary.query("Chroma in ['hbo']")
 # Run group level model and convert to dataframe
-ch_model = rlm('theta ~ -1 + ch_name:Chroma:condition',
-               ch_summary, groups=ch_summary["ID"]).fit()
+ch_model = rlm('theta ~ -1 + ch_name:Chroma:condition', ch_summary).fit()
 ch_model_df = statsmodels_to_results(ch_model)
 
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
