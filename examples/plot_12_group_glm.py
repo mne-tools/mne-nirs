@@ -334,6 +334,7 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                     ch_model_df.query("condition in ['Tapping/Left']"),
                     colorbar=False, axes=axes[0, 0],
                     vmin=0, vmax=20, cmap=mpl.cm.Oranges)
+
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                     ch_model_df.query("condition in ['Tapping/Right']"),
                     colorbar=True, axes=axes[0, 1],
