@@ -53,4 +53,3 @@ def statsmodels_to_results(rlm_model):
     as_df = summary_to_dataframe(rlm_model.summary())
     as_df = expand_summary_dataframe(as_df)
     return as_df
-
