@@ -209,7 +209,7 @@ def plot_glm_group_topo(raw, group_est,
     estimates = group_est[value].values
 
     if value == "coef":
-        estimates = estimates * 1.e6
+        estimates = estimates * 1.0
 
     if threshold:
         p = group_est["P>|z|"].values

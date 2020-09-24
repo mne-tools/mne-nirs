@@ -68,6 +68,7 @@ from mne_nirs.channels import get_short_channels, get_long_channels
 from mne_nirs.channels import picks_pair_to_idx as pair_to_idx
 from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
 from mne_nirs.visualisation import plot_glm_group_topo
+from mne_nirs.signal_enhancement import enhance_negative_correlation
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids
@@ -86,6 +87,14 @@ LetsPlot.setup_html()
 # Define analysis
 # ---------------
 #
+# .. sidebar:: Individual analysis procedures
+#
+#    Waveform individual analysis:
+#    `MNE docs <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
+#
+#    GLM individual analysis:
+#    `MNE-NIRS docs <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_.
+#
 # First we define the analysis that will be applied to each file.
 # This is a GLM analysis as described in the
 # `MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_
@@ -103,6 +112,7 @@ def individual_analysis(bids_path, ID):
     raw_od = optical_density(raw_intensity)
     raw_haemo = beer_lambert_law(raw_od)
     raw_haemo.resample(1.0)
+    # raw_haemo = enhance_negative_correlation(raw_haemo)
 
     # Cut out just the short channels for creating a GLM repressor
     short_chans = get_short_channels(raw_haemo)
@@ -122,10 +132,8 @@ def individual_analysis(bids_path, ID):
 
     # Define channels in each region of interest
     # List the channel pairs manually
-    left = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 3],
-            [2, 4], [3, 2], [3, 3], [4, 3], [4, 4]]
-    right = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7],
-             [6, 8], [7, 6], [7, 7], [8, 7], [8, 8]]
+    left = [[4, 3], [1, 3], [3, 3], [1, 2], [2, 3], [1, 1]]
+    right = [[6, 7], [5, 7], [7, 7], [5, 6], [6, 7], [5, 5]]
     # Then generate the correct indices for each pair
     groups = dict(
         Left_Hemisphere=pair_to_idx(raw_haemo, left, on_missing='ignore'),
@@ -141,6 +149,10 @@ def individual_analysis(bids_path, ID):
     for idx, col in enumerate(design_matrix.columns):
         roi = roi.append(glm_region_of_interest(glm_est, groups, idx, col))
     roi["ID"] = ID  # Add the participant ID to the dataframe
+
+    # Convert to uM for nicer plotting below.
+    cha["theta"] = [t * 1.e6 for t in cha["theta"]]
+    roi["theta"] = [t * 1.e6 for t in roi["theta"]]
 
     return roi, cha, raw_haemo
 
@@ -198,8 +210,10 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 #
 # .. sidebar:: Relevant literature
 #
-#    For a summary of the robust linear model see
-#    https://www.statsmodels.org/stable/mixed_linear.html
+#    For a summary of linear mixed models in python
+#    and the relation to lmer see:
+#    `statsmodels docs <https://www.statsmodels.org/stable/mixed_linear.html>`_.
+#
 #
 #    For a summary of these models in the context of fNIRS see section 3.5 of:
 #    Santosa, H., Zhai, X., Fishburn, F., & Huppert, T. (2018).
@@ -211,11 +225,13 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 # analyse in your favorite stats program.
 #
 # Here we examine the effect of ROI, condition and chroma,
-# controlling for participant.
+# controlling for participant. Alternatively, we could use a robust model such
+# as `roi_model = rlm('theta ~ -1 + ROI:Condition:Chroma', grp_results).fit()`.
 
 grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
 
-roi_model = rlm('theta ~ -1 + ROI:Condition:Chroma', grp_results).fit()
+roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
+                        grp_results, groups=grp_results["ID"]).fit()
 
 roi_model.summary()
 
@@ -243,7 +259,7 @@ ggplot(as_df, aes(x='Condition', y='coef', color='sig', shape='ROI')) \
 # Group topo visualisation
 # ========================
 #
-# We can also view the channel level results for the group.
+# We can also view the channel level results for the group.a
 # Here we just plot the oxyhaemoglobin for the two tapping conditions.
 
 fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 5),
@@ -253,16 +269,18 @@ fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 5),
 ch_summary = df_cha.query("condition in ['Tapping/Left', 'Tapping/Right']")
 ch_summary = ch_summary.query("Chroma in ['hbo']")
 # Run group level model and convert to dataframe
-ch_model = rlm('theta ~ -1 + ch_name:Chroma:condition', ch_summary).fit()
+ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:condition",
+                       ch_summary, groups=ch_summary["ID"]).fit()
+
 ch_model_df = statsmodels_to_results(ch_model)
 
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                     ch_model_df.query("condition in ['Tapping/Left']"),
-                    colorbar=False, axes=axes[0], vmax=15)
+                    colorbar=False, axes=axes[0])
 
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                     ch_model_df.query("condition in ['Tapping/Right']"),
-                    colorbar=True, axes=axes[1], vmax=15)
+                    colorbar=True, axes=axes[1])
 
 
 ###############################################################################

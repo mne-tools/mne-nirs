@@ -7,8 +7,11 @@ import pandas as pd
 
 def summary_to_dataframe(summary):
     '''Convert statsmodels summary to pandas dataframe'''
-    results_as_html = summary.tables[1].as_html()
-    return pd.read_html(results_as_html, header=0, index_col=0)[0]
+    results = summary.tables[1]
+    if type(results) is not pd.core.frame.DataFrame:
+        results = summary.tables[1].as_html()
+        results = pd.read_html(results, header=0, index_col=0)[0]
+    return results
 
 
 def expand_summary_dataframe(summary):
@@ -23,13 +26,18 @@ def expand_summary_dataframe(summary):
         col_names.append(col_name)
 
     # Fill in values
-    for row_idx, row in enumerate(summary.index):
+    indices = summary.index
+    if 'Group Var' in summary.index:
+        summary = summary[:-1]
+        indices = summary.index
+    for row_idx, row in enumerate(indices):
         col_vals = row.split(':')
         for col_idx, col in enumerate(col_names):
             val = col_vals[col_idx].split('[')[1].split(']')[0]
             summary[col][row_idx] = val
 
-    summary["sig"] = [("NS", "S")[p < 0.05] for p in summary["P>|z|"]]
+    summary["sig"] = [("NS", "S")[float(p) < 0.05] for p in summary["P>|z|"]]
+    summary["coef"] = [float(c) for c in summary["Coef."]]
 
     return summary
 
@@ -38,3 +46,4 @@ def statsmodels_to_results(rlm_model):
     as_df = summary_to_dataframe(rlm_model.summary())
     as_df = expand_summary_dataframe(as_df)
     return as_df
+
