@@ -14,7 +14,6 @@ def summary_to_dataframe(summary):
     return results
 
 
-
 def expand_summary_dataframe(summary):
     '''Expand dataframe index column in to individual columns'''
 
@@ -54,3 +53,4 @@ def statsmodels_to_results(rlm_model):
     as_df = summary_to_dataframe(rlm_model.summary())
     as_df = expand_summary_dataframe(as_df)
     return as_df
+
