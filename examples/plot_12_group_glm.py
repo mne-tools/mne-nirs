@@ -79,11 +79,12 @@ import statsmodels.formula.api as smf
 import matplotlib.pyplot as plt
 from lets_plot import *
 LetsPlot.setup_html()
+from IPython.display import display, HTML
 
 
 ###############################################################################
-# Define analysis
-# ---------------
+# Define individual analysis
+# --------------------------
 #
 # .. sidebar:: Individual analysis procedures
 #
@@ -153,8 +154,8 @@ def individual_analysis(bids_path, ID):
 
 
 ###############################################################################
-# Run analysis
-# ------------
+# Run analysis on all participants
+# --------------------------------
 #
 # Next we loop through the five measurements and run the individual analysis
 # on each. We append the individual results in to a large dataframe that
@@ -180,8 +181,8 @@ for sub in range(1, 6):  # Loop from first to fifth subject
 
 
 ###############################################################################
-# Individual results
-# ------------------
+# Visualise Individual results
+# ----------------------------
 #
 # First we visualise the results from each individual to ensure the
 # data values look reasonable.
@@ -229,6 +230,15 @@ grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Rig
 roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
                         grp_results, groups=grp_results["ID"]).fit(method='nm')
 roi_model.summary()
+
+
+###############################################################################
+# Render nicely
+# -----------------------
+#
+# Why wont this work in sphinx?
+
+display(HTML(roi_model.summary().as_html()))
 
 
 ###############################################################################
