@@ -229,7 +229,8 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
 
 roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
-                        grp_results, groups=grp_results["ID"]).fit()
+                        grp_results,
+                        groups=grp_results["ID"]).fit(method='powell')
 
 roi_model.summary()
 
