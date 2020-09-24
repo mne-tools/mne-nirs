@@ -268,16 +268,16 @@ fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 5),
 # Cut down the dataframe just to the conditions we are interested in
 ch_summary = df_cha.query("condition in ['Tapping/Left', 'Tapping/Right']")
 ch_summary = ch_summary.query("Chroma in ['hbo']")
+
 # Run group level model and convert to dataframe
 ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:condition",
                        ch_summary, groups=ch_summary["ID"]).fit()
-
 ch_model_df = statsmodels_to_results(ch_model)
 
+# Plot the two conditions
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                     ch_model_df.query("condition in ['Tapping/Left']"),
                     colorbar=False, axes=axes[0])
-
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                     ch_model_df.query("condition in ['Tapping/Right']"),
                     colorbar=True, axes=axes[1])
