@@ -76,7 +76,6 @@ from mne_nirs.channels import get_short_channels, get_long_channels
 from mne_nirs.channels import picks_pair_to_idx as pair_to_idx
 from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
 from mne_nirs.visualisation import plot_glm_group_topo
-from mne_nirs.signal_enhancement import enhance_negative_correlation
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids
@@ -271,7 +270,6 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 # We do not explore the modeling procedure in depth here as topics
 # such model selection and examining residuals are beyond the scope of
 # this example (see relevant literature).
-
 
 grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
 
