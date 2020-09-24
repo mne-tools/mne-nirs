@@ -68,13 +68,11 @@ from mne_nirs.channels import get_short_channels, get_long_channels
 from mne_nirs.channels import picks_pair_to_idx as pair_to_idx
 from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
 from mne_nirs.visualisation import plot_glm_group_topo
-from mne_nirs.signal_enhancement import enhance_negative_correlation
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids
 
 # Import StatsModels
-from statsmodels.formula.api import rlm
 import statsmodels.formula.api as smf
 
 # Import Plotting Library
@@ -112,7 +110,6 @@ def individual_analysis(bids_path, ID):
     raw_od = optical_density(raw_intensity)
     raw_haemo = beer_lambert_law(raw_od)
     raw_haemo.resample(1.0)
-    # raw_haemo = enhance_negative_correlation(raw_haemo)
 
     # Cut out just the short channels for creating a GLM repressor
     short_chans = get_short_channels(raw_haemo)
@@ -225,8 +222,9 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 # analyse in your favorite stats program.
 #
 # Here we examine the effect of ROI, condition and chroma,
-# controlling for participant. Alternatively, we could use a robust model such
-# as `roi_model = rlm('theta ~ -1 + ROI:Condition:Chroma', grp_results).fit()`.
+# controlling for participant. Alternatively, we could use a robust linear
+# model by using the code
+# `roi_model = rlm('theta ~ -1 + ROI:Condition:Chroma', grp_results).fit()`.
 
 grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
 
