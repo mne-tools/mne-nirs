@@ -112,17 +112,15 @@ def individual_analysis(bids_path, ID):
     raw_haemo.resample(1.0)
 
     # Cut out just the short channels for creating a GLM repressor
-    short_chans = get_short_channels(raw_haemo)
+    sht_chans = get_short_channels(raw_haemo)
     raw_haemo = get_long_channels(raw_haemo)
 
     # Create a design matrix
     design_matrix = make_first_level_design_matrix(raw_haemo, stim_dur=5.0)
 
     # Append short channels mean to design matrix
-    design_matrix["ShortHbO"] = np.mean(short_chans.copy().pick(picks="hbo").
-                                        get_data(), axis=0)
-    design_matrix["ShortHbR"] = np.mean(short_chans.copy().pick(picks="hbr").
-                                        get_data(), axis=0)
+    design_matrix["ShortHbO"] = np.mean(sht_chans.copy().pick(picks="hbo").get_data(), axis=0)
+    design_matrix["ShortHbR"] = np.mean(sht_chans.copy().pick(picks="hbr").get_data(), axis=0)
 
     # Run GLM
     glm_est = run_GLM(raw_haemo, design_matrix)
@@ -229,9 +227,7 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
 
 roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
-                        grp_results,
-                        groups=grp_results["ID"]).fit(method='powell')
-
+                        grp_results, groups=grp_results["ID"]).fit(method='nm')
 roi_model.summary()
 
 
