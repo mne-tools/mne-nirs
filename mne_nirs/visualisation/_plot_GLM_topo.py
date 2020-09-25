@@ -6,6 +6,7 @@
 import numpy as np
 import mne
 from mne.utils import warn
+from mne.channels.layout import _merge_ch_data
 
 
 def plot_glm_topo(raw, glm_estimates, design_matrix,
@@ -198,6 +199,7 @@ def plot_glm_group_topo(raw, group_est,
                         axes=None, sphere=None,
                         colorbar=True,
                         cmap=None, threshold=False,
+                        extrapolate='local', image_interp = 'bilinear',
                         vmin=None, vmax=None):
     import matplotlib.pyplot as plt
     import matplotlib as mpl
@@ -242,6 +244,7 @@ def plot_glm_group_topo(raw, group_est,
 
     _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
         mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
+    estimates, ch_names = _merge_ch_data(estimates, t, ch_names)
 
     if sum(["x" in ch for ch in ch_names]):
         warn("Channels were merged")
@@ -249,7 +252,8 @@ def plot_glm_group_topo(raw, group_est,
         # picks = picks[keeps]
 
     mne.viz.topomap.plot_topomap(estimates, pos,
-                                 extrapolate='local',
+                                 extrapolate=extrapolate,
+                                 image_interp=image_interp,
                                  names=ch_names,
                                  vmin=vmin,
                                  vmax=vmax,
