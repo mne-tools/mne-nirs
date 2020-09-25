@@ -231,7 +231,6 @@ def plot_glm_group_topo(raw, group_est,
     if 'condition' in group_est.columns:
         assert len(np.unique(group_est["condition"])) == 1,\
             "Only one condition allowed"
-
         c = np.unique(group_est["condition"])[0]
     else:
         c = "Contrast"
