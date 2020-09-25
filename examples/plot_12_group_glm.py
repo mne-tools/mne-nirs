@@ -109,7 +109,7 @@ def individual_analysis(bids_path, ID):
     # Convert signal to haemoglobin and resample
     raw_od = optical_density(raw_intensity)
     raw_haemo = beer_lambert_law(raw_od)
-    raw_haemo.resample(1.0)
+    raw_haemo.resample(0.6)
 
     # Cut out just the short channels for creating a GLM repressor
     sht_chans = get_short_channels(raw_haemo)
