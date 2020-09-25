@@ -223,14 +223,13 @@ def plot_glm_group_topo(raw, group_est,
     assert len(np.unique(group_est["Chroma"])) == 1, "Only one Chroma allowed"
 
     if 'condition' in group_est.columns:
-        assert len(
-            np.unique(group_est["condition"])) == 1, "Only one condition allowed"
+        assert len(np.unique(group_est["condition"])) == 1,\
+            "Only one condition allowed"
         c = np.unique(group_est["condition"])[0]
     else:
         c = "Contrast"
 
     t = np.unique(group_est["Chroma"])
-
 
     if axes is None:
         fig, axes = plt.subplots(nrows=1,
