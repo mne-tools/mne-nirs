@@ -63,7 +63,7 @@ from mne.preprocessing.nirs import optical_density, beer_lambert_law
 # Import MNE-NIRS processing
 from mne_nirs.statistics import run_GLM
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import glm_region_of_interest, statsmodels_to_results
+from mne_nirs.statistics import glm_region_of_interest, statsmodels_to_results, compute_contrast
 from mne_nirs.channels import get_short_channels, get_long_channels
 from mne_nirs.channels import picks_pair_to_idx as pair_to_idx
 from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
@@ -149,7 +149,15 @@ def individual_analysis(bids_path, ID):
     cha["theta"] = [t * 1.e6 for t in cha["theta"]]
     roi["theta"] = [t * 1.e6 for t in roi["theta"]]
 
-    return roi, cha, raw_haemo
+    contrast_matrix = np.eye(design_matrix.shape[1])
+    basic_conts = dict([(column, contrast_matrix[i])
+                        for i, column in enumerate(design_matrix.columns)])
+    contrast_LvR = basic_conts['Tapping/Left'] - basic_conts['Tapping/Right']
+    contrast = compute_contrast(glm_est, contrast_LvR)
+    con = _tidy_long_to_wide(glm_to_tidy(raw_haemo, contrast, design_matrix))
+    con["ID"] = ID  # Add the participant ID to the dataframe
+
+    return roi, cha, raw_haemo, con
 
 
 ###############################################################################
@@ -163,6 +171,7 @@ def individual_analysis(bids_path, ID):
 
 df_roi = pd.DataFrame()  # Store region of interest results
 df_cha = pd.DataFrame()  # Store channel level results
+df_con = pd.DataFrame()  # Store channel level results
 
 for sub in range(1, 6):  # Loop from first to fifth subject
     ID = '%02d' % sub  # Tidy the subject name
@@ -172,11 +181,12 @@ for sub in range(1, 6):  # Loop from first to fifth subject
                          datatype="nirs", suffix="nirs", extension=".snirf")
 
     # Analyse data and return both ROI and channel results
-    roi, channel, raw_haemo = individual_analysis(bids_path, ID)
+    roi, channel, raw_haemo, con = individual_analysis(bids_path, ID)
 
     # Append individual results to all participants
     df_roi = df_roi.append(roi)
     df_cha = df_cha.append(channel)
+    df_con = df_con.append(con)
 
 
 ###############################################################################
@@ -265,7 +275,7 @@ ch_summary = ch_summary.query("Chroma in ['hbo']")
 
 # Run group level model and convert to dataframe
 ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:condition",
-                       ch_summary, groups=ch_summary["ID"]).fit()
+                       ch_summary, groups=ch_summary["ID"]).fit(method='nm')
 ch_model_df = statsmodels_to_results(ch_model)
 
 # Plot the two conditions
@@ -284,7 +294,7 @@ ch_summary = ch_summary.query("Chroma in ['hbr']")
 
 # Run group level model and convert to dataframe
 ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:condition",
-                       ch_summary, groups=ch_summary["ID"]).fit()
+                       ch_summary, groups=ch_summary["ID"]).fit(method='nm')
 ch_model_df = statsmodels_to_results(ch_model)
 
 # Plot the two conditions
@@ -302,4 +312,14 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
 # Contrasts
 # ---------
 #
-# Coming soon...
+# For HbO...
+
+con_summary = df_con.query("Chroma in ['hbo']")
+con_summary["effect"] = [t * 1.e6 for t in con_summary["effect"]]
+
+# Run group level model and convert to dataframe
+con_model = smf.mixedlm("effect ~ -1 + ch_name:Chroma",
+                        con_summary, groups=con_summary["ID"]).fit(method='nm')
+con_model_df = statsmodels_to_results(con_model)
+
+plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"), con_model_df, colorbar=True)
