@@ -89,7 +89,6 @@ import matplotlib as mpl
 
 from lets_plot import *
 LetsPlot.setup_html()
-from IPython.display import display, HTML
 
 
 ###############################################################################
@@ -275,15 +274,6 @@ grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Rig
 roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
                         grp_results, groups=grp_results["ID"]).fit(method='nm')
 roi_model.summary()
-
-
-###############################################################################
-# Render nicely
-# -----------------------
-#
-# Why wont this work in sphinx?
-
-display(HTML(roi_model.summary().as_html()))
 
 
 ###############################################################################
