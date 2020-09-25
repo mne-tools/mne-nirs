@@ -199,7 +199,8 @@ def plot_glm_group_topo(raw, group_est,
                         axes=None, sphere=None,
                         colorbar=True,
                         cmap=None, threshold=False,
-                        extrapolate='local', image_interp = 'bilinear',
+                        show_names=False,
+                        extrapolate='local', image_interp='bilinear',
                         vmin=None, vmax=None):
     import matplotlib.pyplot as plt
     import matplotlib as mpl
@@ -260,6 +261,7 @@ def plot_glm_group_topo(raw, group_est,
                                  cmap=cmap,
                                  axes=axes,
                                  show=False,
+                                 show_names=show_names,
                                  sphere=sphere)
     axes.set_title(c)
 
