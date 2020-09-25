@@ -79,7 +79,6 @@ import statsmodels.formula.api as smf
 import matplotlib.pyplot as plt
 from lets_plot import *
 LetsPlot.setup_html()
-from IPython.display import display, HTML
 
 
 ###############################################################################
@@ -189,7 +188,6 @@ for sub in range(1, 6):  # Loop from first to fifth subject
 # Here we see that we have data from five participants, we plot just the HbO
 # values and observe they are in the expect range.
 
-
 grp_results = df_roi.query("Condition in ['Control', 'Tapping/Left', 'Tapping/Right']")
 grp_results = grp_results.query("Chroma in ['hbo']")
 
@@ -201,8 +199,8 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 
 
 ###############################################################################
-# Group results
-# -------------
+# Compute group level results
+# ---------------------------
 #
 # .. sidebar:: Relevant literature
 #
@@ -233,15 +231,6 @@ roi_model.summary()
 
 
 ###############################################################################
-# Render nicely
-# -----------------------
-#
-# Why wont this work in sphinx?
-
-display(HTML(roi_model.summary().as_html()))
-
-
-###############################################################################
 # Visualise group results
 # -----------------------
 #
@@ -261,8 +250,8 @@ ggplot(as_df, aes(x='Condition', y='coef', color='sig', shape='ROI')) \
 
 
 ###############################################################################
-# Group topo visualisation
-# ========================
+# Group topographic visualisation
+# -------------------------------
 #
 # We can also view the channel level results for the group.a
 # Here we just plot the oxyhaemoglobin for the two tapping conditions.
