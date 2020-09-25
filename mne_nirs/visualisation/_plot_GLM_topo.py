@@ -256,7 +256,6 @@ def plot_glm_group_topo(raw, group_est,
         mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
     estimates, ch_names = _merge_ch_data(estimates, t, ch_names)
 
-
     if sum(["x" in ch for ch in ch_names]):
         warn("Channels were merged")
         # keeps = np.array(np.where(["x" not in ch for ch in ch_names])[0])
