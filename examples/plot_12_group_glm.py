@@ -183,6 +183,7 @@ def individual_analysis(bids_path, ID):
     return raw_haemo, roi, cha, con
 
 
+
 ###############################################################################
 # Run analysis on all participants
 # --------------------------------
@@ -197,6 +198,7 @@ df_roi = pd.DataFrame()  # To store region of interest results
 df_cha = pd.DataFrame()  # To store channel level results
 df_con = pd.DataFrame()  # To store channel level contrast results
 
+
 for sub in range(1, 6):  # Loop from first to fifth subject
     ID = '%02d' % sub  # Tidy the subject name
 
@@ -206,6 +208,7 @@ for sub in range(1, 6):  # Loop from first to fifth subject
 
     # Analyse data and return both ROI and channel results
     raw_haemo, roi, channel, con = individual_analysis(bids_path, ID)
+
 
     # Append individual results to all participants
     df_roi = df_roi.append(roi)
@@ -343,8 +346,6 @@ ch_summary = ch_summary.query("Chroma in ['hbr']")
 ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:condition",
                        ch_summary, groups=ch_summary["ID"]).fit(method='nm')
 
-ch_model_df = statsmodels_to_results(ch_model)
-
 # Plot the two conditions
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
                     ch_model_df.query("condition in ['Tapping/Left']"),
@@ -378,3 +379,4 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
 # Mark significantly varying channels (uncomment to run)
 # raw_haemo.copy().pick(picks="hbo").pick(picks=list(
 #     con_model_df.query("sig == True")["ch_name"])).plot_sensors(axes=axes)
+
