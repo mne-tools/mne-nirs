@@ -207,7 +207,12 @@ def plot_glm_group_topo(raw, group_est,
     from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
 
     if not (raw.ch_names == list(group_est["ch_name"].values)):
-        warn("MNE data structure does not match regression results")
+        if len(raw.ch_names) < len(list(group_est["ch_name"].values)):
+            print("reducing GLM results to match raw")
+            group_est["Keep"] = [g in raw.ch_names for g in group_est["ch_name"]]
+            group_est = group_est.query("Keep == True")
+        else:
+            warn("MNE data structure does not match regression results")
 
     estimates = group_est[value].values
 
@@ -218,7 +223,6 @@ def plot_glm_group_topo(raw, group_est,
         p = group_est["P>|z|"].values
         t = p > 0.05
         estimates[t] = 0.
-        print(t)
 
     assert len(np.unique(group_est["Chroma"])) == 1, "Only one Chroma allowed"
 

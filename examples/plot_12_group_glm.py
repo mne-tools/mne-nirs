@@ -77,6 +77,7 @@ import statsmodels.formula.api as smf
 
 # Import Plotting Library
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 from lets_plot import *
 LetsPlot.setup_html()
 
@@ -95,12 +96,13 @@ LetsPlot.setup_html()
 #
 # First we define the analysis that will be applied to each file.
 # This is a GLM analysis as described in the
-# `MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_
+# `MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_,
 # so this example will skim over the individual level details.
 #
-# The analysis extracts a response estimate for each region of interest and
-# each condition and returns the results as a dataframe with the participant
-# ID.
+# The analysis extracts a response estimate for each channel,
+# each region of interest, and computes a contrast between left and right
+# finger tapping.
+# We return the raw object, and data frames for the computed results.
 
 def individual_analysis(bids_path, ID):
 
@@ -134,7 +136,7 @@ def individual_analysis(bids_path, ID):
         Left_Hemisphere=pair_to_idx(raw_haemo, left, on_missing='ignore'),
         Right_Hemisphere=pair_to_idx(raw_haemo, right, on_missing='ignore'))
 
-    # Output channel metrics
+    # Extract channel metrics
     cha = glm_to_tidy(raw_haemo, glm_est, design_matrix)
     cha = _tidy_long_to_wide(cha)
     cha["ID"] = ID  # Add the participant ID to the dataframe
@@ -145,10 +147,7 @@ def individual_analysis(bids_path, ID):
         roi = roi.append(glm_region_of_interest(glm_est, groups, idx, col))
     roi["ID"] = ID  # Add the participant ID to the dataframe
 
-    # Convert to uM for nicer plotting below.
-    cha["theta"] = [t * 1.e6 for t in cha["theta"]]
-    roi["theta"] = [t * 1.e6 for t in roi["theta"]]
-
+    # Contrast left vs right tapping
     contrast_matrix = np.eye(design_matrix.shape[1])
     basic_conts = dict([(column, contrast_matrix[i])
                         for i, column in enumerate(design_matrix.columns)])
@@ -157,7 +156,12 @@ def individual_analysis(bids_path, ID):
     con = _tidy_long_to_wide(glm_to_tidy(raw_haemo, contrast, design_matrix))
     con["ID"] = ID  # Add the participant ID to the dataframe
 
-    return roi, cha, raw_haemo, con
+    # Convert to uM for nicer plotting below.
+    cha["theta"] = [t * 1.e6 for t in cha["theta"]]
+    roi["theta"] = [t * 1.e6 for t in roi["theta"]]
+    con["effect"] = [t * 1.e6 for t in con["effect"]]
+
+    return raw_haemo, roi, cha, con
 
 
 ###############################################################################
@@ -167,11 +171,11 @@ def individual_analysis(bids_path, ID):
 # Next we loop through the five measurements and run the individual analysis
 # on each. We append the individual results in to a large dataframe that
 # will contain the results from all measurements. We create a group dataframe
-# for both the region of interest and channel level results.
+# for both the region of interest, channel level, and contrast results.
 
 df_roi = pd.DataFrame()  # Store region of interest results
 df_cha = pd.DataFrame()  # Store channel level results
-df_con = pd.DataFrame()  # Store channel level results
+df_con = pd.DataFrame()  # Store channel level contrast results
 
 for sub in range(1, 6):  # Loop from first to fifth subject
     ID = '%02d' % sub  # Tidy the subject name
@@ -181,7 +185,7 @@ for sub in range(1, 6):  # Loop from first to fifth subject
                          datatype="nirs", suffix="nirs", extension=".snirf")
 
     # Analyse data and return both ROI and channel results
-    roi, channel, raw_haemo, con = individual_analysis(bids_path, ID)
+    raw_haemo, roi, channel, con = individual_analysis(bids_path, ID)
 
     # Append individual results to all participants
     df_roi = df_roi.append(roi)
@@ -197,6 +201,8 @@ for sub in range(1, 6):  # Loop from first to fifth subject
 # data values look reasonable.
 # Here we see that we have data from five participants, we plot just the HbO
 # values and observe they are in the expect range.
+# We can already see that the control condition is always near zero,
+# and that the responses look to be contralateral to the tapping hand.
 
 grp_results = df_roi.query("Condition in ['Control', 'Tapping/Left', 'Tapping/Right']")
 grp_results = grp_results.query("Chroma in ['hbo']")
@@ -223,8 +229,11 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 #    Santosa, H., Zhai, X., Fishburn, F., & Huppert, T. (2018).
 #    The NIRS brain AnalyzIR toolbox. Algorithms, 11(5), 73.
 #
-# Next we use a linear mixed effects model to understand the relation between
-# condition and our response estimate (theta) for each ROI and chromophore.
+# Next we use a linear mixed effects model to understand the
+# relation between conditions and our response estimate (theta).
+# Combinations of 3 fixed effects will be evaluated, ROI (left vs right),
+# condition (control, tapping/left, tapping/right), and chromophore (HbO, HbR).
+# With a random effect of subject.
 # Alternatively, you could export the dataframe `df_roi.to_csv()` and
 # analyse in your favorite stats program.
 #
@@ -232,6 +241,10 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 # controlling for participant. Alternatively, we could use a robust linear
 # model by using the code
 # `roi_model = rlm('theta ~ -1 + ROI:Condition:Chroma', grp_results).fit()`.
+#
+# We do not explore the modeling procedure in depth here as topics
+# such model selection and examining residuals are beyond the scope of
+# this example.
 
 grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
 
@@ -245,30 +258,42 @@ roi_model.summary()
 # -----------------------
 #
 # Now we can summarise the output of the second level model.
-# This figure shows that control condition has small not significant
-# responses for both HbO and HbR in both hemispheres.
+# This figure shows that control condition has small respones that
+# are not significant for both HbO and HbR in both hemispheres.
 # Whereas clear significant responses are show for the two tapping conditions.
 # We also observe the it is the contralateral hemisphere that has the
 # larger response for each tapping condition.
+# Filled symbols represent HbO, unfilled symbols represent HbR.
 
-as_df = statsmodels_to_results(roi_model)
+df = statsmodels_to_results(roi_model)
 
-ggplot(as_df, aes(x='Condition', y='coef', color='sig', shape='ROI')) \
+p = ggplot(df.query("Chroma == 'hbo'"),
+           aes(x='Condition', y='coef', color='sig', shape='ROI')) \
     + geom_hline(y_intercept=0, linetype="dashed", size=1) \
     + geom_point(size=5) \
+    + scale_shape_manual(values=[16, 17]) \
     + ggsize(800, 300)
 
+# Hack to make HbO filled symbols and HbR unfilled.
+p = p + geom_point(data=df.query("Chroma == 'hbr'")
+                   .query("ROI == 'Left_Hemisphere'"), size=5, shape=1)
+p = p + geom_point(data=df.query("Chroma == 'hbr'")
+                   .query("ROI == 'Right_Hemisphere'"), size=5, shape=2)
 
+p
 ###############################################################################
 # Group topographic visualisation
 # -------------------------------
 #
-# We can also view the channel level results for the group.a
+# We can also view the topographic representation of the data
+# (rather than the ROI summary above).
 # Here we just plot the oxyhaemoglobin for the two tapping conditions.
+# First we compute the mixed effects model, but for each channel rather
+# than region of interest. Then we pass these results to the topo function.
 
 fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(10, 10),
                          gridspec_kw=dict(width_ratios=[1, 1]))
-import matplotlib as mpl
+
 # Cut down the dataframe just to the conditions we are interested in
 ch_summary = df_cha.query("condition in ['Tapping/Left', 'Tapping/Right']")
 ch_summary = ch_summary.query("Chroma in ['hbo']")
@@ -312,14 +337,21 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
 # Contrasts
 # ---------
 #
-# For HbO...
+# Finally we can view the contrast results in a topographic representation.
+# We can also mark the channels the vary significantly between conditions
+# with a black mark.
 
+fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(6, 6))
 con_summary = df_con.query("Chroma in ['hbo']")
-con_summary["effect"] = [t * 1.e6 for t in con_summary["effect"]]
 
 # Run group level model and convert to dataframe
 con_model = smf.mixedlm("effect ~ -1 + ch_name:Chroma",
                         con_summary, groups=con_summary["ID"]).fit(method='nm')
 con_model_df = statsmodels_to_results(con_model)
 
-plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"), con_model_df, colorbar=True)
+plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
+                    con_model_df, colorbar=True, axes=axes)
+
+# Mark significantly varying channels (uncomment to run)
+# raw_haemo.copy().pick(picks="hbo").pick(picks=list(
+#     con_model_df.query("sig == True")["ch_name"])).plot_sensors(axes=axes)

@@ -36,8 +36,9 @@ def expand_summary_dataframe(summary):
             val = col_vals[col_idx].split('[')[1].split(']')[0]
             summary[col][row_idx] = val
 
-    summary["sig"] = [("NS", "S")[float(p) < 0.05] for p in summary["P>|z|"]]
-    summary["coef"] = [float(c) for c in summary["Coef."]]
+    summary["sig"] = [(False, True)[float(p) < 0.05] for p in summary["P>|z|"]]
+    if 'Coef.' in summary.columns:
+        summary["coef"] = [float(c) for c in summary["Coef."]]
 
     return summary
 
