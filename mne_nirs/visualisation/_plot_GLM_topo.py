@@ -215,7 +215,6 @@ def plot_glm_group_topo(raw, group_est,
         else:
             warn("MNE data structure does not match regression results")
 
-
     estimates = group_est[value].values
 
     if value == "coef":

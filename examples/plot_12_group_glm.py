@@ -86,7 +86,6 @@ import statsmodels.formula.api as smf
 # Import Plotting Library
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-
 from lets_plot import *
 LetsPlot.setup_html()
 
@@ -183,7 +182,6 @@ def individual_analysis(bids_path, ID):
     return raw_haemo, roi, cha, con
 
 
-
 ###############################################################################
 # Run analysis on all participants
 # --------------------------------
@@ -192,7 +190,6 @@ def individual_analysis(bids_path, ID):
 # on each. We append the individual results in to a large dataframe that
 # will contain the results from all measurements. We create a group dataframe
 # for both the region of interest, channel level, and contrast results.
-
 
 df_roi = pd.DataFrame()  # To store region of interest results
 df_cha = pd.DataFrame()  # To store channel level results
@@ -208,7 +205,6 @@ for sub in range(1, 6):  # Loop from first to fifth subject
 
     # Analyse data and return both ROI and channel results
     raw_haemo, roi, channel, con = individual_analysis(bids_path, ID)
-
 
     # Append individual results to all participants
     df_roi = df_roi.append(roi)
@@ -272,6 +268,7 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 # such model selection and examining residuals are beyond the scope of
 # this example (see relevant literature).
 
+
 grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
 
 roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
@@ -305,6 +302,13 @@ ggplot(df.query("Chroma == 'hbo'"),
                  .query("ROI == 'Right_Hemisphere'"), size=5, shape=2)
 
 
+# Hack to make HbO filled symbols and HbR unfilled.
+p = p + geom_point(data=df.query("Chroma == 'hbr'")
+                   .query("ROI == 'Left_Hemisphere'"), size=5, shape=1)
+p = p + geom_point(data=df.query("Chroma == 'hbr'")
+                   .query("ROI == 'Right_Hemisphere'"), size=5, shape=2)
+
+p
 ###############################################################################
 # Group topographic visualisation
 # -------------------------------
@@ -317,7 +321,7 @@ ggplot(df.query("Chroma == 'hbo'"),
 
 fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(10, 10),
                          gridspec_kw=dict(width_ratios=[1, 1]))
-import matplotlib as mpl
+
 # Cut down the dataframe just to the conditions we are interested in
 ch_summary = df_cha.query("condition in ['Tapping/Left', 'Tapping/Right']")
 ch_summary = ch_summary.query("Chroma in ['hbo']")
@@ -379,4 +383,3 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
 # Mark significantly varying channels (uncomment to run)
 # raw_haemo.copy().pick(picks="hbo").pick(picks=list(
 #     con_model_df.query("sig == True")["ch_name"])).plot_sensors(axes=axes)
-
