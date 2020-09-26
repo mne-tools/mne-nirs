@@ -49,7 +49,7 @@ def glm_region_of_interest(stats, group_by, cond_idx, cond_name):
             dfe = 0
 
             for pick in chroma_picks:
-                thetas.append(1.0 * (stats[ch_names[pick]].theta)[cond_idx][0])
+                thetas.append(1.0e6 * (stats[ch_names[pick]].theta)[cond_idx][0])
                 ses.append(_se(stats[ch_names[pick]])[cond_idx])
                 dfe = stats[ch_names[pick]].df_model
 
