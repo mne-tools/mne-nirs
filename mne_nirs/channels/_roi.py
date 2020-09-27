@@ -43,7 +43,7 @@ def picks_pair_to_idx(raw, sd_pairs, on_missing='error'):
     picks = list()
 
     for pair in sd_pairs:
-        pair_name = "S" + str(pair[0]) + "_D" + str(pair[1])
+        pair_name = "S" + str(pair[0]) + "_D" + str(pair[1]) + " "
         pair_picks = np.where([pair_name in ch for ch in ch_names])[0]
         if len(pair_picks) == 0:
             msg = ('No matching channels found for source %s '
