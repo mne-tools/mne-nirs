@@ -195,7 +195,6 @@ df_roi = pd.DataFrame()  # To store region of interest results
 df_cha = pd.DataFrame()  # To store channel level results
 df_con = pd.DataFrame()  # To store channel level contrast results
 
-
 for sub in range(1, 6):  # Loop from first to fifth subject
     ID = '%02d' % sub  # Tidy the subject name
 
@@ -268,7 +267,6 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 # such model selection and examining residuals are beyond the scope of
 # this example (see relevant literature).
 
-
 grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
 
 roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
@@ -302,13 +300,6 @@ ggplot(df.query("Chroma == 'hbo'"),
                  .query("ROI == 'Right_Hemisphere'"), size=5, shape=2)
 
 
-# Hack to make HbO filled symbols and HbR unfilled.
-p = p + geom_point(data=df.query("Chroma == 'hbr'")
-                   .query("ROI == 'Left_Hemisphere'"), size=5, shape=1)
-p = p + geom_point(data=df.query("Chroma == 'hbr'")
-                   .query("ROI == 'Right_Hemisphere'"), size=5, shape=2)
-
-p
 ###############################################################################
 # Group topographic visualisation
 # -------------------------------
