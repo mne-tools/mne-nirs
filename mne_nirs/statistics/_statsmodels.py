@@ -26,7 +26,7 @@ def expand_summary_dataframe(summary):
         col_names.append(col_name)
 
     # Fill in values
-    indices = summary.index
+    indices = summary.copy(deep=True).index
     if 'Group Var' in summary.index:
         summary = summary[:-1]
         indices = summary.index
@@ -34,11 +34,17 @@ def expand_summary_dataframe(summary):
         col_vals = row.split(':')
         for col_idx, col in enumerate(col_names):
             val = col_vals[col_idx].split('[')[1].split(']')[0]
-            summary[col][row_idx] = val
+            summary.at[row, col] = val
 
-    summary["sig"] = [(False, True)[float(p) < 0.05] for p in summary["P>|z|"]]
+    summary = summary.copy()  # I dont understand these .loc warnings
+    sum_copy = summary.copy(deep=True)
+    float_p = [float(p) for p in sum_copy["P>|z|"]]
+    summary.loc[:, "P>|z|"] = float_p
+    summary.loc[:, "sig"] = False
+    summary.loc[summary["P>|z|"] < 0.05, 'sig'] = True
+
     if 'Coef.' in summary.columns:
-        summary["coef"] = [float(c) for c in summary["Coef."]]
+        summary.loc[:, "coef"] = [float(c) for c in summary["Coef."]]
 
     return summary
 

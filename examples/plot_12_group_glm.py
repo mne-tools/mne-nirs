@@ -13,7 +13,16 @@ Group Level GLM
    Santosa, H., Zhai, X., Fishburn, F., & Huppert, T. (2018).
    The NIRS brain AnalyzIR toolbox. Algorithms, 11(5), 73.
 
-This is an example of group level analysis in MNE.
+This is an example of a group level GLM based fNIRS analysis in MNE.
+
+Individual level example analysis of this data is described in the
+`MNE fNIRS waveform tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_
+and the
+`MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_.
+So this example will skim over the individual level details
+and focus on the group level aspect of analysis.
+Instead here we describe how to process multiple measurements,
+and summarise the group level effects as summary statistics and visually.
 
 The data used in this example is available `at this location <https://github.com/rob-luke/BIDS-NIRS-Tapping>`_.
 It is an finger tapping example and is briefly described below.
@@ -22,13 +31,6 @@ The example dataset is in
 `BIDS <https://bids.neuroimaging.io>`_
 format and therefore already contains
 information about triggers, condition names, etc.
-
-Individual level example analysis of this data is described in the
-`MNE fNIRS waveform tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_
-and the
-`MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_.
-So this example will skim over the individual level details
-and focus on the group level aspect of analysis.
 
 
 .. collapse:: Data description (click to expand)
@@ -103,6 +105,8 @@ LetsPlot.setup_html()
 # each region of interest, and computes a contrast between left and right
 # finger tapping.
 # We return the raw object, and data frames for the computed results.
+# Information about channels, triggers and their meanings are stored in the
+# BIDS structure, so are automatically obtained when importing the data.
 
 def individual_analysis(bids_path, ID):
 
@@ -173,9 +177,9 @@ def individual_analysis(bids_path, ID):
 # will contain the results from all measurements. We create a group dataframe
 # for both the region of interest, channel level, and contrast results.
 
-df_roi = pd.DataFrame()  # Store region of interest results
-df_cha = pd.DataFrame()  # Store channel level results
-df_con = pd.DataFrame()  # Store channel level contrast results
+df_roi = pd.DataFrame()  # To store region of interest results
+df_cha = pd.DataFrame()  # To store channel level results
+df_con = pd.DataFrame()  # To store channel level contrast results
 
 for sub in range(1, 6):  # Loop from first to fifth subject
     ID = '%02d' % sub  # Tidy the subject name
@@ -220,10 +224,13 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 #
 # .. sidebar:: Relevant literature
 #
+#    For an introduction to mixed effects analysis see:
+#    Winter, Bodo. "A very basic tutorial for performing linear mixed effects
+#    analyses." arXiv preprint arXiv:1308.5499 (2013).
+#
 #    For a summary of linear mixed models in python
 #    and the relation to lmer see:
 #    `statsmodels docs <https://www.statsmodels.org/stable/mixed_linear.html>`_.
-#
 #
 #    For a summary of these models in the context of fNIRS see section 3.5 of:
 #    Santosa, H., Zhai, X., Fishburn, F., & Huppert, T. (2018).
@@ -244,7 +251,7 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 #
 # We do not explore the modeling procedure in depth here as topics
 # such model selection and examining residuals are beyond the scope of
-# this example.
+# this example (see relevant literature).
 
 grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
 
@@ -267,20 +274,18 @@ roi_model.summary()
 
 df = statsmodels_to_results(roi_model)
 
-p = ggplot(df.query("Chroma == 'hbo'"),
-           aes(x='Condition', y='coef', color='sig', shape='ROI')) \
+ggplot(df.query("Chroma == 'hbo'"),
+       aes(x='Condition', y='coef', color='sig', shape='ROI')) \
     + geom_hline(y_intercept=0, linetype="dashed", size=1) \
     + geom_point(size=5) \
     + scale_shape_manual(values=[16, 17]) \
-    + ggsize(800, 300)
+    + ggsize(800, 300) \
+    + geom_point(data=df.query("Chroma == 'hbr'")
+                 .query("ROI == 'Left_Hemisphere'"), size=5, shape=1) \
+    + geom_point(data=df.query("Chroma == 'hbr'")
+                 .query("ROI == 'Right_Hemisphere'"), size=5, shape=2)
 
-# Hack to make HbO filled symbols and HbR unfilled.
-p = p + geom_point(data=df.query("Chroma == 'hbr'")
-                   .query("ROI == 'Left_Hemisphere'"), size=5, shape=1)
-p = p + geom_point(data=df.query("Chroma == 'hbr'")
-                   .query("ROI == 'Right_Hemisphere'"), size=5, shape=2)
 
-p
 ###############################################################################
 # Group topographic visualisation
 # -------------------------------
