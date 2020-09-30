@@ -333,12 +333,6 @@ mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
 # Export Results
 # ---------------
 #
-# .. warning::
-#       The functions used in this section are in development, and are highly
-#       likely to change. These functions are marked with an underscore (_)
-#       at the start of their name to indicate they are not public functions
-#       and have no promise they will be here next week.
-#
 # .. sidebar:: Relevant literature
 #
 #    Wickham, Hadley. "Tidy data." Journal of Statistical Software 59.10 (2014): 1-23.
