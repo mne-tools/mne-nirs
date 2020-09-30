@@ -195,7 +195,7 @@ def plot_glm_contrast_topo(raw, contrast,
 
 
 def plot_glm_group_topo(raw, group_est,
-                        value="coef",
+                        value="Coef.",
                         axes=None, sphere=None,
                         colorbar=True,
                         cmap=None, threshold=False,
@@ -217,7 +217,7 @@ def plot_glm_group_topo(raw, group_est,
 
     estimates = group_est[value].values
 
-    if value == "coef":
+    if value == "Coef.":
         estimates = estimates * 1.0
 
     if threshold:

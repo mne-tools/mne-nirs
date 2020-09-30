@@ -31,6 +31,6 @@ def test_statsmodel_to_df():
                             groups=df_cha["ID"]).fit(method='nm')
     df = statsmodels_to_results(roi_model)
     assert type(df) == pd.DataFrame
-    assert df["coef"]["condition[A]"] == amplitude
-    assert df["sig"]["condition[A]"] is True
-    assert df.shape == (8, 9)
+    assert df["Coef."]["condition[A]"] == amplitude
+    assert df["sig"]["condition[A]"]
+    assert df.shape == (8, 8)

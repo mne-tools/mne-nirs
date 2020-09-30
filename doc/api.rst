@@ -72,6 +72,7 @@ Visualisation
    plot_nirs_source_detector
    plot_glm_topo
    plot_glm_contrast_topo
+   plot_glm_group_topo
 
 
 Simulation

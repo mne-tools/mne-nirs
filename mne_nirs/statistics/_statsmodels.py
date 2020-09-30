@@ -36,7 +36,7 @@ def expand_summary_dataframe(summary):
             val = col_vals[col_idx].split('[')[1].split(']')[0]
             summary.at[row, col] = val
 
-    summary = summary.copy()  # I dont understand these .loc warnings
+    summary = summary.copy()  # Copies required to supress .loc warnings
     sum_copy = summary.copy(deep=True)
     float_p = [float(p) for p in sum_copy["P>|z|"]]
     summary.loc[:, "P>|z|"] = float_p
@@ -44,7 +44,7 @@ def expand_summary_dataframe(summary):
     summary.loc[summary["P>|z|"] < 0.05, 'sig'] = True
 
     if 'Coef.' in summary.columns:
-        summary.loc[:, "coef"] = [float(c) for c in summary["Coef."]]
+        summary.loc[:, "Coef."] = [float(c) for c in summary["Coef."]]
 
     return summary
 
