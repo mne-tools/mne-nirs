@@ -234,15 +234,13 @@ def plot_glm_group_topo(raw, statsmodel_df,
 
     estimates = statsmodel_df[value].values
 
-    if value == "Coef.":
-        estimates = estimates * 1.0
-
     if threshold:
         p = statsmodel_df["P>|z|"].values
         t = p > 0.05
         estimates[t] = 0.
 
-    assert len(np.unique(statsmodel_df["Chroma"])) == 1, "Only one Chroma allowed"
+    assert len(np.unique(statsmodel_df["Chroma"])) == 1,\
+        "Only one Chroma allowed"
 
     if 'condition' in statsmodel_df.columns:
         assert len(np.unique(statsmodel_df["condition"])) == 1,\
@@ -258,6 +256,7 @@ def plot_glm_group_topo(raw, statsmodel_df,
                                  ncols=1,
                                  figsize=(12, 7))
 
+    # Set limits of topomap and colors
     if vmax is None:
         vmax = np.max(np.abs(estimates))
     if vmin is None:
@@ -266,8 +265,8 @@ def plot_glm_group_topo(raw, statsmodel_df,
         cmap = mpl.cm.RdBu_r
     norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
 
+    # Handle overlapping channels, these distort the topomap so are averaged.
     raw_subset = raw.copy()
-
     _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
         mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
     estimates, ch_names = _merge_ch_data(estimates, t, ch_names)
