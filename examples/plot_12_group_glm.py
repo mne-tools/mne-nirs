@@ -280,7 +280,7 @@ roi_model.summary()
 df = statsmodels_to_results(roi_model)
 
 ggplot(df.query("Chroma == 'hbo'"),
-       aes(x='Condition', y='coef', color='sig', shape='ROI')) \
+       aes(x='Condition', y='Coef.', color='Significant', shape='ROI')) \
     + geom_hline(y_intercept=0, linetype="dashed", size=1) \
     + geom_point(size=5) \
     + scale_shape_manual(values=[16, 17]) \

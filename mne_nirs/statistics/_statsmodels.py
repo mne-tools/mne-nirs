@@ -40,11 +40,14 @@ def expand_summary_dataframe(summary):
     sum_copy = summary.copy(deep=True)
     float_p = [float(p) for p in sum_copy["P>|z|"]]
     summary.loc[:, "P>|z|"] = float_p
-    summary.loc[:, "sig"] = False
-    summary.loc[summary["P>|z|"] < 0.05, 'sig'] = True
+    summary.loc[:, "Significant"] = False
+    summary.loc[summary["P>|z|"] < 0.05, 'Significant'] = True
 
+    # Standardise returned column name, it seems to vary per test
     if 'Coef.' in summary.columns:
         summary.loc[:, "Coef."] = [float(c) for c in summary["Coef."]]
+    elif 'coef' in summary.columns:
+        summary.rename(columns={"Coef.": "coef"})
 
     return summary
 

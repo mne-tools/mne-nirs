@@ -32,5 +32,5 @@ def test_statsmodel_to_df():
     df = statsmodels_to_results(roi_model)
     assert type(df) == pd.DataFrame
     assert df["Coef."]["condition[A]"] == amplitude
-    assert df["sig"]["condition[A]"]
+    assert df["Significant"]["condition[A]"]
     assert df.shape == (8, 8)
