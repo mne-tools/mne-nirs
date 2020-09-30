@@ -308,10 +308,6 @@ groups = dict(Left_ROI=picks_pair_to_idx(raw_haemo, left),
 df = pd.DataFrame()
 for idx, col in enumerate(design_matrix.columns[:3]):
     df = df.append(glm_region_of_interest(glm_est, groups, idx, col))
-df
-
-
-
 
 
 ###############################################################################
@@ -356,7 +352,6 @@ mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
 # in the channel, which chroma, etc.
 
 df = glm_to_tidy(raw_haemo, glm_est, design_matrix)
-df = _tidy_long_to_wide(df)
 
 
 ###############################################################################

@@ -102,14 +102,6 @@ LetsPlot.setup_html()
 #    GLM individual analysis:
 #    `MNE-NIRS docs <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_.
 #
-# .. sidebar:: Individual analysis procedures
-#
-#    Waveform individual analysis:
-#    `MNE docs <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
-#
-#    GLM individual analysis:
-#    `MNE-NIRS docs <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_.
-#
 # First we define the analysis that will be applied to each file.
 # This is a GLM analysis as described in the
 # `MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_,
@@ -156,7 +148,6 @@ def individual_analysis(bids_path, ID):
 
     # Extract channel metrics
     cha = glm_to_tidy(raw_haemo, glm_est, design_matrix)
-    cha = _tidy_long_to_wide(cha)
     cha["ID"] = ID  # Add the participant ID to the dataframe
 
     # Compute region of interest results from channel data
@@ -171,7 +162,7 @@ def individual_analysis(bids_path, ID):
                         for i, column in enumerate(design_matrix.columns)])
     contrast_LvR = basic_conts['Tapping/Left'] - basic_conts['Tapping/Right']
     contrast = compute_contrast(glm_est, contrast_LvR)
-    con = _tidy_long_to_wide(glm_to_tidy(raw_haemo, contrast, design_matrix))
+    con = glm_to_tidy(raw_haemo, contrast, design_matrix)
     con["ID"] = ID  # Add the participant ID to the dataframe
 
     # Convert to uM for nicer plotting below.

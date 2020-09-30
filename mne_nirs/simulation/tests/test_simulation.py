@@ -42,7 +42,6 @@ def test_simulate_NIRS():
                                                    drift_model='polynomial')
     glm_est = run_GLM(raw, design_matrix)
     df = glm_to_tidy(raw, glm_est, design_matrix)
-    df = _tidy_long_to_wide(df)
 
     assert df.query("condition in ['Control']")['theta'].values[0] == \
         pytest.approx(0)

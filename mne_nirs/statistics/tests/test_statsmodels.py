@@ -26,7 +26,6 @@ def test_statsmodel_to_df():
         design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0)
         glm_est = run_GLM(raw, design_matrix)
         cha = glm_to_tidy(raw, glm_est, design_matrix)
-        cha = _tidy_long_to_wide(cha)
         cha["ID"] = '%02d' % n
         df_cha = df_cha.append(cha)
     df_cha["theta"] = df_cha["theta"] * 1.0e6

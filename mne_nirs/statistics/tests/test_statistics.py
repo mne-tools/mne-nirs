@@ -64,7 +64,6 @@ def test_GLM_system_test():
         picks="hbr").get_data(), axis=0)
     glm_est = run_GLM(raw_haemo, design_matrix)
     df = glm_to_tidy(raw_haemo, glm_est, design_matrix)
-    df = _tidy_long_to_wide(df)
     a = (df
          .query('condition in ["Control"]')
          .groupby(['condition', 'Chroma'])

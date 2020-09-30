@@ -31,7 +31,7 @@ def _load_dataset():
         raw_intensity.info, picks=picks)
     raw_intensity.pick(picks[dists > 0.01])
 
-    assert 'fnirs_raw' in raw_intensity
+    assert 'fnirs_cw_amplitude' in raw_intensity
     assert len(np.unique(raw_intensity.annotations.description)) == 4
 
     return raw_intensity
