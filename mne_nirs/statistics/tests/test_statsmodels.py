@@ -3,14 +3,12 @@
 # License: BSD (3-clause)
 
 import pandas as pd
-import statsmodels
 import statsmodels.formula.api as smf
 
 from ...simulation import simulate_nirs_raw
 from ...experimental_design import make_first_level_design_matrix
 from ...statistics import run_GLM, statsmodels_to_results
-from ...utils._io import glm_to_tidy, _tidy_long_to_wide
-
+from ...utils._io import glm_to_tidy
 
 
 def test_statsmodel_to_df():
@@ -34,5 +32,5 @@ def test_statsmodel_to_df():
     df = statsmodels_to_results(roi_model)
     assert type(df) == pd.DataFrame
     assert df["coef"]["condition[A]"] == amplitude
-    assert df["sig"]["condition[A]"] == True
+    assert df["sig"]["condition[A]"] is True
     assert df.shape == (8, 9)

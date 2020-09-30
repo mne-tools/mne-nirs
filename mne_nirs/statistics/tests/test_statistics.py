@@ -11,7 +11,7 @@ from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_GLM
 from mne_nirs.simulation import simulate_nirs_raw
 from mne_nirs.channels import get_short_channels, get_long_channels
-from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
+from mne_nirs.utils._io import glm_to_tidy
 
 from mne_nirs.channels import picks_pair_to_idx
 from mne_nirs.statistics import glm_region_of_interest
