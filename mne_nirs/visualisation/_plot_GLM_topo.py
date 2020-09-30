@@ -118,8 +118,6 @@ def plot_glm_contrast_topo(raw, contrast,
         Haemoglobin data.
     contrast : dict
         nilearn.stats.compute_contrast
-    design_matrix : DataFrame
-        As specified in Nilearn
     figsize : TODO: Remove this, how does MNE ususally deal with this?
     sphere : As specified in MNE
 
@@ -194,47 +192,66 @@ def plot_glm_contrast_topo(raw, contrast,
     return fig
 
 
-def plot_glm_group_topo(raw, group_est,
+def plot_glm_group_topo(raw, statsmodel_df,
                         value="Coef.",
-                        axes=None, sphere=None,
+                        axes=None,
+                        sphere=None,
                         colorbar=True,
-                        cmap=None, threshold=False,
+                        cmap=None,
+                        threshold=False,
                         show_names=False,
-                        extrapolate='local', image_interp='bilinear',
+                        extrapolate='local',
+                        image_interp='bilinear',
                         vmin=None, vmax=None):
+    """
+    Plot topomap of NIRS group level GLM results.
+
+    Parameters
+    ----------
+    raw : instance of Raw
+        Haemoglobin data.
+    statsmodel_df : DataFrame
+        Dataframe created from a statsmodel summary.
+    value : String
+        Which column in the `statsmodel_df` to use in the topo map.
+
+    Returns
+    -------
+    fig : Figure with topographic representation of statsmodel_df value.
+    """
     import matplotlib.pyplot as plt
     import matplotlib as mpl
     from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
 
-    if not (raw.ch_names == list(group_est["ch_name"].values)):
-        if len(raw.ch_names) < len(list(group_est["ch_name"].values)):
+    if not (raw.ch_names == list(statsmodel_df["ch_name"].values)):
+        if len(raw.ch_names) < len(list(statsmodel_df["ch_name"].values)):
             print("reducing GLM results to match raw")
-            group_est["Keep"] = [g in raw.ch_names
-                                 for g in group_est["ch_name"]]
-            group_est = group_est.query("Keep == True")
+            statsmodel_df["Keep"] = [g in raw.ch_names
+                                     for g in statsmodel_df["ch_name"]]
+            statsmodel_df = statsmodel_df.query("Keep == True")
         else:
             warn("MNE data structure does not match regression results")
 
-    estimates = group_est[value].values
+    estimates = statsmodel_df[value].values
 
     if value == "Coef.":
         estimates = estimates * 1.0
 
     if threshold:
-        p = group_est["P>|z|"].values
+        p = statsmodel_df["P>|z|"].values
         t = p > 0.05
         estimates[t] = 0.
 
-    assert len(np.unique(group_est["Chroma"])) == 1, "Only one Chroma allowed"
+    assert len(np.unique(statsmodel_df["Chroma"])) == 1, "Only one Chroma allowed"
 
-    if 'condition' in group_est.columns:
-        assert len(np.unique(group_est["condition"])) == 1,\
+    if 'condition' in statsmodel_df.columns:
+        assert len(np.unique(statsmodel_df["condition"])) == 1,\
             "Only one condition allowed"
-        c = np.unique(group_est["condition"])[0]
+        c = np.unique(statsmodel_df["condition"])[0]
     else:
         c = "Contrast"
 
-    t = np.unique(group_est["Chroma"])
+    t = np.unique(statsmodel_df["Chroma"])
 
     if axes is None:
         fig, axes = plt.subplots(nrows=1,
