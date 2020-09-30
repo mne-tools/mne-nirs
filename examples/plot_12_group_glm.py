@@ -340,6 +340,7 @@ ch_summary = ch_summary.query("Chroma in ['hbr']")
 # Run group level model and convert to dataframe
 ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:condition",
                        ch_summary, groups=ch_summary["ID"]).fit(method='nm')
+ch_model_df = statsmodels_to_results(ch_model)
 
 # Plot the two conditions
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
