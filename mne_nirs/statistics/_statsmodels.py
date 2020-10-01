@@ -52,7 +52,19 @@ def expand_summary_dataframe(summary):
     return summary
 
 
-def statsmodels_to_results(rlm_model):
-    as_df = summary_to_dataframe(rlm_model.summary())
-    as_df = expand_summary_dataframe(as_df)
-    return as_df
+def statsmodels_to_results(model):
+    """
+    Convert statsmodels summary to a dataframe.
+
+    Parameters
+    ----------
+    model : statsmodels model output
+        The output of a statsmodels analysis. For example rlm or mixedlm.
+
+    Returns
+    -------
+    df : Pandas dataframe.
+    """
+    df = summary_to_dataframe(model.summary())
+    df = expand_summary_dataframe(df)
+    return df
