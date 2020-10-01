@@ -76,7 +76,7 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
         raw_subset = raw.copy().pick(picks=picks)
         _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
             mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
-        #estimates, ch_names = _merge_ch_data(estimates, t, ch_names)
+        # estimates, ch_names = _merge_ch_data(estimates, t, ch_names)
 
         if sum(["x" in ch for ch in ch_names]):
             warn("Channels were merged")
