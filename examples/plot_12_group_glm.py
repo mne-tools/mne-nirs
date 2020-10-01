@@ -71,10 +71,11 @@ from mne.preprocessing.nirs import optical_density, beer_lambert_law
 # Import MNE-NIRS processing
 from mne_nirs.statistics import run_GLM
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import glm_region_of_interest, statsmodels_to_results, compute_contrast
+from mne_nirs.statistics import glm_region_of_interest, statsmodels_to_results
+from mne_nirs.statistics import compute_contrast
 from mne_nirs.channels import get_short_channels, get_long_channels
 from mne_nirs.channels import picks_pair_to_idx as pair_to_idx
-from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
+from mne_nirs.utils._io import glm_to_tidy
 from mne_nirs.visualisation import plot_glm_group_topo
 
 # Import MNE-BIDS processing
