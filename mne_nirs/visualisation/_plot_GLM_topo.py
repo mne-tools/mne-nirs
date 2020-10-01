@@ -74,9 +74,9 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
         picks = mne.io.pick._picks_to_idx(raw.info, t, exclude=[],
                                           allow_empty=True)
         raw_subset = raw.copy().pick(picks=picks)
-
         _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
             mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
+        #estimates, ch_names = _merge_ch_data(estimates, t, ch_names)
 
         if sum(["x" in ch for ch in ch_names]):
             warn("Channels were merged")
@@ -195,14 +195,17 @@ def plot_glm_contrast_topo(raw, contrast,
 def plot_glm_group_topo(raw, statsmodel_df,
                         value="Coef.",
                         axes=None,
+                        threshold=False,
+                        vmin=None,
+                        vmax=None,
+                        cmap=None,
+                        sensors=True,
+                        res=64,
                         sphere=None,
                         colorbar=True,
-                        cmap=None,
-                        threshold=False,
                         show_names=False,
                         extrapolate='local',
-                        image_interp='bilinear',
-                        vmin=None, vmax=None):
+                        image_interp='bilinear'):
     """
     Plot topomap of NIRS group level GLM results.
 
@@ -214,6 +217,27 @@ def plot_glm_group_topo(raw, statsmodel_df,
         Dataframe created from a statsmodel summary.
     value : String
         Which column in the `statsmodel_df` to use in the topo map.
+    axes : instance of Axes | None
+        The axes to plot to. If None, the current axes will be used.
+    threshold : Bool
+        If threshold is true, all values with P>|z| greater than 0.05 will
+        be set to zero.
+    vmin : float | None
+        The value specifying the lower bound of the color range.
+        If None, and vmax is None, -vmax is used. Else np.min(data).
+        Defaults to None.
+    vmax : float | None
+        The value specifying the upper bound of the color range.
+        If None, the maximum absolute value is used. Defaults to None.
+    cmap : matplotlib colormap | None
+        Colormap to use. If None, 'Reds' is used for all positive data,
+        otherwise defaults to 'RdBu_r'.
+    sensors : bool | str
+        Add markers for sensor locations to the plot. Accepts matplotlib plot
+        format string (e.g., 'r+' for red plusses). If True (default), circles
+        will be used.
+    res : int
+        The resolution of the topomap image (n pixels along each side).
 
     Returns
     -------
@@ -284,6 +308,8 @@ def plot_glm_group_topo(raw, statsmodel_df,
                                  vmax=vmax,
                                  cmap=cmap,
                                  axes=axes,
+                                 sensors=sensors,
+                                 res=res,
                                  show=False,
                                  show_names=show_names,
                                  sphere=sphere)
