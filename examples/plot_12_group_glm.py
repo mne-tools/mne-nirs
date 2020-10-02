@@ -13,16 +13,16 @@ Group Level GLM
    Santosa, H., Zhai, X., Fishburn, F., & Huppert, T. (2018).
    The NIRS brain AnalyzIR toolbox. Algorithms, 11(5), 73.
 
-This is an example of a group level GLM based fNIRS analysis in MNE.
+This is an example of a group level GLM based fNIRS analysis in MNE-NIRS.
 
-Individual level example analysis of this data is described in the
+Individual level analysis of this data is described in the
 `MNE fNIRS waveform tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_
 and the
 `MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_.
 So this example will skim over the individual level details
 and focus on the group level aspect of analysis.
-Instead here we describe how to process multiple measurements,
-and summarise the group level effects as summary statistics and visually.
+Here we describe how to process multiple measurements
+and summarise  group level effects both as summary statistics and visually.
 
 The data used in this example is available `at this location <https://github.com/rob-luke/BIDS-NIRS-Tapping>`_.
 It is an finger tapping example and is briefly described below.
@@ -31,13 +31,6 @@ The example dataset is in
 `BIDS <https://bids.neuroimaging.io>`_
 format and therefore already contains
 information about triggers, condition names, etc.
-
-Individual level example analysis of this data is described in the
-`MNE fNIRS waveform tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_
-and the
-`MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_.
-So this example will skim over the individual level details
-and focus on the group level aspect of analysis.
 
 .. collapse:: Data description (click to expand)
    :class: success
@@ -111,9 +104,9 @@ LetsPlot.setup_html()
 # The analysis extracts a response estimate for each channel,
 # each region of interest, and computes a contrast between left and right
 # finger tapping.
-# We return the raw object, and data frames for the computed results.
+# We return the raw object and data frames for the computed results.
 # Information about channels, triggers and their meanings are stored in the
-# BIDS structure, so are automatically obtained when importing the data.
+# BIDS structure and are automatically obtained when importing the data.
 
 def individual_analysis(bids_path, ID):
 
@@ -181,7 +174,7 @@ def individual_analysis(bids_path, ID):
 # Next we loop through the five measurements and run the individual analysis
 # on each. We append the individual results in to a large dataframe that
 # will contain the results from all measurements. We create a group dataframe
-# for both the region of interest, channel level, and contrast results.
+# for the region of interest, channel level, and contrast results.
 
 df_roi = pd.DataFrame()  # To store region of interest results
 df_cha = pd.DataFrame()  # To store channel level results
@@ -242,22 +235,20 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 #    Santosa, H., Zhai, X., Fishburn, F., & Huppert, T. (2018).
 #    The NIRS brain AnalyzIR toolbox. Algorithms, 11(5), 73.
 #
-# Next we use a linear mixed effects model to understand the
+# Next we use a linear mixed effects model to examine the
 # relation between conditions and our response estimate (theta).
 # Combinations of 3 fixed effects will be evaluated, ROI (left vs right),
 # condition (control, tapping/left, tapping/right), and chromophore (HbO, HbR).
 # With a random effect of subject.
-# Alternatively, you could export the dataframe `df_roi.to_csv()` and
+# Alternatively, you could export the group dataframe (`df_roi.to_csv()`) and
 # analyse in your favorite stats program.
-#
-# Here we examine the effect of ROI, condition and chroma,
-# controlling for participant. Alternatively, we could use a robust linear
-# model by using the code
-# `roi_model = rlm('theta ~ -1 + ROI:Condition:Chroma', grp_results).fit()`.
 #
 # We do not explore the modeling procedure in depth here as topics
 # such model selection and examining residuals are beyond the scope of
 # this example (see relevant literature).
+# Alternatively, we could use a robust linear
+# model by using the code
+# `roi_model = rlm('theta ~ -1 + ROI:Condition:Chroma', grp_results).fit()`.
 
 grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
 
@@ -271,11 +262,12 @@ roi_model.summary()
 # -----------------------
 #
 # Now we can summarise the output of the second level model.
-# This figure shows that control condition has small respones that
-# are not significant for both HbO and HbR in both hemispheres.
+# This figure shows that the control condition has small responses that
+# are not significantly different to zero for both HbO
+# and HbR in both hemispheres.
 # Whereas clear significant responses are show for the two tapping conditions.
-# We also observe the it is the contralateral hemisphere that has the
-# larger response for each tapping condition.
+# We also observe the the tapping response is
+# larger in the contralateral hemisphere.
 # Filled symbols represent HbO, unfilled symbols represent HbR.
 
 df = statsmodels_to_results(roi_model)
@@ -299,8 +291,9 @@ ggplot(df.query("Chroma == 'hbo'"),
 # We can also view the topographic representation of the data
 # (rather than the ROI summary above).
 # Here we just plot the oxyhaemoglobin for the two tapping conditions.
-# First we compute the mixed effects model, but for each channel rather
-# than region of interest. Then we pass these results to the topo function.
+# First we compute the mixed effects model for each channel (rather
+# than region of interest as above).
+# Then we pass these results to the topomap function.
 
 fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(10, 10),
                          gridspec_kw=dict(width_ratios=[1, 1]))
@@ -349,9 +342,11 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
 # Contrasts
 # ---------
 #
-# Finally we can view the contrast results in a topographic representation.
-# We can also mark the channels the vary significantly between conditions
-# with a black mark.
+# Finally we can examine the difference between the left and right hand
+# tapping conditions by viewing the contrast results
+# in a topographic representation.
+# We can also optionally mark the channels the
+# vary significantly between conditions with a black mark.
 
 fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(6, 6))
 con_summary = df_con.query("Chroma in ['hbo']")
