@@ -74,7 +74,7 @@ from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import glm_region_of_interest, statsmodels_to_results
 from mne_nirs.statistics import compute_contrast
 from mne_nirs.channels import get_short_channels, get_long_channels
-from mne_nirs.channels import picks_pair_to_idx as pair_to_idx
+from mne_nirs.channels import picks_pair_to_idx
 from mne_nirs.utils._io import glm_to_tidy
 from mne_nirs.visualisation import plot_glm_group_topo
 
@@ -144,8 +144,8 @@ def individual_analysis(bids_path, ID):
     right = [[6, 7], [5, 7], [7, 7], [5, 6], [6, 7], [5, 5]]
     # Then generate the correct indices for each pair
     groups = dict(
-        Left_Hemisphere=pair_to_idx(raw_haemo, left, on_missing='ignore'),
-        Right_Hemisphere=pair_to_idx(raw_haemo, right, on_missing='ignore'))
+        Left_Hemisphere=picks_pair_to_idx(raw_haemo, left, on_missing='ignore'),
+        Right_Hemisphere=picks_pair_to_idx(raw_haemo, right, on_missing='ignore'))
 
     # Extract channel metrics
     cha = glm_to_tidy(raw_haemo, glm_est, design_matrix)
