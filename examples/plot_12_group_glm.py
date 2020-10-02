@@ -345,8 +345,6 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
 # Finally we can examine the difference between the left and right hand
 # tapping conditions by viewing the contrast results
 # in a topographic representation.
-# We can also optionally mark the channels the
-# vary significantly between conditions with a black mark.
 
 fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(6, 6))
 con_summary = df_con.query("Chroma in ['hbo']")
@@ -358,7 +356,3 @@ con_model_df = statsmodels_to_results(con_model)
 
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                     con_model_df, colorbar=True, axes=axes)
-
-# Mark significantly varying channels (uncomment to run)
-# raw_haemo.copy().pick(picks="hbo").pick(picks=list(
-#     con_model_df.query("sig == True")["ch_name"])).plot_sensors(axes=axes)
