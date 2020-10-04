@@ -38,7 +38,7 @@ appear as if a fNIRS response is observed.
    :depth: 2
 
 """
-# sphinx_gallery_thumbnail_number = 6
+# sphinx_gallery_thumbnail_number = 7
 
 
 # Authors: Robert Luke <mail@robertluke.net>
