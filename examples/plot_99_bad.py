@@ -6,7 +6,7 @@ On the importance of control conditions and understanding parameter selection
 
 .. warning:: DO NOT USE THIS SCRIPT TO PROCESS YOUR DATA
 
-.. sidebar:: PLEASE READ THIS PAPER!!
+.. sidebar:: Relevant literature
 
    Huppert TJ. Commentary on the statistical properties of noise and its
    implication on general linear models in functional near-infrared
@@ -20,8 +20,9 @@ This tutorial was written to motivate further interest in to what affect
 signal processing has on our data. And to provide a concrete example
 about why you should understand your analysis and not vary parameters to meet
 preconceived ideas of what your data should look like.
-I recommend specifying your analysis parameters along with your experimental
-protocol.
+I recommend specifying analysis parameters along with your experimental
+protocol. Hopefully this tutorial also highlights the importance of
+including a control condition in your experimental design.
 
 The
 `MNE fNIRS waveform tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_
@@ -37,7 +38,7 @@ appear as if a fNIRS response is observed.
    :depth: 2
 
 """
-# sphinx_gallery_thumbnail_number = 1
+# sphinx_gallery_thumbnail_number = 6
 
 
 # Authors: Robert Luke <mail@robertluke.net>
@@ -222,7 +223,7 @@ mne.viz.plot_compare_evokeds(evoked_dict, combine="mean", ci=0.95,
 # has on your output. Using a receiver operating characteristic is a good
 # approach to understand your analysis.
 # This also highlights some of the concerns with the time domain analysis
-# approach, and the benifits of the GLM style of analysis
+# approach, and the benefits of the GLM style of analysis
 # `(see MNE-NIRS fNIRS GLM tutorial) <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_,.
 #
 # .. warning:: DO NOT USE THIS SCRIPT TO PROCESS YOUR DATA
