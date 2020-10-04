@@ -308,10 +308,6 @@ groups = dict(Left_ROI=picks_pair_to_idx(raw_haemo, left),
 df = pd.DataFrame()
 for idx, col in enumerate(design_matrix.columns[:3]):
     df = df.append(glm_region_of_interest(glm_est, groups, idx, col))
-df
-
-
-
 
 
 ###############################################################################
@@ -337,12 +333,6 @@ mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
 # Export Results
 # ---------------
 #
-# .. warning::
-#       The functions used in this section are in development, and are highly
-#       likely to change. These functions are marked with an underscore (_)
-#       at the start of their name to indicate they are not public functions
-#       and have no promise they will be here next week.
-#
 # .. sidebar:: Relevant literature
 #
 #    Wickham, Hadley. "Tidy data." Journal of Statistical Software 59.10 (2014): 1-23.
@@ -356,7 +346,6 @@ mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
 # in the channel, which chroma, etc.
 
 df = glm_to_tidy(raw_haemo, glm_est, design_matrix)
-df = _tidy_long_to_wide(df)
 
 
 ###############################################################################

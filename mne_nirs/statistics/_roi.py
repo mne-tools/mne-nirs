@@ -66,7 +66,7 @@ def glm_region_of_interest(stats, group_by, cond_idx, cond_name):
             df = df.append({'ROI': roi_name,
                             'Condition': cond_name,
                             'Chroma': chroma,
-                            'theta': theta,
+                            'theta': theta / 1.0e6,
                             'se': s,
                             't': t,
                             'dfe': dfe,

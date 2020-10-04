@@ -27,7 +27,7 @@ def _load_dataset():
                             raw_intensity.annotations.duration, new_des)
     raw_intensity.set_annotations(annot)
 
-    assert 'fnirs_raw' in raw_intensity
+    assert 'fnirs_cw_amplitude' in raw_intensity
     assert len(np.unique(raw_intensity.annotations.description)) == 4
 
     return raw_intensity

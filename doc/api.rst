@@ -55,6 +55,7 @@ Statistics
    run_GLM
    compute_contrast
    glm_region_of_interest
+   statsmodels_to_results
 
 
 Visualisation
@@ -72,6 +73,7 @@ Visualisation
    plot_nirs_source_detector
    plot_glm_topo
    plot_glm_contrast_topo
+   plot_glm_group_topo
 
 
 Simulation

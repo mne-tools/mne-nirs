@@ -6,7 +6,7 @@ from mne_nirs.simulation import simulate_nirs_raw
 from mne_nirs.statistics import run_GLM
 import numpy as np
 import pytest
-from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
+from mne_nirs.utils._io import glm_to_tidy
 from mne_nirs.experimental_design import make_first_level_design_matrix
 
 
@@ -42,7 +42,6 @@ def test_simulate_NIRS():
                                                    drift_model='polynomial')
     glm_est = run_GLM(raw, design_matrix)
     df = glm_to_tidy(raw, glm_est, design_matrix)
-    df = _tidy_long_to_wide(df)
 
     assert df.query("condition in ['Control']")['theta'].values[0] == \
         pytest.approx(0)

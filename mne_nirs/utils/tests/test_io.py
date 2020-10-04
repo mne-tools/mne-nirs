@@ -30,7 +30,6 @@ def test_io():
                                                    drift_model='polynomial')
     glm_est = run_GLM(raw_haemo, design_matrix)
     df = glm_to_tidy(raw_haemo, glm_est, design_matrix)
-    df = _tidy_long_to_wide(df)
     assert df.shape == (48, 12)
     assert set(df.columns) == {'ch_name', 'condition', 'df', 'mse', 'p_value',
                                't', 'theta', 'Source', 'Detector', 'Chroma',
@@ -55,7 +54,6 @@ def test_io():
 
     contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
     df = glm_to_tidy(raw_haemo, contrast, design_matrix)
-    df = _tidy_long_to_wide(df)
     assert df.shape == (6, 10)
     assert set(df.columns) == {'ch_name', 'ContrastType', 'z_score', 'stat',
                                'p_value', 'effect', 'Source', 'Detector',
@@ -63,7 +61,7 @@ def test_io():
 
     contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR,
                                                     contrast_type='F')
-    df = glm_to_tidy(raw_haemo, contrast, design_matrix)
+    df = glm_to_tidy(raw_haemo, contrast, design_matrix, wide=False)
     df = _tidy_long_to_wide(df)
     assert df.shape == (6, 10)
     assert set(df.columns) == {'ch_name', 'ContrastType', 'z_score', 'stat',

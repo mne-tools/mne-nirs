@@ -6,6 +6,7 @@
 import numpy as np
 import mne
 from mne.utils import warn
+from mne.channels.layout import _merge_ch_data
 
 
 def plot_glm_topo(raw, glm_estimates, design_matrix,
@@ -73,9 +74,9 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
         picks = mne.io.pick._picks_to_idx(raw.info, t, exclude=[],
                                           allow_empty=True)
         raw_subset = raw.copy().pick(picks=picks)
-
         _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
             mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
+        # estimates, ch_names = _merge_ch_data(estimates, t, ch_names)
 
         if sum(["x" in ch for ch in ch_names]):
             warn("Channels were merged")
@@ -117,8 +118,6 @@ def plot_glm_contrast_topo(raw, contrast,
         Haemoglobin data.
     contrast : dict
         nilearn.stats.compute_contrast
-    design_matrix : DataFrame
-        As specified in Nilearn
     figsize : TODO: Remove this, how does MNE ususally deal with this?
     sphere : As specified in MNE
 
@@ -191,3 +190,136 @@ def plot_glm_contrast_topo(raw, contrast,
     cbar.set_label('Contrast Effect', rotation=270)
 
     return fig
+
+
+def plot_glm_group_topo(raw, statsmodel_df,
+                        value="Coef.",
+                        axes=None,
+                        threshold=False,
+                        vmin=None,
+                        vmax=None,
+                        cmap=None,
+                        sensors=True,
+                        res=64,
+                        sphere=None,
+                        colorbar=True,
+                        show_names=False,
+                        extrapolate='local',
+                        image_interp='bilinear'):
+    """
+    Plot topomap of NIRS group level GLM results.
+
+    Parameters
+    ----------
+    raw : instance of Raw
+        Haemoglobin data.
+    statsmodel_df : DataFrame
+        Dataframe created from a statsmodel summary.
+    value : String
+        Which column in the `statsmodel_df` to use in the topo map.
+    axes : instance of Axes | None
+        The axes to plot to. If None, the current axes will be used.
+    threshold : Bool
+        If threshold is true, all values with P>|z| greater than 0.05 will
+        be set to zero.
+    vmin : float | None
+        The value specifying the lower bound of the color range.
+        If None, and vmax is None, -vmax is used. Else np.min(data).
+        Defaults to None.
+    vmax : float | None
+        The value specifying the upper bound of the color range.
+        If None, the maximum absolute value is used. Defaults to None.
+    cmap : matplotlib colormap | None
+        Colormap to use. If None, 'Reds' is used for all positive data,
+        otherwise defaults to 'RdBu_r'.
+    sensors : bool | str
+        Add markers for sensor locations to the plot. Accepts matplotlib plot
+        format string (e.g., 'r+' for red plusses). If True (default), circles
+        will be used.
+    res : int
+        The resolution of the topomap image (n pixels along each side).
+
+    Returns
+    -------
+    fig : Figure with topographic representation of statsmodel_df value.
+    """
+    import matplotlib.pyplot as plt
+    import matplotlib as mpl
+    from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
+
+    if not (raw.ch_names == list(statsmodel_df["ch_name"].values)):
+        if len(raw.ch_names) < len(list(statsmodel_df["ch_name"].values)):
+            print("reducing GLM results to match raw")
+            statsmodel_df["Keep"] = [g in raw.ch_names
+                                     for g in statsmodel_df["ch_name"]]
+            statsmodel_df = statsmodel_df.query("Keep == True")
+        else:
+            warn("MNE data structure does not match regression results")
+
+    estimates = statsmodel_df[value].values
+
+    if threshold:
+        p = statsmodel_df["P>|z|"].values
+        t = p > 0.05
+        estimates[t] = 0.
+
+    assert len(np.unique(statsmodel_df["Chroma"])) == 1,\
+        "Only one Chroma allowed"
+
+    if 'condition' in statsmodel_df.columns:
+        assert len(np.unique(statsmodel_df["condition"])) == 1,\
+            "Only one condition allowed"
+        c = np.unique(statsmodel_df["condition"])[0]
+    else:
+        c = "Contrast"
+
+    t = np.unique(statsmodel_df["Chroma"])
+
+    if axes is None:
+        fig, axes = plt.subplots(nrows=1,
+                                 ncols=1,
+                                 figsize=(12, 7))
+
+    # Set limits of topomap and colors
+    if vmax is None:
+        vmax = np.max(np.abs(estimates))
+    if vmin is None:
+        vmin = vmax * -1.
+    if cmap is None:
+        cmap = mpl.cm.RdBu_r
+    norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
+
+    # Handle overlapping channels, these distort the topomap so are averaged.
+    raw_subset = raw.copy()
+    _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
+        mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
+    estimates, ch_names = _merge_ch_data(estimates, t, ch_names)
+
+    if sum(["x" in ch for ch in ch_names]):
+        warn("Channels were merged")
+        # keeps = np.array(np.where(["x" not in ch for ch in ch_names])[0])
+        # picks = picks[keeps]
+
+    mne.viz.topomap.plot_topomap(estimates, pos,
+                                 extrapolate=extrapolate,
+                                 image_interp=image_interp,
+                                 names=ch_names,
+                                 vmin=vmin,
+                                 vmax=vmax,
+                                 cmap=cmap,
+                                 axes=axes,
+                                 sensors=sensors,
+                                 res=res,
+                                 show=False,
+                                 show_names=show_names,
+                                 sphere=sphere)
+    axes.set_title(c)
+
+    if colorbar:
+        ax1_divider = make_axes_locatable(axes)
+        cax1 = ax1_divider.append_axes("right", size="7%", pad="2%")
+        cbar = mpl.colorbar.ColorbarBase(cax1, cmap=cmap, norm=norm,
+                                         orientation='vertical')
+        cbar.set_label(value, rotation=270)
+
+    return axes

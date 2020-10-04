@@ -6,7 +6,7 @@ from mne.utils import warn
 import nilearn
 
 
-def glm_to_tidy(raw, statistic, design_matrix):
+def glm_to_tidy(raw, statistic, design_matrix, wide=True):
     """
     Exports GLM regression or contrast results in tidy format.
 
@@ -23,6 +23,9 @@ def glm_to_tidy(raw, statistic, design_matrix):
         compute_contrast.
     design_matrix : DataFrame
         As specified in Nilearn
+    wide : Bool
+        Should the returned dataframe be in wide format. If False, then the
+        retuned data will be in long format.
 
     Returns
     -------
@@ -42,6 +45,9 @@ def glm_to_tidy(raw, statistic, design_matrix):
         raise ValueError(
             'Unknown statistic type. Expected dict of RegressionResults '
             'or Contrast type.')
+
+    if wide:
+        df = _tidy_long_to_wide(df, expand_output=True)
 
     return df
 
