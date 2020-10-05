@@ -256,6 +256,9 @@ def plot_glm_group_topo(raw, statsmodel_df,
         else:
             warn("MNE data structure does not match regression results")
 
+    statsmodel_df = statsmodel_df.set_index('ch_name')
+    statsmodel_df = statsmodel_df.reindex(raw.ch_names)
+
     estimates = statsmodel_df[value].values
 
     if threshold:
