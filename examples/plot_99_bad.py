@@ -213,7 +213,7 @@ mne.viz.plot_compare_evokeds(evoked_dict, combine="mean", ci=0.95,
 #
 # As this is an introduction tutorial I do not go in to details about the
 # signal process theory behind why the settings above are wrong.
-# But if you are interested you should start with a first year DSP text book
+# But if you are interested you should start with a DSP text book 
 # on signals and systems.
 #
 # There are many signal processing parameter choices that interact to produce
