@@ -16,8 +16,6 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
     """
     Plot topomap of NIRS GLM data.
 
-      .. warning:: Work in progress: I am trying to think on the best API.
-
     Parameters
     ----------
     raw : instance of Raw
@@ -72,17 +70,13 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
 
     for t_idx, t in enumerate(types):
 
-        estmrg, pos, ch_names, sphere = _handle_overlaps(raw, t,
-                                                         sphere, estimates)
-
-        if sum(["x" in ch for ch in ch_names]):
-            warn("Channels were merged")
+        estmrg, pos, chs, sphere = _handle_overlaps(raw, t, sphere, estimates)
 
         for idx, label in enumerate(design_matrix.columns):
             if label in requested_conditions:
                 mne.viz.topomap.plot_topomap(estmrg[:, idx], pos,
                                              extrapolate='local',
-                                             names=ch_names,
+                                             names=chs,
                                              vmin=vmin,
                                              vmax=vmax,
                                              cmap=cmap,
@@ -100,12 +94,9 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
     return fig
 
 
-def plot_glm_contrast_topo(raw, contrast,
-                           figsize=(12, 7), sphere=None):
+def plot_glm_contrast_topo(raw, contrast, figsize=(12, 7), sphere=None):
     """
     Plot topomap of NIRS GLM data.
-
-      .. warning:: Work in progress: I am trying to think on the best API.
 
     Parameters
     ----------
@@ -145,11 +136,7 @@ def plot_glm_contrast_topo(raw, contrast,
 
     for t_idx, t in enumerate(types):
 
-        estmrg, pos, ch_names, sphere = _handle_overlaps(raw, t,
-                                                         sphere, estimates)
-
-        if sum(["x" in ch for ch in ch_names]):
-            warn("Channels were merged")
+        estmrg, pos, chs, sphere = _handle_overlaps(raw, t, sphere, estimates)
 
         # Deal with case when only a single chroma is available
         if len(types) == 1:
@@ -160,7 +147,7 @@ def plot_glm_contrast_topo(raw, contrast,
         # Plot the topomap
         mne.viz.topomap.plot_topomap(estmrg, pos,
                                      extrapolate='local',
-                                     names=ch_names,
+                                     names=chs,
                                      vmin=vmin,
                                      vmax=vmax,
                                      cmap=cmap,
@@ -240,6 +227,7 @@ def plot_glm_group_topo(raw, statsmodel_df,
     import matplotlib as mpl
     from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
 
+    # Check that the channels in two inputs match
     if not (raw.ch_names == list(statsmodel_df["ch_name"].values)):
         if len(raw.ch_names) < len(list(statsmodel_df["ch_name"].values)):
             print("reducing GLM results to match raw")
@@ -248,10 +236,10 @@ def plot_glm_group_topo(raw, statsmodel_df,
             statsmodel_df = statsmodel_df.query("Keep == True")
         else:
             warn("MNE data structure does not match regression results")
-
     statsmodel_df = statsmodel_df.set_index('ch_name')
     statsmodel_df = statsmodel_df.reindex(raw.ch_names)
 
+    # Extract estimate of interest to plot
     estimates = statsmodel_df[value].values
 
     if threshold:
@@ -269,13 +257,13 @@ def plot_glm_group_topo(raw, statsmodel_df,
     else:
         c = "Contrast"
 
-    t = np.unique(statsmodel_df["Chroma"])
+    t = np.unique(statsmodel_df["Chroma"])[0]
 
+    # Plotting setup
     if axes is None:
         fig, axes = plt.subplots(nrows=1,
                                  ncols=1,
                                  figsize=(12, 7))
-
     # Set limits of topomap and colors
     if vmax is None:
         vmax = np.max(np.abs(estimates))
@@ -285,19 +273,12 @@ def plot_glm_group_topo(raw, statsmodel_df,
         cmap = mpl.cm.RdBu_r
     norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
 
-    # Handle overlapping channels, these distort the topomap so are averaged.
-    raw_subset = raw.copy()
-    _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
-        mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
-    estimates, ch_names = _merge_ch_data(estimates, t, ch_names)
+    estmrg, pos, chs, sphere = _handle_overlaps(raw, t, sphere, estimates)
 
-    if sum(["x" in ch for ch in ch_names]):
-        warn("Channels were merged")
-
-    mne.viz.topomap.plot_topomap(estimates, pos,
+    mne.viz.topomap.plot_topomap(estmrg, pos,
                                  extrapolate=extrapolate,
                                  image_interp=image_interp,
-                                 names=ch_names,
+                                 names=chs,
                                  vmin=vmin,
                                  vmax=vmax,
                                  cmap=cmap,
@@ -320,6 +301,7 @@ def plot_glm_group_topo(raw, statsmodel_df,
 
 
 def _handle_overlaps(raw, t, sphere, estimates):
+    """Prepare for topomap including merging channels"""
     picks = _picks_to_idx(raw.info, t, exclude=[], allow_empty=True)
     raw_subset = raw.copy().pick(picks=picks)
     _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
