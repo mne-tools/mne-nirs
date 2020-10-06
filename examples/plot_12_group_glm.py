@@ -25,14 +25,14 @@ Here we describe how to process multiple measurements
 and summarise  group level effects both as summary statistics and visually.
 
 The data used in this example is available `at this location <https://github.com/rob-luke/BIDS-NIRS-Tapping>`_.
-It is an finger tapping example and is briefly described below.
+It is a finger tapping example and is briefly described below.
 The dataset contains 5 participants.
 The example dataset is in
 `BIDS <https://bids.neuroimaging.io>`_
 format and therefore already contains
 information about triggers, condition names, etc.
 
-.. collapse:: Data description (click to expand)
+.. collapse:: |chevron-circle-down| Data description (click to expand)
    :class: success
 
    Optodes were placed over the motor cortex using the standard NIRX motor

@@ -6,11 +6,13 @@ __pycache__/
 # C extensions
 *.so
 
-# scikit-learn specific
+# mne-nirs specific
 doc/_build/
 doc/auto_examples/
 doc/modules/generated/
-doc/datasets/generated/
+examples/BIDS-NIRS-Tapping
+examples/.ipynb_checkpoints
+examples/*.ipynb
 
 # Distribution / packaging
 

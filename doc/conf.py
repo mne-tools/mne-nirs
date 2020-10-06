@@ -45,6 +45,7 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode',
+    'sphinx_fontawesome',
     'sphinx_gallery.gen_gallery',
     'sphinx_bootstrap_divs',
     'numpydoc',
@@ -335,3 +336,4 @@ sphinx_gallery_conf = {
 def setup(app):
     # a copy button to copy snippet of code from the documentation
     app.add_js_file('js/copybutton.js')
+    app.add_css_file('font-awesome.css')

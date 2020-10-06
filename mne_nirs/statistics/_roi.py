@@ -14,7 +14,9 @@ def glm_region_of_interest(stats, group_by, cond_idx, cond_name):
         The dict key will be used as the ROI label and the dict
         values must be lists of picks (either channel names or integer indices
         of ``epochs.ch_names``). For example::
+
             group_by=dict(Left_ROI=[1, 2, 3, 4], Right_ROI=[5, 6, 7, 8])
+
         Note that within a dict entry all channels must have the same type.
     cond_idx : integer
         Index of condition of interest.
