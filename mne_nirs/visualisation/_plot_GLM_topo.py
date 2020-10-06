@@ -72,11 +72,8 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
 
     for t_idx, t in enumerate(types):
 
-        picks = _picks_to_idx(raw.info, t, exclude=[], allow_empty=True)
-        raw_subset = raw.copy().pick(picks=picks)
-        _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
-            mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
-        estmrg, ch_names = _merge_ch_data(estimates.copy()[picks], t, ch_names)
+        estmrg, pos, ch_names, sphere = _handle_overlaps(raw, t,
+                                                         sphere, estimates)
 
         if sum(["x" in ch for ch in ch_names]):
             warn("Channels were merged")
@@ -148,11 +145,8 @@ def plot_glm_contrast_topo(raw, contrast,
 
     for t_idx, t in enumerate(types):
 
-        picks = _picks_to_idx(raw.info, t, exclude=[], allow_empty=True)
-        raw_subset = raw.copy().pick(picks=picks)
-        _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
-            mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
-        estmrg, ch_names = _merge_ch_data(estimates.copy()[picks], t, ch_names)
+        estmrg, pos, ch_names, sphere = _handle_overlaps(raw, t,
+                                                         sphere, estimates)
 
         if sum(["x" in ch for ch in ch_names]):
             warn("Channels were merged")
@@ -323,3 +317,12 @@ def plot_glm_group_topo(raw, statsmodel_df,
         cbar.set_label(value, rotation=270)
 
     return axes
+
+
+def _handle_overlaps(raw, t, sphere, estimates):
+    picks = _picks_to_idx(raw.info, t, exclude=[], allow_empty=True)
+    raw_subset = raw.copy().pick(picks=picks)
+    _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
+        mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
+    estmrg, ch_names = _merge_ch_data(estimates.copy()[picks], t, ch_names)
+    return estmrg, pos, ch_names, sphere
