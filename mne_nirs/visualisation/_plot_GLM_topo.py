@@ -7,6 +7,7 @@ import numpy as np
 import mne
 from mne.utils import warn
 from mne.channels.layout import _merge_ch_data
+from mne.io.pick import _picks_to_idx
 
 
 def plot_glm_topo(raw, glm_estimates, design_matrix,
@@ -71,21 +72,18 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
 
     for t_idx, t in enumerate(types):
 
-        picks = mne.io.pick._picks_to_idx(raw.info, t, exclude=[],
-                                          allow_empty=True)
+        picks = _picks_to_idx(raw.info, t, exclude=[], allow_empty=True)
         raw_subset = raw.copy().pick(picks=picks)
         _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
             mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
-        # estimates, ch_names = _merge_ch_data(estimates, t, ch_names)
+        estmrg, ch_names = _merge_ch_data(estimates.copy()[picks], t, ch_names)
 
         if sum(["x" in ch for ch in ch_names]):
             warn("Channels were merged")
-            keeps = np.array(np.where(["x" not in ch for ch in ch_names])[0])
-            picks = picks[keeps]
 
         for idx, label in enumerate(design_matrix.columns):
             if label in requested_conditions:
-                mne.viz.topomap.plot_topomap(estimates[picks, idx], pos,
+                mne.viz.topomap.plot_topomap(estmrg[:, idx], pos,
                                              extrapolate='local',
                                              names=ch_names,
                                              vmin=vmin,
@@ -149,14 +147,15 @@ def plot_glm_contrast_topo(raw, contrast,
     norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
 
     for t_idx, t in enumerate(types):
-        # Extract just the channels corresponding to the type to plot
-        picks = mne.io.pick._picks_to_idx(raw.info, t, exclude=[],
-                                          allow_empty=True)
-        raw_subset = raw.copy().pick(picks=picks)
 
-        # Extract positions of channels for plotting
+        picks = _picks_to_idx(raw.info, t, exclude=[], allow_empty=True)
+        raw_subset = raw.copy().pick(picks=picks)
         _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
             mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
+        estmrg, ch_names = _merge_ch_data(estimates.copy()[picks], t, ch_names)
+
+        if sum(["x" in ch for ch in ch_names]):
+            warn("Channels were merged")
 
         # Deal with case when only a single chroma is available
         if len(types) == 1:
@@ -165,7 +164,7 @@ def plot_glm_contrast_topo(raw, contrast,
             ax = axes[t_idx]
 
         # Plot the topomap
-        mne.viz.topomap.plot_topomap(estimates[picks], pos,
+        mne.viz.topomap.plot_topomap(estmrg, pos,
                                      extrapolate='local',
                                      names=ch_names,
                                      vmin=vmin,
@@ -300,8 +299,6 @@ def plot_glm_group_topo(raw, statsmodel_df,
 
     if sum(["x" in ch for ch in ch_names]):
         warn("Channels were merged")
-        # keeps = np.array(np.where(["x" not in ch for ch in ch_names])[0])
-        # picks = picks[keeps]
 
     mne.viz.topomap.plot_topomap(estimates, pos,
                                  extrapolate=extrapolate,
