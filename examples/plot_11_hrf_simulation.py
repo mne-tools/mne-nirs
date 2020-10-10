@@ -1,7 +1,7 @@
 """
 .. _tut-fnirs-hrf-sim:
 
-GLM Analysis (Simulated Data)
+GLM Analysis (Simulated)
 =============================
 
 In this example we simulate a block design fNIRS experiment and analyse

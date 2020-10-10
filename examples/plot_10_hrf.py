@@ -1,7 +1,7 @@
 """
 .. _tut-fnirs-hrf:
 
-GLM Analysis (Measured Data)
+GLM Analysis (Measured)
 ============================
 
 In this example we analyse data from a real multichannel fNIRS
@@ -27,7 +27,7 @@ This GLM analysis is a wrapper over the excellent
    :depth: 2
 
 """
-
+# sphinx_gallery_thumbnail_number = 7
 
 # Authors: Robert Luke <mail@robertluke.net>
 #

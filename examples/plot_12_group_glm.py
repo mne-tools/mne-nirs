@@ -48,6 +48,7 @@ information about triggers, condition names, etc.
    :local:
    :depth: 2
 """
+# sphinx_gallery_thumbnail_number = 3
 
 # Authors: Robert Luke <mail@robertluke.net>
 #
@@ -98,7 +99,7 @@ LetsPlot.setup_html()
 #
 # First we define the analysis that will be applied to each file.
 # This is a GLM analysis as described in the
-# `MNE-NIRS fNIRS GLM tutorial <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_,
+# :ref:`MNE fNIRS waveform tutorial <mne:tut-fnirs-processing>`,
 # so this example will skim over the individual level details.
 #
 # The analysis extracts a response estimate for each channel,

@@ -38,8 +38,12 @@ See the `examples <auto_examples/index.html>`_ and `API documentation <api.html>
 Acknowledgements
 ----------------
 
-This package is built on top of many other great packages. These should be acknowledged if you use this package.
-
+This package is built on top of many other great packages. If you use MNE-NIRS you should also acknowledge these packages.
 MNE: https://mne.tools/dev/overview/cite.html
 
 Nilearn: http://nilearn.github.io/authors.html#citing
+
+statsmodels: https://www.statsmodels.org/stable/index.html#citation
+
+There is not currently a journal article specifically on MNE-NIRS, so please find a
+`relevant paper of mine to cite from here <https://scholar.google.com/citations?user=LngqH5sAAAAJ&hl=en>`_.
