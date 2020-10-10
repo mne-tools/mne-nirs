@@ -38,7 +38,7 @@ See the `examples <auto_examples/index.html>`_ and `API documentation <api.html>
 Acknowledgements
 ----------------
 
-This package is built on top of many other great packages. If you use MNE-NIRS you should also acknowledge these packages.
+This library is built on top of other great packages. If you use MNE-NIRS you should also acknowledge these packages.
 
 MNE: https://mne.tools/dev/overview/cite.html
 
