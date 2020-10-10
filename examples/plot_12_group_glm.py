@@ -95,11 +95,11 @@ LetsPlot.setup_html()
 #    :ref:`MNE docs <mne:tut-fnirs-processing>`
 #
 #    GLM individual analysis:
-#    :ref:`MNE-NIRS docs <mne:tut-fnirs-hrf>`
+#    :ref:`MNE-NIRS docs <tut-fnirs-hrf>`
 #
 # First we define the analysis that will be applied to each file.
 # This is a GLM analysis as described in the
-# :ref:`MNE fNIRS waveform tutorial <mne:tut-fnirs-processing>`,
+# :ref:`individual GLM tutorial <tut-fnirs-hrf>`,
 # so this example will skim over the individual level details.
 #
 # The analysis extracts a response estimate for each channel,
