@@ -75,3 +75,5 @@ snirf_intensity = read_raw_snirf('test_raw.snirf')
 # ensure that the values are the same.
 
 assert_allclose(raw_intensity.get_data(), snirf_intensity.get_data())
+
+snirf_intensity.plot(n_channels=30, duration=300, show_scrollbars=False)
