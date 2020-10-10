@@ -20,6 +20,7 @@ import sphinx_bootstrap_theme
 from distutils.version import LooseVersion
 import sphinx
 import os
+from sphinx_gallery.sorting import FileNameSortKey
 
 sys.path.append("../")
 from mne_nirs import __version__  # noqa: E402
@@ -332,6 +333,7 @@ sphinx_gallery_conf = {
         'mne_nirs': None},
     'download_all_examples': False,
     'show_memory': True,
+    'within_subsection_order': FileNameSortKey,
 }
 
 
