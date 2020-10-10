@@ -14,13 +14,13 @@ We use a GLM analysis to examine the neural activity associated with
 the different tapping conditions.
 An alternative epoching style analysis on the same data can be
 viewed in the
-`MNE documentation <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
+:ref:`MNE documentation <mne:tut-fnirs-processing>`.
 
 This GLM analysis is a wrapper over the excellent
 `Nilearn stats <https://github.com/nilearn/nilearn/tree/master/nilearn/stats>`_.
 
 .. warning::
-      This is a work in progress. Comments are appreciated. To provide feedback please create a github issue.
+      The Nilearn links in this document may be broken. See https://github.com/mne-tools/mne-nirs/issues/112
 
 .. contents:: Page contents
    :local:
@@ -48,7 +48,7 @@ from mne_nirs.channels import (get_long_channels, get_short_channels,
                                picks_pair_to_idx)
 
 from nilearn.plotting import plot_design_matrix
-from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
+from mne_nirs.utils._io import glm_to_tidy
 
 
 ###############################################################################
@@ -57,7 +57,7 @@ from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
 #
 # First we import the motor tapping data, these data are also
 # described and used in the
-# `MNE fNIRS tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
+# :ref:`MNE fNIRS tutorial <mne:tut-fnirs-processing>`
 #
 # After reading the data we resample down to 1Hz
 # to meet github memory constraints.
