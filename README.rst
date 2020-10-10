@@ -15,7 +15,7 @@ API UNDER DEVELOPMENT: Feedback is appreciated.
 
 **MNE-NIRS** is an `MNE <https://mne.tools>`_ compatible near-infrared spectroscopy processing package. 
 
-MNE has support for some common analysis procedures (see `tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_), this package adds additional helper functions, algorithms, and plotting. Functionality that is widely used from this package may be merged in to MNE.
+MNE has support for common fNIRS waveform analysis (see `tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_), this package adds additional GLM style analysis, helper functions, algorithms, and plotting.
 
 
 Documentation
@@ -47,11 +47,13 @@ Contributions are welcome (more than welcome!). Contributions can be feature req
 Acknowledgements
 ----------------
 
-This package is built on top of many other great packages. These should be acknowledged if you use this package.
+This package is built on top of many other great packages. If you use MNE-NIRS you should also acknowledge these packages.
 
 MNE: https://mne.tools/dev/overview/cite.html
 
 Nilearn: http://nilearn.github.io/authors.html#citing
 
-Please also cite me. There is not currently a paper specifically on MNE-NIRS, so please find a 
+statsmodels: https://www.statsmodels.org/stable/index.html#citation
+
+There is not currently a journal article specifically on MNE-NIRS, so please find a 
 `relevant paper of mine to cite from here <https://scholar.google.com/citations?user=LngqH5sAAAAJ&hl=en>`_.
