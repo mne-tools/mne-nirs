@@ -17,6 +17,7 @@ measurement length has on response amplitude estimates.
    :depth: 2
 
 """
+# sphinx_gallery_thumbnail_number = 3
 
 # Authors: Robert Luke <mail@robertluke.net>
 #

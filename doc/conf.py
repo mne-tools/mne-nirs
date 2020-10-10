@@ -319,7 +319,8 @@ intersphinx_mapping = {
     'matplotlib': ('https://matplotlib.org/', None),
     'mne': ('https://mne.tools/stable', None),
     'nilearn': ('http://nilearn.github.io/', None),
-    'sklearn': ('http://scikit-learn.org/stable', None)
+    'sklearn': ('http://scikit-learn.org/stable', None),
+    'statsmodels': ('https://www.statsmodels.org/stable', None)
 }
 
 # sphinx-gallery configuration

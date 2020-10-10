@@ -39,6 +39,7 @@ Acknowledgements
 ----------------
 
 This package is built on top of many other great packages. If you use MNE-NIRS you should also acknowledge these packages.
+
 MNE: https://mne.tools/dev/overview/cite.html
 
 Nilearn: http://nilearn.github.io/authors.html#citing

@@ -48,7 +48,7 @@ information about triggers, condition names, etc.
    :local:
    :depth: 2
 """
-# sphinx_gallery_thumbnail_number = 3
+# sphinx_gallery_thumbnail_number = 2
 
 # Authors: Robert Luke <mail@robertluke.net>
 #
@@ -92,10 +92,10 @@ LetsPlot.setup_html()
 # .. sidebar:: Individual analysis procedures
 #
 #    Waveform individual analysis:
-#    `MNE docs <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_.
+#    :ref:`MNE docs <mne:tut-fnirs-processing>`
 #
 #    GLM individual analysis:
-#    `MNE-NIRS docs <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_.
+#    :ref:`MNE-NIRS docs <mne:tut-fnirs-hrf>`
 #
 # First we define the analysis that will be applied to each file.
 # This is a GLM analysis as described in the
@@ -236,6 +236,7 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 #    For a summary of linear mixed models in python
 #    and the relation to lmer see:
 #    `statsmodels docs <https://www.statsmodels.org/stable/mixed_linear.html>`_.
+#    or  :ref:`statsmodels docs <statsmodels:mixedlmmod>`
 #
 #    For a summary of these models in the context of fNIRS see section 3.5 of:
 #    Santosa, H., Zhai, X., Fishburn, F., & Huppert, T. (2018).
