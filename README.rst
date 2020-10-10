@@ -1,7 +1,7 @@
 MNE-NIRS: Near-Infrared Spectroscopy Analysis
 =============================================
 
-API UNDER DEVELOPMENT. Feedback is appreciated.
+API UNDER DEVELOPMENT: Feedback is appreciated.
 ----------------------------------------------------------------------------
 
 .. image:: https://img.shields.io/badge/docs-master-brightgreen
