@@ -33,6 +33,7 @@ Examples
 - MNE-NIRS examples:
     - `Simulated haemodynamic response GLM analysis <https://mne.tools/mne-nirs/auto_examples/plot_11_hrf_simulation.html>`_.
     - `Measured haemodynamic response GLM analysis <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_.
+    - `Group level GLM analysis <https://mne.tools/mne-nirs/auto_examples/plot_12_group_glm.html>`_.
     - `Signal enhancement <https://mne-tools.github.io/mne-nirs/auto_examples/plot_20_cui.html>`_.
     - `Frequency and filtering <https://mne.tools/mne-nirs/auto_examples/plot_30_frequency.html>`_.
 
