@@ -1,7 +1,7 @@
 """
-.. _tut-fnirs-cui:
+.. _tut-fnirs-enhance:
 
-Signal enhancement techniques
+Signal Enhancement Techniques
 =============================
 
 In this document we investigate the effect of different signal enhancement

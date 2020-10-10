@@ -320,6 +320,7 @@ intersphinx_mapping = {
     'mne': ('https://mne.tools/stable', None),
     'nilearn': ('http://nilearn.github.io/', None),
     'sklearn': ('http://scikit-learn.org/stable', None),
+    'mne_bids': ('https://mne.tools/mne-bids/stable', None),
     'statsmodels': ('https://www.statsmodels.org/stable', None)
 }
 

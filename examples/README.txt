@@ -2,5 +2,3 @@
 
 General examples
 ================
-
-Introductory examples.
