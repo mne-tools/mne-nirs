@@ -329,7 +329,7 @@ sphinx_gallery_conf = {
     'reference_url': {
         'mne_nirs': None},
     'download_all_examples': False,
-    'show_memory': False,
+    'show_memory': True,
 }
 
 
