@@ -107,6 +107,11 @@ LetsPlot.setup_html()
 # We return the raw object and data frames for the computed results.
 # Information about channels, triggers and their meanings are stored in the
 # BIDS structure and are automatically obtained when importing the data.
+#
+# Here we also resample to a 0.3 Hz sample rate just to speed up the example
+# and use less memory, resampling to 0.6 Hz is a better choice for full
+# analyses.
+
 
 def individual_analysis(bids_path, ID):
 
@@ -115,7 +120,7 @@ def individual_analysis(bids_path, ID):
     # Convert signal to haemoglobin and resample
     raw_od = optical_density(raw_intensity)
     raw_haemo = beer_lambert_law(raw_od)
-    raw_haemo.resample(0.6)
+    raw_haemo.resample(0.3)
 
     # Cut out just the short channels for creating a GLM repressor
     sht_chans = get_short_channels(raw_haemo)
