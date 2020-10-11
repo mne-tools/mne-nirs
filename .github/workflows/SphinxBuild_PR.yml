@@ -10,13 +10,14 @@ jobs:
     - shell: bash -el {0}
       run: |
         cp requirements_doc.txt doc/requirements.txt
+        sudo apt-get install python3-dev build-essential
+        pip install psutil
     - shell: bash -el {0}
       run: |
         git clone --depth 1 https://github.com/rob-luke/BIDS-NIRS-Tapping.git examples/BIDS-NIRS-Tapping
     - uses: ammaraskar/sphinx-action@master
       with:
         docs-folder: "doc/"
-        pre-build-command: "apt-get update -y && apt-get install -y python3-psutil && pip install memory_profiler"
     - uses: actions/upload-artifact@v1
       with:
         name: DocumentationHTML
