@@ -16,6 +16,7 @@ jobs:
     - uses: ammaraskar/sphinx-action@master
       with:
         docs-folder: "doc/"
+        pre-build-command: "apt-get update -y && apt-get install -y python3-psutil"
     - uses: actions/upload-artifact@v1
       with:
         name: DocumentationHTML
