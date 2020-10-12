@@ -20,6 +20,7 @@ import sphinx_bootstrap_theme
 from distutils.version import LooseVersion
 import sphinx
 import os
+from sphinx_gallery.sorting import FileNameSortKey
 
 sys.path.append("../")
 from mne_nirs import __version__  # noqa: E402
@@ -319,7 +320,9 @@ intersphinx_mapping = {
     'matplotlib': ('https://matplotlib.org/', None),
     'mne': ('https://mne.tools/stable', None),
     'nilearn': ('http://nilearn.github.io/', None),
-    'sklearn': ('http://scikit-learn.org/stable', None)
+    'sklearn': ('http://scikit-learn.org/stable', None),
+    'mne_bids': ('https://mne.tools/mne-bids/stable', None),
+    'statsmodels': ('https://www.statsmodels.org/stable', None)
 }
 
 # sphinx-gallery configuration
@@ -330,6 +333,7 @@ sphinx_gallery_conf = {
         'mne_nirs': None},
     'download_all_examples': False,
     'show_memory': True,
+    'within_subsection_order': FileNameSortKey,
 }
 
 

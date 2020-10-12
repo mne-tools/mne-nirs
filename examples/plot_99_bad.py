@@ -1,8 +1,8 @@
 """
 .. _tut-fnirs-processing-bad:
 
-On the importance of control conditions and understanding parameter selection
-=============================================================================
+Importance of Controls and Parameter Selection
+==============================================
 
 .. warning:: DO NOT USE THIS SCRIPT TO PROCESS YOUR DATA
 
@@ -14,24 +14,23 @@ On the importance of control conditions and understanding parameter selection
 
 This tutorial demonstrates how **NOT** to process your fNIRS data.
 Here I demonstrate that with a simple process pipelines even random noise
-can look like a canonical neural response.
+can look like a canonical haemodynamic response.
 
 This tutorial was written to motivate further interest in to what affect
 signal processing has on our data. And to provide a concrete example
 about why you should understand your analysis and not vary parameters to meet
 preconceived ideas of what your data should look like.
-I recommend specifying analysis parameters along with your experimental
+I recommend specifying analysis parameters in advance along with your experimental
 protocol. Hopefully this tutorial also highlights the importance of
 including a control condition in your experimental design.
 
 The
-`MNE fNIRS waveform tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_
+:ref:`MNE fNIRS waveform tutorial <mne:tut-fnirs-processing>`
 is used as a basis for this analysis, so most of the document looks similar.
 However, at the midpoint we replace the real data with noise and demonstrate
 that without careful attention to the analysis parameter it would still
 appear as if a fNIRS response is observed.
 
-.. warning:: DO NOT USE THIS SCRIPT TO PROCESS YOUR DATA
 
 .. contents:: Page contents
    :local:
@@ -200,8 +199,9 @@ mne.viz.plot_compare_evokeds(evoked_dict, combine="mean", ci=0.95,
 #
 # Above is a waveform that has many of the characteristics that are expected
 # from a haeomodynamic response.
-# We see a baseline that is around zero, the two chromophore are correctly
-# positive and negative, the peak occurs around 5 seconds then returns to
+# We see a baseline that is around zero, the oxyhaemoglobin is positive
+# and the deoxyhaemoglobin is negative,
+# the peak occurs around 5 seconds then returns to
 # baseline.
 # However, it was generated from random noise!
 #
@@ -213,7 +213,7 @@ mne.viz.plot_compare_evokeds(evoked_dict, combine="mean", ci=0.95,
 #
 # As this is an introduction tutorial I do not go in to details about the
 # signal process theory behind why the settings above are wrong.
-# But if you are interested you should start with a DSP text book 
+# But if you are interested you should start with a DSP textbook
 # on signals and systems.
 #
 # There are many signal processing parameter choices that interact to produce
@@ -224,6 +224,6 @@ mne.viz.plot_compare_evokeds(evoked_dict, combine="mean", ci=0.95,
 # approach to understand your analysis.
 # This also highlights some of the concerns with the time domain analysis
 # approach, and the benefits of the GLM style of analysis
-# `(see MNE-NIRS fNIRS GLM tutorial) <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_,.
+# :ref:`(see MNE-NIRS fNIRS GLM tutorial) <tut-fnirs-hrf>` (and Huppert 2016).
 #
 # .. warning:: DO NOT USE THIS SCRIPT TO PROCESS YOUR DATA
