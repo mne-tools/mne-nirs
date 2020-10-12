@@ -27,10 +27,10 @@ def test_statsmodel_to_df():
         cha["ID"] = '%02d' % n
         df_cha = df_cha.append(cha)
     df_cha["theta"] = df_cha["theta"] * 1.0e6
-    roi_model = smf.mixedlm("theta ~ -1 + condition", df_cha,
+    roi_model = smf.mixedlm("theta ~ -1 + Condition", df_cha,
                             groups=df_cha["ID"]).fit(method='nm')
     df = statsmodels_to_results(roi_model)
     assert type(df) == pd.DataFrame
-    assert df["Coef."]["condition[A]"] == amplitude
-    assert df["Significant"]["condition[A]"]
+    assert df["Coef."]["Condition[A]"] == amplitude
+    assert df["Significant"]["Condition[A]"]
     assert df.shape == (8, 8)

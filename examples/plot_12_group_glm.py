@@ -306,41 +306,41 @@ fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(10, 10),
                          gridspec_kw=dict(width_ratios=[1, 1]))
 
 # Cut down the dataframe just to the conditions we are interested in
-ch_summary = df_cha.query("condition in ['Tapping/Left', 'Tapping/Right']")
+ch_summary = df_cha.query("Condition in ['Tapping/Left', 'Tapping/Right']")
 ch_summary = ch_summary.query("Chroma in ['hbo']")
 
 # Run group level model and convert to dataframe
-ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:condition",
+ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:Condition",
                        ch_summary, groups=ch_summary["ID"]).fit(method='nm')
 ch_model_df = statsmodels_to_results(ch_model)
 
 # Plot the two conditions
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
-                    ch_model_df.query("condition in ['Tapping/Left']"),
+                    ch_model_df.query("Condition in ['Tapping/Left']"),
                     colorbar=False, axes=axes[0, 0],
                     vmin=0, vmax=20, cmap=mpl.cm.Oranges)
 
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
-                    ch_model_df.query("condition in ['Tapping/Right']"),
+                    ch_model_df.query("Condition in ['Tapping/Right']"),
                     colorbar=True, axes=axes[0, 1],
                     vmin=0, vmax=20, cmap=mpl.cm.Oranges)
 
 # Cut down the dataframe just to the conditions we are interested in
-ch_summary = df_cha.query("condition in ['Tapping/Left', 'Tapping/Right']")
+ch_summary = df_cha.query("Condition in ['Tapping/Left', 'Tapping/Right']")
 ch_summary = ch_summary.query("Chroma in ['hbr']")
 
 # Run group level model and convert to dataframe
-ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:condition",
+ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:Condition",
                        ch_summary, groups=ch_summary["ID"]).fit(method='nm')
 ch_model_df = statsmodels_to_results(ch_model)
 
 # Plot the two conditions
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
-                    ch_model_df.query("condition in ['Tapping/Left']"),
+                    ch_model_df.query("Condition in ['Tapping/Left']"),
                     colorbar=False, axes=axes[1, 0],
                     vmin=-10, vmax=0, cmap=mpl.cm.Blues_r)
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
-                    ch_model_df.query("condition in ['Tapping/Right']"),
+                    ch_model_df.query("Condition in ['Tapping/Right']"),
                     colorbar=True, axes=axes[1, 1],
                     vmin=-10, vmax=0, cmap=mpl.cm.Blues_r)
 

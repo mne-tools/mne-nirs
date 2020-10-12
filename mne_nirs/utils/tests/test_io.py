@@ -31,7 +31,7 @@ def test_io():
     glm_est = run_GLM(raw_haemo, design_matrix)
     df = glm_to_tidy(raw_haemo, glm_est, design_matrix)
     assert df.shape == (48, 12)
-    assert set(df.columns) == {'ch_name', 'condition', 'df', 'mse', 'p_value',
+    assert set(df.columns) == {'ch_name', 'Condition', 'df', 'mse', 'p_value',
                                't', 'theta', 'Source', 'Detector', 'Chroma',
                                'Significant', 'se'}
     num_conds = 8  # triggers (1, 2, 3, 15) + 3 drifts + constant

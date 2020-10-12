@@ -65,16 +65,16 @@ def test_GLM_system_test():
     glm_est = run_GLM(raw_haemo, design_matrix)
     df = glm_to_tidy(raw_haemo, glm_est, design_matrix)
     a = (df
-         .query('condition in ["Control"]')
-         .groupby(['condition', 'Chroma'])
+         .query('Condition in ["Control"]')
+         .groupby(['Condition', 'Chroma'])
          .agg(['mean'])
          )
     # Make sure false positive rate is less than 5%
     assert a["Significant"].values[0] < 0.05
     assert a["Significant"].values[1] < 0.05
     a = (df
-         .query('condition in ["Tapping/Left", "Tapping/Right"]')
-         .groupby(['condition', 'Chroma'])
+         .query('Condition in ["Tapping/Left", "Tapping/Right"]')
+         .groupby(['Condition', 'Chroma'])
          .agg(['mean'])
          )
     # Fairly arbitrary cutoff here, but its more than 5%
