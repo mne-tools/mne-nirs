@@ -1,8 +1,8 @@
 """
 .. _tut-fnirs-processing-bad:
 
-Importance of control conditions and parameter selection
-========================================================
+Importance of Controls and Parameter Selection
+==============================================
 
 .. warning:: DO NOT USE THIS SCRIPT TO PROCESS YOUR DATA
 
