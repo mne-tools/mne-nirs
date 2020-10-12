@@ -43,9 +43,9 @@ def test_simulate_NIRS():
     glm_est = run_GLM(raw, design_matrix)
     df = glm_to_tidy(raw, glm_est, design_matrix)
 
-    assert df.query("condition in ['Control']")['theta'].values[0] == \
+    assert df.query("Condition in ['Control']")['theta'].values[0] == \
         pytest.approx(0)
-    assert df.query("condition in ['Cond_A']")['theta'].values[0] == \
+    assert df.query("Condition in ['Cond_A']")['theta'].values[0] == \
         pytest.approx(2e-6)
-    assert df.query("condition in ['Cond_B']")['theta'].values[0] == \
+    assert df.query("Condition in ['Cond_B']")['theta'].values[0] == \
         pytest.approx(4e-6)

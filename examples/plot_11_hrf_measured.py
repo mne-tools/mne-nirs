@@ -358,8 +358,8 @@ df = glm_to_tidy(raw_haemo, glm_est, design_matrix)
 # the tapping, but we do expect 5% or less for the false positive rate.
 
 (df
- .query('condition in ["Control", "Tapping/Left", "Tapping/Right"]')
- .groupby(['condition', 'Chroma'])
+ .query('Condition in ["Control", "Tapping/Left", "Tapping/Right"]')
+ .groupby(['Condition', 'Chroma'])
  .agg(['mean'])
  .drop(['df', 'mse', 'p_value', 't'], 1)
  )
