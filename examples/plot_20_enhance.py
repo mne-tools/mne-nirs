@@ -7,12 +7,6 @@ Signal Enhancement Techniques
 In this document we investigate the effect of different signal enhancement
 techniques on NIRS data.
 
-
-.. warning::
-      This is a work in progress. Suggestions of improvements are
-      appreciated. I am finalising the code, then will fix the text.
-
-
 .. contents:: Page contents
    :local:
    :depth: 2

@@ -11,12 +11,6 @@ on experimental design and our model of how the brain reacts to stimuli,
 the actual data measured during an experiment, and the filtering
 that is applied to the data.
 
-.. warning::
-
-      This is a work in progress. Suggestions of improvements are
-      appreciated. I am finalising the code, then will fix the text.
-
-
 .. contents:: Page contents
    :local:
    :depth: 2
@@ -46,8 +40,8 @@ from mne_nirs.simulation import simulate_nirs_raw
 #
 # This code is similar to the first sections in the MNE tutorial,
 # so will not be described in detail here.
-# Please see
-# https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html
+# Please see the
+# :ref:`MNE documentation <mne:tut-fnirs-processing>`.
 # for a detailed introduction to processing NIRS with MNE.
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
