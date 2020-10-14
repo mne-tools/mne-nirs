@@ -250,10 +250,10 @@ def plot_glm_group_topo(raw, statsmodel_df,
     assert len(np.unique(statsmodel_df["Chroma"])) == 1,\
         "Only one Chroma allowed"
 
-    if 'condition' in statsmodel_df.columns:
-        assert len(np.unique(statsmodel_df["condition"])) == 1,\
+    if 'Condition' in statsmodel_df.columns:
+        assert len(np.unique(statsmodel_df["Condition"])) == 1,\
             "Only one condition allowed"
-        c = np.unique(statsmodel_df["condition"])[0]
+        c = np.unique(statsmodel_df["Condition"])[0]
     else:
         c = "Contrast"
 
