@@ -14,12 +14,13 @@ def examples_path():
     print(os.system("ls"))
     print(os.system("ls .."))
     print(os.system("ls ../.."))
-    print(os.system("ls ../../.."))
+    print(os.system("ls ../../..?"))
     return test_file_path + "/../../examples/"
 
 
 def run_script_and_check(test_file_path):
     return os.popen(f"python3 {test_file_path} && echo 'success'").read()
+
 
 @pytest.mark.parametrize('fname', (["plot_10_hrf_simulation.py",
                                     "plot_11_hrf_measured.py",
@@ -31,4 +32,3 @@ def run_script_and_check(test_file_path):
 def test_hrf_simulation(fname):
     test_file_path = examples_path() + fname
     assert "success" in run_script_and_check(test_file_path)
-
