@@ -54,6 +54,7 @@ before_install:
     - if [ "${DEPS}" != "minimal" ]; then
         pip install nitime;
       fi
+    - git clone --depth 1 https://github.com/rob-luke/BIDS-NIRS-Tapping.git examples/BIDS-NIRS-Tapping
 
 
 install:
