@@ -13,6 +13,7 @@ def examples_path():
     print(os.system("pwd"))
     print(os.system("ls"))
     print(os.system("ls .."))
+    print(os.system("ls ../examples"))
     # print(os.system("ls ../.."))
     # print(os.system("ls ../../..?"))
     # return test_file_path + "/../../examples/"
