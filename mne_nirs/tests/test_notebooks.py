@@ -10,6 +10,11 @@ import pytest
 
 def examples_path():
     test_file_path = os.path.dirname(os.path.abspath(__file__))
+    print(os.system("pwd"))
+    print(os.system("ls"))
+    print(os.system("ls .."))
+    print(os.system("ls ../.."))
+    print(os.system("ls ../../.."))
     return test_file_path + "/../../examples/"
 
 
