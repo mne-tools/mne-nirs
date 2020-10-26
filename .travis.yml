@@ -76,8 +76,6 @@ install:
     - cd ${SRC_DIR}
 
 script:
-#  - mkdir for_test
-#  - cd for_test
   - pytest -v --cov=mne_nirs --pyargs mne_nirs
 
 after_success:

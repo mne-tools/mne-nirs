@@ -9,10 +9,6 @@ import pytest
 
 
 def examples_path():
-    test_file_path = os.path.dirname(os.path.abspath(__file__))
-    test_file_path = test_file_path + "/../../examples/"
-    print(os.system("pwd"))
-    print(os.system("ls"))
 
     if not os.path.isdir("BIDS-NIRS-Tapping"):
         os.system("git clone --depth 1 "
@@ -22,7 +18,9 @@ def examples_path():
 
 
 def run_script_and_check(test_file_path):
-    return os.popen(f"python3 {test_file_path} && echo 'success'").read()
+    import matplotlib as mpl
+    mpl.use("Agg")  # Useful when testing locally as not to block progress
+    return exec(open(test_file_path).read(), locals(), locals())
 
 
 @pytest.mark.parametrize('fname', (["plot_10_hrf_simulation.py",
@@ -34,4 +32,4 @@ def run_script_and_check(test_file_path):
                                     "plot_99_bad.py"]))
 def test_hrf_simulation(fname):
     test_file_path = examples_path() + fname
-    assert "success" in run_script_and_check(test_file_path)
+    run_script_and_check(test_file_path)
