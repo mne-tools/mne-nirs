@@ -11,16 +11,14 @@ import pytest
 def examples_path():
     test_file_path = os.path.dirname(os.path.abspath(__file__))
     test_file_path = test_file_path + "/../../examples/"
-    print(" ")
-    print(test_file_path)
     print(os.system("pwd"))
     print(os.system("ls"))
-    print(" ")
 
     if not os.path.isdir("BIDS-NIRS-Tapping"):
         os.system("git clone --depth 1 "
                   "https://github.com/rob-luke/BIDS-NIRS-Tapping.git")
-    return test_file_path
+
+    return "examples/"
 
 
 def run_script_and_check(test_file_path):
