@@ -79,5 +79,4 @@ script:
   - pytest -v --cov=mne_nirs --pyargs mne_nirs
 
 after_success:
-  - cp .coverage $TRAVIS_BUILD_DIR
-  - codecov --root $TRAVIS_BUILD_DIR || echo "codecov upload failed"
+  - codecov || echo "codecov upload failed"
