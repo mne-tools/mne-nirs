@@ -12,7 +12,7 @@ def examples_path(fname):
     # test_file_path = os.path.dirname(os.path.abspath(__file__))
     if fname == "plot_12_group_glm.py":
         os.system("git clone --depth 1 https://github.com/rob-luke/BIDS-NIRS-Tapping.git")
-        os.system("git clone --depth 1 https://github.com/rob-luke/BIDS-NIRS-Tapping.git ../BIDS-NIRS-Tapping")
+        # os.system("git clone --depth 1 https://github.com/rob-luke/BIDS-NIRS-Tapping.git ../BIDS-NIRS-Tapping")
     print(os.system("pwd"))
     print(os.system("ls"))
     print(os.system("ls .."))
