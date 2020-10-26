@@ -35,6 +35,6 @@ def run_script_and_check(test_file_path):
                                     "plot_20_enhance.py",
                                     "plot_30_frequency.py",
                                     "plot_99_bad.py"]))
-def test_hrf_simulation(fname):
+def test_examples(fname):
     test_file_path = examples_path() + fname
     run_script_and_check(test_file_path)
