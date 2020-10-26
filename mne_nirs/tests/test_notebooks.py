@@ -8,15 +8,15 @@ import os
 import pytest
 
 
-def examples_path():
+def examples_path(fname):
     # test_file_path = os.path.dirname(os.path.abspath(__file__))
+    if fname == "plot_12_group_glm.py":
+        os.system("git clone --depth 1 https://github.com/rob-luke/BIDS-NIRS-Tapping.git")
+        os.system("git clone --depth 1 https://github.com/rob-luke/BIDS-NIRS-Tapping.git ../BIDS-NIRS-Tapping")
     print(os.system("pwd"))
     print(os.system("ls"))
     print(os.system("ls .."))
     print(os.system("ls ../examples"))
-    # print(os.system("ls ../.."))
-    # print(os.system("ls ../../..?"))
-    # return test_file_path + "/../../examples/"
     return "../examples/"
 
 
@@ -32,5 +32,5 @@ def run_script_and_check(test_file_path):
                                     "plot_30_frequency.py",
                                     "plot_99_bad.py"]))
 def test_hrf_simulation(fname):
-    test_file_path = examples_path() + fname
+    test_file_path = examples_path(fname) + fname
     assert "success" in run_script_and_check(test_file_path)
