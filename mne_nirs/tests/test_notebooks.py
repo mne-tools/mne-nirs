@@ -14,7 +14,12 @@ def examples_path():
         os.system("git clone --depth 1 "
                   "https://github.com/rob-luke/BIDS-NIRS-Tapping.git")
 
-    return "examples/"
+    if os.path.isdir("examples"):
+        path = "examples/"
+    else:
+        path = "../examples/"
+
+    return path
 
 
 def run_script_and_check(test_file_path):
