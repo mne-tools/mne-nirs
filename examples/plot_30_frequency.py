@@ -192,7 +192,8 @@ mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
 
 leg_lines = [line for line in fig.axes[0].lines if line.get_linestyle() == '-']
 fig.legend(leg_lines, ['Model Response', 'Measured Data',
-                       'Epoched Data', 'Filter Response'])
+                       'Epoched Data', 'Filter Response'],
+                       loc="lower left", bbox_to_anchor=(0.15, 0.2))
 fig.axes[0].set_ylabel('Filter Magnitude (dB) [invalid for other lines]')
 fig.axes[0].set_title('')
 
