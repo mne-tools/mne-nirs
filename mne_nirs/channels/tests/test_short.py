@@ -6,6 +6,7 @@
 import os
 import mne
 import numpy as np
+import pytest
 
 from mne.preprocessing.nirs import source_detector_distances
 from mne_nirs.channels import get_long_channels, get_short_channels
@@ -36,6 +37,13 @@ def test_short_extraction():
     new_lens = source_detector_distances(short_chans.info)
     assert np.max(new_lens) <= 0.052
 
+    # Check that we dont run on other types, eg eeg.
+    raw_intensity.pick(picks=range(2))
+    raw_intensity.set_channel_types({'S1_D1 760': 'eeg', 'S1_D1 850': 'eeg'},
+                                    verbose='error')
+    with pytest.raises(RuntimeError, match='NIRS signals only'):
+        _ = get_short_channels(raw_intensity)
+
 
 def test_long_extraction():
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
@@ -61,3 +69,10 @@ def test_long_extraction():
 
     new_lens = source_detector_distances(long_chans.info)
     assert np.max(new_lens) >= 0.022
+
+    # Check that we dont run on other types, eg eeg.
+    raw_intensity.pick(picks=range(2))
+    raw_intensity.set_channel_types({'S1_D1 760': 'eeg', 'S1_D1 850': 'eeg'},
+                                    verbose='error')
+    with pytest.raises(RuntimeError, match='NIRS signals only'):
+        _ = get_long_channels(raw_intensity)
