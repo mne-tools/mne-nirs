@@ -17,10 +17,7 @@ viewed in the
 :ref:`MNE documentation <mne:tut-fnirs-processing>`.
 
 This GLM analysis is a wrapper over the excellent
-`Nilearn stats <https://github.com/nilearn/nilearn/tree/master/nilearn/stats>`_.
-
-.. warning::
-      The Nilearn links in this document may be broken. See https://github.com/mne-tools/mne-nirs/issues/112
+`Nilearn GLM <http://nilearn.github.io/modules/reference.html#module-nilearn.glm>`_.
 
 .. contents:: Page contents
    :local:
@@ -166,9 +163,9 @@ plt.xlabel("Time (s)");
 #
 #    For further discussion on design matrices see
 #    the Nilearn examples. Specifically the 
-#    `first level model <https://5712-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/plot_first_level_model_details.html>`_
+#    `first level model <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_first_level_details.html>`_
 #    and 
-#    `design matrix examples <https://5712-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/04_glm_first_level_models/plot_design_matrix.html>`_.
+#    `design matrix examples <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_design_matrix.html>`_.
 #
 # Next we create a model to fit our data to.
 # The model consists of various components to model different things we assume
@@ -316,7 +313,7 @@ for idx, col in enumerate(design_matrix.columns[:3]):
 # -----------------
 #
 # We can also define a contrast as described in
-# `Nilearn docs <https://5874-1235740-gh.circle-artifacts.com/0/doc/_build/html/auto_examples/04_glm_first_level_models/plot_localizer_surface_analysis.html>`_
+# `Nilearn docs <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_localizer_surface_analysis.html>`_
 # and plot it.
 # Here we contrast the response to tapping on the left hand with the response
 # from tapping on the right hand.

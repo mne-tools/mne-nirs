@@ -36,7 +36,7 @@ dependencies:
   - PySurfer[save_movie]
   - dipy --only-binary dipy
   - nibabel
-  - https://github.com/nilearn/nilearn/archive/master.zip
+  - nilearn>=0.7.0
   - neo
   - python-picard
   - PyQt5>=5.10,<5.14; platform_system == "Darwin"
