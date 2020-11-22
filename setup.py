@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-"""A template for mne-python compatible packages."""
+"""An MNE compatible package for processing near-infrared spectroscopy data."""
 
 import codecs
 import os
@@ -12,16 +12,16 @@ with open(ver_file) as f:
     exec(f.read())
 
 DISTNAME = 'mne-nirs'
-DESCRIPTION = 'A template for mne-python compatible packages.'
+DESCRIPTION = 'An MNE compatible package for processing near-infrared spectroscopy data.'
 with codecs.open('README.rst', encoding='utf-8-sig') as f:
     LONG_DESCRIPTION = f.read()
-MAINTAINER = 'your name'
-MAINTAINER_EMAIL = 'user@mail.edu'
-URL = 'https://github.com/mne-tools/mne-nirs'
-LICENSE = 'new BSD'
+MAINTAINER = 'Robert Luke'
+MAINTAINER_EMAIL = 'robert.luke@mq.edu.au'
+URL = 'https://mne.tools/mne-nirs/'
+LICENSE = 'BSD (3-clause)'
 DOWNLOAD_URL = 'https://github.com/mne-tools/mne-nirs'
 VERSION = __version__
-INSTALL_REQUIRES = ['numpy', 'scipy', 'mne']
+INSTALL_REQUIRES = ['numpy>=1.11.3', 'scipy>=0.17.1', 'mne>=0.21.0'],
 CLASSIFIERS = ['Intended Audience :: Science/Research',
                'Intended Audience :: Developers',
                'License :: OSI Approved',
@@ -32,10 +32,8 @@ CLASSIFIERS = ['Intended Audience :: Science/Research',
                'Operating System :: POSIX',
                'Operating System :: Unix',
                'Operating System :: MacOS',
-               'Programming Language :: Python :: 2.7',
-               'Programming Language :: Python :: 3.5',
-               'Programming Language :: Python :: 3.6',
-               'Programming Language :: Python :: 3.7']
+               'Programming Language :: Python :: 3',
+               ]
 EXTRAS_REQUIRE = {
     'tests': [
         'pytest',
@@ -58,8 +56,15 @@ setup(name=DISTNAME,
       version=VERSION,
       download_url=DOWNLOAD_URL,
       long_description=LONG_DESCRIPTION,
+      long_description_content_type='text/x-rst',
       zip_safe=False,  # the package can run out of an .egg file
       classifiers=CLASSIFIERS,
+      keywords='neuroscience neuroimaging fNIRS NIRS brain',
       packages=find_packages(),
+      project_urls={
+          'Documentation': 'https://mne.tools/mne-nirs/',
+          'Source': 'https://github.com/mne-tools/mne-nirs/',
+          'Tracker': 'https://github.com/mne-tools/mne-nirs/issues/',
+      },
       install_requires=INSTALL_REQUIRES,
       extras_require=EXTRAS_REQUIRE)
