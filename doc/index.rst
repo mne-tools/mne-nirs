@@ -13,8 +13,7 @@ This is a library to assist with processing near-infrared spectroscopy data with
 Installation
 ------------
 
-This package is not registered. Run the code below to install the latest
-version from github.
+Run the following code to install MNE-NIRS.
 
 .. code:: bash
 
