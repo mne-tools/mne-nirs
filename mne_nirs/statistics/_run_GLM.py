@@ -27,7 +27,7 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=100,
         The number of CPUs to use to do the computation. -1 means
         'all CPUs'.
     verbose : int, optional
-        The verbosity level. Defaut is 0
+        The verbosity level. Default is 0
 
     Returns
     -------

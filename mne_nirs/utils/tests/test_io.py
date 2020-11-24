@@ -37,15 +37,15 @@ def test_io():
     num_conds = 8  # triggers (1, 2, 3, 15) + 3 drifts + constant
     assert df.shape[0] == num_chans * num_conds
     assert len(df["se"]) == 48
-    assert sum(df["se"]) > 0  # Check isnt nan
+    assert sum(df["se"]) > 0  # Check isn't nan
     assert len(df["df"]) == 48
-    assert sum(df["df"]) > 0  # Check isnt nan
+    assert sum(df["df"]) > 0  # Check isn't nan
     assert len(df["p_value"]) == 48
-    assert sum(df["p_value"]) > 0  # Check isnt nan
+    assert sum(df["p_value"]) > 0  # Check isn't nan
     assert len(df["theta"]) == 48
-    assert sum(df["theta"]) > 0  # Check isnt nan
+    assert sum(df["theta"]) > 0  # Check isn't nan
     assert len(df["t"]) == 48
-    assert sum(df["t"]) > -99999  # Check isnt nan
+    assert sum(df["t"]) > -99999  # Check isn't nan
 
     contrast_matrix = np.eye(design_matrix.shape[1])
     basic_conts = dict([(column, contrast_matrix[i])

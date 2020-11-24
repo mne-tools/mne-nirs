@@ -78,8 +78,8 @@ for condition in evoked_dict:
 
 
 ###############################################################################
-# Apply negative correlation enhancment algorithm
-# -----------------------------------------------
+# Apply negative correlation enhancement algorithm
+# ------------------------------------------------
 #
 # Apply Cui et. al. 2010 and extract epochs.
 

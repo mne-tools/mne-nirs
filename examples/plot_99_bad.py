@@ -218,7 +218,7 @@ mne.viz.plot_compare_evokeds(evoked_dict, combine="mean", ci=0.95,
 #
 # There are many signal processing parameter choices that interact to produce
 # your end result. It is important to have a control condition to ensure
-# that you arent forcing your data to have these fake responses.
+# that you aren't forcing your data to have these fake responses.
 # Its also important to understand the effect that each parameter choice
 # has on your output. Using a receiver operating characteristic is a good
 # approach to understand your analysis.

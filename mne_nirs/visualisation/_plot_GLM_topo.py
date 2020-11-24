@@ -27,7 +27,7 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
         As specified in Nilearn
     requested_conditions : array
         Which conditions should be displayed.
-    figsize : TODO: Remove this, how does MNE ususally deal with this?
+    figsize : TODO: Remove this, how does MNE usually deal with this?
     sphere : As specified in MNE
 
     Returns
@@ -104,7 +104,7 @@ def plot_glm_contrast_topo(raw, contrast, figsize=(12, 7), sphere=None):
         Haemoglobin data.
     contrast : dict
         nilearn.stats.compute_contrast
-    figsize : TODO: Remove this, how does MNE ususally deal with this?
+    figsize : TODO: Remove this, how does MNE usually deal with this?
     sphere : As specified in MNE
 
     Returns

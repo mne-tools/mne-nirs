@@ -28,7 +28,7 @@ def test_roi_picks():
     assert raw.ch_names[picks[6]] == "S8_D16 760"
     assert raw.ch_names[picks[7]] == "S8_D16 850"
 
-    # Test what happens when a pair that doesnt exist is requested (15-13)
+    # Test what happens when a pair that doesn't exist is requested (15-13)
     with pytest.raises(ValueError, match='No matching'):
         picks_pair_to_idx(raw, [[1, 1], [1, 2], [15, 13], [8, 16]])
 

@@ -25,7 +25,7 @@ def glm_to_tidy(raw, statistic, design_matrix, wide=True):
         As specified in Nilearn
     wide : Bool
         Should the returned dataframe be in wide format. If False, then the
-        retuned data will be in long format.
+        returned data will be in long format.
 
     Returns
     -------
