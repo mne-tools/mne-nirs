@@ -1,3 +1,3 @@
 #!/bin/bash -ef
-
-pytest -vv --cov=mne_nirs --pyargs mne_nirs
+ls
+pytest--cov=mne_nirs --cov-report xml -vv "mne-nirs/"
