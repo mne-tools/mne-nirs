@@ -11,7 +11,7 @@ jobs:
   # PIP + non-default stim channel + log level info
   job:
     if: "github.repository == 'mne-tools/mne-nirs' && !contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[skip github]')"
-    name: 'py3.9'
+    name: 'py3.8'
     runs-on: ubuntu-20.04
     defaults:
       run:
@@ -22,7 +22,7 @@ jobs:
       MNE_STIM_CHANNEL: 'STI101'
       OPENBLAS_NUM_THREADS: '1'
       PYTHONUNBUFFERED: '1'
-      PYTHON_VERSION: '3.9'
+      PYTHON_VERSION: '3.8'
     steps:
       - uses: actions/checkout@v2
         with:
