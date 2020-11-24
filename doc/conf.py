@@ -16,7 +16,6 @@
 import multiprocessing as mp
 mp.set_start_method('forkserver')
 import sys
-import sphinx_bootstrap_theme
 from distutils.version import LooseVersion
 import sphinx
 import os
