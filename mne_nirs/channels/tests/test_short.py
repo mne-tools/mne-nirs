@@ -23,7 +23,7 @@ def test_short_extraction():
     assert original_num_channels == 56
 
     short_num_channels = len(short_chans.ch_names)
-    assert short_num_channels == 16  # There are 8 SDs in this set * hbo/hbr
+    assert short_num_channels == 3  # There are 8 SDs in this set * hbo/hbr
 
     new_lens = source_detector_distances(short_chans.info)
     assert np.max(new_lens) <= 0.01
