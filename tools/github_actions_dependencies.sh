@@ -19,6 +19,7 @@ else # pip 3.9 (missing statsmodels and dipy)
 	pip install --progress-bar off --upgrade --pre PyQt5
 	python -c "import vtk"
 	python -c "import pyvistaqt"
+	pip install --upgrade -r requirements.txt
 fi
 pip install --progress-bar off --upgrade -r requirements_testing.txt
 if [ "${DEPS}" != "minimal" ]; then
