@@ -216,7 +216,7 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # -------------------------
 #
 # The matrices above can be a bit abstract as they encompase multiple 
-# conditons and regressors.
+# conditions and regressors.
 # Instead we can examine a single condition.
 # Here we observe the boxcar function for a single condition,
 # this illustrates when the stimulus was active.
@@ -338,7 +338,7 @@ mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
 # We export the GLM results for every channel and condition.
 # Data is exported in long format by default.
 # However, a helper function is also provided to convert the long data to wide format.
-# The long to wide conversion also adds some additonal derived data, such as
+# The long to wide conversion also adds some additional derived data, such as
 # if a significant response (p<0.05) was observed, which sensor and detector is
 # in the channel, which chroma, etc.
 
