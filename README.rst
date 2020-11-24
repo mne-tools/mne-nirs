@@ -4,8 +4,14 @@ MNE-NIRS: Near-Infrared Spectroscopy Analysis
 .. image:: https://img.shields.io/badge/docs-master-brightgreen
     :target: https://mne.tools/mne-nirs/
     
-.. image:: https://travis-ci.com/mne-tools/mne-nirs.svg?branch=master
-    :target: https://travis-ci.com/mne-tools/mne-nirs
+.. image:: https://github.com/mne-tools/mne-nirs/workflows/linux%20/%20pip/badge.svg
+    :target: https://github.com/mne-tools/mne-nirs/actions?query=workflow%3A%22linux+%2F+pip%22
+    
+.. image:: https://github.com/mne-tools/mne-nirs/workflows/macos%20/%20conda/badge.svg
+    :target: https://github.com/mne-tools/mne-nirs/actions?query=workflow%3A%22macos+%2F+conda%22
+    
+.. image:: https://github.com/mne-tools/mne-nirs/workflows/linux%20/%20conda/badge.svg
+    :target: https://github.com/mne-tools/mne-nirs/actions?query=workflow%3A%22linux+%2F+conda%22
     
 .. image:: https://codecov.io/gh/mne-tools/mne-nirs/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/mne-tools/mne-nirs
