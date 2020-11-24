@@ -1,4 +1,4 @@
-name: "Commit Docs To GH-Pages"
+name: "docs"
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - master
 
 jobs:
-  build:
-
+  job:
+    name: 'build and push'
     runs-on: ubuntu-latest
 
     steps:

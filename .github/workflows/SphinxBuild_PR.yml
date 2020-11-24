@@ -1,9 +1,10 @@
-name: "Pull Request Docs Check"
+name: "docs"
 on:
 - pull_request
 
 jobs:
-  docs:
+  job:
+    name: 'build'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
