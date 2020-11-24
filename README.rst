@@ -9,6 +9,9 @@ MNE-NIRS: Near-Infrared Spectroscopy Analysis
     
 .. image:: https://codecov.io/gh/mne-tools/mne-nirs/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/mne-tools/mne-nirs
+    
+.. image:: https://badge.fury.io/py/mne-nirs.svg
+    :target: https://badge.fury.io/py/mne-nirs
 
 **MNE-NIRS** is an `MNE <https://mne.tools>`_ compatible near-infrared spectroscopy processing package. 
 
