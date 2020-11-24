@@ -28,7 +28,7 @@ jobs:
           fetch-depth: 0
       - uses: conda-incubator/setup-miniconda@v2
         with:
-          activate-environment: 'mne'
+          activate-environment: 'mne-nirs'
           python-version: ${{ env.PYTHON_VERSION }}
           environment-file: ${{ env.CONDA_ENV }}
         name: 'Setup conda'
