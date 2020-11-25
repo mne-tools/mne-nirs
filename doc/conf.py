@@ -16,7 +16,6 @@
 import multiprocessing as mp
 mp.set_start_method('forkserver')
 import sys
-import sphinx_bootstrap_theme
 from distutils.version import LooseVersion
 import sphinx
 import os
@@ -141,24 +140,28 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'bootstrap'
+html_theme = 'pydata_sphinx_theme'
+
+# html_sidebars = {
+#     '**': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
+# }
+html_sidebars = {}
+
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 # html_theme_options = {}
 html_theme_options = {
-    'navbar_sidebarrel': False,
-    'navbar_links': [
-        ("Examples", "auto_examples/index"),
-        ("API", "api"),
-        ("GitHub", "https://github.com/mne-tools/mne-nirs", True)
-    ],
-    'bootswatch_theme': "lumen"
+    "search_bar_position": "navbar",
+    "show_toc_level": 1,
+    "external_links": [
+        {"name": "GitHub", "url": "https://github.com/mne-tools/mne-nirs"}
+    ]
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
-html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
+# html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".

@@ -1,8 +1,8 @@
 :orphan:
 
-##########
-Module API
-##########
+###
+API
+###
 
 .. currentmodule:: mne_nirs
 
