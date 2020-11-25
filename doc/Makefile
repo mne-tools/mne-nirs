@@ -3,7 +3,7 @@
 
 # You can set these variables from the command line.
 SPHINXOPTS    = -nWT --keep-going
-SPHINXBUILD   = sphinx-build
+SPHINXBUILD   = sphinx-multiversion
 PAPER         =
 BUILDDIR      = _build
 
