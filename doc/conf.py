@@ -142,10 +142,11 @@ pygments_style = 'sphinx'
 # a list of builtin themes.
 html_theme = 'pydata_sphinx_theme'
 
-html_sidebars = {
-    "API": [],
-    "Examples": [],
-}
+# html_sidebars = {
+#     '**': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
+# }
+html_sidebars = {}
+
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -155,11 +156,8 @@ html_theme_options = {
     "search_bar_position": "navbar",
     "show_toc_level": 1,
     "external_links": [
-        {"name": "Examples", "url": "auto_examples/index"},
-        {"name": "API", "url": "api"},
         {"name": "GitHub", "url": "https://github.com/mne-tools/mne-nirs"}
-    ],
-    'bootswatch_theme': "lumen"
+    ]
 }
 
 # Add any paths that contain custom themes here, relative to this directory.

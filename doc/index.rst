@@ -3,6 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+
+
+
+
 MNE-NIRS
 ========
 
@@ -47,3 +51,11 @@ statsmodels: https://www.statsmodels.org/stable/index.html#citation
 
 There is not currently a journal article specifically on MNE-NIRS, so please find a
 `relevant paper of mine to cite from here <https://scholar.google.com/citations?user=LngqH5sAAAAJ&hl=en>`_.
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+
+   index
+   auto_examples/index
+   api
