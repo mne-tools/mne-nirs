@@ -49,7 +49,6 @@ def test_plot_nirs_source_detector_mayavi():
         surfaces=['brain'],
         fnirs=False,
         subjects_dir=subjects_dir,
-        cmap='Oranges',
         verbose=True)
 
 
