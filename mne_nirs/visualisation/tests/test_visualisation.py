@@ -59,6 +59,7 @@ def test_plot_nirs_source_detector_mayavi():
         trans='fsaverage',
         surfaces=['brain'],
         fnirs=False,
+        cmap='inferno',
         subjects_dir=subjects_dir,
         verbose=True)
 
