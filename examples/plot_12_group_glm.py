@@ -363,3 +363,12 @@ con_model_df = statsmodels_to_results(con_model)
 
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                     con_model_df, colorbar=True, axes=axes)
+
+
+###############################################################################
+#
+# Or we can view only the left hemisphere for the contrast
+#
+
+plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
+                    con_model_df, colorbar=True)
