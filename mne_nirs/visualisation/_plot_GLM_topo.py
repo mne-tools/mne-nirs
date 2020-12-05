@@ -348,4 +348,3 @@ def _get_fig_from_axes(ax):
         return _get_fig_from_axes(ax[0])
     else:
         raise RuntimeError(f"Unable to extract figure from {ax}")
-        return 0
