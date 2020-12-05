@@ -30,11 +30,10 @@ def test_plot_nirs_source_detector_pyvista():
         surfaces=['brain'],
         fnirs=False,
         subjects_dir=subjects_dir,
-        cmap='Oranges',
         verbose=True)
 
     mne_nirs.visualisation.plot_nirs_source_detector(
-        np.random.randn(len(raw.ch_names)) + 5,
+        np.abs(np.random.randn(len(raw.ch_names))) + 5,
         raw.info, show_axes=True,
         subject='fsaverage',
         trans='fsaverage',
