@@ -55,3 +55,6 @@ def test_roi_picks():
     raw.info["ch_names"][3] = 'S1_D11 850'
     picks = picks_pair_to_idx(raw, [[1, 1]])
     assert picks == [0, 1]
+
+    picks = picks_pair_to_idx(raw, [[21, 91], [91, 2]], on_missing='ignore')
+    assert picks == []
