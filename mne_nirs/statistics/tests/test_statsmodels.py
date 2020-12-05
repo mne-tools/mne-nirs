@@ -34,3 +34,12 @@ def test_statsmodel_to_df():
     assert df["Coef."]["Condition[A]"] == amplitude
     assert df["Significant"]["Condition[A]"]
     assert df.shape == (8, 8)
+
+    roi_model = smf.rlm("theta ~ -1 + Condition", df_cha,
+                            groups=df_cha["ID"]).fit()
+    df = statsmodels_to_results(roi_model)
+    assert type(df) == pd.DataFrame
+    assert df["Coef."]["Condition[A]"] == amplitude
+    assert df["Significant"]["Condition[A]"]
+    assert df.shape == (8, 8)
+
