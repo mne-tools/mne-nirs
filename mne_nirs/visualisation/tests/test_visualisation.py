@@ -109,7 +109,7 @@ def test_run_plot_GLM_topo():
     # Ensure warning thrown if glm estimates is missing channels from raw
     glm_estimates_subset = {a: glm_estimates[a]
                             for a in raw_haemo.ch_names[0:3]}
-    with pytest.raises(RuntimeError, match="ructure does not match regression"):
+    with pytest.raises(RuntimeError, match="does not match regression"):
         plot_glm_topo(raw_haemo, glm_estimates_subset, design_matrix)
 
 
