@@ -56,6 +56,5 @@ There is not currently a journal article specifically on MNE-NIRS, so please fin
    :maxdepth: 2
    :hidden:
 
-   index
    auto_examples/index
    api

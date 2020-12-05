@@ -47,7 +47,7 @@ def expand_summary_dataframe(summary):
     if 'Coef.' in summary.columns:
         summary.loc[:, "Coef."] = [float(c) for c in summary["Coef."]]
     elif 'coef' in summary.columns:
-        summary.rename(columns={"Coef.": "coef"})
+        summary = summary.rename(columns={"coef": "Coef."})
 
     return summary
 

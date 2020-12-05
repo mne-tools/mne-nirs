@@ -42,9 +42,9 @@ def glm_to_tidy(raw, statistic, design_matrix, wide=True):
         df = _tidy_Contrast(raw, statistic, design_matrix)
 
     else:
-        raise ValueError(
+        raise TypeError(
             'Unknown statistic type. Expected dict of RegressionResults '
-            'or Contrast type.')
+            f'or Contrast type. Received {type(statistic)}')
 
     if wide:
         df = _tidy_long_to_wide(df, expand_output=True)

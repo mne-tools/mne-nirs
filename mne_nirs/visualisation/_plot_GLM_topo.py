@@ -4,6 +4,10 @@
 
 
 import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
+
 import mne
 from mne.utils import warn
 from mne.channels.layout import _merge_ch_data
@@ -12,9 +16,13 @@ from mne.io.pick import _picks_to_idx
 
 def plot_glm_topo(raw, glm_estimates, design_matrix,
                   requested_conditions=None,
+                  axes=None, vmin=None, vmax=None, colorbar=True,
                   figsize=(12, 7), sphere=None):
     """
     Plot topomap of NIRS GLM data.
+
+    If the channels in raw is a subset of those in the GLM estimate,
+    then only the subset in raw will be plotted.
 
     Parameters
     ----------
@@ -27,7 +35,18 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
         As specified in Nilearn
     requested_conditions : array
         Which conditions should be displayed.
+    axes : instance of Axes | None
+        The axes to plot to. If None, a new figure is used.
+    vmin : float | None
+        The value specifying the lower bound of the color range.
+        If None, and vmax is None, -vmax is used. Else np.min(data).
+        Defaults to None.
+    vmax : float | None
+        The value specifying the upper bound of the color range.
+        If None, the maximum absolute value is used. Defaults to None.
     figsize : TODO: Remove this, how does MNE usually deal with this?
+    colorbar : Bool
+        Should a colorbar be plotted.
     sphere : As specified in MNE
 
     Returns
@@ -36,12 +55,14 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
           and hbr (bottom row).
     """
 
-    import matplotlib.pyplot as plt
-    import matplotlib as mpl
-    from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
-
     if not (raw.ch_names == list(glm_estimates.keys())):
-        warn("MNE data structure does not match regression results")
+        if len(raw.ch_names) < len(list(glm_estimates.keys())):
+            warn("Reducing GLM results to match MNE data")
+            glm_estimates = {a: glm_estimates[a] for a in raw.ch_names}
+        else:
+            raise RuntimeError('MNE data structure does not match regression '
+                               f'results. Raw = {len(raw.ch_names)}. '
+                               f'GLM = {len(list(glm_estimates.keys()))}')
 
     estimates = np.zeros((len(glm_estimates), len(design_matrix.columns)))
 
@@ -53,9 +74,11 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
     if requested_conditions is None:
         requested_conditions = design_matrix.columns
 
-    fig, axes = plt.subplots(nrows=len(types),
-                             ncols=len(requested_conditions),
-                             figsize=figsize)
+    # Plotting setup
+    if axes is None:
+        fig, axes = plt.subplots(nrows=len(types),
+                                 ncols=len(requested_conditions),
+                                 figsize=figsize)
 
     estimates = estimates[:, [c in requested_conditions
                               for c in design_matrix.columns]]
@@ -63,8 +86,10 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
     estimates = estimates * 1e6
     design_matrix = design_matrix[requested_conditions]
 
-    vmax = np.max(np.abs(estimates))
-    vmin = vmax * -1.
+    if vmax is None:
+        vmax = np.max(np.abs(estimates))
+    if vmin is None:
+        vmin = vmax * -1.
     cmap = mpl.cm.RdBu_r
     norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
 
@@ -74,24 +99,37 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
 
         for idx, label in enumerate(design_matrix.columns):
             if label in requested_conditions:
+
+                # Deal with case when only a single
+                # chroma or condition is available
+                if (len(requested_conditions) == 1) & (len(types) == 1):
+                    ax = axes
+                elif (len(requested_conditions) == 1) & (len(types) > 1):
+                    ax = axes[t_idx]
+                elif (len(requested_conditions) > 1) & (len(types) == 1):
+                    ax = axes[idx]
+                else:
+                    ax = axes[t_idx, idx]
+
                 mne.viz.topomap.plot_topomap(estmrg[:, idx], pos,
                                              extrapolate='local',
                                              names=chs,
                                              vmin=vmin,
                                              vmax=vmax,
                                              cmap=cmap,
-                                             axes=axes[t_idx, idx],
+                                             axes=ax,
                                              show=False,
                                              sphere=sphere)
-                axes[t_idx, idx].set_title(label)
+                ax.set_title(label)
 
-        ax1_divider = make_axes_locatable(axes[t_idx, -1])
-        cax1 = ax1_divider.append_axes("right", size="7%", pad="2%")
-        cbar = mpl.colorbar.ColorbarBase(cax1, cmap=cmap, norm=norm,
-                                         orientation='vertical')
-        cbar.set_label('Haemoglobin (uM)', rotation=270)
+        if colorbar:
+            ax1_divider = make_axes_locatable(ax)
+            cax1 = ax1_divider.append_axes("right", size="7%", pad="2%")
+            cbar = mpl.colorbar.ColorbarBase(cax1, cmap=cmap, norm=norm,
+                                             orientation='vertical')
+            cbar.set_label('Haemoglobin (uM)', rotation=270)
 
-    return fig
+    return _get_fig_from_axes(axes)
 
 
 def plot_glm_contrast_topo(raw, contrast, figsize=(12, 7), sphere=None):
@@ -112,10 +150,6 @@ def plot_glm_contrast_topo(raw, contrast, figsize=(12, 7), sphere=None):
     fig : Figure of each design matrix componenent for hbo (top row)
           and hbr (bottom row).
     """
-
-    import matplotlib.pyplot as plt
-    import matplotlib as mpl
-    from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
 
     # Extract types. One subplot is created per type (hbo/hbr)
     types = np.unique(raw.get_channel_types())
@@ -223,14 +257,11 @@ def plot_glm_group_topo(raw, statsmodel_df,
     -------
     fig : Figure with topographic representation of statsmodel_df value.
     """
-    import matplotlib.pyplot as plt
-    import matplotlib as mpl
-    from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
 
     # Check that the channels in two inputs match
     if not (raw.ch_names == list(statsmodel_df["ch_name"].values)):
         if len(raw.ch_names) < len(list(statsmodel_df["ch_name"].values)):
-            print("reducing GLM results to match raw")
+            print("Reducing GLM results to match MNE data")
             statsmodel_df["Keep"] = [g in raw.ch_names
                                      for g in statsmodel_df["ch_name"]]
             statsmodel_df = statsmodel_df.query("Keep == True")
@@ -308,3 +339,12 @@ def _handle_overlaps(raw, t, sphere, estimates):
         mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
     estmrg, ch_names = _merge_ch_data(estimates.copy()[picks], t, ch_names)
     return estmrg, pos, ch_names, sphere
+
+
+def _get_fig_from_axes(ax):
+    if issubclass(type(ax), mpl.axes.SubplotBase):
+        return ax.figure
+    elif type(ax) is np.ndarray:
+        return _get_fig_from_axes(ax[0])
+    else:
+        raise RuntimeError(f"Unable to extract figure from {ax}")

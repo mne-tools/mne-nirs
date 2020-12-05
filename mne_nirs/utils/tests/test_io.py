@@ -4,6 +4,7 @@
 
 
 import os
+import pytest
 import mne
 import mne_nirs
 import numpy as np
@@ -67,3 +68,6 @@ def test_io():
     assert set(df.columns) == {'ch_name', 'ContrastType', 'z_score', 'stat',
                                'p_value', 'effect', 'Source', 'Detector',
                                'Chroma', 'Significant'}
+
+    with pytest.raises(TypeError, match="Unknown statistic type"):
+        glm_to_tidy(raw_haemo, [1, 2, 3], design_matrix, wide=False)

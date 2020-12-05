@@ -24,7 +24,7 @@ This GLM analysis is a wrapper over the excellent
    :depth: 2
 
 """
-# sphinx_gallery_thumbnail_number = 7
+# sphinx_gallery_thumbnail_number = 8
 
 # Authors: Robert Luke <mail@robertluke.net>
 #
@@ -285,6 +285,45 @@ glm_est = run_GLM(raw_haemo, design_matrix)
 plot_glm_topo(raw_haemo, glm_est, design_matrix,
               requested_conditions=['Tapping/Left',
                                     'Tapping/Right'])
+
+
+###############################################################################
+#
+# Note that the topographic visualisation is a high level representation
+# of the underlying data. This visual representation fits a smoothed surface
+# to the data and makes many assumptions including that the data is
+# spatially smooth and that the sensors sufficiently cover the scalp surface.
+# These assumptions can be violated with fNIRS due to the improved spatial
+# sensitivity (relative to EEG) and typically low number of sensors that are
+# unevenly distributed over the scalp.
+# As such, researchers should understand the underlying data and ensure that
+# the figure accurately reflects the effect of interest.
+#
+# As an example of how the topoplot can be deceiving, we replot
+# the `Tapping/Right` condition from above for each hemisphere
+# separately. When both hemisphere are plotted together (left),
+# the function smooths
+# the large space between sensors, making the activity on the left hemisphere
+# smear towards the center and appear larger than the underlying data shows.
+# When each hemisphere is plotted independently (right) it becomes immediately
+# apparent that the data does not indicate that activity spreads across
+# the center of the head.
+
+fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 6),
+                         gridspec_kw=dict(width_ratios=[0.92, 1]))
+
+plot_glm_topo(raw_haemo.copy().pick(picks="hbo"), glm_est, design_matrix,
+              axes=axes[0], colorbar=False,
+              requested_conditions=['Tapping/Right'])
+plot_glm_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
+              glm_est, design_matrix, vmin=-16, vmax=16, axes=axes[1],
+              requested_conditions=['Tapping/Right'], colorbar=False)
+plot_glm_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10, 20)),
+              glm_est, design_matrix, axes=axes[1], vmin=-16, vmax=16,
+              requested_conditions=['Tapping/Right'])
+
+axes[0].set_title("Smoothed across hemispheres")
+axes[1].set_title("Hemispheres plotted independently")
 
 
 ###############################################################################

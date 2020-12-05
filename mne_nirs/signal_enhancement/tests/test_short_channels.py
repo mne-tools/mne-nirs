@@ -8,6 +8,7 @@ import numpy as np
 import pytest
 
 from mne_nirs.signal_enhancement import short_channel_regression
+from mne_nirs.channels import get_long_channels, get_short_channels
 
 
 def _load_dataset():
@@ -44,3 +45,8 @@ def test_short():
     raw_od_corrected = short_channel_regression(raw_od)
 
     assert 'fnirs_od' in raw_od_corrected
+
+    with pytest.raises(RuntimeError, match="long channels present"):
+        short_channel_regression(get_short_channels(raw_od))
+    with pytest.raises(RuntimeError, match="short channels present"):
+        short_channel_regression(get_long_channels(raw_od))
