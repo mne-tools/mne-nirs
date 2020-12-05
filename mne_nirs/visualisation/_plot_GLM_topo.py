@@ -347,5 +347,5 @@ def _get_fig_from_axes(ax):
     elif type(ax) is np.ndarray:
         return _get_fig_from_axes(ax[0])
     else:
-        warn(f"Unable to extract figure from {ax}")
+        raise RuntimeError(f"Unable to extract figure from {ax}")
         return 0
