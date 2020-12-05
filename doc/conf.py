@@ -14,7 +14,6 @@
 
 
 import multiprocessing as mp
-mp.set_start_method('forkserver')
 import sys
 from distutils.version import LooseVersion
 import sphinx
@@ -46,10 +45,13 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode',
     'sphinx_fontawesome',
+    'sphinx_multiversion',
     'sphinx_gallery.gen_gallery',
     'sphinx_bootstrap_divs',
     'numpydoc',
 ]
+
+smv_branch_whitelist = None
 
 # this is needed for some reason...
 # see https://github.com/numpy/numpydoc/issues/69
