@@ -2,10 +2,11 @@
 #
 # License: BSD (3-clause)
 
+import pytest
 import mne
 import mne_nirs
 import numpy as np
-from mne.utils import (requires_pysurfer, traits_test)
+from mne.utils import (requires_pysurfer, traits_test, requires_mayavi)
 from mne_nirs.experimental_design.tests.test_experimental_design import \
     _load_dataset
 from mne_nirs.experimental_design import make_first_level_design_matrix
@@ -43,7 +44,7 @@ def test_plot_nirs_source_detector_pyvista():
         verbose=True)
 
 
-@requires_pysurfer
+@requires_mayavi
 @traits_test
 def test_plot_nirs_source_detector_mayavi():
     mne.viz.set_3d_backend('mayavi')
@@ -98,6 +99,12 @@ def test_run_plot_GLM_topo():
                         glm_estimates, design_matrix,
                         colorbar=False, requested_conditions=['A'])
     assert len(fig.axes) == 1
+
+    # Ensure warning thrown if glm estimates is missing channels from raw
+    glm_estimates_subset = {a: glm_estimates[a]
+                            for a in raw_haemo.ch_names[0:3]}
+    with pytest.raises(RuntimeError, match="ructure does not match regression"):
+        plot_glm_topo(raw_haemo, glm_estimates_subset, design_matrix)
 
 
 def test_run_plot_GLM_contrast_topo():
