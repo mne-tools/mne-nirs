@@ -83,19 +83,25 @@ def test_run_plot_GLM_topo():
                         requested_conditions=['A', 'B'])
     assert len(fig.axes) == 6
 
+    # Two conditions * one chroma + 1 x colorbar
+    fig = plot_glm_topo(raw_haemo.copy().pick(picks="hbo"),
+                        glm_estimates, design_matrix,
+                        requested_conditions=['A', 'B'])
+    assert len(fig.axes) == 3
+
     # One conditions * two chroma + 2 x colorbar
     fig = plot_glm_topo(raw_haemo, glm_estimates, design_matrix,
                         requested_conditions=['A'])
     assert len(fig.axes) == 4
 
     # One conditions * one chroma + 1 x colorbar
-    fig = plot_glm_topo(raw_haemo.pick(picks="hbo"),
+    fig = plot_glm_topo(raw_haemo.copy().pick(picks="hbo"),
                         glm_estimates,
                         design_matrix, requested_conditions=['A'])
     assert len(fig.axes) == 2
 
     # One conditions * one chroma + 0 x colorbar
-    fig = plot_glm_topo(raw_haemo.pick(picks="hbo"),
+    fig = plot_glm_topo(raw_haemo.copy().pick(picks="hbo"),
                         glm_estimates, design_matrix,
                         colorbar=False, requested_conditions=['A'])
     assert len(fig.axes) == 1
