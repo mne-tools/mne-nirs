@@ -52,6 +52,8 @@ extensions = [
 ]
 
 smv_branch_whitelist = None
+# v0.0.1 config is not compatible with sphinx-multiversion
+smv_tag_whitelist = r'^v\d+\.\d+.[2-9]$'
 
 # this is needed for some reason...
 # see https://github.com/numpy/numpydoc/issues/69
