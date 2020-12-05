@@ -57,7 +57,7 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
 
     if not (raw.ch_names == list(glm_estimates.keys())):
         if len(raw.ch_names) < len(list(glm_estimates.keys())):
-            warn("reducing GLM results to match raw")
+            warn("Reducing GLM results to match MNE data")
             glm_estimates = {a: glm_estimates[a] for a in raw.ch_names}
         else:
             raise RuntimeError('MNE data structure does not match regression '
@@ -261,7 +261,7 @@ def plot_glm_group_topo(raw, statsmodel_df,
     # Check that the channels in two inputs match
     if not (raw.ch_names == list(statsmodel_df["ch_name"].values)):
         if len(raw.ch_names) < len(list(statsmodel_df["ch_name"].values)):
-            print("reducing GLM results to match raw")
+            print("Reducing GLM results to match MNE data")
             statsmodel_df["Keep"] = [g in raw.ch_names
                                      for g in statsmodel_df["ch_name"]]
             statsmodel_df = statsmodel_df.query("Keep == True")
@@ -347,5 +347,4 @@ def _get_fig_from_axes(ax):
     elif type(ax) is np.ndarray:
         return _get_fig_from_axes(ax[0])
     else:
-        warn(f"Unable to extract figure from {ax}")
-        return 0
+        raise RuntimeError(f"Unable to extract figure from {ax}")

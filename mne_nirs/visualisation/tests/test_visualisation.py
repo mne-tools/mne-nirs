@@ -2,10 +2,11 @@
 #
 # License: BSD (3-clause)
 
+import pytest
 import mne
 import mne_nirs
 import numpy as np
-from mne.utils import (requires_pysurfer, traits_test)
+from mne.utils import (requires_pysurfer, traits_test, requires_mayavi)
 from mne_nirs.experimental_design.tests.test_experimental_design import \
     _load_dataset
 from mne_nirs.experimental_design import make_first_level_design_matrix
@@ -43,7 +44,7 @@ def test_plot_nirs_source_detector_pyvista():
         verbose=True)
 
 
-@requires_pysurfer
+@requires_mayavi
 @traits_test
 def test_plot_nirs_source_detector_mayavi():
     mne.viz.set_3d_backend('mayavi')
@@ -82,22 +83,34 @@ def test_run_plot_GLM_topo():
                         requested_conditions=['A', 'B'])
     assert len(fig.axes) == 6
 
+    # Two conditions * one chroma + 1 x colorbar
+    fig = plot_glm_topo(raw_haemo.copy().pick(picks="hbo"),
+                        glm_estimates, design_matrix,
+                        requested_conditions=['A', 'B'])
+    assert len(fig.axes) == 3
+
     # One conditions * two chroma + 2 x colorbar
     fig = plot_glm_topo(raw_haemo, glm_estimates, design_matrix,
                         requested_conditions=['A'])
     assert len(fig.axes) == 4
 
     # One conditions * one chroma + 1 x colorbar
-    fig = plot_glm_topo(raw_haemo.pick(picks="hbo"),
+    fig = plot_glm_topo(raw_haemo.copy().pick(picks="hbo"),
                         glm_estimates,
                         design_matrix, requested_conditions=['A'])
     assert len(fig.axes) == 2
 
     # One conditions * one chroma + 0 x colorbar
-    fig = plot_glm_topo(raw_haemo.pick(picks="hbo"),
+    fig = plot_glm_topo(raw_haemo.copy().pick(picks="hbo"),
                         glm_estimates, design_matrix,
                         colorbar=False, requested_conditions=['A'])
     assert len(fig.axes) == 1
+
+    # Ensure warning thrown if glm estimates is missing channels from raw
+    glm_estimates_subset = {a: glm_estimates[a]
+                            for a in raw_haemo.ch_names[0:3]}
+    with pytest.raises(RuntimeError, match="does not match regression"):
+        plot_glm_topo(raw_haemo, glm_estimates_subset, design_matrix)
 
 
 def test_run_plot_GLM_contrast_topo():
@@ -137,3 +150,9 @@ def test_run_plot_GLM_contrast_topo_single_chroma():
     contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
     fig = mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
     assert len(fig.axes) == 2
+
+
+def test_fig_from_axes():
+    from mne_nirs.visualisation._plot_GLM_topo import _get_fig_from_axes
+    with pytest.raises(RuntimeError, match="Unable to extract figure"):
+        _get_fig_from_axes([1, 2, 3])
