@@ -75,6 +75,9 @@ jobs:
             name: make html
             command: |
               cd doc;
+              git status
+              git tag
+              git branch
               make html;
 
         # Save the outputs
