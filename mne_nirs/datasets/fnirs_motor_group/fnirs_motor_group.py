@@ -4,13 +4,11 @@
 # This downloads my fnirs group tapping data. Once BIDS is finalised
 # and the dataset complies I will add this to the MNE-Python library.
 
-import os
 import os.path as op
 from functools import partial
 
 from mne.utils import verbose
-from mne.datasets.utils import (has_dataset, _data_path, _data_path_doc,
-                                _get_version, _version_doc)
+from mne.datasets.utils import (has_dataset)
 from mne.datasets.utils import _get_path, _download, _extract
 
 
@@ -22,7 +20,8 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
               verbose=None):  # noqa: D103
     datapath = _get_path(None, 'MNE_DATASETS_SAMPLE_PATH', None)
 
-    downloadpath = 'https://github.com/rob-luke/BIDS-NIRS-Tapping/archive/master.zip'
+    downloadpath = 'https://github.com/rob-luke/' \
+                   'BIDS-NIRS-Tapping/archive/master.zip'
 
     if not op.isdir(datapath + "/MNE-fNIRS-motor-group-data/"):
         remove_archive, full = _download(datapath, downloadpath,
@@ -35,5 +34,3 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
     datapath = op.join(datapath, "MNE-fNIRS-motor-group-data/")
 
     return datapath
-
-
