@@ -51,7 +51,7 @@ extensions = [
     'numpydoc',
 ]
 
-smv_branch_whitelist = None
+# smv_branch_whitelist = None
 # v0.0.1 config is not compatible with sphinx-multiversion
 smv_tag_whitelist = r'^v\d+\.\d+.[2-9]$'
 
@@ -146,10 +146,11 @@ pygments_style = 'sphinx'
 # a list of builtin themes.
 html_theme = 'pydata_sphinx_theme'
 
-# html_sidebars = {
-#     '**': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
-# }
-html_sidebars = {}
+html_sidebars = {
+    '**': [
+        'versioning.html',
+    ],
+}
 
 
 # Theme options are theme-specific and customize the look and feel of a theme
