@@ -26,6 +26,11 @@ jobs:
       run: |
         git status
 
+
+    - shell: bash -el {0}
+      run: |
+        git branch
+
     - shell: bash -el {0}
       run: |
         git tag
@@ -33,7 +38,7 @@ jobs:
     - uses: ammaraskar/sphinx-action@master
       with:
         docs-folder: "doc/"
-        pre-build-command: "apt-get update -y && apt-get install -y python3-dev build-essential git && ls -al && git status && git tag"
+        pre-build-command: "apt-get update -y && apt-get install -y python3-dev build-essential git && ls -al && git status && git branch && git tag"
     - uses: actions/upload-artifact@v1
       with:
         name: DocumentationHTML
