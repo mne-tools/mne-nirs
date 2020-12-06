@@ -14,7 +14,6 @@
 
 
 import multiprocessing as mp
-mp.set_start_method('forkserver')
 import sys
 from distutils.version import LooseVersion
 import sphinx
@@ -46,10 +45,19 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode',
     'sphinx_fontawesome',
+    'sphinx_multiversion',
     'sphinx_gallery.gen_gallery',
     'sphinx_bootstrap_divs',
     'numpydoc',
 ]
+
+smv_branch_whitelist = r'^.*$'
+# v0.0.1 config is not compatible with sphinx-multiversion, so use 2 onwards
+smv_tag_whitelist = r'^v\d+\.\d+.[2-9]$'
+# Mark tags as releases.
+# TODO: Change to use the maint/vX.X branches as these can have backports
+smv_released_pattern = r'^tags/.*$'           # Tags only
+
 
 # this is needed for some reason...
 # see https://github.com/numpy/numpydoc/issues/69
@@ -142,10 +150,11 @@ pygments_style = 'sphinx'
 # a list of builtin themes.
 html_theme = 'pydata_sphinx_theme'
 
-# html_sidebars = {
-#     '**': ['globaltoc.html', 'sourcelink.html', 'searchbox.html'],
-# }
-html_sidebars = {}
+html_sidebars = {
+    '**': [
+        'versioning.html',
+    ],
+}
 
 
 # Theme options are theme-specific and customize the look and feel of a theme

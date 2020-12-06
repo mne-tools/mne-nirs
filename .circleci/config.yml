@@ -1,4 +1,4 @@
-# Tagging a commit with [circle front] will build the front page and perform test-doc.
+# Tagging a commit with [circle front] will build the front page and perform tests-doc.
 # Tagging a commit with [circle full] will build everything.
 version: 2
 jobs:
@@ -72,17 +72,12 @@ jobs:
 
         # Build docs
         - run:
-            name: Download data
-            command: |
-              cd examples;
-              git clone --depth 1 https://github.com/rob-luke/BIDS-NIRS-Tapping.git;
-
-
-        # Build docs
-        - run:
             name: make html
             command: |
               cd doc;
+              git status
+              git tag
+              git branch
               make html;
 
         # Save the outputs

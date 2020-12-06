@@ -3,7 +3,7 @@
 
 # You can set these variables from the command line.
 SPHINXOPTS    = -nWT --keep-going
-SPHINXBUILD   = sphinx-build
+SPHINXBUILD   = sphinx-multiversion
 PAPER         =
 BUILDDIR      = _build
 
@@ -57,7 +57,8 @@ html:
 	# the embedding of images more robust
 	rm -rf $(BUILDDIR)/html/_images
 	#rm -rf _build/doctrees/
-	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+	@echo "$(SPHINXBUILD)  $(BUILDDIR)/html"
+	$(SPHINXBUILD) . $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
