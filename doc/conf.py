@@ -54,9 +54,8 @@ extensions = [
 smv_branch_whitelist = r'^.*$'
 # v0.0.1 config is not compatible with sphinx-multiversion, so use 2 onwards
 smv_tag_whitelist = r'^v\d+\.\d+.[2-9]$'
-# Mark tags as releases.
-# TODO: Change to use the maint/vX.X branches as these can have backports
-smv_released_pattern = r'^tags/.*$'           # Tags only
+# Mark vX.Y.Z as releases
+smv_released_pattern = r'v\d+\.\d+\.\d+'
 
 
 # this is needed for some reason...
