@@ -2,84 +2,53 @@ name: "docs"
 on:
 - pull_request
 
+
 jobs:
+  # PIP + non-default stim channel + log level info
   job:
-    name: 'build'
-    runs-on: ubuntu-latest
+    if: "github.repository == 'mne-tools/mne-nirs' && !contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[skip github]')"
+    name: 'py3.8'
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        shell: bash
+    env:
+      DISPLAY: ':99.0'
+      MNE_LOGGING_LEVEL: 'info'
+      MNE_STIM_CHANNEL: 'STI101'
+      OPENBLAS_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+      PYTHON_VERSION: '3.8'
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - shell: bash -el {0}
-      run: |
-        cp requirements_doc.txt doc/requirements.txt
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: ./tools/setup_xvfb.sh
+        name: 'Setup xvfb'
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+        name: 'Setup python'
+      - shell: bash -el {0}
+        run: |
+          ./tools/github_actions_dependencies.sh
+          source tools/get_minimal_commands.sh
+        name: 'Install dependencies'
+      - shell: bash -el {0}
+        run: |
+          pip install --progress-bar off --upgrade -r requirements_doc.txt
+        name: 'Install doc dependencies'
+      - shell: bash -el {0}
+        run: ./tools/github_actions_install.sh
+        name: 'Install MNE'
+      - shell: bash -el {0}
+        run: ./tools/github_actions_infos.sh
+        name: 'Show infos'
 
-    - shell: bash -el {0}
-      run: |
-        pwd
-
-    - shell: bash -el {0}
-      run: |
-        ls -al
-
-    - shell: bash -el {0}
-      run: |
-        git status
-
-
-    - shell: bash -el {0}
-      run: |
-        git branch
-
-    - shell: bash -el {0}
-      run: |
-        git tag
-
-    - uses: FranzDiebold/github-env-vars-action@v2
-    - name: Print environment variables
-      run: |
-        echo "CI_REPOSITORY_SLUG=$CI_REPOSITORY_SLUG"
-        echo "CI_REPOSITORY_OWNER=$CI_REPOSITORY_OWNER"
-        echo "CI_REPOSITORY_OWNER_SLUG=$CI_REPOSITORY_OWNER_SLUG"
-        echo "CI_REPOSITORY_NAME=$CI_REPOSITORY_NAME"
-        echo "CI_REPOSITORY_NAME_SLUG=$CI_REPOSITORY_NAME_SLUG"
-        echo "CI_REPOSITORY=$CI_REPOSITORY"
-        echo "CI_REF_SLUG=$CI_REF_SLUG"
-        echo "CI_ACTION_REF_NAME=$CI_ACTION_REF_NAME"
-        echo "CI_ACTION_REF_NAME_SLUG=$CI_ACTION_REF_NAME_SLUG"
-        echo "CI_REF_NAME=$CI_REF_NAME"
-        echo "CI_REF_NAME_SLUG=$CI_REF_NAME_SLUG"
-        echo "CI_REF=$CI_REF"
-        echo "CI_HEAD_REF_SLUG=$CI_HEAD_REF_SLUG"
-        echo "CI_HEAD_REF=$CI_HEAD_REF"
-        echo "CI_BASE_REF_SLUG=$CI_BASE_REF_SLUG"
-        echo "CI_BASE_REF=$CI_BASE_REF"
-        echo "CI_SHA_SHORT=$CI_SHA_SHORT"
-        echo "CI_SHA=$CI_SHA"
-        echo "CI_ACTOR=$CI_ACTOR"
-        echo "CI_EVENT_NAME=$CI_EVENT_NAME"
-        echo "CI_RUN_ID=$CI_RUN_ID"
-        echo "CI_RUN_NUMBER=$CI_RUN_NUMBER"
-        echo "CI_WORKFLOW=$CI_WORKFLOW"
-        echo "CI_ACTION=$CI_ACTION"
-        echo "GITHUB_SHA=$GITHUB_SHA"
-        echo "GITHUB_REF=$GITHUB_REF"
-
-    - shell: bash -el {0}
-      run: |
-        git reset --hard "$GITHUB_SHA"
-        git checkout -q -B "$GITHUB_REF"
-
-    - shell: bash -el {0}
-      run: |
-        git status
-
-
-    - uses: ammaraskar/sphinx-action@master
-      with:
-        docs-folder: "doc/"
-        pre-build-command: "apt-get update -y && apt-get install -y python3-dev build-essential git && touch /tmp/sphinx-log"
-    - uses: actions/upload-artifact@v1
-      with:
-        name: DocumentationHTML
-        path: doc/_build/html/
+      - shell: bash -el {0}
+        run: |
+          git status
+      - uses: actions/upload-artifact@v1
+        with:
+          name: DocumentationHTML
+          path: doc/_build/html/
