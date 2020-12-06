@@ -7,7 +7,7 @@ jobs:
   # PIP + non-default stim channel + log level info
   job:
     if: "github.repository == 'mne-tools/mne-nirs' && !contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[skip github]')"
-    name: 'py3.8'
+    name: 'build'
     runs-on: ubuntu-20.04
     defaults:
       run:
