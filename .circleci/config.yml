@@ -1,4 +1,4 @@
-# Tagging a commit with [circle front] will build the front page and perform test-doc.
+# Tagging a commit with [circle front] will build the front page and perform tests-doc.
 # Tagging a commit with [circle full] will build everything.
 version: 2
 jobs:
@@ -69,14 +69,6 @@ jobs:
                python -c "import mne; mne.set_config('MNE_USE_CUDA', 'false')"  # this is needed for the config tutorial
                python -c "import mne; mne.set_config('MNE_LOGGING_LEVEL', 'info')"
                python -c "import mne; level = mne.get_config('MNE_LOGGING_LEVEL'); assert level.lower() == 'info', repr(level)"
-
-        # Build docs
-        - run:
-            name: Download data
-            command: |
-              cd examples;
-              git clone --depth 1 https://github.com/rob-luke/BIDS-NIRS-Tapping.git;
-
 
         # Build docs
         - run:

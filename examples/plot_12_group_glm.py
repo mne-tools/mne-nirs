@@ -72,6 +72,7 @@ from mne_nirs.channels import get_short_channels, get_long_channels
 from mne_nirs.channels import picks_pair_to_idx
 from mne_nirs.utils._io import glm_to_tidy
 from mne_nirs.visualisation import plot_glm_group_topo
+from mne_nirs.datasets import fnirs_motor_group
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids
@@ -191,7 +192,8 @@ for sub in range(1, 6):  # Loop from first to fifth subject
     ID = '%02d' % sub  # Tidy the subject name
 
     # Create path to file based on experiment info
-    bids_path = BIDSPath(subject=ID, task="tapping", root='BIDS-NIRS-Tapping',
+    bids_path = BIDSPath(subject=ID, task="tapping",
+                         root=fnirs_motor_group.data_path(),
                          datatype="nirs", suffix="nirs", extension=".snirf")
 
     # Analyse data and return both ROI and channel results
