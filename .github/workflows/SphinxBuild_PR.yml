@@ -13,6 +13,23 @@ jobs:
     - shell: bash -el {0}
       run: |
         cp requirements_doc.txt doc/requirements.txt
+
+    - shell: bash -el {0}
+      run: |
+        pwd
+
+    - shell: bash -el {0}
+      run: |
+        ls
+
+    - shell: bash -el {0}
+      run: |
+        git status
+
+    - shell: bash -el {0}
+      run: |
+        git tag
+
     - uses: ammaraskar/sphinx-action@master
       with:
         docs-folder: "doc/"
