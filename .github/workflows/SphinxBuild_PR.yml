@@ -62,13 +62,13 @@ jobs:
         echo "CI_RUN_NUMBER=$CI_RUN_NUMBER"
         echo "CI_WORKFLOW=$CI_WORKFLOW"
         echo "CI_ACTION=$CI_ACTION"
-        echo "GITHUB_SHA=GITHUB_SHA"
-        echo "GITHUB_REF=GITHUB_REF"
+        echo "GITHUB_SHA=$GITHUB_SHA"
+        echo "GITHUB_REF=$GITHUB_REF"
 
     - shell: bash -el {0}
       run: |
-        git reset --hard "GITHUB_SHA"
-        git checkout -q -B "GITHUB_REF"
+        git reset --hard "$GITHUB_SHA"
+        git checkout -q -B "$GITHUB_REF"
 
     - shell: bash -el {0}
       run: |
