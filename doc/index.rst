@@ -4,14 +4,10 @@
    contain the root `toctree` directive.
 
 
-
-
-
 MNE-NIRS
 ========
 
 This is a library to assist with processing near-infrared spectroscopy data with MNE.
-
 
 
 Installation
