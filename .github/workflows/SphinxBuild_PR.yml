@@ -20,7 +20,7 @@ jobs:
 
     - shell: bash -el {0}
       run: |
-        ls
+        ls -al
 
     - shell: bash -el {0}
       run: |
