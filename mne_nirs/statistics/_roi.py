@@ -1,7 +1,8 @@
 import numpy as np
 
 
-def glm_region_of_interest(stats, group_by, cond_idx, cond_name):
+def glm_region_of_interest(stats, group_by, cond_idx,
+                           cond_name, weighted=True):
     """
     Calculate statistics for region of interest.
 
@@ -20,8 +21,10 @@ def glm_region_of_interest(stats, group_by, cond_idx, cond_name):
         Note that within a dict entry all channels must have the same type.
     cond_idx : integer
         Index of condition of interest.
-    cond_idx : String
+    cond_name : String
         Name to be used for condition.
+    weighted : Bool
+        Should channels be weighted by inverse of standard error (True).
 
     Returns
     -------
@@ -55,7 +58,11 @@ def glm_region_of_interest(stats, group_by, cond_idx, cond_name):
                 ses.append(_se(stats[ch_names[pick]])[cond_idx])
                 dfe = stats[ch_names[pick]].df_model
 
-            weights = 1. / np.asarray(ses)
+            # Should channels be weighted by inverse of standard error
+            if weighted:
+                weights = 1. / np.asarray(ses)
+            else:
+                weights = np.ones(len(ses))
             weights /= np.sum(weights)
 
             theta = np.sum(thetas * weights)

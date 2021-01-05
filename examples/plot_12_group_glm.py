@@ -364,7 +364,9 @@ con_summary = df_con.query("Chroma in ['hbo']")
 # Run group level model and convert to dataframe
 con_model = smf.mixedlm("effect ~ -1 + ch_name:Chroma",
                         con_summary, groups=con_summary["ID"]).fit(method='nm')
-con_model_df = statsmodels_to_results(con_model)
+con_model_df = statsmodels_to_results(con_model,
+                                      order=raw_haemo.copy().pick(
+                                          picks="hbo").ch_names)
 
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                     con_model_df, colorbar=True, axes=axes)
