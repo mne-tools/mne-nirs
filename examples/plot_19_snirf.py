@@ -36,7 +36,6 @@ from mne_nirs.io import write_raw_snirf
 from numpy.testing import assert_allclose
 
 
-
 ###############################################################################
 # Import raw NIRS data from vendor
 # --------------------------------
