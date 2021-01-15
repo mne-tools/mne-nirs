@@ -13,17 +13,29 @@ and highlight differences and common issues you may face.
 
 
 Basic Homer2 script to be reproduced in MNE
--------------------------------------------
+===========================================
 
-Below is an example common analysis performed in
+Below is a common example analysis performed in Homer.
+The NIRx data is converted to .nirs format.
+Then the intensity signal is convert to optical density,
+motion corrected using TDDR, and converted to haemoglobin concentration.
 
 
 .. code-block:: matlab
 
-   a = some_function(test)
-   b = another_function(a)
-   the_output = log(b)
-
+   HomerOfflineConverter('~/mne_data/MNE-fNIRS-motor-data/Participant-1');
+   load('file.nirs', '-mat');
+   fs = 7.8125;
+   dRange = [0.07 3];
+   SNRthresh = 7;
+   SDrange = [0 45];
+   reset = 0;
+   tIncMan = ones(size(s,1),1);
+   dod = hmrIntensity2OD(d);
+   SD = enPruneChannels(d,SD,tIncMan,dRange,SNRthresh,SDrange,reset);
+   tddr = hmrMotionCorrectTDDR(dod,SD,fs);
+   ppf = [6 6];
+   dc = hmrOD2Conc(tddr,SD,ppf);
 
 .. contents:: Page contents
    :local:
@@ -31,6 +43,11 @@ Below is an example common analysis performed in
 
 """
 
+###############################################################################
+# MNE equivalent of Homer script
+# ==============================
+#
+# First the necessary libraries and functions are imported.
 
 # Authors: Robert Luke <mail@robertluke.net>
 #
@@ -40,17 +57,55 @@ import os
 import mne
 
 from mne.io import read_raw_nirx
+from mne.preprocessing.nirs import (optical_density, beer_lambert_law,
+                                    temporal_derivative_distribution_repair)
 
 
 ###############################################################################
-# Basic Homer2 script to be reproduced in MNE
-# ------------------------------------------
+# Convert to optical density and motion correct
+# ---------------------------------------------
 #
-# Below is an example common analysis performed in Homer.
-#
+# Similar to Homer the data can be converted to optical density and
+# motion can be corrected using the TDDR method.
 
-
+# First we obtain the path to the data
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
+
+# Next we read the data
 raw_intensity = read_raw_nirx(fnirs_raw_dir).load_data()
 
+
+###############################################################################
+# Convert signal to optical density and apply TDDR
+# ------------------------------------------------
+#
+# As with Homer we can convert the intensity data to optical density and
+# apply motion correction using the TDDR method.
+
+raw_od = optical_density(raw_intensity)
+corrected_tddr = temporal_derivative_distribution_repair(raw_od)
+
+
+###############################################################################
+# Convert to haemoglobin concentration
+# ------------------------------------
+#
+# Next we convert the signal to changes in haemoglobin concentration.
+# MNE uses a different default value for the partial pathlength factor (ppf),
+# Homer uses a default value of ppf=6, whereas MNE uses ppf=0.1,
+# To exactly match the results from Homer we can manually set the ppf value to
+# 6 in MNE.
+
+raw_h = beer_lambert_law(corrected_tddr, 6.)
+
+
+###############################################################################
+# Further analysis details
+# ------------------------------------
+#
+# Commonly this preprocessing is followed by an averaging analysis as described
+# at https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html.
+# If you have specific Homer processing you would like to replicate in MNE
+# please let us know by creating an issue at
+# https://github.com/mne-tools/mne-nirs/issues

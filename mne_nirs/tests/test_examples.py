@@ -15,9 +15,9 @@ def examples_path():
                   "https://github.com/rob-luke/BIDS-NIRS-Tapping.git")
 
     if os.path.isdir("examples"):
-        path = "examples/"
+        path = "examples/general/"
     else:
-        path = "../examples/"
+        path = "../examples/general/"
 
     return path
 
@@ -31,7 +31,7 @@ def run_script_and_check(test_file_path):
 @pytest.mark.parametrize('fname', (["plot_10_hrf_simulation.py",
                                     "plot_11_hrf_measured.py",
                                     "plot_12_group_glm.py",
-                                    "plot_19_snirf.py",
+                                    "plot_01_homer.py",
                                     "plot_20_enhance.py",
                                     "plot_30_frequency.py",
                                     "plot_99_bad.py"]))
