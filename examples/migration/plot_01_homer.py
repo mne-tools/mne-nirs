@@ -98,7 +98,7 @@ corrected_tddr = temporal_derivative_distribution_repair(raw_od)
 # To exactly match the results from Homer we can manually set the ppf value to
 # 6 in MNE.
 
-raw_h = beer_lambert_law(corrected_tddr, 6.)
+raw_h = beer_lambert_law(corrected_tddr, ppf=6.)
 
 
 ###############################################################################

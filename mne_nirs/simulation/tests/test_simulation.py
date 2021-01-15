@@ -35,7 +35,7 @@ def test_simulate_NIRS_multi_channel():
                                         'Cond_B'],
                             stim_dur=[5, 5, 5],
                             sig_dur=300.,
-                            isi_min=15., isi_max=45.,
+                            isi_min=5., isi_max=15.,
                             hrf_model='spm')
 
     design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
