@@ -1,5 +1,8 @@
 .. _general_examples:
 
+Examples
+========
+
 The examples gallery provides working code samples demonstrating various
 analysis and visualization techniques.
 

@@ -1,15 +1,16 @@
 """
 .. _tut-migration-homer:
 
-Migrating your analysis from Homer to MNE
-=========================================
+Migrating from Homer to MNE
+===========================
+
+This tutorial will demonstrate how to do convert a basic Homer script to MNE
+and highlight differences and common issues you may face.
 
 Homer2 is a MATLAB based software analysis package. https://homer-fnirs.org/
 
 Homer3 is also a MATLAB based analysis package. https://github.com/BUNPC/Homer3
 
-This tutorial will demonstrate how to do convert a basic Homer script to MNE
-and highlight differences and common issues you may face.
 
 
 Basic Homer2 script to be reproduced in MNE
