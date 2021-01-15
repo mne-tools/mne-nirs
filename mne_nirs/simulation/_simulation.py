@@ -7,14 +7,24 @@ from mne import Annotations, create_info
 from mne.io import RawArray
 
 
-def simulate_nirs_raw(sfreq=3., amplitude=1., annot_desc='A',
-                      sig_dur=300., stim_dur=5.,
-                      isi_min=15., isi_max=45.,
-                      ch_name='Simulated'):
+def simulate_nirs_raw(sfreq=3.,
+                      amplitude=1.,
+                      annot_desc='A',
+                      sig_dur=300.,
+                      stim_dur=5.,
+                      isi_min=15.,
+                      isi_max=45.,
+                      ch_name='Simulated',
+                      hrf_model='glover'):
     """
     Create simulated data.
 
-      .. warning:: Work in progress: I am trying to think on the best API.
+    The returned data is of type `hbo`.
+    One or more conditions can be simulated.
+    To simulate multiple conditions pass in a description and amplitude
+    for each
+    `amplitude=[0., 2., 4.], annot_desc=['Control', 'Cond_A', 'Cond_B']`.
+
 
     Parameters
     ----------
@@ -22,10 +32,14 @@ def simulate_nirs_raw(sfreq=3., amplitude=1., annot_desc='A',
         The sample rate.
     amplitude : Number, Array of numbers
         The amplitude of the signal to simulate in uM.
+        Pass in an array to simulate multiple conditions.
     annot_desc : String, Array of strings
         The name of the annotations for simulated amplitudes.
+        Pass in an array to simulate multiple conditions,
+        must be the same length as amplitude.
     sig_dur : Number
-        The length of the signal to generate in seconds.
+        The length of the boxcar signal to generate in seconds that will
+        be convolved with the HRF.
     stim_dur : Number, Array of numbers
         The length of the stimulus to generate in seconds.
     isi_min : Number
@@ -34,6 +48,8 @@ def simulate_nirs_raw(sfreq=3., amplitude=1., annot_desc='A',
         The maximum duration of the inter stimulus interval in seconds.
     ch_name : String
         Channel name to be used in returned raw instance.
+    hrf_model : string
+        Specifies the hemodynamic response function. See nilearn docs.
 
     Returns
     -------
@@ -73,6 +89,7 @@ def simulate_nirs_raw(sfreq=3., amplitude=1., annot_desc='A',
                         'duration': durations})
 
     dm = make_first_level_design_matrix(frame_times, events,
+                                        hrf_model=hrf_model,
                                         drift_model='polynomial',
                                         drift_order=0)
     dm = dm.drop(columns='constant')
