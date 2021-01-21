@@ -106,7 +106,7 @@ raw_h = beer_lambert_law(corrected_tddr, ppf=6.)
 # ------------------------------------
 #
 # Commonly this preprocessing is followed by an averaging analysis as described
-# at https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html.
+# in the :ref:`MNE fNIRS tutorial <mne:tut-fnirs-processing>`
 # If you have specific Homer processing you would like to replicate in MNE
 # please let us know by creating an issue at
 # https://github.com/mne-tools/mne-nirs/issues
