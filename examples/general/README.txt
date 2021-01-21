@@ -1,4 +1,4 @@
 .. _general_examples:
 
-fNIRS analysis
---------------
+Analysis examples
+-----------------
