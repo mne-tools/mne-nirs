@@ -5,12 +5,11 @@ Migrating from Homer to MNE
 ===========================
 
 This tutorial will demonstrate how to do convert a basic Homer script to MNE
-and highlight differences and common issues you may face.
+and highlight differences and common issues you may encounter.
 
 Homer2 is a MATLAB based software analysis package. https://homer-fnirs.org/
 
 Homer3 is also a MATLAB based analysis package. https://github.com/BUNPC/Homer3
-
 
 
 Basic Homer2 script to be reproduced in MNE
@@ -106,7 +105,8 @@ raw_h = beer_lambert_law(corrected_tddr, ppf=6.)
 # ------------------------------------
 #
 # Commonly this preprocessing is followed by an averaging analysis as described
-# in the :ref:`MNE fNIRS tutorial <mne:tut-fnirs-processing>`
-# If you have specific Homer processing you would like to replicate in MNE
+# in the :ref:`MNE fNIRS tutorial <mne:tut-fnirs-processing>`.
+# If there is useful processing in the Homer
+# that is not available in MNE
 # please let us know by creating an issue at
 # https://github.com/mne-tools/mne-nirs/issues

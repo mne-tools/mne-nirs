@@ -4,11 +4,11 @@
 Migrating from nirs-toolbox to MNE
 ==================================
 
-This tutorial will demonstrate how to do convert a nirs-toolbox  script to MNE
-and highlight differences and common issues you may face.
+This tutorial will demonstrate how to do convert a nirs-toolbox script to MNE
+and highlight differences and common issues you may encounter.
 
-nirs-toolbox is a MATLAB based software analysis package. https://github.com/huppertt/nirs-toolbox
-
+nirs-toolbox is a MATLAB based software analysis
+package. https://github.com/huppertt/nirs-toolbox
 
 
 Basic nirs-toolbox script to be reproduced in MNE
@@ -59,7 +59,7 @@ Finally a mixed effects model is run on the group level dat.
 # MNE equivalent of nirs-toolbox script
 # =====================================
 #
-# The MNE equivelent of this analysis is well described
+# The MNE equivalent of this analysis is well described
 # in :ref:`the group level tutorial <tut-fnirs-group>`.
 #
 # So this page will focus on the differences between the two approaches.
@@ -77,6 +77,7 @@ Finally a mixed effects model is run on the group level dat.
 # Further analysis details
 # ------------------------------------
 #
-# If you have specific nirs-toolbox processing you would like to replicate in
-# MNE please let us know by creating an issue at
+# If there is useful processing in the nirs-toolbox
+# that is not available in MNE
+# please let us know by creating an issue at
 # https://github.com/mne-tools/mne-nirs/issues
