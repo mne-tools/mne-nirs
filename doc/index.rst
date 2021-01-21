@@ -45,8 +45,7 @@ Nilearn: http://nilearn.github.io/authors.html#citing
 
 statsmodels: https://www.statsmodels.org/stable/index.html#citation
 
-There is not currently a journal article specifically on MNE-NIRS, so please find a
-`relevant paper of mine to cite from here <https://scholar.google.com/citations?user=LngqH5sAAAAJ&hl=en>`_.
+Until there is a journal article specifically on MNE-NIRS, please cite `this article <https://www.biorxiv.org/content/10.1101/2020.12.22.423886v1>`_.
 
 .. toctree::
    :maxdepth: 2
