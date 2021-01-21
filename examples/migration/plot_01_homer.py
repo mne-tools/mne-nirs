@@ -65,8 +65,8 @@ from mne.preprocessing.nirs import (optical_density, beer_lambert_law,
 # Convert to optical density and motion correct
 # ---------------------------------------------
 #
-# Similar to Homer the data can be converted to optical density and
-# motion can be corrected using the TDDR method.
+# First we load the data which simply involves pointing the load function
+# to the correct directory.
 
 # First we obtain the path to the data
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
