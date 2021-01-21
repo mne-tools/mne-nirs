@@ -69,15 +69,14 @@ Finally a mixed effects model is run on the group level dat.
 # Differences between toolboxes
 # ---------------------------------------------
 #
-# MNE does not have iterative reweighting in the GLM analysis.
+# MNE does not have iterative reweighting of the noise estimate
+# in the GLM analysis.
 
 
 ###############################################################################
 # Further analysis details
 # ------------------------------------
 #
-# Commonly this preprocessing is followed by an averaging analysis as described
-# in the :ref:`MNE fNIRS tutorial <mne:tut-fnirs-processing>`
 # If you have specific nirs-toolbox processing you would like to replicate in
 # MNE please let us know by creating an issue at
 # https://github.com/mne-tools/mne-nirs/issues
