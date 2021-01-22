@@ -15,9 +15,9 @@ def examples_path():
                   "https://github.com/rob-luke/BIDS-NIRS-Tapping.git")
 
     if os.path.isdir("examples"):
-        path = "examples/"
+        path = "examples/general/"
     else:
-        path = "../examples/"
+        path = "../examples/general/"
 
     return path
 
