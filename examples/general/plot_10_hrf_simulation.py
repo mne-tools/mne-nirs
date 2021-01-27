@@ -8,6 +8,8 @@ In this example we simulate a block design fNIRS experiment and analyse
 the simulated signal. We investigate the effect additive noise and
 measurement length has on response amplitude estimates.
 
+Test change is visible
+
 .. contents:: Page contents
    :local:
    :depth: 2
