@@ -11,7 +11,7 @@ from mne.utils import _validate_type
 
 def enhance_negative_correlation(raw):
     """
-    Apply method to enhance negative correlation between HbO and HbR.
+    Apply algorithm from Cui et al 2009.
 
     Cui et al, Functional Near Infrared Spectroscopy (NIRS) signal
     improvement based on negative correlation between oxygenated and
