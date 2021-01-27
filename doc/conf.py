@@ -60,7 +60,7 @@ smv_released_pattern = r'^refs/tags/.*$'
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
-# generate autosummary even if no references
+# generate autosummary even if no references.
 autosummary_generate = True
 
 # The suffix of source filenames.
@@ -100,11 +100,10 @@ pygments_style = 'sphinx'
 # a list of builtin themes.
 html_theme = 'pydata_sphinx_theme'
 
-# html_sidebars = {
-#     '**': [
-#         'versioning.html',
-#     ],
-# }
+# Remove left side bar
+html_sidebars = {
+  "**": []
+}
 
 # variables to pass to HTML templating engine
 html_context = {
@@ -124,6 +123,7 @@ html_theme_options = {
     "search_bar_position": "navbar",
     'github_url': 'https://github.com/mne-tools/mne-nirs',
     "show_toc_level": 1,
+    "google_analytics_id": "UA-188272121-1",
 }
 
 
