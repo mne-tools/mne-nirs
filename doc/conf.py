@@ -51,13 +51,13 @@ extensions = [
     'numpydoc',
 ]
 
-smv_branch_whitelist = r'^.*$'
+smv_branch_whitelist = r'master'
 # v0.0.1 config is not compatible with sphinx-multiversion, so use 2 onwards
 # smv_tag_whitelist = r'^v\d+\.\d+.[2-9]$'
 # Just build master and no tags
 smv_tag_whitelist = None
 # Mark vX.Y.Z as releases
-smv_released_pattern = r'^refs/tags/.*$'
+smv_released_pattern = r'^(master|v\d+\.\d+.[2-9])$'  # untested, works?
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
