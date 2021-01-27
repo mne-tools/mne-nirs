@@ -39,9 +39,9 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dLabelMore">
-{#                {%- for item in versions.in_development %}#}
-{#                    <li><a href="{{ item.url }}">{{ item.name }}</a></li>#}
-{#                {%- endfor %}#}
+                {%- for item in versions.in_development %}
+                    <li><a href="{{ item.url }}">{{ item.name }}</a></li>
+                {%- endfor %}
                 {%- for ver, txt in versions_dropdown.items() %}
                     <li><a href="https://mne.tools/mne-nirs/{{ ver }}/index.html">{{ txt }}</a></li>
                 {%- endfor %}

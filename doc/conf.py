@@ -51,13 +51,11 @@ extensions = [
     'numpydoc',
 ]
 
-smv_branch_whitelist = r'master'
+smv_branch_whitelist = r'^.*$'
 # v0.0.1 config is not compatible with sphinx-multiversion, so use 2 onwards
-# smv_tag_whitelist = r'^v\d+\.\d+.[2-9]$'
-# Just build master and no tags
-smv_tag_whitelist = None
+smv_tag_whitelist = r'^v\d+\.\d+.[2-9]$'
 # Mark vX.Y.Z as releases
-smv_released_pattern = r'^(master|v\d+\.\d+.[2-9])$'  # untested, works?
+smv_released_pattern = r'^(?!master).*$'  # Include all branches except "master"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -102,11 +100,10 @@ pygments_style = 'sphinx'
 # a list of builtin themes.
 html_theme = 'pydata_sphinx_theme'
 
-# html_sidebars = {
-#     '**': [
-#         'versioning.html',
-#     ],
-# }
+# Remove left side bar
+html_sidebars = {
+  "**": []
+}
 
 # variables to pass to HTML templating engine
 html_context = {
@@ -126,6 +123,7 @@ html_theme_options = {
     "search_bar_position": "navbar",
     'github_url': 'https://github.com/mne-tools/mne-nirs',
     "show_toc_level": 1,
+    "google_analytics_id": "UA-188272121-1",
 }
 
 
