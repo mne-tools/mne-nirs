@@ -27,7 +27,6 @@
         {% endfor %}
       </ul>
 
-
       {% if theme_search_bar_position == 'navbar' %}
         {%- include "search-field.html" %}
       {% endif %}
@@ -40,8 +39,11 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dLabelMore">
+                {%- for item in versions.branches %}
+                    <li><a href="{{ item.url }}">{{ item.name }}</a></li>
+                {%- endfor %}
                 {%- for ver, txt in versions_dropdown.items() %}
-                <li><a href="https://mne.tools/mne-nirs/{{ ver }}/index.html">{{ txt }}</a></li>
+                    <li><a href="https://mne.tools/mne-nirs/{{ ver }}/index.html">{{ txt }}</a></li>
                 {%- endfor %}
             </ul>
           </li>
