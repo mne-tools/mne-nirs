@@ -48,11 +48,6 @@ jobs:
         name: 'Show infos'
       - shell: bash -el {0}
         run: |
-          git reset --hard "$GITHUB_SHA"
-          git checkout -q -B "$GITHUB_REF"
-          git reset --hard "$GITHUB_SHA"
-      - shell: bash -el {0}
-        run: |
           git status
       - shell: bash -el {0}
         run: ./tools/github_actions_docs.sh
