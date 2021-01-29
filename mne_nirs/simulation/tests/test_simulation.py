@@ -34,7 +34,7 @@ def test_simulate_NIRS_multi_channel():
                                         'Cond_A',
                                         'Cond_B'],
                             stim_dur=[5, 5, 5],
-                            sig_dur=300.,
+                            sig_dur=1500.,
                             isi_min=5., isi_max=15.,
                             hrf_model='spm')
 
@@ -42,8 +42,8 @@ def test_simulate_NIRS_multi_channel():
                                                    drift_order=0,
                                                    drift_model='polynomial')
 
-    assert len(design_matrix['Control']) == 300 * 3
-    assert len(design_matrix['Cond_A']) == 300 * 3
+    assert len(design_matrix['Control']) == 1500 * 3
+    assert len(design_matrix['Cond_A']) == 1500 * 3
 
     # Make sure no extra channels. Specifically the default isn't present.
     with pytest.raises(KeyError, match='A'):
