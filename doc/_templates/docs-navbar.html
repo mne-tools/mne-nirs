@@ -35,7 +35,7 @@
         <!-- version dropdown -->
         <li class="dropdown">
             <button type="button" class="btn btn-{% if (build_dev_html|tobool) %}danger{% else %}primary{% endif %} btn-sm navbar-btn dropdown-toggle" id="dLabelMore" data-toggle="dropdown">
-                v{{ release }}
+                v{{ current_version.name }}
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dLabelMore">
