@@ -14,6 +14,11 @@ deoxyhaemoglobin (HbR) concentration.
 
 Here we will work with the :ref:`fNIRS motor data <fnirs-motor-dataset>`.
 """
+# sphinx_gallery_thumbnail_number = 11
+
+# Authors: Robert Luke <mail@robertluke.net>
+#
+# License: BSD (3-clause)
 
 import os
 import numpy as np
