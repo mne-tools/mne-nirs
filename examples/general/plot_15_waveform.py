@@ -45,7 +45,7 @@ raw_intensity.load_data()
 # detectors as black.
 
 subjects_dir = mne.datasets.sample.data_path() + '/subjects'
-
+mne.viz.set_3d_backend('pyvista')
 fig = mne.viz.create_3d_figure(size=(800, 600), bgcolor='white')
 fig = mne.viz.plot_alignment(raw_intensity.info, show_axes=True,
                              subject='fsaverage', coord_frame='mri',
