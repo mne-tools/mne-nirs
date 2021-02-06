@@ -5,7 +5,8 @@ GLM Analysis (Simulated)
 =============================
 
 In this example we simulate a block design
-functional near-infrared spectroscopy (fNIRS) experiment and analyse
+functional near-infrared spectroscopy (fNIRS)
+experiment and analyse
 the simulated signal. We investigate the effect additive noise and
 measurement length has on response amplitude estimates.
 
@@ -40,7 +41,7 @@ np.random.seed(1)
 # The amplitude of the simulated signal is 4 uMol and the sample rate is 3 Hz.
 # The simulated signal is plotted below.
 
-sfreq = 1.0
+sfreq = 3.
 amp = 4.
 
 raw = mne_nirs.simulation.simulate_nirs_raw(
@@ -131,7 +132,7 @@ raw = mne.simulation.add_noise(raw, cov,
 design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
                                                drift_order=1,
                                                drift_model='polynomial')
-glm_est = run_GLM(raw, design_matrix, noise_model='ar5')
+glm_est = run_GLM(raw, design_matrix)
 
 plt.plot(raw.times, raw_noise_free.get_data().T * 1e6)
 plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
@@ -155,7 +156,7 @@ print("Estimate:", glm_est['Simulated'].theta[0],
 # approximately 0.6 uM for 5 minutes of data to 0.25 uM for 30 minutes of data.
 
 raw = mne_nirs.simulation.simulate_nirs_raw(
-    sfreq=sfreq, sig_dur=60 * 100, amplitude=amp, isi_min=15., isi_max=45.)
+    sfreq=sfreq, sig_dur=60 * 30, amplitude=amp, isi_min=15., isi_max=45.)
 cov = mne.Covariance(np.ones(1) * 1e-11, raw.ch_names,
                      raw.info['bads'], raw.info['projs'], nfree=0)
 raw = mne.simulation.add_noise(raw, cov,
@@ -173,27 +174,11 @@ plt.plot(raw.times, glm_est['Simulated'].theta[0] * design_matrix["A"].values * 
 plt.xlabel("Time (s)")
 plt.ylabel("Haemoglobin (uM)")
 plt.legend(["Noisy Data", "GLM Estimate"])
-plt.show()
-print("Estimate:", glm_est['Simulated'].theta[0],
-      "  MSE:", glm_est['Simulated'].MSE,
-      "  Error (uM):", 1e6*(glm_est['Simulated'].theta[0] - amp*1e-6))
-
-
-glm_est = run_GLM(raw, design_matrix, noise_model='ar30')
-
 
 print("Estimate:", glm_est['Simulated'].theta[0],
       "  MSE:", glm_est['Simulated'].MSE,
       "  Error (uM):", 1e6*(glm_est['Simulated'].theta[0] - amp*1e-6))
 
-
-errors = []
-for ar_order in range(1, 30):
-    glm_est = run_GLM(raw, design_matrix, noise_model="ar" + str(ar_order))
-    errors.append(1e6*(glm_est['Simulated'].theta[0] - amp*1e-6))
-print(errors)
-plt.plot(range(len(errors)), errors)
-plt.show()
 
 ###############################################################################
 # Conclusion?
