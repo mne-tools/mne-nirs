@@ -4,7 +4,8 @@
 GLM Analysis (Measured)
 ============================
 
-In this example we analyse data from a real multichannel fNIRS
+In this example we analyse data from a real multichannel
+functional near-infrared spectroscopy (fNIRS)
 experiment (see :ref:`tut-fnirs-hrf-sim` for a simplified simulated
 analysis). The experiment consists of three conditions
 1) tapping with the left hand,

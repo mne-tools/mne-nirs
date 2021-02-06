@@ -10,7 +10,9 @@ SNIRF Support in MNE
    converter to create .snirf file.
    See https://github.com/fNIRS/snirf_homer3
 
-SNIRF is a file format for storing NIRS data. The specification is maintained
+SNIRF is a file format for storing
+functional near-infrared spectroscopy (fNIRS)
+data. The specification is maintained
 by the society for functional near infrared spectroscopy. In this tutorial
 we demonstrate how to convert your MNE data to SNIRF and also how to read
 SNIRF files.
