@@ -4,6 +4,11 @@
 Waveform averaging analysis
 ===========================
 
+.. sidebar:: Alternate version
+
+   This tutorial is also available on the MNE website at
+   https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html
+
 This tutorial covers how to convert functional near-infrared spectroscopy
 (fNIRS) data from raw measurements to relative oxyhaemoglobin (HbO) and
 deoxyhaemoglobin (HbR) concentration.
@@ -12,7 +17,7 @@ deoxyhaemoglobin (HbR) concentration.
    :local:
    :depth: 2
 
-Here we will work with the :ref:`fNIRS motor data <fnirs-motor-dataset>`.
+Here we will work with the :ref:`fNIRS motor data <mne:fnirs-motor-dataset>`.
 """
 # sphinx_gallery_thumbnail_number = 14
 
@@ -32,29 +37,6 @@ fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_cw_amplitude_dir = os.path.join(fnirs_data_folder, 'Participant-1')
 raw_intensity = mne.io.read_raw_nirx(fnirs_cw_amplitude_dir, verbose=True)
 raw_intensity.load_data()
-
-
-###############################################################################
-# View location of sensors over brain surface
-# -------------------------------------------
-#
-# Here we validate that the location of sources-detector pairs and channels
-# are in the expected locations. Source-detector pairs are shown as lines
-# between the optodes, channels (the mid point of source-detector pairs) are
-# optionally shown as orange dots. Source are optionally shown as red dots and
-# detectors as black.
-
-subjects_dir = mne.datasets.sample.data_path() + '/subjects'
-
-fig = mne.viz.create_3d_figure(size=(800, 600), bgcolor='white')
-fig = mne.viz.plot_alignment(raw_intensity.info, show_axes=True,
-                             subject='fsaverage', coord_frame='mri',
-                             trans='fsaverage', surfaces=['brain'],
-                             fnirs=['channels', 'pairs',
-                                    'sources', 'detectors'],
-                             subjects_dir=subjects_dir, fig=fig)
-mne.viz.set_3d_view(figure=fig, azimuth=20, elevation=60, distance=0.4,
-                    focalpoint=(0., -0.01, 0.02))
 
 ###############################################################################
 # Selecting channels appropriate for detecting neural responses
