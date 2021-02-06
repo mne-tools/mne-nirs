@@ -5,7 +5,9 @@ Frequency and Filter Commentary
 ===============================
 
 In this example we discuss frequency and filters in the context
-of NIRS analysis.
+of
+functional near-infrared spectroscopy (fNIRS)
+analysis.
 We examine the interplay between the expected brain response based
 on experimental design and our model of how the brain reacts to stimuli,
 the actual data measured during an experiment, and the filtering

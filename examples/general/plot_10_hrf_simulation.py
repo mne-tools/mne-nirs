@@ -4,7 +4,9 @@
 GLM Analysis (Simulated)
 =============================
 
-In this example we simulate a block design fNIRS experiment and analyse
+In this example we simulate a block design
+functional near-infrared spectroscopy (fNIRS)
+experiment and analyse
 the simulated signal. We investigate the effect additive noise and
 measurement length has on response amplitude estimates.
 

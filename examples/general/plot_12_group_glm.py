@@ -4,7 +4,9 @@
 Group Level GLM
 ===============
 
-This is an example of a group level GLM based fNIRS analysis in MNE-NIRS.
+This is an example of a group level GLM based
+functional near-infrared spectroscopy (fNIRS)
+analysis in MNE-NIRS.
 
 .. sidebar:: Relevant literature
 

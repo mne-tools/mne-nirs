@@ -12,7 +12,9 @@ Importance of Controls and Parameter Selection
    implication on general linear models in functional near-infrared
    spectroscopy. Neurophotonics. 2016;3(1)
 
-This tutorial demonstrates how **NOT** to process your fNIRS data.
+This tutorial demonstrates how **NOT** to process your
+functional near-infrared spectroscopy (fNIRS)
+data.
 Here I demonstrate that with a simple process pipelines even random noise
 can look like a canonical haemodynamic response.
 
