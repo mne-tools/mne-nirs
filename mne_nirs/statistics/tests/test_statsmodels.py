@@ -13,7 +13,7 @@ from ...statistics import run_GLM, statsmodels_to_results
 from ...utils._io import glm_to_tidy
 
 
-@pytest.mark.parametrize('func', ('mixedlm', 'ols'))
+@pytest.mark.parametrize('func', ('mixedlm', 'ols', 'rlm'))
 @pytest.mark.filterwarnings('ignore:.*optimization.*:')
 @pytest.mark.filterwarnings('ignore:.*on the boundary.*:')
 def test_statsmodel_to_df(func):
