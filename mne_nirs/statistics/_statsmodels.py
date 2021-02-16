@@ -38,10 +38,11 @@ def expand_summary_dataframe(summary):
 
     summary = summary.copy()  # Copies required to suppress .loc warnings
     sum_copy = summary.copy(deep=True)
-    float_p = [float(p) for p in sum_copy["P>|z|"]]
-    summary.loc[:, "P>|z|"] = float_p
+    key = 'P>|t|' if 'P>|t|' in summary.columns else 'P>|z|'
+    float_p = [float(p) for p in sum_copy[key]]
+    summary.loc[:, key] = float_p
     summary.loc[:, "Significant"] = False
-    summary.loc[summary["P>|z|"] < 0.05, 'Significant'] = True
+    summary.loc[summary[key] < 0.05, 'Significant'] = True
 
     # Standardise returned column name, it seems to vary per test
     if 'Coef.' in summary.columns:
