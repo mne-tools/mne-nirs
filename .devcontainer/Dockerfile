@@ -15,12 +15,12 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 # Copy environment.yml (if found) to a temp locaition so we update the environment. Also
 # copy "noop.txt" so the COPY instruction does not fail if no environment.yml exists.
-COPY environment_dev.yml* .devcontainer/noop.txt /tmp/conda-tmp/
-RUN if [ -f "/tmp/conda-tmp/environment_dev.yml" ]; then /opt/conda/bin/conda env update -n base -f /tmp/conda-tmp/environment_dev.yml; fi \
-    && rm -rf /tmp/conda-tmp
+COPY environment.yml /tmp/conda-tmp/
+RUN /opt/conda/bin/conda env update -n base -f /tmp/conda-tmp/environment.yml
+RUN rm -rf /tmp/conda-tmp
 
-# Install pylint
-RUN /opt/conda/bin/pip install pylint
+# Install useful test stuff
+RUN /opt/conda/bin/pip install pylint pytest
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
