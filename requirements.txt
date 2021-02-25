@@ -2,8 +2,8 @@ numpy>=1.15.4
 scipy>=1.1.0
 matplotlib
 pyqt5>=5.10,<5.14; platform_system == "Darwin"
-pyqt5>=5.10,!=5.15.2; platform_system == "Linux"
-pyqt5>=5.10; platform_system != "Linux" and platform_system != "Darwin"
+pyqt5>=5.10,!=5.15.2,!=5.15.3; platform_system == "Linux"
+pyqt5>=5.10,!=5.15.3; platform_system != "Linux" and platform_system != "Darwin"
 pyqt5-sip
 sip
 scikit-learn
@@ -22,12 +22,13 @@ vtk<8.2; platform_system == "Darwin"
 vtk; platform_system != "Darwin"
 mayavi
 PySurfer[save_movie]
-https://github.com/nilearn/nilearn/archive/master.zip # due to https://github.com/nilearn/nilearn/pull/2638
+https://github.com/nilearn/nilearn/archive/master.zip
 xlrd
 imageio>=2.6.1
 imageio-ffmpeg>=0.4.1
 pyvista>=0.24
 pyvistaqt>=0.2.0
 tqdm
+mffpy>=0.5.7
 mne>=0.21.0
 lxml
