@@ -58,11 +58,6 @@ jobs:
             name: Check PyQt5
             command: LD_DEBUG=libs python -c "from PyQt5.QtWidgets import QApplication, QWidget; app = QApplication([])"
 
-        - save_cache:
-            key: pip-cache
-            paths:
-              - ~/.cache/pip
-
         # Look at what we have and fail early if there is some library conflict
         # (remove irrelevant lines compared to MNE-Python)
         - run:
