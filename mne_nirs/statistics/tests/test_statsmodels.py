@@ -3,6 +3,8 @@
 # License: BSD (3-clause)
 
 import numpy as np
+from numpy.testing import assert_allclose
+
 import pytest
 import pandas as pd
 import statsmodels.formula.api as smf
@@ -39,7 +41,7 @@ def test_statsmodel_to_df(func):
                      groups=df_cha["ID"]).fit()
     df = statsmodels_to_results(roi_model)
     assert type(df) == pd.DataFrame
-    assert df["Coef."]["Condition[A]"] == amplitude
+    assert_allclose(df["Coef."]["Condition[A]"], amplitude, rtol=1e-12)
     assert df["Significant"]["Condition[A]"]
     assert df.shape == (8, 8)
 
@@ -47,6 +49,6 @@ def test_statsmodel_to_df(func):
                         groups=df_cha["ID"]).fit()
     df = statsmodels_to_results(roi_model)
     assert type(df) == pd.DataFrame
-    assert df["Coef."]["Condition[A]"] == amplitude
+    assert_allclose(df["Coef."]["Condition[A]"], amplitude, rtol=1e-12)
     assert df["Significant"]["Condition[A]"]
     assert df.shape == (8, 8)
