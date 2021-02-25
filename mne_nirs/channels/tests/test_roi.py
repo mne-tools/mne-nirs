@@ -34,8 +34,8 @@ def test_roi_picks():
 
     with pytest.warns(RuntimeWarning, match='No matching channels'):
         picks = picks_pair_to_idx(raw, [[1, 1], [1, 2], [15, 13], [8, 16]],
-                                on_missing='warning')
-        assert len(picks) == 6  # Missing should be ignored
+                                  on_missing='warning')
+    assert len(picks) == 6  # Missing should be ignored
 
     picks = picks_pair_to_idx(raw, [[1, 1], [1, 2], [15, 13], [8, 16]],
                               on_missing='ignore')
