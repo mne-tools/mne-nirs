@@ -43,4 +43,5 @@ jobs:
           skip: ${{ env.CODESPELL_SKIPS }}
           quiet_level: '3'
           builtin: 'clear,rare,informal,names'
+          ignore_words_file: '.github/workflows/ignore_words.txt'
         name: 'Run codespell'
