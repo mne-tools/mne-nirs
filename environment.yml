@@ -1,7 +1,7 @@
 
 name: mne-nirs
 channels:
-- defaults
+- conda-forge
 dependencies:
 - python>=3.8
 - pip
@@ -16,29 +16,26 @@ dependencies:
 - pillow
 - statsmodels
 - jupyter
-- lxml
 - joblib
 - psutil
 - numexpr
 - traits
-- pyface
+- pyface!=7.3.0
 - traitsui
 - imageio
 - tqdm
-- spyder-kernels
-- pip:
-  - mne>=0.21.0
-  - https://github.com/mne-tools/mne-nirs/archive/master.zip
-  - imageio-ffmpeg>=0.4.1
-  - vtk>=9.0.1
-  - pyvista>=0.24
-  - pyvistaqt
-  - https://github.com/enthought/mayavi/archive/master.zip
-  - PySurfer[save_movie]
-  - dipy --only-binary dipy
-  - nibabel
-  - nilearn>=0.7.0
-  - neo
-  - python-picard
-  - PyQt5>=5.10,<5.14; platform_system == "Darwin"
-  - PyQt5>=5.10; platform_system != "Darwin"
+- spyder-kernels>=1.10.0
+- imageio-ffmpeg>=0.4.1
+- vtk>=9.0.1
+- pyvista>=0.24
+- pyvistaqt>=0.2.0
+- mayavi
+- PySurfer
+- dipy
+- nibabel
+- nilearn
+- python-picard
+- pyqt!=5.15.3
+- mne
+- mffpy>=0.5.7
+- mne>=0.21.0
