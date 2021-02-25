@@ -22,7 +22,7 @@ vtk<8.2; platform_system == "Darwin"
 vtk; platform_system != "Darwin"
 mayavi
 PySurfer[save_movie]
-nilearn
+https://github.com/nilearn/nilearn/archive/master.zip
 xlrd
 imageio>=2.6.1
 imageio-ffmpeg>=0.4.1
