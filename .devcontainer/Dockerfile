@@ -21,6 +21,8 @@ RUN if [ -f "/tmp/conda-tmp/environment_dev.yml" ]; then /opt/conda/bin/conda en
 
 # Install pylint
 RUN /opt/conda/bin/pip install pylint
+RUN /opt/conda/bin/pip install -r requirements_doc.txt
+RUN /opt/conda/bin/pip install -r requirements_testing.txt
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
