@@ -14,6 +14,7 @@ from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
 from mne_nirs.statistics import run_GLM
 
 
+@pytest.mark.filterwarnings('ignore:.*The nilearn.glm module is experimental.*:')
 def test_io():
     num_chans = 6
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()

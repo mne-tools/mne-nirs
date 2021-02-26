@@ -8,6 +8,7 @@ import pytest
 from mne_nirs.experimental_design import make_first_level_design_matrix
 
 
+@pytest.mark.filterwarnings('ignore:.*The nilearn.glm module is experimental.*:')
 def test_simulate_NIRS_single_channel():
 
     raw = simulate_nirs_raw(sfreq=3., amplitude=1., sig_dur=300., stim_dur=5.,
@@ -26,6 +27,7 @@ def test_simulate_NIRS_single_channel():
                               stim_dur=5., isi_min=15., isi_max=45.)
 
 
+@pytest.mark.filterwarnings('ignore:.*The nilearn.glm module is experimental.*:')
 def test_simulate_NIRS_multi_channel():
 
     raw = simulate_nirs_raw(sfreq=3.,

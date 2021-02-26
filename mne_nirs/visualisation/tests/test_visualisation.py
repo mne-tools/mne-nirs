@@ -63,6 +63,7 @@ def test_plot_nirs_source_detector_mayavi():
         verbose=True)
 
 
+@pytest.mark.filterwarnings('ignore:.*The nilearn.glm module is experimental.*:')
 def test_run_plot_GLM_topo():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
@@ -83,9 +84,10 @@ def test_run_plot_GLM_topo():
     assert len(fig.axes) == 6
 
     # Two conditions * one chroma + 1 x colorbar
-    fig = plot_glm_topo(raw_haemo.copy().pick(picks="hbo"),
-                        glm_estimates, design_matrix,
-                        requested_conditions=['A', 'B'])
+    with pytest.warns(RuntimeWarning, match='Reducing GLM results'):
+        fig = plot_glm_topo(raw_haemo.copy().pick(picks="hbo"),
+                            glm_estimates, design_matrix,
+                            requested_conditions=['A', 'B'])
     assert len(fig.axes) == 3
 
     # One conditions * two chroma + 2 x colorbar
@@ -94,15 +96,17 @@ def test_run_plot_GLM_topo():
     assert len(fig.axes) == 4
 
     # One conditions * one chroma + 1 x colorbar
-    fig = plot_glm_topo(raw_haemo.copy().pick(picks="hbo"),
-                        glm_estimates,
-                        design_matrix, requested_conditions=['A'])
+    with pytest.warns(RuntimeWarning, match='Reducing GLM results'):
+        fig = plot_glm_topo(raw_haemo.copy().pick(picks="hbo"),
+                            glm_estimates,
+                            design_matrix, requested_conditions=['A'])
     assert len(fig.axes) == 2
 
     # One conditions * one chroma + 0 x colorbar
-    fig = plot_glm_topo(raw_haemo.copy().pick(picks="hbo"),
-                        glm_estimates, design_matrix,
-                        colorbar=False, requested_conditions=['A'])
+    with pytest.warns(RuntimeWarning, match='Reducing GLM results'):
+        fig = plot_glm_topo(raw_haemo.copy().pick(picks="hbo"),
+                            glm_estimates, design_matrix,
+                            colorbar=False, requested_conditions=['A'])
     assert len(fig.axes) == 1
 
     # Ensure warning thrown if glm estimates is missing channels from raw
@@ -112,6 +116,7 @@ def test_run_plot_GLM_topo():
         plot_glm_topo(raw_haemo, glm_estimates_subset, design_matrix)
 
 
+@pytest.mark.filterwarnings('ignore:.*The nilearn.glm module is experimental.*:')
 def test_run_plot_GLM_contrast_topo():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
@@ -131,6 +136,7 @@ def test_run_plot_GLM_contrast_topo():
     assert len(fig.axes) == 3
 
 
+@pytest.mark.filterwarnings('ignore:.*The nilearn.glm module is experimental.*:')
 def test_run_plot_GLM_contrast_topo_single_chroma():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
