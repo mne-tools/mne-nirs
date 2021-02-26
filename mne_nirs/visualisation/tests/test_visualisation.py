@@ -63,7 +63,7 @@ def test_plot_nirs_source_detector_mayavi():
         verbose=True)
 
 
-@pytest.mark.filterwarnings('ignore:.*The nilearn.glm module is experimental.*:')
+@pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
 def test_run_plot_GLM_topo():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
@@ -116,7 +116,7 @@ def test_run_plot_GLM_topo():
         plot_glm_topo(raw_haemo, glm_estimates_subset, design_matrix)
 
 
-@pytest.mark.filterwarnings('ignore:.*The nilearn.glm module is experimental.*:')
+@pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
 def test_run_plot_GLM_contrast_topo():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
@@ -136,7 +136,7 @@ def test_run_plot_GLM_contrast_topo():
     assert len(fig.axes) == 3
 
 
-@pytest.mark.filterwarnings('ignore:.*The nilearn.glm module is experimental.*:')
+@pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
 def test_run_plot_GLM_contrast_topo_single_chroma():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
