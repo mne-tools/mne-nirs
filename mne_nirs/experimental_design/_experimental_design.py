@@ -71,12 +71,7 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
     design_matrix : DataFrame instance,
         holding the computed design matrix, the index being the frames_times
         and each column a regressor.
-    oversampling : As specified in Nilearn
 
-    Returns
-    -------
-    dm : Design matrix
-        As specified in Nilearn.
     """
     from nilearn.glm.first_level import make_first_level_design_matrix
     from pandas import DataFrame
