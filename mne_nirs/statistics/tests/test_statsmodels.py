@@ -18,6 +18,7 @@ from ...utils._io import glm_to_tidy
 @pytest.mark.parametrize('func', ('mixedlm', 'ols', 'rlm'))
 @pytest.mark.filterwarnings('ignore:.*optimization.*:')
 @pytest.mark.filterwarnings('ignore:.*on the boundary.*:')
+@pytest.mark.filterwarnings('ignore:.*The Hessian matrix at the estimated.*:')
 def test_statsmodel_to_df(func):
     func = getattr(smf, func)
     np.random.seed(0)

@@ -2,6 +2,7 @@
 #
 # License: BSD (3-clause)
 
+import pytest
 import nilearn
 
 from mne_nirs.experimental_design import make_first_level_design_matrix
@@ -9,6 +10,7 @@ from mne_nirs.statistics import run_GLM
 from mne_nirs.simulation import simulate_nirs_raw
 
 
+@pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
 def test_run_GLM():
     raw = simulate_nirs_raw(sig_dur=200, stim_dur=5.)
     design_matrix = make_first_level_design_matrix(raw, stim_dur=5.,

@@ -23,44 +23,55 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
     ----------
     raw : instance of Raw
         Haemoglobin data.
+
     stim_dur : Number
         The length of your stimulus.
-    hrf_model : {'spm', 'spm + derivative', 'spm + derivative + dispersion',
-        'glover', 'glover + derivative', 'glover + derivative + dispersion',
-        'fir', None}, optional,
-        Specifies the hemodynamic response function
-    drift_model : {'polynomial', 'cosine', None}, optional
-        Specifies the desired drift model,
-    period_cut : float, optional
-        Cut period of the high-pass filter in seconds.
-        Used only if drift_model is 'cosine'.
+
+    hrf_model : {'glover', 'spm', 'spm + derivative',
+         'spm + derivative + dispersion',
+        'glover + derivative', 'glover + derivative + dispersion',
+        'fir', None}, optional
+        Specifies the hemodynamic response function. Default='glover'.
+
+    drift_model : {'cosine', 'polynomial', None}, optional
+        Specifies the desired drift model. Default='cosine'.
+
+    high_pass : float, optional
+        High-pass frequency in case of a cosine model (in Hz).
+        Default=0.01.
+
     drift_order : int, optional
         Order of the drift model (in case it is polynomial).
-    fir_delays : array of shape(n_onsets) or list, optional,
+        Default=1.
+
+    fir_delays : array of shape(n_onsets) or list, optional
         In case of FIR design, yields the array of delays used in the FIR
-        model (in scans).
-    add_regs : array of shape(n_frames, n_add_reg), optional
+        model (in scans). Default=[0].
+
+    add_regs : array of shape(n_frames, n_add_reg) or pandas DataFrame
         additional user-supplied regressors, e.g. data driven noise regressors
         or seed based regressors.
+
     add_reg_names : list of (n_add_reg,) strings, optional
         If None, while add_regs was provided, these will be termed
         'reg_%i', i = 0..n_add_reg - 1
+        If add_regs is a DataFrame, the corresponding column names are used
+        and add_reg_names is ignored.
+
     min_onset : float, optional
         Minimal onset relative to frame_times[0] (in seconds)
         events that start before frame_times[0] + min_onset are not considered.
-    oversampling: int, optional,
-        Oversampling factor used in temporal convolutions.
+        Default=-24.
+
+    oversampling : int, optional
+        Oversampling factor used in temporal convolutions. Default=50.
+
     Returns
     -------
     design_matrix : DataFrame instance,
         holding the computed design matrix, the index being the frames_times
         and each column a regressor.
-    oversampling : As specified in Nilearn
 
-    Returns
-    -------
-    dm : Design matrix
-        As specified in Nilearn.
     """
     from nilearn.glm.first_level import make_first_level_design_matrix
     from pandas import DataFrame
