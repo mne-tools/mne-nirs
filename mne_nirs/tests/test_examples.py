@@ -28,6 +28,7 @@ def run_script_and_check(test_file_path):
     return exec(open(test_file_path).read(), locals(), locals())
 
 
+@pytest.mark.examples
 @pytest.mark.parametrize('fname', (["plot_10_hrf_simulation.py",
                                     "plot_11_hrf_measured.py",
                                     "plot_12_group_glm.py",
