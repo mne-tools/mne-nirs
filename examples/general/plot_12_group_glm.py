@@ -385,6 +385,8 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
 
 
 ###############################################################################
+# Table of channel level results
+# ------------------------------
 #
 # Sometimes a reviewer wants a long table of results per channel.
 # This can be generated from the statistics dataframe.
