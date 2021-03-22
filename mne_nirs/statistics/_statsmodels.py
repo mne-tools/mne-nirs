@@ -131,5 +131,6 @@ def statsmodels_to_results(model, order=None):
         df['ch_name'] = df.index
         df.index = df['old_index']
         df.drop(columns='old_index', inplace=True)
+        df.rename_axis(None, inplace=True)
 
     return df

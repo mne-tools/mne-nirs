@@ -382,3 +382,22 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
 
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
                     con_model_df, colorbar=True, threshold=True)
+
+
+###############################################################################
+#
+# Sometimes a reviewer wants a long table of results per channel.
+# This can be generated from the statistics dataframe.
+
+ch_summary = df_cha.query("Condition in ['Tapping/Left', 'Tapping/Right']")
+ch_summary = ch_summary.query("Chroma in ['hbo']")
+
+# Run group level model and convert to dataframe
+ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:Condition",
+                       ch_summary, groups=ch_summary["ID"]).fit(method='nm')
+
+# Here we can use the order argument to ensure the channel name order
+ch_model_df = statsmodels_to_results(ch_model,
+                                     order=raw_haemo.copy().pick(
+                                         picks="hbo").ch_names)
+ch_model_df
