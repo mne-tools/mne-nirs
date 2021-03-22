@@ -68,6 +68,7 @@ _REPLACEMENTS = (
     ('P>|t|', 'pvalues'),
 )
 
+
 def statsmodels_to_results(model, order=None):
     """
     Convert statsmodels summary to a dataframe.
