@@ -26,7 +26,7 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
     if not op.isdir(datapath + "/MNE-fNIRS-motor-group-data/"):
         remove_archive, full = _download(datapath, downloadpath,
                                          "MNE-fNIRS-motor-group-data.zip",
-                                         "60472f83805b5676730e0d256fabeb7d")
+                                         "b91af49a59aea246727ac574517ac4fc")
         _extract(datapath, "fNIRS-motor-group",
                  op.join(datapath, "MNE-fNIRS-motor-group-data"),
                  full, op.join(datapath, "BIDS-NIRS-Tapping-master"), True)
