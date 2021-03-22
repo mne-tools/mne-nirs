@@ -38,7 +38,10 @@ def expand_summary_dataframe(summary):
     for row_idx, row in enumerate(indices):
         col_vals = row.split(':')
         for col_idx, col in enumerate(col_names):
-            val = col_vals[col_idx].split('[')[1].split(']')[0]
+            if "]" in col_vals[col_idx]:
+                val = col_vals[col_idx].split('[')[1].split(']')[0]
+            else:
+                val = col
             summary.at[row, col] = val
 
     summary = summary.copy()  # Copies required to suppress .loc warnings
@@ -66,7 +69,7 @@ _REPLACEMENTS = (
 )
 
 
-def statsmodels_to_results(model):
+def statsmodels_to_results(model, order=None):
     """
     Convert statsmodels summary to a dataframe.
 
@@ -74,6 +77,8 @@ def statsmodels_to_results(model):
     ----------
     model : statsmodels model output
         The output of a statsmodels analysis. For example rlm or mixedlm.
+    order : array of strings
+        Requested order of the channels.
 
     Returns
     -------
@@ -118,4 +123,14 @@ def statsmodels_to_results(model):
         df.iloc[model.k_fe:, df.columns == 'Std.Err.'] = sdf[:, 1]
 
     df = expand_summary_dataframe(df)
+
+    if order is not None:
+        df['old_index'] = df.index
+        df = df.set_index('ch_name')
+        df = df.loc[order, :]
+        df['ch_name'] = df.index
+        df.index = df['old_index']
+        df.drop(columns='old_index', inplace=True)
+        df.rename_axis(None, inplace=True)
+
     return df
