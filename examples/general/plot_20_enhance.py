@@ -5,7 +5,9 @@ Signal Enhancement Techniques
 =============================
 
 In this document we investigate the effect of different signal enhancement
-techniques on NIRS data.
+techniques on
+functional near-infrared spectroscopy (fNIRS)
+data.
 
 .. contents:: Page contents
    :local:

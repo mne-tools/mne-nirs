@@ -4,6 +4,10 @@
 Group Level GLM
 ===============
 
+This is an example of a group level GLM based
+functional near-infrared spectroscopy (fNIRS)
+analysis in MNE-NIRS.
+
 .. sidebar:: Relevant literature
 
    Gorgolewski, Krzysztof J., et al.
@@ -12,8 +16,6 @@ Group Level GLM
 
    Santosa, H., Zhai, X., Fishburn, F., & Huppert, T. (2018).
    The NIRS brain AnalyzIR toolbox. Algorithms, 11(5), 73.
-
-This is an example of a group level GLM based fNIRS analysis in MNE-NIRS.
 
 Individual level analysis of this data is described in the
 :ref:`MNE fNIRS waveform tutorial <mne:tut-fnirs-processing>`

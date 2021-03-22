@@ -3,10 +3,12 @@
 # License: BSD (3-clause)
 
 import os
+import pytest
 import mne
 import mne_nirs
 import numpy as np
 from mne_nirs.experimental_design import make_first_level_design_matrix
+from mne_nirs.simulation import simulate_nirs_raw
 
 
 def _load_dataset():
@@ -57,6 +59,7 @@ def test_create_boxcar():
     assert np.max(np.mean(bc, axis=1)) * bc.shape[1] == 1
 
 
+@pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
 def test_create_design():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
@@ -68,3 +71,21 @@ def test_create_design():
     # Number of columns is number of conditions plus the drift plus constant
     assert design_matrix.shape[1] ==\
         len(np.unique(raw_intensity.annotations.description)) + 2
+
+
+def test_cropped_raw():
+    # Ensure timing is correct for cropped signals
+    raw = simulate_nirs_raw(sfreq=1., amplitude=1., sig_dur=300., stim_dur=1.,
+                            isi_min=20., isi_max=40.)
+
+    onsets = raw.annotations.onset
+    onsets_after_crop = [onsets[idx] for idx in np.where(onsets > 100)]
+
+    raw.crop(tmin=100)
+    design_matrix = make_first_level_design_matrix(raw, drift_order=0,
+                                                   drift_model='polynomial')
+
+    # 100 corrects for the crop time above
+    # 4 is peak time after onset
+    new_idx = np.round(onsets_after_crop[0][0]) - 100 + 4
+    assert design_matrix["A"][new_idx] > 0.1

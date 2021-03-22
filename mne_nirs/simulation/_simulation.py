@@ -17,7 +17,7 @@ def simulate_nirs_raw(sfreq=3.,
                       ch_name='Simulated',
                       hrf_model='glover'):
     """
-    Create simulated data.
+    Create simulated fNIRS data.
 
     The returned data is of type `hbo`.
     One or more conditions can be simulated.
