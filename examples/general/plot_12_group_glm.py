@@ -400,4 +400,7 @@ ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:Condition",
 ch_model_df = statsmodels_to_results(ch_model,
                                      order=raw_haemo.copy().pick(
                                          picks="hbo").ch_names)
+# And make the table prettier
+ch_model_df.reset_index(drop=True, inplace=True)
+ch_model_df = ch_model_df.set_index(['ch_name', 'Condition'])
 ch_model_df
