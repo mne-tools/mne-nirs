@@ -68,6 +68,14 @@ jobs:
               python -m pip install --user --upgrade --progress-bar off -r requirements.txt -r requirements_testing.txt -r requirements_doc.txt
               python -m pip install --user -e .
 
+
+        # Hack in uninstalls of libraries as necessary if pip doesn't do the right thing in upgrading for us...
+        - run:
+            name: Get Python running
+            command: |
+              ./tools/circleci_dependencies.sh
+
+
         - run:
             name: Check PyQt5
             command: LD_DEBUG=libs python -c "from PyQt5.QtWidgets import QApplication, QWidget; app = QApplication([])"
