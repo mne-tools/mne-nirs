@@ -1,6 +1,13 @@
 # Tagging a commit with [circle front] will build the front page and perform tests-doc.
 # Tagging a commit with [circle full] will build everything.
-version: 2
+version: 2.1
+
+_xvfb: &xvfb
+  name: Start Xvfb virtual framebuffer
+  command: |
+    echo "export DISPLAY=:99" >> $BASH_ENV
+    /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 1280x1024x24 -ac +extension GLX +render -noreset -nolisten tcp -nolisten unix
+
 jobs:
     build_docs:
       docker:
@@ -32,10 +39,17 @@ jobs:
                   optipng
 
         - run:
-            name: Spin up Xvfb
+            <<: *xvfb
+            
+        - run:
+            name: Install fonts needed for diagrams
             command: |
-              /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 1400x900x24 -ac +extension GLX +render -noreset;
-
+              mkdir -p $HOME/.fonts
+              curl https://codeload.github.com/adobe-fonts/source-code-pro/tar.gz/2.038R-ro/1.058R-it/1.018R-VAR | tar xz -C $HOME/.fonts
+              curl https://codeload.github.com/adobe-fonts/source-sans-pro/tar.gz/3.028R | tar xz -C $HOME/.fonts
+              fc-cache -f
+            
+            
         - run:
             name: Install fonts needed for diagrams
             command: |
@@ -57,7 +71,8 @@ jobs:
         - run:
             name: Check PyQt5
             command: LD_DEBUG=libs python -c "from PyQt5.QtWidgets import QApplication, QWidget; app = QApplication([])"
-
+            
+            
         # Look at what we have and fail early if there is some library conflict
         # (remove irrelevant lines compared to MNE-Python)
         - run:
