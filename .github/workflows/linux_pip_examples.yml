@@ -10,7 +10,6 @@ on:
     - cron: "0 13 * * 1"
 
 jobs:
-  # PIP + non-default stim channel + log level info
   job:
     name: 'py3.8'
     runs-on: ubuntu-20.04
