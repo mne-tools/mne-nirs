@@ -1,15 +1,18 @@
+# requirements for running tests (on top of environment.yml/requirements.txt)
 pytest!=4.6.0
 pytest-cov
-pytest-mock
 pytest-timeout
+pytest-harvest
 flake8
 flake8-array-spacing
-https://github.com/sphinx-gallery/sphinx-gallery/archive/master.zip
-https://github.com/numpy/numpydoc/archive/main.zip
-https://github.com/codespell-project/codespell/archive/master.zip
+numpydoc
+codespell
 pydocstyle
 check-manifest
 twine
 wheel
+
+# mne-nirs specific requirements
+# redundancy with docs as all doc notebooks are tested
 https://codeload.github.com/rob-luke/mne-bids/zip/nirs
 lets-plot
