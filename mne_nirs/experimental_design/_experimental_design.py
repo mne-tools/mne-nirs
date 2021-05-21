@@ -104,10 +104,6 @@ def create_boxcar(raw, event_id=None, stim_dur=5):
     """
     Create a boxcar of the experiment.
 
-      .. warning:: The naming of this function may change. Use with caution.
-                   This is just a place holder while I get the documentation\
-                   up and running.
-
     Parameters
     ----------
     raw : instance of Raw
