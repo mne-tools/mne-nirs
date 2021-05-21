@@ -4,13 +4,14 @@
 Waveform averaging analysis
 ===========================
 
+.. note:: This tutorial is a mirror of the
+          (`MNE tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`__),
+          and is reproduced in MNE-NIRS for convenience and so that all
+          relevant material is easily accessible to users.
 
 This tutorial covers how to convert functional near-infrared spectroscopy
 (fNIRS) data from raw measurements to relative oxyhaemoglobin (HbO) and
 deoxyhaemoglobin (HbR) concentration.
-
-This tutorial is also available on the MNE website at
-https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html
 
 
 .. contents:: Page contents
