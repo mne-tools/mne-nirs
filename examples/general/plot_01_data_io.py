@@ -147,7 +147,7 @@ import numpy as np
 import pandas as pd
 import mne
 
-# sphinx_gallery_thumbnail_number = 2
+# sphinx_gallery_thumbnail_number = 1
 
 ###############################################################################
 # First, we generate an example CSV file which will then be loaded in to MNE.
