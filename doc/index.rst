@@ -13,6 +13,8 @@ This is a library to assist with processing near-infrared spectroscopy data with
 Installation
 ------------
 
+To install python and MNE follow `these instructions <https://mne.tools/dev/install/mne_python.html>`_.
+
 Run the following code to install MNE-NIRS.
 
 .. code:: bash
