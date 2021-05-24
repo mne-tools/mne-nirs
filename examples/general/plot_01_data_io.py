@@ -2,6 +2,11 @@
 r"""
 .. _tut-importing-fnirs-data:
 
+.. note:: This tutorial is a mirror of the 
+          (`MNE tutorial <https://mne.tools/dev/auto_tutorials/io/30_reading_fnirs_data.html>`__),
+          and is reproduced in MNE-NIRS for convenience and so that all
+          relevant material is easily accessible to users.
+
 
 fNIRS devices consist of two kinds of optodes: light sources (AKA "emitters" or
 "transmitters") and light detectors (AKA "receivers"). Channels are defined as
