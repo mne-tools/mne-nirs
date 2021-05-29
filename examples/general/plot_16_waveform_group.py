@@ -269,21 +269,21 @@ fig, axes = plt.subplots(nrows=len(rois), ncols=len(all_evokeds),
 lims = dict(hbo=[-8, 16], hbr=[-8, 16])
 
 for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
-    for cidx, evoked in enumerate(all_evokeds):
-        for ridx, roi in enumerate(rois):
+    for ridx, roi in enumerate(rois):
+        for cidx, evoked in enumerate(all_evokeds):
             if pick == 'hbr':
                 picks = rois[roi][1::2]  # Select only the hbr channels
             else:
                 picks = rois[roi][0::2]  # Select only the hbo channels
+
             plot_compare_evokeds({evoked: all_evokeds[evoked]}, combine='mean',
                                  picks=picks, axes=axes[ridx, cidx],
                                  show=False, colors=[color], legend=False,
                                  ylim=lims, ci=0.95, show_sensors=cidx == 2)
         axes[0, cidx].set_title(f"{evoked}")
-        axes[1, cidx].set_title("")
+        axes[1, cidx].set_title("") 
+    axes[ridx, 0].set_ylabel(f"{roi}\nChromophore (ΔμMol)")
 axes[0, 0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
-axes[0, 0].set_ylabel("Left ROI\nChromophore (ΔμMol)")
-axes[1, 0].set_ylabel("Right ROI\nChromophore (ΔμMol)")
 
 ###############################################################################
 # From this figure we observe that the response to the tapping seems
