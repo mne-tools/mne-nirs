@@ -25,11 +25,11 @@ analysis in MNE-NIRS.
 Individual level analysis of this data is described in the
 :ref:`MNE-NIRS fNIRS waveform tutorial <tut-fnirs-processing>`
 and the
-:ref:`MNE-NIRS fNIRS GLM tutorial <tut-fnirs-hrf>`
-So this example will skim over the individual level details
-and focus on the group level aspect of analysis.
+:ref:`MNE-NIRS fNIRS GLM tutorial <tut-fnirs-hrf>`.
+As such, this example will skim over the individual level details
+and focus on the group level aspects of analysis.
 Here we describe how to process multiple measurements
-and summarise  group level effects both as summary statistics and visually.
+and summarise group level effects both as summary statistics and visually.
 
 The data used in this example is available
 `at this location <https://github.com/rob-luke/BIDS-NIRS-Tapping>`_.
@@ -74,7 +74,7 @@ from pprint import pprint
 
 # Import MNE processing
 from mne.viz import plot_compare_evokeds
-from mne import Epochs, events_from_annotations
+from mne import Epochs, events_from_annotations, set_log_level
 
 # Import MNE-NIRS processing
 from mne_nirs.channels import get_long_channels
@@ -94,6 +94,9 @@ import statsmodels.formula.api as smf
 # Import Plotting Library
 import matplotlib.pyplot as plt
 from lets_plot import *
+
+# Set general parameters
+set_log_level("WARNING")  # Don't show info, as is repetitive for many subjects
 LetsPlot.setup_html()
 
 
@@ -112,8 +115,8 @@ LetsPlot.setup_html()
 # First we define the analysis that will be applied to each file.
 # This is a waveform analysis as described in the
 # :ref:`individual waveform tutorial <tut-fnirs-processing>`
-# and :ref:`artifact correction tutorial <ex-fnirs-artifacts>`,
-# so this example will skim over the individual level details.
+# and :ref:`artifact correction tutorial <ex-fnirs-artifacts>`.
+# As such, this example will skim over the individual level details.
 
 def individual_analysis(bids_path):
 
@@ -160,7 +163,8 @@ def individual_analysis(bids_path):
 # Next we loop through the five measurements and run the individual analysis
 # on each. For each individual the function returns the raw data and an
 # epoch structure. The epoch structure is then averaged to obtain an evoked
-# response per participant. Each condition is then added to list per condition.
+# response per participant. The individual evoked data is stored in a
+# dictionary (`all_evokeds`) by condition.
 
 all_evokeds = defaultdict(list)
 
@@ -191,8 +195,9 @@ pprint(all_evokeds)
 # View average waveform
 # ---------------------
 #
-# Next we generate a grand average epoch waveform per condition.
-# This is generated using all long fNIRS channels.
+# Next a grand average epoch waveform is generated per condition.
+# This is generated using all long fNIRS channels, as illustrated in the head
+# inset.
 
 # Specify the figure size and limits per chromophore.
 fig, axes = plt.subplots(nrows=1, ncols=len(all_evokeds), figsize=(17, 5))
@@ -202,7 +207,8 @@ for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
     for idx, evoked in enumerate(all_evokeds):
         plot_compare_evokeds({evoked: all_evokeds[evoked]}, combine='mean',
                              picks=pick, axes=axes[idx], show=False,
-                             colors=[color], legend=False, ylim=lims, ci=0.95)
+                             colors=[color], legend=False, ylim=lims, ci=0.95,
+                             show_sensors=idx == 2)
         axes[idx].set_title('{}'.format(evoked))
 axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 
@@ -233,13 +239,17 @@ axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 # dictionary for access below.
 # The fOLD toolbox can be used to assist in the design of ROIs.
 # And consideration should be paid to ensure optimal size ROIs are selected.
+#
+# In this example two ROIs are generated. One for the left motor cortex,
+# and one for the right motor cortex. These are called `Left_Hemisphere` and
+# `Right_Hemisphere` and stored in the `rois` dictionary.
 
 # Specify channel pairs for each ROI
 left = [[4, 3], [1, 3], [3, 3], [1, 2], [2, 3], [1, 1]]
 right = [[8, 7], [5, 7], [7, 7], [5, 6], [6, 7], [5, 5]]
 
 # Then generate the correct indices for each pair and store in dictionary
-groups = dict(
+rois = dict(
     Left_Hemisphere=picks_pair_to_idx(raw_haemo, left, on_missing='ignore'),
     Right_Hemisphere=picks_pair_to_idx(raw_haemo, right, on_missing='ignore'))
 
@@ -248,21 +258,22 @@ groups = dict(
 # View average waveform per region of interest
 # --------------------------------------------
 #
-# Next we generate a grand average epoch waveform per condition.
-# This is generated using all long fNIRS channels.
+# Next an average waveform is generated per condition per region of interest.
+# This allows the researcher to view the responses elicited in different
+# regions of the brain per condition.
 
 # Specify the figure size and limits per chromophore.
-fig, axes = plt.subplots(nrows=len(groups), ncols=len(all_evokeds),
+fig, axes = plt.subplots(nrows=len(rois), ncols=len(all_evokeds),
                          figsize=(15, 6))
 lims = dict(hbo=[-8, 16], hbr=[-8, 16])
 
 for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
     for cidx, evoked in enumerate(all_evokeds):
-        for ridx, group in enumerate(groups):
+        for ridx, roi in enumerate(rois):
             if pick == 'hbr':
-                picks = groups[group][1::2]
+                picks = rois[roi][1::2]  # Select only the hbr channels
             else:
-                picks = groups[group][0::2]
+                picks = rois[roi][0::2]  # Select only the hbo channels
             plot_compare_evokeds({evoked: all_evokeds[evoked]}, combine='mean',
                                  picks=picks, axes=axes[ridx, cidx],
                                  show=False, colors=[color], legend=False,
@@ -295,10 +306,10 @@ df = pd.DataFrame(columns=['ID', 'ROI', 'Chroma', 'Condition', 'Value'])
 
 for idx, evoked in enumerate(all_evokeds):
     for subj_data in all_evokeds[evoked]:
-        for roi in groups:
+        for roi in rois:
             for chroma in ["hbo", "hbr"]:
                 subj_id = subj_data.info["subject_info"]['first_name']
-                data = deepcopy(subj_data).pick(picks=groups[roi]).pick(chroma)
+                data = deepcopy(subj_data).pick(picks=rois[roi]).pick(chroma)
                 value = data.crop(tmin=5.0, tmax=7.0).data.mean() * 1.0e6
 
                 # Append metadata and extracted feature to dataframe
@@ -331,9 +342,9 @@ ggplot(df.query("Chroma == 'hbo'"),
 # Research question 1: Comparison of conditions
 # ---------------------------------------------------------------------------------------------------
 #
-# In this example question we ask: is the hbo response to tapping with the
-# right hand larger than the response when not tapping in the left ROI?
-# For this token example we subset the dataframe then apply the mixed
+# In this example question we ask: is the hbo responsen the left ROI to tapping
+# with the right hand larger than the response when not tapping (control)?
+# For this token example we subset the dataframe and then apply the mixed
 # effect model.
 
 input_data = df.query("Condition in ['Control', 'Tapping/Right']")
@@ -354,10 +365,13 @@ roi_model.summary()
 # Research question 2: Are responses larger on the contralateral side to tapping?
 # -------------------------------------------------------------------------------
 #
-# In this example question we ask: is the hbo response to tapping with the
-# right hand larger than the response when not tapping in the left ROI?
-# For this token example we subset the dataframe then apply the mixed
-# effect model.
+# In this example question we ask: when tapping, is the brain region on the
+# contralateral side of the brain to the tapping hand larger than the
+# ipsilateral side?
+#
+# First the ROI data in the dataframe is encoded as ipsi- and contralateral
+# to the tapping. Then the data is subset to just examine the tapping
+# conditions and the model is applied.
 
 # Encode the ROIs as ipsi- or contralateral to the hand that is tapping.
 df["Hemishphere"] = "Unknown"
