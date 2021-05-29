@@ -62,26 +62,20 @@ requirements_doc.txt file to run this example.
 
 
 # Import common libraries
-import numpy as np
 import pandas as pd
 from itertools import compress
 from collections import defaultdict
 from copy import deepcopy
+from pprint import pprint
 
 # Import MNE processing
-from mne.preprocessing.nirs import optical_density, beer_lambert_law
 from mne.viz import plot_compare_evokeds
+from mne import Epochs, events_from_annotations
 
 # Import MNE-NIRS processing
-from mne import Epochs, events_from_annotations
-from mne_nirs.statistics import run_GLM
-from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import glm_region_of_interest, statsmodels_to_results
-from mne_nirs.statistics import compute_contrast
-from mne_nirs.channels import get_short_channels, get_long_channels
+from mne_nirs.statistics import statsmodels_to_results
+from mne_nirs.channels import get_long_channels
 from mne_nirs.channels import picks_pair_to_idx
-from mne_nirs.utils._io import glm_to_tidy
-from mne_nirs.visualisation import plot_glm_group_topo
 from mne_nirs.datasets import fnirs_motor_group
 from mne.preprocessing.nirs import (
     beer_lambert_law,
@@ -102,9 +96,7 @@ import statsmodels.formula.api as smf
 
 # Import Plotting Library
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 from lets_plot import *
-
 LetsPlot.setup_html()
 
 
@@ -140,11 +132,8 @@ def individual_analysis(bids_path):
     sci = scalp_coupling_index(raw_od, h_freq=1.35, h_trans_bandwidth=0.1)
     raw_od.info["bads"] = list(compress(raw_od.ch_names, sci < 0.5))
 
-    # Interpolate bad channels based on neighbouring data and downample
-    raw_od.interpolate_bads()
+    # Downsample and apply signal cleaning techniques
     raw_od.resample(0.8)
-
-    # Apply signal cleaning techniques
     raw_od = temporal_derivative_distribution_repair(raw_od)
     raw_od = short_channel_regression(raw_od)
 
@@ -157,8 +146,11 @@ def individual_analysis(bids_path):
     # Apply further data cleaning techniques and extract epochs
     raw_haemo = enhance_negative_correlation(raw_haemo)
     raw_haemo = get_long_channels(raw_haemo, min_dist=0.01, max_dist=0.05)
-    # Extract events but ignore those with the word ends (i.e. drop ExperimentEnd trigger)
-    events, event_dict = events_from_annotations(raw_haemo,
+    raw_haemo.interpolate_bads()
+
+    # Extract events but ignore those with
+    # the word ends (i.e. drop ExperimentEnds events)
+    events, event_dict = events_from_annotations(raw_haemo, verbose=False,
                                                  regexp='^(?![Ends]).*$')
     epochs = Epochs(raw_haemo, events, event_id=event_dict,
         tmin=-5, tmax=20,
@@ -174,9 +166,9 @@ def individual_analysis(bids_path):
 # --------------------------------
 #
 # Next we loop through the five measurements and run the individual analysis
-# on each. We append the individual results in to a large dataframe that
-# will contain the results from all measurements. We create a group dataframe
-# for the region of interest, channel level, and contrast results.
+# on each. For each individual the function returns the raw data and an
+# epoch structure. The epoch structure is then averaged to obtain an evoked
+# response per participant. Each condition is then added to list per condition.
 
 all_evokeds = defaultdict(list)
 
@@ -193,20 +185,28 @@ for sub in range(1, 6):  # Loop from first to fifth subject
     for cidx, condition in enumerate(epochs.event_id):
         all_evokeds[condition].append(epochs[condition].average())
 
-all_evokeds
 
 ###############################################################################
-# Run analysis on all participants
-# --------------------------------
-#
-# Next we loop through the five measurements and run the individual analysis
-# on each. We append the individual results in to a large dataframe that
-# will contain the results from all measurements. We create a group dataframe
-# for the region of interest, channel level, and contrast results.
+# The end result is a dictionary indexed per condition.
+# With each item in the dictionary being a list of evoked responses.
+# See below that for each condition we have obtained an MNE evoked type
+# that is generated from the average of 30 trials and epoched from -5 to
+# 20 seconds.
 
-fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(17, 5))
+pprint(all_evokeds)
+
+###############################################################################
+# View average waveform
+# ---------------------
+#
+# Next we generate a grand average epoch waveform per condition.
+# This is generated using all long fNIRS channels.
+
+# Specify the figure size and limits per chromophore.
+fig, axes = plt.subplots(nrows=1, ncols=len(all_evokeds), figsize=(17, 5))
 lims = dict(hbo=[-5, 12], hbr=[-5, 12])
-ci = 0.95
+
+
 for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
     for idx, evoked in enumerate(all_evokeds):
         plot_compare_evokeds({evoked: all_evokeds[evoked]}, combine='mean',
@@ -217,6 +217,23 @@ axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 
 
 ###############################################################################
+# Generate regions of interest
+# --------------------------------
+#
+# Next we loop through the five measurements and run the individual analysis
+# on each. We append the individual results in to a large dataframe that
+
+# Specify channel pairs for each ROI
+left = [[4, 3], [1, 3], [3, 3], [1, 2], [2, 3], [1, 1]]
+right = [[8, 7], [5, 7], [7, 7], [5, 6], [6, 7], [5, 5]]
+
+# Then generate the correct indices for each pair
+groups = dict(
+    Left_Hemisphere=picks_pair_to_idx(raw_haemo, left, on_missing='ignore'),
+    Right_Hemisphere=picks_pair_to_idx(raw_haemo, right, on_missing='ignore'))
+
+
+###############################################################################
 # Run analysis on all participants
 # --------------------------------
 #
@@ -225,16 +242,7 @@ axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 # will contain the results from all measurements. We create a group dataframe
 # for the region of interest, channel level, and contrast results.
 
-
-left = [[4, 3], [1, 3], [3, 3], [1, 2], [2, 3], [1, 1]]
-right = [[8, 7], [5, 7], [7, 7], [5, 6], [6, 7], [5, 5]]
-# Then generate the correct indices for each pair
-groups = dict(
-    Left_Hemisphere=picks_pair_to_idx(raw_haemo, left, on_missing='ignore'),
-    Right_Hemisphere=picks_pair_to_idx(raw_haemo, right, on_missing='ignore'))
-print(groups)
-
-lat = pd.DataFrame(columns=['ID', 'ROI', 'Chroma', 'Condition', 'Value'])
+df = pd.DataFrame(columns=['ID', 'ROI', 'Chroma', 'Condition', 'Value'])
 
 for idx, evoked in enumerate(all_evokeds):
     for subject_data in all_evokeds[evoked]:
@@ -244,30 +252,79 @@ for idx, evoked in enumerate(all_evokeds):
                 data = deepcopy(subject_data).pick(picks=groups[roi]).pick(chroma)
                 mean_value = data.crop(tmin=5.0, tmax=7.0).data.mean() * 1.0e6
 
-                lat = lat.append({'ID': sub_id,  'ROI': roi, 'Chroma': chroma,
-                                  'Condition': evoked,
-                                  'Value': mean_value}, ignore_index=True)
+                df = df.append({'ID': sub_id, 'ROI': roi, 'Chroma': chroma,
+                                'Condition': evoked, 'Value': mean_value},
+                               ignore_index=True)
 
-lat
+# You can export the dataframe for analyis in your favorite stats program
+df.to_csv("stats-export.csv")
+
+# Print out the first entries in the dataframe
+df.head()
+
 
 ###############################################################################
-# Stats
-# --------------------------------
+# View individual results
+# -----------------------
 #
-# Next we loop through the five measurements and run the individual analysis
-# on each. We append the individual results in to a large dataframe that
-# will contain the results from all measurements. We create a group dataframe
-# for the region of interest, channel level, and contrast results.
-
-roi_model = smf.mixedlm("Value ~ -1 + Condition:ROI:Chroma", lat, groups=lat["ID"]).fit()
-print(roi_model.summary())
-
-
-df = statsmodels_to_results(roi_model)
+# In this example question we ask: is the hbo response to tapping with the
 
 ggplot(df.query("Chroma == 'hbo'"),
-       aes(x='Condition', y='Coef.', color='Significant', shape='ROI')) \
+       aes(x='Condition', y='Value', color='ID', shape='ROI')) \
     + geom_hline(y_intercept=0, linetype="dashed", size=1) \
     + geom_point(size=5) \
     + scale_shape_manual(values=[16, 17]) \
     + ggsize(800, 300)
+
+
+###############################################################################
+# Research question 1: Comparison of conditions
+# ---------------------------------------------------------------------------------------------------
+#
+# In this example question we ask: is the hbo response to tapping with the
+# right hand larger than the response when not tapping in the left ROI?
+# For this token example we subset the dataframe then apply the mixed
+# effect model.
+
+input_data = df.query("Condition in ['Control', 'Tapping/Right']")
+input_data = input_data.query("Chroma in ['hbo']")
+input_data = input_data.query("ROI in ['Left_Hemisphere']")
+
+roi_model = smf.mixedlm("Value ~ Condition", input_data,
+                        groups=input_data["ID"]).fit()
+roi_model.summary()
+
+###############################################################################
+# And the model indicates that for the oxyhaemoglobin data in the left
+# region of interest, that the tapping condition with the right hand evokes
+# a larger response than the control.
+
+
+###############################################################################
+# Research question 2: Are responses larger on the contralateral side to tapping?
+# -------------------------------------------------------------------------------
+#
+# In this example question we ask: is the hbo response to tapping with the
+# right hand larger than the response when not tapping in the left ROI?
+# For this token example we subset the dataframe then apply the mixed
+# effect model.
+
+# Encode the ROIs as ipsi- or contralateral to the hand that is tapping.
+df["Hemishphere"] = "Unknown"
+df.loc[(df["Condition"] == "Tapping/Right") & (df["ROI"] == "Right_Hemisphere"), "Hemishphere"] = "Ipsilateral"
+df.loc[(df["Condition"] == "Tapping/Right") & (df["ROI"] == "Left_Hemisphere"), "Hemishphere"] = "Contralateral"
+df.loc[(df["Condition"] == "Tapping/Left") & (df["ROI"] == "Left_Hemisphere"), "Hemishphere"] = "Ipsilateral"
+df.loc[(df["Condition"] == "Tapping/Left") & (df["ROI"] == "Right_Hemisphere"), "Hemishphere"] = "Contralateral"
+
+# Subset the data for example model
+input_data = df.query("Condition in ['Tapping/Right', 'Tapping/Left']")
+input_data = input_data.query("Chroma in ['hbo']")
+
+roi_model = smf.mixedlm("Value ~ Hemishphere", input_data,
+                        groups=input_data["ID"]).fit()
+roi_model.summary()
+
+###############################################################################
+# And the model indicates that for the oxyhaemoglobin data that larger
+# responses are evoked on the contralateral side to the hand that is tapping
+# compared to the ipsilateral side.
