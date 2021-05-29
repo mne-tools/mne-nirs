@@ -208,7 +208,7 @@ axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 
 ###############################################################################
 # From this figure we observe that the response to the tapping condition
-# with the right hand seems larger than when no tapping occured in the control
+# with the right hand seems larger than when no tapping occurred in the control
 # condition (similar for tapping with the left hand).
 # We test if this is the case in the analysis below.
 
@@ -229,7 +229,7 @@ axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 #
 # Here we specify two regions of interest by listing out the source-detector
 # pairs of interest and then determining which channels these correspond to
-# within the raw data structure. The channel indicies are stored in a
+# within the raw data structure. The channel indices are stored in a
 # dictionary for access below.
 # The fOLD toolbox can be used to assist in the design of ROIs.
 # And consideration should be paid to ensure optimal size ROIs are selected.
@@ -306,7 +306,7 @@ for idx, evoked in enumerate(all_evokeds):
                                 'Condition': evoked, 'Value': value},
                                ignore_index=True)
 
-# You can export the dataframe for analyis in your favorite stats program
+# You can export the dataframe for analysis in your favorite stats program
 df.to_csv("stats-export.csv")
 
 # Print out the first entries in the dataframe
