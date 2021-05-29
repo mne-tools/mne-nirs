@@ -211,7 +211,7 @@ for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
                              colors=[color], legend=False, ylim=lims, ci=0.95,
                              show_sensors=idx == 2)
         axes[idx].set_title('{}'.format(evoked))
-axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
+axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"]);
 
 ###############################################################################
 # From this figure we observe that the response to the tapping condition
@@ -254,6 +254,7 @@ rois = dict(
     Left_Hemisphere=picks_pair_to_idx(raw_haemo, left, on_missing='ignore'),
     Right_Hemisphere=picks_pair_to_idx(raw_haemo, right, on_missing='ignore'))
 
+pprint(rois)
 
 ###############################################################################
 # Create average waveform per ROI
@@ -283,7 +284,7 @@ for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
         axes[0, cidx].set_title(f"{evoked}")
         axes[1, cidx].set_title("") 
     axes[ridx, 0].set_ylabel(f"{roi}\nChromophore (ΔμMol)")
-axes[0, 0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
+axes[0, 0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"]);
 
 ###############################################################################
 # From this figure we observe that the response to the tapping seems
