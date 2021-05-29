@@ -10,12 +10,17 @@ analysis in MNE-NIRS.
 
 .. sidebar:: Relevant literature
 
-   Gorgolewski, Krzysztof J., et al.
-   "The brain imaging data structure, a format for organizing and describing
-   outputs of neuroimaging experiments." Scientific data 3.1 (2016): 1-9.
+   Luke, Robert, et al.
+   "Analysis methods for measuring passive auditory fNIRS responses generated
+   by a block-design paradigm." Neurophotonics 8.2 (2021):
+   `025008 <https://www.spiedigitallibrary.org/journals/neurophotonics/volume-8/issue-2/025008/Analysis-methods-for-measuring-passive-auditory-fNIRS-responses-generated-by/10.1117/1.NPh.8.2.025008.short>`_.
 
    Santosa, H., Zhai, X., Fishburn, F., & Huppert, T. (2018).
    The NIRS brain AnalyzIR toolbox. Algorithms, 11(5), 73.
+
+   Gorgolewski, Krzysztof J., et al.
+   "The brain imaging data structure, a format for organizing and describing
+   outputs of neuroimaging experiments." Scientific data 3.1 (2016): 1-9.
 
 Individual level analysis of this data is described in the
 :ref:`MNE fNIRS waveform tutorial <mne:tut-fnirs-processing>`
@@ -36,7 +41,7 @@ format and therefore already contains
 information about triggers, condition names, etc.
 The BIDS specification for NIRS data is still under development,
 as such you must use the development branch of MNE-BIDS as listed in the
-requirements_doc.txt file to run this example.
+`requirements_doc.txt` file to run this example.
 
 .. collapse:: |chevron-circle-down| Data description (click to expand)
    :class: success
@@ -98,11 +103,9 @@ LetsPlot.setup_html()
 #
 # .. sidebar:: Individual analysis procedures
 #
-#    Waveform individual analysis:
-#    :ref:`MNE docs <mne:tut-fnirs-processing>`
+#    :ref:`Waveform individual analysis <tut-fnirs-processing>`
 #
-#    GLM individual analysis:
-#    :ref:`MNE-NIRS docs <tut-fnirs-hrf>`
+#    :ref:`GLM individual analysis <tut-fnirs-hrf>`
 #
 # First we define the analysis that will be applied to each file.
 # This is a GLM analysis as described in the
@@ -228,7 +231,7 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
     + geom_hline(y_intercept=0, linetype="dashed", size=1) \
     + geom_point(size=5) \
     + facet_grid('ID') \
-    + ggsize(800, 300)
+    + ggsize(900, 350)
 
 
 ###############################################################################
@@ -291,7 +294,7 @@ ggplot(df.query("Chroma == 'hbo'"),
     + geom_hline(y_intercept=0, linetype="dashed", size=1) \
     + geom_point(size=5) \
     + scale_shape_manual(values=[16, 17]) \
-    + ggsize(800, 300) \
+    + ggsize(900, 300) \
     + geom_point(data=df.query("Chroma == 'hbr'")
                  .query("ROI == 'Left_Hemisphere'"), size=5, shape=1) \
     + geom_point(data=df.query("Chroma == 'hbr'")
