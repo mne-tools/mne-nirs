@@ -157,8 +157,8 @@ def individual_analysis(bids_path):
 
 
 ###############################################################################
-# Run analysis on all participants
-# --------------------------------
+# Run analysis on all data
+# ------------------------
 #
 # Next we loop through the five measurements and run the individual analysis
 # on each. For each individual the function returns the raw data and an
@@ -256,8 +256,8 @@ rois = dict(
 
 
 ###############################################################################
-# View average waveform per region of interest
-# --------------------------------------------
+# Create average waveform per ROI
+# -------------------------------
 #
 # Next an average waveform is generated per condition per region of interest.
 # This allows the researcher to view the responses elicited in different
@@ -292,8 +292,8 @@ axes[1, 0].set_ylabel("Right ROI\nChromophore (ΔμMol)")
 
 
 ###############################################################################
-# Extract summary metric for each individual
-# ------------------------------------------
+# Extract evoked amplitude
+# ------------------------
 #
 # The waveforms above provide a qualitative overview of the data.
 # It is also useful to perform a quantitative analysis based on features in
@@ -330,6 +330,14 @@ df.head()
 # -----------------------
 #
 # This figure simply summarises the information in the dataframe created above.
+# We observe that the values extracted from the waveform for the control
+# condition generally sit around 0. Whereas the tapping conditions have
+# larger values. There is quite some spread in the values for the tapping
+# conditions, this is typical of a group study. Many factors affect the
+# response amplitude in an fNIRS experiment including skin thickness,
+# skull thickness, both of which vary across the head and across participants.
+# For this reason fNIRS is most appropriate for detecting changes within a
+# single ROI between conditions.
 
 ggplot(df.query("Chroma == 'hbo'"),
        aes(x='Condition', y='Value', color='ID', shape='ROI')) \
