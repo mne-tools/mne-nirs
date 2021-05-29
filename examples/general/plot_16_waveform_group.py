@@ -66,6 +66,7 @@ import numpy as np
 import pandas as pd
 from itertools import compress
 from collections import defaultdict
+from copy import deepcopy
 
 # Import MNE processing
 from mne.preprocessing.nirs import optical_density, beer_lambert_law
@@ -137,7 +138,7 @@ def individual_analysis(bids_path):
     # Convert signal to optical density and determine bad channels
     raw_od = optical_density(raw_intensity)
     sci = scalp_coupling_index(raw_od, h_freq=1.35, h_trans_bandwidth=0.1)
-    raw_od.info["bads"] = list(compress(raw_od.ch_names, sci < 0.8))
+    raw_od.info["bads"] = list(compress(raw_od.ch_names, sci < 0.5))
 
     # Interpolate bad channels based on neighbouring data and downample
     raw_od.interpolate_bads()
@@ -149,18 +150,20 @@ def individual_analysis(bids_path):
 
     # Convert to haemoglobin and filter
     raw_haemo = beer_lambert_law(raw_od)
-    raw_haemo = raw_haemo.filter(0.05, 0.3,
+    raw_haemo = raw_haemo.filter(0.02, 0.3,
                                  h_trans_bandwidth=0.1, l_trans_bandwidth=0.01,
                                  verbose=False)
 
     # Apply further data cleaning techniques and extract epochs
     raw_haemo = enhance_negative_correlation(raw_haemo)
     raw_haemo = get_long_channels(raw_haemo, min_dist=0.01, max_dist=0.05)
-    events, event_dict = events_from_annotations(raw_haemo)
+    # Extract events but ignore those with the word ends (i.e. drop ExperimentEnd trigger)
+    events, event_dict = events_from_annotations(raw_haemo,
+                                                 regexp='^(?![Ends]).*$')
     epochs = Epochs(raw_haemo, events, event_id=event_dict,
-        tmin=-5, tmax=15,
-        reject=dict(hbo=800e-6), reject_by_annotation=True,
-        proj=True, baseline=(None, 0), detrend=None,
+        tmin=-5, tmax=20,
+        reject=dict(hbo=200e-6), reject_by_annotation=True,
+        proj=True, baseline=(None, 0), detrend=0,
         preload=True, verbose=False)
 
     return raw_haemo, epochs
@@ -201,8 +204,8 @@ all_evokeds
 # will contain the results from all measurements. We create a group dataframe
 # for the region of interest, channel level, and contrast results.
 
-fig, axes = plt.subplots(nrows=1, ncols=4, figsize=(17, 5))
-lims = dict(hbo=[-2, 3], hbr=[-2, 3])
+fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(17, 5))
+lims = dict(hbo=[-5, 12], hbr=[-5, 12])
 ci = 0.95
 for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
     for idx, evoked in enumerate(all_evokeds):
@@ -210,3 +213,61 @@ for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
                              picks=pick, axes=axes[idx], show=False,
                              colors=[color], legend=False, ylim=lims, ci=0.95)
         axes[idx].set_title('{}'.format(evoked))
+axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
+
+
+###############################################################################
+# Run analysis on all participants
+# --------------------------------
+#
+# Next we loop through the five measurements and run the individual analysis
+# on each. We append the individual results in to a large dataframe that
+# will contain the results from all measurements. We create a group dataframe
+# for the region of interest, channel level, and contrast results.
+
+
+left = [[4, 3], [1, 3], [3, 3], [1, 2], [2, 3], [1, 1]]
+right = [[8, 7], [5, 7], [7, 7], [5, 6], [6, 7], [5, 5]]
+# Then generate the correct indices for each pair
+groups = dict(
+    Left_Hemisphere=picks_pair_to_idx(raw_haemo, left, on_missing='ignore'),
+    Right_Hemisphere=picks_pair_to_idx(raw_haemo, right, on_missing='ignore'))
+print(groups)
+
+lat = pd.DataFrame(columns=['ID', 'ROI', 'Chroma', 'Condition', 'Value'])
+
+for idx, evoked in enumerate(all_evokeds):
+    for subject_data in all_evokeds[evoked]:
+        for roi in groups:
+            for chroma in ["hbo", "hbr"]:
+                sub_id = subject_data.info["subject_info"]['first_name']
+                data = deepcopy(subject_data).pick(picks=groups[roi]).pick(chroma)
+                mean_value = data.crop(tmin=5.0, tmax=7.0).data.mean() * 1.0e6
+
+                lat = lat.append({'ID': sub_id,  'ROI': roi, 'Chroma': chroma,
+                                  'Condition': evoked,
+                                  'Value': mean_value}, ignore_index=True)
+
+lat
+
+###############################################################################
+# Stats
+# --------------------------------
+#
+# Next we loop through the five measurements and run the individual analysis
+# on each. We append the individual results in to a large dataframe that
+# will contain the results from all measurements. We create a group dataframe
+# for the region of interest, channel level, and contrast results.
+
+roi_model = smf.mixedlm("Value ~ -1 + Condition:ROI:Chroma", lat, groups=lat["ID"]).fit()
+print(roi_model.summary())
+
+
+df = statsmodels_to_results(roi_model)
+
+ggplot(df.query("Chroma == 'hbo'"),
+       aes(x='Condition', y='Coef.', color='Significant', shape='ROI')) \
+    + geom_hline(y_intercept=0, linetype="dashed", size=1) \
+    + geom_point(size=5) \
+    + scale_shape_manual(values=[16, 17]) \
+    + ggsize(800, 300)
