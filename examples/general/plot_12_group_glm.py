@@ -10,9 +10,9 @@ analysis in MNE-NIRS.
 
 .. sidebar:: Relevant literature
 
-   Gorgolewski, Krzysztof J., et al.
-   "The brain imaging data structure, a format for organizing and describing
-   outputs of neuroimaging experiments." Scientific data 3.1 (2016): 1-9.
+   Luke, Robert, et al.
+   "Analysis methods for measuring passive auditory fNIRS responses generated
+   by a block-design paradigm." Neurophotonics 8.2 (2021): 025008.
 
    Santosa, H., Zhai, X., Fishburn, F., & Huppert, T. (2018).
    The NIRS brain AnalyzIR toolbox. Algorithms, 11(5), 73.
@@ -40,6 +40,12 @@ requirements_doc.txt file to run this example.
 
 .. collapse:: |chevron-circle-down| Data description (click to expand)
    :class: success
+
+   .. sidebar:: Relevant literature
+
+      Gorgolewski, Krzysztof J., et al.
+      "The brain imaging data structure, a format for organizing and describing
+      outputs of neuroimaging experiments." Scientific data 3.1 (2016): 1-9.
 
    Optodes were placed over the motor cortex using the standard NIRX motor
    montage, but with 8 short channels added (see their web page for details).
