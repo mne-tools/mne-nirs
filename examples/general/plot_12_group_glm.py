@@ -1,8 +1,8 @@
 """
 .. _tut-fnirs-group:
 
-Group Level GLM
-===============
+Group Level GLM Analysis
+========================
 
 This is an example of a group level GLM based
 functional near-infrared spectroscopy (fNIRS)
