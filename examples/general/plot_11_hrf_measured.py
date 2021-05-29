@@ -15,7 +15,10 @@ We use a GLM analysis to examine the neural activity associated with
 the different tapping conditions.
 An alternative epoching style analysis on the same data can be
 viewed in the
-:ref:`MNE documentation <mne:tut-fnirs-processing>`.
+:ref:`waveform analysis example <tut-fnirs-processing>`.
+See
+`Luke et al (2021) <https://www.spiedigitallibrary.org/journals/neurophotonics/volume-8/issue-2/025008/Analysis-methods-for-measuring-passive-auditory-fNIRS-responses-generated-by/10.1117/1.NPh.8.2.025008.short>`_
+for a comparison of the epoching and GLM approaches.
 
 This GLM analysis is a wrapper over the excellent
 `Nilearn GLM <http://nilearn.github.io/modules/reference.html#module-nilearn.glm>`_.
@@ -331,8 +334,22 @@ axes[1].set_title("Hemispheres plotted independently")
 # Analyse regions of interest
 # ---------------------------
 #
+# .. sidebar:: Relevant literature
+#
+#    Zimeo Morais, G.A., Balardin, J.B. & Sato, J.R.
+#    fNIRS Optodes’ Location Decider (fOLD): a toolbox for probe arrangement
+#    guided by brain regions-of-interest. Sci Rep 8, 3341 (2018).
+#
+#    Shader and Luke et al. "The use of broad vs restricted regions of
+#    interest in functional near-infrared spectroscopy for measuring cortical
+#    activation to auditory-only and visual-only speech."
+#    Hearing Research (2021): `108256 <https://www.sciencedirect.com/science/article/pii/S0378595521000903>`_.
+#
 # Or alternatively we can summarise the responses across regions of interest
 # for each condition. And you can plot it with your favorite software.
+# Region of interest analysis can be more robust than single channel analysis.
+# The fOLD toolbox can be used to assist in the design of ROIs.
+# And consideration should be paid to ensure optimal size ROIs are selected.
 
 left = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 3],
         [2, 4], [3, 2], [3, 3], [4, 3], [4, 4]]
