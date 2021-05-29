@@ -32,6 +32,7 @@ def run_script_and_check(test_file_path):
 @pytest.mark.parametrize('fname', (["plot_10_hrf_simulation.py",
                                     "plot_11_hrf_measured.py",
                                     "plot_12_group_glm.py",
+                                    "plot_16_waveform_group.py",
                                     "plot_19_snirf.py",
                                     "plot_20_enhance.py",
                                     "plot_30_frequency.py",

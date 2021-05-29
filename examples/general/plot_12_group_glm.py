@@ -150,7 +150,7 @@ def individual_analysis(bids_path, ID):
     # Define channels in each region of interest
     # List the channel pairs manually
     left = [[4, 3], [1, 3], [3, 3], [1, 2], [2, 3], [1, 1]]
-    right = [[6, 7], [5, 7], [7, 7], [5, 6], [6, 7], [5, 5]]
+    right = [[8, 7], [5, 7], [7, 7], [5, 6], [6, 7], [5, 5]]
     # Then generate the correct indices for each pair
     groups = dict(
         Left_Hemisphere=picks_pair_to_idx(raw_haemo, left, on_missing='ignore'),

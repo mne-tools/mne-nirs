@@ -28,7 +28,8 @@ def get_short_channels(raw, max_dist=0.01):
     short_chans = raw.copy().load_data()
     _validate_type(short_chans, BaseRaw, 'raw')
 
-    picks = mne.pick_types(short_chans.info, meg=False, eeg=False, fnirs=True)
+    picks = mne.pick_types(short_chans.info, meg=False, eeg=False, fnirs=True,
+                           exclude=[])
     if not len(picks):
         raise RuntimeError('Short channel extraction for NIRS signals only.')
 
@@ -61,7 +62,8 @@ def get_long_channels(raw, min_dist=0.01, max_dist=0.05):
     long_chans = raw.copy().load_data()
     _validate_type(long_chans, BaseRaw, 'raw')
 
-    picks = mne.pick_types(long_chans.info, meg=False, eeg=False, fnirs=True)
+    picks = mne.pick_types(long_chans.info, meg=False, eeg=False, fnirs=True,
+                           exclude=[])
     if not len(picks):
         raise RuntimeError('Short channel extraction for NIRS signals only.')
 
