@@ -131,6 +131,7 @@ def individual_analysis(bids_path):
     raw_od = optical_density(raw_intensity)
     sci = scalp_coupling_index(raw_od, h_freq=1.35, h_trans_bandwidth=0.1)
     raw_od.info["bads"] = list(compress(raw_od.ch_names, sci < 0.5))
+    raw_od.interpolate_bads()
 
     # Downsample and apply signal cleaning techniques
     raw_od.resample(0.8)
@@ -146,7 +147,6 @@ def individual_analysis(bids_path):
     # Apply further data cleaning techniques and extract epochs
     raw_haemo = enhance_negative_correlation(raw_haemo)
     raw_haemo = get_long_channels(raw_haemo, min_dist=0.01, max_dist=0.05)
-    raw_haemo.interpolate_bads()
 
     # Extract events but ignore those with
     # the word ends (i.e. drop ExperimentEnds events)
