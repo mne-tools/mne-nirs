@@ -1,14 +1,19 @@
 """
 .. _tut-fnirs-group-wave:
 
-Group Level Waveform
-====================
+Group Level Waveform Analysis
+=============================
 
 This is an example of a group level waveform based
 functional near-infrared spectroscopy (fNIRS)
 analysis in MNE-NIRS.
 
 .. sidebar:: Relevant literature
+
+   Luke, Robert, et al.
+   "Analysis methods for measuring passive auditory fNIRS responses generated
+   by a block-design paradigm." Neurophotonics 8.2 (2021):
+   `025008 <https://www.spiedigitallibrary.org/journals/neurophotonics/volume-8/issue-2/025008/Analysis-methods-for-measuring-passive-auditory-fNIRS-responses-generated-by/10.1117/1.NPh.8.2.025008.short>`_.
 
    Gorgolewski, Krzysztof J., et al.
    "The brain imaging data structure, a format for organizing and describing
@@ -60,7 +65,6 @@ requirements_doc.txt file to run this example.
 #
 # License: BSD (3-clause)
 
-
 # Import common libraries
 import pandas as pd
 from itertools import compress
@@ -73,20 +77,13 @@ from mne.viz import plot_compare_evokeds
 from mne import Epochs, events_from_annotations
 
 # Import MNE-NIRS processing
-from mne_nirs.statistics import statsmodels_to_results
 from mne_nirs.channels import get_long_channels
 from mne_nirs.channels import picks_pair_to_idx
 from mne_nirs.datasets import fnirs_motor_group
-from mne.preprocessing.nirs import (
-    beer_lambert_law,
-    temporal_derivative_distribution_repair,
-    optical_density,
-    scalp_coupling_index,
-)
-from mne_nirs.signal_enhancement import (
-    enhance_negative_correlation,
-    short_channel_regression,
-)
+from mne.preprocessing.nirs import beer_lambert_law, optical_density,\
+    temporal_derivative_distribution_repair, scalp_coupling_index
+from mne_nirs.signal_enhancement import ( enhance_negative_correlation,
+                                          short_channel_regression)
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids
@@ -114,13 +111,9 @@ LetsPlot.setup_html()
 #
 # First we define the analysis that will be applied to each file.
 # This is a waveform analysis as described in the
-# :ref:`individual waveform tutorial <tut-fnirs-processing>`,
+# :ref:`individual waveform tutorial <tut-fnirs-processing>`
+# and :ref:`artifact correction tutorial <ex-fnirs-artifacts>`,
 # so this example will skim over the individual level details.
-#
-# Here we also resample to a 0.3 Hz sample rate just to speed up the example
-# and use less memory, resampling to 0.6 Hz is a better choice for full
-# analyses.
-
 
 def individual_analysis(bids_path):
 
@@ -206,7 +199,6 @@ pprint(all_evokeds)
 fig, axes = plt.subplots(nrows=1, ncols=len(all_evokeds), figsize=(17, 5))
 lims = dict(hbo=[-5, 12], hbr=[-5, 12])
 
-
 for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
     for idx, evoked in enumerate(all_evokeds):
         plot_compare_evokeds({evoked: all_evokeds[evoked]}, combine='mean',
@@ -215,45 +207,104 @@ for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
         axes[idx].set_title('{}'.format(evoked))
 axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 
+###############################################################################
+# From this figure we observe that the response to the tapping condition
+# with the right hand seems larger than when no tapping occured in the control
+# condition (similar for tapping with the left hand).
+# We test if this is the case in the analysis below.
+
 
 ###############################################################################
 # Generate regions of interest
 # --------------------------------
+# .. sidebar:: Relevant literature
 #
-# Next we loop through the five measurements and run the individual analysis
-# on each. We append the individual results in to a large dataframe that
+#    Zimeo Morais, G.A., Balardin, J.B. & Sato, J.R.
+#    fNIRS Optodes’ Location Decider (fOLD): a toolbox for probe arrangement
+#    guided by brain regions-of-interest. Sci Rep 8, 3341 (2018).
+#
+#    Shader and Luke et al. "The use of broad vs restricted regions of
+#    interest in functional near-infrared spectroscopy for measuring cortical
+#    activation to auditory-only and visual-only speech."
+#    Hearing Research (2021): `108256 <https://www.sciencedirect.com/science/article/pii/S0378595521000903>`_.
+#
+# Here we specify two regions of interest by listing out the source-detector
+# pairs of interest and then determining which channels these correspond to
+# within the raw data structure. The channel indicies are stored in a
+# dictionary for access below.
+# The fOLD toolbox can be used to assist in the design of ROIs.
+# And consideration should be paid to ensure optimal size ROIs are selected.
 
 # Specify channel pairs for each ROI
 left = [[4, 3], [1, 3], [3, 3], [1, 2], [2, 3], [1, 1]]
 right = [[8, 7], [5, 7], [7, 7], [5, 6], [6, 7], [5, 5]]
 
-# Then generate the correct indices for each pair
+# Then generate the correct indices for each pair and store in dictionary
 groups = dict(
     Left_Hemisphere=picks_pair_to_idx(raw_haemo, left, on_missing='ignore'),
     Right_Hemisphere=picks_pair_to_idx(raw_haemo, right, on_missing='ignore'))
 
 
 ###############################################################################
-# Run analysis on all participants
-# --------------------------------
+# View average waveform per region of interest
+# --------------------------------------------
 #
-# Next we loop through the five measurements and run the individual analysis
-# on each. We append the individual results in to a large dataframe that
-# will contain the results from all measurements. We create a group dataframe
-# for the region of interest, channel level, and contrast results.
+# Next we generate a grand average epoch waveform per condition.
+# This is generated using all long fNIRS channels.
+
+# Specify the figure size and limits per chromophore.
+fig, axes = plt.subplots(nrows=len(groups), ncols=len(all_evokeds),
+                         figsize=(15, 6))
+lims = dict(hbo=[-8, 16], hbr=[-8, 16])
+
+for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
+    for cidx, evoked in enumerate(all_evokeds):
+        for ridx, group in enumerate(groups):
+            if pick == 'hbr':
+                picks = groups[group][1::2]
+            else:
+                picks = groups[group][0::2]
+            plot_compare_evokeds({evoked: all_evokeds[evoked]}, combine='mean',
+                                 picks=picks, axes=axes[ridx, cidx],
+                                 show=False, colors=[color], legend=False,
+                                 ylim=lims, ci=0.95, show_sensors=cidx == 2)
+        axes[0, cidx].set_title(f"{evoked}")
+        axes[1, cidx].set_title("")
+axes[0, 0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
+axes[0, 0].set_ylabel("Left ROI\nChromophore (ΔμMol)")
+axes[1, 0].set_ylabel("Right ROI\nChromophore (ΔμMol)")
+
+###############################################################################
+# From this figure we observe that the response to the tapping seems
+# largest in the brain region contralateral to the tapping.
+# We test if this is the case in the analysis below.
+
+
+###############################################################################
+# Extract summary metric for each individual
+# ------------------------------------------
+#
+# The waveforms above provide a qualitative overview of the data.
+# It is also useful to perform a quantitative analysis based on features in
+# the dataset. Here we extract the average value of the waveform between
+# 5 and 7 seconds for each subject, condition, region of interest, and
+# chromophore. This data is stored in a dataframe. The dataframe is saved
+# to a csv for easy analysis in any statistical analysis software.
+# We also demonstrate two example analysis on these values below.
 
 df = pd.DataFrame(columns=['ID', 'ROI', 'Chroma', 'Condition', 'Value'])
 
 for idx, evoked in enumerate(all_evokeds):
-    for subject_data in all_evokeds[evoked]:
+    for subj_data in all_evokeds[evoked]:
         for roi in groups:
             for chroma in ["hbo", "hbr"]:
-                sub_id = subject_data.info["subject_info"]['first_name']
-                data = deepcopy(subject_data).pick(picks=groups[roi]).pick(chroma)
-                mean_value = data.crop(tmin=5.0, tmax=7.0).data.mean() * 1.0e6
+                subj_id = subj_data.info["subject_info"]['first_name']
+                data = deepcopy(subj_data).pick(picks=groups[roi]).pick(chroma)
+                value = data.crop(tmin=5.0, tmax=7.0).data.mean() * 1.0e6
 
-                df = df.append({'ID': sub_id, 'ROI': roi, 'Chroma': chroma,
-                                'Condition': evoked, 'Value': mean_value},
+                # Append metadata and extracted feature to dataframe
+                df = df.append({'ID': subj_id, 'ROI': roi, 'Chroma': chroma,
+                                'Condition': evoked, 'Value': value},
                                ignore_index=True)
 
 # You can export the dataframe for analyis in your favorite stats program
@@ -267,7 +318,7 @@ df.head()
 # View individual results
 # -----------------------
 #
-# In this example question we ask: is the hbo response to tapping with the
+# This figure simply summarises the information in the dataframe created above.
 
 ggplot(df.query("Chroma == 'hbo'"),
        aes(x='Condition', y='Value', color='ID', shape='ROI')) \
@@ -295,9 +346,9 @@ roi_model = smf.mixedlm("Value ~ Condition", input_data,
 roi_model.summary()
 
 ###############################################################################
-# And the model indicates that for the oxyhaemoglobin data in the left
+# The model indicates that for the oxyhaemoglobin data in the left
 # region of interest, that the tapping condition with the right hand evokes
-# a larger response than the control.
+# a 6.4 μM larger response than the control.
 
 
 ###############################################################################
@@ -311,10 +362,14 @@ roi_model.summary()
 
 # Encode the ROIs as ipsi- or contralateral to the hand that is tapping.
 df["Hemishphere"] = "Unknown"
-df.loc[(df["Condition"] == "Tapping/Right") & (df["ROI"] == "Right_Hemisphere"), "Hemishphere"] = "Ipsilateral"
-df.loc[(df["Condition"] == "Tapping/Right") & (df["ROI"] == "Left_Hemisphere"), "Hemishphere"] = "Contralateral"
-df.loc[(df["Condition"] == "Tapping/Left") & (df["ROI"] == "Left_Hemisphere"), "Hemishphere"] = "Ipsilateral"
-df.loc[(df["Condition"] == "Tapping/Left") & (df["ROI"] == "Right_Hemisphere"), "Hemishphere"] = "Contralateral"
+df.loc[(df["Condition"] == "Tapping/Right") &
+       (df["ROI"] == "Right_Hemisphere"), "Hemishphere"] = "Ipsilateral"
+df.loc[(df["Condition"] == "Tapping/Right") &
+       (df["ROI"] == "Left_Hemisphere"), "Hemishphere"] = "Contralateral"
+df.loc[(df["Condition"] == "Tapping/Left") &
+       (df["ROI"] == "Left_Hemisphere"), "Hemishphere"] = "Ipsilateral"
+df.loc[(df["Condition"] == "Tapping/Left") &
+       (df["ROI"] == "Right_Hemisphere"), "Hemishphere"] = "Contralateral"
 
 # Subset the data for example model
 input_data = df.query("Condition in ['Tapping/Right', 'Tapping/Left']")
@@ -325,6 +380,6 @@ roi_model = smf.mixedlm("Value ~ Hemishphere", input_data,
 roi_model.summary()
 
 ###############################################################################
-# And the model indicates that for the oxyhaemoglobin data that larger
-# responses are evoked on the contralateral side to the hand that is tapping
-# compared to the ipsilateral side.
+# And the model indicates that for the oxyhaemoglobin data that ipsilateral
+# responses are 3.4 μMol smaller than those on the contralateral side to the
+# hand that is tapping.
