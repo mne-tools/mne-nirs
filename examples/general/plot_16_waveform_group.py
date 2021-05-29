@@ -40,10 +40,11 @@ The example dataset is in
 format and therefore already contains
 information about triggers, condition names, etc.
 
-.. note:: BIDS: Brain imaging data structure
+.. note::
 
-   The BIDS specification for NIRS data is still under development,
-   as such you must use the development branch of MNE-BIDS.
+   The BIDS specification for NIRS data is still under development. See:
+   `fNIRS BIDS proposal <https://github.com/bids-standard/bids-specification/pull/802>`_.
+   As such, you must use the development branch of MNE-BIDS.
 
    To install the fNIRS development branch of MNE-BIDS run:
    `pip install https://codeload.github.com/rob-luke/mne-bids/zip/nirs`
