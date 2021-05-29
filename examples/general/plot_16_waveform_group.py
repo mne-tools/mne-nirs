@@ -178,6 +178,7 @@ for sub in range(1, 6):  # Loop from first to fifth subject
     # Analyse data and return both ROI and channel results
     raw_haemo, epochs = individual_analysis(bids_path)
 
+    # Save evoked individual participant data along with others in all_evokeds
     for cidx, condition in enumerate(epochs.event_id):
         all_evokeds[condition].append(epochs[condition].average())
 
