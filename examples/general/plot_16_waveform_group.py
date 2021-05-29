@@ -82,8 +82,8 @@ from mne_nirs.channels import picks_pair_to_idx
 from mne_nirs.datasets import fnirs_motor_group
 from mne.preprocessing.nirs import beer_lambert_law, optical_density,\
     temporal_derivative_distribution_repair, scalp_coupling_index
-from mne_nirs.signal_enhancement import ( enhance_negative_correlation,
-                                          short_channel_regression)
+from mne_nirs.signal_enhancement import (enhance_negative_correlation,
+                                         short_channel_regression)
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids
@@ -145,11 +145,10 @@ def individual_analysis(bids_path):
     # the word ends (i.e. drop ExperimentEnds events)
     events, event_dict = events_from_annotations(raw_haemo, verbose=False,
                                                  regexp='^(?![Ends]).*$')
-    epochs = Epochs(raw_haemo, events, event_id=event_dict,
-        tmin=-5, tmax=20,
-        reject=dict(hbo=200e-6), reject_by_annotation=True,
-        proj=True, baseline=(None, 0), detrend=0,
-        preload=True, verbose=False)
+    epochs = Epochs(raw_haemo, events, event_id=event_dict, tmin=-5, tmax=20,
+                    reject=dict(hbo=200e-6), reject_by_annotation=True,
+                    proj=True, baseline=(None, 0), detrend=0,
+                    preload=True, verbose=False)
 
     return raw_haemo, epochs
 
