@@ -106,11 +106,9 @@ LetsPlot.setup_html()
 #
 # .. sidebar:: Individual analysis procedures
 #
-#    Waveform individual analysis:
-#    :ref:`MNE docs <mne:tut-fnirs-processing>`
+#    :ref:`Waveform individual analysis <tut-fnirs-processing>`
 #
-#    GLM individual analysis:
-#    :ref:`MNE-NIRS docs <tut-fnirs-hrf>`
+#    :ref:`GLM individual analysis <tut-fnirs-hrf>`
 #
 # First we define the analysis that will be applied to each file.
 # This is a waveform analysis as described in the
