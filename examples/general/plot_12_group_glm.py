@@ -12,7 +12,8 @@ analysis in MNE-NIRS.
 
    Luke, Robert, et al.
    "Analysis methods for measuring passive auditory fNIRS responses generated
-   by a block-design paradigm." Neurophotonics 8.2 (2021): 025008.
+   by a block-design paradigm." Neurophotonics 8.2 (2021):
+   `025008 <https://www.spiedigitallibrary.org/journals/neurophotonics/volume-8/issue-2/025008/Analysis-methods-for-measuring-passive-auditory-fNIRS-responses-generated-by/10.1117/1.NPh.8.2.025008.short>`_.
 
    Santosa, H., Zhai, X., Fishburn, F., & Huppert, T. (2018).
    The NIRS brain AnalyzIR toolbox. Algorithms, 11(5), 73.
