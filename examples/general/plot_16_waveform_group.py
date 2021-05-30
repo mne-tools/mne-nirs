@@ -369,7 +369,7 @@ roi_model.summary()
 ###############################################################################
 # The model indicates that for the oxyhaemoglobin data in the left
 # region of interest, that the tapping condition with the right hand evokes
-# a 6.4 μM larger response than the control.
+# a 9 μM larger response than the control.
 
 
 ###############################################################################
