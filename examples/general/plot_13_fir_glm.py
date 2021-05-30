@@ -253,8 +253,8 @@ axes[1].plot(index_values, np.sum(dm_cond_scaled_hbr, axis=1), 'b')
 # Format the plot
 axes[0].set_xlim(-5, 30)
 axes[1].set_xlim(-5, 30)
-axes[0].set_ylim(-3, 8)
-axes[1].set_ylim(-3, 8)
+axes[0].set_ylim(-5, 8)
+axes[1].set_ylim(-5, 8)
 axes[0].set_title("FIR Components (Tapping/Right)")
 axes[1].set_title("Evoked Response (Tapping/Right)")
 axes[0].set_ylabel("Oyxhaemoglobin (ΔμMol)")
@@ -295,7 +295,7 @@ axes.fill_between(index_values,
 
 # Format the plot
 axes.set_xlim(-5, 30)
-axes.set_ylim(-3, 8)
+axes.set_ylim(-7, 10)
 axes.set_title("Evoked Response (Tapping/Right)")
 axes.set_ylabel("Haemoglobin (ΔμMol)")
 axes.legend(["Oyxhaemoglobin", "Deoyxhaemoglobin"])
