@@ -187,11 +187,10 @@ df_sum = df_sum.sort_values('delay')
 #
 
 # Print the result for the
-pprint(df_sum.query())
-
+df_sum
 
 ###############################################################################
-# Plot reponse from single condition
+# Plot response from single condition
 # ---------------------------------------------------------------------
 #
 
