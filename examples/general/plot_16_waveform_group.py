@@ -252,9 +252,8 @@ left = [[4, 3], [1, 3], [3, 3], [1, 2], [2, 3], [1, 1]]
 right = [[8, 7], [5, 7], [7, 7], [5, 6], [6, 7], [5, 5]]
 
 # Then generate the correct indices for each pair and store in dictionary
-rois = dict(
-    Left_Hemisphere=picks_pair_to_idx(raw_haemo, left, on_missing='ignore'),
-    Right_Hemisphere=picks_pair_to_idx(raw_haemo, right, on_missing='ignore'))
+rois = dict(Left_Hemisphere=picks_pair_to_idx(raw_haemo, left),
+            Right_Hemisphere=picks_pair_to_idx(raw_haemo, right))
 
 pprint(rois)
 
