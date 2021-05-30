@@ -105,7 +105,7 @@ def analysis(fname, ID):
     design_matrix = make_first_level_design_matrix(raw_haemo,
                                                    hrf_model='fir',
                                                    stim_dur=1.0,
-                                                   fir_delays=range(50),
+                                                   fir_delays=range(10),
                                                    drift_model='cosine',
                                                    high_pass=0.01,
                                                    oversampling=1)
