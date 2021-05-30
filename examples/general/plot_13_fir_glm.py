@@ -16,7 +16,7 @@ In this tutorial the morphology of an fNIRS response is obtained using an
 Finite Impulse Response (FIR) GLM analysis.
 An alternative epoching style analysis on the same data can be
 viewed in the
-:ref:`waveform analysis example <tut-fnirs-processing>`.
+:ref:`waveform analysis example <tut-fnirs-group-wave>`.
 See
 `Luke et al (2021) <https://www.spiedigitallibrary.org/journals/neurophotonics/volume-8/issue-2/025008/Analysis-methods-for-measuring-passive-auditory-fNIRS-responses-generated-by/10.1117/1.NPh.8.2.025008.short>`_
 for a comparison of the epoching and GLM FIR approaches.
