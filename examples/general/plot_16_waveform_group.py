@@ -126,6 +126,7 @@ def individual_analysis(bids_path):
 
     # Read data with annotations in BIDS format
     raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
+    raw_intensity = get_long_channels(raw_intensity, min_dist=0.01)
 
     # Convert signal to optical density and determine bad channels
     raw_od = optical_density(raw_intensity)
@@ -136,7 +137,6 @@ def individual_analysis(bids_path):
     # Downsample and apply signal cleaning techniques
     raw_od.resample(0.8)
     raw_od = temporal_derivative_distribution_repair(raw_od)
-    raw_od = short_channel_regression(raw_od)
 
     # Convert to haemoglobin and filter
     raw_haemo = beer_lambert_law(raw_od)
@@ -146,10 +146,8 @@ def individual_analysis(bids_path):
 
     # Apply further data cleaning techniques and extract epochs
     raw_haemo = enhance_negative_correlation(raw_haemo)
-    raw_haemo = get_long_channels(raw_haemo, min_dist=0.01, max_dist=0.05)
-
     # Extract events but ignore those with
-    # the word ends (i.e. drop ExperimentEnds events)
+    # the word Ends (i.e. drop ExperimentEnds events)
     events, event_dict = events_from_annotations(raw_haemo, verbose=False,
                                                  regexp='^(?![Ends]).*$')
     epochs = Epochs(raw_haemo, events, event_id=event_dict, tmin=-5, tmax=20,
@@ -254,9 +252,8 @@ left = [[4, 3], [1, 3], [3, 3], [1, 2], [2, 3], [1, 1]]
 right = [[8, 7], [5, 7], [7, 7], [5, 6], [6, 7], [5, 5]]
 
 # Then generate the correct indices for each pair and store in dictionary
-rois = dict(
-    Left_Hemisphere=picks_pair_to_idx(raw_haemo, left, on_missing='ignore'),
-    Right_Hemisphere=picks_pair_to_idx(raw_haemo, right, on_missing='ignore'))
+rois = dict(Left_Hemisphere=picks_pair_to_idx(raw_haemo, left),
+            Right_Hemisphere=picks_pair_to_idx(raw_haemo, right))
 
 pprint(rois)
 
