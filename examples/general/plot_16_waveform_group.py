@@ -146,7 +146,6 @@ def individual_analysis(bids_path):
 
     # Apply further data cleaning techniques and extract epochs
     raw_haemo = enhance_negative_correlation(raw_haemo)
-
     # Extract events but ignore those with
     # the word Ends (i.e. drop ExperimentEnds events)
     events, event_dict = events_from_annotations(raw_haemo, verbose=False,
