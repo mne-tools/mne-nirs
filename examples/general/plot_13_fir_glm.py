@@ -285,3 +285,4 @@ axes[1].fill_between(index_values,
                      np.sum(dm_cond_scaled_hbr_l95, axis=1),
                      np.sum(dm_cond_scaled_hbr_u95, axis=1),
                      facecolor='blue', alpha=0.25)
+fig
