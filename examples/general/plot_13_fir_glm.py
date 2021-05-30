@@ -105,7 +105,7 @@ def analysis(fname, ID):
     design_matrix = make_first_level_design_matrix(raw_haemo,
                                                    hrf_model='fir',
                                                    stim_dur=1.0,
-                                                   fir_delays=range(12),
+                                                   fir_delays=range(50),
                                                    drift_model='cosine',
                                                    high_pass=0.01,
                                                    oversampling=1)
@@ -253,6 +253,8 @@ axes[1].plot(index_values, np.sum(dm_cond_scaled_hbr, axis=1), 'b')
 # Format the plot
 axes[0].set_xlim(-5, 30)
 axes[1].set_xlim(-5, 30)
+axes[0].set_ylim(-3, 8)
+axes[1].set_ylim(-3, 8)
 axes[0].set_title("FIR Components (Tapping/Right)")
 axes[1].set_title("Evoked Response (Tapping/Right)")
 axes[0].set_ylabel("Oyxhaemoglobin (ΔμMol)")
@@ -277,12 +279,24 @@ u95_hbr = [float(v) for v in df_hbr["0.975]"]]  # upper estimate
 dm_cond_scaled_hbr_l95 = dm_cond * l95_hbr
 dm_cond_scaled_hbr_u95 = dm_cond * u95_hbr
 
-axes[1].fill_between(index_values,
+fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(7, 7))
+
+# Plot the result
+axes.plot(index_values, np.sum(dm_cond_scaled_hbo, axis=1), 'r')
+axes.plot(index_values, np.sum(dm_cond_scaled_hbr, axis=1), 'b')
+axes.fill_between(index_values,
                      np.sum(dm_cond_scaled_hbo_l95, axis=1),
                      np.sum(dm_cond_scaled_hbo_u95, axis=1),
                      facecolor='red', alpha=0.25)
-axes[1].fill_between(index_values,
+axes.fill_between(index_values,
                      np.sum(dm_cond_scaled_hbr_l95, axis=1),
                      np.sum(dm_cond_scaled_hbr_u95, axis=1),
                      facecolor='blue', alpha=0.25)
-fig
+
+# Format the plot
+axes.set_xlim(-5, 30)
+axes.set_ylim(-3, 8)
+axes.set_title("Evoked Response (Tapping/Right)")
+axes.set_ylabel("Haemoglobin (ΔμMol)")
+axes.legend(["Oyxhaemoglobin", "Deoyxhaemoglobin"])
+axes.set_xlabel("Time (s)")
