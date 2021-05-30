@@ -31,6 +31,10 @@ This GLM analysis is a wrapper over the excellent
 .. note::
 
    This is an advanced tutorial and requires knowledge of pandas and numpy.
+   In the future I would like to write some functions to make this more
+   convenient.
+
+.. note::
 
    The sample rate used in this example is set to 0.5 Hz. This is to ensure
    the code can run on the continuous integration servers. You may wish to
@@ -101,7 +105,7 @@ def analysis(fname, ID):
     design_matrix = make_first_level_design_matrix(raw_haemo,
                                                    hrf_model='fir',
                                                    stim_dur=1.0,
-                                                   fir_delays=range(10),
+                                                   fir_delays=range(12),
                                                    drift_model='cosine',
                                                    high_pass=0.01,
                                                    oversampling=1)
@@ -247,8 +251,8 @@ axes[1].plot(index_values, np.sum(dm_cond_scaled_hbo, axis=1), 'r')
 axes[1].plot(index_values, np.sum(dm_cond_scaled_hbr, axis=1), 'b')
 
 # Format the plot
-axes[0].set_xlim(-5, 35)
-axes[1].set_xlim(-5, 35)
+axes[0].set_xlim(-5, 30)
+axes[1].set_xlim(-5, 30)
 axes[0].set_title("FIR Components (Tapping/Right)")
 axes[1].set_title("Evoked Response (Tapping/Right)")
 axes[0].set_ylabel("Oyxhaemoglobin (ΔμMol)")
@@ -256,3 +260,28 @@ axes[1].set_ylabel("Haemoglobin (ΔμMol)")
 axes[1].legend(["Oyxhaemoglobin", "Deoyxhaemoglobin"])
 axes[0].set_xlabel("Time (s)")
 axes[1].set_xlabel("Time (s)")
+
+
+###############################################################################
+# Plot responses with confidence intervals
+# ---------------------------------------------------------------------
+#
+
+# We can also extract the 95% confidence intervals of the estimates too
+l95_hbo = [float(v) for v in df_hbo["[0.025"]]  # lower estimate
+u95_hbo = [float(v) for v in df_hbo["0.975]"]]  # upper estimate
+dm_cond_scaled_hbo_l95 = dm_cond * l95_hbo
+dm_cond_scaled_hbo_u95 = dm_cond * u95_hbo
+l95_hbr = [float(v) for v in df_hbr["[0.025"]]  # lower estimate
+u95_hbr = [float(v) for v in df_hbr["0.975]"]]  # upper estimate
+dm_cond_scaled_hbr_l95 = dm_cond * l95_hbr
+dm_cond_scaled_hbr_u95 = dm_cond * u95_hbr
+
+axes[1].fill_between(index_values,
+                     np.sum(dm_cond_scaled_hbo_l95, axis=1),
+                     np.sum(dm_cond_scaled_hbo_u95, axis=1),
+                     facecolor='red', alpha=0.25)
+axes[1].fill_between(index_values,
+                     np.sum(dm_cond_scaled_hbr_l95, axis=1),
+                     np.sum(dm_cond_scaled_hbr_u95, axis=1),
+                     facecolor='blue', alpha=0.25)
