@@ -32,12 +32,17 @@ This GLM analysis is a wrapper over the excellent
 
    This is an advanced tutorial and requires knowledge of pandas and numpy.
 
+   The sample rate used in this example is set to 0.5 Hz. This is to ensure
+   the code can run on the continuous integration servers. You may wish to
+   increase the sample rate by adjusting `resample` below for your
+   own analysis.
+
 .. contents:: Page contents
    :local:
    :depth: 2
 
 """
-# sphinx_gallery_thumbnail_number = 8
+# sphinx_gallery_thumbnail_number = 1
 
 # Authors: Robert Luke <mail@robertluke.net>
 #
@@ -80,7 +85,7 @@ def analysis(fname, ID):
     # Convert signal to haemoglobin and just keep hbo
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
-    raw_haemo.resample(1.0, npad="auto")
+    raw_haemo.resample(0.5, npad="auto")
 
     # Cut out just the short channels for creating a GLM regressor
     short_chans = mne_nirs.channels.get_short_channels(raw_haemo)
@@ -90,8 +95,7 @@ def analysis(fname, ID):
     design_matrix = make_first_level_design_matrix(raw_haemo,
                                                    hrf_model='fir',
                                                    stim_dur=1.0,
-                                                   drift_order=5,
-                                                   fir_delays=range(20),
+                                                   fir_delays=range(10),
                                                    drift_model='cosine',
                                                    high_pass=0.01,
                                                    oversampling=1)
@@ -161,7 +165,7 @@ df = df.query("TidyCond in ['Control', 'Tapping']")
 # Finally, extract the FIR delay in to its own column in data frame
 df.loc[:, "delay"] = [n.split('_')[2] for n in df.Condition]
 
-pprint(df)
+df
 
 
 ###############################################################################
@@ -173,12 +177,12 @@ pprint(df)
 rlm_model = smf.mixedlm('theta ~ -1 + delay:TidyCond:Chroma', df,
                         groups=df["ID"]).fit()
 
-print(rlm_model.summary())
-
-# Create a dataframe from LME model
+# Create a dataframe from LME model for plotting below
 df_sum = statsmodels_to_results(rlm_model)
 df_sum["delay"] = [int(n) for n in df_sum["delay"]]
 df_sum = df_sum.sort_values('delay')
+
+rlm_model.summary()
 
 
 ###############################################################################
@@ -186,15 +190,16 @@ df_sum = df_sum.sort_values('delay')
 # ---------------------------------------------------------------------
 #
 
-# Print the result for the
-df_sum
+# Print the result for the oxyhaemoglobin data in the tapping condition
+df_sum.query("TidyCond in ['Tapping']").query("Chroma in ['hbo']")
+
 
 ###############################################################################
 # Plot response from single condition
 # ---------------------------------------------------------------------
 #
 
-fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(15, 5))
+fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(15, 7))
 
 cond = "Tapping"
 
@@ -229,3 +234,5 @@ axes[1].set_ylabel("Haemoglobin (ΔμMol)")
 axes[1].legend(["Oyxhaemoglobin", "Deoyxhaemoglobin"])
 axes[0].set_xlabel("Time (s)")
 axes[1].set_xlabel("Time (s)")
+
+plt.show()
