@@ -4,26 +4,26 @@
 GLM FIR Analysis
 ================
 
-In this example we analyse data from a real multichannel
+In this example we analyse data from a real multi-channel
 functional near-infrared spectroscopy (fNIRS)
 experiment (see :ref:`tut-fnirs-hrf-sim` for a simplified simulated
-analysis). The experiment consists of three conditions
+analysis). The experiment consists of three conditions:
 1) tapping with the left hand,
-2) tapping with the right hand,
+2) tapping with the right hand, and
 3) a control condition where the participant does nothing.
 
-In this tutorial the morphology of an fNIRS response is obtained using an
+In this tutorial the morphology of an fNIRS response is obtained using a
 Finite Impulse Response (FIR) GLM analysis.
-An alternative epoching style analysis on the same data can be
+An alternative epoching-style analysis on the same data can be
 viewed in the
 :ref:`waveform analysis example <tut-fnirs-group-wave>`.
 See
 `Luke et al (2021) <https://www.spiedigitallibrary.org/journals/neurophotonics/volume-8/issue-2/025008/Analysis-methods-for-measuring-passive-auditory-fNIRS-responses-generated-by/10.1117/1.NPh.8.2.025008.short>`_
 for a comparison of the epoching and GLM FIR approaches.
 
-This tutorial only examines the tapping with right hand condition
-to simplify explanation and minimise computation time. Extending the code to
-also analyse the other conditions is left as an exercise for the reader.
+This tutorial only examines the tapping with the right hand condition
+to simplify explanation and minimise computation time. The reader is invited
+to expand the code to also analyse the other conditions.
 
 This GLM analysis is a wrapper over the excellent
 `Nilearn GLM <http://nilearn.github.io/modules/reference.html#module-nilearn.glm>`_.
@@ -31,14 +31,13 @@ This GLM analysis is a wrapper over the excellent
 .. note::
 
    This is an advanced tutorial and requires knowledge of pandas and numpy.
-   In the future I would like to write some functions to make this more
-   convenient.
+   I plan to write some functions to make this more convenient in the future.
 
 .. note::
 
-   The sample rate used in this example is set to 0.5 Hz. This is to ensure
-   the code can run on the continuous integration servers. You may wish to
-   increase the sample rate by adjusting `resample` below for your
+   The sample rate used in this example is set to 0.5 Hz. This is done to
+   ensure that the code can run on the continuous integration servers. You may
+   wish to increase the sample rate by adjusting `resample` below for your
    own analysis.
 
 .. contents:: Page contents
@@ -81,11 +80,11 @@ import matplotlib.pyplot as plt
 # Define FIR analysis
 # ---------------------------------------------------------------------
 #
-# This code runs an FIR GLM analysis.
-# This code fits a FIR for each sample from the onset of a trigger.
-# We specify that 10 FIR delays should be used.
-# This results in values being estimated for 10 `delay` steps,
-# due to the sample rate of 0.5 Hz, these delays
+# This code runs a FIR GLM analysis.
+# It fits a FIR for each sample from the onset of a trigger.
+# We specify here that 10 FIR delays should be used.
+# This results in values being estimated for 10 `delay` steps.
+# Due to the chosen sample rate of 0.5 Hz, these delays
 # correspond to 0, 2, 4... seconds from the onset of the stimulus.
 
 def analysis(fname, ID):
@@ -133,8 +132,9 @@ def analysis(fname, ID):
 # Run analysis
 # ---------------------------------------------------------------------
 #
-# Each subject is looped over and the above analysis is performed on each
-# measurement. The results are appended to a dataframe for analysis below.
+# The analysis is run on each individual subject measurement.
+# The individual results are then appended to a dataframe for
+# group-level analysis below.
 
 df = pd.DataFrame()
 
@@ -155,9 +155,9 @@ for sub in range(1, 6):  # Loop from first to fifth subject
 # Tidy the dataframe
 # ---------------------------------------------------------------------
 #
-# To simplify this tutorial we only examine the data from the right hand
+# For simplicity we only examine the data from the right hand
 # tapping condition. The code below retains only the relevant information
-# in the dataframe and design matrix for the following statistical analysis.
+# from the dataframe and design matrix for the following statistical analysis.
 
 # Keep only tapping and FIR delay information in the dataframe
 # I.e., for this example we are not interest in the drift coefficients,
@@ -171,19 +171,20 @@ df.loc[df["isTapping"] == True, "TidyCond"] = "Tapping"
 # Finally, extract the FIR delay in to its own column in data frame
 df.loc[:, "delay"] = [n.split('_')[2] for n in df.Condition]
 
-# To simplify this example we will only look at the right tapping condition
-# so we now remove the left tapping conditions from the design matrix and
-# GLM results
+# To simplify this example we will only look at the right hand tapping
+# condition so we now remove the left tapping conditions from the
+# design matrix and GLM results
 dm_cols_not_left = np.where(["Right" in c for c in dm.columns])[0]
 dm = dm[[dm.columns[i] for i in dm_cols_not_left]]
 
 
 ###############################################################################
-# Run group level model
+# Run group-level model
 # ---------------------------------------------------------------------
 #
-# A linear mixed effects model is used to determine the effect of delay and
-# chromophore on the response with participant as a random variable.
+# A linear mixed effects (LME) model is used to determine the effect
+# of FIR delay for each chromophore on the evoked response with participant
+# (ID) as a random variable.
 
 lme = smf.mixedlm('theta ~ -1 + delay:TidyCond:Chroma', df,
                   groups=df["ID"]).fit()
@@ -193,13 +194,13 @@ lme = smf.mixedlm('theta ~ -1 + delay:TidyCond:Chroma', df,
 
 
 ###############################################################################
-# Summarise group level findings
+# Summarise group-level findings
 # ---------------------------------------------------------------------
 #
-# Next the values from the model above are extracted in to a dataframe for
-# easier analysis below.
+# Next the values from the model above are extracted into a dataframe for
+# more convenient analysis below.
 # A subset of the results is displayed, illustrating the estimated coefficients
-# for the tapping condition with the oxyhaemoglobin data.
+# for oxyhaemoglobin (HbO) for the right hand tapping condition.
 
 # Create a dataframe from LME model for plotting below
 df_sum = statsmodels_to_results(lme)
@@ -210,20 +211,20 @@ df_sum = df_sum.sort_values('delay')
 df_sum.query("TidyCond in ['Tapping']").query("Chroma in ['hbo']")
 
 ###############################################################################
-# In the output above note that there are 10 delays. And an estimate of the
-# coefficient has been calculated for each delay.
+# Note in the output above that there are 10 FIR delays.
+# A coefficient estimate has been calculated for each delay.
 # These coefficients must be multiplied by the FIR function to obtain the
 # morphology of the fNIRS response.
 
 ###############################################################################
-# Plot response from single condition
+# Plot the response from a single condition
 # ---------------------------------------------------------------------
 #
 # Finally we create a plot with two facets.
 # The first facet illustrates the estimated amplitude of each FIR component
 # for the right hand tapping condition for the oxyhaemoglobin data.
 # The second facet illustrates the overall estimated response for each
-# chromophore and is calculated by summing the individual FIR components.
+# chromophore and is calculated by summing all the individual FIR components.
 
 fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(15, 7))
 
@@ -265,7 +266,7 @@ axes[1].set_xlabel("Time (s)")
 
 
 ###############################################################################
-# Plot responses with confidence intervals
+# Plot the response with confidence intervals
 # ---------------------------------------------------------------------
 #
 
