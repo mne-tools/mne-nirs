@@ -12,7 +12,7 @@ analysis). The experiment consists of three conditions
 2) tapping with the right hand,
 3) a control condition where the participant does nothing.
 
-In this tutorial the morphology of an fNIRS response is obtained using an
+In this tutorial the morphology of an fNIRS response is obtained using a
 Finite Impulse Response (FIR) GLM analysis.
 An alternative epoching style analysis on the same data can be
 viewed in the
