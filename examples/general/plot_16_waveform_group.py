@@ -4,7 +4,7 @@
 Group Level Waveform Analysis
 =============================
 
-This is an example of a group level waveform based
+This is an example of a group-level waveform-based
 functional near-infrared spectroscopy (fNIRS)
 analysis in MNE-NIRS.
 
@@ -22,18 +22,20 @@ analysis in MNE-NIRS.
    Santosa, H., Zhai, X., Fishburn, F., & Huppert, T. (2018).
    The NIRS brain AnalyzIR toolbox. Algorithms, 11(5), 73.
 
-Individual level analysis of this data is described in the
+Individual-level analysis of this data is described in the
 :ref:`MNE-NIRS fNIRS waveform tutorial <tut-fnirs-processing>`
 and the
 :ref:`MNE-NIRS fNIRS GLM tutorial <tut-fnirs-hrf>`.
-As such, this example will skim over the individual level details
-and focus on the group level aspects of analysis.
+As such, this example will skim over the individual-level details
+and focus on the group-level aspects of analysis.
 Here we describe how to process multiple measurements
-and summarise group level effects both as summary statistics and visually.
+and how to summarise group-level effects either by
+visual presentation of the results or with summary statistics.
 
 The data used in this example is available
 `at this location <https://github.com/rob-luke/BIDS-NIRS-Tapping>`_.
-It is a finger tapping example and is briefly described below.
+The data was collected from a finger tapping experiment
+that is briefly described below.
 The dataset contains 5 participants.
 The example dataset is in
 `BIDS <https://bids.neuroimaging.io>`_
@@ -52,13 +54,14 @@ information about triggers, condition names, etc.
 .. collapse:: |chevron-circle-down| Data description (click to expand)
    :class: success
 
-   Optodes were placed over the motor cortex using the standard NIRX motor
-   montage, but with 8 short channels added (see their web page for details).
+   Optodes were placed over the motor cortex using the standard NIRx motor
+   montage with 8 short channels added (see their web page for details).
    To view the sensor locations run
    `raw_intensity.plot_sensors()`.
-   A sound was presented to indicate which hand the participant should tap.
-   Participants tapped their thumb to their fingers for 5s.
-   Conditions were presented in a random order with a randomised inter
+   A 5 sec sound was presented in either the left or right ear to indicate
+   which hand the participant should tap.
+   Participants tapped their thumb to their fingers for the entire 5 sec.
+   Conditions were presented in a random order with a randomised inter-
    stimulus interval.
 
 .. contents:: Page contents
@@ -102,7 +105,7 @@ import matplotlib.pyplot as plt
 from lets_plot import *
 
 # Set general parameters
-set_log_level("WARNING")  # Don't show info, as is repetitive for many subjects
+set_log_level("WARNING")  # Don't show info, as it is repetitive for many subjects
 LetsPlot.setup_html()
 
 
@@ -116,11 +119,11 @@ LetsPlot.setup_html()
 #
 #    :ref:`GLM individual analysis <tut-fnirs-hrf>`
 #
-# First we define the analysis that will be applied to each file.
-# This is a waveform analysis as described in the
+# First, we define the analysis that will be applied to each participant file.
+# This is the same waveform analysis as described in the
 # :ref:`individual waveform tutorial <tut-fnirs-processing>`
 # and :ref:`artifact correction tutorial <ex-fnirs-artifacts>`.
-# As such, this example will skim over the individual level details.
+# As such, this example will skim over the individual-level details.
 
 def individual_analysis(bids_path):
 
@@ -162,11 +165,12 @@ def individual_analysis(bids_path):
 # Run analysis on all data
 # ------------------------
 #
-# Next we loop through the five measurements and run the individual analysis
-# on each. For each individual the function returns the raw data and an
-# epoch structure. The epoch structure is then averaged to obtain an evoked
-# response per participant. The individual evoked data is stored in a
-# dictionary (`all_evokeds`) by condition.
+# Next, we loop through the five participants' measurements and run the
+# individual analysis on each. For each individual, the function
+# returns the raw data and an epoch structure. The epoch structure is
+# then averaged to obtain an evoked response from each participant.
+# The individual-evoked data is stored in a
+# dictionary (`all_evokeds`) for each condition.
 
 all_evokeds = defaultdict(list)
 
@@ -180,16 +184,16 @@ for sub in range(1, 6):  # Loop from first to fifth subject
     # Analyse data and return both ROI and channel results
     raw_haemo, epochs = individual_analysis(bids_path)
 
-    # Save evoked individual participant data along with others in all_evokeds
+    # Save individual-evoked participant data along with others in all_evokeds
     for cidx, condition in enumerate(epochs.event_id):
         all_evokeds[condition].append(epochs[condition].average())
 
 
 ###############################################################################
-# The end result is a dictionary indexed per condition.
-# With each item in the dictionary being a list of evoked responses.
-# See below that for each condition we have obtained an MNE evoked type
-# that is generated from the average of 30 trials and epoched from -5 to
+# The end result is a dictionary that is indexed per condition,
+# with each item in the dictionary being a list of evoked responses.
+# See below that for each condition we have obtained a MNE evoked type
+# that is generated from the average of all 30 trials and epoched from -5 to
 # 20 seconds.
 
 pprint(all_evokeds)
@@ -198,11 +202,11 @@ pprint(all_evokeds)
 # View average waveform
 # ---------------------
 #
-# Next a grand average epoch waveform is generated per condition.
-# This is generated using all long fNIRS channels, as illustrated in the head
-# inset.
+# Next, a grand average epoch waveform is generated for each condition.
+# This is generated using all of the standard (long) fNIRS channels,
+# as illustrated by the head inset in the top right corner of the figure.
 
-# Specify the figure size and limits per chromophore.
+# Specify the figure size and limits per chromophore
 fig, axes = plt.subplots(nrows=1, ncols=len(all_evokeds), figsize=(17, 5))
 lims = dict(hbo=[-5, 12], hbr=[-5, 12])
 
@@ -217,8 +221,8 @@ axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 
 ###############################################################################
 # From this figure we observe that the response to the tapping condition
-# with the right hand seems larger than when no tapping occurred in the control
-# condition (similar for tapping with the left hand).
+# with the right hand appears larger than when no tapping occurred in the
+# control condition (similar for when tapping occured with the left hand).
 # We test if this is the case in the analysis below.
 
 
@@ -236,16 +240,16 @@ axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 #    activation to auditory-only and visual-only speech."
 #    Hearing Research (2021): `108256 <https://www.sciencedirect.com/science/article/pii/S0378595521000903>`_.
 #
-# Here we specify two regions of interest by listing out the source-detector
+# Here we specify two regions of interest (ROIs) by listing the source-detector
 # pairs of interest and then determining which channels these correspond to
 # within the raw data structure. The channel indices are stored in a
 # dictionary for access below.
 # The fOLD toolbox can be used to assist in the design of ROIs.
 # And consideration should be paid to ensure optimal size ROIs are selected.
 #
-# In this example two ROIs are generated. One for the left motor cortex,
+# In this example, two ROIs are generated. One for the left motor cortex
 # and one for the right motor cortex. These are called `Left_Hemisphere` and
-# `Right_Hemisphere` and stored in the `rois` dictionary.
+# `Right_Hemisphere` and are stored in the `rois` dictionary.
 
 # Specify channel pairs for each ROI
 left = [[4, 3], [1, 3], [3, 3], [1, 2], [2, 3], [1, 1]]
@@ -261,9 +265,9 @@ pprint(rois)
 # Create average waveform per ROI
 # -------------------------------
 #
-# Next an average waveform is generated per condition per region of interest.
+# Next, an average waveform is generated per condition per region of interest.
 # This allows the researcher to view the responses elicited in different
-# regions of the brain per condition.
+# regions of the brain for each condition.
 
 # Specify the figure size and limits per chromophore.
 fig, axes = plt.subplots(nrows=len(rois), ncols=len(all_evokeds),
@@ -288,9 +292,9 @@ for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
 axes[0, 0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 
 ###############################################################################
-# From this figure we observe that the response to the tapping seems
-# largest in the brain region contralateral to the tapping.
-# We test if this is the case in the analysis below.
+# From this figure we observe that the response to tapping appears
+# largest in the brain region that is contralateral to the hand
+# that is tapping. We test if this is the case in the analysis below.
 
 
 ###############################################################################
@@ -298,12 +302,13 @@ axes[0, 0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 # ------------------------
 #
 # The waveforms above provide a qualitative overview of the data.
-# It is also useful to perform a quantitative analysis based on features in
-# the dataset. Here we extract the average value of the waveform between
+# It is also useful to perform a quantitative analysis based on the relevant
+# features in the dataset.
+# Here we extract the average value of the waveform between
 # 5 and 7 seconds for each subject, condition, region of interest, and
-# chromophore. This data is stored in a dataframe. The dataframe is saved
-# to a csv for easy analysis in any statistical analysis software.
-# We also demonstrate two example analysis on these values below.
+# chromophore. The data is then stored in a dataframe, which is saved
+# to a csv file for easy analysis in any statistical analysis software.
+# We also demonstrate two example analyses on these values below.
 
 df = pd.DataFrame(columns=['ID', 'ROI', 'Chroma', 'Condition', 'Value'])
 
@@ -334,11 +339,11 @@ df.head()
 # This figure simply summarises the information in the dataframe created above.
 # We observe that the values extracted from the waveform for the control
 # condition generally sit around 0. Whereas the tapping conditions have
-# larger values. There is quite some spread in the values for the tapping
-# conditions, this is typical of a group study. Many factors affect the
-# response amplitude in an fNIRS experiment including skin thickness,
+# larger values. There is quite some variation in the values for the tapping
+# conditions, which is typical of a group-level result. Many factors affect the
+# response amplitude in an fNIRS experiment, including skin thickness and
 # skull thickness, both of which vary across the head and across participants.
-# For this reason fNIRS is most appropriate for detecting changes within a
+# For this reason, fNIRS is most appropriate for detecting changes within a
 # single ROI between conditions.
 
 ggplot(df.query("Chroma == 'hbo'"),
@@ -353,8 +358,9 @@ ggplot(df.query("Chroma == 'hbo'"),
 # Research question 1: Comparison of conditions
 # ---------------------------------------------------------------------------------------------------
 #
-# In this example question we ask: is the hbo responsen the left ROI to tapping
-# with the right hand larger than the response when not tapping (control)?
+# In this example question we ask: is the HbO response in the
+# left ROI to tapping with the right hand larger
+# than the response when not tapping (control)?
 # For this token example we subset the dataframe and then apply the mixed
 # effect model.
 
@@ -367,9 +373,9 @@ roi_model = smf.mixedlm("Value ~ Condition", input_data,
 roi_model.summary()
 
 ###############################################################################
-# The model indicates that for the oxyhaemoglobin data in the left
-# region of interest, that the tapping condition with the right hand evokes
-# a 9 μM larger response than the control.
+# The model indicates that for the oxyhaemoglobin (HbO) data in the left
+# ROI, that the tapping condition with the right hand evokes
+# a 9.0 μMol larger response than the control condition.
 
 
 ###############################################################################
@@ -380,8 +386,8 @@ roi_model.summary()
 # contralateral side of the brain to the tapping hand larger than the
 # ipsilateral side?
 #
-# First the ROI data in the dataframe is encoded as ipsi- and contralateral
-# to the tapping. Then the data is subset to just examine the tapping
+# First, the ROI data in the dataframe is encoded as ipsi- and contralateral
+# to the tapping hand. Then the data is subset to just examine the two tapping
 # conditions and the model is applied.
 
 # Encode the ROIs as ipsi- or contralateral to the hand that is tapping.
@@ -404,6 +410,6 @@ roi_model = smf.mixedlm("Value ~ Hemishphere", input_data,
 roi_model.summary()
 
 ###############################################################################
-# And the model indicates that for the oxyhaemoglobin data that ipsilateral
-# responses are 3.4 μMol smaller than those on the contralateral side to the
+# The model indicates that for the oxyhaemoglobin (HbO) data, the ipsilateral
+# responses are 4.2 μMol smaller than those on the contralateral side to the
 # hand that is tapping.
