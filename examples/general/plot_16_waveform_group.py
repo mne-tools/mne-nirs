@@ -222,7 +222,7 @@ axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 ###############################################################################
 # From this figure we observe that the response to the tapping condition
 # with the right hand appears larger than when no tapping occurred in the
-# control condition (similar for when tapping occured with the left hand).
+# control condition (similar for when tapping occurred with the left hand).
 # We test if this is the case in the analysis below.
 
 
