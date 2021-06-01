@@ -31,7 +31,6 @@ dependencies:
 - PySurfer
 - dipy
 - nibabel
-- https://github.com/nilearn/nilearn/archive/master.zip
 - python-picard
 - pyqt!=5.15.3
 - mne>=0.21.0
@@ -40,3 +39,4 @@ dependencies:
 - lxml
 - pip:
   - ipyvtklink
+  - https://github.com/nilearn/nilearn/archive/master.zip
