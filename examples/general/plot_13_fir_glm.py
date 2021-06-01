@@ -226,7 +226,7 @@ df_sum.query("TidyCond in ['Tapping']").query("Chroma in ['hbo']")
 # The second facet illustrates the overall estimated response for each
 # chromophore and is calculated by summing all the individual FIR components.
 
-fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(15, 7))
+fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(20, 7))
 
 # Extract design matrix columns that correspond to the condition of interest
 dm_cond_idxs = np.where(["Tapping" in n for n in dm.columns])[0]
@@ -247,23 +247,25 @@ dm_cond_scaled_hbr = dm_cond * vals_hbr
 index_values = dm_cond_scaled_hbo.index - np.ceil(raw.annotations.onset[1])
 
 # Plot the result
-axes[0].plot(index_values, dm_cond_scaled_hbo)
-axes[1].plot(index_values, np.sum(dm_cond_scaled_hbo, axis=1), 'r')
-axes[1].plot(index_values, np.sum(dm_cond_scaled_hbr, axis=1), 'b')
+axes[0].plot(index_values, dm_cond)
+axes[1].plot(index_values, dm_cond_scaled_hbo)
+axes[2].plot(index_values, np.sum(dm_cond_scaled_hbo, axis=1), 'r')
+axes[2].plot(index_values, np.sum(dm_cond_scaled_hbr, axis=1), 'b')
 
 # Format the plot
-axes[0].set_xlim(-5, 30)
-axes[1].set_xlim(-5, 30)
-axes[0].set_ylim(-5, 8)
-axes[1].set_ylim(-5, 8)
-axes[0].set_title("FIR Components (Tapping/Right)")
-axes[1].set_title("Evoked Response (Tapping/Right)")
-axes[0].set_ylabel("Oyxhaemoglobin (ΔμMol)")
-axes[1].set_ylabel("Haemoglobin (ΔμMol)")
-axes[1].legend(["Oyxhaemoglobin", "Deoyxhaemoglobin"])
-axes[0].set_xlabel("Time (s)")
-axes[1].set_xlabel("Time (s)")
-
+for ax in range(3):
+    axes[ax].set_xlim(-5, 30)
+    axes[ax].set_xlabel("Time (s)")
+axes[0].set_ylim(-0.5, 1.3)
+axes[1].set_ylim(-3, 8)
+axes[2].set_ylim(-3, 8)
+axes[0].set_title("FIR Model (Unscaled by GLM estimates)")
+axes[1].set_title("FIR Components (Scaled by Tapping/Right GLM Estimates)")
+axes[2].set_title("Evoked Response (Tapping/Right)")
+axes[0].set_ylabel("FIR Model")
+axes[1].set_ylabel("Oyxhaemoglobin (ΔμMol)")
+axes[2].set_ylabel("Haemoglobin (ΔμMol)")
+axes[2].legend(["Oyxhaemoglobin", "Deoyxhaemoglobin"])
 
 ###############################################################################
 # Plot the response with confidence intervals
