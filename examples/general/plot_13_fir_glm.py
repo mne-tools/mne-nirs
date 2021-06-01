@@ -233,7 +233,7 @@ df_sum.query("TidyCond in ['Tapping']").query("Chroma in ['hbo']")
 # chromophore and is calculated by summing all the individual FIR components
 # per chromophore (HbR not shown in first two facets).
 
-fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(20, 7))
+fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(20, 10))
 
 # Extract design matrix columns that correspond to the condition of interest
 dm_cond_idxs = np.where(["Tapping" in n for n in dm.columns])[0]
