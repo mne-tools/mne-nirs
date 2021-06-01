@@ -220,11 +220,18 @@ df_sum.query("TidyCond in ['Tapping']").query("Chroma in ['hbo']")
 # Plot the response from a single condition
 # ---------------------------------------------------------------------
 #
-# Finally we create a plot with two facets.
-# The first facet illustrates the estimated amplitude of each FIR component
-# for the right hand tapping condition for the oxyhaemoglobin data.
-# The second facet illustrates the overall estimated response for each
-# chromophore and is calculated by summing all the individual FIR components.
+# Finally we create a plot with three facets.
+# The first facet illustrates the FIR model that was used in the GLM analysis,
+# the model results displayed in the table above indicate the scaling values
+# that should be applied to this model so that it best describes the
+# measured data.
+# The second facet illustrates the estimated amplitude of each FIR component
+# for the right hand tapping condition for the oxyhaemoglobin data,
+# it is obtained by multiplying the FIR model by the estimated coefficients
+# from the GLM output.
+# The third facet illustrates the overall estimated response for each
+# chromophore and is calculated by summing all the individual FIR components
+# per chromophore (HbR not shown in first two facets).
 
 fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(20, 7))
 
