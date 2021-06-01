@@ -6,7 +6,7 @@ import numpy as np
 from mne.io.pick import _picks_to_idx
 
 
-def run_GLM(raw, design_matrix, noise_model='ar1', bins=100,
+def run_GLM(raw, design_matrix, noise_model='ar4', bins=0,
             n_jobs=1, verbose=0):
     """
     Run GLM on data using supplied design matrix.
@@ -19,10 +19,15 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=100,
         The haemoglobin data.
     design_matrix : as specified in Nilearn
         The design matrix.
-    noise_model : {'ar1', 'ols'}, optional
-        The temporal variance model. Defaults to 'ar1'.
-    bins : : int, optional
-        Maximum number of discrete bins for the AR(1) coef histogram.
+    noise_model : {'ar1', 'ols', 'arN'}, optional
+        The temporal variance model. Defaults to 'ar4'.
+        The AR model can be set to any integer value by modifying the value
+        of N.
+    bins : int, optional
+        Maximum number of discrete bins for the AR coef histogram/clustering.
+        By default the value is 0, which will set the number of bins to the
+        number of channels, effectively estimating the AR model for each
+        channel.
     n_jobs : int, optional
         The number of CPUs to use to do the computation. -1 means
         'all CPUs'.
@@ -39,6 +44,9 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=100,
 
     picks = _picks_to_idx(raw.info, 'fnirs', exclude=[], allow_empty=True)
     ch_names = raw.ch_names
+
+    if bins == 0:
+        bins = len(raw.ch_names)
 
     results = dict()
     for pick in picks:
