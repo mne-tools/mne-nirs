@@ -181,6 +181,35 @@ print("Estimate:", glm_est['Simulated'].theta[0],
 
 
 ###############################################################################
+# Using models that account for structure in the noise ?
+# ------------------------------------------------------
+#
+# To account for temporal structure in the noise an auto regressive noise
+# model can be used. To account for the noise in the example above we can
+# include a fifth order auto regressive model with the GLM. Given this
+# is a simulation we can verify if the correct estimate of the noise properties
+# was extracted from the data and if this improved the response estimate.
+
+glm_est = run_GLM(raw, design_matrix, noise_model='ar5')
+
+fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(15, 6))
+plt.plot([-0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.02428681],
+         axes=axes)  # actual values from model above
+plt.plot(glm_est['Simulated'].model.rho * -1.0,  axes=axes)  # estimates
+plt.legend(["Simulation AR coefficients", "Estimated AR coefficients"])
+plt.xlabel("Coefficient")
+
+
+###############################################################################
+# We can see that the estimates from the GLM AR model are quite accurate,
+# but how does this affect the accuracy of the response estimate?
+
+print("Estimate:", glm_est['Simulated'].theta[0],
+      "  MSE:", glm_est['Simulated'].MSE,
+      "  Error (uM):", 1e6*(glm_est['Simulated'].theta[0] - amp*1e-6))
+
+
+###############################################################################
 # Conclusion?
 # -----------
 #
