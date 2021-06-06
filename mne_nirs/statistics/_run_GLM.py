@@ -6,7 +6,7 @@ import numpy as np
 from mne.io.pick import _picks_to_idx
 
 
-def run_GLM(raw, design_matrix, noise_model='ar4', bins=0,
+def run_GLM(raw, design_matrix, noise_model='ar1', bins=0,
             n_jobs=1, verbose=0):
     """
     Run GLM on data using supplied design matrix.
@@ -19,10 +19,13 @@ def run_GLM(raw, design_matrix, noise_model='ar4', bins=0,
         The haemoglobin data.
     design_matrix : as specified in Nilearn
         The design matrix.
-    noise_model : {'ar1', 'ols', 'arN'}, optional
-        The temporal variance model. Defaults to 'ar4'.
+    noise_model : {'ar1', 'ols', 'arN', 'auto'}, optional
+        The temporal variance model. Defaults to first order
+        auto regressive model 'ar1'.
         The AR model can be set to any integer value by modifying the value
-        of N.
+        of N. E.g. use `ar5` for a fifth order model.
+        If the string `auto` is provided a model with order 4 times the sample
+        rate will be used.
     bins : int, optional
         Maximum number of discrete bins for the AR coef histogram/clustering.
         By default the value is 0, which will set the number of bins to the
@@ -44,6 +47,10 @@ def run_GLM(raw, design_matrix, noise_model='ar4', bins=0,
 
     picks = _picks_to_idx(raw.info, 'fnirs', exclude=[], allow_empty=True)
     ch_names = raw.ch_names
+
+    if noise_model == 'auto':
+        noise_model = f"ar{int(np.round(raw.info['sfreq'] * 4))}"
+    print(noise_model)
 
     if bins == 0:
         bins = len(raw.ch_names)
