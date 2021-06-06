@@ -50,7 +50,6 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=0,
 
     if noise_model == 'auto':
         noise_model = f"ar{int(np.round(raw.info['sfreq'] * 4))}"
-    print(noise_model)
 
     if bins == 0:
         bins = len(raw.ch_names)
