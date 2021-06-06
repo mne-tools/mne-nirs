@@ -208,6 +208,9 @@ print("Estimate:", glm_est['Simulated'].theta[0],
       "  MSE:", glm_est['Simulated'].MSE,
       "  Error (uM):", 1e6*(glm_est['Simulated'].theta[0] - amp*1e-6))
 
+###############################################################################
+# The response estimate using the AR(5) model is more accurate than the
+# AR(1) model (error of 0.25 vs 2.8 uM).
 
 ###############################################################################
 # Conclusion?
@@ -219,3 +222,5 @@ print("Estimate:", glm_est['Simulated'].theta[0],
 # estimate provided by the GLM was correct, but contained some error. We
 # observed that as the measurement time was increased, the estimated
 # error decreased.
+# We also observed in this idealised example that including an appropriate
+# model of the noise can improve the accuracy of the response estimate.
