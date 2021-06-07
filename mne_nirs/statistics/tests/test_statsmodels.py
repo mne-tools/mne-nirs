@@ -43,7 +43,7 @@ def test_statsmodel_to_df(func):
                      groups=df_cha["ID"]).fit()
     df = statsmodels_to_results(roi_model)
     assert type(df) == pd.DataFrame
-    assert_allclose(df["Coef."]["Condition[A]"], amplitude, rtol=1e-12)
+    assert_allclose(df["Coef."]["Condition[A]"], amplitude, rtol=0.1)
     assert df["Significant"]["Condition[A]"]
     assert df.shape == (8, 8)
 
@@ -51,6 +51,6 @@ def test_statsmodel_to_df(func):
                         groups=df_cha["ID"]).fit()
     df = statsmodels_to_results(roi_model)
     assert type(df) == pd.DataFrame
-    assert_allclose(df["Coef."]["Condition[A]"], amplitude, rtol=1e-12)
+    assert_allclose(df["Coef."]["Condition[A]"], amplitude, rtol=0.1)
     assert df["Significant"]["Condition[A]"]
     assert df.shape == (8, 8)
