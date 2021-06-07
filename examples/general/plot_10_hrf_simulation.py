@@ -181,8 +181,8 @@ print("Estimate:", glm_est['Simulated'].theta[0],
 
 
 ###############################################################################
-# Using models that account for structure in the noise ?
-# ------------------------------------------------------
+# Using autoregressive models in the GLM to account for noise structure
+# ---------------------------------------------------------------------
 #
 # An auto regressive noise model can be used account for temporal structure
 # in the noise. To account for the noise properties in the example above,
