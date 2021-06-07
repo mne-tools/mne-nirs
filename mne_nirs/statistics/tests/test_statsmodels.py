@@ -31,6 +31,7 @@ def test_statsmodel_to_df(func):
         raw = simulate_nirs_raw(sfreq=3., amplitude=amplitude,
                                 sig_dur=300., stim_dur=5.,
                                 isi_min=15., isi_max=45.)
+        raw._data += np.random.normal(0, np.sqrt(1e-12), raw._data.shape)
         design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0)
         glm_est = run_GLM(raw, design_matrix)
         with pytest.warns(RuntimeWarning, match='Non standard source detect'):
