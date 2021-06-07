@@ -166,7 +166,7 @@ raw_od.copy().pick(picks = [12, 13, 34, 35]).\
 # the threshold criteria and are marked as bad.
 
 raw_od, scores, times = peak_power(raw_od)
-plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.2)
+plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.1)
 
 
 ###############################################################################
