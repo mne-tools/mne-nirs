@@ -19,9 +19,9 @@ MNE-NIRS: Near-Infrared Spectroscopy Analysis
 .. image:: https://badge.fury.io/py/mne-nirs.svg
     :target: https://badge.fury.io/py/mne-nirs
 
-**MNE-NIRS** is an `MNE <https://mne.tools>`_ compatible near-infrared spectroscopy processing package. 
+**MNE-NIRS** is an `MNE-Python <https://mne.tools>`_ compatible near-infrared spectroscopy processing package. 
 
-MNE has support for common fNIRS waveform analysis (see `tutorial <https://mne.tools/stable/auto_tutorials/preprocessing/plot_70_fnirs_processing.html>`_), this package adds additional GLM style analysis, helper functions, algorithms, and plotting.
+MNE-Python provides support for a subset of fNIRS waveform analysis, this package extends that functionality and adds additional GLM style analysis, helper functions, algorithms, data quality metrics, and plotting.
 
 
 Documentation
@@ -29,19 +29,22 @@ Documentation
 
 Documentation for this project is hosted `here <https://mne-tools.github.io/mne-nirs>`_.
 
+You can find a list of  `examples within the documentation <https://mne.tools/mne-nirs/master/auto_examples/index.html>`_.
 
-Examples
+
+Features
 --------
 
-- MNE examples:
-    - `Basic waveform analysis pipeline <https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html#sphx-glr-auto-tutorials-preprocessing-plot-70-fnirs-processing-py>`_.
-    - `Artifact rejection discussion <https://mne.tools/dev/auto_examples/preprocessing/plot_fnirs_artifact_removal.html#ex-fnirs-artifacts>`_.
-- MNE-NIRS examples:
-    - `Simulated haemodynamic response GLM analysis <https://mne.tools/mne-nirs/auto_examples/plot_11_hrf_simulation.html>`_.
-    - `Measured haemodynamic response GLM analysis <https://mne.tools/mne-nirs/auto_examples/plot_10_hrf.html>`_.
-    - `Group level GLM analysis <https://mne.tools/mne-nirs/auto_examples/plot_12_group_glm.html>`_.
-    - `Signal enhancement <https://mne-tools.github.io/mne-nirs/auto_examples/plot_20_cui.html>`_.
-    - `Frequency and filtering <https://mne.tools/mne-nirs/auto_examples/plot_30_frequency.html>`_.
+MNE-NIRS and MNE-Python provide a wide variety of tools to use when processing NIRS data including:
+
+* Loading data from a `wide variety of devices <https://mne.tools/mne-nirs/master/auto_examples/general/plot_01_data_io.html>`_, including `SNIRF files <https://mne.tools/mne-nirs/master/auto_examples/general/plot_19_snirf.html>`_.
+* Standard preprocessing including `optical density calculation and Beer-Lambert Law conversion <https://mne.tools/mne-nirs/master/auto_examples/general/plot_15_waveform.html#id2>`_, filtering, etc.
+* Data quality metrics including `Scalp Coupling Index <https://mne.tools/mne-nirs/master/auto_examples/general/plot_15_waveform.html#id3>`_.
+* GLM analysis with a wide variety of cusomisation including `including FIR <https://mne.tools/mne-nirs/master/auto_examples/general/plot_13_fir_glm.html>`_ or canonical HRF analysis, higher order autoregressive noise models, `short channel regression, region of interest analysis <https://mne.tools/mne-nirs/master/auto_examples/general/plot_11_hrf_measured.html>`_, etc.
+* Visualisation tools for all stages of processing from raw data to processed waveforms, GLM result visualisation, including both sensor and cortical surface projections.
+* Data cleaning functions including popular short channel techniques and negative correlation enhancement.
+* Group level analysis using `(robust) linear mixed effects models <https://mne.tools/mne-nirs/master/auto_examples/general/plot_12_group_glm.html>`_ and `waveform averaging <https://mne.tools/mne-nirs/master/auto_examples/general/plot_16_waveform_group.html>`_.
+* And much more! Check out the documentation `examples <https://mne.tools/mne-nirs/master/auto_examples/index.html>`_ and the API `for more details <https://mne.tools/mne-nirs/master/api.html>`_.
 
 
 Contributing
@@ -55,7 +58,7 @@ Acknowledgements
 
 This package is built on top of many other great packages. If you use MNE-NIRS you should also acknowledge these packages.
 
-MNE: https://mne.tools/dev/overview/cite.html
+MNE-Python: https://mne.tools/dev/overview/cite.html
 
 Nilearn: http://nilearn.github.io/authors.html#citing
 
