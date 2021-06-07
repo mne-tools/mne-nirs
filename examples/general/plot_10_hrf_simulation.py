@@ -184,11 +184,12 @@ print("Estimate:", glm_est['Simulated'].theta[0],
 # Using models that account for structure in the noise ?
 # ------------------------------------------------------
 #
-# To account for temporal structure in the noise an auto regressive noise
-# model can be used. To account for the noise in the example above we can
-# include a fifth order auto regressive model with the GLM. Given this
-# is a simulation we can verify if the correct estimate of the noise properties
-# was extracted from the data and if this improved the response estimate.
+# An auto regressive noise model can be used account for temporal structure
+# in the noise. To account for the noise properties in the example above,
+# a fifth order auto regressive model is used below. Given this
+# is a simulation, we can verify if the correct estimate of the noise
+# properties was extracted from the data and if this
+# improved the response estimate.
 
 glm_est = run_GLM(raw, design_matrix, noise_model='ar5')
 
