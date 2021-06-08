@@ -19,15 +19,7 @@ def peak_power(raw, time_window=10, threshold=0.1, l_freq=0.7, h_freq=1.5,
                l_trans_bandwidth=0.3, h_trans_bandwidth=0.3,
                verbose=False):
     """
-    Compute peak spectral power metric from [1, 2].
-
-    [1] Pollonini L et al., “PHOEBE: a method for real time mapping of
-    optodes-scalp coupling in functional near-infrared spectroscopy” in
-    Biomed. Opt. Express 7, 5104-5119 (2016).
-
-    [2] Hernandez, Samuel Montero, and Luca Pollonini. "NIRSplot: a tool for
-    quality assessment of fNIRS scans." Optics and the Brain.
-    Optical Society of America, 2020.
+    Compute peak spectral power metric from [1]_ and [2]_.
 
     Parameters
     ----------
@@ -43,6 +35,7 @@ def peak_power(raw, time_window=10, threshold=0.1, l_freq=0.7, h_freq=1.5,
     %(l_trans_bandwidth)s
     %(h_trans_bandwidth)s
     %(verbose)s
+
     Returns
     -------
     scores : array (n_nirs, n_windows)
@@ -50,6 +43,15 @@ def peak_power(raw, time_window=10, threshold=0.1, l_freq=0.7, h_freq=1.5,
     times : list
         List of the start and end times of each window used to compute the
         peak spectral power.
+
+    References
+    ----------
+    .. [1] Pollonini L et al., “PHOEBE: a method for real time mapping of
+           optodes-scalp coupling in functional near-infrared spectroscopy” in
+           Biomed. Opt. Express 7, 5104-5119 (2016).
+    .. [2] Hernandez, Samuel Montero, and Luca Pollonini. "NIRSplot: a tool for
+           quality assessment of fNIRS scans." Optics and the Brain.
+           Optical Society of America, 2020.
     """
 
     raw = raw.copy().load_data()
