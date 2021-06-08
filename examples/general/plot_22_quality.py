@@ -41,7 +41,7 @@ were in contact with the scalp. For further details see the papers listed
 in the relevant literature sidebar.
 
 """
-# sphinx_gallery_thumbnail_number = 3
+# sphinx_gallery_thumbnail_number = 4
 
 # Authors: Robert Luke <mail@robertluke.net>
 #
