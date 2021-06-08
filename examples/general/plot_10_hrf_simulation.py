@@ -181,6 +181,39 @@ print("Estimate:", glm_est['Simulated'].theta[0],
 
 
 ###############################################################################
+# Using autoregressive models in the GLM to account for noise structure
+# ---------------------------------------------------------------------
+#
+# An auto regressive noise model can be used account for temporal structure
+# in the noise. To account for the noise properties in the example above,
+# a fifth order auto regressive model is used below. Given this
+# is a simulation, we can verify if the correct estimate of the noise
+# properties was extracted from the data and if this
+# improved the response estimate.
+
+glm_est = run_GLM(raw, design_matrix, noise_model='ar5')
+
+fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(15, 6))
+plt.plot([-0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.02428681],
+         axes=axes)  # actual values from model above
+plt.plot(glm_est['Simulated'].model.rho * -1.0,  axes=axes)  # estimates
+plt.legend(["Simulation AR coefficients", "Estimated AR coefficients"])
+plt.xlabel("Coefficient")
+
+
+###############################################################################
+# We can see that the estimates from the GLM AR model are quite accurate,
+# but how does this affect the accuracy of the response estimate?
+
+print("Estimate:", glm_est['Simulated'].theta[0],
+      "  MSE:", glm_est['Simulated'].MSE,
+      "  Error (uM):", 1e6*(glm_est['Simulated'].theta[0] - amp*1e-6))
+
+###############################################################################
+# The response estimate using the AR(5) model is more accurate than the
+# AR(1) model (error of 0.25 vs 2.8 uM).
+
+###############################################################################
 # Conclusion?
 # -----------
 #
@@ -190,3 +223,5 @@ print("Estimate:", glm_est['Simulated'].theta[0],
 # estimate provided by the GLM was correct, but contained some error. We
 # observed that as the measurement time was increased, the estimated
 # error decreased.
+# We also observed in this idealised example that including an appropriate
+# model of the noise can improve the accuracy of the response estimate.
