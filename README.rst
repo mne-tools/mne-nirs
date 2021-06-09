@@ -39,7 +39,7 @@ MNE-NIRS and MNE-Python provide a wide variety of tools to use when processing N
 
 * Loading data from a `wide variety of devices <https://mne.tools/mne-nirs/master/auto_examples/general/plot_01_data_io.html>`_, including `SNIRF files <https://mne.tools/mne-nirs/master/auto_examples/general/plot_19_snirf.html>`_.
 * Standard preprocessing including `optical density calculation and Beer-Lambert Law conversion <https://mne.tools/mne-nirs/master/auto_examples/general/plot_15_waveform.html#id2>`_, filtering, etc.
-* Data quality metrics including `Scalp Coupling Index <https://mne.tools/mne-nirs/master/auto_examples/general/plot_15_waveform.html#id3>`_.
+* Data quality metrics including `scalp coupling index <https://mne.tools/mne-nirs/master/auto_examples/general/plot_15_waveform.html#id3>`_ and `peak power <https://mne.tools/mne-nirs/master/auto_examples/general/plot_22_quality.html#peak-power>`_.
 * GLM analysis with a wide variety of cusomisation including `including FIR <https://mne.tools/mne-nirs/master/auto_examples/general/plot_13_fir_glm.html>`_ or canonical HRF analysis, higher order autoregressive noise models, `short channel regression, region of interest analysis <https://mne.tools/mne-nirs/master/auto_examples/general/plot_11_hrf_measured.html>`_, etc.
 * Visualisation tools for all stages of processing from raw data to processed waveforms, GLM result visualisation, including both sensor and cortical surface projections.
 * Data cleaning functions including popular short channel techniques and negative correlation enhancement.
