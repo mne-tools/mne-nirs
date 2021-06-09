@@ -24,6 +24,21 @@ Experimental Design and Analysis
    create_boxcar
 
 
+Preprocessing
+-------------
+
+.. currentmodule:: mne_nirs.preprocessing
+
+.. automodule:: mne_nirs.preprocessing
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
+   peak_power
+
+
 Signal Enhancement
 ------------------
 
@@ -74,6 +89,7 @@ Visualisation
    plot_glm_topo
    plot_glm_contrast_topo
    plot_glm_group_topo
+   plot_timechannel_quality_metric
 
 
 Simulation
