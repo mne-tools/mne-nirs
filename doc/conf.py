@@ -53,9 +53,9 @@ extensions = [
 
 smv_branch_whitelist = r'^(?!refs/heads/).*$'
 # v0.0.1 config is not compatible with sphinx-multiversion, so use 2 onwards
-smv_tag_whitelist = r'^v\d+\.\d+.[4-9]$'
+smv_tag_whitelist = r'^v\d+\.\d+.[2-9]$'
 # Mark vX.Y.Z as releases
-smv_released_pattern = r'^refs/tags/.*$'
+smv_released_pattern = r'^tags/.*$'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
