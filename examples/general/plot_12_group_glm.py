@@ -77,6 +77,7 @@ import numpy as np
 import pandas as pd
 
 # Import MNE processing
+import mne
 from mne.preprocessing.nirs import optical_density, beer_lambert_law
 
 # Import MNE-NIRS processing
@@ -89,6 +90,7 @@ from mne_nirs.channels import picks_pair_to_idx
 from mne_nirs.utils._io import glm_to_tidy
 from mne_nirs.visualisation import plot_glm_group_topo
 from mne_nirs.datasets import fnirs_motor_group
+from mne_nirs.visualisation import plot_glm_surface_projection, brain_to_image
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids
@@ -391,6 +393,57 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
 
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
                     con_model_df, colorbar=True, threshold=True)
+
+
+###############################################################################
+# Cortical Surface Projections
+# ----------------------------
+#
+# The topographic plots above can sometimes be difficult to interpret with
+# respect to the underlying cortical locations. It is also possible to present
+# the data by projecting the channel level GLM values to the nearest cortical
+# surface. This can make it easier to understand the spatial aspects of your
+# data. Note however, that this is not a complete forward model with photon
+# migration simulations.
+# In the figure below we project the group results from the two conditions
+# to the cortical surface, and also present the contrast results in the same
+# fashion.
+# As in the topo plots above you can see that the activity is predominately
+# contralateral to the side of finger tapping.
+
+fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(20, 9))
+clim = dict(kind='value', pos_lims=(0, 8, 11))
+
+# Generate brain figure from data
+brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
+                                    con_model_df, clim=clim, view='dorsal',
+                                    colorbar=True, size=(800, 700))
+
+# Add title to brain and place in the subplot axes
+brain.add_text(0.05, 0.95, f"Left-Right", 'title', font_size=16, color='k')
+axes[2].imshow(brain_to_image(brain))
+axes[2].axis('off')
+
+# Run model code as above
+clim = dict(kind='value', pos_lims=(0, 11.5, 17))
+for idx, cond in enumerate(['Tapping/Left', 'Tapping/Right']):
+
+    # Run same model as explained in the sections above
+    ch_summary = df_cha.query("Condition in [@cond]")
+    ch_summary = ch_summary.query("Chroma in ['hbo']")
+    ch_model = smf.mixedlm("theta ~ -1 + ch_name", ch_summary,
+                           groups=ch_summary["ID"]).fit(method='nm')
+    model_df = statsmodels_to_results(ch_model)
+
+    # Generate brain figure from data
+    brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
+                                        model_df, clim=clim, view='dorsal',
+                                        colorbar=True, size=(800, 700))
+
+    # Add title to brain and place in the subplot axes
+    brain.add_text(0.05, 0.95, cond, 'title', font_size=16, color='k')
+    axes[idx].imshow(brain_to_image(brain))
+    axes[idx].axis('off')
 
 
 ###############################################################################
