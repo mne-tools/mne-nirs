@@ -13,9 +13,14 @@ This tutorial demonstrates how signal quality can be evaluated using MNE-NIRS.
    optodes-scalp coupling in functional near-infrared spectroscopy” in
    Biomed. Opt. Express 7, 5104-5119 (2016).
 
-   Hernandez, Samuel Montero, and Luca Pollonini. "NIRSplot: a tool for
+   Montero Hernandez, Samuel, and Luca Pollonini. "NIRSplot: a tool for
    quality assessment of fNIRS scans." Optics and the Brain.
    Optical Society of America, 2020.
+
+   Pollonini, L., Olds, C., Abaya, H., Bortfeld, H., Beauchamp, M. S., &
+   Oghalai, J. S. (2014). Auditory cortex activation to natural speech and
+   simulated cochlear implant speech measured with functional near-infrared
+   spectroscopy. Hearing research, 309, 84-93.
 
 Ensuring your data is of high quality is essential to good scientific research.
 Evaluating data quality is an essential part of both data collection and
@@ -28,7 +33,7 @@ It is also important to assess data quality during data analysis.
 MNE-Python and MNE-NIRS provides several mechanisms to allow researchers
 to evaluate the quality of their data and to include this information in their
 downstream processing.
-Dedicated tools exist for quality evaluatiuon such as Hernandez (2020).
+Dedicated tools exist for quality evaluatiuon such as Montero Hernandez (2020).
 This tutorial demonstrates methods in MNE-NIRS and MNE-Python for determining
 channels with poor signal
 quality, and methods for determining time segments of data that are of low
@@ -58,8 +63,9 @@ from mne_nirs.preprocessing import peak_power
 from mne_nirs.visualisation import plot_timechannel_quality_metric
 
 ###############################################################################
+# ***********
 # Import data
-# -----------
+# ***********
 #
 # Here we will work with the :ref:`fNIRS motor data <fnirs-motor-dataset>`.
 # We resample the data to make indexing exact times more convenient.
@@ -79,14 +85,21 @@ raw_od.plot(n_channels=55, duration=4000, show_scrollbars=False, clipping=None)
 
 
 ###############################################################################
+# ********************
 # Scalp Coupling Index
-# --------------------
+# ********************
 #
 # The scalp coupling index (SCI) from Pollonini (2016) provides a measure of
-# the quality of the signal for a channel as determined using the entire
+# the quality of the signal for a channel over a specified
 # measurement duration. See Pollonini (2016) for further details of the
-# theory and implementation. Here we calculate the SCI for each channel
-# and view the distribution of values.
+# theory and implementation.
+#
+#
+# SCI evaluated over entire signal
+# ================================
+#
+# Here we calculate the SCI for each channel over
+# the entire signal and view the distribution of values.
 
 sci = mne.preprocessing.nirs.scalp_coupling_index(raw_od)
 fig, ax = plt.subplots()
@@ -112,8 +125,29 @@ print(raw_od.info['bads'])
 raw_od.plot(n_channels=55, duration=4000, show_scrollbars=False, clipping=None)
 
 ###############################################################################
+# Similarly, we can view the montage diagram and view where on the head
+# the bad channels were positioned.
+
+raw_od.plot_sensors()
+
+###############################################################################
+# SCI evaluated over initial segment of signal
+# ============================================
+#
+# The scalp coupling index can be calculated over a limited section of
+# the signal by cropping to the desired section. For example, if you wish to
+# evaluate the data quality of the first 30 seconds of the signal.
+
+sci = mne.preprocessing.nirs.scalp_coupling_index(raw_od.copy().crop(10))
+fig, ax = plt.subplots()
+ax.hist(sci)
+ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
+
+
+###############################################################################
+# **********
 # Peak Power
-# ----------
+# **********
 #
 # It may also be informative to view the quality of the signal at a finer
 # time resolution. The Peak Power metric provides a quality metric evalauted
@@ -128,8 +162,9 @@ plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.1)
 
 
 ###############################################################################
+# ****************
 # Introduced Noise
-# ----------------
+# ****************
 #
 # The above data is quite clean, so here we add some noise to channels to
 # demonstrate that the algorithm is able to detect bad segments of data.
@@ -153,8 +188,9 @@ raw_od.copy().pick(picks = [12, 13, 34, 35]).\
 
 
 ###############################################################################
+# *****************
 # Peak Power Metric
-# -----------------
+# *****************
 #
 # To determine specific time and channel instances where data is of low
 # quality the peak power metric can be utilise (Pollonini, 2016).
@@ -170,8 +206,9 @@ plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.1)
 
 
 ###############################################################################
+# ***********
 # Annotations
-# -----------
+# ***********
 #
 # Similar to how entire channels were marked as bad above, the peak power
 # function annotates the raw data structure to indicate where the bad
@@ -202,8 +239,9 @@ raw_od.copy().pick(picks = [12, 13, 34, 35]).\
 raw_od.plot(n_channels=55, duration=4000, show_scrollbars=False, clipping=None)
 
 ###############################################################################
+# **********
 # Conclusion
-# ----------
+# **********
 #
 # Two data quality metrics were presented and plotted.
 # One metric for determining a bad channel (scalp coupling index).
