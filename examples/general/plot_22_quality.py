@@ -59,7 +59,7 @@ from itertools import compress
 import matplotlib.pyplot as plt
 
 from mne.preprocessing.nirs import optical_density
-from mne_nirs.preprocessing import peak_power, scalp_coupling_index_timechannel
+from mne_nirs.preprocessing import peak_power, scalp_coupling_index_windowed
 from mne_nirs.visualisation import plot_timechannel_quality_metric
 
 ###############################################################################
@@ -151,12 +151,16 @@ ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
 #
 # The scalp coupling index can be calculated over the entire signal in
 # windowed chunks
+# This plot is based on the meg bad channel detection figures
+# available in mne-bids-pipeline.
+# Black horizontal lines indicate channels that have been marked as bad
+# (see above). The color in the left facet shows the raw scores,
+# The color in the right facet indicates segments that are below the threshold.
 
-raw_od, scores, times = scalp_coupling_index_timechannel(raw_od)
-plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.5,
+raw_od, scores, times = scalp_coupling_index_windowed(raw_od)
+plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.7,
                                 title="Scalp Coupling Index "
                                       "Quality Evaluation")
-plt.show()
 
 ###############################################################################
 # **********
@@ -168,13 +172,10 @@ plt.show()
 # over a 10 second window. This allows the user to view instances where
 # a subset of channels may be contaminated by artifacts for a short duration
 # of the recording.
-# This plot is based on the meg bad channel detection figures
-# available in mne-bids-pipeline.
 
 raw_od, scores, times = peak_power(raw_od)
 plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.1,
                                 title="Peak Power Quality Evaluation")
-plt.show()
 
 
 ###############################################################################

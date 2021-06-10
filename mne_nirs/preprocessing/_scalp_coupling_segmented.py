@@ -4,8 +4,6 @@
 
 import numpy as np
 
-from scipy.signal import periodogram
-
 from mne import pick_types
 from mne.io import BaseRaw
 from mne.utils import _validate_type, verbose
@@ -15,13 +13,13 @@ from mne.filter import filter_data
 
 
 @verbose
-def scalp_coupling_index_timechannel(raw, time_window=10, threshold=0.1,
-                                     l_freq=0.7, h_freq=1.5,
-                                     l_trans_bandwidth=0.3,
-                                     h_trans_bandwidth=0.3,
-                                     verbose=False):
+def scalp_coupling_index_windowed(raw, time_window=10, threshold=0.1,
+                                  l_freq=0.7, h_freq=1.5,
+                                  l_trans_bandwidth=0.3,
+                                  h_trans_bandwidth=0.3,
+                                  verbose=False):
     """
-    Compute peak spectral power metric from [1]_ and [2]_.
+    Compute windowed scalp coupling index metric from [1]_ and [2]_.
 
     Parameters
     ----------
@@ -87,8 +85,6 @@ def scalp_coupling_index_timechannel(raw, time_window=10, threshold=0.1,
         times.append((t_start, t_stop))
 
         for ii in picks[::2]:
-
-
 
             c1 = filtered_data[ii][start_sample:end_sample]
             c2 = filtered_data[ii + 1][start_sample:end_sample]
