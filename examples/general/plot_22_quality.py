@@ -136,7 +136,7 @@ raw_od.plot_sensors()
 #
 # The scalp coupling index can be calculated over a limited section of
 # the signal by cropping to the desired section. For example, if you wish to
-# evaluate the data quality of the first 30 seconds of the signal.
+# evaluate the data quality of the first 10 seconds of the signal.
 # Note that the difference to evaluation of the entire signal was quite subtle,
 # but this may vary depending on your experimental design and setup.
 
@@ -157,8 +157,13 @@ ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
 # (see above).
 # The color in the left facet shows the raw scores,
 # The color in the right facet indicates segments that are below the threshold.
+# This is useful for determining if a channel becomes bad throughout an
+# experiment. This may occur due to movement dislodging the optode or many
+# other causes.
+# In this example we set the time window to be 60 seconds, but the user may
+# define a window length that is appropriate for the experiment.
 
-_, scores, times = scalp_coupling_index_windowed(raw_od)
+_, scores, times = scalp_coupling_index_windowed(raw_od, time_window=60)
 plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.7,
                                 title="Scalp Coupling Index "
                                       "Quality Evaluation")
@@ -174,7 +179,7 @@ plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.7,
 # a subset of channels may be contaminated by artifacts for a short duration
 # of the recording.
 
-raw_od, scores, times = peak_power(raw_od)
+raw_od, scores, times = peak_power(raw_od, time_window=10)
 plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.1,
                                 title="Peak Power Quality Evaluation")
 
@@ -219,7 +224,7 @@ raw_od.copy().pick(picks=[12, 13, 34, 35]).\
 # The right facet illustrates the channel and time segments that do not meet
 # the threshold criteria and are marked as bad.
 
-raw_od, scores, times = peak_power(raw_od)
+raw_od, scores, times = peak_power(raw_od, time_window=10)
 plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.1)
 
 
