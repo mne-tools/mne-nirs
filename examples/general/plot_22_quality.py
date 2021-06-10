@@ -149,8 +149,8 @@ ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
 # SCI evaluated over moving window
 # ================================
 #
-# The scalp coupling index can be calculated over the entire signal in
-# windowed chunks
+# The scalp coupling index can be calculated over
+# windowed chunks of the signal.
 # This plot is based on the meg bad channel detection figures
 # available in mne-bids-pipeline.
 # Black horizontal lines indicate channels that have been marked as bad
