@@ -137,6 +137,8 @@ raw_od.plot_sensors()
 # The scalp coupling index can be calculated over a limited section of
 # the signal by cropping to the desired section. For example, if you wish to
 # evaluate the data quality of the first 30 seconds of the signal.
+# Note that the difference to evaluation of the entire signal was quite subtle,
+# but this may vary depending on your experimental design and setup.
 
 sci = mne.preprocessing.nirs.scalp_coupling_index(raw_od.copy().crop(10))
 fig, ax = plt.subplots()
