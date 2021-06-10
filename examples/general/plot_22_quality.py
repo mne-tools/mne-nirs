@@ -59,7 +59,7 @@ from itertools import compress
 import matplotlib.pyplot as plt
 
 from mne.preprocessing.nirs import optical_density
-from mne_nirs.preprocessing import peak_power
+from mne_nirs.preprocessing import peak_power, scalp_coupling_index_timechannel
 from mne_nirs.visualisation import plot_timechannel_quality_metric
 
 ###############################################################################
@@ -143,6 +143,18 @@ fig, ax = plt.subplots()
 ax.hist(sci)
 ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
 
+###############################################################################
+# SCI evaluated over moving window
+# ================================
+#
+# The scalp coupling index can be calculated over the entire signal in
+# windowed chunks
+
+raw_od, scores, times = scalp_coupling_index_timechannel(raw_od)
+plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.5,
+                                title="Scalp Coupling Index "
+                                      "Quality Evaluation")
+plt.show()
 
 ###############################################################################
 # **********
@@ -158,7 +170,9 @@ ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
 # available in mne-bids-pipeline.
 
 raw_od, scores, times = peak_power(raw_od)
-plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.1)
+plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.1,
+                                title="Peak Power Quality Evaluation")
+plt.show()
 
 
 ###############################################################################
@@ -182,8 +196,8 @@ raw_od._data[34, 8000:8080] = np.linspace(0, 0.5, 80) + raw_od._data[34, 8000]
 # Next we plot just these channels to demonstrate that indeed an artifact
 # has been added.
 
-raw_od.copy().pick(picks = [12, 13, 34, 35]).\
-    plot(n_channels=55,duration=40000, show_scrollbars=False,
+raw_od.copy().pick(picks=[12, 13, 34, 35]).\
+    plot(n_channels=55, duration=40000, show_scrollbars=False,
          clipping=None, scalings={'fnirs_od': 0.2})
 
 
@@ -223,8 +237,8 @@ plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.1)
 # channels would be generated for S5-D13 (as the artifact was only present
 # on S2-D4).
 
-raw_od.copy().pick(picks = [12, 13, 34, 35]).\
-    plot(n_channels=55,duration=40000, show_scrollbars=False,
+raw_od.copy().pick(picks=[12, 13, 34, 35]).\
+    plot(n_channels=55, duration=40000, show_scrollbars=False,
          clipping=None, scalings={'fnirs_od': 0.2})
 
 ###############################################################################
