@@ -36,6 +36,22 @@ Usage
 See the `examples <auto_examples/index.html>`_ and `API documentation <api.html>`_.
 
 
+Features
+--------
+
+MNE-NIRS and MNE-Python provide a wide variety of tools to use when processing NIRS data including:
+
+* Loading data from a wide variety of devices, including SNIRF files.
+* Apply 3D sensor locations from common digitisation systems such as Polhemus.
+* Standard preprocessing including optical density calculation and Beer-Lambert Law conversion, filtering, etc.
+* Data quality metrics including scalp coupling index and peak power.
+* GLM analysis with a wide variety of cusomisation including including FIR or canonical HRF analysis, higher order autoregressive noise models, short channel regression, region of interest analysis, etc.
+* Visualisation tools for all stages of processing from raw data to processed waveforms, GLM result visualisation, including both sensor and cortical surface projections.
+* Data cleaning functions including popular short channel techniques and negative correlation enhancement.
+* Group level analysis using (robust) linear mixed effects models and waveform averaging.
+* And much more! Check out the documentation examples and the API for more details.
+
+
 Acknowledgements
 ----------------
 
