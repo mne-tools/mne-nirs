@@ -46,7 +46,7 @@ were in contact with the scalp. For further details see the papers listed
 in the relevant literature sidebar.
 
 """
-# sphinx_gallery_thumbnail_number = 4
+# sphinx_gallery_thumbnail_number = 7
 
 # Authors: Robert Luke <mail@robertluke.net>
 #
@@ -154,10 +154,11 @@ ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
 # This plot is based on the meg bad channel detection figures
 # available in mne-bids-pipeline.
 # Black horizontal lines indicate channels that have been marked as bad
-# (see above). The color in the left facet shows the raw scores,
+# (see above).
+# The color in the left facet shows the raw scores,
 # The color in the right facet indicates segments that are below the threshold.
 
-raw_od, scores, times = scalp_coupling_index_windowed(raw_od)
+_, scores, times = scalp_coupling_index_windowed(raw_od)
 plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.7,
                                 title="Scalp Coupling Index "
                                       "Quality Evaluation")
