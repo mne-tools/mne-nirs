@@ -33,8 +33,7 @@ def test_snirf_write(fname, tmpdir):
     """Test reading NIRX files."""
     raw_orig = read_raw_nirx(fname, preload=True)
     write_raw_snirf(raw_orig, tmpdir.join('test_raw.snirf'))
-    fna = tmpdir.join('test_raw.snirf')
-    raw = read_raw_snirf(fna, optode_frame="head")
+    raw = read_raw_snirf(tmpdir.join('test_raw.snirf'))
 
     # Check annotations are the same
     assert_allclose(raw.annotations.onset, raw_orig.annotations.onset)
