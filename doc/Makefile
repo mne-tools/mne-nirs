@@ -67,7 +67,7 @@ numpydoc:
 	# the embedding of images more robust
 	rm -rf $(BUILDDIR)/numpydoc/_images
 	@echo "sphinx-build  $(BUILDDIR)/numpydoc"
-	sphinx-build -b html $(ALLSPHINXOPTS) $(BUILDDIR)/numpydocl
+	sphinx-build -D plot_gallery=0 -b html $(ALLSPHINXOPTS) $(BUILDDIR)/numpydoc
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/numpydoc."
 
