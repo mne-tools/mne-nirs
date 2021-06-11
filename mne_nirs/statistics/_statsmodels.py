@@ -83,6 +83,7 @@ def statsmodels_to_results(model, order=None):
     Returns
     -------
     df : Pandas dataframe.
+        Data frame with the results from the stats model.
     """
     from statsmodels.regression.mixed_linear_model import MixedLMResultsWrapper
     from scipy.stats.distributions import norm

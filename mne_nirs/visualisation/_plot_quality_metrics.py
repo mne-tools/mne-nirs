@@ -23,11 +23,10 @@ def plot_timechannel_quality_metric(raw, scores, times, threshold=0.1,
         The quality metric scores.
     times : list of pairs
         Start and end time for each quality metric.
-    %(l_freq)s
-    %(h_freq)s
-    %(l_trans_bandwidth)s
-    %(h_trans_bandwidth)s
-    %(verbose)s
+    threshold : float
+        Value below which a segment will be marked as bad.
+    title : str
+        Title of plot. If not specified a default title will be used.
 
     Returns
     -------

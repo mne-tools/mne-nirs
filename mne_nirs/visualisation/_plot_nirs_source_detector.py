@@ -23,7 +23,7 @@ def plot_nirs_source_detector(data, info=None, radius=0.001,
 
     Parameters
     ----------
-    data: array
+    data : array
         Array of values to be plotted between source and detectors.
         One value should be specified per channel in the same order
         as `info.chs`.
