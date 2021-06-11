@@ -44,15 +44,18 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
     vmax : float | None
         The value specifying the upper bound of the color range.
         If None, the maximum absolute value is used. Defaults to None.
-    figsize : TODO: Remove this, how does MNE usually deal with this?
     colorbar : Bool
         Should a colorbar be plotted.
+    figsize : two values
+        Figure size.
     sphere : As specified in MNE
+        Sphere parameter from mne.viz.topomap.plot_topomap.
 
     Returns
     -------
-    fig : Figure of each design matrix componenent for hbo (top row)
-          and hbr (bottom row).
+    fig : figure
+        Figure of each design matrix componenent for hbo (top row)
+        and hbr (bottom row).
     """
 
     if not (raw.ch_names == list(glm_estimates.keys())):

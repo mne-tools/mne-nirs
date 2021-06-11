@@ -15,7 +15,6 @@ def plot_timechannel_quality_metric(raw, scores, times, threshold=0.1,
 
     The left figure shows the raw score per channel and time.
 
-
     Parameters
     ----------
     raw : instance of Raw

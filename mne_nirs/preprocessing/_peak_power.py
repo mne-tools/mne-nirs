@@ -39,7 +39,7 @@ def peak_power(raw, time_window=10, threshold=0.1, l_freq=0.7, h_freq=1.5,
     Returns
     -------
     scores : array (n_nirs, n_windows)
-        Array of peak power values
+        Array of peak power values.
     times : list
         List of the start and end times of each window used to compute the
         peak spectral power.
