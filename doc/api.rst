@@ -37,6 +37,7 @@ Preprocessing
    :toctree: generated/
 
    peak_power
+   scalp_coupling_index_windowed
 
 
 Signal Enhancement

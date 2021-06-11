@@ -141,10 +141,11 @@ def write_raw_snirf(raw, fname):
             digname = [d.encode('UTF-8') for d in digname]
             f.create_dataset("nirs/probe/landmarkPos3D", data=diglocs)
             f.create_dataset("nirs/probe/landmarkLabels", data=digname)
+            # Add non standard (but allowed) custom metadata tags
+            f.create_dataset("nirs/metaDataTags/MNE_coordFrame",
+                             data=[int(raw.info['dig'][0].get("coord_frame"))])
 
         # Add non standard (but allowed) custom metadata tags
-        f.create_dataset("nirs/metaDataTags/MNE_coordFrame",
-                         data=[int(raw.info['dig'][0].get("coord_frame"))])
         if 'middle_name' in raw.info["subject_info"]:
             mname = [raw.info["subject_info"]['middle_name'].encode('UTF-8')]
             f.create_dataset("nirs/metaDataTags/middleName", data=mname)

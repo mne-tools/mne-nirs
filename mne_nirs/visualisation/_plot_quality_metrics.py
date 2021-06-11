@@ -8,7 +8,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def plot_timechannel_quality_metric(raw, scores, times, threshold=0.1):
+def plot_timechannel_quality_metric(raw, scores, times, threshold=0.1,
+                                    title=None):
     """
     Plot time x channel based quality metrics.
 
@@ -38,6 +39,9 @@ def plot_timechannel_quality_metric(raw, scores, times, threshold=0.1):
     ch_names = raw.ch_names
     cols = [np.round(t[0]) for t in times]
 
+    if title is None:
+        title = 'Automated noisy channel detection: fNIRS'
+
     data_to_plot = pd.DataFrame(data=scores,
                                 columns=pd.Index(cols, name='Time (s)'),
                                 index=pd.Index(ch_names, name='Channel'))
@@ -47,8 +51,7 @@ def plot_timechannel_quality_metric(raw, scores, times, threshold=0.1):
 
     # First, plot the "raw" scores.
     fig, ax = plt.subplots(1, 2, figsize=(20, vsize))
-    fig.suptitle('Automated noisy channel detection: fNIRS',
-                 fontsize=16, fontweight='bold')
+    fig.suptitle(title, fontsize=16, fontweight='bold')
     sns.heatmap(data=data_to_plot, cmap='Reds_r', vmin=0, vmax=1,
                 cbar_kws=dict(label='Score'), ax=ax[0])
     [ax[0].axvline(x, ls='dashed', lw=0.25, dashes=(25, 15), color='gray')
