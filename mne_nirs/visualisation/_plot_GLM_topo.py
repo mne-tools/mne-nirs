@@ -258,7 +258,7 @@ def plot_glm_group_topo(raw, statsmodel_df,
         will be used.
     res : int
         The resolution of the topomap image (n pixels along each side).
-    sphere: numbers
+    sphere : numbers
         As specified in mne.
     colorbar : bool
         Should a colorbar be plotted.
@@ -271,7 +271,8 @@ def plot_glm_group_topo(raw, statsmodel_df,
 
     Returns
     -------
-    fig : Figure with topographic representation of statsmodel_df value.
+    fig : figure
+        Figure with topographic representation of statsmodel_df value.
     """
 
     # Check that the channels in two inputs match
