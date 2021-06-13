@@ -28,7 +28,7 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
         The length of your stimulus.
 
     hrf_model : {'glover', 'spm', 'spm + derivative',
-         'spm + derivative + dispersion',
+        'spm + derivative + dispersion',
         'glover + derivative', 'glover + derivative + dispersion',
         'fir', None}, optional
         Specifies the hemodynamic response function. Default='glover'.

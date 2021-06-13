@@ -6,8 +6,10 @@
 import numpy as np
 
 from mne.viz import plot_alignment
+from mne import verbose
 
 
+@verbose
 def plot_nirs_source_detector(data, info=None, radius=0.001,
                               trans=None, subject=None,
                               subjects_dir=None,
@@ -19,7 +21,8 @@ def plot_nirs_source_detector(data, info=None, radius=0.001,
                               show_axes=False,
                               fig=None, cmap=None,
                               interaction='trackball', verbose=None):
-    """Plot NIRS activity between sources and detectors in 3D.
+    """
+    Plot NIRS activity between sources and detectors in 3D.
 
     Parameters
     ----------
@@ -30,6 +33,8 @@ def plot_nirs_source_detector(data, info=None, radius=0.001,
     info : dict | None
         The measurement info.
         If None (default), no sensor information will be shown.
+    radius : numbers
+        Tube radius for connecting links.
     %(trans)s
     subject : str | None
         The subject name corresponding to FreeSurfer environment
@@ -77,8 +82,6 @@ def plot_nirs_source_detector(data, info=None, radius=0.001,
         If True (default), show ECoG sensors.
     src : instance of SourceSpaces | None
         If not None, also plot the source space points.
-    cmap : str
-        Colormap to be used.
     mri_fiducials : bool | str
         Plot MRI fiducials (default False). If ``True``, look for a file with
         the canonical name (``bem/{subject}-fiducials.fif``). If ``str`` it
@@ -93,6 +96,28 @@ def plot_nirs_source_detector(data, info=None, radius=0.001,
         If True (default), show sEEG electrodes.
     fnirs : bool
         If True (default), show fNIRS electrodes.
+    show_axes : bool
+        If True (default False), coordinate frame axis indicators will be
+        shown:
+
+        * head in pink.
+        * MRI in gray (if ``trans is not None``).
+        * MEG in blue (if MEG sensors are present).
+
+        .. versionadded:: 0.16
+    fig : mayavi.mlab.Figure | None
+        Mayavi Scene in which to plot the alignment.
+        If ``None``, creates a new 600x600 pixel figure with black background.
+
+        .. versionadded:: 0.16
+    cmap : str
+        Colormap to be used.
+    interaction : str
+        Can be "trackball" (default) or "terrain", i.e. a turntable-style
+        camera.
+
+        .. versionadded:: 0.16
+    %(verbose)s
 
     Returns
     -------

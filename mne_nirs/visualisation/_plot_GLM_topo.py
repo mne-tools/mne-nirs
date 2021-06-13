@@ -264,10 +264,10 @@ def plot_glm_group_topo(raw, statsmodel_df,
         Should a colorbar be plotted.
     show_names : bool
         Display the channel names.
-    image_interp : str
-        Type of interpolation for image.
     extrapolate : str
         Type of extrapolation for image.
+    image_interp : str
+        Type of interpolation for image.
 
     Returns
     -------
