@@ -79,9 +79,9 @@ Hitachi (.csv)
 ==============
 
 Hitachi produce continuous wave fNIRS devices.
-Hitachi fNIRS recordings can be read using :func:`mne.io.read_raw_hitachi`.
+Hitachi fNIRS recordings can be read using `mne.io.read_raw_hitachi`.
 No optode information is stored so you'll need to set the montage manually,
-see the Notes section of :func:`mne.io.read_raw_hitachi`.
+see the Notes section of `mne.io.read_raw_hitachi`.
 
 
 ************************

@@ -141,7 +141,7 @@ html_context = {
 # documentation.
 # html_theme_options = {}
 html_theme_options = {
-    "search_bar_position": "navbar",
+    "navbar_end": ["navbar-icon-links.html", "search-field.html"],
     'github_url': 'https://github.com/mne-tools/mne-nirs',
     "show_toc_level": 1,
     "google_analytics_id": "UA-188272121-1",
