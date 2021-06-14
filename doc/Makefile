@@ -58,7 +58,8 @@ html:
 	rm -rf $(BUILDDIR)/html/_images
 	#rm -rf _build/doctrees/
 	@echo "$(SPHINXBUILD)  $(BUILDDIR)/html"
-	$(SPHINXBUILD) . $(BUILDDIR)/html
+# 	$(SPHINXBUILD) . $(BUILDDIR)/html
+	sphinx-build -D plot_gallery=0 -A current_version=1 -A versions=1 -b html $(ALLSPHINXOPTS) $(BUILDDIR)/test
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 

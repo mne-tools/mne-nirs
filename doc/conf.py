@@ -141,7 +141,7 @@ html_context = {
 # documentation.
 # html_theme_options = {}
 html_theme_options = {
-    "navbar_end": ["navbar-icon-links.html", "search-field.html"],
+    "navbar_end": ["version-switcher.html", "navbar-icon-links.html", "search-field.html"],
     'github_url': 'https://github.com/mne-tools/mne-nirs',
     "show_toc_level": 1,
     "google_analytics_id": "UA-188272121-1",
