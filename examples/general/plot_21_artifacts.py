@@ -74,7 +74,7 @@ corrupted_od.plot(n_channels=15, duration=400, show_scrollbars=False)
 # ---------------------------------------------
 #
 # This approach corrects baseline shift and spike artifacts without the need
-# for any user-supplied parameters :footcite:`FishburnEtAl2019`.
+# for any user-supplied parameters FishburnEtAl2019.
 
 corrected_tddr = temporal_derivative_distribution_repair(corrupted_od)
 corrected_tddr.plot(n_channels=15, duration=400, show_scrollbars=False)
@@ -90,4 +90,7 @@ corrected_tddr.plot(n_channels=15, duration=400, show_scrollbars=False)
 # References
 # ----------
 #
-# .. footbibliography::
+# Frank A Fishburn, Ruth S Ludlum, Chandan J Vaidya, and Andrei V Medvedev.
+# Temporal derivative distribution repair (tddr): a motion correction method
+# for fNIRS. NeuroImage,
+# 184:171–179, 2019. doi:10.1016/j.neuroimage.2018.09.025.
