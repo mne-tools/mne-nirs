@@ -5,7 +5,7 @@
     </button>
     <div class="dropdown-menu list-group-flush py-0" aria-labelledby="dLabelMore">
         {%- for item in versions.in_development %}
-            <li><a href="{{ item.url }}">{{ item.name }}</a></li>
+            <a class="list-group-item list-group-item-action py-1" href={{ item.url }}>{{ item.name }}</a>
         {%- endfor %}
         {%- for ver, txt in versions_dropdown.items() %}
             <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/{{ ver }}/index.html">{{ txt }}</a>
