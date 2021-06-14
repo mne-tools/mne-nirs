@@ -35,7 +35,7 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=0,
         The number of CPUs to use to do the computation. -1 means
         'all CPUs'.
     verbose : int, optional
-        The verbosity level. Default is 0
+        The verbosity level. Default is 0.
 
     Returns
     -------
@@ -73,7 +73,7 @@ def compute_contrast(glm_est, contrast, contrast_type=None):
 
     Parameters
     ----------
-    glm_estimates : dict
+    glm_est : dict
         Dictionary of nilearn regression results as returned by `run_glm`.
     contrast : numpy.ndarray of shape (p) or (q, p),
         Where q = number of contrast vectors and p = number of regressors.

@@ -1,4 +1,4 @@
-.. _general_examples:
+.. _all_examples:
 
 Examples
 ========

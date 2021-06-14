@@ -28,7 +28,7 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
         The length of your stimulus.
 
     hrf_model : {'glover', 'spm', 'spm + derivative',
-         'spm + derivative + dispersion',
+        'spm + derivative + dispersion',
         'glover + derivative', 'glover + derivative + dispersion',
         'fir', None}, optional
         Specifies the hemodynamic response function. Default='glover'.
@@ -49,10 +49,10 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
         model (in scans). Default=[0].
 
     add_regs : array of shape(n_frames, n_add_reg) or pandas DataFrame
-        additional user-supplied regressors, e.g. data driven noise regressors
+        Additional user-supplied regressors, e.g. data driven noise regressors
         or seed based regressors.
 
-    add_reg_names : list of (n_add_reg,) strings, optional
+    add_reg_names : list of (n_add_reg,) str, optional
         If None, while add_regs was provided, these will be termed
         'reg_%i', i = 0..n_add_reg - 1
         If add_regs is a DataFrame, the corresponding column names are used
@@ -69,9 +69,8 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
     Returns
     -------
     design_matrix : DataFrame instance,
-        holding the computed design matrix, the index being the frames_times
+        Holding the computed design matrix, the index being the frames_times
         and each column a regressor.
-
     """
     from nilearn.glm.first_level import make_first_level_design_matrix
     from pandas import DataFrame

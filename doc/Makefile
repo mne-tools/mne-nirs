@@ -62,6 +62,15 @@ html:
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
+numpydoc:
+	# These two lines make the build a bit more lengthy, and the
+	# the embedding of images more robust
+	rm -rf $(BUILDDIR)/numpydoc/_images
+	@echo "sphinx-build  $(BUILDDIR)/numpydoc"
+	sphinx-build -D plot_gallery=0 -A current_version=1 -A versions=1 -b html $(ALLSPHINXOPTS) $(BUILDDIR)/numpydoc
+	@echo
+	@echo "Build finished. The HTML pages are in $(BUILDDIR)/numpydoc."
+
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
 	@echo

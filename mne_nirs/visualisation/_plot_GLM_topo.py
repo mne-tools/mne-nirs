@@ -32,7 +32,7 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
         Keys correspond to the different labels values values are
         RegressionResults instances corresponding to the voxels.
     design_matrix : DataFrame
-        As specified in Nilearn
+        As specified in Nilearn.
     requested_conditions : array
         Which conditions should be displayed.
     axes : instance of Axes | None
@@ -44,15 +44,18 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
     vmax : float | None
         The value specifying the upper bound of the color range.
         If None, the maximum absolute value is used. Defaults to None.
-    figsize : TODO: Remove this, how does MNE usually deal with this?
     colorbar : Bool
         Should a colorbar be plotted.
+    figsize : two values
+        Figure size.
     sphere : As specified in MNE
+        Sphere parameter from mne.viz.topomap.plot_topomap.
 
     Returns
     -------
-    fig : Figure of each design matrix componenent for hbo (top row)
-          and hbr (bottom row).
+    fig : figure
+        Figure of each design matrix componenent for hbo (top row)
+        and hbr (bottom row).
     """
 
     if not (raw.ch_names == list(glm_estimates.keys())):
@@ -141,14 +144,17 @@ def plot_glm_contrast_topo(raw, contrast, figsize=(12, 7), sphere=None):
     raw : instance of Raw
         Haemoglobin data.
     contrast : dict
-        nilearn.stats.compute_contrast
-    figsize : TODO: Remove this, how does MNE usually deal with this?
-    sphere : As specified in MNE
+        As in nilearn.stats.compute_contrast.
+    figsize : numbers
+        TODO: Remove this, how does MNE usually deal with this.
+    sphere : numbers
+        As specified in MNE.
 
     Returns
     -------
-    fig : Figure of each design matrix componenent for hbo (top row)
-          and hbr (bottom row).
+    fig : figure
+        Figure of each design matrix componenent for hbo (top row)
+        and hbr (bottom row).
     """
 
     # Extract types. One subplot is created per type (hbo/hbr)
@@ -252,10 +258,21 @@ def plot_glm_group_topo(raw, statsmodel_df,
         will be used.
     res : int
         The resolution of the topomap image (n pixels along each side).
+    sphere : numbers
+        As specified in mne.
+    colorbar : bool
+        Should a colorbar be plotted.
+    show_names : bool
+        Display the channel names.
+    extrapolate : str
+        Type of extrapolation for image.
+    image_interp : str
+        Type of interpolation for image.
 
     Returns
     -------
-    fig : Figure with topographic representation of statsmodel_df value.
+    fig : figure
+        Figure with topographic representation of statsmodel_df value.
     """
 
     # Check that the channels in two inputs match

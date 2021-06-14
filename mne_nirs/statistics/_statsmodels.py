@@ -77,12 +77,13 @@ def statsmodels_to_results(model, order=None):
     ----------
     model : statsmodels model output
         The output of a statsmodels analysis. For example rlm or mixedlm.
-    order : array of strings
+    order : array of str
         Requested order of the channels.
 
     Returns
     -------
     df : Pandas dataframe.
+        Data frame with the results from the stats model.
     """
     from statsmodels.regression.mixed_linear_model import MixedLMResultsWrapper
     from scipy.stats.distributions import norm

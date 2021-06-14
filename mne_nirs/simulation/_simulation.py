@@ -25,7 +25,6 @@ def simulate_nirs_raw(sfreq=3.,
     for each
     `amplitude=[0., 2., 4.], annot_desc=['Control', 'Cond_A', 'Cond_B']`.
 
-
     Parameters
     ----------
     sfreq : Number
@@ -33,7 +32,7 @@ def simulate_nirs_raw(sfreq=3.,
     amplitude : Number, Array of numbers
         The amplitude of the signal to simulate in uM.
         Pass in an array to simulate multiple conditions.
-    annot_desc : String, Array of strings
+    annot_desc : str, Array of str
         The name of the annotations for simulated amplitudes.
         Pass in an array to simulate multiple conditions,
         must be the same length as amplitude.
@@ -46,9 +45,9 @@ def simulate_nirs_raw(sfreq=3.,
         The minimum duration of the inter stimulus interval in seconds.
     isi_max : Number
         The maximum duration of the inter stimulus interval in seconds.
-    ch_name : String
+    ch_name : str
         Channel name to be used in returned raw instance.
-    hrf_model : string
+    hrf_model : str
         Specifies the hemodynamic response function. See nilearn docs.
 
     Returns

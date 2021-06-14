@@ -43,7 +43,6 @@ def get_long_channels(raw, min_dist=0.01, max_dist=0.05):
     """
     Return channels with a long source detector separation.
 
-
     Parameters
     ----------
     raw : instance of Raw
