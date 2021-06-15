@@ -18,7 +18,7 @@ jobs:
       OPENBLAS_NUM_THREADS: '1'
       PYTHONUNBUFFERED: '1'
       PYTHON_VERSION: '3.8'
-#      PYVISTA_OFF_SCREEN: True
+      PYVISTA_OFF_SCREEN: True
     steps:
       - uses: actions/checkout@v2
         with:
