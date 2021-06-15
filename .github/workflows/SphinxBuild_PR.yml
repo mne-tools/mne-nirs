@@ -19,6 +19,7 @@ jobs:
       PYTHONUNBUFFERED: '1'
       PYTHON_VERSION: '3.8'
       PYVISTA_OFF_SCREEN: True
+      PYVISTA_USE_IPYVTK: True
     steps:
       - uses: actions/checkout@v2
         with:
