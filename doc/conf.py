@@ -19,6 +19,7 @@ from distutils.version import LooseVersion
 import sphinx
 import os
 from sphinx_gallery.sorting import FileNameSortKey
+import pyvista
 
 sys.path.append("../")
 from mne_nirs import __version__  # noqa: E402
@@ -223,6 +224,7 @@ intersphinx_mapping = {
 sphinx_gallery_conf = {
     'doc_module': 'mne_nirs',
     'backreferences_dir': os.path.join('generated'),
+    'image_scrapers': ('pyvista', 'matplotlib'),
     'reference_url': {
         'mne_nirs': None},
     'download_all_examples': False,

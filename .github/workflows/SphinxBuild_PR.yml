@@ -6,7 +6,7 @@ on:
 jobs:
   # PIP + non-default stim channel + log level info
   job:
-    name: 'build'
+    name: 'Docs'
     runs-on: ubuntu-20.04
     defaults:
       run:
@@ -18,6 +18,7 @@ jobs:
       OPENBLAS_NUM_THREADS: '1'
       PYTHONUNBUFFERED: '1'
       PYTHON_VERSION: '3.8'
+#      PYVISTA_OFF_SCREEN: True
     steps:
       - uses: actions/checkout@v2
         with:
@@ -43,6 +44,13 @@ jobs:
       - shell: bash -el {0}
         run: ./tools/github_actions_infos.sh
         name: 'Show infos'
+      - name: Test PyVista
+        run: python -c "import pyvista;pyvista.Sphere().plot(screenshot='sphere.png')"
+      - name: Upload PyVista test
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshot1
+          path: sphere.png
       - shell: bash -el {0}
         run: |
           git reset --hard "$GITHUB_SHA"
@@ -51,6 +59,13 @@ jobs:
       - shell: bash -el {0}
         run: |
           git status
+      - name: Test PyVista
+        run: python -c "import pyvista;pyvista.Sphere().plot(screenshot='sphere2.png')"
+      - name: Upload PyVista test
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshot2
+          path: sphere2.png
       - shell: bash -el {0}
         run: ./tools/github_actions_docs.sh
         name: 'Build docs'
