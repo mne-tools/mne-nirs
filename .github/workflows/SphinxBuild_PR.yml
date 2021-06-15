@@ -73,3 +73,10 @@ jobs:
         with:
           name: DocumentationHTML
           path: doc/_build/html/
+      - name: Test PyVista
+        run: python -c "import pyvista;pyvista.Sphere().plot(screenshot='sphere3.png')"
+      - name: Upload PyVista test
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshot3
+          path: sphere3.png
