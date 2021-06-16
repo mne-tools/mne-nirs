@@ -411,15 +411,13 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
 # As in the topo plots above you can see that the activity is predominately
 # contralateral to the side of finger tapping.
 
-fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(20, 9))
-clim = dict(kind='value', pos_lims=(0, 8, 11))
 
 # Generate brain figure from data
+clim = dict(kind='value', pos_lims=(0, 8, 11))
 brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
                                     con_model_df, clim=clim, view='dorsal',
                                     colorbar=True, size=(800, 700))
 brain.add_text(0.05, 0.95, f"Left-Right", 'title', font_size=16, color='k')
-
 
 # Run model code as above
 clim = dict(kind='value', pos_lims=(0, 11.5, 17))
