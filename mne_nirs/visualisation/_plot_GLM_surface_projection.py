@@ -127,20 +127,3 @@ def plot_glm_surface_projection(raw, statsmodel_df, picks="hbo",
         brain.show_view(view)
 
     return brain
-
-
-def brain_to_image(brain):
-    """
-    Convert brain type from MNE to an image array for plotting with matplotlib.
-
-    Parameters
-    ----------
-    brain : instance of mne.viz.Brain
-        Brain type from MNE.
-
-    Returns
-    -------
-    array : numpy array
-        Array that can be plotted using matplotlib imshow.
-    """
-    return np.asarray(Image.fromarray(brain.screenshot()))

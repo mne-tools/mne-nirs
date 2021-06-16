@@ -92,7 +92,6 @@ Visualisation
    plot_glm_group_topo
    plot_timechannel_quality_metric
    plot_glm_surface_projection
-   brain_to_image
 
 
 Simulation

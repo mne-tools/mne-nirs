@@ -90,7 +90,7 @@ from mne_nirs.channels import picks_pair_to_idx
 from mne_nirs.utils._io import glm_to_tidy
 from mne_nirs.visualisation import plot_glm_group_topo
 from mne_nirs.datasets import fnirs_motor_group
-from mne_nirs.visualisation import plot_glm_surface_projection, brain_to_image
+from mne_nirs.visualisation import plot_glm_surface_projection
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids
@@ -418,11 +418,8 @@ clim = dict(kind='value', pos_lims=(0, 8, 11))
 brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
                                     con_model_df, clim=clim, view='dorsal',
                                     colorbar=True, size=(800, 700))
-
-# Add title to brain and place in the subplot axes
 brain.add_text(0.05, 0.95, f"Left-Right", 'title', font_size=16, color='k')
-axes[2].imshow(brain_to_image(brain))
-axes[2].axis('off')
+
 
 # Run model code as above
 clim = dict(kind='value', pos_lims=(0, 11.5, 17))
@@ -439,11 +436,7 @@ for idx, cond in enumerate(['Tapping/Left', 'Tapping/Right']):
     brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
                                         model_df, clim=clim, view='dorsal',
                                         colorbar=True, size=(800, 700))
-
-    # Add title to brain and place in the subplot axes
     brain.add_text(0.05, 0.95, cond, 'title', font_size=16, color='k')
-    axes[idx].imshow(brain_to_image(brain))
-    axes[idx].axis('off')
 
 
 ###############################################################################
