@@ -33,10 +33,10 @@ dependencies:
 - nibabel
 - python-picard
 - pyqt!=5.15.3
-- mne>=0.21.0
 - mffpy>=0.5.7
 - ipywidgets
 - lxml
 - pip:
   - ipyvtklink
   - https://github.com/nilearn/nilearn/archive/main.zip
+  - https://github.com/mne-tools/mne-python/archive/main.zip
