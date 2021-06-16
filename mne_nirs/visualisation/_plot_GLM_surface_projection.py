@@ -4,7 +4,6 @@
 
 import os
 import numpy as np
-from PIL import Image
 
 from mne import stc_near_sensors, EvokedArray, read_source_spaces
 from mne.datasets import sample
