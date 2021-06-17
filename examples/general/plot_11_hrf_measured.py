@@ -279,10 +279,13 @@ glm_est['S1_D1 hbo'].MSE
 
 ###############################################################################
 #
-# Due to the richness of the object we provide a function to extract commonly
-# used information and put it in a convenient dataframe/table.
+# Due to the richness of the object we provide a function `glm_to_tidy` to
+# extract commonly used information and put it in a convenient dataframe/table.
+# Below this is demonstrated and then we just display the first 9 rows of the
+# table which correspond to the 9 components of the design matrix for the
+# first channel.
 
-glm_to_tidy(data_subset, glm_est, design_matrix)
+glm_to_tidy(data_subset, glm_est, design_matrix).head(9)
 
 ###############################################################################
 #
@@ -391,6 +394,12 @@ df = pd.DataFrame()
 for idx, col in enumerate(design_matrix.columns[:3]):
     df = df.append(glm_region_of_interest(glm_est, groups, idx, col))
 
+###############################################################################
+# As with the single channel results above, this is placed in a tidy dataframe
+# which contains conveniently extracted information, but now for the region
+# of interest.
+
+df
 
 ###############################################################################
 #
