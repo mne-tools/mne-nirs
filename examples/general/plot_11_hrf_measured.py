@@ -286,7 +286,8 @@ glm_to_tidy(data_subset, glm_est, design_matrix)
 
 ###############################################################################
 #
-# We then display the results. Note that the control condition sits
+# We then display the results. In this example we address the objects directly.
+# Note that the control condition sits
 # around zero
 # and that the HbO is positive and larger than the HbR, this is to be expected.
 # Further, we note that for this channel the response to tapping on the
