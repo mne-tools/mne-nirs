@@ -256,10 +256,41 @@ plt.ylabel("Amplitude")
 data_subset = raw_haemo.copy().pick(picks=range(2))
 glm_est = run_GLM(data_subset, design_matrix)
 
+###############################################################################
+#
+# This returns a GLM regression estimate for each channel.
+# This data is stored in a dictionary, which can be addressed using the
+# desired channel name. You can view an overview of the estimates as:
+
+glm_est
+
 
 ###############################################################################
 #
-# We then display the results. Note that the control condition sits
+# Or you can view the estimate for a single channel by indexing it by name.
+# You can see that for each channel a standard
+# `Nilearn RegressionResults object <https://nilearn.github.io/modules/generated/nilearn.glm.RegressionResults.html>`_
+# is returned. These objects are rich with information that can be requested
+# from the object, for example to determine the mean square error of the
+# estimate you would call
+
+glm_est['S1_D1 hbo'].MSE
+
+
+###############################################################################
+#
+# Due to the richness of the object we provide a function `glm_to_tidy` to
+# extract commonly used information and put it in a convenient dataframe/table.
+# Below this is demonstrated and then we just display the first 9 rows of the
+# table which correspond to the 9 components of the design matrix for the
+# first channel.
+
+glm_to_tidy(data_subset, glm_est, design_matrix).head(9)
+
+###############################################################################
+#
+# We then display the results. In this example we address the objects directly.
+# Note that the control condition sits
 # around zero
 # and that the HbO is positive and larger than the HbR, this is to be expected.
 # Further, we note that for this channel the response to tapping on the
@@ -363,6 +394,12 @@ df = pd.DataFrame()
 for idx, col in enumerate(design_matrix.columns[:3]):
     df = df.append(glm_region_of_interest(glm_est, groups, idx, col))
 
+###############################################################################
+# As with the single channel results above, this is placed in a tidy dataframe
+# which contains conveniently extracted information, but now for the region
+# of interest.
+
+df
 
 ###############################################################################
 #

@@ -251,7 +251,7 @@ dm_cond_scaled_hbr = dm_cond * vals_hbr
 
 # Extract the time scale for plotting.
 # Set time zero to be the onset of the finger tapping.
-index_values = dm_cond_scaled_hbo.index - np.ceil(raw.annotations.onset[1])
+index_values = dm_cond_scaled_hbo.index - np.ceil(raw.annotations.onset[0])
 
 # Plot the result
 axes[0].plot(index_values, dm_cond)
@@ -273,6 +273,7 @@ axes[0].set_ylabel("FIR Model")
 axes[1].set_ylabel("Oyxhaemoglobin (ΔμMol)")
 axes[2].set_ylabel("Haemoglobin (ΔμMol)")
 axes[2].legend(["Oyxhaemoglobin", "Deoyxhaemoglobin"])
+
 
 ###############################################################################
 # Plot the response with confidence intervals
