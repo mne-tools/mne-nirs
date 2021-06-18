@@ -273,7 +273,8 @@ axes[0].set_ylabel("FIR Model")
 axes[1].set_ylabel("Oyxhaemoglobin (ΔμMol)")
 axes[2].set_ylabel("Haemoglobin (ΔμMol)")
 axes[2].legend(["Oyxhaemoglobin", "Deoyxhaemoglobin"])
-plt.show()
+
+
 ###############################################################################
 # Plot the response with confidence intervals
 # ---------------------------------------------------------------------
@@ -310,5 +311,3 @@ axes.set_title("Evoked Response (Tapping/Right)")
 axes.set_ylabel("Haemoglobin (ΔμMol)")
 axes.legend(["Oyxhaemoglobin", "Deoyxhaemoglobin"])
 axes.set_xlabel("Time (s)")
-
-plt.show()
