@@ -237,6 +237,10 @@ sphinx_gallery_conf = {
     'branch': 'main',  # noqa: E501 Can be any branch, tag, or commit hash. Use a branch that hosts your docs.
     'binderhub_url': 'https://mybinder.org',  # noqa: E501 Any URL of a binderhub deployment. Must be full URL (e.g. https://mybinder.org).
     'filepath_prefix': filepath_prefix,  # noqa: E501 A prefix to prepend to any filepaths in Binder links.
+        'dependencies': [
+            '../requirements.txt',
+            '../requirements_doc.txt',
+        ],
     }
 }
 
