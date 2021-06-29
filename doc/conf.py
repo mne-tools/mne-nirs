@@ -219,6 +219,8 @@ intersphinx_mapping = {
     'statsmodels': ('https://www.statsmodels.org/stable', None)
 }
 
+filepath_prefix = 'dev'
+
 # sphinx-gallery configuration
 sphinx_gallery_conf = {
     'doc_module': 'mne_nirs',
@@ -228,6 +230,18 @@ sphinx_gallery_conf = {
     'download_all_examples': False,
     'show_memory': True,
     'within_subsection_order': FileNameSortKey,
+    'binder': {
+    # Required keys
+    'org': 'rob-luke',
+    'repo': 'mne-nirs-docker',
+    'branch': 'main',  # noqa: E501 Can be any branch, tag, or commit hash. Use a branch that hosts your docs.
+    'binderhub_url': 'https://mybinder.org',  # noqa: E501 Any URL of a binderhub deployment. Must be full URL (e.g. https://mybinder.org).
+    'filepath_prefix': filepath_prefix,  # noqa: E501 A prefix to prepend to any filepaths in Binder links.
+    'dependencies': [
+        '../test_requirements.txt',
+        './requirements.txt',
+    ],
+    }
 }
 
 
