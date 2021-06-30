@@ -77,7 +77,6 @@ import numpy as np
 import pandas as pd
 
 # Import MNE processing
-import mne
 from mne.preprocessing.nirs import optical_density, beer_lambert_law
 
 # Import MNE-NIRS processing
