@@ -22,6 +22,7 @@ else # pip 3.9 (missing statsmodels and dipy)
 	python -c "import pyvistaqt"
 	pip install --progress-bar off --upgrade -r requirements.txt
 fi
+pip install --progress-bar off --upgrade -r https://github.com/mne-tools/mne-python/archive/main.zip
 pip install --progress-bar off --upgrade -r requirements_testing.txt
 if [ "${DEPS}" != "minimal" ]; then
 	pip install nitime
