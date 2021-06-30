@@ -399,6 +399,14 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
 # Cortical Surface Projections
 # ----------------------------
 #
+# .. sidebar:: 3D plotting
+#
+#    Due to limitations with the cloud computing used to generate these
+#    documents, the 3D plot will not appear in the online documentation.
+#    However, when you run this code locally you will obtain a 3D head figure
+#    simillar to what is shown in the tutorial:
+#    :ref:`MNE fNIRS waveform tutorial <mne:tut-working-with-ecog>`.
+#
 # The topographic plots above can sometimes be difficult to interpret with
 # respect to the underlying cortical locations. It is also possible to present
 # the data by projecting the channel level GLM values to the nearest cortical
@@ -417,7 +425,7 @@ clim = dict(kind='value', pos_lims=(0, 8, 11))
 brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
                                     con_model_df, clim=clim, view='dorsal',
                                     colorbar=True, size=(800, 700))
-brain.add_text(0.05, 0.95, f"Left-Right", 'title', font_size=16, color='k')
+brain.add_text(0.05, 0.95, "Left-Right", 'title', font_size=16, color='k')
 
 # Run model code as above
 clim = dict(kind='value', pos_lims=(0, 11.5, 17))
