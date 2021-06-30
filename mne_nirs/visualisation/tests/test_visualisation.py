@@ -11,7 +11,8 @@ from mne_nirs.experimental_design.tests.test_experimental_design import \
     _load_dataset
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_GLM
-from mne_nirs.visualisation import plot_glm_topo
+from mne_nirs.visualisation import plot_glm_topo, plot_glm_surface_projection
+from mne_nirs.utils import glm_to_tidy
 
 
 @requires_pysurfer
@@ -161,3 +162,28 @@ def test_fig_from_axes():
     from mne_nirs.visualisation._plot_GLM_topo import _get_fig_from_axes
     with pytest.raises(RuntimeError, match="Unable to extract figure"):
         _get_fig_from_axes([1, 2, 3])
+
+
+@requires_pysurfer
+@traits_test
+@pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
+def test_run_plot_GLM_projection():
+    mne.viz.set_3d_backend('pyvista')
+    raw_intensity = _load_dataset()
+    raw_intensity.crop(450, 600)  # Keep the test fast
+
+    design_matrix = make_first_level_design_matrix(raw_intensity,
+                                                   drift_order=1,
+                                                   drift_model='polynomial')
+    raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
+    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
+    glm_estimates = run_GLM(raw_haemo, design_matrix)
+    df = glm_to_tidy(raw_haemo, glm_estimates, design_matrix)
+    df = df.query("Chroma in 'hbo'")
+    df = df.query("Condition in 'A'")
+
+    brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
+                                        df, clim='auto', view='dorsal',
+                                        colorbar=True, size=(800, 700),
+                                        value="theta")
+    assert type(brain) == mne.viz._brain.Brain

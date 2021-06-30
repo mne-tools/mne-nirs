@@ -225,6 +225,7 @@ filepath_prefix = 'examples/mne-nirs-website-examples'
 sphinx_gallery_conf = {
     'doc_module': 'mne_nirs',
     'backreferences_dir': os.path.join('generated'),
+    'image_scrapers': ('pyvista', 'matplotlib'),
     'reference_url': {
         'mne_nirs': None},
     'download_all_examples': False,
