@@ -405,7 +405,7 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
 #    documents, the 3D plot will not appear in the online documentation.
 #    However, when you run this code locally you will obtain a 3D head figure
 #    simillar to what is shown in the tutorial:
-#    :ref:`MNE fNIRS waveform tutorial <mne:tut-working-with-ecog>`.
+#    `ECOG tutorial <https://mne.tools/dev/auto_tutorials/clinical/30_ecog.html#sphx-glr-auto-tutorials-clinical-30-ecog-py>`_.
 #
 # The topographic plots above can sometimes be difficult to interpret with
 # respect to the underlying cortical locations. It is also possible to present
