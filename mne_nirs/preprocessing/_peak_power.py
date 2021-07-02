@@ -87,8 +87,9 @@ def peak_power(raw, time_window=10, threshold=0.1, l_freq=0.7, h_freq=1.5,
             c1 = filtered_data[ii][start_sample:end_sample]
             c2 = filtered_data[ii + 1][start_sample:end_sample]
 
-            c1 = c1 / np.std(c1)
-            c2 = c2 / np.std(c2)
+            # protect against zero
+            c1 = c1 / (np.std(c1) or 1)
+            c2 = c2 / (np.std(c2) or 1)
 
             c = np.correlate(c1, c2, "full")
             c = c / (window_samples)
