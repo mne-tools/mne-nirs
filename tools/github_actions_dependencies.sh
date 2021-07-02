@@ -16,7 +16,7 @@ else # pip 3.9 (missing statsmodels and dipy)
 #	pip install vtk-9.0.20201117-cp39-cp39-linux_x86_64.whl
   pip install vtk
 	pip install --progress-bar off https://github.com/pyvista/pyvista/zipball/5ee02e2f295f667e33f11e71946e774cca40256c
-	pip install --progress-bar off https://github.com/pyvista/pyvistaqt/zipball/master
+	pip install --progress-bar off https://github.com/pyvista/pyvistaqt/zipball/main
 	pip install --progress-bar off --upgrade --pre PyQt5
 	python -c "import vtk"
 	python -c "import pyvistaqt"

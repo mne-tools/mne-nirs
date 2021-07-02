@@ -19,7 +19,7 @@ jobs:
       MNE_STIM_CHANNEL: 'STI101'
       OPENBLAS_NUM_THREADS: '1'
       PYTHONUNBUFFERED: '1'
-      PYTHON_VERSION: '3.8'
+      PYTHON_VERSION: '3.9'
     steps:
       - uses: actions/checkout@v2
         with:
