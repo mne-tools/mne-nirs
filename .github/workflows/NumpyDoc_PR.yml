@@ -5,8 +5,8 @@ on:
 
 jobs:
   # PIP + non-default stim channel + log level info
-  job:
-    name: 'build'
+  numpydoc:
+    name: 'numpydoc'
     runs-on: ubuntu-20.04
     defaults:
       run:

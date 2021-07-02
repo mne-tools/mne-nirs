@@ -12,6 +12,15 @@ Major version changes indicate incompatible API changes.
 Minor version changes indicate new functionality was added in a backwards compatible manner.
 Patch version changes indicate backward compatible bug fixes.
 
+v0.1.0
+------
+
+Enhancements
+
+* Add RegressionResults and ContrastResults classes to store GLM results. These classes have methods that replace the functions compute_contrast and glm_region_of_interest. By `Robert Luke`_.
+
+
+
 v0.0.6
 ------
 

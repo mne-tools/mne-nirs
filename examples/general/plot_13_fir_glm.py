@@ -117,10 +117,10 @@ def analysis(fname, ID):
 
     # Create a single ROI that includes all channels for example
     rois = dict(AllChannels=range(len(raw_haemo.ch_names)))
+    # Calculate ROI for all conditions
+    conditions = design_matrix.columns
     # Compute output metrics by ROI
-    df_ind = pd.DataFrame()
-    for idx, col in enumerate(design_matrix.columns):
-        df_ind = df_ind.append(glm_region_of_interest(glm_est, rois, idx, col))
+    df_ind = glm_est.to_dataframe_region_of_interest(rois, conditions)
 
     df_ind["ID"] = ID
     df_ind["theta"] = [t * 1.e6 for t in df_ind["theta"]]

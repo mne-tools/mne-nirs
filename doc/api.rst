@@ -4,12 +4,17 @@
 API
 ###
 
+This page describes the application programming interface of MNE-NIRS.
+The functions and classes of this package are described below.
+The description of each interface will include links to the examples
+relevant to that code.
+
 .. currentmodule:: mne_nirs
 
 .. toctree::
 
-Experimental Design and Analysis
---------------------------------
+Experimental Design
+-------------------
 
 .. currentmodule:: mne_nirs.experimental_design
 
@@ -27,7 +32,8 @@ Experimental Design and Analysis
 Preprocessing
 -------------
 
-Data quality evaluation.
+Data quality evaluation
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. currentmodule:: mne_nirs.preprocessing
 
@@ -61,6 +67,11 @@ Signal Enhancement
 Statistics
 ----------
 
+First level analysis
+^^^^^^^^^^^^^^^^^^^^
+
+Individual (first) level analysis functions.
+
 .. currentmodule:: mne_nirs.statistics
 
 .. automodule:: mne_nirs.statistics
@@ -71,8 +82,39 @@ Statistics
    :toctree: generated/
 
    run_GLM
-   compute_contrast
-   glm_region_of_interest
+
+
+Individual (first) level result classes.
+
+.. currentmodule:: mne_nirs.statistics
+
+.. automodule:: mne_nirs.statistics
+   :no-members:
+   :no-inherited-members:
+   :noindex:
+
+.. autosummary::
+   :toctree: generated/
+
+   RegressionResults
+   ContrastResults
+
+
+Second level analysis
+^^^^^^^^^^^^^^^^^^^^^
+
+Group (second) level analysis functions.
+
+.. currentmodule:: mne_nirs.statistics
+
+.. automodule:: mne_nirs.statistics
+   :no-members:
+   :no-inherited-members:
+   :noindex:
+
+.. autosummary::
+   :toctree: generated/
+
    statsmodels_to_results
 
 
@@ -175,8 +217,6 @@ General helper functions.
    :toctree: generated/
 
    glm_to_tidy
-
-
 
 
 Input/Output

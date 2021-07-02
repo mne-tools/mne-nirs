@@ -82,7 +82,7 @@ from mne.preprocessing.nirs import optical_density, beer_lambert_law
 # Import MNE-NIRS processing
 from mne_nirs.statistics import run_GLM
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import glm_region_of_interest, statsmodels_to_results
+from mne_nirs.statistics import statsmodels_to_results
 from mne_nirs.statistics import compute_contrast
 from mne_nirs.channels import get_short_channels, get_long_channels
 from mne_nirs.channels import picks_pair_to_idx
@@ -164,23 +164,23 @@ def individual_analysis(bids_path, ID):
         Right_Hemisphere=picks_pair_to_idx(raw_haemo, right, on_missing='ignore'))
 
     # Extract channel metrics
-    cha = glm_to_tidy(raw_haemo, glm_est, design_matrix)
-    cha["ID"] = ID  # Add the participant ID to the dataframe
+    cha = glm_est.to_dataframe()
 
     # Compute region of interest results from channel data
-    roi = pd.DataFrame()
-    for idx, col in enumerate(design_matrix.columns):
-        roi = roi.append(glm_region_of_interest(glm_est, groups, idx, col))
-    roi["ID"] = ID  # Add the participant ID to the dataframe
+    roi = glm_est.to_dataframe_region_of_interest(groups, design_matrix.columns)
 
-    # Contrast left vs right tapping
+    # Define left vs right tapping contrast
     contrast_matrix = np.eye(design_matrix.shape[1])
     basic_conts = dict([(column, contrast_matrix[i])
                         for i, column in enumerate(design_matrix.columns)])
     contrast_LvR = basic_conts['Tapping/Left'] - basic_conts['Tapping/Right']
-    contrast = compute_contrast(glm_est, contrast_LvR)
-    con = glm_to_tidy(raw_haemo, contrast, design_matrix)
-    con["ID"] = ID  # Add the participant ID to the dataframe
+
+    # Compute defined contrast
+    contrast = glm_est.compute_contrast(contrast_LvR)
+    con = contrast.to_dataframe()
+
+    # Add the participant ID to the dataframes
+    roi["ID"] = cha["ID"] = con["ID"] = ID
 
     # Convert to uM for nicer plotting below.
     cha["theta"] = [t * 1.e6 for t in cha["theta"]]

@@ -6,7 +6,7 @@ from mne.utils import warn
 import nilearn
 
 
-def glm_to_tidy(raw, statistic, design_matrix, wide=True):
+def glm_to_tidy(info, statistic, design_matrix, wide=True, order=None):
     """
     Export GLM regression or contrast results in tidy format.
 
@@ -15,8 +15,8 @@ def glm_to_tidy(raw, statistic, design_matrix, wide=True):
 
     Parameters
     ----------
-    raw : MNE.Raw
-        Instance of MNE raw.
+    info : MNE.Info
+        Instance of MNE info.
     statistic : nilearn data,
         Either dict of nilearn.stats.regression.RegressionResults as returned
         by run_GLM, or nilearn.stats.contrasts.Contrast as returned by
@@ -26,6 +26,8 @@ def glm_to_tidy(raw, statistic, design_matrix, wide=True):
     wide : Bool
         Should the returned dataframe be in wide format. If False, then the
         returned data will be in long format.
+    order : list
+        Order that the channels should be returned with.
 
     Returns
     -------
@@ -36,10 +38,10 @@ def glm_to_tidy(raw, statistic, design_matrix, wide=True):
     if isinstance(statistic, dict) and \
             isinstance(statistic[list(statistic.keys())[0]],
                        nilearn.glm.regression.RegressionResults):
-        df = _tidy_RegressionResults(raw, statistic, design_matrix)
+        df = _tidy_RegressionResults(info, statistic, design_matrix)
 
     elif isinstance(statistic, nilearn.glm.contrasts.Contrast):
-        df = _tidy_Contrast(raw, statistic, design_matrix)
+        df = _tidy_Contrast(info, statistic, design_matrix)
 
     else:
         raise TypeError(
@@ -48,6 +50,15 @@ def glm_to_tidy(raw, statistic, design_matrix, wide=True):
 
     if wide:
         df = _tidy_long_to_wide(df, expand_output=True)
+
+    if order is not None:
+        df['old_index'] = df.index
+        df = df.set_index('ch_name')
+        df = df.loc[order, :]
+        df['ch_name'] = df.index
+        df.index = df['old_index']
+        df.drop(columns='old_index', inplace=True)
+        df.rename_axis(None, inplace=True)
 
     return df
 

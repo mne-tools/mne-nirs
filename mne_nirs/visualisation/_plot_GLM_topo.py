@@ -2,6 +2,7 @@
 #
 # License: BSD (3-clause)
 
+from copy import deepcopy
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,12 +10,13 @@ import matplotlib as mpl
 from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
 
 import mne
+from mne import Info
 from mne.utils import warn
 from mne.channels.layout import _merge_ch_data
-from mne.io.pick import _picks_to_idx
+from mne.io.pick import _picks_to_idx, _get_channel_types
 
 
-def plot_glm_topo(raw, glm_estimates, design_matrix,
+def plot_glm_topo(inst, glm_estimates, design_matrix,
                   requested_conditions=None,
                   axes=None, vmin=None, vmax=None, colorbar=True,
                   figsize=(12, 7), sphere=None):
@@ -26,8 +28,8 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
 
     Parameters
     ----------
-    raw : instance of Raw
-        Haemoglobin data.
+    inst : instance of Info or Raw
+        Raw data or info structure used to generate the GLM results.
     glm_estimates : dict
         Keys correspond to the different labels values values are
         RegressionResults instances corresponding to the voxels.
@@ -57,14 +59,30 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
         Figure of each design matrix componenent for hbo (top row)
         and hbr (bottom row).
     """
+    warn('"plot_glm_topo" has been deprecated in favor of the more '
+         'comprehensive GLM class and will be removed in 0.2.0.'
+         'Use the RegressionResults class "plot_topo()" method instead.',
+         DeprecationWarning)
+    return _plot_glm_topo(inst, glm_estimates, design_matrix,
+                          requested_conditions=requested_conditions,
+                          axes=axes, vmin=vmin, vmax=vmax, colorbar=colorbar,
+                          figsize=figsize, sphere=sphere)
 
-    if not (raw.ch_names == list(glm_estimates.keys())):
-        if len(raw.ch_names) < len(list(glm_estimates.keys())):
+
+def _plot_glm_topo(inst, glm_estimates, design_matrix,
+                   requested_conditions=None,
+                   axes=None, vmin=None, vmax=None, colorbar=True,
+                   figsize=(12, 7), sphere=None):
+
+    info = deepcopy(inst if isinstance(inst, Info) else inst.info)
+
+    if not (info.ch_names == list(glm_estimates.keys())):
+        if len(info.ch_names) < len(list(glm_estimates.keys())):
             warn("Reducing GLM results to match MNE data")
-            glm_estimates = {a: glm_estimates[a] for a in raw.ch_names}
+            glm_estimates = {a: glm_estimates[a] for a in info.ch_names}
         else:
             raise RuntimeError('MNE data structure does not match regression '
-                               f'results. Raw = {len(raw.ch_names)}. '
+                               f'results. Raw = {len(info.ch_names)}. '
                                f'GLM = {len(list(glm_estimates.keys()))}')
 
     estimates = np.zeros((len(glm_estimates), len(design_matrix.columns)))
@@ -72,7 +90,7 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
     for idx, name in enumerate(glm_estimates.keys()):
         estimates[idx, :] = glm_estimates[name].theta.T
 
-    types = np.unique(raw.get_channel_types())
+    types = np.unique(_get_channel_types(info))
 
     if requested_conditions is None:
         requested_conditions = design_matrix.columns
@@ -98,7 +116,7 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
 
     for t_idx, t in enumerate(types):
 
-        estmrg, pos, chs, sphere = _handle_overlaps(raw, t, sphere, estimates)
+        estmrg, pos, chs, sphere = _handle_overlaps(info, t, sphere, estimates)
 
         for idx, label in enumerate(design_matrix.columns):
             if label in requested_conditions:
@@ -135,14 +153,14 @@ def plot_glm_topo(raw, glm_estimates, design_matrix,
     return _get_fig_from_axes(axes)
 
 
-def plot_glm_contrast_topo(raw, contrast, figsize=(12, 7), sphere=None):
+def plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None):
     """
     Plot topomap of NIRS GLM data.
 
     Parameters
     ----------
-    raw : instance of Raw
-        Haemoglobin data.
+    inst : instance of Info or Raw
+        Raw data or info structure used to generate the GLM results.
     contrast : dict
         As in nilearn.stats.compute_contrast.
     figsize : numbers
@@ -156,9 +174,20 @@ def plot_glm_contrast_topo(raw, contrast, figsize=(12, 7), sphere=None):
         Figure of each design matrix componenent for hbo (top row)
         and hbr (bottom row).
     """
+    warn('"plot_glm_contrast_topo" has been deprecated in favor of the more '
+         'comprehensive GLM class and will be removed in 0.2.0.'
+         'Use the ContrastResults class "plot_topo()" method instead.',
+         DeprecationWarning)
+    return _plot_glm_contrast_topo(inst, contrast, figsize=figsize,
+                                   sphere=sphere)
+
+
+def _plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None):
+
+    info = deepcopy(inst if isinstance(inst, Info) else inst.info)
 
     # Extract types. One subplot is created per type (hbo/hbr)
-    types = np.unique(raw.get_channel_types())
+    types = np.unique(_get_channel_types(info))
 
     # Extract values to plot and rescale to uM
     estimates = contrast.effect[0]
@@ -176,7 +205,7 @@ def plot_glm_contrast_topo(raw, contrast, figsize=(12, 7), sphere=None):
 
     for t_idx, t in enumerate(types):
 
-        estmrg, pos, chs, sphere = _handle_overlaps(raw, t, sphere, estimates)
+        estmrg, pos, chs, sphere = _handle_overlaps(info, t, sphere, estimates)
 
         # Deal with case when only a single chroma is available
         if len(types) == 1:
@@ -212,7 +241,7 @@ def plot_glm_contrast_topo(raw, contrast, figsize=(12, 7), sphere=None):
     return fig
 
 
-def plot_glm_group_topo(raw, statsmodel_df,
+def plot_glm_group_topo(inst, statsmodel_df,
                         value="Coef.",
                         axes=None,
                         threshold=False,
@@ -231,8 +260,8 @@ def plot_glm_group_topo(raw, statsmodel_df,
 
     Parameters
     ----------
-    raw : instance of Raw
-        Haemoglobin data.
+    inst : instance of Info or Raw
+        Raw data or info structure used to generate the GLM results.
     statsmodel_df : DataFrame
         Dataframe created from a statsmodel summary.
     value : String
@@ -274,18 +303,19 @@ def plot_glm_group_topo(raw, statsmodel_df,
     fig : figure
         Figure with topographic representation of statsmodel_df value.
     """
+    info = deepcopy(inst if isinstance(inst, Info) else inst.info)
 
     # Check that the channels in two inputs match
-    if not (raw.ch_names == list(statsmodel_df["ch_name"].values)):
-        if len(raw.ch_names) < len(list(statsmodel_df["ch_name"].values)):
+    if not (info.ch_names == list(statsmodel_df["ch_name"].values)):
+        if len(info.ch_names) < len(list(statsmodel_df["ch_name"].values)):
             print("Reducing GLM results to match MNE data")
-            statsmodel_df["Keep"] = [g in raw.ch_names
+            statsmodel_df["Keep"] = [g in info.ch_names
                                      for g in statsmodel_df["ch_name"]]
             statsmodel_df = statsmodel_df.query("Keep == True")
         else:
             warn("MNE data structure does not match regression results")
     statsmodel_df = statsmodel_df.set_index('ch_name')
-    statsmodel_df = statsmodel_df.reindex(raw.ch_names)
+    statsmodel_df = statsmodel_df.reindex(info.ch_names)
 
     # Extract estimate of interest to plot
     estimates = statsmodel_df[value].values
@@ -321,7 +351,7 @@ def plot_glm_group_topo(raw, statsmodel_df,
         cmap = mpl.cm.RdBu_r
     norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
 
-    estmrg, pos, chs, sphere = _handle_overlaps(raw, t, sphere, estimates)
+    estmrg, pos, chs, sphere = _handle_overlaps(info, t, sphere, estimates)
 
     mne.viz.topomap.plot_topomap(estmrg, pos,
                                  extrapolate=extrapolate,
@@ -348,12 +378,13 @@ def plot_glm_group_topo(raw, statsmodel_df,
     return axes
 
 
-def _handle_overlaps(raw, t, sphere, estimates):
+def _handle_overlaps(info, t, sphere, estimates):
     """Prepare for topomap including merging channels"""
-    picks = _picks_to_idx(raw.info, t, exclude=[], allow_empty=True)
-    raw_subset = raw.copy().pick(picks=picks)
+    picks = _picks_to_idx(info, t, exclude=[], allow_empty=True)
+    pick_names = [info.ch_names[p] for p in picks]
+    info_subset = info.copy().pick_channels(pick_names)
     _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
-        mne.viz.topomap._prepare_topomap_plot(raw_subset, t, sphere=sphere)
+        mne.viz.topomap._prepare_topomap_plot(info_subset, t, sphere=sphere)
     estmrg, ch_names = _merge_ch_data(estimates.copy()[picks], t, ch_names)
     return estmrg, pos, ch_names, sphere
 

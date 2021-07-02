@@ -12,7 +12,6 @@ import statsmodels.formula.api as smf
 from ...simulation import simulate_nirs_raw
 from ...experimental_design import make_first_level_design_matrix
 from ...statistics import run_GLM, statsmodels_to_results
-from ...utils._io import glm_to_tidy
 
 
 @pytest.mark.parametrize('func', ('mixedlm', 'ols', 'rlm'))
@@ -35,7 +34,7 @@ def test_statsmodel_to_df(func):
         design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0)
         glm_est = run_GLM(raw, design_matrix)
         with pytest.warns(RuntimeWarning, match='Non standard source detect'):
-            cha = glm_to_tidy(raw, glm_est, design_matrix)
+            cha = glm_est.to_dataframe()
         cha["ID"] = '%02d' % n
         df_cha = df_cha.append(cha)
     df_cha["theta"] = df_cha["theta"] * 1.0e6

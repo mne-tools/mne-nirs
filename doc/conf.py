@@ -25,11 +25,14 @@ from mne_nirs import __version__  # noqa: E402
 from mne.tests.test_docstring_parameters import error_ignores
 
 
+# -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-# sys.path.insert(0, os.path.abspath('.'))
+curdir = os.path.dirname(__file__)
+sys.path.append(os.path.abspath(os.path.join(curdir, '..', 'mne_nirs')))
+sys.path.append(os.path.abspath(os.path.join(curdir, 'sphinxext')))
 
 # -- General configuration ------------------------------------------------
 
@@ -54,7 +57,7 @@ extensions = [
 
 smv_branch_whitelist = r'^(?!refs/heads/).*$'
 # v0.0.1 config is not compatible with sphinx-multiversion, so use 2 onwards
-smv_tag_whitelist = r'^v\d+\.\d+.[6-9]$'
+smv_tag_whitelist = r'^v\d+\.1.[0-9]$'
 # Mark vX.Y.Z as releases
 smv_released_pattern = r'^.*v.*$'
 
@@ -63,6 +66,7 @@ templates_path = ['_templates']
 
 # generate autosummary even if no references.
 autosummary_generate = True
+autodoc_default_options = {'inherited-members': None}
 
 # The suffix of source filenames.
 source_suffix = '.rst'

@@ -27,12 +27,12 @@ def test_run_GLM():
     assert len(glm_estimates) == len(raw.ch_names)
 
     # Check the estimate is correct within 10% error
-    assert abs(glm_estimates["Simulated"].theta[0] - 1.e-6) < 0.1e-6
+    assert abs(glm_estimates.pick("Simulated").theta()[0][0] - 1.e-6) < 0.1e-6
 
     # ensure we return the same type as nilearn to encourage compatibility
     _, ni_est = nilearn.glm.first_level.run_glm(
         raw.get_data(0).T, design_matrix.values)
-    assert type(ni_est) == type(glm_estimates)
+    assert isinstance(glm_estimates._data, type(ni_est))
 
 
 def test_run_GLM_order():
@@ -43,21 +43,21 @@ def test_run_GLM_order():
 
     # Default should be first order AR
     glm_estimates = run_GLM(raw, design_matrix)
-    assert glm_estimates['Simulated'].model.order == 1
+    assert glm_estimates.pick("Simulated").model()[0].order == 1
 
     # Default should be first order AR
     glm_estimates = run_GLM(raw, design_matrix, noise_model='ar2')
-    assert glm_estimates['Simulated'].model.order == 2
+    assert glm_estimates.pick("Simulated").model()[0].order == 2
 
     glm_estimates = run_GLM(raw, design_matrix, noise_model='ar7')
-    assert glm_estimates['Simulated'].model.order == 7
+    assert glm_estimates.pick("Simulated").model()[0].order == 7
 
     # Auto should be 4 times sample rate
     cov = Covariance(np.ones(1) * 1e-11, raw.ch_names,
                      raw.info['bads'], raw.info['projs'], nfree=0)
     raw = add_noise(raw, cov, iir_filter=iir_filter)
     glm_estimates = run_GLM(raw, design_matrix, noise_model='auto')
-    assert glm_estimates['Simulated'].model.order == 3 * 4
+    assert glm_estimates.pick("Simulated").model()[0].order == 3 * 4
 
     raw = simulate_nirs_raw(sig_dur=10, stim_dur=5., sfreq=2)
     cov = Covariance(np.ones(1) * 1e-11, raw.ch_names,
@@ -68,4 +68,4 @@ def test_run_GLM_order():
                                                    drift_model='polynomial')
     # Auto should be 4 times sample rate
     glm_estimates = run_GLM(raw, design_matrix, noise_model='auto')
-    assert glm_estimates['Simulated'].model.order == 2 * 4
+    assert glm_estimates.pick("Simulated").model()[0].order == 2 * 4

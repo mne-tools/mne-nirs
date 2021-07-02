@@ -77,9 +77,15 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 
 glm_est = run_GLM(raw, design_matrix)
 
-print("Estimate:", glm_est['Simulated'].theta[0],
-      "  MSE:", glm_est['Simulated'].MSE,
-      "  Error (uM):", 1e6*(glm_est['Simulated'].theta[0] - amp*1e-6))
+
+def print_results(glm_est, truth):
+    """Function to print the results of GLM estimate"""
+    print("Estimate:", glm_est.theta()[0][0],
+          "  MSE:", glm_est.MSE()[0],
+          "  Error (uM):", 1e6*(glm_est.theta()[0][0] - truth * 1e-6))
+
+print_results(glm_est, amp)
+
 
 
 ###############################################################################
@@ -102,14 +108,12 @@ glm_est = run_GLM(raw, design_matrix)
 
 plt.plot(raw.times, raw_noise_free.get_data().T * 1e6)
 plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
-plt.plot(raw.times, glm_est['Simulated'].theta[0] * design_matrix["A"].values * 1e6)
+plt.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
 plt.xlabel("Time (s)")
 plt.ylabel("Haemoglobin (uM)")
 plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 
-print("Estimate:", glm_est['Simulated'].theta[0],
-      "  MSE:", glm_est['Simulated'].MSE,
-      "  Error (uM):", 1e6*(glm_est['Simulated'].theta[0] - amp*1e-6))
+print_results(glm_est, amp)
 
 
 ###############################################################################
@@ -136,14 +140,12 @@ glm_est = run_GLM(raw, design_matrix)
 
 plt.plot(raw.times, raw_noise_free.get_data().T * 1e6)
 plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
-plt.plot(raw.times, glm_est['Simulated'].theta[0] * design_matrix["A"].values * 1e6)
+plt.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
 plt.xlabel("Time (s)")
 plt.ylabel("Haemoglobin (uM)")
 plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 
-print("Estimate:", glm_est['Simulated'].theta[0],
-      "  MSE:", glm_est['Simulated'].MSE,
-      "  Error (uM):", 1e6*(glm_est['Simulated'].theta[0] - amp*1e-6))
+print_results(glm_est, amp)
 
 
 ###############################################################################
@@ -170,14 +172,12 @@ design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
 glm_est = run_GLM(raw, design_matrix)
 
 plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
-plt.plot(raw.times, glm_est['Simulated'].theta[0] * design_matrix["A"].values * 1e6)
+plt.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
 plt.xlabel("Time (s)")
 plt.ylabel("Haemoglobin (uM)")
 plt.legend(["Noisy Data", "GLM Estimate"])
 
-print("Estimate:", glm_est['Simulated'].theta[0],
-      "  MSE:", glm_est['Simulated'].MSE,
-      "  Error (uM):", 1e6*(glm_est['Simulated'].theta[0] - amp*1e-6))
+print_results(glm_est, amp)
 
 
 ###############################################################################
@@ -196,7 +196,7 @@ glm_est = run_GLM(raw, design_matrix, noise_model='ar5')
 fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(15, 6))
 plt.plot([-0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.02428681],
          axes=axes)  # actual values from model above
-plt.plot(glm_est['Simulated'].model.rho * -1.0,  axes=axes)  # estimates
+plt.plot(glm_est.model()[0].rho * -1.0,  axes=axes)  # estimates
 plt.legend(["Simulation AR coefficients", "Estimated AR coefficients"])
 plt.xlabel("Coefficient")
 
@@ -205,9 +205,7 @@ plt.xlabel("Coefficient")
 # We can see that the estimates from the GLM AR model are quite accurate,
 # but how does this affect the accuracy of the response estimate?
 
-print("Estimate:", glm_est['Simulated'].theta[0],
-      "  MSE:", glm_est['Simulated'].MSE,
-      "  Error (uM):", 1e6*(glm_est['Simulated'].theta[0] - amp*1e-6))
+print_results(glm_est, amp)
 
 ###############################################################################
 # The response estimate using the AR(5) model is more accurate than the

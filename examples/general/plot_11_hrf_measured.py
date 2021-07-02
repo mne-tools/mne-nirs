@@ -43,7 +43,7 @@ import mne
 import mne_nirs
 
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import run_GLM, glm_region_of_interest
+from mne_nirs.statistics import run_GLM
 from mne_nirs.visualisation import plot_glm_topo
 from mne_nirs.channels import (get_long_channels, get_short_channels,
                                picks_pair_to_idx)
@@ -259,8 +259,9 @@ glm_est = run_GLM(data_subset, design_matrix)
 ###############################################################################
 #
 # This returns a GLM regression estimate for each channel.
-# This data is stored in a dictionary, which can be addressed using the
-# desired channel name. You can view an overview of the estimates as:
+# This data is stored in a dedicated type, which can be addressed as with other
+# MNE types, using the `pick` function.
+# You can view an overview of the estimates as:
 
 glm_est
 
@@ -268,28 +269,37 @@ glm_est
 ###############################################################################
 #
 # Or you can view the estimate for a single channel by indexing it by name.
-# You can see that for each channel a standard
+# Underlying the data for each channel is a standard
 # `Nilearn RegressionResults object <https://nilearn.github.io/modules/generated/nilearn.glm.RegressionResults.html>`_
-# is returned. These objects are rich with information that can be requested
+# object. These objects are rich with information that can be requested
 # from the object, for example to determine the mean square error of the
-# estimate you would call
+# estimates for two channels you would call
 
-glm_est['S1_D1 hbo'].MSE
+glm_est.MSE()
 
 
 ###############################################################################
 #
-# Due to the richness of the object we provide a function `glm_to_tidy` to
+# Or to query the mean square error of a single channel you would call.
+# Note that as we wish to retain both channels for the analysis below,
+# we operate on a copy to demonstrate this channel picking functionality.
+
+glm_est.copy().pick('S1_D1 hbr').MSE()
+
+
+###############################################################################
+#
+# Due to the richness of the object we provide a function to
 # extract commonly used information and put it in a convenient dataframe/table.
 # Below this is demonstrated and then we just display the first 9 rows of the
 # table which correspond to the 9 components of the design matrix for the
 # first channel.
 
-glm_to_tidy(data_subset, glm_est, design_matrix).head(9)
+glm_est.to_dataframe().head(9)
 
 ###############################################################################
 #
-# We then display the results. In this example we address the objects directly.
+# We then display the results using the scatter plot function.
 # Note that the control condition sits
 # around zero
 # and that the HbO is positive and larger than the HbR, this is to be expected.
@@ -297,12 +307,7 @@ glm_to_tidy(data_subset, glm_est, design_matrix).head(9)
 # right hand is larger than the left. And the values are similar to what
 # is seen in the epoching tutorial.
 
-plt.scatter(design_matrix.columns[:3], glm_est['S1_D1 hbo'].theta[:3] * 1e6)
-plt.scatter(design_matrix.columns[:3], glm_est['S1_D1 hbr'].theta[:3] * 1e6)
-plt.xlabel("Experiment Condition")
-plt.ylabel("Haemoglobin (μM)")
-plt.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
-plt.hlines([0.0], 0, 2)
+glm_est.scatter()
 
 
 ###############################################################################
@@ -317,9 +322,7 @@ plt.hlines([0.0], 0, 2)
 # negative of HbO as expected.
 
 glm_est = run_GLM(raw_haemo, design_matrix)
-plot_glm_topo(raw_haemo, glm_est, design_matrix,
-              requested_conditions=['Tapping/Left',
-                                    'Tapping/Right'])
+glm_est.plot_topo(conditions=['Tapping/Left', 'Tapping/Right'])
 
 
 ###############################################################################
@@ -347,18 +350,27 @@ plot_glm_topo(raw_haemo, glm_est, design_matrix,
 fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 6),
                          gridspec_kw=dict(width_ratios=[0.92, 1]))
 
-plot_glm_topo(raw_haemo.copy().pick(picks="hbo"), glm_est, design_matrix,
-              axes=axes[0], colorbar=False,
-              requested_conditions=['Tapping/Right'])
-plot_glm_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
-              glm_est, design_matrix, vmin=-16, vmax=16, axes=axes[1],
-              requested_conditions=['Tapping/Right'], colorbar=False)
-plot_glm_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10, 20)),
-              glm_est, design_matrix, axes=axes[1], vmin=-16, vmax=16,
-              requested_conditions=['Tapping/Right'])
+glm_hbo = glm_est.copy().pick(picks="hbo")
+conditions = ['Tapping/Right']
+
+glm_hbo.plot_topo(axes=axes[0], colorbar=False, conditions=conditions)
+
+glm_hbo.copy().pick(picks=range(10)).plot_topo(conditions=conditions,
+    axes=axes[1], colorbar=False, vmin=-16, vmax=16)
+glm_hbo.copy().pick(picks=range(10, 20)).plot_topo(conditions=conditions,
+    axes=axes[1], colorbar=False, vmin=-16, vmax=16)
 
 axes[0].set_title("Smoothed across hemispheres")
 axes[1].set_title("Hemispheres plotted independently")
+
+
+###############################################################################
+#
+# Another way to view the data is to project the GLM estimates to the nearest
+# cortical surface
+
+glm_est.copy().surface_projection(condition="Tapping/Right",
+                                  view="dorsal", chroma="hbo")
 
 
 ###############################################################################
@@ -390,9 +402,10 @@ right = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7],
 groups = dict(Left_ROI=picks_pair_to_idx(raw_haemo, left),
               Right_ROI=picks_pair_to_idx(raw_haemo, right))
 
-df = pd.DataFrame()
-for idx, col in enumerate(design_matrix.columns[:3]):
-    df = df.append(glm_region_of_interest(glm_est, groups, idx, col))
+conditions = ['Control', 'Tapping/Left', 'Tapping/Right']
+
+df = glm_est.to_dataframe_region_of_interest(groups, conditions)
+
 
 ###############################################################################
 # As with the single channel results above, this is placed in a tidy dataframe
@@ -400,6 +413,7 @@ for idx, col in enumerate(design_matrix.columns[:3]):
 # of interest.
 
 df
+
 
 ###############################################################################
 #
@@ -416,8 +430,9 @@ contrast_matrix = np.eye(design_matrix.shape[1])
 basic_conts = dict([(column, contrast_matrix[i])
                    for i, column in enumerate(design_matrix.columns)])
 contrast_LvR = basic_conts['Tapping/Left'] - basic_conts['Tapping/Right']
-contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
-mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
+
+contrast = glm_est.compute_contrast(contrast_LvR)
+contrast.plot_topo()
 
 
 ###############################################################################
@@ -436,7 +451,7 @@ mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
 # if a significant response (p<0.05) was observed, which sensor and detector is
 # in the channel, which chroma, etc.
 
-df = glm_to_tidy(raw_haemo, glm_est, design_matrix)
+df = glm_est.to_dataframe()
 
 
 ###############################################################################
