@@ -9,8 +9,7 @@ from scipy.signal import periodogram
 from mne import pick_types
 from mne.io import BaseRaw
 from mne.utils import _validate_type, verbose
-from mne.preprocessing.nirs import (_channel_frequencies,
-                                    _check_channels_ordered)
+from mne.preprocessing.nirs import _validate_nirs_info
 from mne.filter import filter_data
 
 
@@ -61,8 +60,7 @@ def peak_power(raw, time_window=10, threshold=0.1, l_freq=0.7, h_freq=1.5,
         raise RuntimeError('Scalp coupling index '
                            'should be run on optical density data.')
 
-    freqs = np.unique(_channel_frequencies(raw.info))
-    picks = _check_channels_ordered(raw.info, freqs)
+    picks = _validate_nirs_info(raw.info)
 
     filtered_data = filter_data(raw._data, raw.info['sfreq'], l_freq, h_freq,
                                 picks=picks, verbose=verbose,
