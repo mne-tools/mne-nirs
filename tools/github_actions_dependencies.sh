@@ -34,4 +34,5 @@ else
 fi
 
 pip install --progress-bar off --upgrade https://github.com/mne-tools/mne-python/archive/main.zip
+pip install --progress-bar off --upgrade -r requirements.txt
 pip install --progress-bar off --upgrade -r requirements_testing.txt
