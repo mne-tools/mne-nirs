@@ -41,7 +41,7 @@ jobs:
 
         - run:
             <<: *xvfb
-            
+
         - run:
             name: Install fonts needed for diagrams
             command: |
@@ -49,8 +49,8 @@ jobs:
               curl https://codeload.github.com/adobe-fonts/source-code-pro/tar.gz/2.038R-ro/1.058R-it/1.018R-VAR | tar xz -C $HOME/.fonts
               curl https://codeload.github.com/adobe-fonts/source-sans-pro/tar.gz/3.028R | tar xz -C $HOME/.fonts
               fc-cache -f
-            
-            
+
+
         - run:
             name: Install fonts needed for diagrams
             command: |
@@ -80,8 +80,8 @@ jobs:
         - run:
             name: Check PyQt5
             command: LD_DEBUG=libs python -c "from PyQt5.QtWidgets import QApplication, QWidget; app = QApplication([])"
-            
-            
+
+
         # Look at what we have and fail early if there is some library conflict
         # (remove irrelevant lines compared to MNE-Python)
         - run:
