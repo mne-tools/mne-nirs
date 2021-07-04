@@ -89,11 +89,37 @@ Visualisation
    :toctree: generated/
 
    plot_nirs_source_detector
+
+
+GLM result visualisation.
+
+.. currentmodule:: mne_nirs.visualisation
+
+.. automodule:: mne_nirs.visualisation
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
    plot_glm_topo
    plot_glm_contrast_topo
    plot_glm_group_topo
-   plot_timechannel_quality_metric
    plot_glm_surface_projection
+
+
+Data quality visualisation.
+
+.. currentmodule:: mne_nirs.visualisation
+
+.. automodule:: mne_nirs.visualisation
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
+   plot_timechannel_quality_metric
 
 
 Simulation
@@ -114,6 +140,8 @@ Simulation
 Channels
 --------
 
+Functions to help with handling channel information.
+
 .. currentmodule:: mne_nirs.channels
 
 .. automodule:: mne_nirs.channels
@@ -130,6 +158,8 @@ Channels
 
 Utilities
 ---------
+
+General helper functions.
 
 .. currentmodule:: mne_nirs.utils
 

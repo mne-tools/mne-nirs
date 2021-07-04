@@ -1,4 +1,4 @@
-"""NIRS specific plotting functions."""
+"""fNIRS specific plotting functions."""
 
 # Authors: Robert Luke <mail@robertluke.net>
 #
