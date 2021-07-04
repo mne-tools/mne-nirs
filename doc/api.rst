@@ -27,6 +27,8 @@ Experimental Design and Analysis
 Preprocessing
 -------------
 
+Data quality evaluation.
+
 .. currentmodule:: mne_nirs.preprocessing
 
 .. automodule:: mne_nirs.preprocessing

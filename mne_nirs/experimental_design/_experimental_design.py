@@ -14,7 +14,7 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
                                    add_reg_names=None, min_onset=-24,
                                    oversampling=50):
     """
-    Generate a design matrix for the experiment.
+    Generate design matrix from MNE data structure.
 
     This is a wrapper function for
     nilearn.stats.first_level_model.make_first_level_design_matrix.
@@ -101,7 +101,7 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
 
 def create_boxcar(raw, event_id=None, stim_dur=5):
     """
-    Create a boxcar of the experiment.
+    Generate boxcar waveform from MNE data structure.
 
     Parameters
     ----------

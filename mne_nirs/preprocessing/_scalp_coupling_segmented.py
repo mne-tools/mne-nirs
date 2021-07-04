@@ -19,7 +19,12 @@ def scalp_coupling_index_windowed(raw, time_window=10, threshold=0.1,
                                   h_trans_bandwidth=0.3,
                                   verbose=False):
     """
-    Compute windowed scalp coupling index metric from [1]_ and [2]_.
+    Compute scalp coupling index for each channel and time window.
+
+    As described in [1]_ and [2]_.
+    This method provides a metric of data quality along the duration of
+    the measurement. The user can specify the window over which the
+    metric is computed.
 
     Parameters
     ----------
