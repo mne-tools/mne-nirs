@@ -79,6 +79,8 @@ Statistics
 Visualisation
 ------------------
 
+fNIRS specific data visualisation.
+
 .. currentmodule:: mne_nirs.visualisation
 
 .. automodule:: mne_nirs.visualisation
