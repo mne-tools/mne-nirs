@@ -18,7 +18,12 @@ def peak_power(raw, time_window=10, threshold=0.1, l_freq=0.7, h_freq=1.5,
                l_trans_bandwidth=0.3, h_trans_bandwidth=0.3,
                verbose=False):
     """
-    Compute peak spectral power metric from [1]_ and [2]_.
+    Compute peak spectral power metric for each channel and time window.
+
+    As described in [1]_ and [2]_.
+    This method provides a metric of data quality along the duration of
+    the measurement. The user can specify the window over which the
+    metric is computed.
 
     Parameters
     ----------
