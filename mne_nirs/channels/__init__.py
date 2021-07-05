@@ -1,5 +1,3 @@
-"""Functions to help with handling channel information."""
-
 # Authors: Robert Luke <mail@robertluke.net>
 #
 # License: BSD (3-clause)

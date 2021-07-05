@@ -22,7 +22,11 @@ def plot_nirs_source_detector(data, info=None, radius=0.001,
                               fig=None, cmap=None,
                               interaction='trackball', verbose=None):
     """
-    Plot NIRS activity between sources and detectors in 3D.
+    3D visualisation of fNIRS response magnitude.
+
+    This function plots the response amplitude for each channel.
+    Each channel is represented by a line between the source and detector,
+    the color of the line reflects the response magnitude.
 
     Parameters
     ----------

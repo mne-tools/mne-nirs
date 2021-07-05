@@ -11,12 +11,11 @@ from mne.utils import _validate_type
 
 def enhance_negative_correlation(raw):
     """
-    Apply algorithm from Cui et al 2009.
+    Apply negative correlation enhancement algorithm.
 
-    Cui et al, Functional Near Infrared Spectroscopy (NIRS) signal
-    improvement based on negative correlation between oxygenated and
-    deoxygenated hemoglobin dynamics, NeuroImage
-    https://doi.org/10.1016/j.neuroimage.2009.11.050
+    As descirbed in [1]_.
+    This function will return a modified raw instance that has the
+    enhancement applied to it.
 
     Parameters
     ----------
@@ -27,6 +26,13 @@ def enhance_negative_correlation(raw):
     -------
     raw : instance of Raw
         The modified raw instance.
+
+    References
+    ----------
+    .. [1] Cui et al, Functional Near Infrared Spectroscopy (NIRS) signal
+           improvement based on negative correlation between oxygenated and
+           deoxygenated hemoglobin dynamics, NeuroImage
+           https://doi.org/10.1016/j.neuroimage.2009.11.050
     """
     raw = raw.copy().load_data()
     _validate_type(raw, BaseRaw, 'raw')
