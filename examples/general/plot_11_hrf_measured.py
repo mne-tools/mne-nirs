@@ -89,19 +89,16 @@ raw_intensity.resample(0.7)
 # Then we crop the recording to the section containing our
 # experimental conditions.
 
-original_annotations = raw_intensity.annotations
-new_des = [des for des in raw_intensity.annotations.description]
-new_des = ['Control' if x == "1.0" else x for x in new_des]
-new_des = ['Tapping/Left' if x == "2.0" else x for x in new_des]
-new_des = ['Tapping/Right' if x == "3.0" else x for x in new_des]
-keepers = [n == 'Control' or
-           n == "Tapping/Left" or
-           n == "Tapping/Right" for n in new_des]
-idxs = np.array(np.where(keepers)[0])
-annot = mne.Annotations(original_annotations.onset[idxs],
-                        original_annotations.duration[idxs] * 5., 
-                        np.array([new_des[idx] for idx in np.where(keepers)[0]]))
-raw_intensity.set_annotations(annot)
+# Create a temporary version of the annotations (just to keep variable name short)
+ann = raw_intensity.annotations
+# Replace event numbers with more meaningful names
+ann.description = [d.replace('1.0', 'Control') for d in ann.description]
+ann.description = [d.replace('2.0', 'Tapping/Left') for d in ann.description]
+ann.description = [d.replace('3.0', 'Tapping/Right') for d in ann.description]
+# Remove unwanted events
+ann.delete(np.where([d == '15.0' for d in ann.description]))
+# Write new annotations back to the raw data structure
+raw_intensity.set_annotations(ann)
 
 
 ###############################################################################
