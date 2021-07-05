@@ -6,6 +6,11 @@
 Changelog
 #########
 
+MNE-NIRS follows `semantic versioning <https://semver.org/>`_.
+Such that, version numbers are described as v<MAJOR>.<MINOR>.<PATCH>.
+Major version changes indicate incompatible API changes.
+Minor version changes indicate new functionality was added in a backwards compatible manner.
+Patch version changes indicate backward compatible bug fixes.
 
 v0.0.6
 ------
