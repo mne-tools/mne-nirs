@@ -99,7 +99,7 @@ jobs:
             name: Only build this branch and not master
             command: |
               git reset --hard "$CIRCLE_SHA1"
-              git checkout -q -B "CIRCLE_BRANCH"
+              git checkout -q -B "$CIRCLE_BRANCH"
               git reset --hard "$CIRCLE_SHA1"
               git branch -D master
 
