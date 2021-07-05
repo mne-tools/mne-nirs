@@ -71,3 +71,4 @@ Until there is a journal article specifically on MNE-NIRS, please cite `this art
 
    auto_examples/index
    api
+   changelog

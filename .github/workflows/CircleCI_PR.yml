@@ -1,12 +1,18 @@
 on: [status]
+env:
+  PR_NUMBER: ${{ github.event.pull_request.number }}
 jobs:
   circleci_artifacts_redirector_job:
     runs-on: ubuntu-latest
     name: Run CircleCI artifacts redirector
     steps:
+      - name: view the PR number
+        run: |
+          echo "PR number = ${{ github.event.pull_request.number }}"
+          echo "PR number = ${{ env.PR_NUMBER }}"
       - name: GitHub Action step
         uses: larsoner/circleci-artifacts-redirector-action@master
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          artifact-path: 0/dev/pull/${{ github.event.pull_request.number }}/index.html
+          artifact-path: 0/dev/pull/${{ env.PR_NUMBER }}/index.html
           circleci-jobs: build_docs

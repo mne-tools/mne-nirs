@@ -100,6 +100,7 @@ GLM result visualisation.
 .. automodule:: mne_nirs.visualisation
    :no-members:
    :no-inherited-members:
+   :noindex:
 
 .. autosummary::
    :toctree: generated/
@@ -117,6 +118,7 @@ Data quality visualisation.
 .. automodule:: mne_nirs.visualisation
    :no-members:
    :no-inherited-members:
+   :noindex:
 
 .. autosummary::
    :toctree: generated/
