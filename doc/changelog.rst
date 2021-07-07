@@ -31,7 +31,7 @@ Enhancements
 
 * Added windowed signal quality metrics scalp coupling index and peak power. By `Robert Luke`_.
 
-* Added FIR GLM example. By `Robert Luke`_.
+* Added a finite impulse response (FIR) GLM example. By `Robert Luke`_.
 
 * Added group level waveform example. By `Robert Luke`_.
 
