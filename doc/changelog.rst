@@ -27,6 +27,8 @@ Enhancements
 v0.0.5
 ------
 
+Enhancements
+
 * Added windowed signal quality metrics scalp coupling index and peak power. By `Robert Luke`_.
 
 * Added FIR GLM example. By `Robert Luke`_.
