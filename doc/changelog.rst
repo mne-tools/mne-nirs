@@ -17,7 +17,7 @@ v0.1.0
 
 Enhancements
 
-* Add RegressionResults and ContrastResults classes to store GLM results. These classes have methods that replace the functions compute_contrast and glm_region_of_interest. By `Robert Luke`_.
+* Add :class:`~mne_nirs.statistics.RegressionResults` and :class:`~mne_nirs.statistics.ContrastResults` classes to store GLM results. These classes have methods that replace the functions compute_contrast and glm_region_of_interest. By `Robert Luke`_.
 
 
 
