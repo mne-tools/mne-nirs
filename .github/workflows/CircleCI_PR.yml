@@ -4,6 +4,8 @@ jobs:
   circleci_artifacts_redirector_job:
     runs-on: ubuntu-20.04
     name: Run CircleCI artifacts redirector
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
     
       - name: Test
