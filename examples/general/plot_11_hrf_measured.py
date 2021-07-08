@@ -92,8 +92,7 @@ raw_intensity.resample(0.7)
 raw_intensity.annotations.rename({'1.0': 'Control',
                                   '2.0': 'Tapping/Left',
                                   '3.0': 'Tapping/Right'})
-raw_intensity.annotations.delete(
-    np.where([d == '15.0' for d in raw_intensity.annotations.description]))
+raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
 raw_intensity.annotations.set_durations(5)
 
 
