@@ -29,6 +29,11 @@ To load MNE-NIRS add these lines to your script.
     >>> import mne
     >>> import mne_nirs
 
+Alternatively, if you just wish to try out the software, you can use the Binder link at the bottom of each example page.
+Clicking these binder links will spin up an online server instance for you to use.
+This will allow you to edit and run code, upload data, visualise results, etc, 
+without needing to download and install anything on your computer.
+
 
 Usage
 -----
