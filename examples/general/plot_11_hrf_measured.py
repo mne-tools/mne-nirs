@@ -89,16 +89,12 @@ raw_intensity.resample(0.7)
 # Then we crop the recording to the section containing our
 # experimental conditions.
 
-# Create a temporary version of the annotations (just to keep variable name short)
-ann = raw_intensity.annotations
-# Replace event numbers with more meaningful names
-ann.description = [d.replace('1.0', 'Control') for d in ann.description]
-ann.description = [d.replace('2.0', 'Tapping/Left') for d in ann.description]
-ann.description = [d.replace('3.0', 'Tapping/Right') for d in ann.description]
-# Remove unwanted events
-ann.delete(np.where([d == '15.0' for d in ann.description]))
-# Write new annotations back to the raw data structure
-raw_intensity.set_annotations(ann)
+raw_intensity.annotations.rename({'1.0': 'Control',
+                                  '2.0': 'Tapping/Left',
+                                  '3.0': 'Tapping/Right'})
+raw_intensity.annotations.delete(
+    np.where([d == '15.0' for d in raw_intensity.annotations.description]))
+raw_intensity.annotations.set_durations(5)
 
 
 ###############################################################################
