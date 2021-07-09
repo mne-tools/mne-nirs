@@ -15,7 +15,7 @@ import nilearn
 
 from mne_nirs.statistics import RegressionResults
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import run_GLM
+from mne_nirs.statistics import run_glm
 
 
 def _get_minimal_haemo_data(tmin=0, tmax=60):
@@ -32,7 +32,7 @@ def _get_glm_result(tmax=60, tmin=0):
     design_matrix = make_first_level_design_matrix(raw, stim_dur=5.,
                                                    drift_order=1,
                                                    drift_model='polynomial')
-    return run_GLM(raw, design_matrix)
+    return run_glm(raw, design_matrix)
 
 
 def _get_glm_contrast_result(tmin=60, tmax=400):
@@ -41,7 +41,7 @@ def _get_glm_contrast_result(tmin=60, tmax=400):
                                                    drift_order=1,
                                                    drift_model='polynomial')
 
-    glm_est = run_GLM(raw, design_matrix)
+    glm_est = run_glm(raw, design_matrix)
 
     contrast_matrix = np.eye(design_matrix.shape[1])
     basic_conts = dict([(column, contrast_matrix[i])

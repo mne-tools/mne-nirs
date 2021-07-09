@@ -10,7 +10,7 @@ from mne import Covariance
 from mne.simulation import add_noise
 
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import run_GLM
+from mne_nirs.statistics import run_glm, run_GLM
 from mne_nirs.simulation import simulate_nirs_raw
 
 iir_filter = [1., -0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.024286]
@@ -22,7 +22,13 @@ def test_run_GLM():
     design_matrix = make_first_level_design_matrix(raw, stim_dur=5.,
                                                    drift_order=1,
                                                    drift_model='polynomial')
-    glm_estimates = run_GLM(raw, design_matrix)
+    glm_estimates = run_glm(raw, design_matrix)
+
+    # Test backwards compatability
+    old_res = run_GLM(raw, design_matrix)
+    assert old_res.keys() == glm_estimates.data.keys()
+    assert (old_res["Simulated"].theta ==
+            glm_estimates.data["Simulated"].theta).all()
 
     assert len(glm_estimates) == len(raw.ch_names)
 
@@ -42,21 +48,21 @@ def test_run_GLM_order():
                                                    drift_model='polynomial')
 
     # Default should be first order AR
-    glm_estimates = run_GLM(raw, design_matrix)
+    glm_estimates = run_glm(raw, design_matrix)
     assert glm_estimates.pick("Simulated").model()[0].order == 1
 
     # Default should be first order AR
-    glm_estimates = run_GLM(raw, design_matrix, noise_model='ar2')
+    glm_estimates = run_glm(raw, design_matrix, noise_model='ar2')
     assert glm_estimates.pick("Simulated").model()[0].order == 2
 
-    glm_estimates = run_GLM(raw, design_matrix, noise_model='ar7')
+    glm_estimates = run_glm(raw, design_matrix, noise_model='ar7')
     assert glm_estimates.pick("Simulated").model()[0].order == 7
 
     # Auto should be 4 times sample rate
     cov = Covariance(np.ones(1) * 1e-11, raw.ch_names,
                      raw.info['bads'], raw.info['projs'], nfree=0)
     raw = add_noise(raw, cov, iir_filter=iir_filter)
-    glm_estimates = run_GLM(raw, design_matrix, noise_model='auto')
+    glm_estimates = run_glm(raw, design_matrix, noise_model='auto')
     assert glm_estimates.pick("Simulated").model()[0].order == 3 * 4
 
     raw = simulate_nirs_raw(sig_dur=10, stim_dur=5., sfreq=2)
@@ -67,5 +73,5 @@ def test_run_GLM_order():
                                                    drift_order=1,
                                                    drift_model='polynomial')
     # Auto should be 4 times sample rate
-    glm_estimates = run_GLM(raw, design_matrix, noise_model='auto')
+    glm_estimates = run_glm(raw, design_matrix, noise_model='auto')
     assert glm_estimates.pick("Simulated").model()[0].order == 2 * 4

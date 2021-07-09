@@ -11,7 +11,7 @@ import statsmodels.formula.api as smf
 
 from ...simulation import simulate_nirs_raw
 from ...experimental_design import make_first_level_design_matrix
-from ...statistics import run_GLM, statsmodels_to_results
+from ...statistics import run_glm, statsmodels_to_results
 
 
 @pytest.mark.parametrize('func', ('mixedlm', 'ols', 'rlm'))
@@ -32,7 +32,7 @@ def test_statsmodel_to_df(func):
                                 isi_min=15., isi_max=45.)
         raw._data += np.random.normal(0, np.sqrt(1e-12), raw._data.shape)
         design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0)
-        glm_est = run_GLM(raw, design_matrix)
+        glm_est = run_glm(raw, design_matrix)
         with pytest.warns(RuntimeWarning, match='Non standard source detect'):
             cha = glm_est.to_dataframe()
         cha["ID"] = '%02d' % n

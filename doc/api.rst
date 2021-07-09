@@ -81,7 +81,7 @@ Individual (first) level analysis functions.
 .. autosummary::
    :toctree: generated/
 
-   run_GLM
+   run_glm
 
 
 Individual (first) level result classes.

@@ -26,7 +26,7 @@ import mne_nirs
 import matplotlib.pylab as plt
 import numpy as np
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import run_GLM
+from mne_nirs.statistics import run_glm
 from nilearn.plotting import plot_design_matrix
 np.random.seed(1)
 
@@ -75,7 +75,7 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # which was the amplitude we used in the simulation.
 # We also see that the mean square error of the model fit is close to zero.
 
-glm_est = run_GLM(raw, design_matrix)
+glm_est = run_glm(raw, design_matrix)
 
 
 def print_results(glm_est, truth):
@@ -104,7 +104,7 @@ print_results(glm_est, amp)
 raw_noise_free = raw.copy()
 
 raw._data += np.random.normal(0, np.sqrt(1e-11), raw._data.shape)
-glm_est = run_GLM(raw, design_matrix)
+glm_est = run_glm(raw, design_matrix)
 
 plt.plot(raw.times, raw_noise_free.get_data().T * 1e6)
 plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
@@ -136,7 +136,7 @@ raw = mne.simulation.add_noise(raw, cov,
 design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
                                                drift_order=1,
                                                drift_model='polynomial')
-glm_est = run_GLM(raw, design_matrix)
+glm_est = run_glm(raw, design_matrix)
 
 plt.plot(raw.times, raw_noise_free.get_data().T * 1e6)
 plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
@@ -169,7 +169,7 @@ raw = mne.simulation.add_noise(raw, cov,
 design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
                                                drift_order=1,
                                                drift_model='polynomial')
-glm_est = run_GLM(raw, design_matrix)
+glm_est = run_glm(raw, design_matrix)
 
 plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
 plt.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
@@ -191,7 +191,7 @@ print_results(glm_est, amp)
 # properties was extracted from the data and if this
 # improved the response estimate.
 
-glm_est = run_GLM(raw, design_matrix, noise_model='ar5')
+glm_est = run_glm(raw, design_matrix, noise_model='ar5')
 
 fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(15, 6))
 plt.plot([-0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.02428681],

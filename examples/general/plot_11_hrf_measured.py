@@ -43,7 +43,7 @@ import mne
 import mne_nirs
 
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import run_GLM
+from mne_nirs.statistics import run_glm
 from mne_nirs.visualisation import plot_glm_topo
 from mne_nirs.channels import (get_long_channels, get_short_channels,
                                picks_pair_to_idx)
@@ -247,7 +247,7 @@ plt.ylabel("Amplitude")
 # of a single source detector pair.
 
 data_subset = raw_haemo.copy().pick(picks=range(2))
-glm_est = run_GLM(data_subset, design_matrix)
+glm_est = run_glm(data_subset, design_matrix)
 
 ###############################################################################
 #
@@ -314,7 +314,7 @@ glm_est.scatter()
 # contralateral to the tapping side. Also note that HbR tends to be the
 # negative of HbO as expected.
 
-glm_est = run_GLM(raw_haemo, design_matrix)
+glm_est = run_glm(raw_haemo, design_matrix)
 glm_est.plot_topo(conditions=['Tapping/Left', 'Tapping/Right'])
 
 

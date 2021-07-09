@@ -80,7 +80,7 @@ import pandas as pd
 from mne.preprocessing.nirs import optical_density, beer_lambert_law
 
 # Import MNE-NIRS processing
-from mne_nirs.statistics import run_GLM
+from mne_nirs.statistics import run_glm
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import statsmodels_to_results
 from mne_nirs.statistics import compute_contrast
@@ -152,7 +152,7 @@ def individual_analysis(bids_path, ID):
     design_matrix["ShortHbR"] = np.mean(sht_chans.copy().pick(picks="hbr").get_data(), axis=0)
 
     # Run GLM
-    glm_est = run_GLM(raw_haemo, design_matrix)
+    glm_est = run_glm(raw_haemo, design_matrix)
 
     # Define channels in each region of interest
     # List the channel pairs manually

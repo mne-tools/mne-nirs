@@ -5,4 +5,4 @@
 from ._roi import glm_region_of_interest
 from ._statsmodels import statsmodels_to_results
 from ._glm_level_first import (RegressionResults, ContrastResults,
-                               run_GLM, compute_contrast)
+                               run_glm, compute_contrast, run_GLM)

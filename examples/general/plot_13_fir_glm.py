@@ -60,7 +60,7 @@ import pandas as pd
 from mne.preprocessing.nirs import optical_density, beer_lambert_law
 
 # Import MNE-NIRS processing
-from mne_nirs.statistics import run_GLM
+from mne_nirs.statistics import run_glm
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import glm_region_of_interest, statsmodels_to_results
 from mne_nirs.datasets import fnirs_motor_group
@@ -113,7 +113,7 @@ def analysis(fname, ID):
         design_matrix[f"short_{chan}"] = short_chans.get_data(chan).T
 
     # Run GLM
-    glm_est = run_GLM(raw_haemo, design_matrix)
+    glm_est = run_glm(raw_haemo, design_matrix)
 
     # Create a single ROI that includes all channels for example
     rois = dict(AllChannels=range(len(raw_haemo.ch_names)))

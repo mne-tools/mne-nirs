@@ -488,8 +488,50 @@ class ContrastResults(_BaseGLM):
         return _plot_glm_contrast_topo(self.info, self._data,
                                        figsize=figsize, sphere=sphere)
 
-
 def run_GLM(raw, design_matrix, noise_model='ar1', bins=0,
+            n_jobs=1, verbose=0):
+    """
+    Run GLM on data using supplied design matrix.
+    This is a wrapper function for nilearn.stats.first_level_model.run_glm.
+    Parameters
+    ----------
+    raw : instance of Raw
+        The haemoglobin data.
+    design_matrix : as specified in Nilearn
+        The design matrix.
+    noise_model : {'ar1', 'ols', 'arN', 'auto'}, optional
+        The temporal variance model. Defaults to first order
+        auto regressive model 'ar1'.
+        The AR model can be set to any integer value by modifying the value
+        of N. E.g. use `ar5` for a fifth order model.
+        If the string `auto` is provided a model with order 4 times the sample
+        rate will be used.
+    bins : int, optional
+        Maximum number of discrete bins for the AR coef histogram/clustering.
+        By default the value is 0, which will set the number of bins to the
+        number of channels, effectively estimating the AR model for each
+        channel.
+    n_jobs : int, optional
+        The number of CPUs to use to do the computation. -1 means
+        'all CPUs'.
+    verbose : int, optional
+        The verbosity level. Default is 0.
+    Returns
+    -------
+    glm_estimates : dict
+        Keys correspond to the different labels values values are
+        RegressionResults instances corresponding to the voxels.
+    """
+    warn('"run_GLM" has been deprecated in favor of the more '
+         'comprehensive run_glm function, and will be removed in 0.2.0.'
+         'See the changelog for further details.',
+         DeprecationWarning)
+    res = run_glm(raw, design_matrix, noise_model=noise_model, bins=bins,
+                  n_jobs=n_jobs, verbose=verbose)
+    return res.data
+
+
+def run_glm(raw, design_matrix, noise_model='ar1', bins=0,
             n_jobs=1, verbose=0):
     """
     GLM fit for an MNE structure containing fNIRS data.

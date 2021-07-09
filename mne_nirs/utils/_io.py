@@ -11,7 +11,7 @@ def glm_to_tidy(info, statistic, design_matrix, wide=True, order=None):
     Export GLM regression or contrast results in tidy format.
 
     Creates a long pandas data frame from regression results or contrast
-    as computed by run_GLM or compute_contrast.
+    as computed by run_glm or compute_contrast.
 
     Parameters
     ----------
@@ -19,7 +19,7 @@ def glm_to_tidy(info, statistic, design_matrix, wide=True, order=None):
         Instance of MNE info.
     statistic : nilearn data,
         Either dict of nilearn.stats.regression.RegressionResults as returned
-        by run_GLM, or nilearn.stats.contrasts.Contrast as returned by
+        by run_glm, or nilearn.stats.contrasts.Contrast as returned by
         compute_contrast.
     design_matrix : DataFrame
         As specified in Nilearn.
