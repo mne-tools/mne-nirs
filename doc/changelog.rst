@@ -20,9 +20,9 @@ API changes
 * Add :class:`~mne_nirs.statistics.RegressionResults` and :class:`~mne_nirs.statistics.ContrastResults` classes to store GLM results. By `Robert Luke`_.
 
 Adding a class simplifies user code and common use cases.
-To generate results in the new format use the function run_glm rather than run_glm.
+To generate results in the new format use the function run_glm rather than run_GLM.
 This will return a RegressionResults type that contains all relevant information.
-All previous existing functionality still exists with this new type,
+All previous functionality still exists with this new type,
 but is now accessible as more succinct methods that handle the relevant information,
 this results in less arguments being passed around by the user.
 To access the previous glm_to_tidy(results) functionality use the new results.to_dataframe().
