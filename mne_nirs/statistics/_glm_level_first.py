@@ -488,6 +488,7 @@ class ContrastResults(_BaseGLM):
         return _plot_glm_contrast_topo(self.info, self._data,
                                        figsize=figsize, sphere=sphere)
 
+
 def run_GLM(raw, design_matrix, noise_model='ar1', bins=0,
             n_jobs=1, verbose=0):
     """
