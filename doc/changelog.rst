@@ -36,14 +36,15 @@ Enhancements
 v0.0.5
 ------
 
-* Added windowed signal quality metrics scalp coupling index and peak power.
+Enhancements
 
-* Added FIR GLM example.
+* Added windowed signal quality metrics scalp coupling index and peak power. By `Robert Luke`_.
 
-* Added group level waveform example.
+* Added a finite impulse response (FIR) GLM example. By `Robert Luke`_.
 
-* Added ability to use auto regressive models of any order in GLM computation.
+* Added group level waveform example. By `Robert Luke`_.
 
+* Added ability to use auto regressive models of any order in GLM computation. By `Robert Luke`_.
 
 
 .. _Robert Luke: https://github.com/rob-luke/

@@ -88,4 +88,4 @@ def test_cropped_raw():
     # 100 corrects for the crop time above
     # 4 is peak time after onset
     new_idx = np.round(onsets_after_crop[0][0]) - 100 + 4
-    assert design_matrix["A"][new_idx] > 0.1
+    assert design_matrix["A"][new_idx] > 0.09
