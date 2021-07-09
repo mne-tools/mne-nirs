@@ -15,9 +15,29 @@ Patch version changes indicate backward compatible bug fixes.
 v0.1.0
 ------
 
+API changes
+
+* Add :class:`~mne_nirs.statistics.RegressionResults` and :class:`~mne_nirs.statistics.ContrastResults` classes to store GLM results. By `Robert Luke`_.
+
+Adding a class simplifies user code and common use cases.
+To generate results in the new format use the function run_glm rather than run_GLM.
+This will return a RegressionResults type that contains all relevant information.
+All previous existing functionality still exists with this new type,
+but is now accessible as more succinct methods that handle the relevant information,
+this results in less arguments being passed around by the user.
+To access the previous glm_to_tidy(results) functionality use the new results.to_dataframe().
+To access the previous plot_glm_topo(results) functionality use the new results.plot_topo().
+A full list of replacement methods is provided below
+
 Enhancements
 
-* Add :class:`~mne_nirs.statistics.RegressionResults` and :class:`~mne_nirs.statistics.ContrastResults` classes to store GLM results. These classes have methods that replace the functions compute_contrast and glm_region_of_interest. By `Robert Luke`_.
+* Add method RegressionResults.compute_contrast which replaces compute_contrast.
+* Add method RegressionResults.plot_glm_topo which replaces plot_topo.
+* Add method RegressionResults.to_dataframe which replaces glm_to_tidy.
+* Add method RegressionResults.to_dataframe_region_of_interest which replaces glm_region_of_interest.
+* Add new method RegressionResults.scatter which illustrates the GLM results as a scatter plot.
+* Add new method RegressionResults.surface_projection which illustrates the GLM results as a surface projection.
+
 
 
 

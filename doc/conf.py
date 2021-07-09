@@ -30,9 +30,7 @@ from mne.tests.test_docstring_parameters import error_ignores
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-curdir = os.path.dirname(__file__)
-sys.path.append(os.path.abspath(os.path.join(curdir, '..', 'mne_nirs')))
-sys.path.append(os.path.abspath(os.path.join(curdir, 'sphinxext')))
+# sys.path.insert(0, os.path.abspath('.'))
 
 # -- General configuration ------------------------------------------------
 

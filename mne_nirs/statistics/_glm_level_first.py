@@ -9,6 +9,7 @@ import numpy as np
 from numpy import array_equal, where
 
 import nilearn.glm
+from nilearn.glm.first_level import run_glm as nilearn_glm
 
 from mne.channels.channels import ContainsMixin
 from mne.utils import fill_doc, warn, verbose
@@ -524,8 +525,6 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=0,
     glm_estimates : RegressionResults
         RegressionResults class which stores the GLM results.
     """
-    from nilearn.glm.first_level import run_glm
-
     picks = _picks_to_idx(raw.info, 'fnirs', exclude=[], allow_empty=True)
     ch_names = raw.ch_names
 
@@ -537,10 +536,10 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=0,
 
     results = dict()
     for pick in picks:
-        labels, glm_estimates = run_glm(raw.get_data(pick).T,
-                                        design_matrix.values,
-                                        noise_model=noise_model, bins=bins,
-                                        n_jobs=n_jobs, verbose=verbose)
+        labels, glm_estimates = nilearn_glm(raw.get_data(pick).T,
+                                            design_matrix.values,
+                                            noise_model=noise_model, bins=bins,
+                                            n_jobs=n_jobs, verbose=verbose)
         results[ch_names[pick]] = glm_estimates[labels[0]]
 
     return RegressionResults(raw.info, results, design_matrix)
