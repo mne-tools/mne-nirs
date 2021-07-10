@@ -12,6 +12,14 @@ Major version changes indicate incompatible API changes.
 Minor version changes indicate new functionality was added in a backwards compatible manner.
 Patch version changes indicate backward compatible bug fixes.
 
+v0.1.0
+------
+
+Infrastructure
+
+* Change the git repository to use `main`, rather than `master` branch.
+
+
 v0.0.6
 ------
 
