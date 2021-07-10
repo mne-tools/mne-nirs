@@ -30,12 +30,12 @@ A full list of replacement methods is provided below.
 
 Enhancements
 
-* Add method :meth:`mne_nirs.statistics.RegressionResults.compute_contrast` which replaces compute_contrast.
-* Add method :meth:`mne_nirs.statistics.RegressionResults.plot_glm_topo` which replaces plot_topo.
-* Add method :meth:`mne_nirs.statistics.RegressionResults.to_dataframe` which replaces glm_to_tidy.
-* Add method :meth:`mne_nirs.statistics.RegressionResults.to_dataframe_region_of_interest` which replaces glm_region_of_interest.
-* Add new method :meth:`mne_nirs.statistics.RegressionResults.scatter` which illustrates the GLM results as a scatter plot.
-* Add new method :meth:`mne_nirs.statistics.RegressionResults.surface_projection` which illustrates the GLM results as a surface projection.
+* Add :meth:`mne_nirs.statistics.RegressionResults.compute_contrast` to replace compute_contrast.
+* Add :meth:`mne_nirs.statistics.RegressionResults.plot_topo` to replace plot_glm_topo.
+* Add :meth:`mne_nirs.statistics.RegressionResults.to_dataframe` to replace glm_to_tidy.
+* Add :meth:`mne_nirs.statistics.RegressionResults.to_dataframe_region_of_interest` to replace glm_region_of_interest.
+* Add :meth:`mne_nirs.statistics.RegressionResults.scatter` to display GLM results as a scatter plot.
+* Add :meth:`mne_nirs.statistics.RegressionResults.surface_projection` to display GLM results on a cortical surface.
 
 
 Infrastructure
