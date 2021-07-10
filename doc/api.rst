@@ -168,6 +168,31 @@ Individual (first) level result classes.
 
    RegressionResults
    ContrastResults
+   
+Individual (first) level result class methods.
+View the class documentation above for a detailed list of methods.
+
+.. currentmodule:: mne_nirs.statistics
+
+.. automodule:: mne_nirs.statistics
+   :no-members:
+   :no-inherited-members:
+   :noindex:
+
+.. autosummary::
+   :toctree: generated/
+
+   RegressionResults.compute_contrast
+   RegressionResults.to_dataframe
+   RegressionResults.to_dataframe_region_of_interest
+   RegressionResults.scatter
+   RegressionResults.plot_topo
+   RegressionResults.surface_projection
+   RegressionResults.scatter
+   
+   ContrastResults.scatter
+   ContrastResults.plot_topo
+   ContrastResults.to_dataframe
 
 
 Second level analysis
