@@ -28,7 +28,7 @@ This GLM analysis is a wrapper over the excellent
    :depth: 2
 
 """
-# sphinx_gallery_thumbnail_number = 8
+# sphinx_gallery_thumbnail_number = 9
 
 # Authors: Robert Luke <mail@robertluke.net>
 #
