@@ -10,13 +10,22 @@ The description of each interface will include links to the examples
 relevant to that code.
 
 This library extends the fNIRS functionality available within
-`MNE-Python <https://mne.tools/dev>`_.
-As such, when using this package you are likely to use functions from both
-MNE-Python and MNE-NIRS.
+`MNE-Python <https://mne.tools>`_.
+When analysing fNIRS data with these tools you are likely to use functions
+from both MNE-Python and MNE-NIRS.
+As such, documentation is provided below for relevant functions and classes
+from both packages.
+
+.. currentmodule:: mne_nirs
+
+.. toctree::
 
 
-MNE-Python: Input/Output
-------------------------
+Input/Output
+------------
+
+MNE-Python
+^^^^^^^^^^
 
 .. currentmodule:: mne.io
 
@@ -33,8 +42,27 @@ MNE-Python: Input/Output
    read_raw_boxy
 
 
-MNE-Python: Preprocessing
--------------------------
+MNE-NIRS
+^^^^^^^^
+
+.. currentmodule:: mne_nirs.io.snirf
+
+.. automodule:: mne_nirs.io.snirf
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
+   write_raw_snirf
+
+
+
+Preprocessing
+-------------
+
+MNE-Python
+^^^^^^^^^^
 
 .. currentmodule:: mne.preprocessing.nirs
 
@@ -53,28 +81,24 @@ MNE-Python: Preprocessing
    temporal_derivative_distribution_repair
 
 
-.. currentmodule:: mne_nirs
+MNE-NIRS
+^^^^^^^^
 
-.. toctree::
+Signal Enhancement
 
-Experimental Design and Analysis
---------------------------------
 
-.. currentmodule:: mne_nirs.experimental_design
+.. currentmodule:: mne_nirs.signal_enhancement
 
-.. automodule:: mne_nirs.experimental_design
+.. automodule:: mne_nirs.signal_enhancement
    :no-members:
    :no-inherited-members:
 
 .. autosummary::
    :toctree: generated/
 
-   make_first_level_design_matrix
-   create_boxcar
+   enhance_negative_correlation
+   short_channel_regression
 
-
-Preprocessing
--------------
 
 Data quality evaluation.
 
@@ -91,20 +115,22 @@ Data quality evaluation.
    scalp_coupling_index_windowed
 
 
-Signal Enhancement
-------------------
 
-.. currentmodule:: mne_nirs.signal_enhancement
+Experimental Design
+-------------------
 
-.. automodule:: mne_nirs.signal_enhancement
+.. currentmodule:: mne_nirs.experimental_design
+
+.. automodule:: mne_nirs.experimental_design
    :no-members:
    :no-inherited-members:
 
 .. autosummary::
    :toctree: generated/
 
-   enhance_negative_correlation
-   short_channel_regression
+   make_first_level_design_matrix
+   create_boxcar
+
 
 
 Statistics
@@ -227,17 +253,3 @@ General helper functions.
 
 
 
-
-Input/Output
-------------
-
-.. currentmodule:: mne_nirs.io.snirf
-
-.. automodule:: mne_nirs.io.snirf
-   :no-members:
-   :no-inherited-members:
-
-.. autosummary::
-   :toctree: generated/
-
-   write_raw_snirf
