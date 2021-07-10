@@ -21,6 +21,7 @@ import os
 from sphinx_gallery.sorting import FileNameSortKey
 
 sys.path.append("../")
+import mne
 from mne_nirs import __version__  # noqa: E402
 from mne.tests.test_docstring_parameters import error_ignores
 
@@ -49,11 +50,12 @@ extensions = [
     'sphinx_gallery.gen_gallery',
     'sphinx_bootstrap_divs',
     'numpydoc',
+    'sphinxcontrib.bibtex',
 ]
 
 smv_branch_whitelist = r'^(?!refs/heads/).*$'
 # v0.0.1 config is not compatible with sphinx-multiversion, so use 2 onwards
-smv_tag_whitelist = r'^v\d+\.1.[0-9]$'
+smv_tag_whitelist = None  # r'^v\d+\.\d+.\d+$'
 # Mark vX.Y.Z as releases
 smv_released_pattern = r'^.*v.*$'
 
@@ -114,6 +116,12 @@ numpydoc_validation_exclude = {  # set of regex
 }
 
 
+# sphinxcontrib-bibtex
+bibtex_bibfiles = ['./references.bib']
+bibtex_style = 'unsrt'
+bibtex_footbibliography_header = ''
+
+
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -129,7 +137,8 @@ html_sidebars = {
 html_context = {
     'build_dev_html': bool(int(os.environ.get('BUILD_DEV_HTML', False))),
     'versions_dropdown': {
-        'v0.0.5': 'v0.0.5 (stable)',
+        'v0.0.6': 'v0.0.6 (stable)',
+        'v0.0.5': 'v0.0.5',
         'v0.0.4': 'v0.0.4',
         'v0.0.3': 'v0.0.3',
         'v0.0.2': 'v0.0.2',

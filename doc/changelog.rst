@@ -25,20 +25,22 @@ This will return a RegressionResults type that contains all relevant information
 All previous functionality still exists with this new type,
 but is now accessible as more succinct methods that handle the relevant information,
 this results in less arguments being passed around by the user.
-To access the previous glm_to_tidy(results) functionality use the new results.to_dataframe().
-To access the previous plot_glm_topo(results) functionality use the new results.plot_topo().
-A full list of replacement methods is provided below
+For example, to access the previous glm_to_tidy(results) functionality use the new results.to_dataframe().
+A full list of replacement methods is provided below.
 
 Enhancements
 
-* Add method RegressionResults.compute_contrast which replaces compute_contrast.
-* Add method RegressionResults.plot_glm_topo which replaces plot_topo.
-* Add method RegressionResults.to_dataframe which replaces glm_to_tidy.
-* Add method RegressionResults.to_dataframe_region_of_interest which replaces glm_region_of_interest.
-* Add new method RegressionResults.scatter which illustrates the GLM results as a scatter plot.
-* Add new method RegressionResults.surface_projection which illustrates the GLM results as a surface projection.
+* Add method :meth:`mne_nirs.statistics.RegressionResults.compute_contrast` which replaces compute_contrast.
+* Add method :meth:`mne_nirs.statistics.RegressionResults.plot_glm_topo` which replaces plot_topo.
+* Add method :meth:`mne_nirs.statistics.RegressionResults.to_dataframe` which replaces glm_to_tidy.
+* Add method :meth:`mne_nirs.statistics.RegressionResults.to_dataframe_region_of_interest` which replaces glm_region_of_interest.
+* Add new method :meth:`mne_nirs.statistics.RegressionResults.scatter` which illustrates the GLM results as a scatter plot.
+* Add new method :meth:`mne_nirs.statistics.RegressionResults.surface_projection` which illustrates the GLM results as a surface projection.
 
 
+Infrastructure
+
+* Change the git repository to use `main`, rather than `master` branch.
 
 
 v0.0.6
