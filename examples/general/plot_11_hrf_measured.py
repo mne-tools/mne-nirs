@@ -92,8 +92,7 @@ raw_intensity.resample(0.7)
 raw_intensity.annotations.rename({'1.0': 'Control',
                                   '2.0': 'Tapping/Left',
                                   '3.0': 'Tapping/Right'})
-raw_intensity.annotations.delete(
-    np.where([d == '15.0' for d in raw_intensity.annotations.description]))
+raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
 raw_intensity.annotations.set_durations(5)
 
 
@@ -133,10 +132,8 @@ raw_haemo = get_long_channels(raw_haemo)
 # We observe that the order of conditions was randomised and the time between
 # events is also randomised.
 
-events, _ = mne.events_from_annotations(raw_haemo, verbose=False)
-event_dict = {'Control': 1, 'Tapping/Left': 2, 'Tapping/Right': 3}
-mne.viz.plot_events(events, event_id=event_dict,
-                    sfreq=raw_haemo.info['sfreq'])
+events, event_dict = mne.events_from_annotations(raw_haemo, verbose=False)
+mne.viz.plot_events(events, event_id=event_dict, sfreq=raw_haemo.info['sfreq'])
 
 
 ###############################################################################
@@ -252,29 +249,29 @@ glm_est = run_glm(data_subset, design_matrix)
 ###############################################################################
 #
 # This returns a GLM regression estimate for each channel.
-# This data is stored in a dedicated type, which can be addressed as with other
-# MNE types, using the `pick` function.
-# You can view an overview of the estimates as:
+# This data is stored in a dedicated type.
+# You can view an overview of the estimates by addressing the variable:
 
 glm_est
 
 
 ###############################################################################
 #
-# Or you can view the estimate for a single channel by indexing it by name.
 # Underlying the data for each channel is a standard
 # `Nilearn RegressionResults object <https://nilearn.github.io/modules/generated/nilearn.glm.RegressionResults.html>`_
 # object. These objects are rich with information that can be requested
 # from the object, for example to determine the mean square error of the
-# estimates for two channels you would call
+# estimates for two channels you would call:
 
 glm_est.MSE()
 
-
 ###############################################################################
 #
-# Or to query the mean square error of a single channel you would call.
-# Note that as we wish to retain both channels for the analysis below,
+# Or you can view the estimate for a single channel by indexing it by name.
+# As with other MNE types you can use the `pick` function.
+# To query the mean square error of a single channel you would call.
+#
+# Note: that as we wish to retain both channels for furhter the analysis below,
 # we operate on a copy to demonstrate this channel picking functionality.
 
 glm_est.copy().pick('S1_D1 hbr').MSE()
@@ -340,18 +337,15 @@ glm_est.plot_topo(conditions=['Tapping/Left', 'Tapping/Right'])
 # apparent that the data does not indicate that activity spreads across
 # the center of the head.
 
-fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 6),
-                         gridspec_kw=dict(width_ratios=[0.92, 1]))
+fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 6), gridspec_kw=dict(width_ratios=[0.92, 1]))
 
 glm_hbo = glm_est.copy().pick(picks="hbo")
 conditions = ['Tapping/Right']
 
 glm_hbo.plot_topo(axes=axes[0], colorbar=False, conditions=conditions)
 
-glm_hbo.copy().pick(picks=range(10)).plot_topo(conditions=conditions,
-    axes=axes[1], colorbar=False, vmin=-16, vmax=16)
-glm_hbo.copy().pick(picks=range(10, 20)).plot_topo(conditions=conditions,
-    axes=axes[1], colorbar=False, vmin=-16, vmax=16)
+glm_hbo.copy().pick(picks=range(10)).plot_topo(conditions=conditions, axes=axes[1], colorbar=False, vmin=-16, vmax=16)
+glm_hbo.copy().pick(picks=range(10, 20)).plot_topo(conditions=conditions, axes=axes[1], colorbar=False, vmin=-16, vmax=16)
 
 axes[0].set_title("Smoothed across hemispheres")
 axes[1].set_title("Hemispheres plotted independently")
@@ -362,8 +356,7 @@ axes[1].set_title("Hemispheres plotted independently")
 # Another way to view the data is to project the GLM estimates to the nearest
 # cortical surface
 
-glm_est.copy().surface_projection(condition="Tapping/Right",
-                                  view="dorsal", chroma="hbo")
+glm_est.copy().surface_projection(condition="Tapping/Right", view="dorsal", chroma="hbo")
 
 
 ###############################################################################
