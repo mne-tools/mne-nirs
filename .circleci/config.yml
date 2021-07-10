@@ -96,12 +96,12 @@ jobs:
                python -c "import mne; level = mne.get_config('MNE_LOGGING_LEVEL'); assert level.lower() == 'info', repr(level)"
 
         - run:
-            name: Only build this branch and not master
+            name: Only build this branch and not main
             command: |
               git reset --hard "$CIRCLE_SHA1"
               git checkout -q -B "$CIRCLE_BRANCH"
               git reset --hard "$CIRCLE_SHA1"
-              git branch -D master
+              git branch -D main
 
         # Build docs
         - run:
@@ -135,4 +135,4 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
