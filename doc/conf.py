@@ -21,6 +21,7 @@ import os
 from sphinx_gallery.sorting import FileNameSortKey
 
 sys.path.append("../")
+import mne
 from mne_nirs import __version__  # noqa: E402
 from mne.tests.test_docstring_parameters import error_ignores
 
