@@ -60,7 +60,7 @@ def plot_glm_topo(inst, glm_estimates, design_matrix,
         and hbr (bottom row).
     """
     warn('"plot_glm_topo" has been deprecated in favor of the more '
-         'comprehensive GLM class and will be removed in 0.2.0.'
+         'comprehensive GLM class and will be removed in v1.0.0. '
          'Use the RegressionResults class "plot_topo()" method instead.',
          DeprecationWarning)
     return _plot_glm_topo(inst, glm_estimates, design_matrix,
@@ -175,7 +175,7 @@ def plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None):
         and hbr (bottom row).
     """
     warn('"plot_glm_contrast_topo" has been deprecated in favor of the more '
-         'comprehensive GLM class and will be removed in 0.2.0.'
+         'comprehensive GLM class and will be removed in v1.0.0. '
          'Use the ContrastResults class "plot_topo()" method instead.',
          DeprecationWarning)
     return _plot_glm_contrast_topo(inst, contrast, figsize=figsize,

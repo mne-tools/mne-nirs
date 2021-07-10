@@ -7,7 +7,7 @@ import numpy as np
 from mne.utils import warn
 
 
-def glm_region_of_interest(glm, group_by,
+def glm_region_of_interest(glm, group_by, cond_idx,
                            cond_name, weighted=True):
     """
     Calculate statistics for region of interest.
@@ -27,6 +27,8 @@ def glm_region_of_interest(glm, group_by,
         Note that within a dict entry all channels must have the same type.
     cond_name : str
         Name to be used for condition.
+    cond_idx : int
+        Index of condition of interest.
     weighted : Bool
         Should channels be weighted by inverse of standard error (True).
 
@@ -36,14 +38,13 @@ def glm_region_of_interest(glm, group_by,
         Statistics for each ROI.
     """
     warn('"glm_region_of_interest" has been deprecated in favor of the more '
-         'comprehensive GLM class and will be removed in 0.2.0.'
+         'comprehensive GLM class and will be removed in v1.0.0. '
          'Use the RegressionResults class "region_of_interest_dataframe()" '
          'method instead.',
          DeprecationWarning)
 
-    cond_idx = np.where([c == cond_name for c in glm.design.columns])[0]
-    return _glm_region_of_interest(glm.data, group_by, cond_idx, cond_name,
-                                   weighted=weighted)
+    return _glm_region_of_interest(glm, group_by,
+                                   cond_idx, cond_name, weighted=weighted)
 
 
 def _glm_region_of_interest(stats, group_by, cond_idx,

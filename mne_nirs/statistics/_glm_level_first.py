@@ -524,7 +524,7 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=0,
         RegressionResults instances corresponding to the voxels.
     """
     warn('"run_GLM" has been deprecated in favor of the more '
-         'comprehensive run_glm function, and will be removed in 0.2.0.'
+         'comprehensive run_glm function, and will be removed in v1.0.0. '
          'See the changelog for further details.',
          DeprecationWarning)
     res = run_glm(raw, design_matrix, noise_model=noise_model, bins=bins,
@@ -610,7 +610,7 @@ def compute_contrast(glm_est, contrast, contrast_type=None):
         Yields the statistics of the contrast (effects, variance, p-values).
     """
     warn('"compute_contrast" has been deprecated in favor of the more '
-         'comprehensive GLM class and will be removed in 0.2.0.'
+         'comprehensive GLM class and will be removed in v1.0.0. '
          'Use the ResultsGLM class "compute_contrast()" method instead.',
          DeprecationWarning)
     return _compute_contrast(glm_est, contrast, contrast_type=contrast_type)
