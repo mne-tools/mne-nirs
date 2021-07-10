@@ -24,7 +24,7 @@ def test_run_GLM():
                                                    drift_model='polynomial')
     glm_estimates = run_glm(raw, design_matrix)
 
-    # Test backwards compatability
+    # Test backwards compatibility
     old_res = run_GLM(raw, design_matrix)
     assert old_res.keys() == glm_estimates.data.keys()
     assert (old_res["Simulated"].theta ==
