@@ -254,6 +254,15 @@ glm_est = run_glm(data_subset, design_matrix)
 
 glm_est
 
+###############################################################################
+#
+# As with other MNE types you can use the `pick` function.
+# To query the mean square error of a single channel you would call.
+#
+# Note: as we wish to retain both channels for further the analysis below,
+# we operate on a copy to demonstrate this channel picking functionality.
+
+glm_est.copy().pick('S1_D1 hbr')
 
 ###############################################################################
 #
@@ -267,19 +276,16 @@ glm_est.MSE()
 
 ###############################################################################
 #
-# Or you can view the estimate for a single channel by indexing it by name.
-# As with other MNE types you can use the `pick` function.
-# To query the mean square error of a single channel you would call.
-#
-# Note: that as we wish to retain both channels for further the analysis below,
-# we operate on a copy to demonstrate this channel picking functionality.
+# And we can chain the methods to quickly access required details.
+# For example, to determine the MSE for channel `S1` `D1` for the hbr type
+# you would call:
 
 glm_est.copy().pick('S1_D1 hbr').MSE()
 
 
 ###############################################################################
 #
-# Due to the richness of the object we provide a function to
+# Due to the richness of the objects we provide a function to
 # extract commonly used information and put it in a convenient dataframe/table.
 # Below this is demonstrated and then we just display the first 9 rows of the
 # table which correspond to the 9 components of the design matrix for the
