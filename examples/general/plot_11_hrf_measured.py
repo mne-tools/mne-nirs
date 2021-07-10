@@ -271,7 +271,7 @@ glm_est.MSE()
 # As with other MNE types you can use the `pick` function.
 # To query the mean square error of a single channel you would call.
 #
-# Note: that as we wish to retain both channels for furhter the analysis below,
+# Note: that as we wish to retain both channels for further the analysis below,
 # we operate on a copy to demonstrate this channel picking functionality.
 
 glm_est.copy().pick('S1_D1 hbr').MSE()
