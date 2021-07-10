@@ -4,6 +4,55 @@
 API
 ###
 
+This page describes the application programming interface of MNE-NIRS.
+The functions and classes of this package are described below.
+The description of each interface will include links to the examples
+relevant to that code.
+
+This library extends the fNIRS functionality available within
+`MNE-Python <https://mne.tools/dev>`_.
+As such, when using this package you are likely to use functions from both
+MNE-Python and MNE-NIRS.
+
+
+MNE-Python: Input/Output
+------------------------
+
+.. currentmodule:: mne.io
+
+.. automodule:: mne.io
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
+   read_raw_hitachi
+   read_raw_nirx
+   read_raw_snirf
+   read_raw_boxy
+
+
+MNE-Python: Preprocessing
+-------------------------
+
+.. currentmodule:: mne.preprocessing.nirs
+
+.. automodule:: mne.preprocessing.nirs
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
+   optical_density
+   beer_lambert_law
+   source_detector_distances
+   short_channels
+   scalp_coupling_index
+   temporal_derivative_distribution_repair
+
+
 .. currentmodule:: mne_nirs
 
 .. toctree::
