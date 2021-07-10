@@ -6,7 +6,7 @@
        Remove the stable tag from previous version and add this version as `'v0.0.X': 'v0.0.X (stable)',`
 1. Push change and wait for PR checks to go green.
 1. Merge PR and wait for checks to go green.
-1. Clone master branch locally. `git clone git@github.com:mne-tools/mne-nirs.git`
+1. Clone main branch locally. `git clone git@github.com:mne-tools/mne-nirs.git`
 3. Create release locally by
    1. `pip install twine`
    1. `rm -rf dist`
