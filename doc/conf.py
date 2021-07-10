@@ -51,6 +51,7 @@ extensions = [
     'sphinx_gallery.gen_gallery',
     'sphinx_bootstrap_divs',
     'numpydoc',
+    'sphinxcontrib.bibtex',
 ]
 
 smv_branch_whitelist = r'^(?!refs/heads/).*$'
@@ -113,6 +114,12 @@ numpydoc_validation_exclude = {  # set of regex
     # copied from sklearn
     r'mne\.utils\.deprecated',
 }
+
+
+# sphinxcontrib-bibtex
+bibtex_bibfiles = ['./references.bib']
+bibtex_style = 'unsrt'
+bibtex_footbibliography_header = ''
 
 
 # -- Options for HTML output ----------------------------------------------
