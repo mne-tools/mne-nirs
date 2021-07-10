@@ -6,7 +6,7 @@ API
 
 This page describes the application programming interface of MNE-NIRS.
 The functions and classes of this package are described below.
-The description of each interface will include links to the examples
+The description of each interface includes links to the examples
 relevant to that code.
 
 This library extends the fNIRS functionality available within
@@ -15,6 +15,10 @@ When analysing fNIRS data with these tools you are likely to use functions
 from both MNE-Python and MNE-NIRS.
 As such, documentation is provided below for relevant functions and classes
 from both packages.
+General neuroimaging functionality provided by MNE-Python such as filtering,
+epoching, visualisation, etc is not included here and can be found in the
+`MNE-Python API page <https://mne.tools/dev/python_reference.html>`_.
+
 
 .. currentmodule:: mne_nirs
 
@@ -55,7 +59,6 @@ MNE-NIRS
    :toctree: generated/
 
    write_raw_snirf
-
 
 
 Preprocessing
