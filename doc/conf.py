@@ -26,7 +26,6 @@ from mne_nirs import __version__  # noqa: E402
 from mne.tests.test_docstring_parameters import error_ignores
 
 
-
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -65,6 +64,7 @@ templates_path = ['_templates']
 
 # generate autosummary even if no references.
 autosummary_generate = True
+autodoc_default_options = {'inherited-members': None}
 
 # The suffix of source filenames.
 source_suffix = '.rst'

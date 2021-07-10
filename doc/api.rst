@@ -118,7 +118,6 @@ Data quality evaluation.
    scalp_coupling_index_windowed
 
 
-
 Experimental Design
 -------------------
 
@@ -135,9 +134,13 @@ Experimental Design
    create_boxcar
 
 
-
 Statistics
 ----------
+
+First level analysis
+^^^^^^^^^^^^^^^^^^^^
+
+Individual (first) level analysis functions.
 
 .. currentmodule:: mne_nirs.statistics
 
@@ -148,9 +151,40 @@ Statistics
 .. autosummary::
    :toctree: generated/
 
-   run_GLM
-   compute_contrast
-   glm_region_of_interest
+   run_glm
+
+
+Individual (first) level result classes.
+
+.. currentmodule:: mne_nirs.statistics
+
+.. automodule:: mne_nirs.statistics
+   :no-members:
+   :no-inherited-members:
+   :noindex:
+
+.. autosummary::
+   :toctree: generated/
+
+   RegressionResults
+   ContrastResults
+
+
+Second level analysis
+^^^^^^^^^^^^^^^^^^^^^
+
+Group (second) level analysis functions.
+
+.. currentmodule:: mne_nirs.statistics
+
+.. automodule:: mne_nirs.statistics
+   :no-members:
+   :no-inherited-members:
+   :noindex:
+
+.. autosummary::
+   :toctree: generated/
+
    statsmodels_to_results
 
 
@@ -253,6 +287,3 @@ General helper functions.
    :toctree: generated/
 
    glm_to_tidy
-
-
-

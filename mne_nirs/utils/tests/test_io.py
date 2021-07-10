@@ -11,7 +11,7 @@ import numpy as np
 
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
-from mne_nirs.statistics import run_GLM
+from mne_nirs.statistics import run_glm
 
 
 @pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
@@ -30,8 +30,8 @@ def test_io():
                                                    stim_dur=5.0,
                                                    drift_order=3,
                                                    drift_model='polynomial')
-    glm_est = run_GLM(raw_haemo, design_matrix)
-    df = glm_to_tidy(raw_haemo, glm_est, design_matrix)
+    glm_est = run_glm(raw_haemo, design_matrix)
+    df = glm_to_tidy(raw_haemo, glm_est.data, design_matrix)
     assert df.shape == (48, 12)
     assert set(df.columns) == {'ch_name', 'Condition', 'df', 'mse', 'p_value',
                                't', 'theta', 'Source', 'Detector', 'Chroma',
@@ -54,14 +54,14 @@ def test_io():
                         for i, column in enumerate(design_matrix.columns)])
     contrast_LvR = basic_conts['2.0'] - basic_conts['3.0']
 
-    contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
+    contrast = mne_nirs.statistics.compute_contrast(glm_est.data, contrast_LvR)
     df = glm_to_tidy(raw_haemo, contrast, design_matrix)
     assert df.shape == (6, 10)
     assert set(df.columns) == {'ch_name', 'ContrastType', 'z_score', 'stat',
                                'p_value', 'effect', 'Source', 'Detector',
                                'Chroma', 'Significant'}
 
-    contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR,
+    contrast = mne_nirs.statistics.compute_contrast(glm_est.data, contrast_LvR,
                                                     contrast_type='F')
     df = glm_to_tidy(raw_haemo, contrast, design_matrix, wide=False)
     df = _tidy_long_to_wide(df)

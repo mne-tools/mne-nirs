@@ -1,8 +1,54 @@
+# Authors: Robert Luke <mail@robertluke.net>
+#
+# License: BSD (3-clause)
+
 import numpy as np
 
+from mne.utils import warn
 
-def glm_region_of_interest(stats, group_by, cond_idx,
+
+def glm_region_of_interest(glm, group_by, cond_idx,
                            cond_name, weighted=True):
+    """
+    Calculate statistics for region of interest.
+
+    Parameters
+    ----------
+    glm : dict
+        Need to write.
+    group_by : dict
+        Specifies which channels are aggregated into a single ROI.
+        The dict key will be used as the ROI label and the dict
+        values must be lists of picks (either channel names or integer indices
+        of ``epochs.ch_names``). For example::
+
+            group_by=dict(Left_ROI=[1, 2, 3, 4], Right_ROI=[5, 6, 7, 8])
+
+        Note that within a dict entry all channels must have the same type.
+    cond_name : str
+        Name to be used for condition.
+    cond_idx : int
+        Index of condition of interest.
+    weighted : Bool
+        Should channels be weighted by inverse of standard error (True).
+
+    Returns
+    -------
+    stats : DataFrame
+        Statistics for each ROI.
+    """
+    warn('"glm_region_of_interest" has been deprecated in favor of the more '
+         'comprehensive GLM class and will be removed in v1.0.0. '
+         'Use the RegressionResults class "region_of_interest_dataframe()" '
+         'method instead.',
+         DeprecationWarning)
+
+    return _glm_region_of_interest(glm, group_by,
+                                   cond_idx, cond_name, weighted=weighted)
+
+
+def _glm_region_of_interest(stats, group_by, cond_idx,
+                            cond_name, weighted=True):
     """
     Calculate statistics for region of interest.
 
