@@ -190,9 +190,9 @@ View the class documentation above for a detailed list of methods.
    RegressionResults.surface_projection
    RegressionResults.scatter
    
-   ContrastResults.scatter
-   ContrastResults.plot_topo
    ContrastResults.to_dataframe
+   ContrastResults.plot_topo
+   ContrastResults.scatter
 
 
 Second level analysis
