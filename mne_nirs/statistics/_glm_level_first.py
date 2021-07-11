@@ -297,7 +297,7 @@ class RegressionResults(_BaseGLM):
 
     def to_dataframe_region_of_interest(self, group_by, condition,
                                         weighted=True):
-        """Calculate region of interest results and return as a dataframe.
+        """Region of interest results as a dataframe.
 
         Parameters
         ----------
