@@ -180,6 +180,7 @@ View the class documentation above for a detailed list of methods.
    :noindex:
 
 .. autosummary::
+   :noindex:
    :toctree: generated/
 
    RegressionResults.compute_contrast
@@ -295,20 +296,3 @@ Functions to help with handling channel information.
    get_short_channels
    get_long_channels
    picks_pair_to_idx
-
-
-Utilities
----------
-
-General helper functions.
-
-.. currentmodule:: mne_nirs.utils
-
-.. automodule:: mne_nirs.utils
-   :no-members:
-   :no-inherited-members:
-
-.. autosummary::
-   :toctree: generated/
-
-   glm_to_tidy
