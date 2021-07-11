@@ -180,7 +180,6 @@ View the class documentation above for a detailed list of methods.
    :noindex:
 
 .. autosummary::
-   :noindex:
    :toctree: generated/
 
    RegressionResults.compute_contrast
