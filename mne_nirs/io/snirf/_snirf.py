@@ -288,7 +288,7 @@ def _match_channel_pattern(channel_name):
     rgx = r"^S(?P<source>\d+)_D(?P<detector>\d+) (?P<wavelength>\d+)$"
     match = re.fullmatch(rgx, channel_name)
     if match is None:
-        msg = f'channel name does not match expected pattern: {channel_name}'
+        msg = f"channel name does not match expected pattern: {channel_name}"
         raise ValueError(msg)
     return match
 
