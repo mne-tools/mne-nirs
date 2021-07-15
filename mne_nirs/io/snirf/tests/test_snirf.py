@@ -59,10 +59,10 @@ def test_snirf_write(fname, tmpdir):
             diffs += f'\n{line}'
     assert diffs == ''
 
-    verify_against_snirf_file_format_spec(test_file)
+    _verify_snirf_required_fields(test_file)
 
 
-def verify_against_snirf_file_format_spec(test_file):
+def _verify_snirf_required_fields(test_file):
     """Tests that all required fields are present.
 
     Uses Draft 3 of version 1.0 of the spec:
