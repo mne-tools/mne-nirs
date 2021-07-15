@@ -128,9 +128,9 @@ def _add_measurement_lists(raw, data_block):
     data_block : hpy5.Group
         The hdf5 data1 group to which the measurement lists should be added.
     """
-    sources = _get_source_list(raw)
-    detectors = _get_detector_list(raw)
-    wavelengths = _get_wavelength_list(raw)
+    sources = _get_unique_source_list(raw)
+    detectors = _get_unique_detector_list(raw)
+    wavelengths = _get_unique_wavelength_list(raw)
 
     for idx, ch_name in enumerate(raw.ch_names, start=1):
         ml_id = f"measurementList{idx}"
@@ -158,9 +158,9 @@ def _add_probe_info(raw, nirs):
     nirs : hpy5.Group
         The root hdf5 nirs group to which the probe info should be added.
     """
-    sources = _get_source_list(raw)
-    detectors = _get_detector_list(raw)
-    wavelengths = _get_wavelength_list(raw)
+    sources = _get_unique_source_list(raw)
+    detectors = _get_unique_detector_list(raw)
+    wavelengths = _get_unique_wavelength_list(raw)
 
     probe = nirs.create_group("probe")
 
@@ -177,10 +177,10 @@ def _add_probe_info(raw, nirs):
     srclocs = np.empty((len(sources), 3))
     detlocs = np.empty((len(detectors), 3))
     for i, src in enumerate(sources):
-        idx = ch_sources.index(float(src))
+        idx = ch_sources.index(src)
         srclocs[i, :] = raw.info["chs"][idx]["loc"][3:6]
     for i, det in enumerate(detectors):
-        idx = ch_detectors.index(float(det))
+        idx = ch_detectors.index(det)
         detlocs[i, :] = raw.info["chs"][idx]["loc"][6:9]
     probe.create_dataset("sourcePos3D", data=srclocs)
     probe.create_dataset("detectorPos3D", data=detlocs)
@@ -226,45 +226,107 @@ def _add_stim_info(raw, nirs):
         The root hdf5 nirs group to which the stimuli info should be added.
     """
     # Convert MNE annotations to SNIRF stims
-    for idx, desc in enumerate(np.unique(raw.annotations.description), start=1):
+    descriptions = np.unique(raw.annotations.description)
+    for idx, desc in enumerate(descriptions, start=1):
         stim_group = nirs.create_group(f"stim{idx}")
         trgs = np.where(raw.annotations.description == desc)[0]
         stims = np.zeros((len(trgs), 3))
         for idx, trg in enumerate(trgs):
             stims[idx, :] = [raw.annotations.onset[trg], 5.0,
                              raw.annotations.duration[trg]]
-        
         stim_group.create_dataset("data", data=stims)
         stim_group.create_dataset("name", data=[_str_encode(desc)])
 
 
-def _get_source_list(raw):
+def _get_unique_source_list(raw):
+    """Returns the sorted list of distinct source ids.
+
+    Parameters
+    ----------
+    raw : instance of Raw
+        Data object containing the list of channels.
+    """
     ch_sources = [_extract_source(ch_name) for ch_name in raw.ch_names]
     return list(sorted(set(ch_sources)))
 
 
-def _get_detector_list(raw):
+def _get_unique_detector_list(raw):
+    """Returns the sorted list of distinct detector ids.
+
+    Parameters
+    ----------
+    raw : instance of Raw
+        Data object containing the list of channels.
+    """
     ch_detectors = [_extract_detector(ch_name) for ch_name in raw.ch_names]
     return list(sorted(set(ch_detectors)))
 
 
-def _get_wavelength_list(raw):
+def _get_unique_wavelength_list(raw):
+    """Returns the sorted list of distinct wavelengths.
+
+    Parameters
+    ----------
+    raw : instance of Raw
+        Data object containing the list of channels.
+    """
     ch_wavelengths = [_extract_wavelength(ch_name) for ch_name in raw.ch_names]
     return list(sorted(set(ch_wavelengths)))
 
 
 def _match_channel_pattern(channel_name):
+    """Returns a regex match agains the expected channel name format.
+
+    The returned match object contains three named groups: source, detector,
+    and wavelength. If no match is found, a ValueError is raised.
+
+    Parameters
+    ----------
+    channel_name : str
+        The name of the channel.
+    """
     rgx = r"^S(?P<source>\d+)_D(?P<detector>\d+) (?P<wavelength>\d+)$"
-    return re.fullmatch(rgx, channel_name)
+    match = re.fullmatch(rgx, channel_name)
+    if match is None:
+        msg = f'channel name does not match expected pattern: {channel_name}'
+        raise ValueError(msg)
+    return match
 
 
 def _extract_source(channel_name):
+    """Extracts and returns the source id from the channel name.
+
+    The id is returned as an integer value.
+
+    Parameters
+    ----------
+    channel_name : str
+        The name of the channel.
+    """
     return int(_match_channel_pattern(channel_name).group("source"))
 
 
 def _extract_detector(channel_name):
+    """Extracts and returns the detector id from the channel name.
+
+    The id is returned as an integer value.
+
+    Parameters
+    ----------
+    channel_name : str
+        The name of the channel.
+    """
     return int(_match_channel_pattern(channel_name).group("detector"))
 
 
 def _extract_wavelength(channel_name):
+    """Extracts and returns the wavelength from the channel name.
+
+    The wavelength is returned as a float value.
+
+    Parameters
+    ----------
+    channel_name : str
+        The name of the channel.
+    """
     return float(_match_channel_pattern(channel_name).group("wavelength"))
