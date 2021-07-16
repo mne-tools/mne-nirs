@@ -46,7 +46,7 @@ def test_snirf_write(fname, tmpdir):
     # Check data is the same
     assert_allclose(raw.get_data(), raw_orig.get_data())
 
-    assert abs(raw_orig.info["meas_date"] - raw.info["meas_date"]) < \
+    assert abs(raw_orig.info['meas_date'] - raw.info['meas_date']) < \
            datetime.timedelta(seconds=1)
 
     # Check info object is the same
@@ -69,47 +69,47 @@ def _verify_snirf_required_fields(test_file):
     https://github.com/fNIRS/snirf/blob/52de9a6724ddd0c9dcd36d8d11007895fed74205/snirf_specification.md
     """
     required_metadata_fields = [
-        "SubjectID", "MeasurementDate", "MeasurementTime",
-        "LengthUnit", "TimeUnit", "FrequencyUnit"
+        'SubjectID', 'MeasurementDate', 'MeasurementTime',
+        'LengthUnit', 'TimeUnit', 'FrequencyUnit'
     ]
     required_measurement_list_fields = [
-        "sourceIndex", "detectorIndex", "wavelengthIndex",
-        "dataType", "dataTypeIndex"
+        'sourceIndex', 'detectorIndex', 'wavelengthIndex',
+        'dataType', 'dataTypeIndex'
     ]
 
-    with h5py.File(test_file, "r") as h5:
+    with h5py.File(test_file, 'r') as h5:
         # Verify required base fields
-        assert "nirs" in h5
-        assert "formatVersion" in h5
+        assert 'nirs' in h5
+        assert 'formatVersion' in h5
 
         # Verify required metadata fields
-        assert "metaDataTags" in h5["/nirs"]
-        metadata = h5["/nirs/metaDataTags"]
+        assert 'metaDataTags' in h5['/nirs']
+        metadata = h5['/nirs/metaDataTags']
         for field in required_metadata_fields:
             assert field in metadata
 
         # Verify required data fields
-        assert "data1" in h5["/nirs"]
-        data1 = h5["/nirs/data1"]
-        assert "dataTimeSeries" in data1
-        assert "time" in data1
+        assert 'data1' in h5['/nirs']
+        data1 = h5['/nirs/data1']
+        assert 'dataTimeSeries' in data1
+        assert 'time' in data1
 
         # Verify required fields for each measurementList
         measurement_lists = [k for k in data1.keys()
-                             if k.startswith("measurementList")]
+                             if k.startswith('measurementList')]
         for ml in measurement_lists:
             for field in required_measurement_list_fields:
                 assert field in data1[ml]
 
         # Verify required fields for each stimulus
-        stims = [k for k in h5["/nirs"].keys() if k.startswith("stim")]
+        stims = [k for k in h5['/nirs'].keys() if k.startswith('stim')]
         for stim in stims:
-            assert "name" in h5["/nirs"][stim]
-            assert "data" in h5["/nirs"][stim]
+            assert 'name' in h5['/nirs'][stim]
+            assert 'data' in h5['/nirs'][stim]
 
         # Verify probe fields
-        assert "probe" in h5["/nirs"]
-        probe = h5["/nirs/probe"]
-        assert "wavelengths" in probe
-        assert "sourcePos3D" in probe or "sourcePos2D" in probe
-        assert "detectorPos3D" in probe or "detectorPos2D" in probe
+        assert 'probe' in h5['/nirs']
+        probe = h5['/nirs/probe']
+        assert 'wavelengths' in probe
+        assert 'sourcePos3D' in probe or 'sourcePos2D' in probe
+        assert 'detectorPos3D' in probe or 'detectorPos2D' in probe
