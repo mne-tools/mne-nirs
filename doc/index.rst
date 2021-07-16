@@ -69,7 +69,7 @@ so this approach is best used for quickly exploring the capabilities of MNE-NIRS
 Alternatively, if you wish to run code locally on your own computer with your own data, you can run a 
 `docker instance locally <https://docs.docker.com/get-docker/>`_
 using the 
-`MNE-NIRS-docker <https://github.com/mne-tools/mne-docker>`_ image.
+`MNE-NIRS-docker <https://github.com/rob-luke/mne-nirs-docker>`_ image.
 See the web page for detailed instructions.
 Using docker provides a notebook server running on your own computer, 
 it comes pre-prepared with MNE-Python, MNE-NIRS, and other useful packages installed.
