@@ -63,7 +63,7 @@ Clicking these binder links will spin up an online server instance for you to us
 This will allow you to edit and run code, upload data, visualise results, etc, 
 without needing to download and install anything on your computer.
 However, as this is a free cloud server the computation may be slower, 
-and data on these cloud binder instances will reguarly be reset,
+and data on these cloud binder instances will regularly be reset,
 so this approach is best used for quickly exploring the capabilities of MNE-NIRS. 
 
 Alternatively, if you wish to run code locally on your own computer with your own data, you can run a 
