@@ -275,7 +275,7 @@ def _get_unique_wavelength_list(raw):
 
 
 def _match_channel_pattern(channel_name):
-    """Returns a regex match agains the expected channel name format.
+    """Returns a regex match against the expected channel name format.
 
     The returned match object contains three named groups: source, detector,
     and wavelength. If no match is found, a ValueError is raised.
