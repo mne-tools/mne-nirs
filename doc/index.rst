@@ -10,31 +10,6 @@ MNE-NIRS
 This is a library to assist with processing near-infrared spectroscopy data with MNE.
 
 
-Installation
-------------
-
-To install python and MNE follow `these instructions <https://mne.tools/dev/install/mne_python.html>`_.
-
-Run the following code to install MNE-NIRS.
-
-.. code:: bash
-
-    >>> pip install mne-nirs
-
-
-To load MNE-NIRS add these lines to your script.
-
-.. code:: python
-
-    >>> import mne
-    >>> import mne_nirs
-
-Alternatively, if you just wish to try out the software, you can use the Binder link at the bottom of each example page.
-Clicking these binder links will spin up an online server instance for you to use.
-This will allow you to edit and run code, upload data, visualise results, etc, 
-without needing to download and install anything on your computer.
-
-
 Usage
 -----
 
@@ -55,6 +30,51 @@ MNE-NIRS and MNE-Python provide a wide variety of tools to use when processing N
 * Data cleaning functions including popular short channel techniques and negative correlation enhancement.
 * Group level analysis using (robust) linear mixed effects models and waveform averaging.
 * And much more! Check out the documentation examples and the API for more details.
+
+
+Installation
+------------
+
+To install python and MNE follow `these instructions <https://mne.tools/dev/install/mne_python.html>`_.
+
+Run the following code to install MNE-NIRS.
+
+.. code:: bash
+
+    >>> pip install mne-nirs
+
+
+To load MNE-NIRS add these lines to your script.
+
+.. code:: python
+
+    >>> import mne
+    >>> import mne_nirs
+
+
+Alternative installation options
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you wish to try using MNE-NIRS without installing a python environment on your computer,
+there are two options available.
+
+If you wish to run the examples using a cloud server, you can use the binder links located at the bottom of each example.
+Clicking these binder links will spin up an online server instance for you to use.
+This will allow you to edit and run code, upload data, visualise results, etc, 
+without needing to download and install anything on your computer.
+However, as this is a free cloud server the computation may be slower, 
+and data on these cloud binder instances will reguarly be reset,
+so this approach is best used for quickly exploring the capabilities of MNE-NIRS. 
+
+Alternatively, if you wish to run code locally on your own computer with your own data, you can run a 
+`docker instance locally <https://docs.docker.com/get-docker/>`_
+using the 
+`MNE-NIRS-docker <https://github.com/mne-tools/mne-docker>`_ image.
+See the web page for detailed instructions.
+Using docker provides a notebook server running on your own computer, 
+it comes pre-prepared with MNE-Python, MNE-NIRS, and other useful packages installed.
+This approach gets you up and running with a single command, and provides
+the greatest flexibility without installing python.
 
 
 Acknowledgements
