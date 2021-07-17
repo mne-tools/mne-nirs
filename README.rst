@@ -21,7 +21,7 @@ MNE-NIRS: Near-Infrared Spectroscopy Analysis
 
 **MNE-NIRS** is an `MNE-Python <https://mne.tools>`_ compatible near-infrared spectroscopy processing package. 
 
-MNE-Python provides support for a subset of fNIRS waveform analysis, this package extends that functionality and adds additional GLM style analysis, helper functions, algorithms, data quality metrics, and plotting.
+MNE-Python provides support for fNIRS analysis, this package extends that functionality and adds additional GLM style analysis, helper functions, algorithms, data quality metrics, plotting, and additional file format support.
 
 
 Documentation
