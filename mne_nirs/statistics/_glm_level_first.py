@@ -339,7 +339,8 @@ class RegressionResults(_BaseGLM):
             tidy['age'] = float(self.info["subject_info"]['age'])
             if self.info["subject_info"]['sex'] == FIFF.FIFFV_SUBJ_SEX_MALE:
                 sex = "male"
-            elif self.info["subject_info"]['sex'] == FIFF.FIFFV_SUBJ_SEX_FEMALE:
+            elif self.info["subject_info"]['sex'] == \
+                    FIFF.FIFFV_SUBJ_SEX_FEMALE:
                 sex = "female"
             else:
                 sex = "unknown"
