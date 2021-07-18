@@ -167,7 +167,9 @@ def individual_analysis(bids_path, ID):
     cha = glm_est.to_dataframe()
 
     # Compute region of interest results from channel data
-    roi = glm_est.to_dataframe_region_of_interest(groups, design_matrix.columns)
+    roi = glm_est.to_dataframe_region_of_interest(groups,
+                                                  design_matrix.columns,
+                                                  demographic_info=True)
 
     # Define left vs right tapping contrast
     contrast_matrix = np.eye(design_matrix.shape[1])
@@ -280,6 +282,27 @@ roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
                         grp_results, groups=grp_results["ID"]).fit(method='nm')
 roi_model.summary()
 
+
+###############################################################################
+# Second level analysis with covariates
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#
+# It is simple to extend these models to include covariates.
+# This dataset is small, so including additional factors may not be
+# appropriate. However, for instructional purpose, we will include a
+# covariate of age. Also, for instructional purpose, this example demonstrate
+# how to only analyse the hbo results in the right hemisphere.
+#
+# From the model result we observe that there is no effect of gender in the
+# oxyhaemoglobin responses in the right hemisphere.
+
+grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
+grp_results = grp_results.query("Chroma in ['hbo']")
+grp_results = grp_results.query("ROI in ['Right_Hemisphere']")
+
+roi_model = smf.mixedlm("theta ~ Condition + sex",
+                        grp_results, groups=grp_results["ID"]).fit(method='nm')
+roi_model.summary()
 
 ###############################################################################
 # Visualise group results
