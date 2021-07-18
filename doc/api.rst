@@ -118,7 +118,6 @@ Data quality evaluation.
    scalp_coupling_index_windowed
 
 
-
 Experimental Design
 -------------------
 
@@ -135,9 +134,13 @@ Experimental Design
    create_boxcar
 
 
-
 Statistics
 ----------
+
+First level analysis
+^^^^^^^^^^^^^^^^^^^^
+
+Individual (first) level analysis functions.
 
 .. currentmodule:: mne_nirs.statistics
 
@@ -148,9 +151,65 @@ Statistics
 .. autosummary::
    :toctree: generated/
 
-   run_GLM
-   compute_contrast
-   glm_region_of_interest
+   run_glm
+
+
+Individual (first) level result classes.
+
+.. currentmodule:: mne_nirs.statistics
+
+.. automodule:: mne_nirs.statistics
+   :no-members:
+   :no-inherited-members:
+   :noindex:
+
+.. autosummary::
+   :toctree: generated/
+
+   RegressionResults
+   ContrastResults
+   
+Individual (first) level result class methods.
+View the class documentation above for a detailed list of methods.
+
+.. currentmodule:: mne_nirs.statistics
+
+.. automodule:: mne_nirs.statistics
+   :no-members:
+   :no-inherited-members:
+   :noindex:
+
+.. autosummary::
+   :toctree: generated/
+
+   RegressionResults.compute_contrast
+   RegressionResults.to_dataframe
+   RegressionResults.to_dataframe_region_of_interest
+   RegressionResults.scatter
+   RegressionResults.plot_topo
+   RegressionResults.surface_projection
+   RegressionResults.scatter
+   
+   ContrastResults.to_dataframe
+   ContrastResults.plot_topo
+   ContrastResults.scatter
+
+
+Second level analysis
+^^^^^^^^^^^^^^^^^^^^^
+
+Group (second) level analysis functions.
+
+.. currentmodule:: mne_nirs.statistics
+
+.. automodule:: mne_nirs.statistics
+   :no-members:
+   :no-inherited-members:
+   :noindex:
+
+.. autosummary::
+   :toctree: generated/
+
    statsmodels_to_results
 
 
@@ -236,23 +295,3 @@ Functions to help with handling channel information.
    get_short_channels
    get_long_channels
    picks_pair_to_idx
-
-
-Utilities
----------
-
-General helper functions.
-
-.. currentmodule:: mne_nirs.utils
-
-.. automodule:: mne_nirs.utils
-   :no-members:
-   :no-inherited-members:
-
-.. autosummary::
-   :toctree: generated/
-
-   glm_to_tidy
-
-
-

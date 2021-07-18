@@ -10,7 +10,7 @@ from mne.utils import (requires_pysurfer, traits_test, requires_mayavi)
 from mne_nirs.experimental_design.tests.test_experimental_design import \
     _load_dataset
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import run_GLM
+from mne_nirs.statistics import run_glm
 from mne_nirs.visualisation import plot_glm_topo, plot_glm_surface_projection
 from mne_nirs.utils import glm_to_tidy
 
@@ -74,44 +74,44 @@ def test_run_plot_GLM_topo():
                                                    drift_model='polynomial')
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
-    glm_estimates = run_GLM(raw_haemo, design_matrix)
-    fig = plot_glm_topo(raw_haemo, glm_estimates, design_matrix)
+    glm_estimates = run_glm(raw_haemo, design_matrix)
+    fig = plot_glm_topo(raw_haemo, glm_estimates.data, design_matrix)
     # 5 conditions (A,B,C,Drift,Constant) * two chroma + 2xcolorbar
     assert len(fig.axes) == 12
 
     # Two conditions * two chroma + 2 x colorbar
-    fig = plot_glm_topo(raw_haemo, glm_estimates, design_matrix,
+    fig = plot_glm_topo(raw_haemo, glm_estimates.data, design_matrix,
                         requested_conditions=['A', 'B'])
     assert len(fig.axes) == 6
 
     # Two conditions * one chroma + 1 x colorbar
     with pytest.warns(RuntimeWarning, match='Reducing GLM results'):
         fig = plot_glm_topo(raw_haemo.copy().pick(picks="hbo"),
-                            glm_estimates, design_matrix,
+                            glm_estimates.data, design_matrix,
                             requested_conditions=['A', 'B'])
     assert len(fig.axes) == 3
 
     # One conditions * two chroma + 2 x colorbar
-    fig = plot_glm_topo(raw_haemo, glm_estimates, design_matrix,
+    fig = plot_glm_topo(raw_haemo, glm_estimates.data, design_matrix,
                         requested_conditions=['A'])
     assert len(fig.axes) == 4
 
     # One conditions * one chroma + 1 x colorbar
     with pytest.warns(RuntimeWarning, match='Reducing GLM results'):
         fig = plot_glm_topo(raw_haemo.copy().pick(picks="hbo"),
-                            glm_estimates,
+                            glm_estimates.data,
                             design_matrix, requested_conditions=['A'])
     assert len(fig.axes) == 2
 
     # One conditions * one chroma + 0 x colorbar
     with pytest.warns(RuntimeWarning, match='Reducing GLM results'):
         fig = plot_glm_topo(raw_haemo.copy().pick(picks="hbo"),
-                            glm_estimates, design_matrix,
+                            glm_estimates.data, design_matrix,
                             colorbar=False, requested_conditions=['A'])
     assert len(fig.axes) == 1
 
     # Ensure warning thrown if glm estimates is missing channels from raw
-    glm_estimates_subset = {a: glm_estimates[a]
+    glm_estimates_subset = {a: glm_estimates.data[a]
                             for a in raw_haemo.ch_names[0:3]}
     with pytest.raises(RuntimeError, match="does not match regression"):
         plot_glm_topo(raw_haemo, glm_estimates_subset, design_matrix)
@@ -127,12 +127,12 @@ def test_run_plot_GLM_contrast_topo():
                                                    drift_model='polynomial')
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
-    glm_est = run_GLM(raw_haemo, design_matrix)
+    glm_est = run_glm(raw_haemo, design_matrix)
     contrast_matrix = np.eye(design_matrix.shape[1])
     basic_conts = dict([(column, contrast_matrix[i])
                         for i, column in enumerate(design_matrix.columns)])
     contrast_LvR = basic_conts['A'] - basic_conts['B']
-    contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
+    contrast = mne_nirs.statistics.compute_contrast(glm_est.data, contrast_LvR)
     fig = mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
     assert len(fig.axes) == 3
 
@@ -148,12 +148,12 @@ def test_run_plot_GLM_contrast_topo_single_chroma():
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
     raw_haemo = raw_haemo.pick(picks='hbo')
-    glm_est = run_GLM(raw_haemo, design_matrix)
+    glm_est = run_glm(raw_haemo, design_matrix)
     contrast_matrix = np.eye(design_matrix.shape[1])
     basic_conts = dict([(column, contrast_matrix[i])
                         for i, column in enumerate(design_matrix.columns)])
     contrast_LvR = basic_conts['A'] - basic_conts['B']
-    contrast = mne_nirs.statistics.compute_contrast(glm_est, contrast_LvR)
+    contrast = mne_nirs.statistics.compute_contrast(glm_est.data, contrast_LvR)
     fig = mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
     assert len(fig.axes) == 2
 
@@ -177,8 +177,8 @@ def test_run_plot_GLM_projection():
                                                    drift_model='polynomial')
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
-    glm_estimates = run_GLM(raw_haemo, design_matrix)
-    df = glm_to_tidy(raw_haemo, glm_estimates, design_matrix)
+    glm_estimates = run_glm(raw_haemo, design_matrix)
+    df = glm_to_tidy(raw_haemo, glm_estimates.data, design_matrix)
     df = df.query("Chroma in 'hbo'")
     df = df.query("Condition in 'A'")
 

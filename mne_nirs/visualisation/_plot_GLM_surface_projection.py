@@ -4,15 +4,16 @@
 
 import os
 import numpy as np
+from copy import deepcopy
 
-from mne import stc_near_sensors, EvokedArray, read_source_spaces
+from mne import stc_near_sensors, EvokedArray, read_source_spaces, Info
 from mne.datasets import sample
 from mne.io.constants import FIFF
 from mne import verbose
 
 
 @verbose
-def plot_glm_surface_projection(raw, statsmodel_df, picks="hbo",
+def plot_glm_surface_projection(inst, statsmodel_df, picks="hbo",
                                 value="Coef.",
                                 background='w', figure=None, clim='auto',
                                 mode='weighted', colormap='RdBu_r',
@@ -35,7 +36,7 @@ def plot_glm_surface_projection(raw, statsmodel_df, picks="hbo",
 
     Parameters
     ----------
-    raw : instance of Raw
+    inst : instance of Raw
         Haemoglobin data.
     statsmodel_df : dataframe
         As produced by produced by `statsmodels_to_results`.
@@ -85,13 +86,14 @@ def plot_glm_surface_projection(raw, statsmodel_df, picks="hbo",
     figure : instance of mne.viz.Brain | matplotlib.figure.Figure
         An instance of :class:`mne.viz.Brain` or matplotlib figure.
     """
-    if not (raw.ch_names == list(statsmodel_df['ch_name'].values)):
+    info = deepcopy(inst if isinstance(inst, Info) else inst.info)
+    if not (info.ch_names == list(statsmodel_df['ch_name'].values)):
         raise RuntimeError('MNE data structure does not match dataframe '
-                           f'results. Raw = {raw.ch_names}. '
+                           f'results.\nMNE = {info.ch_names}.\n'
                            f'GLM = {list(statsmodel_df["ch_name"].values)}')
 
     ea = EvokedArray(np.tile(statsmodel_df[value].values.T, (1, 1)).T,
-                     raw.copy().info)
+                     info.copy())
 
     # TODO: mimic behaviour of other MNE-NIRS glm plotting options
     if picks is not None:
