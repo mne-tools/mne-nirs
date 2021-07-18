@@ -37,10 +37,13 @@ Enhancements
 * Add :meth:`mne_nirs.statistics.RegressionResults.scatter` to display GLM results as a scatter plot.
 * Add :meth:`mne_nirs.statistics.RegressionResults.surface_projection` to display GLM results on a cortical surface.
 
+Documentation
+
+* Added an example of how to include second level covariates in the group level GLM tutorial. By `Robert Luke`_.
 
 Infrastructure
 
-* Change the git repository to use `main`, rather than `master` branch.
+* Change the git repository to use `main`, rather than `master` branch. By `Robert Luke`_.
 
 
 v0.0.6
