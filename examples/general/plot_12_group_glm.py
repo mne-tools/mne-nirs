@@ -287,6 +287,12 @@ roi_model.summary()
 # Second level analysis with covariates
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
+# .. sidebar:: Relevant literature
+#
+#    For a detailed discussion about covariates in fNIRS analysis see
+#    the seminar by Dr. Jessica Gemignani
+#    (`youtube <https://www.youtube.com/watch?feature=emb_logo&v=3E28sT1JI14>`_).
+#
 # It is simple to extend these models to include covariates.
 # This dataset is small, so including additional factors may not be
 # appropriate. However, for instructional purpose, we will include a
