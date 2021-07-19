@@ -296,13 +296,15 @@ roi_model.summary()
 # It is simple to extend these models to include covariates.
 # This dataset is small, so including additional factors may not be
 # appropriate. However, for instructional purpose, we will include a
-# covariate of age. Also, for instructional purpose, this example demonstrate
-# how to only analyse the hbo results in the right hemisphere.
+# covariate of age. Also, for instructional purpose, we modify the model above
+# to examine only the two tapping conditions, and explore the difference
+# between the two tapping conditions in the hbo signal in the right hemisphere.
 #
-# From the model result we observe that there is no effect of gender in the
-# oxyhaemoglobin responses in the right hemisphere.
+# From the model result we observe that hbo responses in the right hemisphere
+# are smaller when the right hand was used (as expected for these
+# contralaterally dominant responses) and there is no effect of gender.
 
-grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
+grp_results = df_roi.query("Condition in ['Tapping/Left', 'Tapping/Right']")
 grp_results = grp_results.query("Chroma in ['hbo']")
 grp_results = grp_results.query("ROI in ['Right_Hemisphere']")
 
@@ -322,6 +324,10 @@ roi_model.summary()
 # We also observe the the tapping response is
 # larger in the contralateral hemisphere.
 # Filled symbols represent HbO, unfilled symbols represent HbR.
+
+grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
+roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
+                        grp_results, groups=grp_results["ID"]).fit(method='nm')
 
 df = statsmodels_to_results(roi_model)
 
