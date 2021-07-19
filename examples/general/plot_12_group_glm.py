@@ -297,8 +297,8 @@ roi_model.summary()
 # This dataset is small, so including additional factors may not be
 # appropriate. However, for instructional purpose, we will include a
 # covariate of age. Also, for instructional purpose, we modify the model above
-# to examine only the two tapping conditions, and explore the difference
-# between the two tapping conditions in the hbo signal in the right hemisphere.
+# to only explore the difference between the two tapping conditions in the
+# hbo signal in the right hemisphere.
 #
 # From the model result we observe that hbo responses in the right hemisphere
 # are smaller when the right hand was used (as expected for these
