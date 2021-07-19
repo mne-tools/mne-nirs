@@ -310,7 +310,7 @@ grp_results = grp_results.query("ROI in ['Right_Hemisphere']")
 
 roi_model = smf.mixedlm("theta ~ Condition + sex",
                         grp_results, groups=grp_results["ID"]).fit(method='nm')
-print(roi_model.summary())
+roi_model.summary()
 
 ###############################################################################
 # Visualise group results
