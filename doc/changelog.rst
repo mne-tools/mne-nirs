@@ -37,9 +37,16 @@ Enhancements
 * Add :meth:`mne_nirs.statistics.RegressionResults.scatter` to display GLM results as a scatter plot.
 * Add :meth:`mne_nirs.statistics.RegressionResults.surface_projection` to display GLM results on a cortical surface.
 
+
 Documentation
 
 * Added an example of how to include second level covariates in the group level GLM tutorial. By `Robert Luke`_.
+
+
+Bugs
+
+* Fix inconsistencies between files written via :meth:`mne_nirs.io.snirf.write_raw_snirf` and the `current version <https://github.com/fNIRS/snirf/blob/52de9a6724ddd0c9dcd36d8d11007895fed74205/snirf_specification.md>`_ of the official SNIRF spec. By `Darin Erat Sleiter`_.
+
 
 Infrastructure
 
@@ -74,3 +81,4 @@ Enhancements
 
 .. _Robert Luke: https://github.com/rob-luke/
 .. _Eric Larson: https://github.com/larsoner/
+.. _Darin Erat Sleiter: https://github.com/dsleiter
