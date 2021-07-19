@@ -11,7 +11,7 @@ import pytest
 from mne.datasets.testing import data_path, requires_testing_data
 from mne.utils import requires_h5py, object_diff
 from mne.io import read_raw_snirf, read_raw_nirx
-from mne_nirs.io.snirf import write_raw_snirf
+from mne_nirs.io.snirf import write_raw_snirf, SPEC_FORMAT_VERSION
 
 
 fname_nirx_15_0 = op.join(data_path(download=False),
@@ -60,6 +60,7 @@ def test_snirf_write(fname, tmpdir):
     assert diffs == ''
 
     _verify_snirf_required_fields(test_file)
+    _verify_snirf_version_str(test_file)
 
 
 def _verify_snirf_required_fields(test_file):
@@ -113,3 +114,11 @@ def _verify_snirf_required_fields(test_file):
         assert 'wavelengths' in probe
         assert 'sourcePos3D' in probe or 'sourcePos2D' in probe
         assert 'detectorPos3D' in probe or 'detectorPos2D' in probe
+
+
+def _verify_snirf_version_str(test_file):
+    """Verify that the version string contains the correct spec version."""
+    with h5py.File(test_file, 'r') as h5:
+        version_str = h5['/formatVersion'][0].decode('UTF-8')
+        expected_str = SPEC_FORMAT_VERSION
+        assert version_str == expected_str

@@ -10,6 +10,11 @@ import numpy as np
 from mne.io.pick import _picks_to_idx
 
 
+# The currently-implemented spec can be found here:
+# https://github.com/fNIRS/snirf/blob/52de9a6724ddd0c9dcd36d8d11007895fed74205/snirf_specification.md
+SPEC_FORMAT_VERSION = '1.0 - Draft 3'
+
+
 def write_raw_snirf(raw, fname):
     """Write continuous wave data to disk in SNIRF format.
 
@@ -31,7 +36,8 @@ def write_raw_snirf(raw, fname):
 
     with h5py.File(fname, 'w') as f:
         nirs = f.create_group('/nirs')
-        f.create_dataset('formatVersion', data=[_str_encode('1.0')])
+        f.create_dataset('formatVersion',
+                         data=[_str_encode(SPEC_FORMAT_VERSION)])
 
         _add_metadata_tags(raw, nirs)
         _add_single_data_block(raw, nirs)
