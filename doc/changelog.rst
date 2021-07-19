@@ -40,7 +40,7 @@ Enhancements
 
 Documentation
 
-* Added an example of how to include second level covariates in the group level GLM tutorial. By `Robert Luke`_.
+* Add an example of how to include second level covariates in the group level GLM tutorial. By `Robert Luke`_.
 
 
 Bugs
