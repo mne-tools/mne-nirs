@@ -55,7 +55,8 @@ extensions = [
 
 smv_branch_whitelist = r'^(?!refs/heads/).*$'
 # v0.0.1 config is not compatible with sphinx-multiversion, so use 2 onwards
-smv_tag_whitelist = r'^v\d+\.\d+.\d+$'
+# smv_tag_whitelist = r'^v\d+\.\d+.\d+$'
+smv_tag_whitelist = None
 # Mark vX.Y.Z as releases
 smv_released_pattern = r'^.*v.*$'
 
