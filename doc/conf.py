@@ -137,7 +137,8 @@ html_sidebars = {
 html_context = {
     'build_dev_html': bool(int(os.environ.get('BUILD_DEV_HTML', False))),
     'versions_dropdown': {
-        'v0.0.6': 'v0.0.6 (stable)',
+        'v0.1.0': 'v0.1.0 (stable)',
+        'v0.0.6': 'v0.0.6',
         'v0.0.5': 'v0.0.5',
         'v0.0.4': 'v0.0.4',
         'v0.0.3': 'v0.0.3',
