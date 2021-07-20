@@ -14,6 +14,7 @@ from nilearn.glm.first_level import run_glm as nilearn_glm
 from mne.channels.channels import ContainsMixin
 from mne.utils import fill_doc, warn, verbose
 from mne.io.pick import _picks_to_idx
+from mne.io.constants import FIFF
 
 from ..visualisation._plot_GLM_topo import _plot_glm_topo,\
     _plot_glm_contrast_topo
@@ -296,7 +297,7 @@ class RegressionResults(_BaseGLM):
                               figsize=figsize, sphere=sphere)
 
     def to_dataframe_region_of_interest(self, group_by, condition,
-                                        weighted=True):
+                                        weighted=True, demographic_info=False):
         """Region of interest results as a dataframe.
 
         Parameters
@@ -313,7 +314,10 @@ class RegressionResults(_BaseGLM):
         condition : str | list
             Name to be used for condition.
         weighted : Bool
-            Should channels be weighted by inverse of standard error (True).
+            Should channels be weighted by inverse of standard error.
+        demographic_info : Bool
+            Add an extra column with demographic information from
+            info["subject_info"].
 
         Returns
         -------
@@ -330,6 +334,18 @@ class RegressionResults(_BaseGLM):
             roi = _glm_region_of_interest(self._data, group_by,
                                           cond_idx, cond, weighted)
             tidy = tidy.append(roi)
+
+        if demographic_info:
+            tidy['Age'] = float(self.info["subject_info"]['age'])
+            if self.info["subject_info"]['sex'] == FIFF.FIFFV_SUBJ_SEX_MALE:
+                sex = "male"
+            elif self.info["subject_info"]['sex'] == \
+                    FIFF.FIFFV_SUBJ_SEX_FEMALE:
+                sex = "female"
+            else:
+                sex = "unknown"
+            tidy['Sex'] = sex
+            tidy['Hand'] = self.info["subject_info"]['hand']
 
         return tidy
 
