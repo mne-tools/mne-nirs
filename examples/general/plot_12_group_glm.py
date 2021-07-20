@@ -308,7 +308,7 @@ grp_results = df_roi.query("Condition in ['Tapping/Left', 'Tapping/Right']")
 grp_results = grp_results.query("Chroma in ['hbo']")
 grp_results = grp_results.query("ROI in ['Right_Hemisphere']")
 
-roi_model = smf.mixedlm("theta ~ Condition + sex",
+roi_model = smf.mixedlm("theta ~ Condition + Sex",
                         grp_results, groups=grp_results["ID"]).fit(method='nm')
 roi_model.summary()
 

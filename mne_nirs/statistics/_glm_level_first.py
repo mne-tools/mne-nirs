@@ -336,7 +336,7 @@ class RegressionResults(_BaseGLM):
             tidy = tidy.append(roi)
 
         if demographic_info:
-            tidy['age'] = float(self.info["subject_info"]['age'])
+            tidy['Age'] = float(self.info["subject_info"]['age'])
             if self.info["subject_info"]['sex'] == FIFF.FIFFV_SUBJ_SEX_MALE:
                 sex = "male"
             elif self.info["subject_info"]['sex'] == \
@@ -344,8 +344,8 @@ class RegressionResults(_BaseGLM):
                 sex = "female"
             else:
                 sex = "unknown"
-            tidy['sex'] = sex
-            tidy['hand'] = self.info["subject_info"]['hand']
+            tidy['Sex'] = sex
+            tidy['Hand'] = self.info["subject_info"]['hand']
 
         return tidy
 
