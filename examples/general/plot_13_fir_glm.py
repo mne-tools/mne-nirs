@@ -62,7 +62,7 @@ from mne.preprocessing.nirs import optical_density, beer_lambert_law
 # Import MNE-NIRS processing
 from mne_nirs.statistics import run_glm
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import glm_region_of_interest, statsmodels_to_results
+from mne_nirs.statistics import statsmodels_to_results
 from mne_nirs.datasets import fnirs_motor_group
 from mne_nirs.channels import get_short_channels, get_long_channels
 

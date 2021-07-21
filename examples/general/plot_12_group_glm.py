@@ -83,10 +83,8 @@ from mne.preprocessing.nirs import optical_density, beer_lambert_law
 from mne_nirs.statistics import run_glm
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import statsmodels_to_results
-from mne_nirs.statistics import compute_contrast
 from mne_nirs.channels import get_short_channels, get_long_channels
 from mne_nirs.channels import picks_pair_to_idx
-from mne_nirs.utils._io import glm_to_tidy
 from mne_nirs.visualisation import plot_glm_group_topo
 from mne_nirs.datasets import fnirs_motor_group
 from mne_nirs.visualisation import plot_glm_surface_projection
