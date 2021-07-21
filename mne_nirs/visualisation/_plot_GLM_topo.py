@@ -94,6 +94,8 @@ def _plot_glm_topo(inst, glm_estimates, design_matrix,
 
     if requested_conditions is None:
         requested_conditions = design_matrix.columns
+    requested_conditions = [x for x in design_matrix.columns
+                            if x in requested_conditions]
 
     # Plotting setup
     if axes is None:
