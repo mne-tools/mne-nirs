@@ -83,10 +83,8 @@ from mne.preprocessing.nirs import optical_density, beer_lambert_law
 from mne_nirs.statistics import run_glm
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import statsmodels_to_results
-from mne_nirs.statistics import compute_contrast
 from mne_nirs.channels import get_short_channels, get_long_channels
 from mne_nirs.channels import picks_pair_to_idx
-from mne_nirs.utils._io import glm_to_tidy
 from mne_nirs.visualisation import plot_glm_group_topo
 from mne_nirs.datasets import fnirs_motor_group
 from mne_nirs.visualisation import plot_glm_surface_projection
@@ -296,13 +294,15 @@ roi_model.summary()
 # It is simple to extend these models to include covariates.
 # This dataset is small, so including additional factors may not be
 # appropriate. However, for instructional purpose, we will include a
-# covariate of gender. Also, for instructional purpose, we modify the model
+# covariate of gender. There are 3 females and 2 males in this dataset.
+# Also, for instructional purpose, we modify the model
 # above to only explore the difference between the two tapping conditions in
 # the hbo signal in the right hemisphere.
 #
 # From the model result we observe that hbo responses in the right hemisphere
 # are smaller when the right hand was used (as expected for these
-# contralaterally dominant responses) and there is no effect of gender.
+# contralaterally dominant responses) and there is no significant
+# effect of gender.
 
 grp_results = df_roi.query("Condition in ['Tapping/Left', 'Tapping/Right']")
 grp_results = grp_results.query("Chroma in ['hbo']")

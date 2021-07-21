@@ -36,7 +36,6 @@ This GLM analysis is a wrapper over the excellent
 
 import os
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 
 import mne
@@ -44,12 +43,11 @@ import mne_nirs
 
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_glm
-from mne_nirs.visualisation import plot_glm_topo
-from mne_nirs.channels import (get_long_channels, get_short_channels,
+from mne_nirs.channels import (get_long_channels,
+                               get_short_channels,
                                picks_pair_to_idx)
 
 from nilearn.plotting import plot_design_matrix
-from mne_nirs.utils._io import glm_to_tidy
 
 
 ###############################################################################
