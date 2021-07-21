@@ -36,6 +36,9 @@ Installation
 ------------
 
 To install python and MNE follow `these instructions <https://mne.tools/dev/install/mne_python.html>`_.
+Some NIRS functionality is only available in the latest version of MNE-Python,
+so I suggest installing the latest development version `as described here <https://mne.tools/dev/install/advanced.html#using-the-development-version>`_.
+
 
 Run the following code to install MNE-NIRS.
 
