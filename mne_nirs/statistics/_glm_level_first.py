@@ -3,6 +3,7 @@
 # License: BSD (3-clause)
 
 from copy import deepcopy
+from pathlib import PosixPath
 
 import pandas as pd
 import numpy as np
@@ -12,9 +13,11 @@ import nilearn.glm
 from nilearn.glm.first_level import run_glm as nilearn_glm
 
 from mne.channels.channels import ContainsMixin
-from mne.utils import fill_doc, warn, verbose
+from mne.utils import fill_doc, warn, verbose, check_fname, _validate_type
 from mne.io.pick import _picks_to_idx
 from mne.io.constants import FIFF
+from mne.externals.h5io import read_hdf5, write_hdf5
+from mne import Info
 
 from ..visualisation._plot_GLM_topo import _plot_glm_topo,\
     _plot_glm_contrast_topo
@@ -46,6 +49,36 @@ class _BaseGLM(ContainsMixin):
     def __len__(self):
         return len(self.info.ch_names)
 
+    def _get_state(self):  # noqa: D105
+        """Return the state of the GLM results as a dictionary.
+
+        See _state_to_glm for inverse operation.
+
+        Returns
+        -------
+        state : dict
+            State of the object.
+        """
+        state = deepcopy(dict(
+            data=self._data,
+            design=self.design,
+            info=self.info,
+            preload=self.preload,
+            classname=str(self.__class__)
+        ))
+        if isinstance(state['data'], dict):
+            for channel in state['data']:
+                state['data'][channel] = state['data'][channel].__dict__
+                if isinstance(state['data'][channel]['model'],
+                              nilearn.glm.regression.OLSModel):
+                    state['data'][channel]['modelname'] = \
+                        str(state['data'][channel]['model'].__class__)
+                    state['data'][channel]['model'] = \
+                        state['data'][channel]['model'].__dict__
+        if isinstance(state['data'], nilearn.glm.contrasts.Contrast):
+            state['data'] = state['data'].__dict__
+        return state
+
     def copy(self):
         """Return a copy of the GLM results.
 
@@ -55,6 +88,26 @@ class _BaseGLM(ContainsMixin):
             A copy of the object.
         """
         return deepcopy(self)
+
+    @fill_doc
+    def save(self, fname, overwrite=False):
+        """Save GLM results to disk.
+
+        Parameters
+        ----------
+        fname : str
+            The filename to use to write the HDF5 data.
+            Should end in ``'glm.h5'``.
+        %(overwrite)s
+        """
+        _validate_type(fname, 'path-like', 'fname')
+        if isinstance(fname, PosixPath):
+            fname = str(fname)
+        if not fname.endswith('glm.h5'):
+            raise IOError('The filename must end with glm.h5, '
+                          f'instead received {fname}')
+        write_hdf5(fname, self._get_state(),
+                   overwrite=overwrite, title='mnepython')
 
     def to_dataframe(self, order=None):
         """Return a tidy dataframe representing the GLM results.
@@ -642,3 +695,94 @@ def _compute_contrast(glm_est, contrast, contrast_type=None):
     from nilearn.glm.contrasts import compute_contrast as _cc
     return _cc(np.array(list(glm_est.keys())), glm_est, contrast,
                contrast_type=contrast_type)
+
+
+def read_glm(fname):
+    """
+    Read GLM results from disk.
+
+    Parameters
+    ----------
+    fname : str
+        The file name, which should end with ``glm.h5``.
+
+    Returns
+    -------
+    glm : RegressionResults or ContrastResults
+        RegressionResults or ContrastResults class
+        which stores the GLM results.
+    """
+    check_fname(fname, 'path-like', 'glm.h5')
+    glm = read_hdf5(fname, title='mnepython')
+    return _state_to_glm(glm)
+
+
+def _state_to_glm(glm):
+    """
+    Convert state of GLM stored as dictionary to a MNE-NIRS GLM type.
+
+    Parameters
+    ----------
+    glm : dict
+        State of GLM type.
+
+    Returns
+    -------
+    glm : _BaseGLM
+        RegressionResults or ContrastResults class
+        which stores the GLM results.
+    """
+
+    if glm['classname'] == "<class 'mne_nirs.statistics._glm_level_first" \
+                           ".RegressionResults'>":
+
+        for channel in glm['data']:
+
+            # Recreate model type
+            if glm['data'][channel]['modelname'] == \
+                    "<class 'nilearn.glm.regression.ARModel'>":
+                model = nilearn.glm.regression.ARModel(
+                    glm['data'][channel]['model']['design'],
+                    glm['data'][channel]['model']['rho'],
+                )
+
+            elif glm['data'][channel]['modelname'] == \
+                    "<class 'nilearn.glm.regression.OLSModel'>":
+                model = nilearn.glm.regression.OLSModel(
+                    glm['data'][channel]['model']['design'],
+                )
+            else:
+                raise IOError("Unknown model type "
+                              f"{glm['data'][channel]['modelname']}")
+
+            for key in glm['data'][channel]['model']:
+                model.__setattr__(key, glm['data'][channel]['model'][key])
+            glm['data'][channel]['model'] = model
+
+            # Then recreate result type
+            res = nilearn.glm.regression.RegressionResults(
+                glm['data'][channel]['theta'],
+                glm['data'][channel]['Y'],
+                glm['data'][channel]['model'],
+                glm['data'][channel]['whitened_Y'],
+                glm['data'][channel]['whitened_residuals'],
+                cov=glm['data'][channel]['cov']
+            )
+            for key in glm['data'][channel]:
+                res.__setattr__(key, glm['data'][channel][key])
+            glm['data'][channel] = res
+
+        # Ensure order of dictionary matches info
+        data = {k: glm['data'][k] for k in glm['info']['ch_names']}
+        return RegressionResults(Info(glm['info']), data, glm['design'])
+
+    elif glm['classname'] == "<class 'mne_nirs.statistics._glm_level_first" \
+                             ".ContrastResults'>":
+        data = nilearn.glm.contrasts.Contrast(glm['data']['effect'],
+                                              glm['data']['variance'])
+        for key in glm['data']:
+            data.__setattr__(key, glm['data'][key])
+        return ContrastResults(Info(glm['info']), data, glm['design'])
+
+    else:
+        raise IOError('Unable to read data')
