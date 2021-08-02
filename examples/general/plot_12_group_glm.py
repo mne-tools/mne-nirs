@@ -90,7 +90,7 @@ from mne_nirs.datasets import fnirs_motor_group
 from mne_nirs.visualisation import plot_glm_surface_projection
 
 # Import MNE-BIDS processing
-from mne_bids import BIDSPath, read_raw_bids
+from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
 
 # Import StatsModels
 import statsmodels.formula.api as smf
@@ -100,6 +100,39 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from lets_plot import *
 LetsPlot.setup_html()
+
+
+###############################################################################
+# Set up directories
+# ------------------
+#
+# First we will define where the raw data is stored. We will analyse a
+# BIDS dataset, note that the BIDS specification for NIRS data is still
+# under development and you will need to install the development branch
+# as described above.
+#
+# We first define the root directory of our dataset.
+
+root = fnirs_motor_group.data_path()
+print(root)
+
+
+###############################################################################
+# And as we are using MNE-BIDS we can create a BIDSPath.
+# This class helps to handle all the path wrangling.
+# We inform the software that we are analysing nirs data that is saved in
+# the snirf format.
+
+dataset = BIDSPath(root=root, task="tapping",
+                   datatype="nirs", suffix="nirs", extension=".snirf")
+
+print(dataset.directory)
+
+###############################################################################
+# For example we can automatically query the subjects, tasks, and sessions.
+
+subjects = get_entity_vals(root, 'subject')
+print(subjects)
 
 
 ###############################################################################
@@ -203,16 +236,13 @@ df_roi = pd.DataFrame()  # To store region of interest results
 df_cha = pd.DataFrame()  # To store channel level results
 df_con = pd.DataFrame()  # To store channel level contrast results
 
-for sub in range(1, 6):  # Loop from first to fifth subject
-    ID = '%02d' % sub  # Tidy the subject name
+for sub in subjects:  # Loop from first to fifth subject
 
     # Create path to file based on experiment info
-    bids_path = BIDSPath(subject=ID, task="tapping",
-                         root=fnirs_motor_group.data_path(),
-                         datatype="nirs", suffix="nirs", extension=".snirf")
+    bids_path = dataset.update(subject=sub)
 
     # Analyse data and return both ROI and channel results
-    raw_haemo, roi, channel, con = individual_analysis(bids_path, ID)
+    raw_haemo, roi, channel, con = individual_analysis(bids_path, sub)
 
     # Append individual results to all participants
     df_roi = df_roi.append(roi)
