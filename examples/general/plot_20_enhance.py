@@ -29,7 +29,7 @@ import mne_nirs
 from mne_nirs.channels import picks_pair_to_idx
 
 
-###############################################################################
+# %%
 # Import and preprocess data
 # --------------------------
 #
@@ -53,7 +53,7 @@ events, _ = mne.events_from_annotations(raw_haemo, event_id={'1.0': 1,
 event_dict = {'Control': 1, 'Tapping/Left': 2, 'Tapping/Right': 3}
 
 
-###############################################################################
+# %%
 # Extract epochs with no additional processing
 # --------------------------------------------
 #
@@ -79,7 +79,7 @@ for condition in evoked_dict:
     evoked_dict[condition].rename_channels(lambda x: x[:-4])
 
 
-###############################################################################
+# %%
 # Apply negative correlation enhancement algorithm
 # ------------------------------------------------
 #
@@ -103,7 +103,7 @@ for condition in evoked_dict_anti:
     evoked_dict_anti[condition].rename_channels(lambda x: x[:-4])
 
 
-###############################################################################
+# %%
 # Apply short channel correction
 # ------------------------------
 #
@@ -133,7 +133,7 @@ for condition in evoked_dict_corr:
     evoked_dict_corr[condition].rename_channels(lambda x: x[:-4])
 
 
-###############################################################################
+# %%
 # Plot approaches for comparison
 # ------------------------------
 #
@@ -165,7 +165,7 @@ for column, condition in enumerate(['Original Data',
     axes[column].set_title('{}'.format(condition))
 
 
-###############################################################################
+# %%
 # Plot hemisphere for each approach
 # ---------------------------------
 #

@@ -102,7 +102,7 @@ from lets_plot import *
 LetsPlot.setup_html()
 
 
-###############################################################################
+# %%
 # Set up directories
 # ------------------
 #
@@ -117,7 +117,7 @@ root = fnirs_motor_group.data_path()
 print(root)
 
 
-###############################################################################
+# %%
 # And as we are using MNE-BIDS we can create a BIDSPath.
 # This class helps to handle all the path wrangling.
 # We inform the software that we are analysing nirs data that is saved in
@@ -128,14 +128,14 @@ dataset = BIDSPath(root=root, task="tapping",
 
 print(dataset.directory)
 
-###############################################################################
+# %%
 # For example we can automatically query the subjects, tasks, and sessions.
 
 subjects = get_entity_vals(root, 'subject')
 print(subjects)
 
 
-###############################################################################
+# %%
 # Define individual analysis
 # --------------------------
 #
@@ -223,7 +223,7 @@ def individual_analysis(bids_path, ID):
     return raw_haemo, roi, cha, con
 
 
-###############################################################################
+# %%
 # Run analysis on all participants
 # --------------------------------
 #
@@ -250,7 +250,7 @@ for sub in subjects:  # Loop from first to fifth subject
     df_con = df_con.append(con)
 
 
-###############################################################################
+# %%
 # Visualise Individual results
 # ----------------------------
 #
@@ -271,7 +271,7 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
     + ggsize(900, 350)
 
 
-###############################################################################
+# %%
 # Compute group level results
 # ---------------------------
 #
@@ -311,7 +311,7 @@ roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
 roi_model.summary()
 
 
-###############################################################################
+# %%
 # Second level analysis with covariates
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
@@ -342,7 +342,7 @@ roi_model = smf.mixedlm("theta ~ Condition + Sex",
                         grp_results, groups=grp_results["ID"]).fit(method='nm')
 roi_model.summary()
 
-###############################################################################
+# %%
 # Visualise group results
 # -----------------------
 #
@@ -374,7 +374,7 @@ ggplot(df.query("Chroma == 'hbo'"),
                  .query("ROI == 'Right_Hemisphere'"), size=5, shape=2)
 
 
-###############################################################################
+# %%
 # Group topographic visualisation
 # -------------------------------
 #
@@ -428,7 +428,7 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
                     vmin=-10, vmax=0, cmap=mpl.cm.Blues_r)
 
 
-###############################################################################
+# %%
 # Contrasts
 # ---------
 #
@@ -450,7 +450,7 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                     con_model_df, colorbar=True, axes=axes)
 
 
-###############################################################################
+# %%
 #
 # Or we can view only the left hemisphere for the contrast.
 # And set all channels that dont have a significant response to zero.
@@ -460,7 +460,7 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
                     con_model_df, colorbar=True, threshold=True)
 
 
-###############################################################################
+# %%
 # Cortical Surface Projections
 # ----------------------------
 #
@@ -510,7 +510,7 @@ for idx, cond in enumerate(['Tapping/Left', 'Tapping/Right']):
     brain.add_text(0.05, 0.95, cond, 'title', font_size=16, color='k')
 
 
-###############################################################################
+# %%
 # Table of channel level results
 # ------------------------------
 #

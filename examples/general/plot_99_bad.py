@@ -59,7 +59,7 @@ raw_intensity = mne.io.read_raw_nirx(fnirs_cw_amplitude_dir, verbose=True)
 raw_intensity.load_data()
 
 
-###############################################################################
+# %%
 # Selecting channels appropriate for detecting neural responses
 # -------------------------------------------------------------
 #
@@ -76,7 +76,7 @@ raw_intensity.plot(n_channels=len(raw_intensity.ch_names),
                    duration=500, show_scrollbars=False)
 
 
-###############################################################################
+# %%
 # Converting from raw intensity to optical density
 # ------------------------------------------------
 #
@@ -87,7 +87,7 @@ raw_od.plot(n_channels=len(raw_od.ch_names),
             duration=500, show_scrollbars=False)
 
 
-###############################################################################
+# %%
 # Converting from optical density to haemoglobin
 # ----------------------------------------------
 #
@@ -100,7 +100,7 @@ raw_haemo.plot(n_channels=len(raw_haemo.ch_names),
 
 
 
-###############################################################################
+# %%
 # !!!!!!Replace real data with white noise!!!!!
 # ----------------------------------------------
 #
@@ -112,7 +112,7 @@ raw_haemo._data = np.random.randn(40, 23239) / 1.0e6 * 1
 raw_haemo._data[::2, :]= np.random.randn(20, 23239) / 1.0e6 * 3
 
 
-###############################################################################
+# %%
 # Removing heart rate from signal (BAD DONT COPY)
 # -----------------------------------------------
 #
@@ -130,7 +130,7 @@ fig.suptitle('After filtering', weight='bold', size='x-large')
 fig.subplots_adjust(top=0.88)
 
 
-###############################################################################
+# %%
 # Apply Cui negative correlation method
 # -------------------------------------
 #
@@ -139,7 +139,7 @@ fig.subplots_adjust(top=0.88)
 raw_haemo = mne_nirs.signal_enhancement.enhance_negative_correlation(raw_haemo)
 
 
-###############################################################################
+# %%
 # Extract epochs
 # --------------
 #
@@ -159,7 +159,7 @@ fig = mne.viz.plot_events(events, event_id=event_dict,
 fig.subplots_adjust(right=0.7)  # make room for the legend
 
 
-###############################################################################
+# %%
 # Next we define the range of our epochs, the rejection criteria,
 # baseline correction, and extract the epochs. We visualise the log of which
 # epochs were dropped.
@@ -174,7 +174,7 @@ epochs = mne.Epochs(raw_haemo, events, event_id=event_dict,
                     detrend=1, verbose=True)
 
 
-###############################################################################
+# %%
 # Plot standard fNIRS response image
 # ----------------------------------
 #
@@ -195,7 +195,7 @@ mne.viz.plot_compare_evokeds(evoked_dict, combine="mean", ci=0.95,
                              colors=color_dict)
 
 
-###############################################################################
+# %%
 # Summary
 # --------------
 #

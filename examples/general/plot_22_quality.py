@@ -62,7 +62,7 @@ from mne.preprocessing.nirs import optical_density
 from mne_nirs.preprocessing import peak_power, scalp_coupling_index_windowed
 from mne_nirs.visualisation import plot_timechannel_quality_metric
 
-###############################################################################
+# %%
 # ***********
 # Import data
 # ***********
@@ -78,13 +78,13 @@ raw_intensity.load_data().resample(4.0, npad="auto")
 raw_od = optical_density(raw_intensity)
 raw_od.plot(n_channels=55, duration=4000, show_scrollbars=False, clipping=None)
 
-###############################################################################
+# %%
 # From the above plot we observe that the data is relatively clean.
 # Later we will add some artificial bad sections to demonstrate the quality
 # evaluation metrics.
 
 
-###############################################################################
+# %%
 # ********************
 # Scalp Coupling Index
 # ********************
@@ -106,7 +106,7 @@ fig, ax = plt.subplots()
 ax.hist(sci)
 ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
 
-###############################################################################
+# %%
 # We observe that most of the channels have a good SCI of 1, but a few channels
 # have a poorer score. We can list the channels with an SCI below a threshold.
 # And we can mark these as bad in the MNE data. This way the functions
@@ -118,19 +118,19 @@ ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
 raw_od.info['bads'] = list(compress(raw_od.ch_names, sci < 0.7))
 print(raw_od.info['bads'])
 
-###############################################################################
+# %%
 # We can plot the time course of the signal again and note that the bad
 # channels are now displayed in grey to indicate they are bad.
 
 raw_od.plot(n_channels=55, duration=4000, show_scrollbars=False, clipping=None)
 
-###############################################################################
+# %%
 # Similarly, we can view the montage diagram and view where on the head
 # the bad channels were positioned.
 
 raw_od.plot_sensors()
 
-###############################################################################
+# %%
 # SCI evaluated over initial segment of signal
 # ============================================
 #
@@ -145,7 +145,7 @@ fig, ax = plt.subplots()
 ax.hist(sci)
 ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
 
-###############################################################################
+# %%
 # SCI evaluated over moving window
 # ================================
 #
@@ -168,7 +168,7 @@ plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.7,
                                 title="Scalp Coupling Index "
                                       "Quality Evaluation")
 
-###############################################################################
+# %%
 # **********
 # Peak Power
 # **********
@@ -184,7 +184,7 @@ plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.1,
                                 title="Peak Power Quality Evaluation")
 
 
-###############################################################################
+# %%
 # ****************
 # Introduced Noise
 # ****************
@@ -201,7 +201,7 @@ raw_od._data[12, 4000:4080] = np.linspace(0, -0.5, 80) + raw_od._data[12, 4000]
 # Add an artifact to channel S5-D13 at time 2000 seconds
 raw_od._data[34, 8000:8080] = np.linspace(0, 0.5, 80) + raw_od._data[34, 8000]
 
-###############################################################################
+# %%
 # Next we plot just these channels to demonstrate that indeed an artifact
 # has been added.
 
@@ -210,7 +210,7 @@ raw_od.copy().pick(picks=[12, 13, 34, 35]).\
          clipping=None, scalings={'fnirs_od': 0.2})
 
 
-###############################################################################
+# %%
 # *****************
 # Peak Power Metric
 # *****************
@@ -228,7 +228,7 @@ raw_od, scores, times = peak_power(raw_od, time_window=10)
 plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.1)
 
 
-###############################################################################
+# %%
 # ***********
 # Annotations
 # ***********
@@ -250,7 +250,7 @@ raw_od.copy().pick(picks=[12, 13, 34, 35]).\
     plot(n_channels=55, duration=40000, show_scrollbars=False,
          clipping=None, scalings={'fnirs_od': 0.2})
 
-###############################################################################
+# %%
 # These channel and time specific annotations are used by downstream
 # processing. For example, when extracting epochs if a specific channel
 # has an annotation indicating a bad segment in a specific time window, then
@@ -261,7 +261,7 @@ raw_od.copy().pick(picks=[12, 13, 34, 35]).\
 
 raw_od.plot(n_channels=55, duration=4000, show_scrollbars=False, clipping=None)
 
-###############################################################################
+# %%
 # **********
 # Conclusion
 # **********

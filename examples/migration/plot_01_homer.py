@@ -43,7 +43,7 @@ motion corrected using TDDR, and converted to haemoglobin concentration.
 
 """
 
-###############################################################################
+# %%
 # MNE equivalent of Homer script
 # ==============================
 #
@@ -61,7 +61,7 @@ from mne.preprocessing.nirs import (optical_density, beer_lambert_law,
                                     temporal_derivative_distribution_repair)
 
 
-###############################################################################
+# %%
 # Convert to optical density and motion correct
 # ---------------------------------------------
 #
@@ -76,7 +76,7 @@ fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
 raw_intensity = read_raw_nirx(fnirs_raw_dir).load_data()
 
 
-###############################################################################
+# %%
 # Convert signal to optical density and apply TDDR
 # ------------------------------------------------
 #
@@ -87,7 +87,7 @@ raw_od = optical_density(raw_intensity)
 corrected_tddr = temporal_derivative_distribution_repair(raw_od)
 
 
-###############################################################################
+# %%
 # Convert to haemoglobin concentration
 # ------------------------------------
 #
@@ -100,7 +100,7 @@ corrected_tddr = temporal_derivative_distribution_repair(raw_od)
 raw_h = beer_lambert_law(corrected_tddr, ppf=6.)
 
 
-###############################################################################
+# %%
 # Further analysis details
 # ------------------------------------
 #

@@ -2,7 +2,7 @@
 .. _ex-fnirs-artifacts:
 
 ==============================
-Artifact correction techniques
+Artifact Correction Techniques
 ==============================
 
 Here we artificially introduce several artifacts in a
@@ -20,7 +20,7 @@ import mne
 from mne.preprocessing.nirs import (optical_density,
                                     temporal_derivative_distribution_repair)
 
-###############################################################################
+# %%
 # Import data
 # -----------
 #
@@ -39,13 +39,13 @@ new_annotations = mne.Annotations([31, 187, 317], [8, 8, 8],
 raw_od.set_annotations(new_annotations)
 raw_od.plot(n_channels=15, duration=400, show_scrollbars=False)
 
-###############################################################################
+# %%
 # We can see some small artifacts in the above data from movement around 40,
 # 190 and 240 seconds. However, this data is relatively clean so we will
 # add some additional artifacts below.
 
 
-###############################################################################
+# %%
 # Add artificial artifacts to data
 # --------------------------------
 #
@@ -69,7 +69,7 @@ corrupted_od.set_annotations(new_annotations)
 corrupted_od.plot(n_channels=15, duration=400, show_scrollbars=False)
 
 
-###############################################################################
+# %%
 # Apply temporal derivative distribution repair
 # ---------------------------------------------
 #
@@ -80,13 +80,13 @@ corrected_tddr = temporal_derivative_distribution_repair(corrupted_od)
 corrected_tddr.plot(n_channels=15, duration=400, show_scrollbars=False)
 
 
-###############################################################################
+# %%
 # We can see in the data above that the introduced spikes and shifts are
 # largely removed, but some residual smaller artifact remains.
 # The same can be said for the artifacts in the original data.
 
 
-###############################################################################
+# %%
 # References
 # ----------
 #

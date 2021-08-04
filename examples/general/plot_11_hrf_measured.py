@@ -50,7 +50,7 @@ from mne_nirs.channels import (get_long_channels,
 from nilearn.plotting import plot_design_matrix
 
 
-###############################################################################
+# %%
 # Import raw NIRS data
 # --------------------
 #
@@ -79,7 +79,7 @@ raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
 raw_intensity.resample(0.7)
 
 
-###############################################################################
+# %%
 # Clean up annotations before analysis
 # ------------------------------------
 #
@@ -94,7 +94,7 @@ raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0'
 raw_intensity.annotations.set_durations(5)
 
 
-###############################################################################
+# %%
 # Preprocess NIRS data
 # --------------------
 # Next we convert the raw data to haemoglobin concentration.
@@ -103,7 +103,7 @@ raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
 raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
 
 
-###############################################################################
+# %%
 #
 # .. sidebar:: Relevant literature
 #
@@ -119,7 +119,7 @@ short_chs = get_short_channels(raw_haemo)
 raw_haemo = get_long_channels(raw_haemo)
 
 
-###############################################################################
+# %%
 # View experiment events
 # ----------------------
 #
@@ -134,7 +134,7 @@ events, event_dict = mne.events_from_annotations(raw_haemo, verbose=False)
 mne.viz.plot_events(events, event_id=event_dict, sfreq=raw_haemo.info['sfreq'])
 
 
-###############################################################################
+# %%
 #
 # The previous plot did not illustrate the duration that an event lasted for.
 # Alternatively, we can view the experiment using a boxcar plot, where the
@@ -147,7 +147,7 @@ plt.legend(["Control", "Left", "Right"], loc="upper right")
 plt.xlabel("Time (s)");
 
 
-###############################################################################
+# %%
 # Create design matrix
 # --------------------
 #
@@ -175,7 +175,7 @@ design_matrix = make_first_level_design_matrix(raw_haemo,
                                                drift_model='polynomial')
 
 
-###############################################################################
+# %%
 #
 # We also add the mean of the short channels to the design matrix.
 # In theory these channels contain only systemic components, so including
@@ -190,7 +190,7 @@ design_matrix["ShortHbR"] = np.mean(short_chs.copy().pick(
                                     picks="hbr").get_data(), axis=0)
 
 
-###############################################################################
+# %%
 #
 # And we display a summary of the design matrix
 # using standard Nilearn reporting functions.
@@ -203,7 +203,7 @@ fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
 fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
-###############################################################################
+# %%
 # Examine expected response
 # -------------------------
 #
@@ -226,7 +226,7 @@ plt.xlabel("Time (s)")
 plt.ylabel("Amplitude")
 
 
-###############################################################################
+# %%
 #
 # Fit GLM to subset of data and estimate response for each experimental condition
 # -------------------------------------------------------------------------------
@@ -244,7 +244,7 @@ plt.ylabel("Amplitude")
 data_subset = raw_haemo.copy().pick(picks=range(2))
 glm_est = run_glm(data_subset, design_matrix)
 
-###############################################################################
+# %%
 #
 # This returns a GLM regression estimate for each channel.
 # This data is stored in a dedicated type.
@@ -252,7 +252,7 @@ glm_est = run_glm(data_subset, design_matrix)
 
 glm_est
 
-###############################################################################
+# %%
 #
 # As with other MNE types you can use the `pick` function.
 # To query the mean square error of a single channel you would call.
@@ -262,7 +262,7 @@ glm_est
 
 glm_est.copy().pick('S1_D1 hbr')
 
-###############################################################################
+# %%
 #
 # Underlying the data for each channel is a standard
 # `Nilearn RegressionResults object <https://nilearn.github.io/modules/generated/nilearn.glm.RegressionResults.html>`_
@@ -272,7 +272,7 @@ glm_est.copy().pick('S1_D1 hbr')
 
 glm_est.MSE()
 
-###############################################################################
+# %%
 #
 # And we can chain the methods to quickly access required details.
 # For example, to determine the MSE for channel `S1` `D1` for the hbr type
@@ -281,7 +281,7 @@ glm_est.MSE()
 glm_est.copy().pick('S1_D1 hbr').MSE()
 
 
-###############################################################################
+# %%
 #
 # Due to the richness of the objects we provide a function to
 # extract commonly used information and put it in a convenient dataframe/table.
@@ -291,7 +291,7 @@ glm_est.copy().pick('S1_D1 hbr').MSE()
 
 glm_est.to_dataframe().head(9)
 
-###############################################################################
+# %%
 #
 # We then display the results using the scatter plot function.
 # Note that the control condition sits
@@ -304,7 +304,7 @@ glm_est.to_dataframe().head(9)
 glm_est.scatter()
 
 
-###############################################################################
+# %%
 # Fit GLM to all data and view topographic distribution
 # -----------------------------------------------------
 #
@@ -319,7 +319,7 @@ glm_est = run_glm(raw_haemo, design_matrix)
 glm_est.plot_topo(conditions=['Tapping/Left', 'Tapping/Right'])
 
 
-###############################################################################
+# %%
 #
 # Note that the topographic visualisation is a high level representation
 # of the underlying data. This visual representation fits a smoothed surface
@@ -355,7 +355,7 @@ axes[0].set_title("Smoothed across hemispheres")
 axes[1].set_title("Hemispheres plotted independently")
 
 
-###############################################################################
+# %%
 #
 # Another way to view the data is to project the GLM estimates to the nearest
 # cortical surface
@@ -363,7 +363,7 @@ axes[1].set_title("Hemispheres plotted independently")
 glm_est.copy().surface_projection(condition="Tapping/Right", view="dorsal", chroma="hbo")
 
 
-###############################################################################
+# %%
 # Analyse regions of interest
 # ---------------------------
 #
@@ -397,7 +397,7 @@ conditions = ['Control', 'Tapping/Left', 'Tapping/Right']
 df = glm_est.to_dataframe_region_of_interest(groups, conditions)
 
 
-###############################################################################
+# %%
 # As with the single channel results above, this is placed in a tidy dataframe
 # which contains conveniently extracted information, but now for the region
 # of interest.
@@ -405,7 +405,7 @@ df = glm_est.to_dataframe_region_of_interest(groups, conditions)
 df
 
 
-###############################################################################
+# %%
 #
 # Compute contrasts
 # -----------------
@@ -425,7 +425,7 @@ contrast = glm_est.compute_contrast(contrast_LvR)
 contrast.plot_topo()
 
 
-###############################################################################
+# %%
 # Export Results
 # ---------------
 #
@@ -444,7 +444,7 @@ contrast.plot_topo()
 df = glm_est.to_dataframe()
 
 
-###############################################################################
+# %%
 # Determine true and false positive rates
 # ---------------------------------------
 #

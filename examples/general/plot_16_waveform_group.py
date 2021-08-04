@@ -109,7 +109,7 @@ set_log_level("WARNING")  # Don't show info, as it is repetitive for many subjec
 LetsPlot.setup_html()
 
 
-###############################################################################
+# %%
 # Define individual analysis
 # --------------------------
 #
@@ -161,7 +161,7 @@ def individual_analysis(bids_path):
     return raw_haemo, epochs
 
 
-###############################################################################
+# %%
 # Run analysis on all data
 # ------------------------
 #
@@ -189,7 +189,7 @@ for sub in range(1, 6):  # Loop from first to fifth subject
         all_evokeds[condition].append(epochs[condition].average())
 
 
-###############################################################################
+# %%
 # The end result is a dictionary that is indexed per condition,
 # with each item in the dictionary being a list of evoked responses.
 # See below that for each condition we have obtained a MNE evoked type
@@ -198,7 +198,7 @@ for sub in range(1, 6):  # Loop from first to fifth subject
 
 pprint(all_evokeds)
 
-###############################################################################
+# %%
 # View average waveform
 # ---------------------
 #
@@ -219,14 +219,14 @@ for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
         axes[idx].set_title('{}'.format(evoked))
 axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 
-###############################################################################
+# %%
 # From this figure we observe that the response to the tapping condition
 # with the right hand appears larger than when no tapping occurred in the
 # control condition (similar for when tapping occurred with the left hand).
 # We test if this is the case in the analysis below.
 
 
-###############################################################################
+# %%
 # Generate regions of interest
 # --------------------------------
 # .. sidebar:: Relevant literature
@@ -261,7 +261,7 @@ rois = dict(Left_Hemisphere=picks_pair_to_idx(raw_haemo, left),
 
 pprint(rois)
 
-###############################################################################
+# %%
 # Create average waveform per ROI
 # -------------------------------
 #
@@ -291,13 +291,13 @@ for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
         axes[ridx, 0].set_ylabel(f"{roi}\nChromophore (ΔμMol)")
 axes[0, 0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 
-###############################################################################
+# %%
 # From this figure we observe that the response to tapping appears
 # largest in the brain region that is contralateral to the hand
 # that is tapping. We test if this is the case in the analysis below.
 
 
-###############################################################################
+# %%
 # Extract evoked amplitude
 # ------------------------
 #
@@ -332,7 +332,7 @@ df.to_csv("stats-export.csv")
 df.head()
 
 
-###############################################################################
+# %%
 # View individual results
 # -----------------------
 #
@@ -354,7 +354,7 @@ ggplot(df.query("Chroma == 'hbo'"),
     + ggsize(800, 300)
 
 
-###############################################################################
+# %%
 # Research question 1: Comparison of conditions
 # ---------------------------------------------------------------------------------------------------
 #
@@ -372,13 +372,13 @@ roi_model = smf.mixedlm("Value ~ Condition", input_data,
                         groups=input_data["ID"]).fit()
 roi_model.summary()
 
-###############################################################################
+# %%
 # The model indicates that for the oxyhaemoglobin (HbO) data in the left
 # ROI, that the tapping condition with the right hand evokes
 # a 9.0 μMol larger response than the control condition.
 
 
-###############################################################################
+# %%
 # Research question 2: Are responses larger on the contralateral side to tapping?
 # -------------------------------------------------------------------------------
 #
@@ -409,7 +409,7 @@ roi_model = smf.mixedlm("Value ~ Hemishphere", input_data,
                         groups=input_data["ID"]).fit()
 roi_model.summary()
 
-###############################################################################
+# %%
 # The model indicates that for the oxyhaemoglobin (HbO) data, the ipsilateral
 # responses are 4.2 μMol smaller than those on the contralateral side to the
 # hand that is tapping.
