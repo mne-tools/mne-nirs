@@ -53,7 +53,9 @@ def test_snirf_write(fname, tmpdir):
     obj_diff = object_diff(raw.info, raw_orig.info)
     diffs = ''
     for line in obj_diff.splitlines():
-        if ('logno' not in line) and ('scanno' not in line) and\
+        if ('logno' not in line) and \
+                ('scanno' not in line) and \
+                ('his_id' not in line) and\
                 ('datetime mismatch' not in line):
             # logno and scanno are not used in processing
             diffs += f'\n{line}'
