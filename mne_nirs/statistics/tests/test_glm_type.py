@@ -24,6 +24,7 @@ def _get_minimal_haemo_data(tmin=0, tmax=60):
     raw.crop(tmax=tmax, tmin=tmin)
     raw = mne.preprocessing.nirs.optical_density(raw)
     raw = mne.preprocessing.nirs.beer_lambert_law(raw)
+    raw.resample(0.3)
     return raw
 
 
@@ -164,16 +165,19 @@ def test_results_glm_io():
     res.save("test-regression-glm.h5", overwrite=True)
     loaded_res = read_glm("test-regression-glm.h5")
     assert loaded_res.to_dataframe().equals(res.to_dataframe())
+    assert res == loaded_res
 
     res = _get_glm_result(tmax=400, noise_model='ols')
     res.save("test-regression-ols_glm.h5", overwrite=True)
     loaded_res = read_glm("test-regression-ols_glm.h5")
     assert loaded_res.to_dataframe().equals(res.to_dataframe())
+    assert res == loaded_res
 
     res = _get_glm_contrast_result()
     res.save("test-contrast-glm.h5", overwrite=True)
     loaded_res = read_glm("test-contrast-glm.h5")
     assert loaded_res.to_dataframe().equals(res.to_dataframe())
+    assert res == loaded_res
 
     with pytest.raises(IOError, match='must end with glm.h5'):
         res.save("test-contrast-glX.h5", overwrite=True)

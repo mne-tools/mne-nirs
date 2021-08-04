@@ -235,6 +235,15 @@ class RegressionResults(_BaseGLM):
         self.design = design
         self.preload = True
 
+    def __eq__(self, res):
+        same_keys = self.data.keys() == res.data.keys()
+        same_design = (self.design == res.design).all().all()
+        same_ch = self.info.ch_names == res.info.ch_names
+        same_theta = np.sum([(res.theta()[idx] == val).all()
+                             for idx, val in
+                             enumerate(self.theta())]) == len(self.ch_names)
+        return int(same_ch and same_design and same_keys and same_theta)
+
     @fill_doc
     def pick(self, picks, exclude=()):
         """Pick a subset of channels.
@@ -522,6 +531,11 @@ class ContrastResults(_BaseGLM):
         self.data = data
         self.design = design
         self.preload = True
+
+    def __eq__(self, res):
+        same_design = (self.design == res.design).all().all()
+        same_ch = self.info.ch_names == res.info.ch_names
+        return int(same_ch and same_design)
 
     @property
     def data(self):
