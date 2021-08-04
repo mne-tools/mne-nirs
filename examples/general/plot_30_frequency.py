@@ -33,7 +33,7 @@ from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.simulation import simulate_nirs_raw
 
 
-###############################################################################
+# %%
 # Import and preprocess data
 # --------------------------
 #
@@ -66,7 +66,7 @@ raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
 raw_haemo = mne_nirs.channels.get_long_channels(raw_haemo)
 
 
-###############################################################################
+# %%
 # Model neural response
 # ---------------------
 #
@@ -97,7 +97,7 @@ hrf.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log',
                                color='r', show=False)
 
 
-###############################################################################
+# %%
 # Plot raw measured data
 # ----------------------
 #
@@ -119,7 +119,7 @@ raw_haemo._data = raw_haemo._data * 1e-2
 raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log')
 
 
-###############################################################################
+# %%
 # Plot epoched data
 # -----------------
 #
@@ -143,7 +143,7 @@ epochs.pick(picks='hbo').plot_psd(average=True, fmax=2,
                                   color='g', xscale='log')
 
 
-###############################################################################
+# %%
 # Plot filter response
 # --------------------
 #
@@ -163,7 +163,7 @@ mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
                     plot='magnitude')
 
 
-###############################################################################
+# %%
 # Discussion
 # ----------
 #
@@ -201,7 +201,7 @@ fig.axes[0].set_title('')
 
 
 
-###############################################################################
+# %%
 # Understanding the relation between stimulus presentation and response
 # ---------------------------------------------------------------------
 #

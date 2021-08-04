@@ -55,7 +55,7 @@ Finally a mixed effects model is run on the group level dat.
 
 """
 
-###############################################################################
+# %%
 # MNE equivalent of nirs-toolbox script
 # =====================================
 #
@@ -65,7 +65,7 @@ Finally a mixed effects model is run on the group level dat.
 # So this page will focus on the differences between the two approaches.
 
 
-###############################################################################
+# %%
 # Differences between toolboxes
 # ---------------------------------------------
 #
@@ -76,7 +76,7 @@ Finally a mixed effects model is run on the group level dat.
 # in the GLM analysis.
 
 
-###############################################################################
+# %%
 # Further analysis details
 # ------------------------------------
 #

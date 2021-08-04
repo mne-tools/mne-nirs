@@ -31,7 +31,7 @@ from nilearn.plotting import plot_design_matrix
 np.random.seed(1)
 
 
-###############################################################################
+# %%
 # Simulate noise free NIRS data
 # -----------------------------
 #
@@ -49,7 +49,7 @@ raw = mne_nirs.simulation.simulate_nirs_raw(
 raw.plot(duration=300, show_scrollbars=False)
 
 
-###############################################################################
+# %%
 # Create design matrix
 # ------------------------------------
 #
@@ -64,7 +64,7 @@ fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
 fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
-###############################################################################
+# %%
 # Estimate response on clean data
 # -------------------------------
 #
@@ -88,7 +88,7 @@ print_results(glm_est, amp)
 
 
 
-###############################################################################
+# %%
 # Simulate noisy NIRS data (white)
 # --------------------------------
 #
@@ -116,7 +116,7 @@ plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 print_results(glm_est, amp)
 
 
-###############################################################################
+# %%
 # Simulate noisy NIRS data (colored)
 # ----------------------------------
 #
@@ -148,7 +148,7 @@ plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 print_results(glm_est, amp)
 
 
-###############################################################################
+# %%
 # How does increasing the measurement length affect estimation accuracy?
 # ----------------------------------------------------------------------
 #
@@ -180,7 +180,7 @@ plt.legend(["Noisy Data", "GLM Estimate"])
 print_results(glm_est, amp)
 
 
-###############################################################################
+# %%
 # Using autoregressive models in the GLM to account for noise structure
 # ---------------------------------------------------------------------
 #
@@ -201,17 +201,17 @@ plt.legend(["Simulation AR coefficients", "Estimated AR coefficients"])
 plt.xlabel("Coefficient")
 
 
-###############################################################################
+# %%
 # We can see that the estimates from the GLM AR model are quite accurate,
 # but how does this affect the accuracy of the response estimate?
 
 print_results(glm_est, amp)
 
-###############################################################################
+# %%
 # The response estimate using the AR(5) model is more accurate than the
 # AR(1) model (error of 0.25 vs 2.8 uM).
 
-###############################################################################
+# %%
 # Conclusion?
 # -----------
 #

@@ -76,7 +76,7 @@ import statsmodels.formula.api as smf
 import matplotlib.pyplot as plt
 
 
-###############################################################################
+# %%
 # Define FIR analysis
 # ---------------------------------------------------------------------
 #
@@ -128,7 +128,7 @@ def analysis(fname, ID):
     return df_ind, raw_haemo, design_matrix
 
 
-###############################################################################
+# %%
 # Run analysis
 # ---------------------------------------------------------------------
 #
@@ -151,7 +151,7 @@ for sub in range(1, 6):  # Loop from first to fifth subject
     df = df.append(df_individual)
 
 
-###############################################################################
+# %%
 # Tidy the dataframe
 # ---------------------------------------------------------------------
 #
@@ -178,7 +178,7 @@ dm_cols_not_left = np.where(["Right" in c for c in dm.columns])[0]
 dm = dm[[dm.columns[i] for i in dm_cols_not_left]]
 
 
-###############################################################################
+# %%
 # Run group-level model
 # ---------------------------------------------------------------------
 #
@@ -193,7 +193,7 @@ lme = smf.mixedlm('theta ~ -1 + delay:TidyCond:Chroma', df,
 # You can display the model output using: lme.summary()
 
 
-###############################################################################
+# %%
 # Summarise group-level findings
 # ---------------------------------------------------------------------
 #
@@ -210,13 +210,13 @@ df_sum = df_sum.sort_values('delay')
 # Print the result for the oxyhaemoglobin data in the tapping condition
 df_sum.query("TidyCond in ['Tapping']").query("Chroma in ['hbo']")
 
-###############################################################################
+# %%
 # Note in the output above that there are 10 FIR delays.
 # A coefficient estimate has been calculated for each delay.
 # These coefficients must be multiplied by the FIR function to obtain the
 # morphology of the fNIRS response.
 
-###############################################################################
+# %%
 # Plot the response from a single condition
 # ---------------------------------------------------------------------
 #
@@ -275,7 +275,7 @@ axes[2].set_ylabel("Haemoglobin (ΔμMol)")
 axes[2].legend(["Oyxhaemoglobin", "Deoyxhaemoglobin"])
 
 
-###############################################################################
+# %%
 # Plot the response with confidence intervals
 # ---------------------------------------------------------------------
 #

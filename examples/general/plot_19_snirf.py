@@ -38,7 +38,7 @@ from mne_nirs.io import write_raw_snirf
 from numpy.testing import assert_allclose
 
 
-###############################################################################
+# %%
 # Import raw NIRS data from vendor
 # --------------------------------
 #
@@ -50,7 +50,7 @@ fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
 raw_intensity = read_raw_nirx(fnirs_raw_dir).load_data()
 
 
-###############################################################################
+# %%
 # Write data as SNIRF
 # -------------------
 #
@@ -59,7 +59,7 @@ raw_intensity = read_raw_nirx(fnirs_raw_dir).load_data()
 write_raw_snirf(raw_intensity, 'test_raw.snirf')
 
 
-###############################################################################
+# %%
 # Read back SNIRF file
 # --------------------
 # 
@@ -68,7 +68,7 @@ write_raw_snirf(raw_intensity, 'test_raw.snirf')
 snirf_intensity = read_raw_snirf('test_raw.snirf')
 
 
-###############################################################################
+# %%
 # Compare files
 # -------------
 # 
