@@ -10,14 +10,14 @@ import mne
 
 def get_short_channels(raw, max_dist=0.01):
     """
-    Return channels with a short source detector separation.
+    Return channels with a short source-detector separation.
 
     Parameters
     ----------
     raw : instance of Raw
-        The haemoglobin data.
+        Raw instance containing fNIRS data.
     max_dist : number
-        Maximum distance of returned channel (m).
+        Maximum distance of returned channels (m).
 
     Returns
     -------
@@ -39,18 +39,18 @@ def get_short_channels(raw, max_dist=0.01):
     return short_chans
 
 
-def get_long_channels(raw, min_dist=0.01, max_dist=0.045):
+def get_long_channels(raw, min_dist=0.015, max_dist=0.045):
     """
     Return channels with a long source detector separation.
 
     Parameters
     ----------
     raw : instance of Raw
-        The haemoglobin data.
+        Raw instance containing fNIRS data.
     min_dist : number
-        Minimum distance of returned channel.
+        Minimum distance of returned channels (m).
     max_dist : number
-        Maximum distance of returned channel.
+        Maximum distance of returned channels (m).
 
     Returns
     -------
