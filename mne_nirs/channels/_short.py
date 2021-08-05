@@ -39,7 +39,7 @@ def get_short_channels(raw, max_dist=0.01):
     return short_chans
 
 
-def get_long_channels(raw, min_dist=0.01, max_dist=0.05):
+def get_long_channels(raw, min_dist=0.01, max_dist=0.045):
     """
     Return channels with a long source detector separation.
 
