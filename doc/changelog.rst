@@ -14,6 +14,14 @@ Patch version changes indicate backward compatible bug fixes.
 
 To install a specific version of the library you would run ``pip install mne-nirs==0.0.6``, where ``0.0.6`` is the version you wish to install.
 
+v0.1.1 - dev
+------------
+
+API changes
+
+* Maximum source detector distance reduced from 5 to 4.5 cm when using :func:`mne_nirs.channels.get_long_channels`. By `Robert Luke`_.
+
+
 v0.1.0
 ------
 
