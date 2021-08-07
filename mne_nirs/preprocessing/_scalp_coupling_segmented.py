@@ -86,7 +86,7 @@ def scalp_coupling_index_windowed(raw, time_window=10, threshold=0.1,
         end_sample = start_sample + window_samples
 
         t_start = raw.times[start_sample]
-        t_stop = raw.times[end_sample]
+        t_stop = np.min([raw.times[end_sample], raw.times[-1]])
         times.append((t_start, t_stop))
 
         for ii in picks[::2]:
