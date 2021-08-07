@@ -21,6 +21,10 @@ API changes
 
 * Maximum source detector distance reduced from 5 to 4.5 cm when using :func:`mne_nirs.channels.get_long_channels`. By `Robert Luke`_.
 
+Fixes
+
+* Fix end values for windowed quality metrics. By `Robert Luke`_.
+
 
 v0.1.0
 ------

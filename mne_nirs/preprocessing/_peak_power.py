@@ -82,6 +82,7 @@ def peak_power(raw, time_window=10, threshold=0.1, l_freq=0.7, h_freq=1.5,
 
         start_sample = int(window * window_samples)
         end_sample = start_sample + window_samples
+        end_sample = np.min([end_sample, len(raw) - 1])
 
         t_start = raw.times[start_sample]
         t_stop = raw.times[end_sample]
