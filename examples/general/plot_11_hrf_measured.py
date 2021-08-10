@@ -168,9 +168,7 @@ plt.xlabel("Time (s)");
 #
 #    For further discussion on design matrices see
 #    the Nilearn examples. Specifically the 
-#    `first level model <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_first_level_details.html>`_
-#    and 
-#    `design matrix examples <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_design_matrix.html>`_.
+#    `first level model example <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_first_level_details.html>`_.
 #
 # Next we create a model to fit our data to.
 # The model consists of various components to model different things we assume
@@ -179,13 +177,17 @@ plt.xlabel("Time (s)");
 # using the SPM haemodynamic response
 # function (HRF) combined with the known stimulus event times and durations
 # (as described above).
-# We also include a third order polynomial drift and constant to model
-# slow fluctuations in the data and a constant DC shift.
+# We also include a cosine drift model with components up to the high pass
+# parameter value. See the nilearn documentation for recommendations on setting
+# these values. In short, they suggest `"The cutoff period (1/high_pass) should be
+# set as the longest period between two trials of the same condition multiplied by 2.
+# For instance, if the longest period is 32s, the high_pass frequency shall be 1/64 Hz ~ 0.016 Hz"`.
 
 design_matrix = make_first_level_design_matrix(raw_haemo,
-                                               hrf_model='spm', stim_dur=5.0,
-                                               drift_order=3,
-                                               drift_model='polynomial')
+                                               drift_model='cosine',
+                                               high_pass=0.005,  # Must be specified per experiment
+                                               hrf_model='spm',
+                                               stim_dur=5.0)
 
 
 # %%
