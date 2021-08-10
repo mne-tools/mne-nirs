@@ -216,8 +216,14 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # we observe that each time a stimulus is presented there is an expected
 # brain response that lags the stimulus onset and consists of a large positive
 # component followed by an undershoot.
+#
+# In this example the second trigger (index 1) corresponds to the ``Tapping/Left``
+# condition in the design matrix, so we plot those below. In your data the mapping
+# may be different, so you may need to alter either the ``s`` index or condition
+# name. Note however, that this is just for visualisation and does not affect
+# the results below.
 
-s = mne_nirs.experimental_design.create_boxcar(raw_intensity)
+s = mne_nirs.experimental_design.create_boxcar(raw_intensity, stim_dur=5.0)
 plt.plot(raw_intensity.times, s[:, 1])
 plt.plot(design_matrix['Tapping/Left'])
 plt.xlim(180, 300)
