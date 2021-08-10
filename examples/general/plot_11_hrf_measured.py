@@ -27,6 +27,12 @@ This GLM analysis is a wrapper over the excellent
    :local:
    :depth: 2
 
+.. note:: Parts of this tutorial require the latest development version of MNE-Python. See these instructions for  
+          `how to upgrade <https://mne.tools/dev/install/updating.html>`__.
+          But basically boils down to running
+          ``pip install -U --no-deps https://github.com/mne-tools/mne-python/archive/main.zip``.
+          Sections of the code that require this version will be noted below.
+          
 """
 # sphinx_gallery_thumbnail_number = 9
 
@@ -82,6 +88,13 @@ raw_intensity.resample(0.7)
 # %%
 # Clean up annotations before analysis
 # ------------------------------------
+#
+# .. sidebar:: Requires MNE-Python development version
+#
+#    This section of code requires the latest development version of MNE-Python.
+#    See instructions at the top of the page on how to upgrade.
+#    Alternatively you can use the more cumbersome version of the code as shown
+#    `in the old documentation <https://github.com/mne-tools/mne-nirs/blob/38de21c2f172bd15c6e8c53d66fc462a57e9f3e1/examples/general/plot_11_hrf_measured.py#L92-L104>`__.
 #
 # Next we update the annotations by assigning names to each trigger ID.
 # Then we crop the recording to the section containing our
