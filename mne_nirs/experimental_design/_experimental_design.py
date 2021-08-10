@@ -99,7 +99,7 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
     return dm
 
 
-def create_boxcar(raw, event_id=None, stim_dur=5):
+def create_boxcar(raw, event_id=None, stim_dur=1):
     """
     Generate boxcar waveform from MNE data structure.
 

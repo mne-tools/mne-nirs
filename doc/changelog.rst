@@ -20,6 +20,7 @@ v0.1.1 - dev
 API changes
 
 * Maximum source detector distance reduced from 5 to 4.5 cm when using :func:`mne_nirs.channels.get_long_channels`. By `Robert Luke`_.
+* Default stimulus duration in :func:`mne_nirs.experimental_design.create_boxcar` changed from 5 to 1 second. By `Robert Luke`_.
 
 Fixes
 
