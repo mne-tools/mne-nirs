@@ -42,12 +42,18 @@ information about triggers, condition names, etc.
 
 .. note::
 
+   This tutorial uses data in the BIDS format.
    The BIDS specification for NIRS data is still under development. See:
    `fNIRS BIDS proposal <https://github.com/bids-standard/bids-specification/pull/802>`_.
-   As such, you must use the development branch of MNE-BIDS.
+   As such, to run this tutorial you must use the fNIRS development branch of MNE-BIDS.
 
    To install the fNIRS development branch of MNE-BIDS run:
-   `pip install https://codeload.github.com/rob-luke/mne-bids/zip/nirs`
+   `pip install -U https://codeload.github.com/rob-luke/mne-bids/zip/nirs`.
+
+   MNE-Python. allows you to process fNIRS data that is not in BIDS format too.
+   Simply modify the ``read_raw_`` function to match your data type.
+   See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
+   to use your data with MNE-Python.
 
 .. collapse:: |chevron-circle-down| Data description (click to expand)
    :class: success
@@ -105,20 +111,25 @@ LetsPlot.setup_html()
 # %%
 # Set up directories
 # ------------------
+# .. sidebar:: Requires MNE-BIDS fNIRS branch
+#
+#    This section of code requires the MNE-BIDS fNIRS branch.
+#    See instructions at the top of the page on how to install.
+#    Alternatively, if your data is not in BIDS format,
+#    skip to the next section.
 #
 # First we will define where the raw data is stored. We will analyse a
-# BIDS dataset, note that the BIDS specification for NIRS data is still
-# under development and you will need to install the development branch
-# as described above.
-#
-# We first define the root directory of our dataset.
+# BIDS dataset. This ensures we have all the metadata we require
+# without manually specifying the trigger names etc.
+# We first define where the root directory of our dataset is.
+# In this example we use the example dataset ``fnirs_motor_group``.
 
 root = fnirs_motor_group.data_path()
 print(root)
 
 
 # %%
-# And as we are using MNE-BIDS we can create a BIDSPath.
+# And as we are using MNE-BIDS we can create a BIDSPath object.
 # This class helps to handle all the path wrangling.
 # We inform the software that we are analysing nirs data that is saved in
 # the snirf format.
