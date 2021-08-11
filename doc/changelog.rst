@@ -22,6 +22,14 @@ API changes
 * :func:`mne_nirs.channels.get_long_channels` maximum optode distance reduced from 5 to 4.5 cm. By `Robert Luke`_.
 * :func:`mne_nirs.experimental_design.create_boxcar` duration reduced from 5 to 1 second. By `Robert Luke`_.
 
+
+Enhancements
+
+* Add :meth:`mne_nirs.statistics.RegressionResults.save`. By `Robert Luke`_.
+* Add :meth:`mne_nirs.statistics.ContrastResults.save`. By `Robert Luke`_.
+* Add :func:`mne_nirs.statistics.load_glm`. By `Robert Luke`_.
+
+
 Fixes
 
 * Fix end values for windowed quality metrics. By `Robert Luke`_.
@@ -51,6 +59,9 @@ Enhancements
 * :meth:`mne_nirs.statistics.RegressionResults.to_dataframe_region_of_interest` replaces ``glm_region_of_interest``.
 * Add :meth:`mne_nirs.statistics.RegressionResults.scatter` to display GLM results as a scatter plot.
 * Add :meth:`mne_nirs.statistics.RegressionResults.surface_projection` to display GLM results on a cortical surface.
+* Add :meth:`mne_nirs.statistics.ContrastResults.plot_topo`.
+* Add :meth:`mne_nirs.statistics.ContrastResults.to_dataframe`.
+* Add :meth:`mne_nirs.statistics.ContrastResults.scatter`.
 
 
 Documentation
