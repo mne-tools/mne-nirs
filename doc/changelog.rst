@@ -19,8 +19,8 @@ v0.1.1 - dev
 
 API changes
 
-* Maximum source detector distance reduced from 5 to 4.5 cm when using :func:`mne_nirs.channels.get_long_channels`. By `Robert Luke`_.
-* Default stimulus duration in :func:`mne_nirs.experimental_design.create_boxcar` changed from 5 to 1 second. By `Robert Luke`_.
+* :func:`mne_nirs.channels.get_long_channels` maximum optode distance reduced from 5 to 4.5 cm. By `Robert Luke`_.
+* :func:`mne_nirs.experimental_design.create_boxcar` duration reduced from 5 to 1 second. By `Robert Luke`_.
 
 Fixes
 
@@ -45,10 +45,10 @@ A full list of replacement methods is provided below.
 
 Enhancements
 
-* Add :meth:`mne_nirs.statistics.RegressionResults.compute_contrast` to replace ``compute_contrast``.
-* Add :meth:`mne_nirs.statistics.RegressionResults.plot_topo` to replace ``plot_glm_topo``.
-* Add :meth:`mne_nirs.statistics.RegressionResults.to_dataframe` to replace ``glm_to_tidy``.
-* Add :meth:`mne_nirs.statistics.RegressionResults.to_dataframe_region_of_interest` to replace ``glm_region_of_interest``.
+* :meth:`mne_nirs.statistics.RegressionResults.compute_contrast` replaces ``compute_contrast``.
+* :meth:`mne_nirs.statistics.RegressionResults.plot_topo` replaces ``plot_glm_topo``.
+* :meth:`mne_nirs.statistics.RegressionResults.to_dataframe` replaces ``glm_to_tidy``.
+* :meth:`mne_nirs.statistics.RegressionResults.to_dataframe_region_of_interest` replaces ``glm_region_of_interest``.
 * Add :meth:`mne_nirs.statistics.RegressionResults.scatter` to display GLM results as a scatter plot.
 * Add :meth:`mne_nirs.statistics.RegressionResults.surface_projection` to display GLM results on a cortical surface.
 
