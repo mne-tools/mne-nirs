@@ -13,7 +13,7 @@ from matplotlib.pyplot import Axes
 import mne
 import nilearn
 
-from mne_nirs.statistics import RegressionResults
+from mne_nirs.statistics import RegressionResults, read_glm
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_glm
 
@@ -24,15 +24,16 @@ def _get_minimal_haemo_data(tmin=0, tmax=60):
     raw.crop(tmax=tmax, tmin=tmin)
     raw = mne.preprocessing.nirs.optical_density(raw)
     raw = mne.preprocessing.nirs.beer_lambert_law(raw)
+    raw.resample(0.3)
     return raw
 
 
-def _get_glm_result(tmax=60, tmin=0):
+def _get_glm_result(tmax=60, tmin=0, noise_model='ar1'):
     raw = _get_minimal_haemo_data(tmin=tmin, tmax=tmax)
     design_matrix = make_first_level_design_matrix(raw, stim_dur=5.,
                                                    drift_order=1,
                                                    drift_model='polynomial')
-    return run_glm(raw, design_matrix)
+    return run_glm(raw, design_matrix, noise_model=noise_model)
 
 
 def _get_glm_contrast_result(tmin=60, tmax=400):
@@ -156,6 +157,30 @@ def test_create_results_glm_contrast():
     assert isinstance(res.to_dataframe(), pandas.DataFrame)
     df = res.to_dataframe()
     assert df.shape == (n_channels, 10)
+
+
+def test_results_glm_io():
+
+    res = _get_glm_result(tmax=400)
+    res.save("test-regression-glm.h5", overwrite=True)
+    loaded_res = read_glm("test-regression-glm.h5")
+    assert loaded_res.to_dataframe().equals(res.to_dataframe())
+    assert res == loaded_res
+
+    res = _get_glm_result(tmax=400, noise_model='ols')
+    res.save("test-regression-ols_glm.h5", overwrite=True)
+    loaded_res = read_glm("test-regression-ols_glm.h5")
+    assert loaded_res.to_dataframe().equals(res.to_dataframe())
+    assert res == loaded_res
+
+    res = _get_glm_contrast_result()
+    res.save("test-contrast-glm.h5", overwrite=True)
+    loaded_res = read_glm("test-contrast-glm.h5")
+    assert loaded_res.to_dataframe().equals(res.to_dataframe())
+    assert res == loaded_res
+
+    with pytest.raises(IOError, match='must end with glm.h5'):
+        res.save("test-contrast-glX.h5", overwrite=True)
 
 
 def _take(n, mydict):
