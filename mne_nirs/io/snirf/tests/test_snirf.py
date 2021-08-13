@@ -65,6 +65,21 @@ def test_snirf_write(fname, tmpdir):
     _verify_snirf_version_str(test_file)
 
 
+@requires_h5py
+@requires_testing_data
+@pytest.mark.parametrize('fname', (
+    fname_nirx_15_2,
+))
+def test_snirf_nobday(fname, tmpdir):
+    """Ensure writing works when no birthday is present."""
+    raw_orig = read_raw_nirx(fname, preload=True)
+    raw_orig.info['subject_info'].pop('birthday', None)
+    test_file = tmpdir.join('test_raw.snirf')
+    write_raw_snirf(raw_orig, test_file)
+    raw = read_raw_snirf(test_file)
+    assert_allclose(raw.get_data(), raw_orig.get_data())
+
+
 def _verify_snirf_required_fields(test_file):
     """Tests that all required fields are present.
 
