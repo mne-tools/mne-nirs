@@ -33,6 +33,7 @@ Enhancements
 Fixes
 
 * Fix end values for windowed quality metrics. By `Robert Luke`_.
+* Fix snirf writer bug where it required the optional DateOfBirth field. By `Christian Arthur`_.
 
 
 v0.1.0
@@ -108,3 +109,4 @@ Enhancements
 .. _Robert Luke: https://github.com/rob-luke/
 .. _Eric Larson: https://github.com/larsoner/
 .. _Darin Erat Sleiter: https://github.com/dsleiter
+.. _Christian Arthur: https://github.com/chrsthur
