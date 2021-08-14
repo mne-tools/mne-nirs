@@ -89,7 +89,8 @@ def _add_metadata_tags(raw, nirs):
     if 'birthday' in raw.info['subject_info']:
         birthday = datetime.date(*raw.info['subject_info']['birthday'])
         birthstr = birthday.strftime('%Y-%m-%d')
-        metadata_tags.create_dataset('DateOfBirth', data=[_str_encode(birthstr)])
+        metadata_tags.create_dataset('DateOfBirth',
+                                     data=[_str_encode(birthstr)])
     if 'middle_name' in raw.info['subject_info']:
         middle_name = raw.info['subject_info']['middle_name']
         metadata_tags.create_dataset('middleName',
