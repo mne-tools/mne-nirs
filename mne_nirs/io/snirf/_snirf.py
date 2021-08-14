@@ -68,16 +68,13 @@ def _add_metadata_tags(raw, nirs):
     """
     metadata_tags = nirs.create_group('metaDataTags')
 
-    # Store measurement and birth date
+    # Store measurement
     datestr = raw.info['meas_date'].strftime('%Y-%m-%d')
     timestr = raw.info['meas_date'].strftime('%H:%M:%SZ')
-    birthday = datetime.date(*raw.info['subject_info']['birthday'])
-    birthstr = birthday.strftime('%Y-%m-%d')
     metadata_tags.create_dataset('MeasurementDate',
                                  data=[_str_encode(datestr)])
     metadata_tags.create_dataset('MeasurementTime',
                                  data=[_str_encode(timestr)])
-    metadata_tags.create_dataset('DateOfBirth', data=[_str_encode(birthstr)])
 
     # Store demographic info
     subject_id = raw.info['subject_info']['first_name']
@@ -89,6 +86,11 @@ def _add_metadata_tags(raw, nirs):
     metadata_tags.create_dataset('FrequencyUnit', data=[_str_encode('Hz')])
 
     # Add non standard (but allowed) custom metadata tags
+    if 'birthday' in raw.info['subject_info']:
+        birthday = datetime.date(*raw.info['subject_info']['birthday'])
+        birthstr = birthday.strftime('%Y-%m-%d')
+        metadata_tags.create_dataset('DateOfBirth',
+                                     data=[_str_encode(birthstr)])
     if 'middle_name' in raw.info['subject_info']:
         middle_name = raw.info['subject_info']['middle_name']
         metadata_tags.create_dataset('middleName',
