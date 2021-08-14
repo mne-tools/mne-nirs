@@ -33,7 +33,7 @@ Enhancements
 Fixes
 
 * Fix end values for windowed quality metrics. By `Robert Luke`_.
-* Fix snirf writer bug where it required the optional DateOfBirth field. By `Christian Arthur`_.
+* Fix snirf writer bug where it required the optional DateOfBirth field. By `Christian Arthur`_, Jeonghoon Choi, Jiazhen Liu, and Juncheng Zhang
 
 
 v0.1.0
