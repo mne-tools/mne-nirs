@@ -114,8 +114,6 @@ numpydoc_validation_exclude = {  # set of regex
     r'\.__sub__', r'\.__add__', r'\.__iter__', r'\.__div__', r'\.__neg__',
     # copied from sklearn
     r'mne\.utils\.deprecated',
-    # Dont know why I can't get this working, so just ignore
-    r'mne_nirs\.statistics\._glm_level_first',
 }
 
 
