@@ -1,5 +1,4 @@
 name: style
-
 on:
   push:
     branches:
@@ -7,6 +6,9 @@ on:
   pull_request:
     branches:
       - '*'
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number }}
+  cancel-in-progress: true
 
 jobs:
 

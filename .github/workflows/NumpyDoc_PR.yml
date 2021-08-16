@@ -1,6 +1,9 @@
 name: "numpydoc"
 on:
 - pull_request
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number }}
+  cancel-in-progress: true
 
 
 jobs:
