@@ -7,7 +7,7 @@ on:
     branches:
       - '*'
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.number }}
+  group: ${{ github.workflow }}-${{ github.event.number }}-${{ github.event.type }}
   cancel-in-progress: true
 
 jobs:

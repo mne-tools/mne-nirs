@@ -9,7 +9,7 @@ on:
   schedule:
     - cron: "0 13 * * 1"
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.number }}
+  group: ${{ github.workflow }}-${{ github.event.number }}-${{ github.event.type }}
   cancel-in-progress: true
 
 jobs:
