@@ -163,6 +163,26 @@ Individual (first) level result classes.
    ContrastResults
    read_glm
 
+Individual (first) level result class methods.
+View the class documentation above for a detailed list of methods.
+
+.. autosummary::
+
+   RegressionResults.compute_contrast
+   RegressionResults.to_dataframe
+   RegressionResults.to_dataframe_region_of_interest
+   RegressionResults.scatter
+   RegressionResults.plot_topo
+   RegressionResults.surface_projection
+   RegressionResults.scatter
+   RegressionResults.save
+
+   ContrastResults.to_dataframe
+   ContrastResults.plot_topo
+   ContrastResults.scatter
+   ContrastResults.save
+
+
 Second level analysis
 ^^^^^^^^^^^^^^^^^^^^^
 
