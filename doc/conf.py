@@ -100,6 +100,8 @@ pygments_style = 'sphinx'
 
 # NumPyDoc configuration -----------------------------------------------------
 
+numpydoc_class_members_toctree = False
+numpydoc_attributes_as_param_list = True
 numpydoc_validate = True
 numpydoc_validation_checks = {'all'} | set(error_ignores)
 numpydoc_validation_exclude = {  # set of regex
