@@ -42,6 +42,8 @@ def peak_power(raw, time_window=10, threshold=0.1, l_freq=0.7, h_freq=1.5,
 
     Returns
     -------
+    raw : instance of Raw
+        The Raw data. Optionally annotated with bad segments.
     scores : array (n_nirs, n_windows)
         Array of peak power values.
     times : list
