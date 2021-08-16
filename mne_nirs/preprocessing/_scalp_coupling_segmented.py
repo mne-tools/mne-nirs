@@ -43,6 +43,8 @@ def scalp_coupling_index_windowed(raw, time_window=10, threshold=0.1,
 
     Returns
     -------
+    raw : instance of Raw
+        The Raw data. Optionally annotated with bad segments.
     scores : array (n_nirs, n_windows)
         Array of peak power values.
     times : list
