@@ -1,4 +1,7 @@
 on: [status]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number }}-${{ github.event.type }}
+  cancel-in-progress: true
 
 jobs:
   circleci_artifacts_redirector_job:
@@ -7,7 +10,7 @@ jobs:
     env:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
-    
+
 
       - uses: FranzDiebold/github-env-vars-action@v2
       - name: Print environment variables
@@ -35,8 +38,8 @@ jobs:
           echo "CI_RUN_ID=$CI_RUN_ID"
           echo "CI_RUN_NUMBER=$CI_RUN_NUMBER"
           echo "CI_WORKFLOW=$CI_WORKFLOW"
-          echo "CI_ACTION=$CI_ACTION" 
-    
+          echo "CI_ACTION=$CI_ACTION"
+
       - name: Test
         uses: actions/github-script@0.3.0
         with:
@@ -45,12 +48,12 @@ jobs:
             const core = require('@actions/core')
             const prNumber = context.payload.number;
             core.exportVariable('PULL_NUMBER', prNumber);
-    
+
       - name: view the PR number
         run: |
           echo "PR number = ${{ env.PULL_NUMBER }}"
           echo "PR number = $PULL_NUMBER"
-          
+
       - name: GitHub Action step
         uses: larsoner/circleci-artifacts-redirector-action@master
         with:

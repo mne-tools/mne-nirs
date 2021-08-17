@@ -25,10 +25,10 @@ def glm_region_of_interest(glm, group_by, cond_idx,
             group_by=dict(Left_ROI=[1, 2, 3, 4], Right_ROI=[5, 6, 7, 8])
 
         Note that within a dict entry all channels must have the same type.
-    cond_name : str
-        Name to be used for condition.
     cond_idx : int
         Index of condition of interest.
+    cond_name : str
+        Name to be used for condition.
     weighted : Bool
         Should channels be weighted by inverse of standard error (True).
 
