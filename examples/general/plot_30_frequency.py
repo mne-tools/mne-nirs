@@ -28,7 +28,6 @@ import mne
 import mne_nirs
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.pyplot as plt
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.simulation import simulate_nirs_raw
 
