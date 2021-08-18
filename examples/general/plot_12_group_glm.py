@@ -512,7 +512,7 @@ for idx, cond in enumerate(['Tapping/Left', 'Tapping/Right']):
     ch_summary = ch_summary.query("Chroma in ['hbo']")
     ch_model = smf.mixedlm("theta ~ -1 + ch_name", ch_summary,
                            groups=ch_summary["ID"]).fit(method='nm')
-    model_df = statsmodels_to_results(ch_model)
+    model_df = statsmodels_to_results(ch_model, order=raw_haemo.copy().pick("hbo").ch_names)
 
     # Generate brain figure from data
     brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
