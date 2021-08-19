@@ -292,8 +292,8 @@ for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
                                  picks=picks, axes=axes[ridx, cidx],
                                  show=False, colors=[color], legend=False,
                                  ylim=lims, ci=0.95, show_sensors=cidx == 2)
-            axes[0, cidx].set_title(f"{evoked}")
-            axes[ridx, cidx].set_title("") 
+            axes[ridx, cidx].set_title("")
+        axes[0, cidx].set_title(f"{evoked}")
         axes[ridx, 0].set_ylabel(f"{roi}\nChromophore (ΔμMol)")
 axes[0, 0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 
