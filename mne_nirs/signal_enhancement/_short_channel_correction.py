@@ -14,7 +14,7 @@ from mne.preprocessing.nirs import source_detector_distances
 def short_channel_regression(raw, max_dist=0.01):
     """
     Systemic correction regression based on nearest short channel.
-    
+
     Method as described by NIRx and based on
     :footcite:`fabbri2004optical`, :footcite:`saager2005direct`,
     and :footcite:`scholkmann2014measuring`.
@@ -30,7 +30,7 @@ def short_channel_regression(raw, max_dist=0.01):
     -------
     raw : instance of Raw
         The modified raw instance.
-        
+
     References
     ----------
     .. footbibliography::
