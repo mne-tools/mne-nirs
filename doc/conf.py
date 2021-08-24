@@ -18,6 +18,7 @@ import sys
 from distutils.version import LooseVersion
 import sphinx
 import os
+import warnings
 from sphinx_gallery.sorting import FileNameSortKey
 
 sys.path.append("../")
