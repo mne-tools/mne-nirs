@@ -107,7 +107,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from lets_plot import *
 LetsPlot.setup_html()
-set_3d_backend('pyvista')
+set_3d_backend('pyvistaqt')
 
 
 # %%
