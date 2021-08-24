@@ -84,7 +84,6 @@ import pandas as pd
 
 # Import MNE processing
 from mne.preprocessing.nirs import optical_density, beer_lambert_law
-from mne.viz import set_3d_backend
 
 # Import MNE-NIRS processing
 from mne_nirs.statistics import run_glm
@@ -107,7 +106,6 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from lets_plot import *
 LetsPlot.setup_html()
-set_3d_backend('pyvistaqt')
 
 
 # %%
