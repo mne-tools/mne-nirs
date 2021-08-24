@@ -13,7 +13,7 @@ def enhance_negative_correlation(raw):
     """
     Apply negative correlation enhancement algorithm.
 
-    As descirbed in [1]_.
+    As described in :footcite:`cui2010functional`. 
     This function will return a modified raw instance that has the
     enhancement applied to it.
     This function can only be run on data containing
