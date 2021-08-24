@@ -13,26 +13,16 @@ from mne.preprocessing.nirs import source_detector_distances
 
 def short_channel_regression(raw, max_dist=0.01):
     """
-    Short channel regression based on nearest channel.
+    Systemic correction regression based on nearest short channel.
 
-    Fabbri, Francesco, et al. "Optical measurements of absorption changes in
-    two-layered diffusive media."
-    Physics in Medicine & Biology 49.7 (2004): 1183.
-
-    Saager, Rolf B., and Andrew J. Berger. "Direct characterization and
-    removal of interfering absorption trends in two-layer turbid media."
-    JOSA A 22.9 (2005): 1874-1882.
-
-    Scholkmann, Felix, Andreas Jaakko Metz, and Martin Wolf.
-    "Measuring tissue hemodynamics and oxygenation by continuous-wave
-    functional near-infrared spectroscopy—how robust are the different
-    calculation methods against movement artifacts?."
-    Physiological measurement 35.4 (2014): 717.
+    Method as described by NIRx and based on
+    :footcite:`fabbri2004optical`, :footcite:`saager2005direct`,
+    and :footcite:`scholkmann2014measuring`.
 
     Parameters
     ----------
     raw : instance of Raw
-        Haemoglobin data.
+        Raw instance containing optical density data.
     max_dist : number
         Channels less than this distance are considered short (m).
 
@@ -40,6 +30,10 @@ def short_channel_regression(raw, max_dist=0.01):
     -------
     raw : instance of Raw
         The modified raw instance.
+
+    References
+    ----------
+    .. footbibliography::
     """
     raw = raw.copy().load_data()
     _validate_type(raw, BaseRaw, 'raw')
