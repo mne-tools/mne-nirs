@@ -18,6 +18,7 @@ import sys
 from distutils.version import LooseVersion
 import sphinx
 import os
+import warnings
 from sphinx_gallery.sorting import FileNameSortKey
 
 sys.path.append("../")
@@ -236,11 +237,40 @@ intersphinx_mapping = {
 
 filepath_prefix = 'examples/mne-nirs-website-examples'
 
+scrapers = ('matplotlib',)
+try:
+    mne.viz.set_3d_backend(mne.viz.get_3d_backend())
+except Exception:
+    report_scraper = None
+else:
+    backend = mne.viz.get_3d_backend()
+    if backend == 'mayavi':
+        from traits.api import push_exception_handler
+        mlab = mne.utils._import_mlab()
+        # Do not pop up any mayavi windows while running the
+        # examples. These are very annoying since they steal the focus.
+        mlab.options.offscreen = True
+        # hack to initialize the Mayavi Engine
+        mlab.test_plot3d()
+        mlab.close()
+        scrapers += ('mayavi',)
+        push_exception_handler(reraise_exceptions=True)
+    elif backend in ('notebook', 'pyvistaqt'):
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning)
+            import pyvista
+        pyvista.OFF_SCREEN = False
+        brain_scraper = mne.viz._brain._BrainScraper()
+        scrapers += (brain_scraper, 'pyvista')
+    report_scraper = mne.report._ReportScraper()
+    scrapers += (report_scraper,)
+    del backend
+
 # sphinx-gallery configuration
 sphinx_gallery_conf = {
     'doc_module': 'mne_nirs',
     'backreferences_dir': os.path.join('generated'),
-    'image_scrapers': ('pyvista', 'matplotlib'),
+    'image_scrapers': scrapers,
     'reference_url': {
         'mne_nirs': None},
     'download_all_examples': False,
