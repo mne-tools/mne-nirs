@@ -16,6 +16,8 @@ def enhance_negative_correlation(raw):
     As descirbed in [1]_.
     This function will return a modified raw instance that has the
     enhancement applied to it.
+    This function can only be run on data containing
+    hbo and hbr types.
 
     Parameters
     ----------
