@@ -64,6 +64,7 @@ def test_snirf_write(fname, tmpdir):
     raw_orig = read_raw_nirx(fname, preload=True)
     test_file = tmpdir.join('test_raw.snirf')
     write_raw_snirf(raw_orig, test_file)
+    write_raw_snirf(raw_orig, "/Users/rluke/Desktop/test_snirf_w_homer_string.snirf")
     raw = read_raw_snirf(test_file)
 
     # Check annotations are the same

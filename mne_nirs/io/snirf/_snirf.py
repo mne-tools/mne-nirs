@@ -132,7 +132,8 @@ def _add_metadata_tags(raw, nirs):
         _create_dataset_str(metadata_tags, 'sex', data=sex)
     if raw.info['dig'] is not None:
         coord_frame_id = int(raw.info['dig'][0].get('coord_frame'))
-        _create_dataset_str(metadata_tags, 'MNE_coordFrame', data=str(coord_frame_id))
+        _create_dataset_str(metadata_tags, 'MNE_coordFrame',
+                            data=str(coord_frame_id))
 
 
 def _add_single_data_block(raw, nirs):
