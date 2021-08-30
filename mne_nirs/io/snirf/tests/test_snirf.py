@@ -12,8 +12,7 @@ from mne.datasets.testing import data_path, requires_testing_data
 from mne.utils import requires_h5py, object_diff
 from mne.io import read_raw_snirf, read_raw_nirx
 
-from mne.preprocessing.nirs import (optical_density, beer_lambert_law,
-                                    short_channels, source_detector_distances)
+from mne.preprocessing.nirs import optical_density, beer_lambert_law
 
 from mne_nirs.io.snirf import write_raw_snirf, SPEC_FORMAT_VERSION
 
