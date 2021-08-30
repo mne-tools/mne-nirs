@@ -44,26 +44,6 @@ def test_plot_nirs_source_detector_pyvista():
         verbose=True)
 
 
-@requires_mayavi
-@traits_test
-def test_plot_nirs_source_detector_mayavi():
-    mne.viz.set_3d_backend('mayavi')
-    data_path = mne.datasets.testing.data_path() + '/NIRx/nirscout'
-    subjects_dir = mne.datasets.sample.data_path() + '/subjects'
-    raw = mne.io.read_raw_nirx(data_path + '/nirx_15_2_recording_w_short')
-
-    mne_nirs.visualisation.plot_nirs_source_detector(
-        np.random.randn(len(raw.ch_names)),
-        raw.info, show_axes=True,
-        subject='fsaverage',
-        trans='fsaverage',
-        surfaces=['brain'],
-        fnirs=False,
-        cmap='inferno',
-        subjects_dir=subjects_dir,
-        verbose=True)
-
-
 @pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
 def test_run_plot_GLM_topo():
     raw_intensity = _load_dataset()
