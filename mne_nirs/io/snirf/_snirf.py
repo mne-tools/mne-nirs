@@ -56,6 +56,39 @@ def _str_encode(str_val):
     return str_val.encode('UTF-8')
 
 
+def _create_dataset_str(dset, name, data=None, dtype=None):
+    """Create a dataset with string datatype with length as Homer.
+
+    There appears to be some peculiarities with handling HDF5 strings
+    in MATLAB. This function mimics the data types written by Homer3.
+
+    Parameters
+    ----------
+    dset : dataset
+        Dataset to write to.
+    name : str
+        Dataset name.
+    data : str
+        The string to encode.
+    dtype : str
+        Type to write. If none, then auto set according to Homer.
+    """
+    if data is None:
+        raise RuntimeError('Data must be provided to write to dataset')
+
+    if not isinstance(data, str):
+        raise RuntimeError('Data must be a string type')
+
+    encoded_data_list = [_str_encode(data)]
+
+    if dtype is None:
+        dtype = f"S{len(data) + 1}"
+
+    dset.create_dataset(name, data=encoded_data_list, dtype=dtype)
+
+    return True
+
+
 def _add_metadata_tags(raw, nirs):
     """Creates and adds elements to the nirs metaDataTags group.
 
@@ -71,39 +104,35 @@ def _add_metadata_tags(raw, nirs):
     # Store measurement
     datestr = raw.info['meas_date'].strftime('%Y-%m-%d')
     timestr = raw.info['meas_date'].strftime('%H:%M:%SZ')
-    metadata_tags.create_dataset('MeasurementDate',
-                                 data=[_str_encode(datestr)])
-    metadata_tags.create_dataset('MeasurementTime',
-                                 data=[_str_encode(timestr)])
+    _create_dataset_str(metadata_tags, 'MeasurementDate', data=datestr)
+    _create_dataset_str(metadata_tags, 'MeasurementTime', data=timestr)
 
     # Store demographic info
     subject_id = raw.info['subject_info']['first_name']
-    metadata_tags.create_dataset('SubjectID', data=[_str_encode(subject_id)])
+    _create_dataset_str(metadata_tags, 'SubjectID', data=subject_id)
 
     # Store the units of measurement
-    metadata_tags.create_dataset('LengthUnit', data=[_str_encode('m')])
-    metadata_tags.create_dataset('TimeUnit', data=[_str_encode('s')])
-    metadata_tags.create_dataset('FrequencyUnit', data=[_str_encode('Hz')])
+    _create_dataset_str(metadata_tags, 'LengthUnit', data='m')
+    _create_dataset_str(metadata_tags, 'TimeUnit', data='s')
+    _create_dataset_str(metadata_tags, 'FrequencyUnit', data='Hz')
 
     # Add non standard (but allowed) custom metadata tags
     if 'birthday' in raw.info['subject_info']:
         birthday = datetime.date(*raw.info['subject_info']['birthday'])
         birthstr = birthday.strftime('%Y-%m-%d')
-        metadata_tags.create_dataset('DateOfBirth',
-                                     data=[_str_encode(birthstr)])
+        _create_dataset_str(metadata_tags, 'DateOfBirth', data=birthstr)
     if 'middle_name' in raw.info['subject_info']:
         middle_name = raw.info['subject_info']['middle_name']
-        metadata_tags.create_dataset('middleName',
-                                     data=[_str_encode(middle_name)])
+        _create_dataset_str(metadata_tags, 'middleName', data=middle_name)
     if 'last_name' in raw.info['subject_info']:
         last_name = raw.info['subject_info']['last_name']
-        metadata_tags.create_dataset('lastName', data=[_str_encode(last_name)])
+        _create_dataset_str(metadata_tags, 'lastName', data=last_name)
     if 'sex' in raw.info['subject_info']:
         sex = str(int(raw.info['subject_info']['sex']))
-        metadata_tags.create_dataset('sex', data=[_str_encode(sex)])
+        _create_dataset_str(metadata_tags, 'sex', data=sex)
     if raw.info['dig'] is not None:
         coord_frame_id = int(raw.info['dig'][0].get('coord_frame'))
-        metadata_tags.create_dataset('MNE_coordFrame', data=[coord_frame_id])
+        _create_dataset_str(metadata_tags, 'MNE_coordFrame', data=str(coord_frame_id))
 
 
 def _add_single_data_block(raw, nirs):

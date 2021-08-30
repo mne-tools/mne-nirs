@@ -11,6 +11,10 @@ import pytest
 from mne.datasets.testing import data_path, requires_testing_data
 from mne.utils import requires_h5py, object_diff
 from mne.io import read_raw_snirf, read_raw_nirx
+
+from mne.preprocessing.nirs import (optical_density, beer_lambert_law,
+                                    short_channels, source_detector_distances)
+
 from mne_nirs.io.snirf import write_raw_snirf, SPEC_FORMAT_VERSION
 
 
@@ -21,6 +25,32 @@ fname_nirx_15_2 = op.join(data_path(download=False),
 fname_nirx_15_2_short = op.join(data_path(download=False),
                                 'NIRx', 'nirscout',
                                 'nirx_15_2_recording_w_short')
+
+# Test the reader here for convenience too
+sfnirs_homer_103_wShort = op.join(data_path(download=False),
+                                  'SNIRF', 'SfNIRS', 'snirf_homer3', '1.0.3',
+                                  'snirf_1_3_nirx_15_2_'
+                                  'recording_w_short.snirf')
+sfnirs_homer_103_153 = op.join(data_path(download=False),
+                               'SNIRF', 'SfNIRS', 'snirf_homer3', '1.0.3',
+                               'nirx_15_3_recording.snirf')
+
+
+@requires_h5py
+@requires_testing_data
+@pytest.mark.filterwarnings('ignore:.*contains 2D location.*:')
+@pytest.mark.parametrize('fname', ([sfnirs_homer_103_wShort,
+                                    sfnirs_homer_103_153,
+                                    ]))
+def test_basic_reading_and_min_process(fname):
+    """Test reading SNIRF files and minimum typical processing."""
+    raw = read_raw_snirf(fname, preload=True)
+    # SNIRF data can contain several types, so only apply appropriate functions
+    if 'fnirs_cw_amplitude' in raw:
+        raw = optical_density(raw)
+    if 'fnirs_od' in raw:
+        raw = beer_lambert_law(raw)
+    assert 'hbo' in raw
 
 
 @requires_h5py
