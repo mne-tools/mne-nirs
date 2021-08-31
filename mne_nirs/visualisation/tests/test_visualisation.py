@@ -6,7 +6,7 @@ import pytest
 import mne
 import mne_nirs
 import numpy as np
-from mne.utils import (requires_pysurfer, traits_test, requires_mayavi)
+from mne.utils import (requires_pysurfer, traits_test)
 from mne_nirs.experimental_design.tests.test_experimental_design import \
     _load_dataset
 from mne_nirs.experimental_design import make_first_level_design_matrix
