@@ -6,7 +6,7 @@ import pytest
 import mne
 import mne_nirs
 import numpy as np
-from mne.utils import (requires_pysurfer, traits_test, requires_mayavi)
+from mne.utils import (requires_pysurfer, traits_test)
 from mne_nirs.experimental_design.tests.test_experimental_design import \
     _load_dataset
 from mne_nirs.experimental_design import make_first_level_design_matrix
@@ -40,26 +40,6 @@ def test_plot_nirs_source_detector_pyvista():
         trans='fsaverage',
         surfaces=['brain'],
         fnirs=False,
-        subjects_dir=subjects_dir,
-        verbose=True)
-
-
-@requires_mayavi
-@traits_test
-def test_plot_nirs_source_detector_mayavi():
-    mne.viz.set_3d_backend('mayavi')
-    data_path = mne.datasets.testing.data_path() + '/NIRx/nirscout'
-    subjects_dir = mne.datasets.sample.data_path() + '/subjects'
-    raw = mne.io.read_raw_nirx(data_path + '/nirx_15_2_recording_w_short')
-
-    mne_nirs.visualisation.plot_nirs_source_detector(
-        np.random.randn(len(raw.ch_names)),
-        raw.info, show_axes=True,
-        subject='fsaverage',
-        trans='fsaverage',
-        surfaces=['brain'],
-        fnirs=False,
-        cmap='inferno',
         subjects_dir=subjects_dir,
         verbose=True)
 
