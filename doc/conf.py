@@ -123,7 +123,7 @@ numpydoc_validation_exclude = {  # set of regex
 
 
 # sphinxcontrib-bibtex
-bibtex_bibfiles = ['./references.bib']
+bibtex_bibfiles = ['./references.bib', './references-nirs.bib']
 bibtex_style = 'unsrt'
 bibtex_footbibliography_header = ''
 
