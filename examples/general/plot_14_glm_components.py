@@ -334,7 +334,7 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 #
 # To assist in selecting a high pass value a few convenience functions are included in MNE-NIRS.
 # First we can query what the longest ISI is per annotation, but first we must be sure
-# to remove annotations we arent interested in (in this experiment the trigger
+# to remove annotations we aren't interested in (in this experiment the trigger
 # 15 is not of interest).
 
 raw_original = mne.io.read_raw_nirx(fnirs_raw_dir)
