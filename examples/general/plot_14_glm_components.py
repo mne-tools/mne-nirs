@@ -49,7 +49,8 @@ import numpy as np
 import mne
 
 # Import MNE-NIRS processing
-from mne_nirs.experimental_design import make_first_level_design_matrix
+from mne_nirs.experimental_design import make_first_level_design_matrix, \
+    longest_ISI, drift_high_pass
 
 # Import Nilearn
 from nilearn.glm import first_level
@@ -330,3 +331,41 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # "The cutoff period (1/high_pass) should be set as the longest period between two trials of the same condition multiplied by 2.
 # For instance, if the longest period is 32s, the high_pass frequency shall be 1/64 Hz ~ 0.016 Hz."
 # `(reference) <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_first_level_details.html#changing-the-drift-model>`__.
+#
+# To assist in selecting a high pass value a few convenience functions are included in MNE-NIRS.
+# First we can query what the longest ISI is per annotation, but first we must be sure
+# to remove annotations we arent interested in (in this experiment the trigger
+# 15 is not of interest).
+
+raw_original = mne.io.read_raw_nirx(fnirs_raw_dir)
+raw_original.annotations.delete(raw_original.annotations.description == '15.0')
+
+isis = longest_ISI(raw_original)
+print(isis)
+
+
+# %%
+#
+# We see that the longest period between two trials is 435 seconds. Which multiplied
+# by two is 870 seconds. So aa high pass value of 1/870 or 0.001 Hz is appropriate.
+# We can also use the function
+# :func:`mne_nirs.experimental_design.make_first_level_design_matrix`
+# to suggest the high pass value. Note however, that you should not blindly follow
+# this functions suggestion, as each experiment is different. Instead use this as
+# a sanity check on your own calculations.
+
+print(drift_high_pass(raw_original))
+
+
+# %%
+#
+# For example, if all conditions were evoking the same response it may make more
+# sense to include them as a single condition when computing the ISI.
+# This would be achieved by renaming the triggers.
+
+raw_original.annotations.rename({'2.0': 'Tapping',
+                                 '3.0': 'Tapping'})
+raw_original.annotations.delete(raw_original.annotations.description == '1.0')
+isis = longest_ISI(raw_original)
+print(isis)
+print(drift_high_pass(raw_original))

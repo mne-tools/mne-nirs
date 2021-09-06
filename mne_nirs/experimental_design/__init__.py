@@ -3,4 +3,5 @@
 # License: BSD (3-clause)
 
 from ._experimental_design import create_boxcar, \
-    make_first_level_design_matrix
+    make_first_level_design_matrix, longest_ISI, \
+    drift_high_pass

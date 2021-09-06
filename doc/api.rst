@@ -132,6 +132,8 @@ Experimental Design
 
    make_first_level_design_matrix
    create_boxcar
+   longest_ISI
+   drift_high_pass
 
 
 Statistics

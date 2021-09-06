@@ -133,3 +133,51 @@ def create_boxcar(raw, event_id=None, stim_dur=1):
         s[event_samples, idx] = 1.
         s[:, idx] = np.convolve(s[:, idx], bc)[:len(raw.times)]
     return s
+
+
+def longest_ISI(raw):
+    """
+    Compute longest ISI per annotation.
+
+    Parameters
+    ----------
+    raw : instance of Raw
+        Haemoglobin data.
+
+    Returns
+    -------
+    l : list
+        Longest ISI per annotation.
+    """
+    descriptions = np.unique(raw.annotations.description)
+    l = []
+    for desc in descriptions:
+        mask = raw.annotations.description == desc
+        l.append(np.max(np.diff(raw.annotations.onset[mask])))
+    return l
+
+
+def drift_high_pass(raw):
+    """
+    Compute cosine drift regressor high pass cut off.
+
+    Value computed according to Nilearn :footcite:`abraham2014machine`
+    `(suggestion) <http://nilearn.github.io/auto_examples/04_glm_first
+    _level/plot_first_level_details.html#changing-the-drift-model>`__.
+
+    Parameters
+    ----------
+    raw : instance of Raw
+        Haemoglobin data.
+
+    Returns
+    -------
+    l : number
+        Suggested high pass cut off.
+
+    References
+    ----------
+    .. footbibliography::
+    """
+    max_isi = np.max(longest_ISI(raw))
+    return 1 / (2 * max_isi)
