@@ -14,10 +14,11 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
                                    add_reg_names=None, min_onset=-24,
                                    oversampling=50):
     """
-    Generate design matrix from MNE data structure.
+    Generate a design matrix based on annotations and model HRF.
 
-    This is a wrapper function for
-    nilearn.stats.first_level_model.make_first_level_design_matrix.
+    This is a wrapper function for the nilearn :footcite:`abraham2014machine`
+    function ``make_first_level_design_matrix``. For detailed description
+    of the arguments see the nilearn documentation at http://nilearn.github.io
 
     Parameters
     ----------
@@ -71,6 +72,10 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
     design_matrix : DataFrame instance,
         Holding the computed design matrix, the index being the frames_times
         and each column a regressor.
+
+    References
+    ----------
+    .. footbibliography::
     """
     from nilearn.glm.first_level import make_first_level_design_matrix
     from pandas import DataFrame
@@ -101,7 +106,7 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
 
 def create_boxcar(raw, event_id=None, stim_dur=1):
     """
-    Generate boxcar waveform from MNE data structure.
+    Generate boxcar representation of the experimental paradigm.
 
     Parameters
     ----------
@@ -115,7 +120,7 @@ def create_boxcar(raw, event_id=None, stim_dur=1):
     Returns
     -------
     s : array
-        Returns an array for each trigger channel.
+        Returns an array for each annotation label.
     """
     from scipy import signal
     bc = signal.boxcar(round(raw.info['sfreq'] * stim_dur))
