@@ -96,8 +96,8 @@ def test_high_pass_helpers():
     # Test the helpers give reasonable values
     raw = simulate_nirs_raw(sfreq=1., amplitude=1., sig_dur=300., stim_dur=1.,
                             isi_min=20., isi_max=40.)
-    l = longest_ISI(raw)[0]
-    assert l >= 20
-    assert l <= 40
-    assert drift_high_pass(raw) >= 1 / (40*2)
-    assert drift_high_pass(raw) <= 1 / (20*2)
+    lisi = longest_ISI(raw)[0]
+    assert lisi >= 20
+    assert lisi <= 40
+    assert drift_high_pass(raw) >= 1 / (40 * 2)
+    assert drift_high_pass(raw) <= 1 / (20 * 2)

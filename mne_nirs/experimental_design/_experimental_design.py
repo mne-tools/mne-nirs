@@ -146,15 +146,15 @@ def longest_ISI(raw):
 
     Returns
     -------
-    l : list
+    longest : list
         Longest ISI per annotation.
     """
     descriptions = np.unique(raw.annotations.description)
-    l = []
+    longest = []
     for desc in descriptions:
         mask = raw.annotations.description == desc
-        l.append(np.max(np.diff(raw.annotations.onset[mask])))
-    return l
+        longest.append(np.max(np.diff(raw.annotations.onset[mask])))
+    return longest
 
 
 def drift_high_pass(raw):
