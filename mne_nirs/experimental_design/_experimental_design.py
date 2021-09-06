@@ -14,7 +14,7 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
                                    add_reg_names=None, min_onset=-24,
                                    oversampling=50):
     """
-    Generate design matrix for fNIRS data based on annotations and model HRF.
+    Generate a design matrix based on annotations and model HRF.
 
     This is a wrapper function for the nilearn :footcite:`abraham2014machine`
     function ``make_first_level_design_matrix``. For detailed description
