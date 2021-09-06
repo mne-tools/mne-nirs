@@ -212,9 +212,9 @@ raw_intensity.annotations.set_durations(5)
 # with color representing amplitude.
 
 design_matrix = make_first_level_design_matrix(raw_intensity,
-                                               # Ignore drift model for now, see description below
+                                               # Ignore drift model for now, see section below
                                                drift_model='polynomial',
-                                               drift_order=1,
+                                               drift_order=0,
                                                # Here we specify the HRF and duration
                                                hrf_model='glover',
                                                stim_dur=3.0)
@@ -229,9 +229,9 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # the resulting regressor for each annotation is elongated.
 
 design_matrix = make_first_level_design_matrix(raw_intensity,
-                                               # Ignore drift model for now, see description below
+                                               # Ignore drift model for now, see section below
                                                drift_model='polynomial',
-                                               drift_order=1,
+                                               drift_order=0,
                                                # Here we specify the HRF and duration
                                                hrf_model='glover',
                                                stim_dur=13.0)
