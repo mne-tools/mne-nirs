@@ -398,16 +398,20 @@ class RegressionResults(_BaseGLM):
             tidy = tidy.append(roi)
 
         if demographic_info:
-            tidy['Age'] = float(self.info["subject_info"]['age'])
-            if self.info["subject_info"]['sex'] == FIFF.FIFFV_SUBJ_SEX_MALE:
-                sex = "male"
-            elif self.info["subject_info"]['sex'] == \
-                    FIFF.FIFFV_SUBJ_SEX_FEMALE:
-                sex = "female"
-            else:
-                sex = "unknown"
-            tidy['Sex'] = sex
-            tidy['Hand'] = self.info["subject_info"]['hand']
+            if 'age' in self.info['subject_info'].keys():
+                tidy['Age'] = float(self.info["subject_info"]['age'])
+            if 'sex' in self.info['subject_info'].keys():
+                if self.info["subject_info"]['sex'] == \
+                        FIFF.FIFFV_SUBJ_SEX_MALE:
+                    sex = "male"
+                elif self.info["subject_info"]['sex'] == \
+                        FIFF.FIFFV_SUBJ_SEX_FEMALE:
+                    sex = "female"
+                else:
+                    sex = "unknown"
+                tidy['Sex'] = sex
+            if 'Hand' in self.info['subject_info'].keys():
+                tidy['Hand'] = self.info["subject_info"]['hand']
 
         return tidy
 
