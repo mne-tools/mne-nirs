@@ -19,7 +19,6 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
     This is a wrapper function for the nilearn :footcite:`abraham2014machine`
     function ``make_first_level_design_matrix``. For detailed description
     of the arguments see the nilearn documentation at http://nilearn.github.io
-    
 
     Parameters
     ----------
@@ -73,6 +72,10 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
     design_matrix : DataFrame instance,
         Holding the computed design matrix, the index being the frames_times
         and each column a regressor.
+
+    References
+    ----------
+    .. footbibliography::
     """
     from nilearn.glm.first_level import make_first_level_design_matrix
     from pandas import DataFrame
