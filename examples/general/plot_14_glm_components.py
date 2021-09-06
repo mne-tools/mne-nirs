@@ -19,6 +19,11 @@ The MNE-NIRS GLM analysis framework is entirely based on the Nilearn package.
 Their excellent software forms the basis of the analysis described in this tutorial.
 As such, you may also wish to read their documentation to familiarise yourself with
 different concepts used here.
+Specifically this tutorial is heavily based on the following Nilearn examples,
+but placed within an fNIRS context.
+
+* http://nilearn.github.io/auto_examples/04_glm_first_level/plot_first_level_details.html
+* https://nilearn.github.io/auto_examples/04_glm_first_level/plot_hrf.html
 
 Accordingly we will access nilearn functions directly in this tutorial to illustrate
 various choices available in your analysis.
@@ -238,3 +243,90 @@ design_matrix = make_first_level_design_matrix(raw_intensity,
 
 fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
 fig = plot_design_matrix(design_matrix, ax=ax1)
+
+
+# %%
+# Drift Regressors
+# ---------------------------------------------------------------------
+#
+# Aspects of the measured signal may change in over time in an manner
+# unrelated to the neural response we wish to measure.
+# For example, the measurement room may warm up and result in a steady
+# increase in the signal over the measurement duration.
+# These signal changes that are unrelated to our feature of interest are
+# termed drifts, and can be included in the design matrix and the GLM
+# fitting as drift regressors.
+#
+# In the examples above a single drift regressor was used to model a constant
+# offset in the data. This is also termed a zero order polynomial regressor.
+# Two types of regressors are provided for in MNE-NIRS thanks to Nilearn.
+# Polynomial  and cosine drift regressors.
+
+
+# %%
+# Polynomial Drift Regressors
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#
+# In the example above a polynomial drift regressor is included.
+# In this case we can specify the order of the polynomils to be included.
+# A zero order polynomial will fit a constant, a first order will fit an
+# increasing function, and so on.
+# As an example we demonstrate how to include up to a fifth order polynomial.
+# You can observe that with increasing polynomial order,
+# higher frequency components will be removed from the signal.
+
+design_matrix = make_first_level_design_matrix(raw_intensity,
+                                               drift_model='polynomial',
+                                               drift_order=5)
+
+fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
+fig = plot_design_matrix(design_matrix, ax=ax1)
+
+
+# %%
+# Cosine Drift Regressors
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#
+# An alternative way to specify drift regressors is via the cosine drift model.
+# This may be more intuitive as you can specify regressors up to a certain cutoff
+# frequency. Effectively regressing out frequency components below a limit,
+# which may be interpreted as a high pass filter.
+# In the example below we demonstrate how to regress our signals up to 0.01 Hz.
+# We observe that the function has included 6 drift regressors in the design matrix.
+
+design_matrix = make_first_level_design_matrix(raw_intensity,
+                                               drift_model='cosine',
+                                               high_pass=0.01)
+
+fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
+fig = plot_design_matrix(design_matrix, ax=ax1)
+
+
+# %%
+#
+# As described above, including additional regressor components will remove
+# higher frequency components. So we can increase the high pass cut off and
+# this should add more regressors.
+
+design_matrix = make_first_level_design_matrix(raw_intensity,
+                                               drift_model='cosine',
+                                               high_pass=0.03)
+
+fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
+fig = plot_design_matrix(design_matrix, ax=ax1)
+
+
+# %%
+# Selecting Drift Regressors
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#
+# The aim of the drift regressors is to remove signal components unrelated
+# to the expected neural response. As the expected response can be computed
+# based on annotation timing and expected brain responses
+# (see :ref:`frequency commentary <tut-fnirs-freq>`)
+# the high pass cut off can be set on first principles.
+#
+# The Nilearn documentation states that
+# "The cutoff period (1/high_pass) should be set as the longest period between two trials of the same condition multiplied by 2.
+# For instance, if the longest period is 32s, the high_pass frequency shall be 1/64 Hz ~ 0.016 Hz."
+# `(reference) <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_first_level_details.html#changing-the-drift-model>`__.
