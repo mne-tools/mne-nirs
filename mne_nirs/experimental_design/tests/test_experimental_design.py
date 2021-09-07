@@ -95,7 +95,7 @@ def test_cropped_raw():
 def test_high_pass_helpers():
     # Test the helpers give reasonable values
     raw = simulate_nirs_raw(sfreq=1., amplitude=1., sig_dur=300., stim_dur=1.,
-                            isi_min=20., isi_max=40.)
+                            isi_min=20., isi_max=38.)
     lisi, names = longest_inter_annotation_interval(raw)
     lisi = lisi[0]
     assert lisi >= 20
