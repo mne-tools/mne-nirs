@@ -67,8 +67,7 @@ from nilearn.plotting import plot_design_matrix
 # After reading the data we resample down to 1Hz
 # to meet github memory constraints.
 #
-# .. collapse:: Data description (click to expand)
-#    :class: success
+# .. note::
 #
 #    Optodes were placed over the motor cortex using the standard NIRX motor
 #    montage, but with 8 short channels added (see their web page for details).
