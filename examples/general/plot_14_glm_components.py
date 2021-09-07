@@ -61,7 +61,7 @@ import mne
 
 # Import MNE-NIRS processing
 from mne_nirs.experimental_design import make_first_level_design_matrix, \
-    longest_ISI, drift_high_pass
+    longest_inter_annotation_interval, drift_high_pass
 
 # Import Nilearn
 from nilearn.glm import first_level
@@ -406,7 +406,7 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 raw_original = mne.io.read_raw_nirx(fnirs_raw_dir)
 raw_original.annotations.delete(raw_original.annotations.description == '15.0')
 
-isis = longest_ISI(raw_original)
+isis, names = longest_inter_annotation_interval(raw_original)
 print(isis)
 
 
@@ -432,6 +432,6 @@ print(drift_high_pass(raw_original))
 raw_original.annotations.rename({'2.0': 'Tapping',
                                  '3.0': 'Tapping'})
 raw_original.annotations.delete(raw_original.annotations.description == '1.0')
-isis = longest_ISI(raw_original)
+isis, names = longest_inter_annotation_interval(raw_original)
 print(isis)
 print(drift_high_pass(raw_original))

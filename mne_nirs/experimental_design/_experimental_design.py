@@ -135,9 +135,12 @@ def create_boxcar(raw, event_id=None, stim_dur=1):
     return s
 
 
-def longest_ISI(raw):
+def longest_inter_annotation_interval(raw):
     """
     Compute longest ISI per annotation.
+
+    Specifically, longest period between two trials of
+    the same condition.
 
     Parameters
     ----------
@@ -148,13 +151,15 @@ def longest_ISI(raw):
     -------
     longest : list
         Longest ISI per annotation.
+    annotation_name : list
+        Annotation name corresponding to reported interval.
     """
     descriptions = np.unique(raw.annotations.description)
     longest = []
     for desc in descriptions:
         mask = raw.annotations.description == desc
         longest.append(np.max(np.diff(raw.annotations.onset[mask])))
-    return longest
+    return longest, annotation_name
 
 
 def drift_high_pass(raw):
@@ -179,5 +184,6 @@ def drift_high_pass(raw):
     ----------
     .. footbibliography::
     """
-    max_isi = np.max(longest_ISI(raw))
+    longest, annotation_name = longest_inter_annotation_interval(raw)
+    max_isi = np.max(longest)
     return 1 / (2 * max_isi)

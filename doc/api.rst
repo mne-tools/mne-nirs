@@ -132,7 +132,7 @@ Experimental Design
 
    make_first_level_design_matrix
    create_boxcar
-   longest_ISI
+   longest_inter_annotation_interval
    drift_high_pass
 
 

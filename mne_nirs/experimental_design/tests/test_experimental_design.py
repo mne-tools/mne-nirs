@@ -8,7 +8,7 @@ import mne
 import mne_nirs
 import numpy as np
 from mne_nirs.experimental_design import make_first_level_design_matrix, \
-    longest_ISI, drift_high_pass
+    longest_inter_annotation_interval, drift_high_pass
 from mne_nirs.simulation import simulate_nirs_raw
 
 
@@ -96,7 +96,7 @@ def test_high_pass_helpers():
     # Test the helpers give reasonable values
     raw = simulate_nirs_raw(sfreq=1., amplitude=1., sig_dur=300., stim_dur=1.,
                             isi_min=20., isi_max=40.)
-    lisi = longest_ISI(raw)[0]
+    lisi = longest_inter_annotation_interval(raw)[0]
     assert lisi >= 20
     assert lisi <= 40
     assert drift_high_pass(raw) >= 1 / (40 * 2)
