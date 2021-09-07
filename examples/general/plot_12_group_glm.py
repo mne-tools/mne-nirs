@@ -583,8 +583,8 @@ largest_response_channel
 
 # These files are not distributedd with MNE-NIRS.
 # You need to download them from the authors website.
-fold_files = [os.path.join(expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-10.xls"),
-              os.path.join(expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-5.xls")]
+fold_files = [os.path.join(os.path.expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-10.xls"),
+              os.path.join(os.path.expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-5.xls")]
 
 raw_channel = raw_haemo.copy().pick(largest_response_channel.name[0])
 fold_channel_specificity(raw_channel, fold_files)[0]
