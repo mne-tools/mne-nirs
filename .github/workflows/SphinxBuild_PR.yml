@@ -38,7 +38,7 @@ jobs:
           unzip data.zip -d ~/mne_data/fOLD
           ls
           ls ~
-          ls ~/fOLD
+          ls ~/mne_data/fOLD
       - shell: bash -el {0}
         run: |
           ./tools/github_actions_dependencies.sh
