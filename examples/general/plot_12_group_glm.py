@@ -586,7 +586,7 @@ largest_response_channel
 # channel specificity to different brain regions.
 # These files are not distributedd with MNE-NIRS.
 # You need to download them from the authors website.
-# In this example I have downloaded the entire _fOLD-public_ repository
+# In this example I have downloaded the entire ``fOLD-public`` repository
 # as a zip and expanded it in ``/home/rob/mne_data/fOLD/``.
 # To use the functions ``fold_channel_specificity`` and ``fold_landmark_specificity``
 # you must pass the location of the fOLD xls files as an argument

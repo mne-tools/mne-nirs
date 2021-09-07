@@ -39,11 +39,11 @@ def _read_fold_xls(fname, atlas="Juelich"):
 
     # Empty values in the table mean its the same as above
     for row_idx in range(1, tbl.shape[0]):
-        for col in tbl.columns:
+        for col_idx, col in enumerate(tbl.columns):
             if not isinstance(tbl[col][row_idx], str):
                 if np.isnan(tbl[col][row_idx]):
-                    tbl[col][row_idx] = \
-                        tbl[col][row_idx - 1]
+                    tbl.iloc[row_idx, col_idx] = \
+                        tbl.iloc[row_idx - 1, col_idx]
 
     tbl["Specificity"] = tbl["Specificity"] * 100
     tbl["brainSens"] = tbl["brainSens"] * 100
