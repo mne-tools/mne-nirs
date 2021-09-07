@@ -1,7 +1,6 @@
-import pandas
 import pandas as pd
 import numpy as np
-import eeg_positions as ep
+import mne
 
 
 fname = "/Users/rluke/Downloads/10-10.xls"
@@ -30,10 +29,12 @@ def _read_fold_xls(fname, atlas="Juelich"):
     return tbl
 
 
-def _generate_all_locations(system=["1020", "1010", "1005"]):
-    coords = pd.DataFrame()
-    for sys in system:
-        coords = coords.append(ep.get_elec_coords(sys, dim="3d"))
+def _generate_all_locations():
+
+    montage = mne.channels.make_standard_montage('standard_1020', head_size=0.1)
+    coords = pd.DataFrame.from_dict(montage.get_positions()['ch_pos']).T
+    coords["label"] = coords.index
+    coords = coords.rename(columns={0: "x", 1: "y", 2: "z"})
 
     return coords.reset_index(drop=True)
 
@@ -51,3 +52,5 @@ def _find_closest_standard_location(x, y, z, reference):
     return reference["label"][min_idx]
 
 tbl = _read_fold_xls(fname)
+
+

@@ -24,7 +24,7 @@ def test_label_finder():
     raw = read_raw_nirx(fname_nirx_15_3_short, preload=True)
     head_mri_t, _ = _get_trans('fsaverage', 'head', 'mri')
 
-    reference_locations = _generate_all_locations(system=["1010"])
+    reference_locations = _generate_all_locations()
 
     # Test central head position source
 
@@ -50,9 +50,33 @@ def test_label_finder():
     z = mni_locs[2]
     assert _find_closest_standard_location(x, y, z, reference_locations) == "T8"
 
-    # Test left auditory position source
+    # Test right auditory position source
 
     raw_cz = raw.copy().pick(4)
+    raw_cz.plot_sensors()
+    source_locs = raw_cz.info['chs'][0]['loc'][3:6]
+
+    mni_locs = apply_trans(head_mri_t, source_locs)
+    x = mni_locs[0]
+    y = mni_locs[1]
+    z = mni_locs[2]
+    assert _find_closest_standard_location(x, y, z, reference_locations) == "TP8"
+
+    # Test left auditory position source
+
+    raw_cz = raw.copy().pick(1)
+    raw_cz.plot_sensors()
+    source_locs = raw_cz.info['chs'][0]['loc'][3:6]
+
+    mni_locs = apply_trans(head_mri_t, source_locs)
+    x = mni_locs[0]
+    y = mni_locs[1]
+    z = mni_locs[2]
+    assert _find_closest_standard_location(x, y, z, reference_locations) == "T7"
+
+    # Test left auditory position detector
+
+    raw_cz = raw.copy().pick(1)
     raw_cz.plot_sensors()
     source_locs = raw_cz.info['chs'][0]['loc'][6:9]
 
@@ -60,6 +84,28 @@ def test_label_finder():
     x = mni_locs[0]
     y = mni_locs[1]
     z = mni_locs[2]
-    assert _find_closest_standard_location(x, y, z, reference_locations) == "T8"
+    assert _find_closest_standard_location(x, y, z, reference_locations) == "TP7"
 
+    # Test front position detector
 
+    raw_cz = raw.copy().pick(14)
+    raw_cz.plot_sensors()
+    source_locs = raw_cz.info['chs'][0]['loc'][6:9]
+
+    mni_locs = apply_trans(head_mri_t, source_locs)
+    x = mni_locs[0]
+    y = mni_locs[1]
+    z = mni_locs[2]
+    assert _find_closest_standard_location(x, y, z, reference_locations) == "AF2"
+
+    # Test rear position detector
+
+    raw_cz = raw.copy().pick(9)
+    raw_cz.plot_sensors()
+    source_locs = raw_cz.info['chs'][0]['loc'][6:9]
+
+    mni_locs = apply_trans(head_mri_t, source_locs)
+    x = mni_locs[0]
+    y = mni_locs[1]
+    z = mni_locs[2]
+    assert _find_closest_standard_location(x, y, z, reference_locations) == "PO2"
