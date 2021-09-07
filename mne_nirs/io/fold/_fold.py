@@ -212,7 +212,7 @@ def fold_channel_specificity(raw, fold_files=[None], atlas="Juelich"):
 
         tbl = _source_detector_fold_table(raw, cidx,
                                           reference_locations, fold_tbl)
-        chan_spec.append(tbl)
+        chan_spec.append(tbl.reset_index(drop=True))
 
     return chan_spec
 
