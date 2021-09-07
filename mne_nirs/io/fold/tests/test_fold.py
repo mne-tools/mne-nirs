@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-# Authors: Robert Luke  <mail@robertluke.net>
-#          simplified BSD-3 license
+# Author: Robert Luke <mail@robertluke.net>
+#
+# License: BSD (3-clause)
 
 import os.path as op
 
@@ -10,13 +11,48 @@ from mne.datasets.testing import data_path, requires_testing_data
 from mne.io import read_raw_nirx
 from mne.transforms import apply_trans, _get_trans
 
-from mne_nirs.io.fold._fold import _generate_all_locations,\
+from mne_nirs.io.fold._fold import _generate_montage_locations,\
     _find_closest_standard_location, _read_fold_xls
 
 
 # https://github.com/mne-tools/mne-testing-data/pull/72
 fname_nirx_15_3_short = op.join(data_path(download=False),
                                 'NIRx', 'nirscout', 'nirx_15_3_recording')
+
+
+def test_fold_workflow():
+    # Read raw data
+    raw = read_raw_nirx(fname_nirx_15_3_short, preload=True)
+    reference_locations = _generate_montage_locations()
+
+    # Get source and detector labels
+    head_mri_t, _ = _get_trans('fsaverage', 'head', 'mri')
+    channel_of_interest = raw.copy().pick(1)
+    source_locs = channel_of_interest.info['chs'][0]['loc'][3:6]
+    mni_locs = apply_trans(head_mri_t, source_locs)
+    x = mni_locs[0]
+    y = mni_locs[1]
+    z = mni_locs[2]
+    source_label = _find_closest_standard_location(
+        x, y, z, reference_locations)
+    assert source_label == "T7"
+    detector_locs = channel_of_interest.info['chs'][0]['loc'][6:9]
+    mni_locs = apply_trans(head_mri_t, detector_locs)
+    x = mni_locs[0]
+    y = mni_locs[1]
+    z = mni_locs[2]
+    detector_label = _find_closest_standard_location(
+        x, y, z, reference_locations)
+    assert detector_label == "TP7"
+
+    # Find correct fOLD elements
+    tbl = _read_fold_xls("./data/example.xls", atlas="Juelich")
+    tbl = tbl.query("Source == @source_label").\
+        query("Detector == @detector_label")
+
+    # Query region of interest
+    specificity = tbl.query("Landmark == 'L Mid Orbital Gyrus'")["Specificity"]
+    assert specificity.values == 0.1234
 
 
 def test_fold_reader():
@@ -33,7 +69,7 @@ def test_label_finder():
     raw = read_raw_nirx(fname_nirx_15_3_short, preload=True)
     head_mri_t, _ = _get_trans('fsaverage', 'head', 'mri')
 
-    reference_locations = _generate_all_locations()
+    reference_locations = _generate_montage_locations()
 
     # Test central head position source
 
@@ -94,18 +130,6 @@ def test_label_finder():
     z = mni_locs[2]
     assert _find_closest_standard_location(
         x, y, z, reference_locations) == "TP7"
-
-    # Test front position detector
-
-    raw_cz = raw.copy().pick(14)
-    source_locs = raw_cz.info['chs'][0]['loc'][6:9]
-
-    mni_locs = apply_trans(head_mri_t, source_locs)
-    x = mni_locs[0]
-    y = mni_locs[1]
-    z = mni_locs[2]
-    assert _find_closest_standard_location(
-        x, y, z, reference_locations) == "AF2"
 
     # Test rear position detector
 
