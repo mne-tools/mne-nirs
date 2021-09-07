@@ -2,4 +2,4 @@
 #
 # License: BSD (3-clause)
 
-from ._fold import landmark_specificity
+from ._fold import fold_landmark_specificity, fold_channel_specificity

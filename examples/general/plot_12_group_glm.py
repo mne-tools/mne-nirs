@@ -80,6 +80,7 @@ information about triggers, condition names, etc.
 # Import common libraries
 import numpy as np
 import pandas as pd
+import os
 
 # Import MNE processing
 from mne.preprocessing.nirs import optical_density, beer_lambert_law
@@ -93,6 +94,7 @@ from mne_nirs.channels import picks_pair_to_idx
 from mne_nirs.visualisation import plot_glm_group_topo
 from mne_nirs.datasets import fnirs_motor_group
 from mne_nirs.visualisation import plot_glm_surface_projection
+from mne_nirs.io.fold import fold_landmark_specificity, fold_channel_specificity
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
@@ -542,3 +544,39 @@ ch_model_df = statsmodels_to_results(ch_model,
 ch_model_df.reset_index(drop=True, inplace=True)
 ch_model_df = ch_model_df.set_index(['ch_name', 'Condition'])
 ch_model_df
+
+
+# %%
+# Relating Responses to Brain Landmarks
+# -------------------------------------
+#
+# It can be useful to understand what brain structures
+# the response may have been measured from. Here we illustrate
+# how to report the structure the channel with the largest
+# response was sensitive to.
+#
+# First we determine the channel with the largest response.
+
+
+largest_response_channel = ch_model_df.loc[ch_model_df['Coef.'].idxmax()]
+largest_response_channel
+
+
+# %%
+#
+# Next we use information from the fOLD toolbox to report the
+# channel specificity to different brain regions.
+#
+# The fOLD data is hosted at https://github.com/nirx/fOLD-public.
+# You should download this first. Then you can use these functions
+# to view the data.
+#
+# Be sure to cite the authors if you use their data:
+# _Morais, Guilherme Augusto Zimeo, Joana Bisol Balardin, and João Ricardo Sato. "fNIRS optodes’ location decider (fOLD): a toolbox for probe arrangement guided by brain regions-of-interest." Scientific reports 8.1 (2018): 1-11._
+#
+
+fold_files = [os.path.join(expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-10.xls"),
+              os.path.join(expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-5.xls")]
+
+raw_channel = raw_haemo.copy().pick(largest_response_channel.name[0])
+fold_channel_specificity(raw_channel, fold_files)[0]

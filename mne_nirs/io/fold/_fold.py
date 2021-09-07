@@ -45,6 +45,7 @@ def _read_fold_xls(fname, atlas="Juelich"):
                     tbl[col][row_idx] = \
                         tbl[col][row_idx - 1]
 
+    tbl["Specificity"] = tbl["Specificity"] * 100
     return tbl
 
 
@@ -98,8 +99,13 @@ def _find_closest_standard_location(position, reference, trans_pos='mri'):
     return reference["label"][min_idx]
 
 
-def landmark_specificity(raw, landmark, fold_files=[None], atlas="Juelich"):
+def fold_landmark_specificity(raw, landmark, fold_files=[None],
+                              atlas="Juelich"):
     """Return the specificity of each channel to a specified brain landmark.
+
+    Specificity values as stored in the fOLD toolbox
+    :footcite:`morais2018fnirs`
+    excel files.
 
     Parameters
     ----------
@@ -111,6 +117,10 @@ def landmark_specificity(raw, landmark, fold_files=[None], atlas="Juelich"):
         Paths to fold toolbox files.
     atlas : str
         Brain atlas to use. Defaults to Juelich.
+
+    References
+    ----------
+    .. footbibliography::
     """
     if None in fold_files:
         raise ValueError("You must specify the path to fOLD xls files")
@@ -126,24 +136,11 @@ def landmark_specificity(raw, landmark, fold_files=[None], atlas="Juelich"):
     for fname in fold_files:
         fold_tbl = fold_tbl.append(_read_fold_xls(fname, atlas=atlas))
 
-    print(fold_tbl)
-
     specificity = np.zeros(len(raw.ch_names))
     for cidx in range(len(raw.ch_names)):
-        src = raw.info['chs'][cidx]['loc'][3:6]
-        det = raw.info['chs'][cidx]['loc'][6:9]
 
-        src_name = _find_closest_standard_location(src,  # noqa
-                                                   reference_locations)
-        det_name = _find_closest_standard_location(det,  # noqa
-                                                   reference_locations)
-
-        tbl = fold_tbl.query("Source == @src_name").\
-            query("Detector == @det_name")
-        # Try reversing source and detector
-        if len(tbl) == 0:
-            tbl = fold_tbl.query("Source == @det_name"). \
-                query("Detector == @src_name")
+        tbl = _source_detector_fold_table(raw, cidx,
+                                          reference_locations, fold_tbl)
 
         if len(tbl) > 0:
             tbl["ContainsLmk"] = [landmark in la for la in tbl["Landmark"]]
@@ -158,3 +155,68 @@ def landmark_specificity(raw, landmark, fold_files=[None], atlas="Juelich"):
             raise RuntimeError("Multiple specificity values returned")
 
     return np.array(specificity)
+
+
+def fold_channel_specificity(raw, fold_files=[None], atlas="Juelich"):
+    """Return the specificity of landmarks a channel is sensitive to.
+
+    Specificity values as stored in the fOLD toolbox
+    :footcite:`morais2018fnirs`
+    excel files.
+
+    Parameters
+    ----------
+    raw : BaseRaw
+        fNIRS data.
+    fold_files : list
+        Paths to fold toolbox files.
+    atlas : str
+        Brain atlas to use. Defaults to Juelich.
+
+    Returns
+    -------
+    spec : list of dataframes
+        List of dataframes, one for each channel.
+
+    References
+    ----------
+    .. footbibliography::
+    """
+    if None in fold_files:
+        raise ValueError("You must specify the path to fOLD xls files")
+
+    _validate_type(raw, BaseRaw, 'raw')
+
+    reference_locations = _generate_montage_locations()
+
+    fold_tbl = pd.DataFrame()
+    for fname in fold_files:
+        fold_tbl = fold_tbl.append(_read_fold_xls(fname, atlas=atlas))
+
+    chan_spec = list()
+    for cidx in range(len(raw.ch_names)):
+
+        tbl = _source_detector_fold_table(raw, cidx,
+                                          reference_locations, fold_tbl)
+        chan_spec.append(tbl)
+
+    return chan_spec
+
+
+def _source_detector_fold_table(raw, cidx, reference_locations, fold_tbl):
+    src = raw.info['chs'][cidx]['loc'][3:6]
+    det = raw.info['chs'][cidx]['loc'][6:9]
+
+    src_name = _find_closest_standard_location(src,  # noqa
+                                               reference_locations)
+    det_name = _find_closest_standard_location(det,  # noqa
+                                               reference_locations)
+
+    tbl = fold_tbl.query("Source == @src_name"). \
+        query("Detector == @det_name")
+    # Try reversing source and detector
+    if len(tbl) == 0:
+        tbl = fold_tbl.query("Source == @det_name"). \
+            query("Detector == @src_name")
+
+    return tbl

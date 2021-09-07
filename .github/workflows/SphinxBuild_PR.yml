@@ -29,6 +29,15 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
         name: 'Setup python'
+      - name: Download fOLD data
+        shell: bash -el {0}
+        run: |
+          curl -L https://github.com/nirx/fOLD-public/archive/master.zip --output data.zip
+          pwd
+          unzip data.zip -d ~/mne_data/fOLD
+          ls
+          ls ~
+          ls ~/fOLD
       - shell: bash -el {0}
         run: |
           ./tools/github_actions_dependencies.sh
