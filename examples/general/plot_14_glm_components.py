@@ -429,8 +429,7 @@ print(drift_high_pass(raw_original))
 # sense to include them as a single condition when computing the ISI.
 # This would be achieved by renaming the triggers.
 
-raw_original.annotations.rename({'2.0': 'Tapping',
-                                 '3.0': 'Tapping'})
+raw_original.annotations.rename({'2.0': 'Tapping', '3.0': 'Tapping'})
 raw_original.annotations.delete(raw_original.annotations.description == '1.0')
 isis, names = longest_inter_annotation_interval(raw_original)
 print(isis)

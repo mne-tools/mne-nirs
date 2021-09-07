@@ -154,9 +154,9 @@ def longest_inter_annotation_interval(raw):
     annotation_name : list
         Annotation name corresponding to reported interval.
     """
-    descriptions = np.unique(raw.annotations.description)
+    annotation_name = np.unique(raw.annotations.description)
     longest = []
-    for desc in descriptions:
+    for desc in annotation_name:
         mask = raw.annotations.description == desc
         longest.append(np.max(np.diff(raw.annotations.onset[mask])))
     return longest, annotation_name
