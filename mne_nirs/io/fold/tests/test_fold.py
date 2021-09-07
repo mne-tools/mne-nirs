@@ -5,6 +5,7 @@
 
 import os.path as op
 import pathlib
+import numpy as np
 import pandas as pd
 
 from mne.datasets.testing import data_path, requires_testing_data
@@ -24,7 +25,9 @@ fname_nirx_15_3_short = op.join(data_path(download=False),
 def test_fold_integration():
     raw = read_raw_nirx(fname_nirx_15_3_short, preload=True)
     res = landmark_specificity(raw, "L Superior Frontal Gyrus", [foldfile])
-
+    assert len(res) == len(raw.ch_names)
+    assert np.max(res) <= 1
+    assert np.min(res) >= 0
 
 
 def test_fold_workflow():
@@ -35,11 +38,13 @@ def test_fold_workflow():
 
     # Get source and detector labels
     source_locs = channel_of_interest.info['chs'][0]['loc'][3:6]
-    source_label = _find_closest_standard_location(source_locs, reference_locations)
+    source_label = _find_closest_standard_location(source_locs,
+                                                   reference_locations)
     assert source_label == "T7"
 
     detector_locs = channel_of_interest.info['chs'][0]['loc'][6:9]
-    detector_label = _find_closest_standard_location(detector_locs, reference_locations)
+    detector_label = _find_closest_standard_location(detector_locs,
+                                                     reference_locations)
     assert detector_label == "TP7"
 
     # Find correct fOLD elements

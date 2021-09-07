@@ -126,8 +126,8 @@ def landmark_specificity(raw, landmark, fold_files=[None], atlas="Juelich"):
     fold_tbl = pd.DataFrame()
     for fname in fold_files:
         fold_tbl = fold_tbl.append(_read_fold_xls(fname, atlas=atlas))
-    print(fold_tbl)
 
+    specificity = np.zeros(len(raw.ch_names))
     for cidx in range(len(raw.ch_names)):
         src = raw.info['chs'][cidx]['loc'][3:6]
         det = raw.info['chs'][cidx]['loc'][6:9]
@@ -135,6 +135,16 @@ def landmark_specificity(raw, landmark, fold_files=[None], atlas="Juelich"):
         src_name = _find_closest_standard_location(src, reference_locations)
         det_name = _find_closest_standard_location(det, reference_locations)
 
-    return 1
+        tbl = fold_tbl.query("Source == @src_name").\
+            query("Detector == @det_name")
+        tbl = tbl.query("Landmark == @landmark")["Specificity"]
 
+        if len(tbl) == 0:
+            print(f"No data for {src_name}-{det_name}")
+        elif len(tbl) == 1:
+            specificity[cidx] = tbl.values[0]
+            print(f"Specificity {src_name}-{det_name} = {specificity[cidx]}")
+        else:
+            raise RuntimeError("Multiple specificity values returned")
 
+    return specificity
