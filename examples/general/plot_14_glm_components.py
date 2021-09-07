@@ -1,8 +1,8 @@
 """
 .. _tut-fnirs-glm-components:
 
-Elements of GLM Analysis and Design Matrix Design
-=================================================
+GLM Analysis and Design Matrix Parameters
+=========================================
 
 This tutorial describes the various design choices available when analysing
 your fNIRS data using a GLM approach.
