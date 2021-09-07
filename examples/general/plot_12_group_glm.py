@@ -553,7 +553,7 @@ ch_model_df
 # .. sidebar:: fOLD Toolbox
 #
 #    You should use the fOLD toolbox to pick your optode locations
-#    when writing your experiment protocol.
+#    when designing your experiment protocol.
 #    The tool is very intuitive and easy to use.
 #    Be sure to cite the authors if you use their data:
 #
@@ -561,7 +561,7 @@ ch_model_df
 #
 # It can be useful to understand what brain structures
 # the response may have been measured from. Here we illustrate
-# how to report the structure the source detector pair with the largest
+# how to report the structures the source detector pair with the largest
 # response was sensitive to.
 #
 # First we determine the channel with the largest response.
@@ -581,7 +581,6 @@ largest_response_channel
 #
 # Next we use information from the fOLD toolbox to report the
 # channel specificity to different brain regions.
-#
 # These files are not distributedd with MNE-NIRS.
 # You need to download them from the authors website.
 
@@ -590,3 +589,20 @@ fold_files = [os.path.join(os.path.expanduser("~"), "mne_data", "fOLD", "fOLD-pu
 
 raw_channel = raw_haemo.copy().pick(largest_response_channel.name[0])
 fold_channel_specificity(raw_channel, fold_files)[0]
+
+
+# %%
+#
+# We observe that the channel with the largest response to tapping
+# had the greatest specificity to the Precentral Gyrus, which is
+# the site of the primary motor cortex.
+
+
+# %%
+# Conclusion
+# ----------
+#
+# This example has demonstrated how to perform a group level analysis
+# using a GLM approach.
+# We observed the responses were evoked primarily contralateral to the
+# hand of tapping and most likely originate from the primary motor cortex.

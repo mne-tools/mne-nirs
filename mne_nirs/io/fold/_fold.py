@@ -121,7 +121,7 @@ def fold_landmark_specificity(raw, landmark, fold_files=[None],
     fold_files : list
         Paths to fold toolbox files.
     atlas : str
-        Brain atlas to use. Defaults to Juelich.
+        Brain atlas to use.
 
     Returns
     -------
@@ -185,7 +185,7 @@ def fold_channel_specificity(raw, fold_files=[None], atlas="Juelich"):
     fold_files : list
         Paths to fold toolbox files.
     atlas : str
-        Brain atlas to use. Defaults to Juelich.
+        Brain atlas to use.
 
     Returns
     -------
