@@ -46,6 +46,7 @@ def _read_fold_xls(fname, atlas="Juelich"):
                         tbl[col][row_idx - 1]
 
     tbl["Specificity"] = tbl["Specificity"] * 100
+    tbl["brainSens"] = tbl["brainSens"] * 100
     return tbl
 
 

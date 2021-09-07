@@ -550,20 +550,6 @@ ch_model_df
 # Relating Responses to Brain Landmarks
 # -------------------------------------
 #
-# It can be useful to understand what brain structures
-# the response may have been measured from. Here we illustrate
-# how to report the structure the channel with the largest
-# response was sensitive to.
-#
-# First we determine the channel with the largest response.
-
-
-largest_response_channel = ch_model_df.loc[ch_model_df['Coef.'].idxmax()]
-largest_response_channel
-
-
-# %%
-#
 # .. sidebar:: fOLD Toolbox
 #
 #    You should use the fOLD toolbox to pick your optode locations
@@ -571,18 +557,34 @@ largest_response_channel
 #    The tool is very intuitive and easy to use.
 #    Be sure to cite the authors if you use their data:
 #
-#    _Morais, Guilherme Augusto Zimeo, Joana Bisol Balardin, and João Ricardo Sato. "fNIRS optodes’ location decider (fOLD): a toolbox for probe arrangement guided by brain regions-of-interest." Scientific reports 8.1 (2018): 1-11._
+#    Morais, Guilherme Augusto Zimeo, Joana Bisol Balardin, and João Ricardo Sato. "fNIRS optodes’ location decider (fOLD): a toolbox for probe arrangement guided by brain regions-of-interest." Scientific reports 8.1 (2018): 1-11.
+#
+# It can be useful to understand what brain structures
+# the response may have been measured from. Here we illustrate
+# how to report the structure the source detector pair with the largest
+# response was sensitive to.
+#
+# First we determine the channel with the largest response.
+#
+# Next we will probe the fOLD data structure to determine the
+# brain landmarks that this channel is most sensitive to.
+#
+# The fOLD data is hosted at https://github.com/nirx/fOLD-public.
+# You should download that first. Then you can use these functions
+# to view the data.
+
+largest_response_channel = ch_model_df.loc[ch_model_df['Coef.'].idxmax()]
+largest_response_channel
+
+
+# %%
 #
 # Next we use information from the fOLD toolbox to report the
 # channel specificity to different brain regions.
 #
-# The fOLD data is hosted at https://github.com/nirx/fOLD-public.
-# You should download this first. Then you can use these functions
-# to view the data.
-#
-
 # These files are not distributedd with MNE-NIRS.
 # You need to download them from the authors website.
+
 fold_files = [os.path.join(os.path.expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-10.xls"),
               os.path.join(os.path.expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-5.xls")]
 
