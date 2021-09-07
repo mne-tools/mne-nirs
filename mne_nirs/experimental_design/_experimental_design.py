@@ -167,7 +167,7 @@ def drift_high_pass(raw):
     Compute cosine drift regressor high pass cut off.
 
     Value computed according to Nilearn :footcite:`abraham2014machine`
-    `(suggestion) <http://nilearn.github.io/auto_examples/04_glm_first
+    `suggestion <http://nilearn.github.io/auto_examples/04_glm_first
     _level/plot_first_level_details.html#changing-the-drift-model>`__.
 
     Parameters
@@ -177,7 +177,7 @@ def drift_high_pass(raw):
 
     Returns
     -------
-    l : number
+    cutoff : number
         Suggested high pass cut off.
 
     References
