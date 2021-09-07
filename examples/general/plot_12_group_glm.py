@@ -553,25 +553,28 @@ ch_model_df
 # .. sidebar:: fOLD Toolbox
 #
 #    You should use the fOLD toolbox to pick your optode locations
-#    when designing your experiment protocol.
+#    when designing your experiment.
 #    The tool is very intuitive and easy to use.
-#    Be sure to cite the authors if you use their data:
+#    Be sure to cite the authors if you use their tool or data:
 #
 #    Morais, Guilherme Augusto Zimeo, Joana Bisol Balardin, and João Ricardo Sato. "fNIRS optodes’ location decider (fOLD): a toolbox for probe arrangement guided by brain regions-of-interest." Scientific reports 8.1 (2018): 1-11.
 #
 # It can be useful to understand what brain structures
-# the response may have been measured from. Here we illustrate
-# how to report the structures the source detector pair with the largest
-# response was sensitive to.
+# the measured response may have resulted from. Here we illustrate
+# how to report the brain structures/landmarks that the source
+# detector pair with the largest response was sensitive to.
 #
 # First we determine the channel with the largest response.
 #
-# Next we will probe the fOLD data structure to determine the
+# Next, we query the fOLD dataset to determine the
 # brain landmarks that this channel is most sensitive to.
 #
-# The fOLD data is hosted at https://github.com/nirx/fOLD-public.
-# You should download that first. Then you can use these functions
-# to view the data.
+# MNE-NIRS does not distribute the fOLD toolbox or the data
+# that they provide.
+# The fOLD data is hosted at https://github.com/nirx/fOLD-public
+# and you should download that first. Then you can use these functions
+# to query their data. You must cite the fOLD authors if you
+# use their tool or data.
 
 largest_response_channel = ch_model_df.loc[ch_model_df['Coef.'].idxmax()]
 largest_response_channel
@@ -583,6 +586,11 @@ largest_response_channel
 # channel specificity to different brain regions.
 # These files are not distributedd with MNE-NIRS.
 # You need to download them from the authors website.
+# In this example I have downloaded the entire _fOLD-public_ repository
+# as a zip and expanded it in ``/home/rob/mne_data/fOLD/``.
+# To use the functions ``fold_channel_specificity`` and ``fold_landmark_specificity``
+# you must pass the location of the fOLD xls files as an argument
+# so the software knows where you placed the data.
 
 fold_files = [os.path.join(os.path.expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-10.xls"),
               os.path.join(os.path.expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-5.xls")]
@@ -595,7 +603,8 @@ fold_channel_specificity(raw_channel, fold_files)[0]
 #
 # We observe that the channel with the largest response to tapping
 # had the greatest specificity to the Precentral Gyrus, which is
-# the site of the primary motor cortex.
+# the site of the primary motor cortex. This is consistent
+# with the expectation for a finger tapping task.
 
 
 # %%

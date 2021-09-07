@@ -168,7 +168,7 @@ def fold_landmark_specificity(raw, landmark, fold_files=[None],
 
 
 def fold_channel_specificity(raw, fold_files=[None], atlas="Juelich"):
-    """Return the specificity of landmarks a channel is sensitive to.
+    """Return the landmarks and specificity a channel is sensitive to.
 
     Specificity values as stored in the fOLD toolbox
     :footcite:`morais2018fnirs`
