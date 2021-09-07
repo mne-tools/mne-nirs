@@ -95,6 +95,25 @@ def plot_glm_surface_projection(inst, statsmodel_df, picks="hbo",
     ea = EvokedArray(np.tile(statsmodel_df[value].values.T, (1, 1)).T,
                      info.copy())
 
+    return _plot_3d_evoked_array(inst, ea, picks=picks,
+                                 value=value,
+                                 background=background, figure=figure, clim=clim,
+                                 mode=mode, colormap=colormap,
+                                 surface=surface, hemi=hemi, size=size,
+                                 view=view, colorbar=colorbar, distance=distance,
+                                 subjects_dir=subjects_dir, src=src, verbose=verbose)
+
+
+def _plot_3d_evoked_array(inst, ea, picks="hbo",
+                          value="Coef.",
+                          background='w', figure=None, clim='auto',
+                          mode='weighted', colormap='RdBu_r',
+                          surface='pial', hemi='both', size=800,
+                          view=None, colorbar=True, distance=0.03,
+                          subjects_dir=None, src=None, verbose=False):
+
+    info = deepcopy(inst if isinstance(inst, Info) else inst.info)
+
     # TODO: mimic behaviour of other MNE-NIRS glm plotting options
     if picks is not None:
         ea = ea.pick(picks=picks)
