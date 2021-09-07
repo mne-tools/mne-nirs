@@ -564,6 +564,15 @@ largest_response_channel
 
 # %%
 #
+# .. sidebar:: fOLD Toolbox
+#
+#    You should use the fOLD toolbox to pick your optode locations
+#    when writing your experiment protocol.
+#    The tool is very intuitive and easy to use.
+#    Be sure to cite the authors if you use their data:
+#
+#    _Morais, Guilherme Augusto Zimeo, Joana Bisol Balardin, and João Ricardo Sato. "fNIRS optodes’ location decider (fOLD): a toolbox for probe arrangement guided by brain regions-of-interest." Scientific reports 8.1 (2018): 1-11._
+#
 # Next we use information from the fOLD toolbox to report the
 # channel specificity to different brain regions.
 #
@@ -571,10 +580,9 @@ largest_response_channel
 # You should download this first. Then you can use these functions
 # to view the data.
 #
-# Be sure to cite the authors if you use their data:
-# _Morais, Guilherme Augusto Zimeo, Joana Bisol Balardin, and João Ricardo Sato. "fNIRS optodes’ location decider (fOLD): a toolbox for probe arrangement guided by brain regions-of-interest." Scientific reports 8.1 (2018): 1-11._
-#
 
+# These files are not distributedd with MNE-NIRS.
+# You need to download them from the authors website.
 fold_files = [os.path.join(expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-10.xls"),
               os.path.join(expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-5.xls")]
 
