@@ -5,7 +5,7 @@ GLM Analysis and Design Matrix Parameters
 =========================================
 
 This tutorial describes the various design choices available when analysing
-your fNIRS data using a GLM approach.
+fNIRS data with a GLM approach.
 
 .. sidebar:: Nilearn
 
@@ -20,7 +20,7 @@ available in the different fNIRS software packages (Homer, NIRS-SPM, etc).
 This document aims to clarify the features available for GLM analysis
 in the MNE-NIRS software, and demonstrate how you can modify the default
 analysis parameters to best suit your experiment.
-It also tries to explain some of the design choices that were made
+It also endeavours to motivate some of the design choices that were made
 when designing this software.
 Please raise a GitHub issue if there is an analysis design you would
 like to use but can not determine how to do with MNE-NIRS.
@@ -34,9 +34,9 @@ Specifically this tutorial is heavily based on the following Nilearn examples,
 but placed within an fNIRS context.
 
 * `Nilearn: Understanding parameters of the first-level model <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_first_level_details.html>`__.
-* `Nilearn: Example of hemodynamic response functions. <https://nilearn.github.io/auto_examples/04_glm_first_level/plot_hrf.html>`__.
+* `Nilearn: Example of hemodynamic response functions <https://nilearn.github.io/auto_examples/04_glm_first_level/plot_hrf.html>`__.
 
-Accordingly in this tutorial we will access nilearn functions directly to illustrate
+Accordingly, in this tutorial we will access nilearn functions directly to illustrate
 various choices available in your analysis.
 However, this is just to illustrate various points. In reality (see all other tutorials),
 MNE-NIRS will wrap all required Nilearn functions so you don't need to access them directly.
@@ -225,7 +225,7 @@ plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap))
 #    ``glover + derivative + dispersion``.
 #
 # As mentioned above, we don't directly compute these regressors for
-# each condition. Instead the function :func:`mne_nirs.experimental_design.make_first_level_design_matrix`
+# each condition. Instead the function ``make_first_level_design_matrix``
 # conveniently does this for us.
 #
 # As an example we will import a measurement and generate a
