@@ -108,16 +108,25 @@ def fold_landmark_specificity(raw, landmark, fold_files=[None],
     :footcite:`morais2018fnirs`
     excel files.
 
+    The data is not provided with MNE-NIRS. You must download the excel
+    spreadsheets from the authors website and provide the paths using
+    the ``fold_files`` argument.
+
     Parameters
     ----------
     raw : BaseRaw
-        fNIRS data.
+        The fNIRS data.
     landmark : str
         Landmark of interest. Must be present in fOLD toolbox data file.
     fold_files : list
         Paths to fold toolbox files.
     atlas : str
         Brain atlas to use. Defaults to Juelich.
+
+    Returns
+    -------
+    spec : array
+        Specificity values for each channel to brain landmark.
 
     References
     ----------
@@ -165,10 +174,14 @@ def fold_channel_specificity(raw, fold_files=[None], atlas="Juelich"):
     :footcite:`morais2018fnirs`
     excel files.
 
+    The data is not provided with MNE-NIRS. You must download the excel
+    spreadsheets from the authors website and provide the paths using
+    the ``fold_files`` argument.
+
     Parameters
     ----------
     raw : BaseRaw
-        fNIRS data.
+        The fNIRS data.
     fold_files : list
         Paths to fold toolbox files.
     atlas : str
