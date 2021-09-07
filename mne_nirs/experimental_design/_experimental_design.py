@@ -28,9 +28,9 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
     stim_dur : Number
         The length of your stimulus.
 
-    hrf_model : {'glover', 'spm', 'spm + derivative',
-        'spm + derivative + dispersion',
-        'glover + derivative', 'glover + derivative + dispersion',
+    hrf_model : {'glover', 'spm', 'spm + derivative', \
+        'spm + derivative + dispersion',\
+        'glover + derivative', 'glover + derivative + dispersion',\
         'fir', None}, optional
         Specifies the hemodynamic response function. Default='glover'.
 
@@ -133,3 +133,57 @@ def create_boxcar(raw, event_id=None, stim_dur=1):
         s[event_samples, idx] = 1.
         s[:, idx] = np.convolve(s[:, idx], bc)[:len(raw.times)]
     return s
+
+
+def longest_inter_annotation_interval(raw):
+    """
+    Compute longest ISI per annotation.
+
+    Specifically, longest period between two trials of
+    the same condition.
+
+    Parameters
+    ----------
+    raw : instance of Raw
+        Haemoglobin data.
+
+    Returns
+    -------
+    longest : list
+        Longest ISI per annotation.
+    annotation_name : list
+        Annotation name corresponding to reported interval.
+    """
+    annotation_name = np.unique(raw.annotations.description)
+    longest = []
+    for desc in annotation_name:
+        mask = raw.annotations.description == desc
+        longest.append(np.max(np.diff(raw.annotations.onset[mask])))
+    return longest, annotation_name
+
+
+def drift_high_pass(raw):
+    """
+    Compute cosine drift regressor high pass cut off.
+
+    Value computed according to Nilearn :footcite:`abraham2014machine`
+    `suggestion <http://nilearn.github.io/auto_examples/04_glm_first
+    _level/plot_first_level_details.html#changing-the-drift-model>`__.
+
+    Parameters
+    ----------
+    raw : instance of Raw
+        Haemoglobin data.
+
+    Returns
+    -------
+    cutoff : number
+        Suggested high pass cut off.
+
+    References
+    ----------
+    .. footbibliography::
+    """
+    longest, annotation_name = longest_inter_annotation_interval(raw)
+    max_isi = np.max(longest)
+    return 1 / (2 * max_isi)

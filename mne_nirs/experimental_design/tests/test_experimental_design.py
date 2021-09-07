@@ -7,7 +7,8 @@ import pytest
 import mne
 import mne_nirs
 import numpy as np
-from mne_nirs.experimental_design import make_first_level_design_matrix
+from mne_nirs.experimental_design import make_first_level_design_matrix, \
+    longest_inter_annotation_interval, drift_high_pass
 from mne_nirs.simulation import simulate_nirs_raw
 
 
@@ -89,3 +90,15 @@ def test_cropped_raw():
     # 4 is peak time after onset
     new_idx = np.round(onsets_after_crop[0][0]) - 100 + 4
     assert design_matrix["A"][new_idx] > 0.09
+
+
+def test_high_pass_helpers():
+    # Test the helpers give reasonable values
+    raw = simulate_nirs_raw(sfreq=1., amplitude=1., sig_dur=300., stim_dur=1.,
+                            isi_min=20., isi_max=38.)
+    lisi, names = longest_inter_annotation_interval(raw)
+    lisi = lisi[0]
+    assert lisi >= 20
+    assert lisi <= 40
+    assert drift_high_pass(raw) >= 1 / (40 * 2)
+    assert drift_high_pass(raw) <= 1 / (20 * 2)
