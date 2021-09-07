@@ -57,8 +57,7 @@ information about triggers, condition names, etc.
    See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
    to use your data with MNE-Python.
 
-.. collapse:: |chevron-circle-down| Data description (click to expand)
-   :class: success
+.. note::
 
    Optodes were placed over the motor cortex using the standard NIRx motor
    montage with 8 short channels added (see their web page for details).

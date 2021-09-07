@@ -49,7 +49,6 @@ extensions = [
     'sphinx_fontawesome',
     'sphinx_multiversion',
     'sphinx_gallery.gen_gallery',
-    'sphinx_bootstrap_divs',
     'numpydoc',
     'sphinxcontrib.bibtex',
 ]
