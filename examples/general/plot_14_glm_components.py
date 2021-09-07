@@ -1,8 +1,8 @@
 """
 .. _tut-fnirs-glm-components:
 
-GLM and Design Matrix Elements
-==============================
+Elements of GLM Analysis and Design Matrix Design
+=================================================
 
 This tutorial describes the various design choices available when analysing
 your fNIRS data using a GLM approach.
@@ -10,22 +10,33 @@ your fNIRS data using a GLM approach.
 .. sidebar:: Nilearn
 
    If you use MNE-NIRS to conduct a GLM analysis please cite Nilearn.
-   This package relies heavily on Nilearn for the underlying computation.
-   Without their great work this would not be possible.
-   See here for how to accurately cite Nilearn:
+   This package relies on Nilearn for the underlying computation.
+   Without Nilearn this would not be possible.
+   For how to accurately cite Nilearn see:
    http://nilearn.github.io/authors.html#citing
+
+There are subtle differences between the GLM analysis procedures
+available in the different fNIRS software packages (Homer, NIRS-SPM, etc).
+This document aims to clarify the features available for GLM analysis
+in the MNE-NIRS software, and demonstrate how you can modify the default
+analysis parameters to best suit your experiment.
+It also tries to explain some of the design choices that were made
+when designing this software.
+Please raise a GitHub issue if there is an analysis design you would
+like to use but can not determine how to do with MNE-NIRS.
 
 The MNE-NIRS GLM analysis framework is entirely based on the Nilearn package.
 Their excellent software forms the basis of the analysis described in this tutorial.
-As such, you may also wish to read their documentation to familiarise yourself with
-different concepts used here.
+As such, you may also wish to read
+`their documentation <http://nilearn.github.io>`__
+to familiarise yourself with different concepts used in MNE-NIRS.
 Specifically this tutorial is heavily based on the following Nilearn examples,
 but placed within an fNIRS context.
 
-* http://nilearn.github.io/auto_examples/04_glm_first_level/plot_first_level_details.html
-* https://nilearn.github.io/auto_examples/04_glm_first_level/plot_hrf.html
+* `Nilearn: Understanding parameters of the first-level model <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_first_level_details.html>`__.
+* `Nilearn: Example of hemodynamic response functions. <https://nilearn.github.io/auto_examples/04_glm_first_level/plot_hrf.html>`__.
 
-Accordingly we will access nilearn functions directly in this tutorial to illustrate
+Accordingly in this tutorial we will access nilearn functions directly to illustrate
 various choices available in your analysis.
 However, this is just to illustrate various points. In reality (see all other tutorials),
 MNE-NIRS will wrap all required Nilearn functions so you don't need to access them directly.
@@ -68,11 +79,11 @@ import matplotlib as mpl
 # Various Haemodynamic Response Functions (HRFs) are provided for use
 # when analysing your data. A summary of these functions in the context
 # of fMRI is provided in the Nilearn tutorial
-# https://nilearn.github.io/auto_examples/04_glm_first_level/plot_hrf.html.
+# `Nilearn: Example of hemodynamic response functions. <https://nilearn.github.io/auto_examples/04_glm_first_level/plot_hrf.html>`__.
 # This example heavily borrows from that example but expands the description
 # within an fNIRS context.
 #
-# To illustrate underlying concepts we will use Nilearn functions here directly,
+# To illustrate underlying concepts we will use Nilearn functions directly,
 # but for analysing actual data you should use the MNE-NIRS
 # :func:`mne_nirs.experimental_design.make_first_level_design_matrix`
 # wrapper.
@@ -82,9 +93,15 @@ import matplotlib as mpl
 # HRF Model Selection
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
+# .. sidebar:: FIR Models
+#
+#    MNE-NIRS also supports FIR GLM models.
+#    See :ref:`MNE-NIRS FIR GLM tutorial <tut-fnirs-fir>`.
+#
 # Two standard HRF models are provided. The SPM and Glover models.
 # These differ in their response dynamics.
 # Both are plotted on top of each other below for comparison.
+# Note that they differ in their peak timing and undershoot.
 
 time_length = 30
 
@@ -104,23 +121,19 @@ plt.legend()
 # Regressor Computation
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
-# These functions alone are not used directly in the GLM analysis.
+# These functions are not used directly in the GLM analysis.
 # Instead they are used as the basis to compute a regressor which is
 # utilised in the GLM fit.
 # This is done by convolving the HRF model with a boxcar function that
-# distills information known
+# distills information
 # about the experimental design. Specifically the stimulus onset times
 # are used to indicate when a response begins, and a duration is used
 # to specify the time over which the model should be convolved.
 #
-# Modifying the duration changes the regressor shape. Below we demonstrate
+# Modifying the duration changes the regressor timecourse. Below we demonstrate
 # how this varies for several duration values with the Glover HRF.
 
-# Generate an event of 1 second duration that occurs at time zero.
-onset, amplitude, duration = 0.0, 1.0, 1.0
-hrf_model = "glover"
-
-
+# Convenient functions so we dont need to repeat code below
 def generate_stim(onset, amplitude, duration, hrf_model, maxtime=30):
 
     # Generate signal with specified duration and onset
@@ -145,10 +158,12 @@ def plot_regressor(onset, amplitude, duration, hrf_model):
     plt.ylabel("Amplitude (AU)")
     plt.legend(loc=1)
     plt.title(hrf_model)
+    return None
 
-    return 1
 
-
+# Generate an event of 1 second duration that occurs at time zero.
+onset, amplitude, duration = 0.0, 1.0, 1.0
+hrf_model = "glover"
 plot_regressor(onset, amplitude, duration, hrf_model)
 
 
@@ -156,6 +171,24 @@ plot_regressor(onset, amplitude, duration, hrf_model)
 #
 # If the duration is increased we see the resulting regressor
 # is modified, and the transformation is not a simple scaling.
+#
+# For a 3 second duration:
+
+duration = 3
+plot_regressor(onset, amplitude, duration, hrf_model)
+
+
+# %%
+#
+# Or for a 5 second duration:
+
+duration = 5
+plot_regressor(onset, amplitude, duration, hrf_model)
+
+
+# %%
+#
+# Or for a 15 second duration:
 
 duration = 15
 plot_regressor(onset, amplitude, duration, hrf_model)
@@ -183,6 +216,14 @@ plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap))
 # Inclusion in Design matrix
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
+# .. sidebar:: Derivative and dispersion terms
+#
+#    You can also include derivative and dispersion terms to model
+#    differences between your data and the model. This is done by simply
+#    specifying your selected model plus the additional terms.
+#    For example, ``spm + derivative`` or
+#    ``glover + derivative + dispersion``.
+#
 # As mentioned above, we don't directly compute these regressors for
 # each condition. Instead the function :func:`mne_nirs.experimental_design.make_first_level_design_matrix`
 # conveniently does this for us.
@@ -190,9 +231,9 @@ plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap))
 # As an example we will import a measurement and generate a
 # design matrix for it. We will specify that we wish to use a Glover
 # HRF convolved with a 3 second duration.
-# This is similar to the first level GLM example, see there for more details.
+# See the :ref:`MNE-NIRS fNIRS GLM tutorial <tut-fnirs-hrf>` for more details.
 #
-# First we import the example data, crop to just the firs few minutes,
+# First we import the example data, crop to just the first few minutes,
 # and give names to the annotations.
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
@@ -208,8 +249,9 @@ raw_intensity.annotations.set_durations(5)
 
 # %%
 #
-# Next we compute the design matrix and plot it.
-# This representation of the regressor is transposed, as in time goes down the vertical
+# Next we generate the design matrix and plot it.
+# This representation of the regressor is transposed,
+# time goes down the vertical
 # axis and is specified in scan number (fMRI hangover) or sample.
 # There is no colorbar for this plot, as specified in Nilearn.
 #
@@ -247,10 +289,28 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
 # %%
+#
+# Depending on your experimental design the resulting responses
+# may overlap (for example an event related design).
+# This is not an issue, the design matrix can handle overlapping responses.
+
+design_matrix = make_first_level_design_matrix(raw_intensity,
+                                               # Ignore drift model for now, see section below
+                                               drift_model='polynomial',
+                                               drift_order=0,
+                                               # Here we specify the HRF and duration
+                                               hrf_model='glover',
+                                               stim_dur=30.0)
+
+fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
+fig = plot_design_matrix(design_matrix, ax=ax1)
+
+
+# %%
 # Drift Regressors
 # ---------------------------------------------------------------------
 #
-# Aspects of the measured signal may change in over time in an manner
+# Aspects of the measured signal may change over time in a manner
 # unrelated to the neural response we wish to measure.
 # For example, the measurement room may warm up and result in a steady
 # increase in the signal over the measurement duration.
@@ -261,7 +321,13 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # In the examples above a single drift regressor was used to model a constant
 # offset in the data. This is also termed a zero order polynomial regressor.
 # Two types of regressors are provided for in MNE-NIRS thanks to Nilearn.
-# Polynomial  and cosine drift regressors.
+# Polynomial and cosine drift regressors.
+#
+# .. note::
+#
+#    Remember that the GLM can fit a negative coefficient,
+#    so a decreasing drift can be modeled by the increasing drift
+#    regressor with a negative coefficient.
 
 
 # %%
@@ -269,12 +335,12 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
 # In the example above a polynomial drift regressor is included.
-# In this case we can specify the order of the polynomils to be included.
+# In this case we can specify the order of the polynomials to be included.
 # A zero order polynomial will fit a constant, a first order will fit an
 # increasing function, and so on.
 # As an example we demonstrate how to include up to a fifth order polynomial.
 # You can observe that with increasing polynomial order,
-# higher frequency components will be removed from the signal.
+# higher frequency components will be regressed from the signal.
 
 design_matrix = make_first_level_design_matrix(raw_intensity,
                                                drift_model='polynomial',
@@ -289,7 +355,7 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
 # An alternative way to specify drift regressors is via the cosine drift model.
-# This may be more intuitive as you can specify regressors up to a certain cutoff
+# This may be more intuitive as you can specify regressors up to a certain cut off
 # frequency. Effectively regressing out frequency components below a limit,
 # which may be interpreted as a high pass filter.
 # In the example below we demonstrate how to regress our signals up to 0.01 Hz.
@@ -347,7 +413,7 @@ print(isis)
 # %%
 #
 # We see that the longest period between two trials is 435 seconds. Which multiplied
-# by two is 870 seconds. So aa high pass value of 1/870 or 0.001 Hz is appropriate.
+# by two is 870 seconds. So a high pass value of 1/870 or 0.001 Hz is appropriate.
 # We can also use the function
 # :func:`mne_nirs.experimental_design.make_first_level_design_matrix`
 # to suggest the high pass value. Note however, that you should not blindly follow
