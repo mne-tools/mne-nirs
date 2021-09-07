@@ -99,19 +99,18 @@ def _find_closest_standard_location(position, reference, trans_pos='mri'):
 
 
 def landmark_specificity(raw, landmark, fold_files=[None], atlas="Juelich"):
-    """Return closest montage label to coordinates.
+    """Return the specificity of each channel to a specified brain landmark.
 
     Parameters
     ----------
-    raw : array
-        Coordinates.
+    raw : BaseRaw
+        fNIRS data.
     landmark : str
-        Apply a transformation to positions to specified frame.
-        Use None for no transformation.
+        Landmark of interest. Must be present in fOLD toolbox data file.
     fold_files : list
         Paths to fold toolbox files.
     atlas : str
-        Brain atlas to use.
+        Brain atlas to use. Defaults to Juelich.
     """
     if None in fold_files:
         raise ValueError("You must specify the path to fOLD xls files")
