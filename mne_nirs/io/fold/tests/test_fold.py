@@ -12,8 +12,9 @@ from mne.datasets.testing import data_path, requires_testing_data
 from mne.io import read_raw_nirx
 
 from mne_nirs.io.fold._fold import _generate_montage_locations,\
-    _find_closest_standard_location, _read_fold_xls, \
-    fold_landmark_specificity, fold_channel_specificity
+    _find_closest_standard_location, _read_fold_xls
+from mne_nirs.io import fold_landmark_specificity
+from mne_nirs.io.fold import fold_channel_specificity
 
 thisfile = pathlib.Path(__file__).parent.resolve()
 foldfile = op.join(thisfile, "data", "example.xls")
