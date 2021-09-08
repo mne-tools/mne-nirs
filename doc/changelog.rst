@@ -28,6 +28,8 @@ Enhancements
 * Add :meth:`mne_nirs.statistics.RegressionResults.save`. By `Robert Luke`_.
 * Add :meth:`mne_nirs.statistics.ContrastResults.save`. By `Robert Luke`_.
 * Add :func:`mne_nirs.statistics.read_glm`. By `Robert Luke`_.
+* Add :func:`mne_nirs.io.fold_landmark_specificity`. By `Robert Luke`_.
+* Add :func:`mne_nirs.io.fold_channel_specificity`. By `Robert Luke`_.
 
 
 Fixes
