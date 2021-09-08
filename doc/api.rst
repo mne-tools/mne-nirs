@@ -60,9 +60,9 @@ MNE-NIRS
 
    write_raw_snirf
 
-.. currentmodule:: mne_nirs.io.fold
+.. currentmodule:: mne_nirs.io
 
-.. automodule:: mne_nirs.io.fold
+.. automodule:: mne_nirs.io
    :no-members:
    :no-inherited-members:
 
