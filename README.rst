@@ -35,7 +35,7 @@ You can find a list of  `examples within the documentation <https://mne.tools/mn
 Features
 --------
 
-MNE-NIRS and MNE-Python provide a wide variety of tools to use when processing NIRS data including:
+MNE-NIRS and MNE-Python provide a wide variety of tools to use when processing fNIRS data including:
 
 * Loading data from a `wide variety of devices <https://mne.tools/mne-nirs/main/auto_examples/general/plot_01_data_io.html>`_, including `SNIRF files <https://mne.tools/mne-nirs/master/auto_examples/general/plot_19_snirf.html>`_.
 * `Apply 3D sensor locations <https://mne.tools/stable/overview/implementation.html#supported-formats-for-digitized-3d-locations>`_ from common digitisation systems such as Polhemus.

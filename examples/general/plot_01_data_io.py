@@ -235,24 +235,3 @@ raw.set_montage(montage)
 
 # View the position of optodes in 2D to confirm the positions are correct.
 raw.plot_sensors()
-
-
-# %%
-# To validate the positions were loaded correctly it is also possible to view
-# the location of the sources (red), detectors (black), and channels (white
-# lines and orange dots) in a 3D representation.
-# The ficiduals are marked in blue, green and red.
-# See :ref:`plot_source_alignment` for more details.
-
-subjects_dir = mne.datasets.sample.data_path() + '/subjects'
-mne.datasets.fetch_fsaverage(subjects_dir=subjects_dir)
-
-trans = mne.channels.compute_native_head_t(montage)
-
-fig = mne.viz.create_3d_figure(size=(800, 600), bgcolor='white')
-fig = mne.viz.plot_alignment(
-    raw.info, trans=trans, subject='fsaverage', subjects_dir=subjects_dir,
-    surfaces=['brain', 'head'], coord_frame='mri', dig=True, show_axes=True,
-    fnirs=['channels', 'pairs', 'sources', 'detectors'], fig=fig)
-mne.viz.set_3d_view(figure=fig, azimuth=90, elevation=90, distance=0.5,
-                    focalpoint=(0., -0.01, 0.02))
