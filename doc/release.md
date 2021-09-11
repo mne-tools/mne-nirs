@@ -20,7 +20,7 @@
     1. Change the version number from `0.0.X` to `0.0.X+1 dev` in [mne-nirs/mne_nirs/_version.py](https://github.com/mne-tools/mne-nirs/blob/master/mne_nirs/_version.py#L1)
     2. Set docs to build all versions in [conf.py](https://github.com/mne-tools/mne-nirs/blob/714dc6f75ebc561e7974ba7d3256fe0ae8d35174/doc/conf.py#L57) by setting `smv_tag_whitelist = r'^v\d+\.\d+.\d+$'`
 9. Commit which rebuild all docs
-10. Set docs to build current version only in [conf.py](https://github.com/mne-tools/mne-nirs/blob/714dc6f75ebc561e7974ba7d3256fe0ae8d35174/doc/conf.py#L57) by setting `smv_tag_whitelist = None`
+10. Set docs to build current version only in [conf.py](https://github.com/mne-tools/mne-nirs/blob/714dc6f75ebc561e7974ba7d3256fe0ae8d35174/doc/conf.py#L57) by setting `smv_tag_whitelist = 'ignore all tags'`
 11. Commit
 
 Done!
