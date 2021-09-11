@@ -34,7 +34,7 @@ def list_sources(raw):
     ch_names = raw.ch_names
     for pick in picks:
         x = re.search(r"S(\d+)_D(\d+)", ch_names[pick])
-        sources.append(x.group(1))
+        sources.append(int(x.group(1)))
 
     sources = np.unique(sources)
 
@@ -66,7 +66,7 @@ def list_detectors(raw):
     ch_names = raw.ch_names
     for pick in picks:
         x = re.search(r"S(\d+)_D(\d+)", ch_names[pick])
-        detectors.append(x.group(2))
+        detectors.append(int(x.group(2)))
 
     detectors = np.unique(detectors)
 
