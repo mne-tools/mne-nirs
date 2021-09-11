@@ -2,8 +2,9 @@
 
 1. Change version number and doc dropdown options. E.g. [46104c8](https://github.com/mne-tools/mne-nirs/pull/295/commits/46104c8cc5f971b1cce772626869dd96993b2bb7)
     1. Change the version number from `0.0.X dev` to `0.0.X` in [mne-nirs/mne_nirs/_version.py](https://github.com/mne-tools/mne-nirs/blob/master/mne_nirs/_version.py#L1)
-    1. Add new version to [mne-nirs/doc/conf.py](https://github.com/mne-tools/mne-nirs/blob/714dc6f75ebc561e7974ba7d3256fe0ae8d35174/doc/conf.py#L131) by changing `html_context, versions_dropdown`.
+    2. Add new version to [mne-nirs/doc/conf.py](https://github.com/mne-tools/mne-nirs/blob/714dc6f75ebc561e7974ba7d3256fe0ae8d35174/doc/conf.py#L131) by changing `html_context, versions_dropdown`.
        Remove the stable tag from previous version and add this version as `'v0.0.X': 'v0.0.X (stable)',`
+    3. Modify the changelog.md and rename the `-dev` from most recent changes
 1. Push change and wait for PR checks to go green.
 1. Merge PR and wait for checks to go green.
 1. Clone main branch locally. `git clone git@github.com:mne-tools/mne-nirs.git`
