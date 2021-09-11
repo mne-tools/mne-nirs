@@ -282,6 +282,8 @@ Functions to help with handling channel information.
 .. autosummary::
    :toctree: generated/
 
+   list_sources
+   list_detectors
    get_short_channels
    get_long_channels
    picks_pair_to_idx

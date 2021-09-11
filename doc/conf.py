@@ -54,10 +54,10 @@ extensions = [
 ]
 
 smv_branch_whitelist = r'^(?!refs/heads/).*$'
-smv_tag_whitelist = r'^v\d+\.\d+.\d+$'
+# smv_tag_whitelist = r'^v\d+\.\d+.\d+$'
 # They say to set this to None, but then Sphinx complains about it not being
 # a string, so let's just use a regex that should lead to no tags
-# smv_tag_whitelist = 'ignore all tags'
+smv_tag_whitelist = 'ignore all tags'
 # Mark vX.Y.Z as releases
 smv_released_pattern = r'^.*v.*$'
 
