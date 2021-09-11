@@ -86,7 +86,7 @@ def drop_sources(raw, sources):
 
     Returns
     -------
-    inst : instance of Raw, Epochs, or Evoked
+    inst : instance of Raw
         The modified instance.
     """
     if isinstance(sources, int):
@@ -127,7 +127,7 @@ def drop_detectors(raw, detectors):
 
     Returns
     -------
-    inst : instance of Raw, Epochs, or Evoked
+    inst : instance of Raw
         The modified instance.
     """
     if isinstance(detectors, int):
