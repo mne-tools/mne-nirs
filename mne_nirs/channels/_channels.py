@@ -21,7 +21,7 @@ def list_sources(raw):
     Returns
     -------
     sources : list
-        List of all sources in ascending order.
+        Unique list of all sources in ascending order.
     """
     _validate_type(raw, BaseRaw, 'raw')
 
@@ -53,7 +53,7 @@ def list_detectors(raw):
     Returns
     -------
     sources : list
-        List of all detectors in ascending order.
+        Unique list of all detectors in ascending order.
     """
     _validate_type(raw, BaseRaw, 'raw')
 
