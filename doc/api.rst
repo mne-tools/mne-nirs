@@ -284,6 +284,8 @@ Functions to help with handling channel information.
 
    list_sources
    list_detectors
+   drop_sources
+   drop_detectors
    get_short_channels
    get_long_channels
    picks_pair_to_idx
