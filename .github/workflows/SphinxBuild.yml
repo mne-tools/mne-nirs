@@ -12,6 +12,7 @@ jobs:
   job:
     name: 'docs and push'
     runs-on: ubuntu-20.04
+    if: "!contains(github.event.head_commit.message, '[skip docs]')"
     defaults:
       run:
         shell: bash
