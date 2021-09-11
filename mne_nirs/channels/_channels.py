@@ -122,7 +122,7 @@ def drop_detectors(raw, detectors):
     ----------
     raw : instance of Raw
         Raw instance containing fNIRS data.
-    sources : iterable or str
+    detectors : iterable or str
         Iterable (e.g. list) of detector(s) or detector to remove.
 
     Returns
