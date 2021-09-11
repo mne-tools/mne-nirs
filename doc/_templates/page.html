@@ -3,8 +3,15 @@
 <p>
   <strong>
     <p style="border:3px; border-style:solid; border-color:#FF0000; padding: 1em;">
-      <h3>Latest Version: {{ latest_version.name }}</h3>
-      <h3>Current Version: {{ current_version.name }}</h3>
+      {% if current_version.is_released %}
+        Released version
+        Current Version: {{ current_version.name }}
+        Released: {{ current_version.is_released }}
+      {% else %}
+        Development version
+        Current Version: {{ current_version.name }}
+        Released: {{ current_version.is_released }}
+      {% endif %}
     </p>
   </strong>
 </p>
