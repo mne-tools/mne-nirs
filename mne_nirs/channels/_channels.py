@@ -153,3 +153,85 @@ def drop_detectors(raw, detectors):
     keeps = np.where(keeps)[0]
 
     return raw.pick(keeps)
+
+
+def pick_sources(raw, sources):
+    """
+    Pick sources.
+
+    Parameters
+    ----------
+    raw : instance of Raw
+        Raw instance containing fNIRS data.
+    sources : iterable or str
+        Iterable (e.g. list) of source(s) or source to keep.
+
+    Returns
+    -------
+    inst : instance of Raw
+        The modified instance.
+    """
+    if isinstance(sources, int):
+        sources = [sources]
+
+    try:
+        all_str = all([isinstance(src, int) for src in sources])
+    except TypeError:
+        raise ValueError("'ch_names' must be iterable, got "
+                         "type {} ({}).".format(type(sources), sources))
+
+    if not all_str:
+        raise ValueError("Each element in 'ch_names' must be int, got "
+                         "{}.".format([type(ch) for ch in sources]))
+
+    keeps = np.zeros(len(raw.ch_names))
+    for src in sources:
+        template = f"S{src}_"
+        for idx in range(len(raw.ch_names)):
+            if template in raw.ch_names[idx]:
+                keeps[idx] = 1
+
+    keeps = np.where(keeps)[0]
+
+    return raw.pick(keeps)
+
+
+def pick_detectors(raw, detectors):
+    """
+    Pick detectors.
+
+    Parameters
+    ----------
+    raw : instance of Raw
+        Raw instance containing fNIRS data.
+    detectors : iterable or str
+        Iterable (e.g. list) of detector(s) or detector to keep.
+
+    Returns
+    -------
+    inst : instance of Raw
+        The modified instance.
+    """
+    if isinstance(detectors, int):
+        detectors = [detectors]
+
+    try:
+        all_str = all([isinstance(det, int) for det in detectors])
+    except TypeError:
+        raise ValueError("'ch_names' must be iterable, got "
+                         "type {} ({}).".format(type(detectors), detectors))
+
+    if not all_str:
+        raise ValueError("Each element in 'ch_names' must be int, got "
+                         "{}.".format([type(det) for det in detectors]))
+
+    keeps = np.zeros(len(raw.ch_names))
+    for det in detectors:
+        template = f"_D{det} "
+        for idx in range(len(raw.ch_names)):
+            if template in raw.ch_names[idx]:
+                keeps[idx] = 1
+
+    keeps = np.where(keeps)[0]
+
+    return raw.pick(keeps)

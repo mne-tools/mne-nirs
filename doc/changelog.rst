@@ -24,6 +24,8 @@ Enhancements
 * Add :meth:`mne_nirs.channels.list_detectors`. By `Robert Luke`_.
 * Add :meth:`mne_nirs.channels.drop_sources`. By `Robert Luke`_.
 * Add :meth:`mne_nirs.channels.drop_detectors`. By `Robert Luke`_.
+* Add :meth:`mne_nirs.channels.pick_sources`. By `Robert Luke`_.
+* Add :meth:`mne_nirs.channels.pick_detectors`. By `Robert Luke`_.
 
 
 v0.1.1
