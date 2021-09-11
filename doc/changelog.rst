@@ -14,8 +14,8 @@ Patch version changes indicate backward compatible bug fixes.
 
 To install a specific version of the library you would run ``pip install mne-nirs==0.0.6``, where ``0.0.6`` is the version you wish to install.
 
-v0.1.1 - dev
-------------
+v0.1.1
+------
 
 API changes
 
