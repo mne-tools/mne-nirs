@@ -60,6 +60,18 @@ MNE-NIRS
 
    write_raw_snirf
 
+.. currentmodule:: mne_nirs.io
+
+.. automodule:: mne_nirs.io
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
+   fold_landmark_specificity
+   fold_channel_specificity
+
 
 Preprocessing
 -------------

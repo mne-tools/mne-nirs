@@ -80,6 +80,7 @@ information about triggers, condition names, etc.
 # Import common libraries
 import numpy as np
 import pandas as pd
+import os
 
 # Import MNE processing
 from mne.preprocessing.nirs import optical_density, beer_lambert_law
@@ -93,6 +94,7 @@ from mne_nirs.channels import picks_pair_to_idx
 from mne_nirs.visualisation import plot_glm_group_topo
 from mne_nirs.datasets import fnirs_motor_group
 from mne_nirs.visualisation import plot_glm_surface_projection
+from mne_nirs.io.fold import fold_landmark_specificity, fold_channel_specificity
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
@@ -542,3 +544,74 @@ ch_model_df = statsmodels_to_results(ch_model,
 ch_model_df.reset_index(drop=True, inplace=True)
 ch_model_df = ch_model_df.set_index(['ch_name', 'Condition'])
 ch_model_df
+
+
+# %%
+# Relating Responses to Brain Landmarks
+# -------------------------------------
+#
+# .. sidebar:: fOLD Toolbox
+#
+#    You should use the fOLD toolbox to pick your optode locations
+#    when designing your experiment.
+#    The tool is very intuitive and easy to use.
+#    Be sure to cite the authors if you use their tool or data:
+#
+#    Morais, Guilherme Augusto Zimeo, Joana Bisol Balardin, and João Ricardo Sato. "fNIRS optodes’ location decider (fOLD): a toolbox for probe arrangement guided by brain regions-of-interest." Scientific reports 8.1 (2018): 1-11.
+#
+# It can be useful to understand what brain structures
+# the measured response may have resulted from. Here we illustrate
+# how to report the brain structures/landmarks that the source
+# detector pair with the largest response was sensitive to.
+#
+# First we determine the channel with the largest response.
+#
+# Next, we query the fOLD dataset to determine the
+# brain landmarks that this channel is most sensitive to.
+#
+# MNE-NIRS does not distribute the fOLD toolbox or the data
+# that they provide.
+# The fOLD data is hosted at https://github.com/nirx/fOLD-public
+# and you should download that first. Then you can use these functions
+# to query their data. You must cite the fOLD authors if you
+# use their tool or data.
+
+largest_response_channel = ch_model_df.loc[ch_model_df['Coef.'].idxmax()]
+largest_response_channel
+
+
+# %%
+#
+# Next we use information from the fOLD toolbox to report the
+# channel specificity to different brain regions.
+# These files are not distributedd with MNE-NIRS.
+# You need to download them from the authors website.
+# In this example I have downloaded the entire ``fOLD-public`` repository
+# as a zip and expanded it in ``/home/rob/mne_data/fOLD/``.
+# To use the functions ``fold_channel_specificity`` and ``fold_landmark_specificity``
+# you must pass the location of the fOLD xls files as an argument
+# so the software knows where you placed the data.
+
+fold_files = [os.path.join(os.path.expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-10.xls"),
+              os.path.join(os.path.expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-5.xls")]
+
+raw_channel = raw_haemo.copy().pick(largest_response_channel.name[0])
+fold_channel_specificity(raw_channel, fold_files)[0]
+
+
+# %%
+#
+# We observe that the channel with the largest response to tapping
+# had the greatest specificity to the Precentral Gyrus, which is
+# the site of the primary motor cortex. This is consistent
+# with the expectation for a finger tapping task.
+
+
+# %%
+# Conclusion
+# ----------
+#
+# This example has demonstrated how to perform a group level analysis
+# using a GLM approach.
+# We observed the responses were evoked primarily contralateral to the
+# hand of tapping and most likely originate from the primary motor cortex.
