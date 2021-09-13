@@ -1,5 +1,5 @@
 """
-.. _tut-fnirs-freq:
+.. _tut-mayer:
 
 Mayer Wave Parametrisation
 ==========================
