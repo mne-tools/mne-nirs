@@ -15,7 +15,7 @@ Mayer Wave Parametrisation
    Donoghue, Thomas, Julio Dominguez, and Bradley Voytek. "Electrophysiological frequency band ratio measures conflate periodic and aperiodic neural activity." Eneuro 7.6 (2020).
 
 Mayer waves are spontaneous oscillations in arterial blood pressure with a
-frequency of ~0.1 Hz (Ghali and Ghali, 2020; Julien, 2006).
+frequency of ~0.1 Hz (Ghali and Ghali, 2020; Julien, 2006; Yucel, 2016).
 Mayer waves are not easily removed from hemodynamic signatures of brain
 activity as they tend to occur on a time course often confounded with
 the frequency of a sensory task, for example, and/or the
