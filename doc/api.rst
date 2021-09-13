@@ -101,6 +101,7 @@ Signal Enhancement
 
    enhance_negative_correlation
    short_channel_regression
+   quanitfy_mayer_fooof
 
 
 Data quality evaluation.
