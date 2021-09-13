@@ -9,7 +9,7 @@ from functools import partial
 import numpy as np
 
 from mne.utils._testing import requires_module
-from mne_nirs.preprocessing import quanitfy_mayer_fooof
+from mne_nirs.preprocessing import quantify_mayer_fooof
 
 
 requires_fooof = partial(requires_module, name='fooof')
@@ -22,16 +22,16 @@ def test_mayer():
     raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir,
                                          verbose=True).load_data()
 
-    raw_intensity = raw_intensity.pick(picks=range(8))  # Keep the test fast
+    raw_intensity = raw_intensity.pick(picks=range(8)).crop(tmax=600)
 
     with pytest.raises(RuntimeError, match="run on haemoglobin"):
-        _ = quanitfy_mayer_fooof(raw_intensity)
+        _ = quantify_mayer_fooof(raw_intensity)
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
     with pytest.raises(RuntimeError, match="run on haemoglobin"):
-        _ = quanitfy_mayer_fooof(raw_od)
+        _ = quantify_mayer_fooof(raw_od)
 
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
-    df_mayer = quanitfy_mayer_fooof(raw_haemo)
+    df_mayer = quantify_mayer_fooof(raw_haemo)
 
     print(df_mayer)
 

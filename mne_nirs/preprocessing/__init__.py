@@ -4,4 +4,4 @@
 
 from ._peak_power import peak_power
 from ._scalp_coupling_segmented import scalp_coupling_index_windowed
-from ._mayer import quanitfy_mayer_fooof
+from ._mayer import quantify_mayer_fooof

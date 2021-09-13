@@ -11,7 +11,7 @@ from mne.utils import _validate_type, _require_version
 from mne.time_frequency import psd_welch
 
 
-def quanitfy_mayer_fooof(raw, num_oscillations=1, centre_frequency=0.01,
+def quantify_mayer_fooof(raw, num_oscillations=1, centre_frequency=0.01,
                          extra_df_fields={},
                          fmin=0.001, fmax=1, tmin=0, tmax=None,
                          n_fft=400, n_overlap=200):
@@ -20,7 +20,7 @@ def quanitfy_mayer_fooof(raw, num_oscillations=1, centre_frequency=0.01,
 
     The Fitting Oscillations & One Over F (FOOOF)
     :footcite:`donoghue2020parameterizing`
-    is utilised to estimate Mayer wave oscillation paramters as described in
+    is utilised to estimate Mayer wave oscillation parameters as described in
     :footcite:`luke2021characterization`.
 
     The FOOOF algorithm is applied to the mean PSD estimate of the data,
@@ -72,7 +72,7 @@ def quanitfy_mayer_fooof(raw, num_oscillations=1, centre_frequency=0.01,
     hbo_picks = pick_types(raw.info, fnirs='hbo')
     hbr_picks = pick_types(raw.info, fnirs='hbr')
 
-    if (not len(hbo_picks)) | (not len(hbr_picks)):
+    if (not len(hbo_picks)) & (not len(hbr_picks)):
         # It may be perfectly valid to compute this on optical density
         # or raw data, I just haven't tried this. Let me know if this works
         # for you and we can ease this restriction.
@@ -115,7 +115,7 @@ def _run_fooof(raw,
                                tmin=tmin, tmax=tmax,
                                n_overlap=n_overlap, n_fft=n_fft)
 
-    # FOOOF doesnt like low frequencies, so multiple by 10.
+    # FOOOF doesn't like low frequencies, so multiple by 10.
     # This is corrected for in the output below.
     freqs = freqs * 10
 

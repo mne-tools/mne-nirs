@@ -101,7 +101,6 @@ Signal Enhancement
 
    enhance_negative_correlation
    short_channel_regression
-   quanitfy_mayer_fooof
 
 
 Data quality evaluation.
@@ -117,6 +116,7 @@ Data quality evaluation.
 
    peak_power
    scalp_coupling_index_windowed
+   quantify_mayer_fooof
 
 
 Experimental Design
