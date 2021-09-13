@@ -57,6 +57,9 @@ def quantify_mayer_fooof(raw, num_oscillations=1, centre_frequency=0.01,
     n_overlap : int
         The number of points of overlap between segments. Will be adjusted
         to be <= n_per_seg. The default value is 0.
+    peak_width_limits : tuple of (float, float), optional, default: (0.5, 12.0)
+        Limits on possible peak width, in Hz, as (lower_bound, upper_bound).
+        As used by FOOOF.
 
     Returns
     -------
@@ -128,7 +131,7 @@ def _run_fooof(raw,
     # And these values are really 0.0001 to 1 Hz
     freq_range = [0.001, 10]
 
-    fm.fit(freqs, check_nans(np.mean(spectra, axis=0)), freq_range)
+    fm.fit(freqs, np.mean(spectra, axis=0), freq_range)
 
     return fm
 
@@ -138,7 +141,7 @@ def _process_fooof_output(fm, centre_frequency):
     CFs = [d[0] for d in fm.peak_params_]
 
     # In this line we correct for the scaling done in _run_fooof()
-    mayer_idx = find_nearest_idx(CFs, centre_frequency * 10)
+    mayer_idx = _find_nearest_idx(CFs, centre_frequency * 10)
 
     mayer = fm.peak_params_[mayer_idx]
 
@@ -149,28 +152,9 @@ def _process_fooof_output(fm, centre_frequency):
     return cf, pw, bw
 
 
-def find_nearest_idx(a, a0):
+def _find_nearest_idx(a, a0):
     """Element idx in nd array `a` closest to the scalar value `a0`."""
     if isinstance(a, list):
         a = np.array(a)
     idx = np.abs(a - a0).argmin()
     return idx
-
-
-def check_nans(data, nan_policy='zero'):
-    """Check an array for nan values, and replace, based on policy."""
-    # This is taken directly from
-    # https://fooof-tools.github.io/fooof/auto_examples/analyses/plot_mne_example.html
-
-    # Find where there are nan values in the data
-    nan_inds = np.where(np.isnan(data))
-
-    # Apply desired nan policy to data
-    if nan_policy == 'zero':
-        data[nan_inds] = 0
-    elif nan_policy == 'mean':
-        data[nan_inds] = np.nanmean(data)
-    else:
-        raise ValueError('Nan policy not understood.')
-
-    return data
