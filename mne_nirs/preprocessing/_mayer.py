@@ -14,7 +14,8 @@ from mne.time_frequency import psd_welch
 def quantify_mayer_fooof(raw, num_oscillations=1, centre_frequency=0.01,
                          extra_df_fields={},
                          fmin=0.001, fmax=1, tmin=0, tmax=None,
-                         n_fft=400, n_overlap=200):
+                         n_fft=400, n_overlap=200,
+                         peak_width_limits=(0.5, 12.0)):
     """
     Quantify Mayer wave properties using FOOOF analysis.
 
@@ -87,7 +88,8 @@ def quantify_mayer_fooof(raw, num_oscillations=1, centre_frequency=0.01,
             fm_hbo = _run_fooof(raw.copy().pick(picks),
                                 fmin=fmin, fmax=fmax,
                                 tmin=tmin, tmax=tmax,
-                                n_overlap=n_overlap, n_fft=n_fft)
+                                n_overlap=n_overlap, n_fft=n_fft,
+                                peak_width_limits=peak_width_limits)
 
             cf, pw, bw = _process_fooof_output(fm_hbo, centre_frequency)
 
@@ -106,7 +108,8 @@ def quantify_mayer_fooof(raw, num_oscillations=1, centre_frequency=0.01,
 def _run_fooof(raw,
                fmin=0.001, fmax=1,
                tmin=0, tmax=None,
-               n_overlap=200, n_fft=400):
+               n_overlap=200, n_fft=400,
+               peak_width_limits=(0.5, 12.0)):
     """Prepare data for FOOOF including welch and scaling, then apply."""
     from fooof import FOOOF
 
@@ -120,7 +123,7 @@ def _run_fooof(raw,
     freqs = freqs * 10
 
     # Remember these values are really 0.001 to 1.2 Hz
-    fm = FOOOF(peak_width_limits=(0.01, 12.0))
+    fm = FOOOF(peak_width_limits=peak_width_limits)
 
     # And these values are really 0.0001 to 1 Hz
     freq_range = [0.001, 10]

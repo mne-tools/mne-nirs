@@ -14,6 +14,13 @@ Mayer Wave Parametrisation
 
    Donoghue, Thomas, Julio Dominguez, and Bradley Voytek. "Electrophysiological frequency band ratio measures conflate periodic and aperiodic neural activity." Eneuro 7.6 (2020).
 
+Mayer waves are spontaneous oscillations in arterial blood pressure with a
+frequency of ~0.1 Hz (Ghali and Ghali, 2020; Julien, 2006).
+Mayer waves are not easily removed from hemodynamic signatures of brain
+activity as they tend to occur on a time course often confounded with
+the frequency of a sensory task, for example, and/or the
+cortical hemodynamic response to that task.
+
 This example demonstrates how to use the
 Fitting Oscillations & One Over F (FOOOF)
 :footcite:`donoghue2020parameterizing`
@@ -22,7 +29,7 @@ This is based on the description provided in
 :footcite:`luke2021characterization`.
 
 This tutorial is heavily based on the tutorials provided by the FOOOF
-authors over at https://fooof-tools.github.io/fooof/auto_tutorials/index.html.
+authors over at https://fooof-tools.github.io/fooof.
 You should read their excellent documentation. Their work should be considered
 the primary resource, and this is just an example of how to apply it to fNIRS
 data for the purpose of extracting Mayer waves oscillation parameters.
@@ -60,12 +67,6 @@ from fooof import FOOOF
 # --------------------------
 #
 # We read in the data and convert to haemoglobin concentration.
-#
-# This code is similar to the first sections in the MNE tutorial,
-# so will not be described in detail here.
-# Please see the
-# :ref:`MNE documentation <mne:tut-fnirs-processing>`.
-# for a detailed introduction to processing NIRS with MNE.
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
@@ -91,9 +92,15 @@ raw
 # quality, well maintained, thoroughly documented, and they have considered
 # many edge cases.
 #
-# Below we plot the spectrum of the data and the FOOOF fit of oscillations
+# Below we plot the spectrum of the data, the FOOOF fit of oscillations,
 # and aperiodic component. Note the bump at 0.1 Hz that reflects the Mayer
 # wave activity.
+#
+# Note that the activity is not a perfect peak at 0.1 Hz, but is spread
+# across neighbouring frequencies. Additionally, the peak does not occur
+# at exactly 0.1 Hz, but instead seems to peak at approximately 0.09 Hz.
+# The shaded area illustrates the oscillation fitted by the FOOOF algorithm,
+# it matches well to the data.
 
 def scale_up_spectra(spectra, freqs):
     """
@@ -108,16 +115,18 @@ def scale_up_spectra(spectra, freqs):
 spectra, freqs = psd_welch(raw, fmin=0.001, fmax=1, tmin=0, tmax=None, n_overlap=300, n_fft=600)
 spectra, freqs = scale_up_spectra(spectra, freqs)
 
-fm = FOOOF(peak_width_limits=(0.06, 12.0))
+# Specify the model, note that frequency values here are times 10
+fm = FOOOF(peak_width_limits=(0.5, 12.0))
 # Set the frequency range to fit the model
 freq_range = [0.001, 10]
 
 fm.fit(freqs, np.mean(spectra, axis=0), freq_range)
 
 fig, axs = plt.subplots(1, 1, figsize=(10, 5))
-fm.plot(plot_peaks=None, data_kwargs={'color': 'orange'}, plt_log=False, ax=axs, plot_aperiodic=True)
+fm.plot(plot_peaks='shade', data_kwargs={'color': 'orange'}, ax=axs)
 # Correct for x10 scaling above
 plt.xticks([0, 1, 2, 3, 4, 5, 6], [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6])
+plt.show()
 
 
 # %%
@@ -128,5 +137,7 @@ plt.xticks([0, 1, 2, 3, 4, 5, 6], [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6])
 # parameters that takes care of the frequency scaling and selects the component
 # most likely associated with the Mayer wave. It returns this data in a pandas
 # dataframe for your convenience.
+# It uses the FOOOF algorithm under the hood, so ensure you cite the original
+# authors if you use this function.
 
-print(quantify_mayer_fooof(raw.pick("hbo"), extra_df_fields={"Study": "Online tutorial"}))
+quantify_mayer_fooof(raw.pick("hbo"), extra_df_fields={"Study": "Online tutorial"})
