@@ -128,6 +128,7 @@ Data quality evaluation.
 
    peak_power
    scalp_coupling_index_windowed
+   quantify_mayer_fooof
 
 
 Experimental Design

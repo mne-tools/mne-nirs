@@ -26,6 +26,9 @@ Enhancements
 * Add :meth:`mne_nirs.channels.drop_detectors`. By `Robert Luke`_.
 * Add :meth:`mne_nirs.channels.pick_sources`. By `Robert Luke`_.
 * Add :meth:`mne_nirs.channels.pick_detectors`. By `Robert Luke`_.
+* Add :meth:`mne_nirs.preprocessing.quantify_mayer_fooof`. By `Robert Luke`_.
+* Add :func:`mne_nirs.io.fold_landmark_specificity`. By `Robert Luke`_.
+* Add :func:`mne_nirs.io.fold_channel_specificity`. By `Robert Luke`_.
 
 
 v0.1.1
@@ -44,8 +47,6 @@ Enhancements
 * Add :func:`mne_nirs.statistics.read_glm`. By `Robert Luke`_.
 * Add :func:`mne_nirs.experimental_design.longest_inter_annotation_interval`. By `Robert Luke`_.
 * Add :func:`mne_nirs.experimental_design.drift_high_pass`. By `Robert Luke`_.
-* Add :func:`mne_nirs.io.fold_landmark_specificity`. By `Robert Luke`_.
-* Add :func:`mne_nirs.io.fold_channel_specificity`. By `Robert Luke`_.
 
 
 Fixes
