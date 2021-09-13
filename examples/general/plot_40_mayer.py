@@ -118,7 +118,7 @@ spectra, freqs = scale_up_spectra(spectra, freqs)
 # Specify the model, note that frequency values here are times 10
 fm = FOOOF(peak_width_limits=(0.5, 12.0))
 # Set the frequency range to fit the model
-freq_range = [0.001, 10]
+freq_range = [0.001, 7]
 
 fm.fit(freqs, np.mean(spectra, axis=0), freq_range)
 
@@ -126,7 +126,6 @@ fig, axs = plt.subplots(1, 1, figsize=(10, 5))
 fm.plot(plot_peaks='shade', data_kwargs={'color': 'orange'}, ax=axs)
 # Correct for x10 scaling above
 plt.xticks([0, 1, 2, 3, 4, 5, 6], [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6])
-plt.show()
 
 
 # %%
