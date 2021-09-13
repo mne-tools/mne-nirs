@@ -47,7 +47,6 @@ data for the purpose of extracting Mayer waves oscillation parameters.
 
 import os
 import mne
-import mne_nirs
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -55,8 +54,6 @@ from mne.preprocessing.nirs import optical_density, beer_lambert_law
 from mne.time_frequency import psd_welch
 
 from mne_nirs.channels import get_long_channels
-from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.simulation import simulate_nirs_raw
 from mne_nirs.preprocessing import quantify_mayer_fooof
 
 from fooof import FOOOF
