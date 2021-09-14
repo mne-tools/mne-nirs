@@ -30,7 +30,7 @@ else
 	echo "pyvistaqt"
 	pip install --progress-bar off https://github.com/pyvista/pyvistaqt/zipball/main
 	echo "imageio-ffmpeg, xlrd, mffpy"
-	pip install --progress-bar off --pre mayavi imageio-ffmpeg xlrd mffpy
+	pip install --progress-bar off --pre imageio-ffmpeg xlrd mffpy
 fi
 
 pip install --progress-bar off --upgrade https://github.com/mne-tools/mne-python/archive/main.zip
