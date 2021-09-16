@@ -85,7 +85,7 @@ raw
 # the FOOOF algorithm.
 #
 # I recommend using the FOOOF algorithm as provided by the authors rather
-# than reimplementation or custom plotting etc. There code is of excellent
+# than reimplementation or custom plotting etc. Their code is of excellent
 # quality, well maintained, thoroughly documented, and they have considered
 # many edge cases.
 #
