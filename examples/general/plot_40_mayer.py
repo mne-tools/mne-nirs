@@ -82,10 +82,10 @@ raw
 # -----------------------
 #
 # Next we estimate the power spectral density of the data and pass this to
-# the FOOOF algorithm
+# the FOOOF algorithm.
 #
 # I recommend using the FOOOF algorithm as provided by the authors rather
-# than reimplementation or custom plotting etc. As there code is of excellent
+# than reimplementation or custom plotting etc. Their code is of excellent
 # quality, well maintained, thoroughly documented, and they have considered
 # many edge cases.
 #
@@ -137,3 +137,39 @@ plt.xticks([0, 1, 2, 3, 4, 5, 6], [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]);
 # authors if you use this function.
 
 quantify_mayer_fooof(raw.pick("hbo"), extra_df_fields={"Study": "Online tutorial"})
+
+
+# %%
+# Conclusion
+# ----------
+#
+# We have demonstrated how to use the FOOOF algorithm for quantifying Mayer
+# wave parameters, and highlighted the `quantify_mayer_fooof` for conveniently
+# applying this analysis to fNIRS data with MNE-NIRS.
+#
+# An example measurement illustrated what the presence of a Mayer wave
+# looks like with a power spectral density. The measurement also illustrated that the Mayer wave
+# is not a perfect sinusoid, as evidenced by the broad spectral content.
+# Further, the example illustrated that the Mayer wave is not always precisely locked
+# to 0.1 Hz, both visual inspection and FOOOF quantification indicate a 0.09 Hz
+# centre frequency.
+#
+# See the article Luke (2021) :footcite:`luke2021characterization` for further
+# details on this analysis approach, and normative data from over 300 fNIRS
+# measurements. This article also demonstrates that using short-channel
+# systemic component correction algorithms can reduce the Mayer wave component
+# in the signal (see also Yucel 2016).
+# See both the
+# :ref:`GLM tutorial <tut-fnirs-hrf>`
+# and
+# :ref:`signal enhancement tutorial <tut-fnirs-enhance>`
+# for how to use short channels in either a GLM or averaging analysis with MNE-NIRS.
+
+
+# %%
+# Bibliography
+# -----------------------------------------------
+#
+# .. footbibliography::
+
+
