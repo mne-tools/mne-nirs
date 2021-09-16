@@ -65,4 +65,4 @@ Nilearn: http://nilearn.github.io/authors.html#citing
 
 statsmodels: https://www.statsmodels.org/stable/index.html#citation
 
-Until there is a journal article specifically on MNE-NIRS, please cite `this article <https://www.biorxiv.org/content/10.1101/2020.12.22.423886v1>`_.
+Until there is a journal article specifically on MNE-NIRS, please cite `this article <https://doi.org/10.1117/1.NPh.8.2.025008>`_.
