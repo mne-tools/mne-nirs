@@ -107,7 +107,7 @@ jobs:
         - run:
             name: list packages
             command: |
-               conda list
+               pip list
 
 
         - run:
