@@ -45,5 +45,8 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
     fetcher.fetch(fname=archive_name, downloader=downloader, processor=unzip)
     # after unpacking, remove the archive file
     os.remove(op.join(datapath, archive_name))
-    return shutil.move(op.join(datapath, archive_name[:-4]),
-                       op.join(datapath, foldername))
+    if op.isdir(op.join(datapath, foldername)):
+        return op.join(datapath, foldername)
+    else:
+        return shutil.move(op.join(datapath, archive_name[:-4]),
+                           op.join(datapath, foldername))
