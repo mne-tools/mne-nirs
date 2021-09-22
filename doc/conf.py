@@ -27,7 +27,7 @@ from mne_nirs import __version__  # noqa: E402
 from mne.tests.test_docstring_parameters import error_ignores
 
 
-smv_tag_whitelist = os.getenv('SMV_TAG_WHITELIST', r'^v\d+\.\d+.\d+$'))
+smv_tag_whitelist = os.getenv('SMV_TAG_WHITELIST', r'^v\d+\.\d+.\d+$')
 
 
 # If extensions (or modules to document with autodoc) are in another directory,
