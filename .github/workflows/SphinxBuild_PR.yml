@@ -1,4 +1,4 @@
-name: "docs"
+name: "PR Docs"
 on:
 - pull_request
 
@@ -20,6 +20,7 @@ jobs:
       PYTHONUNBUFFERED: '1'
       PYTHON_VERSION: '3.9'
       MNE_3D_BACKEND: 'pyvistaqt'
+      SMV_TAG_WHITELIST: 'ignore all tags'
     steps:
       - uses: actions/checkout@v2
         with:

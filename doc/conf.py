@@ -27,6 +27,9 @@ from mne_nirs import __version__  # noqa: E402
 from mne.tests.test_docstring_parameters import error_ignores
 
 
+smv_tag_whitelist = os.getenv('SMV_TAG_WHITELIST', r'^v\d+\.\d+.\d+$')
+
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -57,7 +60,7 @@ smv_branch_whitelist = r'^(?!refs/heads/).*$'
 # smv_tag_whitelist = r'^v\d+\.\d+.\d+$'
 # They say to set this to None, but then Sphinx complains about it not being
 # a string, so let's just use a regex that should lead to no tags
-smv_tag_whitelist = 'ignore all tags'
+# smv_tag_whitelist = 'ignore all tags'
 # Mark vX.Y.Z as releases
 smv_released_pattern = r'^.*v.*$'
 
