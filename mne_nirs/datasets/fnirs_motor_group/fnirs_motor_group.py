@@ -27,7 +27,7 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
     archive_name = 'BIDS-NIRS-Tapping-master.zip'
     urls = {archive_name:
             'https://github.com/rob-luke/BIDS-NIRS-Tapping/archive/master.zip'}
-    hashes = {archive_name: 'md5:8b1a09e4af64ec66426b9c70c07a5594'}
+    hashes = {archive_name: 'md5:d2b32a03601c9882aef534e22ad237ab'}
 
     fetcher = pooch.create(
         path=datapath,
