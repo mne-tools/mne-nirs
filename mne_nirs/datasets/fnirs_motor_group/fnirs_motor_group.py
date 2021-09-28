@@ -5,13 +5,14 @@
 # and the dataset complies I will add this to the MNE-Python library.
 
 import os
-import os.path as op
-from functools import partial
+import tempfile
 import shutil
+import pooch
+from functools import partial
 
 from mne.utils import verbose
-from mne.datasets.utils import (has_dataset)
-from mne.datasets.utils import _get_path
+from mne.datasets.utils import has_dataset
+from mne.datasets import fetch_dataset
 
 has_fnirs_motor_group_data = partial(has_dataset, name='fnirs_motor_group')
 
@@ -19,34 +20,27 @@ has_fnirs_motor_group_data = partial(has_dataset, name='fnirs_motor_group')
 @verbose
 def data_path(path=None, force_update=False, update_path=True, download=True,
               verbose=None):  # noqa: D103
-    # TODO: all of the arguments to the function are being ignored!
-    import pooch
 
-    datapath = _get_path(None, 'MNE_DATASETS_SAMPLE_PATH', None)
-    foldername = 'fNIRS-motor-group'
-    archive_name = 'BIDS-NIRS-Tapping-master.zip'
-    urls = {archive_name:
-            'https://github.com/rob-luke/BIDS-NIRS-Tapping/archive/master.zip'}
-    hashes = {archive_name: 'md5:d2b32a03601c9882aef534e22ad237ab'}
-
-    fetcher = pooch.create(
-        path=datapath,
-        base_url='',    # Full URLs are given in the `urls` dict.
-        version=None,   # Data versioning is decoupled from MNE-Python version.
-        urls=urls,
-        retry_if_failed=2,  # 2 retries = 3 total attempts
-        registry=hashes
+    dataset_params = dict(
+        archive_name='BIDS-NIRS-Tapping-master.zip',
+        hash='md5:d2b32a03601c9882aef534e22ad237ab',
+        url='https://github.com/rob-luke/BIDS-NIRS-Tapping/archive/master.zip',
+        folder_name='fNIRS-motor-group',
+        dataset_name='fnirs_motor_group',
+        config_key='MNE_DATASETS_FNIRSMOTORGROUP_PATH',
     )
 
-    # fetch and unpack the data
-    archive_name = 'BIDS-NIRS-Tapping-master.zip'
-    downloader = pooch.HTTPDownloader(progressbar=True)
-    unzip = pooch.Unzip(extract_dir=datapath)
-    fetcher.fetch(fname=archive_name, downloader=downloader, processor=unzip)
-    # after unpacking, remove the archive file
-    os.remove(op.join(datapath, archive_name))
-    if op.isdir(op.join(datapath, foldername)):
-        return op.join(datapath, foldername)
-    else:
-        return shutil.move(op.join(datapath, archive_name[:-4]),
-                           op.join(datapath, foldername))
+    dpath = fetch_dataset(dataset_params, path=path, force_update=force_update,
+                          update_path=update_path, download=download,
+                          processor=pooch.Unzip(
+                              extract_dir="./fNIRS-motor-group"))
+
+    # Do some wrangling to deal with nested directories
+    bad_name = os.path.join(dpath, 'BIDS-NIRS-Tapping-master')
+    if os.path.isdir(bad_name):
+        tmppath = tempfile.mkdtemp()
+        os.rename(bad_name, tmppath)
+        shutil.rmtree(dpath)
+        os.rename(tmppath, dpath)
+
+    return dpath

@@ -9,3 +9,8 @@ def test_dataset_tapping_group():
     datapath = mne_nirs.datasets.fnirs_motor_group.data_path()
     assert op.isdir(datapath)
     assert op.isdir(op.join(datapath, "sub-01"))
+
+    # First pass downloaded, check that second pass of access works
+    datapath = mne_nirs.datasets.fnirs_motor_group.data_path()
+    assert op.isdir(datapath)
+    assert op.isdir(op.join(datapath, "sub-01"))
