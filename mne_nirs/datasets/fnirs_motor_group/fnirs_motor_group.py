@@ -30,11 +30,10 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
         config_key='MNE_DATASETS_FNIRSMOTORGROUP_PATH',
     )
 
-    dpath = fetch_dataset(dataset_params, processor=pooch.Unzip(
-        extract_dir="./fNIRS-motor-group"),
-                         path=path,
-                         force_update=force_update, update_path=update_path,
-                         download=download)
+    dpath = fetch_dataset(dataset_params, path=path, force_update=force_update,
+                          update_path=update_path, download=download,
+                          processor=pooch.Unzip(
+                              extract_dir="./fNIRS-motor-group"))
 
     # Do some wrangling to deal with nested directories
     bad_name = os.path.join(dpath, 'BIDS-NIRS-Tapping-master')
