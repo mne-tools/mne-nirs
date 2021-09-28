@@ -7,5 +7,6 @@ import mne_nirs
 
 def test_dataset_tapping_group():
     datapath = mne_nirs.datasets.fnirs_motor_group.data_path()
+    print(datapath)
     assert op.isdir(datapath)
     assert op.isdir(op.join(datapath, "sub-01"))

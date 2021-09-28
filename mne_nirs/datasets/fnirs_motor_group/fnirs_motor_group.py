@@ -4,6 +4,7 @@
 # This downloads my fnirs group tapping data. Once BIDS is finalised
 # and the dataset complies I will add this to the MNE-Python library.
 
+import pooch
 from functools import partial
 
 from mne.utils import verbose
@@ -22,8 +23,12 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
         hash='md5:d2b32a03601c9882aef534e22ad237ab',
         url='https://github.com/rob-luke/BIDS-NIRS-Tapping/archive/master.zip',
         folder_name='fNIRS-motor-group',
+        dataset_name='fnirs_motor_group',
+        config_key='MNE_DATASETS_FNIRSMOTORGROUP_PATH',
     )
 
-    return fetch_dataset(dataset_params, processor='unzip', path=path,
+    return fetch_dataset(dataset_params, processor=pooch.Unzip(
+        extract_dir="./fNIRS-motor-group"),
+                         path=path,
                          force_update=force_update, update_path=update_path,
                          download=download)
