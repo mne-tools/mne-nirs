@@ -40,7 +40,7 @@ import mne_bids.stats
 # *******************
 #
 # This data is from the publication
-# :cite:p:`Luke_fNIRS_Finger_Tapping_2021`.
+# :footcite:p:`Luke_fNIRS_Finger_Tapping_2021`.
 # This data provides an example of the canonical finger tapping experiment.
 # Data is provided from five participants. The experiment was a block design
 # with three conditions. The first condition consisted of the participants
@@ -58,7 +58,7 @@ mne_bids.stats.count_events(datapath)
 # *************************
 #
 # This data is from the publication
-# :cite:p:`luke2021analysis`.
+# :footcite:p:`luke2021analysis`.
 # In this experiment listeners were presented with auditory stimuli via insertphones.
 # Data is provided from seventeen participants. The experiment was a block
 # design with three conditions. The first condition consisted of speech,
@@ -75,7 +75,7 @@ mne_bids.stats.count_events(datapath)
 # **********************
 #
 # This data is from the publication
-# :cite:p:`shader2021use`.
+# :footcite:p:`shader2021use`.
 # In this experiment participants were presented a continuously running story
 # in blocked segments. Each segment was presented as either audio only
 # or visual only.
@@ -90,4 +90,5 @@ mne_bids.stats.count_events(datapath)
 # Bibliography
 # -----------------------------------------------
 #
+# .. bibliography::
 # .. footbibliography::
