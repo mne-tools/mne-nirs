@@ -12,7 +12,7 @@ your experiment (including piloting and exploration) then please cite the
 authors of the data.
 
 A brief explanation of each dataset is provided below, and a demonstration
-of how to download the data and load it in to MNE-NIRS.
+of how to download the data and address it with MNE.
 Each dataset is provided in BIDs format, as such we can use the MNE-BIDS
 package to quickly report the number of trials for each condition in the
 dataset.
@@ -85,4 +85,5 @@ mne_bids.stats.count_events(datapath)
 # Bibliography
 # -----------------------------------------------
 #
-# .. footbibliography::
+.. footbibliography::
+:style: unsrt
