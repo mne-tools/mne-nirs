@@ -11,7 +11,7 @@ Each dataset is published and if you use the data at any stage of
 your experiment (including piloting and exploration) then please cite the
 authors of the data.
 
-A brief explantation of each dataset is provided below, and a demonstration
+A brief explanation of each dataset is provided below, and a demonstration
 of how to download the data and load it in to MNE-NIRS.
 Each dataset is provided in BIDs format, as such we can use the MNE-BIDS
 package to quickly report the number of trials for each condition in the
