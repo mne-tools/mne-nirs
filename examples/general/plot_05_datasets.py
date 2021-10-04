@@ -85,5 +85,4 @@ mne_bids.stats.count_events(datapath)
 # Bibliography
 # -----------------------------------------------
 #
-.. footbibliography::
-:style: unsrt
+# .. footbibliography::
