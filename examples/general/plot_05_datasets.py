@@ -24,12 +24,7 @@ dataset.
 #
 # License: BSD (3-clause)
 
-import os
-import mne
-import numpy as np
-from itertools import compress
-import matplotlib.pyplot as plt
-import mne
+
 import mne_nirs
 import mne_bids.stats
 
