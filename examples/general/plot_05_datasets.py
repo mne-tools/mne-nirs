@@ -37,6 +37,8 @@ import mne_bids.stats
 # Finger Tapping Data
 # *******************
 #
+# This data is from the publication
+# :footcite:`Luke_fNIRS_Finger_Tapping_2021`.
 # This data provides an example of the canonical finger tapping experiment.
 # Data is provided from five participants. The experiment was a block design
 # with three conditions. The first condition consisted of the participants
@@ -61,15 +63,17 @@ mne_bids.stats.count_events(datapath)
 # the second condition consisted of low frequency noise.
 # The final condition was a control, no audio was presented to the listeners.
 
-datapath = mne_nirs.datasets.fnirs_motor_group.data_path()
+datapath = mne_nirs.datasets.block_speech_noise.data_path()
 mne_bids.stats.count_events(datapath)
 
 
 # %%
-# *******************
-# Finger Tapping Data
-# *******************
+# **********************
+# Audio or Visual Speech
+# **********************
 #
+# This data is from the publication
+# :footcite:`shader2021use`.
 # This data provides an example of the canonical finger tapping experiment.
 # Data is provided from five participants. The experiment was a block design
 # with three conditions. The first condition consisted of the participants
@@ -77,7 +81,7 @@ mne_bids.stats.count_events(datapath)
 # same but with the right hand. The final condition was a control, with no
 # motor task.
 
-datapath = mne_nirs.datasets.fnirs_motor_group.data_path()
+datapath = mne_nirs.datasets.audio_or_visual_speech.data_path()
 mne_bids.stats.count_events(datapath)
 
 

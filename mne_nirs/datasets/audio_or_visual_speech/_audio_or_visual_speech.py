@@ -37,8 +37,8 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
                               extract_dir="./fNIRS-audio-visual-speech"))
 
     # Do some wrangling to deal with nested directories
-    bad_name = os.path.join(dpath,'2021-fNIRS-Audio-visual-speech-'
-                                  'Broad-vs-restricted-regions')
+    bad_name = os.path.join(dpath, '2021-fNIRS-Audio-visual-speech-'
+                                   'Broad-vs-restricted-regions')
     if os.path.isdir(bad_name):
         tmppath = tempfile.mkdtemp()
         os.rename(bad_name, tmppath)
