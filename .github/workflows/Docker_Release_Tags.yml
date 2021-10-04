@@ -41,7 +41,7 @@ jobs:
         run: docker tag ghcr.io/${GITHUB_REPOSITORY}/${GITHUB_REF##*/} ghcr.io/mne-tools/mne-nirs/image:{{ github.event.inputs.mne_nirs }}
 
       - name: Push image to github
-        run: docker push ghcr.io/rob-luke/mne-nirs/image:{{ github.event.inputs.mne_nirs }}
+        run: docker push ghcr.io/mne-tools/mne-nirs/image:{{ github.event.inputs.mne_nirs }}
 
       - name: System info
         run: docker run ghcr.io/mne-tools/mne-nirs/image:{{ github.event.inputs.mne_nirs }} python -c "import mne_nirs; print(mne_nirs.__version__)"
