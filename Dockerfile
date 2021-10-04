@@ -1,7 +1,8 @@
-FROM ghcr.io/mne-tools/mne-python-plot:main
-
-ARG mne_nirs_v=main
+ARG mne_python_v=main
 ARG nilearn_v=main
+ARG mne_nirs_v=main
+
+FROM ghcr.io/mne-tools/mne-python-plot:${mne_python_v}
 
 USER root
 
