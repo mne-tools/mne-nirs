@@ -35,7 +35,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build docker image
-        run: docker-compose build --build-arg mne_python_v={{ github.event.inputs.mne_python }} --build-arg mne_nirs_v={{ github.event.inputs.mne_nirs }} --build-arg nilearn_v={{ github.event.inputs.nilearn }} base
+        run: docker-compose build --build-arg mne_python_v=${{ github.event.inputs.mne_python }} --build-arg mne_nirs_v=${{ github.event.inputs.mne_nirs }} --build-arg nilearn_v=${{ github.event.inputs.nilearn }} base
 
       - name: List docker images
         run: docker images
