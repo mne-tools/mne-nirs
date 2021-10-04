@@ -5,15 +5,17 @@
 Available Example Datasets
 ==========================
 
-To facilitate onboarding and trialing of MNE-NIRS we provide some example
-datasets. Each dataset is published and if you use the data at any stage of
+To get you up and running with MNE-NIRS and fNIRS data analysis we provide
+some example datasets.
+Each dataset is published and if you use the data at any stage of
 your experiment (including piloting and exploration) then please cite the
 authors of the data.
 
 A brief explantation of each dataset is provided below, and a demonstration
-of how to download the data and load it in to MNE-NIRS. The number of trials
-of each condition are printed using the MNE-BIDS function, and the experimental
-design parameters are printed using MNE-NIRS functions.
+of how to download the data and load it in to MNE-NIRS.
+Each dataset is provided in BIDs format, as such we can use the MNE-BIDS
+package to quickly report the number of trials for each condition in the
+dataset.
 
 """
 # sphinx_gallery_thumbnail_number = 1
@@ -38,7 +40,7 @@ import mne_bids.stats
 # *******************
 #
 # This data is from the publication
-# :footcite:`Luke_fNIRS_Finger_Tapping_2021`.
+# :cite:p:`Luke_fNIRS_Finger_Tapping_2021`.
 # This data provides an example of the canonical finger tapping experiment.
 # Data is provided from five participants. The experiment was a block design
 # with three conditions. The first condition consisted of the participants
@@ -56,7 +58,7 @@ mne_bids.stats.count_events(datapath)
 # *************************
 #
 # This data is from the publication
-# :footcite:`luke2021analysis`.
+# :cite:p:`luke2021analysis`.
 # In this experiment listeners were presented with auditory stimuli via insertphones.
 # Data is provided from seventeen participants. The experiment was a block
 # design with three conditions. The first condition consisted of speech,
@@ -73,8 +75,8 @@ mne_bids.stats.count_events(datapath)
 # **********************
 #
 # This data is from the publication
-# :footcite:`shader2021use`.
-# In this experiment participants were presented a continously running story
+# :cite:p:`shader2021use`.
+# In this experiment participants were presented a continuously running story
 # in blocked segments. Each segment was presented as either audio only
 # or visual only.
 # In addition to the audio visual stimuli, a control condition was also
