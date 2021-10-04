@@ -48,4 +48,4 @@ docker run -p 8888:8888 ghcr.io/mne-tools/mne-nirs/image:v0.0.6 jupyter-lab --ip
 ## Development
 
 To build an image use the `Docker_Release_Tags.yml` github action.
-These are not exectued automatically and must be triggered using the GitHub interface.
+These are not executed automatically and must be triggered using the GitHub interface.
