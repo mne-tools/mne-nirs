@@ -37,4 +37,4 @@ jobs:
         run: docker run mnetools/mne-python python -c "import mne_nirs; print(mne_nirs.__version__)"
 
       - name: Run visualisation test
-        run: docker run -v `pwd`:/opt/app/examples mnetools/mne-python ipython /opt/app/examples/mne_nirs/tests/docker_test.py
+        run: docker run -v `pwd`:/opt/app/examples mnetools/mne-python ipython /opt/app/examples/mne_nirs/tests/docker.py
