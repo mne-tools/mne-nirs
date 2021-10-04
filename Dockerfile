@@ -1,4 +1,4 @@
-FROM ghcr.io/mne-tools/mne-python-plot
+FROM ghcr.io/mne-tools/mne-python-plot:latest
 
 ARG mne_nirs_v=main
 ARG nilearn_v=main
