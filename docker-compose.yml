@@ -1,0 +1,21 @@
+version: "3.1"
+
+services:
+  scheduler:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: mnetools/mne-python
+    hostname: mne-dask-scheduler
+    ports:
+      - "8786:8786"
+      - "8787:8787"
+    command: ["dask-scheduler"]
+
+  worker:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: mnetools/mne-python
+    hostname: mne-dask-worker
+    command: ["dask-worker", "tcp://scheduler:8786"]
