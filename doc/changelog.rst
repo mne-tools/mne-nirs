@@ -29,8 +29,6 @@ Enhancements
 * Add :meth:`mne_nirs.preprocessing.quantify_mayer_fooof`. By `Robert Luke`_.
 * Add :func:`mne_nirs.io.fold_landmark_specificity`. By `Robert Luke`_.
 * Add :func:`mne_nirs.io.fold_channel_specificity`. By `Robert Luke`_.
-* Add new dataset with seventeen participants, :func:`mne_nirs.datasets.block_speech_noise`. By `Robert Luke`_.
-* Add new dataset with eight participants :func:`mne_nirs.datasets.audio_or_visual_speech`. By `Robert Luke`_.
 
 
 v0.1.1
