@@ -69,11 +69,15 @@ jobs:
           git status
       - shell: bash -el {0}
         run: ./tools/github_actions_docs.sh
-        name: 'Build docs'          
+        name: 'Build docs'
       - shell: bash -el {0}
-        name: 'Copy redirect html'       
+        name: 'Copy redirect html'
         run: |
           cp ./doc/index.html ./doc/_build/html/index.html
+      - shell: bash -el {0}
+        name: 'Copy dockerfile for binder'
+        run: |
+          cp ./Dockerfile ./doc/_build/html/Dockerfile
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

@@ -268,6 +268,18 @@ else:
     scrapers += (report_scraper,)
     del backend
 
+# Resolve binder filepath_prefix. From the docs:
+# "A prefix to append to the filepath in the Binder links. You should use this
+# if you will store your built documentation in a sub-folder of a repository,
+# instead of in the root."
+# we will store dev docs in a `dev` subdirectory and all other docs in a
+# directory "v" + version_str. E.g., "v0.3"
+if 'dev' in version:
+    filepath_prefix = 'main'
+else:
+    filepath_prefix = 'v{}'.format(version)
+
+
 # sphinx-gallery configuration
 sphinx_gallery_conf = {
     'doc_module': 'mne_nirs',
@@ -280,12 +292,11 @@ sphinx_gallery_conf = {
     'within_subsection_order': FileNameSortKey,
     'binder': {
     # Required keys
-    'org': 'rob-luke',
-    'repo': 'mne-nirs-docker',
-    'branch': 'main',  # noqa: E501 Can be any branch, tag, or commit hash. Use a branch that hosts your docs.
+    'org': 'mne-tools',
+    'repo': 'mne-nirs',
+    'branch': 'gh-pages',  # noqa: E501 Can be any branch, tag, or commit hash. Use a branch that hosts your docs.
     'binderhub_url': 'https://mybinder.org',  # noqa: E501 Any URL of a binderhub deployment. Must be full URL (e.g. https://mybinder.org).
-    'filepath_prefix': 'examples',  # noqa: E501 A prefix to prepend to any filepaths in Binder links.
-    'notebooks_dir': 'mne-nirs-website-examples',  # noqa: E501 A prefix to prepend to any filepaths in Binder links.
+        'filepath_prefix': filepath_prefix,  # noqa: E501 A prefix to prepend to any filepaths in Binder links.
         'dependencies': [
             '../requirements.txt',
             '../requirements_doc.txt',
