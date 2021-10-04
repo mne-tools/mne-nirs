@@ -35,13 +35,16 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build docker image
-        run: DOCKER_BUILDKIT=1 docker build --build-arg mne_python_v={{ github.event.inputs.mne_python }} --build-arg mne_nirs_v={{ github.event.inputs.mne_nirs }} --build-arg nilearn_v={{ github.event.inputs.nilearn }} --progress=plain -t ghcr.io/${GITHUB_REPOSITORY}/${GITHUB_REF##*/} .
+        run: docker-compose build --build-arg mne_python_v={{ github.event.inputs.mne_python }} --build-arg mne_nirs_v={{ github.event.inputs.mne_nirs }} --build-arg nilearn_v={{ github.event.inputs.nilearn }} base
 
-      - name: Tag image
-        run: docker tag ghcr.io/${GITHUB_REPOSITORY}/${GITHUB_REF##*/} ghcr.io/mne-tools/mne-nirs/image:{{ github.event.inputs.mne_nirs }}
+      - name: List docker images
+        run: docker images
+
+      - name: Rename base image tag for release
+        run: docker tag mne-tools/mne-nirs ghcr.io/mne-tools/mne-nirs:${{ github.event.inputs.mne_nirs }}
 
       - name: Push image to github
-        run: docker push ghcr.io/mne-tools/mne-nirs/image:{{ github.event.inputs.mne_nirs }}
+        run: docker push ghcr.io/mne-tools/mne-nirs:{{ github.event.inputs.mne_nirs }}
 
       - name: System info
-        run: docker run ghcr.io/mne-tools/mne-nirs/image:{{ github.event.inputs.mne_nirs }} python -c "import mne_nirs; print(mne_nirs.__version__)"
+        run: docker run ghcr.io/mne-tools/mne-nirs:{{ github.event.inputs.mne_nirs }} python -c "import mne_nirs; print(mne_nirs.__version__)"
