@@ -1,0 +1,40 @@
+name: Docker Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number }}-${{ github.event.type }}
+  cancel-in-progress: true
+
+jobs:
+  latest:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build docker image
+        run: docker-compose build worker
+
+      - name: System info
+        run: docker run mnetools/mne-python python -c "import mne; mne.sys_info()"
+
+      - name: MNE-NIRS info
+        run: docker run mnetools/mne-python python -c "import mne_nirs; print(mne_nirs.__version__)"
+
+      - name: Run visualisation test
+        run: docker run -v `pwd`:/opt/app/examples mnetools/mne-python ipython /opt/app/examples/.github/workflows/docker_tests.py
