@@ -237,8 +237,6 @@ intersphinx_mapping = {
     'statsmodels': ('https://www.statsmodels.org/stable', None)
 }
 
-filepath_prefix = 'examples/mne-nirs-website-examples'
-
 scrapers = ('matplotlib',)
 try:
     mne.viz.set_3d_backend(mne.viz.get_3d_backend())
