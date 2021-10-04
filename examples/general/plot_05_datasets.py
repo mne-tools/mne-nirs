@@ -74,17 +74,14 @@ mne_bids.stats.count_events(datapath)
 #
 # This data is from the publication
 # :footcite:`shader2021use`.
-# This data provides an example of the canonical finger tapping experiment.
-# Data is provided from five participants. The experiment was a block design
-# with three conditions. The first condition consisted of the participants
-# tapping their thumb to fingers on the left hand, the second condition was the
-# same but with the right hand. The final condition was a control, with no
-# motor task.
+# In this experiment participants were presented a continously running story
+# in blocked segments. Each segment was presented as either audio only
+# or visual only.
+# In addition to the audio visual stimuli, a control condition was also
+# presented randomly throughout the experiment.
 
 datapath = mne_nirs.datasets.audio_or_visual_speech.data_path()
 mne_bids.stats.count_events(datapath)
-
-
 
 
 # %%
