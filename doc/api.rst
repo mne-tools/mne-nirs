@@ -304,3 +304,24 @@ Functions to help with handling channel information.
    get_short_channels
    get_long_channels
    picks_pair_to_idx
+
+
+Datasets
+--------
+
+The following datasets are accessible using MNE-NIRS.
+The software will automatically download and extract
+the data, then provide the path to the data.
+
+.. currentmodule:: mne_nirs.datasets
+
+.. automodule:: mne_nirs.datasets
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
+   fnirs_motor_group
+   block_speech_noise
+   audio_or_visual_speech
