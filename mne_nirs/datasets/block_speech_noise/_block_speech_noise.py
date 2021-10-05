@@ -19,6 +19,40 @@ has_block_speech_noise_data = partial(has_dataset, name='block_speech_noise')
 @verbose
 def data_path(path=None, force_update=False, update_path=True, download=True,
               verbose=None):  # noqa: D103
+    """
+    Audio speech and noise dataset with 18 participants.
+
+    Get path to local copy of data from the article :footcite:`shader2021use`.
+
+    Parameters
+    ----------
+    path : None | str
+        Location of where to look for the dataset.
+        If None, the environment variable or config parameter is used.
+        If it doesn’t exist, the “~/mne_data” directory is used.
+        If the dataset is not found under the given path,
+        the data will be automatically downloaded to the specified folder.
+    force_update : bool
+        Force update of the dataset even if a local copy exists.
+    update_path : bool | None
+        If True, set the MNE_DATASETS_FNIRSSPEECHNOISE_PATH in
+        mne-python config to the given path. If None, the user is prompted.
+    download : bool
+        If False and the dataset has not been downloaded yet,
+        it will not be downloaded and the path will be returned
+        as ‘’ (empty string). This is mostly used for debugging purposes
+        and can be safely ignored by most users.
+    %(verbose)s
+
+    Returns
+    -------
+    path : str
+        Path to dataset directory.
+
+    References
+    ----------
+    .. footbibliography::
+    """
 
     dataset_params = dict(
         archive_name='2021-fNIRS-Analysis-Methods-Passive-Auditory.zip',
