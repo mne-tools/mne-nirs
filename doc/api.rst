@@ -313,7 +313,6 @@ The following datasets are accessible using MNE-NIRS.
 The software will automatically download and extract
 the data, then provide the path to the data.
 
-fNIRS Motor Experiment (Finger tapping)
 
 .. currentmodule:: mne_nirs.datasets.fnirs_motor_group
 
@@ -327,9 +326,6 @@ fNIRS Motor Experiment (Finger tapping)
    data_path
 
 
-Speech and Noise Dataset
-^^^^^^^^^^^^^^^^^^^^^^^^
-
 .. currentmodule:: mne_nirs.datasets.block_speech_noise
 
 .. automodule:: mne_nirs.datasets.block_speech_noise
@@ -341,7 +337,6 @@ Speech and Noise Dataset
 
    data_path
 
-**Speech and Noise Dataset**
 
 .. currentmodule:: mne_nirs.datasets.audio_or_visual_speech
 

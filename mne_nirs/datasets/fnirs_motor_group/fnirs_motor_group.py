@@ -21,29 +21,34 @@ has_fnirs_motor_group_data = partial(has_dataset, name='fnirs_motor_group')
 def data_path(path=None, force_update=False, update_path=True, download=True,
               verbose=None):  # noqa: D103
     """
-    Systemic correction regression based on nearest short channel.
+    Motor task experiment data with 5 participants.
 
-    Method as described by NIRx and based on
-    :footcite:`fabbri2004optical`, :footcite:`saager2005direct`,
-    and :footcite:`scholkmann2014measuring`.
+    Get path to local copy of data from the article :footcite:`shader2021use`.
 
     Parameters
     ----------
-    path : instance of Raw
-        Raw instance containing optical density data.
-    force_update : number
-        Channels less than this distance are considered short (m).
-    update_path : number
-        Channels less than this distance are considered short (m).
-    download : number
-        Channels less than this distance are considered short (m).
-    verbose : number
-        Channels less than this distance are considered short (m).
+    path : None | str
+        Location of where to look for the dataset.
+        If None, the environment variable or config parameter is used.
+        If it doesn’t exist, the “~/mne_data” directory is used.
+        If the dataset is not found under the given path,
+        the data will be automatically downloaded to the specified folder.
+    force_update : bool
+        Force update of the dataset even if a local copy exists.
+    update_path : bool | None
+        If True, set the MNE_DATASETS_FNIRSMOTORGROUP_PATH in
+        mne-python config to the given path. If None, the user is prompted.
+    download : bool
+        If False and the dataset has not been downloaded yet,
+        it will not be downloaded and the path will be returned
+        as ‘’ (empty string). This is mostly used for debugging purposes
+        and can be safely ignored by most users.
+    v%(verbose)s
 
     Returns
     -------
-    raw : instance of Raw
-        The modified raw instance.
+    path : str
+        Path to dataset directory.
 
     References
     ----------
