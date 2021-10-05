@@ -313,15 +313,43 @@ The following datasets are accessible using MNE-NIRS.
 The software will automatically download and extract
 the data, then provide the path to the data.
 
-.. currentmodule:: mne_nirs.datasets
+fNIRS Motor Experiment (Finger tapping)
 
-.. automodule:: mne_nirs.datasets
+.. currentmodule:: mne_nirs.datasets.fnirs_motor_group
+
+.. automodule:: mne_nirs.datasets.fnirs_motor_group
    :no-members:
    :no-inherited-members:
 
 .. autosummary::
    :toctree: generated/
 
-   fnirs_motor_group
-   block_speech_noise
-   audio_or_visual_speech
+   data_path
+
+
+Speech and Noise Dataset
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. currentmodule:: mne_nirs.datasets.block_speech_noise
+
+.. automodule:: mne_nirs.datasets.block_speech_noise
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
+   data_path
+
+**Speech and Noise Dataset**
+
+.. currentmodule:: mne_nirs.datasets.audio_or_visual_speech
+
+.. automodule:: mne_nirs.datasets.audio_or_visual_speech
+   :no-members:
+   :no-inherited-members:
+
+.. autosummary::
+   :toctree: generated/
+
+   data_path

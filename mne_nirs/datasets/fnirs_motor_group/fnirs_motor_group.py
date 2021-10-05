@@ -20,6 +20,35 @@ has_fnirs_motor_group_data = partial(has_dataset, name='fnirs_motor_group')
 @verbose
 def data_path(path=None, force_update=False, update_path=True, download=True,
               verbose=None):  # noqa: D103
+    """
+    Systemic correction regression based on nearest short channel.
+
+    Method as described by NIRx and based on
+    :footcite:`fabbri2004optical`, :footcite:`saager2005direct`,
+    and :footcite:`scholkmann2014measuring`.
+
+    Parameters
+    ----------
+    path : instance of Raw
+        Raw instance containing optical density data.
+    force_update : number
+        Channels less than this distance are considered short (m).
+    update_path : number
+        Channels less than this distance are considered short (m).
+    download : number
+        Channels less than this distance are considered short (m).
+    verbose : number
+        Channels less than this distance are considered short (m).
+
+    Returns
+    -------
+    raw : instance of Raw
+        The modified raw instance.
+
+    References
+    ----------
+    .. footbibliography::
+    """
 
     dataset_params = dict(
         archive_name='BIDS-NIRS-Tapping-master.zip',
