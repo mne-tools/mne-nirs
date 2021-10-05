@@ -42,7 +42,7 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
         it will not be downloaded and the path will be returned
         as ‘’ (empty string). This is mostly used for debugging purposes
         and can be safely ignored by most users.
-    v%(verbose)s
+    %(verbose)s
 
     Returns
     -------
