@@ -1,9 +1,9 @@
 """
 .. _ex-fnirs-datasets:
 
-==========================
-Available Example Datasets
-==========================
+================
+Example Datasets
+================
 
 To get you up and running with MNE-NIRS and fNIRS data analysis we provide
 some example datasets.
