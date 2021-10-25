@@ -31,6 +31,11 @@ Enhancements
 * Add :func:`mne_nirs.io.fold_channel_specificity`. By `Robert Luke`_.
 
 
+Fixes
+
+* Prepend a character to event names that are number only to comply with nilearn criteria for design matrix column names. By `Robert Luke`_.
+
+
 v0.1.1
 ------
 
