@@ -86,6 +86,12 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
     conditions = raw.annotations.description
     onsets = raw.annotations.onset - raw.first_time
     duration = stim_dur * np.ones(len(conditions))
+    for cidx, condition in enumerate(conditions):
+        if not condition.isidentifier():
+            # Need to ensure we have valid identifiers for nilearn
+            # so we prepend a t to refer to a trigger identifier
+            conditions[cidx] = f"t_{condition}"
+
     events = DataFrame({'trial_type': conditions,
                         'onset': onsets,
                         'duration': duration})
