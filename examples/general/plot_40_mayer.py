@@ -71,7 +71,7 @@ raw = mne.io.read_raw_nirx(fnirs_raw_dir, verbose=True).load_data()
 
 raw = optical_density(raw)
 raw.resample(1.5)
-raw = beer_lambert_law(raw)
+raw = beer_lambert_law(raw, ppf=0.1)
 raw = raw.pick(picks="hbo")
 raw = get_long_channels(raw, min_dist=0.025, max_dist=0.045)
 raw

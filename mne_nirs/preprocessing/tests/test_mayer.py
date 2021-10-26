@@ -30,7 +30,7 @@ def test_mayer():
     with pytest.raises(RuntimeError, match="run on haemoglobin"):
         _ = quantify_mayer_fooof(raw_od)
 
-    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
+    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
     df_mayer = quantify_mayer_fooof(raw_haemo)
 
     print(df_mayer)
