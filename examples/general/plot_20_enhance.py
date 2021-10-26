@@ -42,7 +42,7 @@ fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
 fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
 raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir, verbose=True).load_data()
 raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
-raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
+raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
 raw_haemo = mne_nirs.channels.get_long_channels(raw_haemo)
 
 raw_haemo = raw_haemo.filter(0.05, 0.7, h_trans_bandwidth=0.2,
@@ -110,7 +110,7 @@ for condition in evoked_dict_anti:
 # Apply Scholkmann et al 2014 and extract epochs.
 
 od_corrected = mne_nirs.signal_enhancement.short_channel_regression(raw_od)
-raw_haemo = mne.preprocessing.nirs.beer_lambert_law(od_corrected)
+raw_haemo = mne.preprocessing.nirs.beer_lambert_law(od_corrected, ppf=0.1)
 raw_haemo = mne_nirs.channels.get_long_channels(raw_haemo)
 
 raw_haemo = raw_haemo.filter(0.05, 0.7, h_trans_bandwidth=0.2,

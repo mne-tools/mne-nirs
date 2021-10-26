@@ -47,7 +47,7 @@ def test_cui():
     with pytest.raises(RuntimeError, match="run on haemoglobin"):
         _ = mne_nirs.signal_enhancement.enhance_negative_correlation(
             raw_od)
-    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
+    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
     raw_anti = mne_nirs.signal_enhancement.enhance_negative_correlation(
         raw_haemo)
     assert np.abs(np.corrcoef(raw_haemo._data[0],

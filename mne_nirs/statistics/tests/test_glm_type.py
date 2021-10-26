@@ -23,7 +23,7 @@ def _get_minimal_haemo_data(tmin=0, tmax=60):
         mne.datasets.fnirs_motor.data_path(), 'Participant-1'), preload=False)
     raw.crop(tmax=tmax, tmin=tmin)
     raw = mne.preprocessing.nirs.optical_density(raw)
-    raw = mne.preprocessing.nirs.beer_lambert_law(raw)
+    raw = mne.preprocessing.nirs.beer_lambert_law(raw, ppf=0.1)
     raw.resample(0.3)
     return raw
 

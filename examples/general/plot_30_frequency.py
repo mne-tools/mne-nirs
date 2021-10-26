@@ -61,7 +61,7 @@ raw_intensity.annotations.delete(
     np.where([d == 'Control' for d in raw_intensity.annotations.description]))
 
 raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
-raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
+raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
 raw_haemo = mne_nirs.channels.get_long_channels(raw_haemo)
 
 

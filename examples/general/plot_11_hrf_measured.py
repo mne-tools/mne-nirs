@@ -112,7 +112,7 @@ raw_intensity.annotations.set_durations(5)
 # Next we convert the raw data to haemoglobin concentration.
 
 raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
-raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
+raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
 
 
 # %%

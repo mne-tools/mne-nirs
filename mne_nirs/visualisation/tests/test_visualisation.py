@@ -53,7 +53,7 @@ def test_run_plot_GLM_topo():
                                                    drift_order=1,
                                                    drift_model='polynomial')
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
-    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
+    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
     glm_estimates = run_glm(raw_haemo, design_matrix)
     fig = plot_glm_topo(raw_haemo, glm_estimates.data, design_matrix)
     # 5 conditions (A,B,C,Drift,Constant) * two chroma + 2xcolorbar
@@ -106,7 +106,7 @@ def test_run_plot_GLM_contrast_topo():
                                                    drift_order=1,
                                                    drift_model='polynomial')
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
-    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
+    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
     glm_est = run_glm(raw_haemo, design_matrix)
     contrast_matrix = np.eye(design_matrix.shape[1])
     basic_conts = dict([(column, contrast_matrix[i])
@@ -126,7 +126,7 @@ def test_run_plot_GLM_contrast_topo_single_chroma():
                                                    drift_order=1,
                                                    drift_model='polynomial')
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
-    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
+    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
     raw_haemo = raw_haemo.pick(picks='hbo')
     glm_est = run_glm(raw_haemo, design_matrix)
     contrast_matrix = np.eye(design_matrix.shape[1])
@@ -156,7 +156,7 @@ def test_run_plot_GLM_projection():
                                                    drift_order=1,
                                                    drift_model='polynomial')
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
-    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od)
+    raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
     glm_estimates = run_glm(raw_haemo, design_matrix)
     df = glm_to_tidy(raw_haemo, glm_estimates.data, design_matrix)
     df = df.query("Chroma in 'hbo'")
