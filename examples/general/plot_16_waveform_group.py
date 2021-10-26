@@ -146,7 +146,7 @@ def individual_analysis(bids_path):
     raw_od = temporal_derivative_distribution_repair(raw_od)
 
     # Convert to haemoglobin and filter
-    raw_haemo = beer_lambert_law(raw_od)
+    raw_haemo = beer_lambert_law(raw_od, ppf=0.1)
     raw_haemo = raw_haemo.filter(0.02, 0.3,
                                  h_trans_bandwidth=0.1, l_trans_bandwidth=0.01,
                                  verbose=False)

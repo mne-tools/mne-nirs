@@ -108,7 +108,7 @@ def analysis(fname, ID):
 
     # Convert signal to haemoglobin and just keep hbo
     raw_od = optical_density(raw_intensity)
-    raw_haemo = beer_lambert_law(raw_od)
+    raw_haemo = beer_lambert_law(raw_od, ppf=0.1)
     raw_haemo.resample(0.5, npad="auto")
 
     # Cut out just the short channels for creating a GLM regressor

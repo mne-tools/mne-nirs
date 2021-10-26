@@ -22,7 +22,7 @@ dipy
 vtk; platform_system == "Darwin"
 vtk; platform_system == "Linux"
 vtk<=9.0.1; platform_system == "Windows"
-https://github.com/nilearn/nilearn/archive/main.zip
+nilearn
 xlrd
 imageio>=2.6.1
 imageio-ffmpeg>=0.4.1

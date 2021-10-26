@@ -108,7 +108,7 @@ def individual_analysis(bids_path):
 
     raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
     raw_intensity.pick(picks=range(20)).crop(200).resample(0.3)  # Reduce load
-    raw_haemo = beer_lambert_law(optical_density(raw_intensity))
+    raw_haemo = beer_lambert_law(optical_density(raw_intensity), ppf=0.1)
     design_matrix = make_first_level_design_matrix(raw_haemo)
     glm_est = run_glm(raw_haemo, design_matrix)
 
