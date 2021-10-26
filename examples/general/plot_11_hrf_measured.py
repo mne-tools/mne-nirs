@@ -239,7 +239,7 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 
 s = mne_nirs.experimental_design.create_boxcar(raw_intensity, stim_dur=5.0)
 plt.plot(raw_intensity.times, s[:, 1])
-plt.plot(design_matrix['Tapping/Left'])
+plt.plot(design_matrix['Tapping_Left'])
 plt.xlim(180, 300)
 plt.legend(["Stimulus", "Expected Response"])
 plt.xlabel("Time (s)")
@@ -336,7 +336,7 @@ glm_est.scatter()
 # negative of HbO as expected.
 
 glm_est = run_glm(raw_haemo, design_matrix)
-glm_est.plot_topo(conditions=['Tapping/Left', 'Tapping/Right'])
+glm_est.plot_topo(conditions=['Tapping/Left', 'Tapping_Right'])
 
 
 # %%
@@ -364,7 +364,7 @@ glm_est.plot_topo(conditions=['Tapping/Left', 'Tapping/Right'])
 fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 6), gridspec_kw=dict(width_ratios=[0.92, 1]))
 
 glm_hbo = glm_est.copy().pick(picks="hbo")
-conditions = ['Tapping/Right']
+conditions = ['Tapping_Right']
 
 glm_hbo.plot_topo(axes=axes[0], colorbar=False, conditions=conditions)
 
@@ -380,7 +380,7 @@ axes[1].set_title("Hemispheres plotted independently")
 # Another way to view the data is to project the GLM estimates to the nearest
 # cortical surface
 
-glm_est.copy().surface_projection(condition="Tapping/Right", view="dorsal", chroma="hbo")
+glm_est.copy().surface_projection(condition="Tapping_Right", view="dorsal", chroma="hbo")
 
 
 # %%
@@ -412,7 +412,7 @@ right = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7],
 groups = dict(Left_ROI=picks_pair_to_idx(raw_haemo, left),
               Right_ROI=picks_pair_to_idx(raw_haemo, right))
 
-conditions = ['Control', 'Tapping/Left', 'Tapping/Right']
+conditions = ['Control', 'Tapping_Left', 'Tapping_Right']
 
 df = glm_est.to_dataframe_region_of_interest(groups, conditions)
 
@@ -439,7 +439,7 @@ df
 contrast_matrix = np.eye(design_matrix.shape[1])
 basic_conts = dict([(column, contrast_matrix[i])
                    for i, column in enumerate(design_matrix.columns)])
-contrast_LvR = basic_conts['Tapping/Left'] - basic_conts['Tapping/Right']
+contrast_LvR = basic_conts['Tapping_Left'] - basic_conts['Tapping_Right']
 
 contrast = glm_est.compute_contrast(contrast_LvR)
 contrast.plot_topo()
@@ -474,7 +474,7 @@ df = glm_est.to_dataframe()
 # the tapping, but we do expect 5% or less for the false positive rate.
 
 (df
- .query('Condition in ["Control", "Tapping/Left", "Tapping/Right"]')
+ .query('Condition in ["Control", "Tapping_Left", "Tapping_Right"]')
  .groupby(['Condition', 'Chroma'])
  .agg(['mean'])
  .drop(['df', 'mse', 'p_value', 't'], 1)

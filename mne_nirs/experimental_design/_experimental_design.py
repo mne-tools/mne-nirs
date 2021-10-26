@@ -4,6 +4,7 @@
 
 import numpy as np
 import mne
+from mne.utils import warn
 
 
 def make_first_level_design_matrix(raw, stim_dur=1.,
@@ -86,11 +87,11 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
     conditions = raw.annotations.description
     onsets = raw.annotations.onset - raw.first_time
     duration = stim_dur * np.ones(len(conditions))
+
     for cidx, condition in enumerate(conditions):
         if not condition.isidentifier():
-            # Need to ensure we have valid identifiers for nilearn
-            # so we prepend a t to refer to a trigger identifier
-            conditions[cidx] = f"t_{condition}"
+            conditions[cidx] = _fix_names_for_nilearn(condition)
+
 
     events = DataFrame({'trial_type': conditions,
                         'onset': onsets,
@@ -108,6 +109,30 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
                                         fir_delays=fir_delays)
 
     return dm
+
+
+def _fix_names_for_nilearn(name):
+    """Need to ensure valid identifiers for nilearn"""
+    # Need to ensure we have valid identifiers for nilearn
+    # so we prepend a t to refer to a trigger identifier
+
+    name_original = name
+
+    if name.isidentifier():
+        return name
+
+    name = name.replace('/', '_')
+
+    if not name.isidentifier():
+        name = f"t_{name}"
+
+    if name.isidentifier():
+        return name
+    else:
+        warn(f"Unable to sanitise identifier {name_original} for use with "
+             f"nilearn. Please report this as an issue at the MNE-NIRS "
+             f"GitHub issues page")
+        return name
 
 
 def create_boxcar(raw, event_id=None, stim_dur=1):
