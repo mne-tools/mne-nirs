@@ -37,6 +37,6 @@ dependencies:
 - pytables
 - pooch
 - nilearn
+- mne>=0.24
 - pip:
   - ipyvtklink
-  - https://github.com/mne-tools/mne-python/archive/main.zip

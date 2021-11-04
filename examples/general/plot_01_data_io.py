@@ -201,7 +201,7 @@ sfreq = 10.  # in Hz
 # see :ref:`tut-info-class`, and for additional details on how continuous data
 # is stored in MNE-Python see :ref:`tut-raw-class`.
 # For a more extensive description of how to create MNE-Python data structures
-# from raw array data see :ref:`tut_creating_data_structures`.
+# from raw array data see :ref:`mne:tut_creating_data_structures`.
 
 info = mne.create_info(ch_names=ch_names, ch_types=ch_types, sfreq=sfreq)
 raw = mne.io.RawArray(data, info, verbose=True)
@@ -220,8 +220,8 @@ raw = mne.io.RawArray(data, info, verbose=True)
 # (montages) from some vendors, and this is demonstrated below.
 # Some handy tutorials for understanding sensor locations, coordinate systems,
 # and how to store and view this information in MNE-Python are:
-# :ref:`tut-sensor-locations`, :ref:`plot_source_alignment`, and
-# :ref:`ex-eeg-on-scalp`.
+# :ref:`mne:tut-sensor-locations`, :ref:`mne:plot_source_alignment`, and
+# :ref:`mne:ex-eeg-on-scalp`.
 #
 # Below is an example of how to load the optode positions for an Artinis
 # OctaMon device.

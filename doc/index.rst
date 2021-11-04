@@ -1,9 +1,3 @@
-.. project-template documentation master file, created by
-   sphinx-quickstart on Mon Jan 18 14:44:12 2016.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-
 MNE-NIRS
 ========
 
@@ -36,9 +30,8 @@ Installation
 ------------
 
 MNE-NIRS requires you install Python and MNE-Python before installing MNE-NIRS.
-To install Python and MNE-Python follow `these instructions <https://mne.tools/dev/install/mne_python.html>`_.
-Some NIRS functionality is only available in the latest version of MNE-Python,
-so I suggest installing the latest development version `as described here <https://mne.tools/dev/install/advanced.html#other-python-distributions>`_.
+To install Python and MNE-Python follow `these instructions <https://mne.tools/stable/install/install_python.html>`_.
+You must use MNE-Python v0.24 or above.
 
 
 Run the following code to install MNE-NIRS:
@@ -48,7 +41,7 @@ Run the following code to install MNE-NIRS:
     >>> pip install mne-nirs
 
 
-Or if you wish to run the latest development version of MNE-NIRS (which I strongly suggest):
+Or if you wish to run the latest development version of MNE-NIRS:
 
 .. code:: bash
 
@@ -80,8 +73,7 @@ so this approach is best used for quickly exploring the capabilities of MNE-NIRS
 Alternatively, if you wish to run code locally on your own computer with your own data, you can run a 
 `docker instance locally <https://docs.docker.com/get-docker/>`_
 using the 
-`MNE-NIRS-docker <https://github.com/rob-luke/mne-nirs-docker>`_ image.
-See the web page for detailed instructions.
+`MNE-NIRS docker image <https://github.com/mne-tools/mne-nirs/pkgs/container/mne-nirs>`_ image.
 Using docker provides a notebook server running on your own computer, 
 it comes pre-prepared with MNE-Python, MNE-NIRS, and other useful packages installed.
 This approach gets you up and running with a single command, and provides
@@ -93,7 +85,7 @@ Upgrading your software version
 See the
 `MNE-Python instructions for how to update <https://mne.tools/dev/install/updating.html>`_
 the MNE-Python version.
-Similarly, you can update MNE-NIRS by running ``pip install -U --no-deps https://github.com/mne-tools/mne-nirs/archive/main.zip``
+Similarly, you can update MNE-NIRS to the latest development version by running ``pip install -U --no-deps https://github.com/mne-tools/mne-nirs/archive/main.zip``
 
 
 Acknowledgements

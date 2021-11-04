@@ -33,6 +33,5 @@ else
 	pip install --progress-bar off --pre imageio-ffmpeg xlrd mffpy
 fi
 
-pip install --progress-bar off --upgrade https://github.com/mne-tools/mne-python/archive/main.zip
 pip install --progress-bar off -r requirements.txt
 pip install --progress-bar off --upgrade -r requirements_testing.txt
