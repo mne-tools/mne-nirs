@@ -42,15 +42,14 @@ import numpy as np
 
 # Import sklearn processing
 from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 
 # Import MNE processing
 from mne.preprocessing.nirs import optical_density, beer_lambert_law
 from mne import Epochs, events_from_annotations
-from mne.decoding import (SlidingEstimator, Scaler,
-                          cross_val_multiscore, LinearModel,
-                          Vectorizer, get_coef)
+from mne.decoding import (Scaler,
+                          cross_val_multiscore,
+                          Vectorizer)
 
 from mne_nirs.datasets.audio_or_visual_speech import data_path
 
@@ -75,7 +74,7 @@ from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
 # In this example we use the example dataset ``audio_or_visual_speech``.
 
 root = data_path()
-dataset = BIDSPath(root=root, task="AudioVisualBroadVsRestricted", session = "01",
+dataset = BIDSPath(root=root, task="AudioVisualBroadVsRestricted", session="01",
                    datatype="nirs", suffix="nirs", extension=".snirf")
 subjects = get_entity_vals(root, 'subject')
 
@@ -145,7 +144,7 @@ for chroma in ['hbo', 'hbr']:
                             Vectorizer(),
                             LogisticRegression(solver='liblinear'))
 
-        scores = 100 *  cross_val_multiscore(clf, X, y, cv=5, n_jobs=1, scoring='roc_auc')
+        scores = 100 * cross_val_multiscore(clf, X, y, cv=5, n_jobs=1, scoring='roc_auc')
 
         score = np.mean(scores, axis=0)
         score_std = np.std(scores, axis=0)
