@@ -13,7 +13,8 @@ MNE-Python, scikit-learn, and MNE-NIRS.
    This tutorial uses data in the BIDS format.
    The BIDS specification for NIRS data is still under development. See:
    `fNIRS BIDS proposal <https://github.com/bids-standard/bids-specification/pull/802>`_.
-   As such, to run this tutorial you must use the fNIRS development branch of MNE-BIDS.
+   As such, to run this tutorial you must use the fNIRS development
+   branch of MNE-BIDS.
 
    To install the fNIRS development branch of MNE-BIDS run:
    `pip install -U https://codeload.github.com/rob-luke/mne-bids/zip/nirs`.
@@ -74,8 +75,8 @@ from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
 # In this example we use the example dataset ``audio_or_visual_speech``.
 
 root = data_path()
-dataset = BIDSPath(root=root, task="AudioVisualBroadVsRestricted", session="01",
-                   datatype="nirs", suffix="nirs", extension=".snirf")
+dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf", session="01",
+                   task="AudioVisualBroadVsRestricted", datatype="nirs")
 subjects = get_entity_vals(root, 'subject')
 
 
@@ -94,15 +95,10 @@ subjects = get_entity_vals(root, 'subject')
 def epoch_preprocessing(bids_path):
 
     with open(os.devnull, "w") as f, contextlib.redirect_stdout(f):
-        raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False).load_data()
+        raw_intensity = read_raw_bids(bids_path=bids_path).load_data()
 
     raw_od = optical_density(raw_intensity)
-
-    # Aggressive downsampling is performed here to enable this to run on
-    # the cloud servers. You may wish to use a higher value in real studies
-    # and then modify the filter cut off frequencies accordingly below.
     raw_od.resample(1.5)
-
     raw_haemo = beer_lambert_law(raw_od, ppf=6)
     raw_haemo = raw_haemo.filter(None, 0.6, h_trans_bandwidth=0.05,
                                  l_trans_bandwidth=0.01, verbose=False)
@@ -125,7 +121,7 @@ def epoch_preprocessing(bids_path):
 # audio condition.
 # The pipeline is. The scoring is.
 # Also see mne-bids-pipeline.
-# Add some releveant links to MNE-Python tutorials.
+# Add some relevant links to MNE-Python tutorials.
 
 for chroma in ['hbo', 'hbr']:
 
@@ -144,7 +140,8 @@ for chroma in ['hbo', 'hbr']:
                             Vectorizer(),
                             LogisticRegression(solver='liblinear'))
 
-        scores = 100 * cross_val_multiscore(clf, X, y, cv=5, n_jobs=1, scoring='roc_auc')
+        scores = 100 * cross_val_multiscore(clf, X, y,
+                                            cv=5, n_jobs=1, scoring='roc_auc')
 
         score = np.mean(scores, axis=0)
         score_std = np.std(scores, axis=0)
