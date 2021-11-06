@@ -29,10 +29,10 @@ MNE-Python, scikit-learn, and MNE-NIRS.
    :local:
    :depth: 2
 """
-# sphinx_gallery_thumbnail_number = 2
 
 # Authors: Robert Luke <mail@robertluke.net>
-#
+#          Alexandre Gramfort <alexandre.gramfort@inria.fr>
+#          Eric Larson <larson.eric.d@gmail.com>
 # License: BSD (3-clause)
 
 
@@ -45,13 +45,14 @@ import numpy as np
 from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
 
-# Import MNE processing
+# Import MNE-Python processing
 from mne.preprocessing.nirs import optical_density, beer_lambert_law
 from mne import Epochs, events_from_annotations
 from mne.decoding import (Scaler,
                           cross_val_multiscore,
                           Vectorizer)
 
+# Import MNE-NIRS processing
 from mne_nirs.datasets.audio_or_visual_speech import data_path
 
 # Import MNE-BIDS processing
