@@ -143,9 +143,7 @@ for chroma in ['hbo', 'hbr']:
         scores = 100 * cross_val_multiscore(clf, X, y,
                                             cv=5, n_jobs=1, scoring='roc_auc')
 
-        score = np.mean(scores, axis=0)
-        score_std = np.std(scores, axis=0)
-        st_scores.append(score)
+        st_scores.append(np.mean(scores, axis=0))
 
     print(f"Average spatio-temporal ROC-AUC performance ({chroma}) = "
           f"{np.round(np.mean(st_scores))} % ({np.round(np.std(st_scores))})")
