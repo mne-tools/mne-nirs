@@ -6,7 +6,7 @@ Decoding Analysis
 
 This is an example of a decoding analysis performed on
 functional near-infrared spectroscopy (fNIRS) data using
-MNE-Python, SK-Learn, and MNE-NIRS.
+MNE-Python, scikit-learn, and MNE-NIRS.
 
 .. note::
 
@@ -23,11 +23,6 @@ MNE-Python, SK-Learn, and MNE-NIRS.
    See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
    to use your data with MNE-Python.
 
-.. note::
-
-   The data in this example is agressively downsampled and filtered to allow
-   the tutorial to be run on the cloud server. You may wish to use a higher
-   sample rate and cut-off filter frequency in your own studies.
 
 .. contents:: Page contents
    :local:
@@ -41,27 +36,23 @@ MNE-Python, SK-Learn, and MNE-NIRS.
 
 
 # Import common libraries
-import numpy as np
 import os
+import contextlib
+import numpy as np
 
+# Import sklearn processing
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 
+# Import MNE processing
+from mne.preprocessing.nirs import optical_density, beer_lambert_law
+from mne import Epochs, events_from_annotations
 from mne.decoding import (SlidingEstimator, Scaler,
                           cross_val_multiscore, LinearModel,
                           Vectorizer, get_coef)
 
-import contextlib
-import mne_nirs
-
-# Import MNE processing
-from mne.preprocessing.nirs import optical_density, beer_lambert_law
-from mne import Epochs, events_from_annotations
-
-# Import MNE-NIRS processing
-from mne_nirs.statistics import run_glm
-from mne_nirs.experimental_design import make_first_level_design_matrix
+from mne_nirs.datasets.audio_or_visual_speech import data_path
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
@@ -83,10 +74,8 @@ from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
 # We first define where the root directory of our dataset is.
 # In this example we use the example dataset ``audio_or_visual_speech``.
 
-root = mne_nirs.datasets.audio_or_visual_speech.data_path()
-
-dataset = BIDSPath(root=root, task="AudioVisualBroadVsRestricted",
-                   session = "01",
+root = data_path()
+dataset = BIDSPath(root=root, task="AudioVisualBroadVsRestricted", session = "01",
                    datatype="nirs", suffix="nirs", extension=".snirf")
 subjects = get_entity_vals(root, 'subject')
 
@@ -96,7 +85,11 @@ subjects = get_entity_vals(root, 'subject')
 # --------------------------
 #
 # More details on the epoching analysis can be found
-# at :ref:`Waveform individual analysis <tut-fnirs-processing>`
+# at :ref:`Waveform individual analysis <tut-fnirs-processing>`.
+# A minimal processing pipeline is demonstrated here, as the focus
+# of this tutorial is to demonstrate the decodig pipeline.
+# In this example only the epochs for the two conditions we wish to decode
+# between are retained.
 
 
 def epoch_preprocessing(bids_path):
@@ -106,15 +99,14 @@ def epoch_preprocessing(bids_path):
 
     raw_od = optical_density(raw_intensity)
 
-    # Agressive downsampling is performed here to enable this to run on
+    # Aggressive downsampling is performed here to enable this to run on
     # the cloud servers. You may wish to use a higher value in real studies
     # and then modify the filter cut off frequencies accordingly below.
     raw_od.resample(1.5)
 
     raw_haemo = beer_lambert_law(raw_od, ppf=6)
-    raw_haemo = raw_haemo.filter(None, 0.6,
-                                 h_trans_bandwidth=0.05, l_trans_bandwidth=0.01,
-                                 verbose=False)
+    raw_haemo = raw_haemo.filter(None, 0.6, h_trans_bandwidth=0.05,
+                                 l_trans_bandwidth=0.01, verbose=False)
 
     events, event_dict = events_from_annotations(raw_haemo, verbose=False)
     epochs = Epochs(raw_haemo, events, event_id=event_dict, tmin=-5, tmax=30,
@@ -130,10 +122,11 @@ def epoch_preprocessing(bids_path):
 # Run analysis on all participants
 # --------------------------------
 #
-# Next we loop through the five measurements and run the individual analysis
-# on each. We append the individual results in to a large dataframe that
-# will contain the results from all measurements. We create a group dataframe
-# for the region of interest, channel level, and contrast results.
+# Next we loop through each measurement and decode between the control and
+# audio condition.
+# The pipeline is. The scoring is.
+# Also see mne-bids-pipeline.
+# Add some releveant links to MNE-Python tutorials.
 
 for chroma in ['hbo', 'hbr']:
 
@@ -157,7 +150,6 @@ for chroma in ['hbo', 'hbr']:
         score = np.mean(scores, axis=0)
         score_std = np.std(scores, axis=0)
         st_scores.append(score)
-        # print(f"Subject: {sub} mean ROC-AUC = {np.round(score, 2)} % ({np.round(score_std, 2)})")
 
     print(f"Average spatio-temporal ROC-AUC performance ({chroma}) = "
           f"{np.round(np.mean(st_scores))} % ({np.round(np.std(st_scores))})")
