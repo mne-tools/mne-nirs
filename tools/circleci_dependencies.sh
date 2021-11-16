@@ -16,14 +16,14 @@ python -m pip install --upgrade --progress-bar off --pre sphinx
 if [[ "$CIRCLE_JOB" == "interactive_test" ]]; then
 	echo "Installing latest dependencies for interactive_test"
 	python -m pip install --progress-bar off --upgrade --pre --only-binary ":all:" python-dateutil pytz joblib threadpoolctl
-	python -m pip install --progress-bar off --upgrade --pre --only-binary ":all:" -i "https://pypi.anaconda.org/scipy-wheels-nightly/simple" --extra-index-url https://www.riverbankcomputing.com/pypi/simple numpy scipy pandas scikit-learn PyQt5
+	python -m pip install --progress-bar off --upgrade --pre --only-binary ":all:" -i "https://pypi.anaconda.org/scipy-wheels-nightly/simple" --extra-index-url https://www.riverbankcomputing.com/pypi/simple numpy pandas scikit-learn PyQt5
 	python -m pip install --progress-bar off --upgrade --pre --only-binary ":all:" -f "https://7933911d6844c6c53a7d-47bd50c35cd79bd838daf386af554a83.ssl.cf2.rackcdn.com" h5py pillow matplotlib
 	python -m pip install --progress-bar off --upgrade --pre --only-binary ":all:" numba llvmlite
 	wget -q https://osf.io/kej3v/download -O vtk-9.0.20201117-cp39-cp39-linux_x86_64.whl
 	python -m pip install --progress-bar off vtk-9.0.20201117-cp39-cp39-linux_x86_64.whl
 	python -m pip install --progress-bar off https://github.com/pyvista/pyvista/zipball/main
 	python -m pip install --progress-bar off https://github.com/pyvista/pyvistaqt/zipball/main
-	python -m pip install --progress-bar off --upgrade -r requirements_testing.txt -r requirements_testing_extra.txt
+	python -m pip install --progress-bar off --upgrade -r requirements.txt -r requirements_testing.txt -r requirements_testing_extra.txt
 	python -m pip install -e .
 elif [[ "$CIRCLE_JOB" == "linkcheck"* ]]; then
 	echo "Installing minimal linkcheck dependencies"
