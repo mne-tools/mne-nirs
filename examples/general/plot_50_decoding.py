@@ -44,7 +44,6 @@ preprint.
 
 # Authors: Robert Luke <mail@robertluke.net>
 #          Alexandre Gramfort <alexandre.gramfort@inria.fr>
-#          Eric Larson <larson.eric.d@gmail.com>
 # License: BSD (3-clause)
 
 
