@@ -16,6 +16,10 @@ in the MNE-Python documentation. For example see
 This example will use the techniques covered in the MNE-Python tutorials,
 but applied specifically to fNIRS data.
 
+This script is an example of analysis performed in a manuscript under review.
+A link to the manuscript will be provided when it is accepted or posted as a
+preprint.
+
 .. note::
 
    This tutorial uses data in the BIDS format.
@@ -134,7 +138,7 @@ def epoch_preprocessing(bids_path):
 # from all time points and epochs, after which they were vectorized to
 # comply with the scikit-learn data structure, and a logistic regression
 # classifier was applied using the liblinear solver.
-# These approaches classify the data within, rather than across, subjects.
+# This approach classifies the data within, rather than across, subjects.
 
 
 for chroma in ['hbo', 'hbr']:
