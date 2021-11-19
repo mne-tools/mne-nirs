@@ -172,5 +172,5 @@ for chroma in ['hbo', 'hbr']:
 # ----------
 #
 # Data were epoched then decoding was performed on the hbo signal and the hbr
-# signal. The HbO signal decodes the conditions with 4% greater accuracy
+# signal. The HbO signal decodes the conditions with 6% greater accuracy
 # than the HbR signal.
