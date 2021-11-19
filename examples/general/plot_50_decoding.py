@@ -8,6 +8,14 @@ This is an example of a decoding analysis performed on
 functional near-infrared spectroscopy (fNIRS) data using
 MNE-Python, scikit-learn, and MNE-NIRS.
 
+Detailed information about decoding of neural signals can be found
+in the MNE-Python documentation. For example see
+`Decoding (MVPA) <https://mne.tools/stable/auto_examples/decoding/decoding_csp_eeg.html>`_,
+:ref:`Linear classifier on sensor data  <mne:ex-linear-patterns>`,
+:ref:`Decoding source space data <mne:tut-dec-st-source>`.
+This example will use the techniques covered in the MNE-Python tutorials,
+but applied specifically to fNIRS data.
+
 .. note::
 
    This tutorial uses data in the BIDS format.
@@ -88,7 +96,7 @@ subjects = get_entity_vals(root, 'subject')
 # More details on the epoching analysis can be found
 # at :ref:`Waveform individual analysis <tut-fnirs-processing>`.
 # A minimal processing pipeline is demonstrated here, as the focus
-# of this tutorial is to demonstrate the decodig pipeline.
+# of this tutorial is to demonstrate the decoding pipeline.
 # In this example only the epochs for the two conditions we wish to decode
 # between are retained.
 
@@ -120,9 +128,14 @@ def epoch_preprocessing(bids_path):
 #
 # Next we loop through each measurement and decode between the control and
 # audio condition.
-# The pipeline is. The scoring is.
-# Also see mne-bids-pipeline.
-# Add some relevant links to MNE-Python tutorials.
+# Here we compute a single spatio-temporal metric approach that simultaneously
+# uses all channels and time points to estimate the experimental condition.
+# The data is scaled for each channel by the mean and standard deviation
+# from all time points and epochs, after which they were vectorized to
+# comply with the scikit-learn data structure, and a logistic regression
+# classifier was applied using the liblinear solver.
+# These approaches classify the data within, rather than across, subjects.
+
 
 for chroma in ['hbo', 'hbr']:
 
@@ -148,3 +161,12 @@ for chroma in ['hbo', 'hbr']:
 
     print(f"Average spatio-temporal ROC-AUC performance ({chroma}) = "
           f"{np.round(np.mean(st_scores))} % ({np.round(np.std(st_scores))})")
+
+
+# %%
+# Conclusion
+# ----------
+#
+# Data were epoched then decoding was performed on the hbo signal and the hbr
+# signal. The HbO signal decodes the conditions with 4% greater accuracy
+# than the HbR signal.
