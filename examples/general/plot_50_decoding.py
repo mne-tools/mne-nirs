@@ -17,6 +17,7 @@ This example will use the techniques covered in the MNE-Python tutorials,
 but applied specifically to fNIRS data.
 
 This script is an example of analysis performed in the manuscript
+Luke et. al. (2021)
 :footcite:`Luke2021.11.19.469225`.
 
 .. note::
@@ -172,7 +173,7 @@ for chroma in ['hbo', 'hbr']:
 # Data were epoched then decoding was performed on the hbo signal and the hbr
 # signal. The HbO signal decodes the conditions with 6% greater accuracy
 # than the HbR signal. For further discussion about the efficacy of fNIRS
-# signals in decoding experimental condition see
+# signals in decoding experimental condition see Luke et. al. (2021)
 # :footcite:`Luke2021.11.19.469225`.
 
 
