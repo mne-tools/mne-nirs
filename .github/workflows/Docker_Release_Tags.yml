@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       mne_python:
-        description: 'MNE-Python version (e.g. v0.23.3 or main)'
+        description: 'MNE-Python version (e.g. v0.24.0 or main)'
         required: true
         default: 'main'
       mne_nirs:
-        description: 'MNE-NIRS version (e.g. v0.1.1 or main)'
+        description: 'MNE-NIRS version (e.g. v0.1.2 or main)'
         required: true
         default: 'main'
       nilearn:
-        description: 'Nilearn version (e.g. v0.8.2 or main)'
+        description: 'Nilearn version (e.g. 0.8.1 or main)'
         required: true
         default: 'main'
 
