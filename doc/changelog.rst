@@ -15,8 +15,19 @@ Patch version changes indicate backward compatible bug fixes.
 To install a specific version of the library you would run ``pip install mne-nirs==0.0.6``, where ``0.0.6`` is the version you wish to install.
 
 
-v0.1.2-development
+v0.1.3 development
 ------------------
+
+* No change yet
+
+
+v0.1.2
+------
+
+General
+
+* MNE-NIRS now uses the MNE-Python stable version v0.24 and no longer requires the development version.
+
 
 Enhancements
 
@@ -29,6 +40,7 @@ Enhancements
 * Add :meth:`mne_nirs.preprocessing.quantify_mayer_fooof`. By `Robert Luke`_.
 * Add :func:`mne_nirs.io.fold_landmark_specificity`. By `Robert Luke`_.
 * Add :func:`mne_nirs.io.fold_channel_specificity`. By `Robert Luke`_.
+* Added fetchers for two more publicly available datasets. By `Robert Luke`_.
 
 
 Fixes
