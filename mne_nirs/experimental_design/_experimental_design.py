@@ -90,7 +90,7 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
 
     for cidx, condition in enumerate(conditions):
         if not condition.isidentifier():
-            conditions[cidx] = _fix_names_for_nilearn(condition)
+            conditions[cidx] = _sanitise_names_for_nilearn(condition)
 
 
     events = DataFrame({'trial_type': conditions,
@@ -111,20 +111,29 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
     return dm
 
 
-def _fix_names_for_nilearn(name):
-    """Need to ensure valid identifiers for nilearn"""
-    # Need to ensure we have valid identifiers for nilearn
-    # so we prepend a t to refer to a trigger identifier
+def _sanitise_names_for_nilearn(name):
+    """
+    Ensure valid identifiers for nilearn
+
+    Nilearn does not allow number or certain characters in the names.
+    Numbers are prepended with a t for trigger.
+    Dots are replaced with three ###.
+    Slashes are replaced with three underscores.
+    """
 
     name_original = name
 
     if name.isidentifier():
         return name
 
-    name = name.replace('/', '_')
+    name = name.replace('/', '___')
+    name = name.replace('.', '_')
 
+    # See if prepending a string fixes the issue
     if not name.isidentifier():
-        name = f"t_{name}"
+        temp_name = f"t_{name}"
+        if temp_name.isidentifier():
+            name = temp_name
 
     if name.isidentifier():
         return name
@@ -133,6 +142,28 @@ def _fix_names_for_nilearn(name):
              f"nilearn. Please report this as an issue at the MNE-NIRS "
              f"GitHub issues page")
         return name
+
+
+
+def _unsanitise_names_for_nilearn(name):
+    """
+    Convert nilearn format names back to MNE.
+    Reverses the sanitise names for nilearn function.
+
+    This function inverts the following changes.
+    Numbers are prepended with a t for trigger.
+    Dots are replaced with an underscore.
+    Slashes are replaced with three underscores.
+    """
+
+    if name.startswith("t_"):
+        name = name.replace('t_', '')
+
+    name = name.replace('___', '/')
+    name = name.replace('_', '.')
+
+    return name
+
 
 
 def create_boxcar(raw, event_id=None, stim_dur=1):

@@ -9,6 +9,8 @@ import mne_nirs
 import numpy as np
 from mne_nirs.experimental_design import make_first_level_design_matrix, \
     longest_inter_annotation_interval, drift_high_pass
+from mne_nirs.experimental_design._experimental_design import (
+    _sanitise_names_for_nilearn, _unsanitise_names_for_nilearn)
 from mne_nirs.simulation import simulate_nirs_raw
 
 
@@ -102,3 +104,30 @@ def test_high_pass_helpers():
     assert lisi <= 40
     assert drift_high_pass(raw) >= 1 / (40 * 2)
     assert drift_high_pass(raw) <= 1 / (20 * 2)
+
+
+def test_name_sanitisation_for_nilearn():
+    # Test the helpers give reasonable values
+
+    assert _sanitise_names_for_nilearn('2.0').isidentifier()
+    assert _sanitise_names_for_nilearn('23.0').isidentifier()
+    assert _sanitise_names_for_nilearn('3').isidentifier()
+    assert _sanitise_names_for_nilearn('Audio/Left').isidentifier()
+    assert _sanitise_names_for_nilearn('Audio/Left/F').isidentifier()
+
+    assert _sanitise_names_for_nilearn('2.0') == "t_2_0"
+    assert _sanitise_names_for_nilearn('23.0') == "t_23_0"
+    assert _sanitise_names_for_nilearn('3') == "t_3"
+    assert _sanitise_names_for_nilearn('Audio/Left') == "Audio___Left"
+    assert _sanitise_names_for_nilearn('Audio/Left/F') == "Audio___Left___F"
+
+    assert _unsanitise_names_for_nilearn(
+        _sanitise_names_for_nilearn('2.0')) == "2.0"
+    assert _unsanitise_names_for_nilearn(
+        _sanitise_names_for_nilearn('23.0')) == "23.0"
+    assert _unsanitise_names_for_nilearn(
+        _sanitise_names_for_nilearn('3')) == "3"
+    assert _unsanitise_names_for_nilearn(
+        _sanitise_names_for_nilearn('Audio/Left')) == "Audio/Left"
+    assert _unsanitise_names_for_nilearn(
+        _sanitise_names_for_nilearn('Audio/Left/F')) == "Audio/Left/F"
