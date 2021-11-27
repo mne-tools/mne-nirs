@@ -182,7 +182,7 @@ glm_est = run_glm(raw_haemo, design_matrix)
 # to meet github memory constraints.
 
 # Plot the projection and sensor locations
-brain = glm_est.copy().surface_projection(condition="TappingRight", view="dorsal", chroma="hbo")
+brain = glm_est.copy().surface_projection(condition="Tapping/Right", view="dorsal", chroma="hbo")
 brain.add_sensors(glm_est.info, trans='fsaverage', fnirs=['channels', 'pairs', 'sources', 'detectors'])
 
 # mark the premotor cortex in green
