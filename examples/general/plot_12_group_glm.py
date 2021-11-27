@@ -94,7 +94,7 @@ from mne_nirs.channels import picks_pair_to_idx
 from mne_nirs.visualisation import plot_glm_group_topo
 from mne_nirs.datasets import fnirs_motor_group
 from mne_nirs.visualisation import plot_glm_surface_projection
-from mne_nirs.io.fold import fold_landmark_specificity, fold_channel_specificity
+from mne_nirs.io.fold import fold_channel_specificity
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
