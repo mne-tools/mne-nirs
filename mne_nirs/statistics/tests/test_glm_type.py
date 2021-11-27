@@ -47,7 +47,7 @@ def _get_glm_contrast_result(tmin=60, tmax=400):
     contrast_matrix = np.eye(design_matrix.shape[1])
     basic_conts = dict([(column, contrast_matrix[i])
                         for i, column in enumerate(design_matrix.columns)])
-    contrast_LvR = basic_conts['t_1'] - basic_conts['t_2']
+    contrast_LvR = basic_conts['t_1_0'] - basic_conts['t_2_0']
 
     return glm_est.compute_contrast(contrast_LvR)
 
@@ -128,7 +128,7 @@ def test_glm_scatter():
 
     assert isinstance(_get_glm_result().scatter(), Axes)
     assert isinstance(_get_glm_contrast_result().scatter(), Axes)
-    _get_glm_result(tmax=2974, tmin=0).surface_projection(condition="t_3",
+    _get_glm_result(tmax=2974, tmin=0).surface_projection(condition="t_3_0",
                                                           view="dorsal")
 
 

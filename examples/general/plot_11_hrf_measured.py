@@ -239,7 +239,7 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 
 s = mne_nirs.experimental_design.create_boxcar(raw_intensity, stim_dur=5.0)
 plt.plot(raw_intensity.times, s[:, 1])
-plt.plot(design_matrix['Tapping_Left'])
+plt.plot(design_matrix['Tapping___Left'])
 plt.xlim(180, 300)
 plt.legend(["Stimulus", "Expected Response"])
 plt.xlabel("Time (s)")
@@ -336,7 +336,7 @@ glm_est.scatter()
 # negative of HbO as expected.
 
 glm_est = run_glm(raw_haemo, design_matrix)
-glm_est.plot_topo(conditions=['Tapping/Left', 'Tapping_Right'])
+glm_est.plot_topo(conditions=['Tapping___Left', 'Tapping___Right'])
 
 
 # %%
@@ -364,7 +364,7 @@ glm_est.plot_topo(conditions=['Tapping/Left', 'Tapping_Right'])
 fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 6), gridspec_kw=dict(width_ratios=[0.92, 1]))
 
 glm_hbo = glm_est.copy().pick(picks="hbo")
-conditions = ['Tapping_Right']
+conditions = ['Tapping___Right']
 
 glm_hbo.plot_topo(axes=axes[0], colorbar=False, conditions=conditions)
 
@@ -380,7 +380,7 @@ axes[1].set_title("Hemispheres plotted independently")
 # Another way to view the data is to project the GLM estimates to the nearest
 # cortical surface
 
-glm_est.copy().surface_projection(condition="Tapping_Right", view="dorsal", chroma="hbo")
+glm_est.copy().surface_projection(condition="Tapping___Right", view="dorsal", chroma="hbo")
 
 
 # %%

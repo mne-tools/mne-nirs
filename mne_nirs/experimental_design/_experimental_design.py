@@ -84,7 +84,7 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
     frame_times = raw.times
 
     # Create events for nilearn
-    conditions = raw.annotations.description
+    conditions = list(raw.annotations.description)
     onsets = raw.annotations.onset - raw.first_time
     duration = stim_dur * np.ones(len(conditions))
 
