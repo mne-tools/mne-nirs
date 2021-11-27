@@ -50,7 +50,7 @@ import matplotlib.pyplot as plt
 
 # Download anatomical locations
 subjects_dir = mne.datasets.sample.data_path() + '/subjects'
-mne.datasets.fetch_hcp_mmp_parcellation(subjects_dir=subjects_dir, verbose=True)
+mne.datasets.fetch_hcp_mmp_parcellation(subjects_dir=subjects_dir, accept=True)
 labels = mne.read_labels_from_annot('fsaverage', 'HCPMMP1', 'lh', subjects_dir=subjects_dir)
 labels_combined = mne.read_labels_from_annot('fsaverage', 'HCPMMP1_combined', 'lh', subjects_dir=subjects_dir)
 
