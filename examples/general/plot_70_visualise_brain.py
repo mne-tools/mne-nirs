@@ -15,6 +15,13 @@ and overlay the sensor locations and regions of interest.
 This tutorial glosses over the processing details, see the
 :ref:`GLM tutorial <tut-fnirs-hrf>` for details on the preprocessing.
 
+.. note::
+
+   This tutorial does not render correctly when built on the cloud infrastructure.
+   As such, the images on this web page are currently just black squares.
+   However, this should work perfectly well when run locally.
+   Hopefully this issue with the cloud server will be fixed soon.
+
 .. contents:: Page contents
    :local:
    :depth: 2
