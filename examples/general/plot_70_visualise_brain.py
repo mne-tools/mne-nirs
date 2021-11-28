@@ -1,14 +1,19 @@
 """
 .. _tut-fnirs-vis-brain:
 
-Brain Plotting
-==============
+Utilising Anatomical Information
+================================
+
+This example demonstrates how you can utilise anatomical and sensor position
+information in your analysis pipeline. This information can be used to
+verify measurement/analysis and also improve analysis accuracy
+:footcite:`novi2020integration`.
 
 This example demonstrates how to plot your data on a 3D brain
 and overlay the sensor locations and regions of interest.
 
-This tutorial glosses over the processing details, see the other examples
-for more details on preprocessing.
+This tutorial glosses over the processing details, see the
+:ref:`GLM tutorial <tut-fnirs-hrf>` for details on the preprocessing.
 
 .. contents:: Page contents
    :local:
@@ -24,27 +29,41 @@ for more details on preprocessing.
 
 import os
 import numpy as np
-import matplotlib.pyplot as plt
 
 import mne
 
-from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
-
+from mne_bids import BIDSPath, read_raw_bids
 import mne_nirs
 
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_glm
 from mne_nirs.channels import get_long_channels, get_short_channels
 from mne_nirs.io.fold import fold_landmark_specificity
+from mne_nirs.visualisation import plot_nirs_source_detector
 
 
-from PIL import Image
-import matplotlib.pyplot as plt
+# %%
+# Download example data
+# -------------------------------
+#
+# Download required data for this tutorial.
+
+# %%
+# Download example fNIRS data
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#
+# Download the ``audio_or_visual_speech`` dataset and load the first measurement.
+
+root = mne_nirs.datasets.audio_or_visual_speech.data_path()
+dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf",
+                   task="AudioVisualBroadVsRestricted", datatype="nirs",
+                   subject="01", session="01")
+raw = read_raw_bids(dataset)
 
 
 # %%
 # Download annotation information
-# -------------------------------
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
 # Download the HCP-MMP parcellation.
 
@@ -56,94 +75,93 @@ labels_combined = mne.read_labels_from_annot('fsaverage', 'HCPMMP1_combined', 'l
 
 
 # %%
-# Create function to grab a screenshot of the 3D image
-# ----------------------------------------------------
+# Verify placement of sensors
+# ---------------------------
 #
-# This function creates a figure from the 3D visualisation.
-# It is only required as the tutorial is being run on a cloud server.
-# On your local machine the tutorial should open a
-# nice 3D viewer automatically.
-# You should not need to use this function locally.
+# The first thing we can do is plot the location of the optodes and channels
+# over an average brain surface to verify the data, specifically the 3D coordinates,
+# have been loaded correctly. The sources are represented as red dots,
+# the detectors are represented as black dots, the whit lines represent source-detector
+# pairs, and the orange dots represent channel locations.
+# In this example we can see channels over the left inferior frontal gyrus,
+# auditory cortex, planum temporale, and occipital lobe.
 
-def cloud_3d_screenshot(brain, azimuth=160, elevation=60, distance=400):
-    brain.show_view(azimuth=azimuth, elevation=elevation, distance=distance)
-    fig, axes = plt.subplots(figsize=(16, 16))
-    b = np.asarray(Image.fromarray(brain.screenshot()))
-    axes.imshow(b)
-    axes.axis('off')
-    return fig
-
-
-# %%
-# Plot brain with all sensors and channels
-# ----------------------------------------
-#
-# Overlay the sensor information for a specific measurement
-# on the image of a brain.
-
-# Load data
-root = mne_nirs.datasets.audio_or_visual_speech.data_path()
-dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf",
-                   task="AudioVisualBroadVsRestricted", datatype="nirs",
-                   subject="01", session="01")
-raw = read_raw_bids(dataset)
-
-# Plot brain and overlay sensors
 brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5')
 brain.add_sensors(raw.info, trans='fsaverage', fnirs=['channels', 'pairs', 'sources', 'detectors'])
-cloud_3d_screenshot(brain, azimuth=180, elevation=80, distance=450)
+brain.show_view(azimuth=180, elevation=80, distance=450)
 
 
 # %%
 # Plot sensor channels and anatomical region of interest
 # ------------------------------------------------------
 #
-# Overlay the sensor information for a specific measurement
-# on the image of a brain and mark a specific region of interest.
+# Once the data has been loaded we can highlight anatomical regions of interest
+# to ensure that the sensors are appropriately placed to measure from
+# the relevant brain structures.
+# In this example we highlight the primary auditory cortex in blue,
+# and we can see that a number of channels are placed over this structure.
 
-# Plot brain and overlay sensors
 brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5')
 brain.add_sensors(raw.info, trans='fsaverage', fnirs=['channels', 'pairs', 'sources', 'detectors'])
 
-# mark the primary auditory cortex in blue
 aud_label = [label for label in labels if label.name == 'L_A1_ROI-lh'][0]
 brain.add_label(aud_label, borders=False, color='blue')
-
-cloud_3d_screenshot(brain, azimuth=180, elevation=80, distance=450)\
+brain.show_view(azimuth=180, elevation=80, distance=450)
 
 
 # %%
 # Plot channels sensitive to anatomical region of interest
 # --------------------------------------------------------
 #
-# Overlay the sensor information for a specific measurement
-# on the image of a brain and mark a specific region of interest.
-#
-# This example highlights the left inferior frontal gyrus in green
-# and displays the channels with greater than 50% specificity to this structure.
+# Rather than simply eye balling the sensor and ROIs of interest, we can
+# quantify the specificity of each channel to the anatomical region of interest
+# and select channels that are sufficiently sensitive for further analysis.
+# In this example we highlight the left inferior frontal gyrus (IFG) and
+# use data from the fOLD toolbox :footcite:`morais2018fnirs`.
+# To see more details about how to use the fOLD data see
+# `this tutorial <https://mne.tools/mne-nirs/main/auto_examples/general/plot_12_group_glm.html#id13>`_.
 
+# Specify the location of the fOLD files
 fold_files = [os.path.join(os.path.expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-10.xls"),
               os.path.join(os.path.expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-5.xls")]
+
+# Return specificity of each channel to the Left IFG
 specificity = fold_landmark_specificity(raw, 'L IFG (p. Triangularis)', fold_files)
 
+# Retain only channels with specificity to left IFG of greater than 50%
 raw_IFG = raw.copy().pick(picks=np.where(specificity > 50)[0])
 
-# Plot brain and overlay sensors
 brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5')
 brain.add_sensors(raw_IFG.info, trans='fsaverage', fnirs=['channels', 'pairs'])
 
-# mark the primary auditory cortex in blue
 ifg_label = [label for label in labels_combined if label.name == 'Inferior Frontal Cortex-lh'][0]
 brain.add_label(ifg_label, borders=False, color='green')
 
-cloud_3d_screenshot(brain, azimuth=140, elevation=95, distance=360)
+brain.show_view(azimuth=140, elevation=95, distance=360)
+
+
+# %%
+#
+# Alternatively, we can retain all channels and visualise the specificity of each channel the ROI
+# by encoding the specificty in the color of the line between each source and detector.
+# In this example we see that several channels have substantial specificity to
+# the region of interest.
+#
+# Note: this function currently doesnt support the new MNE brain API, so does
+# not allow the same behaviour as above (adding sensors, highlighting ROIs etc).
+# It should be updated in the near future.
+
+fig = plot_nirs_source_detector(specificity, raw.info, surfaces='brain',
+                                subject='fsaverage', subjects_dir=subjects_dir, trans='fsaverage')
+mne.viz.set_3d_view(fig, azimuth=140, elevation=95)
 
 
 # %%
 # Preprocess fNIRS data
 # ---------------------
 #
-# First we process the fNIRS data. This is a duplication of the GLM tutorial
+# We can also use the 3D information to project the results on to the cortical surface.
+# First, we process the fNIRS data. This is a duplication of the GLM tutorial
 # analysis. The details will not be described here, instead view the
 # :ref:`fNIRS GLM tutorial <tut-fnirs-hrf>`
 #
@@ -174,15 +192,12 @@ glm_est = run_glm(raw_haemo, design_matrix)
 # Plot surface projection of GLM results
 # --------------------------------------
 #
-# First we process the fNIRS data. This is a duplication of the GLM tutorial
-# analysis. The details will not be described here, instead view the
-# :ref:`fNIRS GLM tutorial <tut-fnirs-hrf>`
-#
-# After reading the data we resample down to 1Hz
-# to meet github memory constraints.
+# Finally, we can project the GLM results from each channel to the nearest cortical surface
+# and overlay the sensor positions and two different regions of interest.
+# In this example we highlight the motor cortex and auditory association cortex.
 
 # Plot the projection and sensor locations
-brain = glm_est.copy().surface_projection(condition="Tapping/Right", view="dorsal", chroma="hbo")
+brain = glm_est.copy().surface_projection(condition="TappingRight", view="dorsal", chroma="hbo")
 brain.add_sensors(glm_est.info, trans='fsaverage', fnirs=['channels', 'pairs', 'sources', 'detectors'])
 
 # mark the premotor cortex in green
@@ -193,4 +208,11 @@ brain.add_label(aud_label, borders=True, color='green')
 aud_label = [label for label in labels_combined if label.name == 'Auditory Association Cortex-lh'][0]
 brain.add_label(aud_label, borders=True, color='blue')
 
-cloud_3d_screenshot(brain)
+brain.show_view(azimuth=160, elevation=60, distance=400)
+
+
+# %%
+# Bibliography
+# -----------------------------------------------
+#
+# .. footbibliography::
