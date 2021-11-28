@@ -197,7 +197,7 @@ glm_est = run_glm(raw_haemo, design_matrix)
 # In this example we highlight the motor cortex and auditory association cortex.
 
 # Plot the projection and sensor locations
-brain = glm_est.copy().surface_projection(condition="TappingRight", view="dorsal", chroma="hbo")
+brain = glm_est.copy().surface_projection(condition="Tapping/Right", view="dorsal", chroma="hbo")
 brain.add_sensors(glm_est.info, trans='fsaverage', fnirs=['channels', 'pairs', 'sources', 'detectors'])
 
 # mark the premotor cortex in green

@@ -66,3 +66,20 @@ Nilearn: http://nilearn.github.io/authors.html#citing
 statsmodels: https://www.statsmodels.org/stable/index.html#citation
 
 Until there is a journal article specifically on MNE-NIRS, please cite `this article <https://doi.org/10.1117/1.NPh.8.2.025008>`_.
+
+
+Docker
+------
+
+To start a jupyter lab server with a specified MNE-NIRS version, and mount a local directory on a mac or nix computer use:
+
+.. code-block:: bash
+
+   docker run -p 8888:8888 -v `pwd`:/home/mne_user ghcr.io/mne-tools/mne-nirs:v0.1.2 jupyter-lab --ip="*"
+
+
+Or on windows:
+
+.. code-block:: bash
+
+   docker run -p 8888:8888 -v %cd%:/home/mne_user ghcr.io/mne-tools/mne-nirs:v0.1.2 jupyter-lab --ip="*"
