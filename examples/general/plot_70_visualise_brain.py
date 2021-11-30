@@ -39,6 +39,7 @@ import numpy as np
 import pandas as pd
 
 import mne
+from mne.preprocessing.nirs import optical_density, beer_lambert_law
 
 import statsmodels.formula.api as smf
 
