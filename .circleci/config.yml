@@ -15,6 +15,20 @@ jobs:
       steps:
         - checkout
         - run:
+            name: Merge with upstream
+            command: |
+              echo $(git log -1 --pretty=%B) | tee gitlog.txt
+              echo ${CI_PULL_REQUEST//*pull\//} | tee merge.txt
+              if [[ $(cat merge.txt) != "" ]]; then
+                echo "Merging $(cat merge.txt)";
+                if ! git remote -v | grep upstream; then
+                  git remote add upstream https://github.com/mne-tools/mne-nirs.git
+                fi
+                git fetch upstream
+                git pull --ff-only upstream "refs/pull/$(cat merge.txt)/merge";
+              fi
+
+        - run:
             name: Set BASH_ENV
             command: |
               set -e
@@ -103,7 +117,7 @@ jobs:
                python -c "import mne; mne.set_config('MNE_USE_CUDA', 'false')"  # this is needed for the config tutorial
                python -c "import mne; mne.set_config('MNE_LOGGING_LEVEL', 'info')"
                python -c "import mne; level = mne.get_config('MNE_LOGGING_LEVEL'); assert level.lower() == 'info', repr(level)"
-               
+
         - run:
             name: list packages
             command: |
