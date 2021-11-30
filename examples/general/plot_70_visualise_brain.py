@@ -175,24 +175,66 @@ mne.viz.set_3d_view(fig, azimuth=140, elevation=95)
 # After reading the data we resample down to 1Hz
 # to meet github memory constraints.
 
-fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
-raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
-raw_intensity.resample(0.7)
-raw_intensity.annotations.rename({'1.0': 'Control',
-                                  '2.0': 'Tapping/Left',
-                                  '3.0': 'Tapping/Right'})
-raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
-raw_intensity.annotations.set_durations(5)
-raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
-raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
-short_chs = get_short_channels(raw_haemo)
-raw_haemo = get_long_channels(raw_haemo)
-design_matrix = make_first_level_design_matrix(raw_haemo, drift_model='cosine',
-                                               high_pass=0.005, hrf_model='spm', stim_dur=5.0)
-design_matrix["ShortHbO"] = np.mean(short_chs.copy().pick(picks="hbo").get_data(), axis=0)
-design_matrix["ShortHbR"] = np.mean(short_chs.copy().pick(picks="hbr").get_data(), axis=0)
-glm_est = run_glm(raw_haemo, design_matrix)
+
+def individual_analysis(bids_path, ID):
+
+    raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
+
+    # Convert signal to haemoglobin and resample
+    raw_od = optical_density(raw_intensity)
+    raw_haemo = beer_lambert_law(raw_od, ppf=0.1)
+    raw_haemo.resample(0.3)
+
+    # Cut out just the short channels for creating a GLM repressor
+    sht_chans = get_short_channels(raw_haemo)
+    raw_haemo = get_long_channels(raw_haemo)
+
+    # Create a design matrix
+    design_matrix = make_first_level_design_matrix(raw_haemo, stim_dur=5.0)
+
+    # Append short channels mean to design matrix
+    design_matrix["ShortHbO"] = np.mean(sht_chans.copy().pick(picks="hbo").get_data(), axis=0)
+    design_matrix["ShortHbR"] = np.mean(sht_chans.copy().pick(picks="hbr").get_data(), axis=0)
+
+    # Run GLM
+    glm_est = run_glm(raw_haemo, design_matrix)
+
+    # Extract channel metrics
+    cha = glm_est.to_dataframe()
+
+    # Add the participant ID to the dataframes
+    roi["ID"] = cha["ID"] = con["ID"] = ID
+
+    # Convert to uM for nicer plotting below.
+    cha["theta"] = [t * 1.e6 for t in cha["theta"]]
+
+    return raw_haemo, cha
+
+
+# Get dataset details
+root = fnirs_motor_group.data_path()
+dataset = BIDSPath(root=root, task="tapping",
+                   datatype="nirs", suffix="nirs", extension=".snirf")
+subjects = get_entity_vals(root, 'subject')
+
+df_cha = pd.DataFrame()  # To store channel level results
+for sub in subjects:  # Loop from first to fifth subject
+
+    # Create path to file based on experiment info
+    bids_path = dataset.update(subject=sub)
+
+    # Analyse data and return both ROI and channel results
+    raw_haemo, channel = individual_analysis(bids_path, sub)
+
+    # Append individual results to all participants
+    df_cha = df_cha.append(channel)
+
+ch_summary = df_cha.query("Condition in 'Tapping/Right'")
+ch_summary = ch_summary.query("Chroma in ['hbo']")
+ch_model = smf.mixedlm("theta ~ -1 + ch_name", ch_summary,
+                       groups=ch_summary["ID"]).fit(method='nm')
+model_df = statsmodels_to_results(ch_model, order=raw_haemo.copy().pick("hbo").ch_names)
+
 
 
 # %%
@@ -204,8 +246,8 @@ glm_est = run_glm(raw_haemo, design_matrix)
 # In this example we highlight the motor cortex and auditory association cortex.
 
 # Plot the projection and sensor locations
-brain = glm_est.copy().surface_projection(condition="Tapping/Right", view="dorsal", chroma="hbo")
-brain.add_sensors(glm_est.info, trans='fsaverage', fnirs=['channels', 'pairs', 'sources', 'detectors'])
+brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"), model_df, colorbar=True)
+brain.add_sensors(raw_haemo.info, trans='fsaverage', fnirs=['channels', 'pairs', 'sources', 'detectors'])
 
 # mark the premotor cortex in green
 aud_label = [label for label in labels_combined if label.name == 'Premotor Cortex-lh'][0]
