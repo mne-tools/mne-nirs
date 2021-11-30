@@ -300,7 +300,8 @@ sphinx_gallery_conf = {
             '../requirements.txt',
             '../requirements_doc.txt',
         ],
-    }
+    },
+    'plot_gallery': 'True',  # Avoid annoying str/bool default warning
 }
 
 

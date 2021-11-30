@@ -10,8 +10,8 @@ _xvfb: &xvfb
 
 jobs:
     build_docs:
-      docker:
-        - image: circleci/python:3.8.5-buster
+      machine:
+        image: ubuntu-2004:202111-01
       steps:
         - checkout
         - run:
@@ -32,13 +32,18 @@ jobs:
             name: Set BASH_ENV
             command: |
               set -e
+              python3 -m venv ~/python_env --upgrade-deps
               echo "set -e" >> $BASH_ENV
               echo "export DISPLAY=:99" >> $BASH_ENV
               echo "export OPENBLAS_NUM_THREADS=4" >> $BASH_ENV
               echo "export XDG_RUNTIME_DIR=/tmp/runtime-circleci" >> $BASH_ENV
               source tools/get_minimal_commands.sh
+              echo "export MNE_3D_OPTION_ANTIALIAS=false" >> $BASH_ENV
               echo "export MNE_3D_BACKEND=pyvista" >> $BASH_ENV
               echo "export PATH=~/.local/bin/:$PATH" >> $BASH_ENV
+              echo "source ~/python_env/bin/activate" >> $BASH_ENV
+              mkdir -p ~/.local/bin
+              ln -s ~/python_env/bin/python ~/.local/bin/python
               echo "BASH_ENV:"
               cat $BASH_ENV
               mkdir -p ~/mne_data
@@ -78,10 +83,10 @@ jobs:
         - run:
             name: Get Python running
             command: |
-              python -m pip install --user --upgrade --progress-bar off pip setuptools
-              python -m pip install --user --upgrade --progress-bar off --pre sphinx
-              python -m pip install --user --upgrade --progress-bar off -r requirements.txt -r requirements_testing.txt -r requirements_doc.txt
-              python -m pip install --user -e .
+              python -m pip install --upgrade --progress-bar off pip setuptools
+              python -m pip install --upgrade --progress-bar off --pre sphinx
+              python -m pip install --upgrade --progress-bar off -r requirements.txt -r requirements_testing.txt -r requirements_doc.txt
+              python -m pip install -e .
 
 
         # Hack in uninstalls of libraries as necessary if pip doesn't do the right thing in upgrading for us...
