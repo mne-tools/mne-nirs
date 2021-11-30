@@ -28,7 +28,7 @@ This tutorial glosses over the processing details, see the
 
 
 """
-# sphinx_gallery_thumbnail_number = 9
+# sphinx_gallery_thumbnail_number = 4
 
 # Authors: Robert Luke <mail@robertluke.net>
 #
@@ -157,7 +157,7 @@ brain.show_view(azimuth=140, elevation=95, distance=360)
 # In this example we see that several channels have substantial specificity to
 # the region of interest.
 #
-# Note: this function currently doesnt support the new MNE brain API, so does
+# Note: this function currently doesn't support the new MNE brain API, so does
 # not allow the same behaviour as above (adding sensors, highlighting ROIs etc).
 # It should be updated in the near future.
 
