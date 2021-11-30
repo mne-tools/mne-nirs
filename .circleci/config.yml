@@ -10,8 +10,8 @@ _xvfb: &xvfb
 
 jobs:
     build_docs:
-      docker:
-        - image: circleci/python:3.8.5-buster
+      machine:
+        image: ubuntu-2004:202111-01
       steps:
         - checkout
         - run:
@@ -23,6 +23,7 @@ jobs:
               echo "export OPENBLAS_NUM_THREADS=4" >> $BASH_ENV
               echo "export XDG_RUNTIME_DIR=/tmp/runtime-circleci" >> $BASH_ENV
               source tools/get_minimal_commands.sh
+              echo "export MNE_3D_OPTION_ANTIALIAS=false" >> $BASH_ENV
               echo "export MNE_3D_BACKEND=pyvista" >> $BASH_ENV
               echo "export PATH=~/.local/bin/:$PATH" >> $BASH_ENV
               echo "BASH_ENV:"
@@ -103,7 +104,7 @@ jobs:
                python -c "import mne; mne.set_config('MNE_USE_CUDA', 'false')"  # this is needed for the config tutorial
                python -c "import mne; mne.set_config('MNE_LOGGING_LEVEL', 'info')"
                python -c "import mne; level = mne.get_config('MNE_LOGGING_LEVEL'); assert level.lower() == 'info', repr(level)"
-               
+
         - run:
             name: list packages
             command: |
