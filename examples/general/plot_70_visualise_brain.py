@@ -208,7 +208,7 @@ def individual_analysis(bids_path, ID):
     cha = glm_est.to_dataframe()
 
     # Add the participant ID to the dataframes
-    roi["ID"] = cha["ID"] = con["ID"] = ID
+    cha["ID"] = ID
 
     # Convert to uM for nicer plotting below.
     cha["theta"] = [t * 1.e6 for t in cha["theta"]]
