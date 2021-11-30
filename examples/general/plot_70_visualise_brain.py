@@ -36,6 +36,7 @@ This tutorial glosses over the processing details, see the
 
 import os
 import numpy as np
+import pandas as pd
 
 import mne
 
