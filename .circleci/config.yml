@@ -126,7 +126,7 @@ jobs:
               git status
               git tag
               git branch
-              make html;
+              make html-single;
 
         # Save the outputs
         - store_artifacts:

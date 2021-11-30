@@ -53,14 +53,19 @@ clean:
 	-rm -rf modules/generated/*
 
 html:
-	# These two lines make the build a bit more lengthy, and the
-	# the embedding of images more robust
-	rm -rf $(BUILDDIR)/html/_images
-	#rm -rf _build/doctrees/
-	@echo "$(SPHINXBUILD)  $(BUILDDIR)/html"
+	@# These two lines make the build a bit more lengthy, and the
+	@# the embedding of images more robust
+	@rm -rf $(BUILDDIR)/html/_images
+	@#rm -rf _build/doctrees/
 	$(SPHINXBUILD) . $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
+
+html-single:
+	@rm -Rf _built/doctrees
+	sphinx-build -A current_version=1 -A versions=1 -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+	@echo
+	@echo "Build finished (single). The HTML pages are in $(BUILDDIR)/html."
 
 numpydoc:
 	# These two lines make the build a bit more lengthy, and the
