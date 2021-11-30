@@ -6,11 +6,11 @@ r"""
 Importing Data From fNIRS Devices
 =================================
 
-.. note:: This tutorial is a mirror of the 
+.. note:: This tutorial is a mirror of the
           (`MNE tutorial <https://mne.tools/dev/auto_tutorials/io/30_reading_fnirs_data.html>`__),
           and is reproduced in MNE-NIRS for convenience and so that all
           relevant material is easily accessible to users.
-          
+
 fNIRS devices consist of two kinds of optodes: light sources (AKA "emitters" or
 "transmitters") and light detectors (AKA "receivers"). Channels are defined as
 source-detector pairs, and channel locations are defined as the midpoint
@@ -201,7 +201,7 @@ sfreq = 10.  # in Hz
 # see :ref:`tut-info-class`, and for additional details on how continuous data
 # is stored in MNE-Python see :ref:`tut-raw-class`.
 # For a more extensive description of how to create MNE-Python data structures
-# from raw array data see :ref:`mne:tut_creating_data_structures`.
+# from raw array data see :ref:`mne:tut-creating-data-structures`.
 
 info = mne.create_info(ch_names=ch_names, ch_types=ch_types, sfreq=sfreq)
 raw = mne.io.RawArray(data, info, verbose=True)
@@ -220,7 +220,7 @@ raw = mne.io.RawArray(data, info, verbose=True)
 # (montages) from some vendors, and this is demonstrated below.
 # Some handy tutorials for understanding sensor locations, coordinate systems,
 # and how to store and view this information in MNE-Python are:
-# :ref:`mne:tut-sensor-locations`, :ref:`mne:plot_source_alignment`, and
+# :ref:`mne:tut-sensor-locations`, :ref:`mne:tut-source-alignment`, and
 # :ref:`mne:ex-eeg-on-scalp`.
 #
 # Below is an example of how to load the optode positions for an Artinis
