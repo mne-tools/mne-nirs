@@ -117,6 +117,15 @@ brain.show_view(azimuth=180, elevation=80, distance=450)
 # Plot channels sensitive to anatomical region of interest
 # --------------------------------------------------------
 #
+# .. sidebar:: fOLD Toolbox
+#
+#    You should use the fOLD toolbox to pick your optode locations
+#    when designing your experiment.
+#    The tool is very intuitive and easy to use.
+#    Be sure to cite the authors if you use their tool or data:
+#
+#    Morais, Guilherme Augusto Zimeo, Joana Bisol Balardin, and João Ricardo Sato. "fNIRS optodes’ location decider (fOLD): a toolbox for probe arrangement guided by brain regions-of-interest." Scientific reports 8.1 (2018): 1-11.
+#
 # Rather than simply eye balling the sensor and ROIs of interest, we can
 # quantify the specificity of each channel to the anatomical region of interest
 # and select channels that are sufficiently sensitive for further analysis.
