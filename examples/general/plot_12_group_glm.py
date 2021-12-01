@@ -94,7 +94,7 @@ from mne_nirs.channels import picks_pair_to_idx
 from mne_nirs.visualisation import plot_glm_group_topo
 from mne_nirs.datasets import fnirs_motor_group
 from mne_nirs.visualisation import plot_glm_surface_projection
-from mne_nirs.io.fold import fold_landmark_specificity, fold_channel_specificity
+from mne_nirs.io.fold import fold_channel_specificity
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
@@ -475,14 +475,6 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
 # %%
 # Cortical Surface Projections
 # ----------------------------
-#
-# .. sidebar:: 3D plotting
-#
-#    Due to limitations with the cloud computing used to generate these
-#    documents, the 3D plot will not appear in the online documentation.
-#    However, when you run this code locally you will obtain a 3D head figure
-#    simillar to what is shown in the tutorial:
-#    `ECOG tutorial <https://mne.tools/dev/auto_tutorials/clinical/30_ecog.html#sphx-glr-auto-tutorials-clinical-30-ecog-py>`_.
 #
 # The topographic plots above can sometimes be difficult to interpret with
 # respect to the underlying cortical locations. It is also possible to present
