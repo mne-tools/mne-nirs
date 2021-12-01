@@ -247,7 +247,7 @@ model_df = statsmodels_to_results(ch_model, order=raw_haemo.copy().pick("hbo").c
 # Finally, we can project the GLM results from each channel to the nearest cortical surface
 # and overlay the sensor positions and two different regions of interest.
 # In this example we also highlight the premotor cortex and auditory association cortex
-# in green and blue respecively.
+# in green and blue respectively.
 
 # Plot the projection and sensor locations
 brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"), model_df, colorbar=True)
