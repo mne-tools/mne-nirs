@@ -47,7 +47,7 @@ from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
 import mne_nirs
 
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import run_glm
+from mne_nirs.statistics import run_glm, statsmodels_to_results
 from mne_nirs.channels import get_long_channels, get_short_channels
 from mne_nirs.io.fold import fold_landmark_specificity
 from mne_nirs.visualisation import plot_nirs_source_detector, plot_glm_surface_projection
