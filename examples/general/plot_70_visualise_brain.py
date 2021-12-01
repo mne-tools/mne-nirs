@@ -15,20 +15,13 @@ and overlay the sensor locations and regions of interest.
 This tutorial glosses over the processing details, see the
 :ref:`GLM tutorial <tut-fnirs-hrf>` for details on the preprocessing.
 
-.. note::
-
-   This tutorial does not render correctly when built on the cloud infrastructure.
-   As such, the images on this web page are currently just black squares.
-   However, this should work perfectly well when run locally.
-   Hopefully this issue with the cloud server will be fixed soon.
-
 .. contents:: Page contents
    :local:
    :depth: 2
 
 
 """
-# sphinx_gallery_thumbnail_number = 4
+# sphinx_gallery_thumbnail_number = 5
 
 # Authors: Robert Luke <mail@robertluke.net>
 #
@@ -58,7 +51,7 @@ from mne_nirs.datasets import fnirs_motor_group
 # Download example data
 # -------------------------------
 #
-# Download required data for this tutorial.
+# First, the data required data for this tutorial is downloaded.
 
 # %%
 # Download example fNIRS data
@@ -67,9 +60,8 @@ from mne_nirs.datasets import fnirs_motor_group
 # Download the ``audio_or_visual_speech`` dataset and load the first measurement.
 
 root = mne_nirs.datasets.audio_or_visual_speech.data_path()
-dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf",
-                   task="AudioVisualBroadVsRestricted", datatype="nirs",
-                   subject="01", session="01")
+dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf", subject="01",
+                   task="AudioVisualBroadVsRestricted", datatype="nirs", session="01"
 raw = read_raw_bids(dataset)
 
 
@@ -175,10 +167,7 @@ mne.viz.set_3d_view(fig, azimuth=140, elevation=95)
 # We can also use the 3D information to project the results on to the cortical surface.
 # First, we process the fNIRS data. This is a duplication of the GLM tutorial
 # analysis. The details will not be described here, instead view the
-# :ref:`fNIRS GLM tutorial <tut-fnirs-hrf>`
-#
-# After reading the data we resample down to 1Hz
-# to meet github memory constraints.
+# :ref:`fNIRS GLM tutorial <tut-fnirs-hrf>`.
 
 
 def individual_analysis(bids_path, ID):
@@ -248,7 +237,8 @@ model_df = statsmodels_to_results(ch_model, order=raw_haemo.copy().pick("hbo").c
 #
 # Finally, we can project the GLM results from each channel to the nearest cortical surface
 # and overlay the sensor positions and two different regions of interest.
-# In this example we highlight the motor cortex and auditory association cortex.
+# In this example we also highlight the premotor cortex and auditory association cortex
+# in green and blue respecively.
 
 # Plot the projection and sensor locations
 brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"), model_df, colorbar=True)
