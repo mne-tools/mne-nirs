@@ -24,6 +24,7 @@ jobs:
       PYTHONUNBUFFERED: '1'
       PYTHON_VERSION: '3.9'
       MNE_3D_BACKEND: 'pyvistaqt'
+      MNE_3D_OPTION_ANTIALIAS: 'false'
     steps:
       - uses: actions/checkout@v2
         with:
