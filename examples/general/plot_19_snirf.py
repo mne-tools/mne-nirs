@@ -6,18 +6,18 @@ SNIRF Support in MNE
 
 .. sidebar:: .nirs files
 
-   If you wish to process your .nirs files in MNE use the official snirf
-   converter to create .snirf file.
-   See https://github.com/fNIRS/snirf_homer3
+   MNE does not support reading ``.nirs`` files. If you have ``.nirs`` files that
+   you would like to process in MNE, you should first convert them to SNIRF.
+   To convert ``.nirs`` files to SNIRF you can use the Homer3 ``Nirs2Snirf``
+   function. See https://github.com/fNIRS/snirf_homer3
 
-SNIRF is a file format for storing
-functional near-infrared spectroscopy (fNIRS)
-data. The specification is maintained
-by the society for functional near infrared spectroscopy. In this tutorial
-we demonstrate how to convert your MNE data to SNIRF and also how to read
-SNIRF files.
+SNIRF is a file format for storing functional near-infrared spectroscopy (fNIRS)
+data. The specification is maintained by the society for functional near infrared
+spectroscopy. In this tutorial we demonstrate how to convert your MNE data to
+the SNIRF  and also how to read SNIRF files. We also demonstrate how to validate
+that a SNIRF file conforms to the SNIRF specification.
 
-Read the SNIRF protocol over at https://github.com/fNIRS/snirf
+You can read the SNIRF protocol at the official site https://github.com/fNIRS/snirf.
 
 .. contents:: Page contents
    :local:
@@ -32,6 +32,7 @@ Read the SNIRF protocol over at https://github.com/fNIRS/snirf
 
 import os
 import mne
+import pysnirf2
 
 from mne.io import read_raw_nirx, read_raw_snirf
 from mne_nirs.io import write_raw_snirf
@@ -78,3 +79,18 @@ snirf_intensity = read_raw_snirf('test_raw.snirf')
 assert_allclose(raw_intensity.get_data(), snirf_intensity.get_data())
 
 snirf_intensity.plot(n_channels=30, duration=300, show_scrollbars=False)
+
+
+# %%
+# Validate SNIRF File
+# -------------------
+#
+# To validate that a file complies with the SNIRF standard you should use the
+# official SNIRF validator from the Boston University Neurophotonics Center
+# called ``pysnirf2``. Detailed instructions for this program can be found at
+# https://github.com/BUNPC/pysnirf2. Below we demonstrate that the files created
+# by MNE-NIRS are compliant with the specification.
+
+valid, result = pysnirf2.validateSnirf('test_raw.snirf')
+assert valid
+print(result)
