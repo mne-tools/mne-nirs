@@ -6,11 +6,11 @@ r"""
 Importing Data From fNIRS Devices
 =================================
 
-.. note:: This tutorial is a mirror of the 
+.. note:: This tutorial is a mirror of the
           (`MNE tutorial <https://mne.tools/dev/auto_tutorials/io/30_reading_fnirs_data.html>`__),
           and is reproduced in MNE-NIRS for convenience and so that all
           relevant material is easily accessible to users.
-          
+
 fNIRS devices consist of two kinds of optodes: light sources (AKA "emitters" or
 "transmitters") and light detectors (AKA "receivers"). Channels are defined as
 source-detector pairs, and channel locations are defined as the midpoint
@@ -51,7 +51,26 @@ using :func:`mne.io.read_raw_snirf`.
 
 .. note:: The SNIRF format has provisions for many different types of fNIRS
           recordings. MNE-Python currently only supports reading continuous
-          wave data stored in the .snirf format.
+          wave or haemoglobin data stored in the .snirf format.
+
+
+Specifying the coordinate system
+--------------------------------
+
+There are a variety of coordinate systems used to specify the location of
+sensors (see :ref:`mne:tut-source-alignment` for details). Where possible the
+coordinate system will be determined automatically when reading a SNIRF file.
+However, sometimes this is not possible and you must manually specify the
+coordinate frame the optodes are in. This is done using the ``optode_frame``
+argument when loading data.
+
+=======  ==================  =================
+Vendor   Model               ``optode_frame``
+=======  ==================  =================
+NIRx     ICBM-152 MNI        mri
+Kernel   ICBM 2009b          mri
+=======  ==================  =================
+
 
 
 ***********************
@@ -79,9 +98,9 @@ Hitachi (.csv)
 ==============
 
 Hitachi produce continuous wave fNIRS devices.
-Hitachi fNIRS recordings can be read using `mne.io.read_raw_hitachi`.
+Hitachi fNIRS recordings can be read using :func:`mne:mne.io.read_raw_hitachi`.
 No optode information is stored so you'll need to set the montage manually,
-see the Notes section of `mne.io.read_raw_hitachi`.
+see the Notes section of :func:`mne:mne.io.read_raw_hitachi`.
 
 
 ************************
@@ -125,11 +144,11 @@ Custom Data Import
 Loading legacy data in CSV or TSV format
 ========================================
 
-.. warning:: This method is not supported and users are discoraged to use it.
+.. warning:: This method is not supported and users are discouraged to use it.
              You should convert your data to the
              `SNIRF <https://github.com/fNIRS/snirf>`_ format using the tools
              provided by the Society for functional Near-Infrared Spectroscopy,
-             and then load it using :func:`mne.io.read_raw_snirf`.
+             and then load it using :func:`mne:mne.io.read_raw_snirf`.
 
 fNIRS measurements may be stored in a non-standardised format that is not
 supported by MNE-Python and cannot be converted easily into SNIRF.
@@ -141,11 +160,14 @@ specification of sensor positions varies between each vendor). You will likely
 have to adapt this depending on the system from which your CSV originated.
 """  # noqa:E501
 
+# %%
+
+import os.path as op
 import numpy as np
 import pandas as pd
 import mne
 
-# sphinx_gallery_thumbnail_number = 1
+# sphinx_gallery_thumbnail_number = 2
 
 # %%
 # First, we generate an example CSV file which will then be loaded in to
@@ -201,7 +223,7 @@ sfreq = 10.  # in Hz
 # see :ref:`tut-info-class`, and for additional details on how continuous data
 # is stored in MNE-Python see :ref:`tut-raw-class`.
 # For a more extensive description of how to create MNE-Python data structures
-# from raw array data see :ref:`mne:tut_creating_data_structures`.
+# from raw array data see :ref:`mne:tut-creating-data-structures`.
 
 info = mne.create_info(ch_names=ch_names, ch_types=ch_types, sfreq=sfreq)
 raw = mne.io.RawArray(data, info, verbose=True)
@@ -220,7 +242,7 @@ raw = mne.io.RawArray(data, info, verbose=True)
 # (montages) from some vendors, and this is demonstrated below.
 # Some handy tutorials for understanding sensor locations, coordinate systems,
 # and how to store and view this information in MNE-Python are:
-# :ref:`mne:tut-sensor-locations`, :ref:`mne:plot_source_alignment`, and
+# :ref:`mne:tut-sensor-locations`, :ref:`mne:tut-source-alignment`, and
 # :ref:`mne:ex-eeg-on-scalp`.
 #
 # Below is an example of how to load the optode positions for an Artinis
@@ -235,3 +257,20 @@ raw.set_montage(montage)
 
 # View the position of optodes in 2D to confirm the positions are correct.
 raw.plot_sensors()
+
+# %%
+# To validate the positions were loaded correctly it is also possible to view
+# the location of the sources (red), detectors (black), and channels (white
+# lines and orange dots) in a 3D representation.
+# The ficiduals are marked in blue, green and red.
+# See :ref:`tut-source-alignment` for more details.
+
+subjects_dir = op.join(mne.datasets.sample.data_path(), 'subjects')
+mne.datasets.fetch_fsaverage(subjects_dir=subjects_dir)
+
+brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir,
+                      alpha=0.5, cortex='low_contrast')
+# brain.add_head()
+brain.add_sensors(raw.info, trans='fsaverage')
+# brain.enable_depth_peeling()
+brain.show_view(azimuth=90, elevation=90, distance=500)

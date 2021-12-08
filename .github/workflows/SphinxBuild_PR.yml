@@ -21,6 +21,7 @@ jobs:
       PYTHON_VERSION: '3.9'
       MNE_3D_BACKEND: 'pyvistaqt'
       SMV_TAG_WHITELIST: 'ignore all tags'
+      MNE_3D_OPTION_ANTIALIAS: 'false'
     steps:
       - uses: actions/checkout@v2
         with:
