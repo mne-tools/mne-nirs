@@ -4,13 +4,16 @@
 
 from copy import deepcopy
 from pathlib import PosixPath
+import warnings
 
 import pandas as pd
 import numpy as np
 from numpy import array_equal, where
 
-import nilearn.glm
-from nilearn.glm.first_level import run_glm as nilearn_glm
+with warnings.catch_warnings(record=True):
+    warnings.simplefilter('ignore')
+    import nilearn.glm
+    from nilearn.glm.first_level import run_glm as nilearn_glm
 
 from mne.channels.channels import ContainsMixin
 from mne.utils import fill_doc, warn, verbose, check_fname, _validate_type
