@@ -7,6 +7,7 @@ import datetime
 import h5py
 from numpy.testing import assert_allclose
 import pytest
+from pysnirf2 import validateSnirf
 
 from mne.datasets.testing import data_path, requires_testing_data
 from mne.utils import requires_h5py, object_diff
@@ -36,6 +37,9 @@ def test_snirf_write(fname, tmpdir):
     test_file = tmpdir.join('test_raw.snirf')
     write_raw_snirf(raw_orig, test_file)
     raw = read_raw_snirf(test_file)
+
+    valid, result = validateSnirf(str(test_file))
+    assert valid
 
     # Check annotations are the same
     assert_allclose(raw.annotations.onset, raw_orig.annotations.onset)
