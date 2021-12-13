@@ -417,6 +417,13 @@ class RegressionResults(_BaseGLM):
                                           cond_idx, cond, weighted)
             tidy = tidy.append(roi)
 
+        if weighted is True:
+            tidy["Weighted"] = "Inverse standard error"
+        elif weighted is False:
+            tidy["Weighted"] = "No channel weighting applied"
+        elif isinstance(weighted, dict):
+            tidy["Weighted"] = "Custom channel weighting applied"
+
         if demographic_info:
             if 'age' in self.info['subject_info'].keys():
                 tidy['Age'] = float(self.info["subject_info"]['age'])

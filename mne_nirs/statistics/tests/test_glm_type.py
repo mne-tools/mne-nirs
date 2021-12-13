@@ -156,14 +156,14 @@ def test_results_glm_export_dataframe_region_of_interest():
 
     # Single ROI, single condition
     df = res.to_dataframe_region_of_interest(rois, "1.0")
-    assert df.shape == (1, 8)
+    assert df.shape == (1, 9)
     assert df.Condition[0] == "1.0"
     assert df.ROI[0] == "A"
     assert df.Chroma[0] == "hbo"
 
     # Single ROI, multiple conditions
     df = res.to_dataframe_region_of_interest(rois, ["1.0", "3.0", "drift_1"])
-    assert df.shape == (3, 8)
+    assert df.shape == (3, 9)
     assert (df.Condition == ["1.0", "3.0", "drift_1"]).all()
     assert (df.ROI == ["A", "A", "A"]).all()
 
@@ -175,7 +175,7 @@ def test_results_glm_export_dataframe_region_of_interest():
 
     # Multiple ROI, single condition
     df = res.to_dataframe_region_of_interest(rois, "1.0")
-    assert df.shape == (2, 8)
+    assert df.shape == (2, 9)
     assert df.Condition[0] == "1.0"
     assert df.Condition[1] == "1.0"
     assert df.ROI[0] == "A"
@@ -185,22 +185,22 @@ def test_results_glm_export_dataframe_region_of_interest():
 
     # Multiple ROI, multiple conditions
     df = res.to_dataframe_region_of_interest(rois, ["1.0", "3.0", "drift_1"])
-    assert df.shape == (6, 8)
+    assert df.shape == (6, 9)
 
     # Multiple ROI, all conditions (default)
     df = res.to_dataframe_region_of_interest(rois, "1.0")
-    assert df.shape == (2, 8)
+    assert df.shape == (2, 9)
 
     # HbO and HbR ROI
     rois["C"] = [6, 7, 8]
 
     # Multiple ROI, single condition
     df = res.to_dataframe_region_of_interest(rois, "1.0")
-    assert df.shape == (4, 8)
+    assert df.shape == (4, 9)
 
     # Multiple ROI, multiple conditions
     df = res.to_dataframe_region_of_interest(rois, ["1.0", "3.0", "drift_1"])
-    assert df.shape == (12, 8)
+    assert df.shape == (12, 9)
 
     # Multiple ROI, all conditions (default)
     df = res.to_dataframe_region_of_interest(rois, "1.0")
@@ -208,7 +208,7 @@ def test_results_glm_export_dataframe_region_of_interest():
     # With demographic information
     df = res.to_dataframe_region_of_interest(rois, ["1.0", "3.0", "drift_1"],
                                              demographic_info=True)
-    assert df.shape == (12, 9)
+    assert df.shape == (12, 10)
     assert "Sex" in df.columns
 
 
@@ -223,9 +223,11 @@ def test_results_glm_export_dataframe_region_of_interest_weighted():
     rois["C"] = [6, 7, 8, 9]
 
     df = res.to_dataframe_region_of_interest(rois, "1.0", weighted=False)
-    assert df.shape == (4, 8)
+    assert df.shape == (4, 9)
+    assert df.Weighted[0] == "No channel weighting applied"
     df = res.to_dataframe_region_of_interest(rois, "1.0", weighted=True)
-    assert df.shape == (4, 8)
+    assert df.shape == (4, 9)
+    assert df.Weighted[0] == "Inverse standard error"
 
     # Create weights
     weights = dict()
@@ -234,7 +236,8 @@ def test_results_glm_export_dataframe_region_of_interest_weighted():
     weights["C"] = [16, 7, 8, 9]
 
     df = res.to_dataframe_region_of_interest(rois, "1.0", weighted=weights)
-    assert df.shape == (4, 8)
+    assert df.shape == (4, 9)
+    assert df.Weighted[0] == "Custom channel weighting applied"
 
     with pytest.raises(ValueError, match='must be positive'):
         weights["C"] = [16, 7, -8, 9]
