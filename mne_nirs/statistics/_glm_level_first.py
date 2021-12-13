@@ -387,7 +387,7 @@ class RegressionResults(_BaseGLM):
             can be provided.
             If a dictionary is provided, the keys and length of lists must
             match the ``group_by`` parameters.
-            The weights will be scaled internally to scale to 1.
+            The weights will be scaled internally to sum to 1.
         demographic_info : Bool
             Add an extra column with demographic information from
             info["subject_info"].
@@ -422,9 +422,9 @@ class RegressionResults(_BaseGLM):
         if weighted is True:
             tidy["Weighted"] = "Inverse standard error"
         elif weighted is False:
-            tidy["Weighted"] = "No channel weighting applied"
+            tidy["Weighted"] = "Equal"
         elif isinstance(weighted, dict):
-            tidy["Weighted"] = "Custom channel weighting applied"
+            tidy["Weighted"] = "Custom"
 
         if demographic_info:
             if 'age' in self.info['subject_info'].keys():

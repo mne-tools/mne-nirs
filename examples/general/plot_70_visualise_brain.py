@@ -60,7 +60,7 @@ from mne_nirs.datasets import fnirs_motor_group
 # Download the ``audio_or_visual_speech`` dataset and load the first measurement.
 
 root = mne_nirs.datasets.audio_or_visual_speech.data_path()
-dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf", subject="01",
+dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf", subject="04",
                    task="AudioVisualBroadVsRestricted", datatype="nirs", session="01")
 raw = read_raw_bids(dataset)
 
@@ -186,22 +186,37 @@ mne.viz.set_3d_view(fig, azimuth=140, elevation=95)
 # Typical
 raw_od = optical_density(raw)
 raw_haemo = beer_lambert_law(raw_od)
-raw_haemo.resample(0.3)
-design_matrix = make_first_level_design_matrix(raw_haemo, stim_dur=5.0)
+raw_haemo.resample(0.6).pick("hbo")  # Speed increase for web server
+sht_chans = get_short_channels(raw_haemo)
+raw_haemo = get_long_channels(raw_haemo)
+design_matrix = make_first_level_design_matrix(raw_haemo, stim_dur=13.0)
+design_matrix["ShortHbO"] = np.mean(sht_chans.copy().pick(picks="hbo").get_data(), axis=0)
 glm_est = run_glm(raw_haemo, design_matrix)
 
 # First we create a dictionary for each region of interest.
 # Here we just have a single region of interest that contains all the channels.
 rois = dict()
-rois["All_LIFG_weighted"] = range(len(glm_est.ch_names))
+rois["Audio_weighted"] = range(len(glm_est.ch_names))
+rois["Visual_weighted"] = range(len(glm_est.ch_names))
+rois["LIFG_weighted"] = range(len(glm_est.ch_names))
+
+# Next we compute the specificity for each channel to the auditory cortex
+# and also to the visual cortex.
+spec_aud = fold_landmark_specificity(raw_haemo, '42 - Primary and Auditory Association Cortex', fold_files, atlas="Brodmann")
+spec_vis = fold_landmark_specificity(raw_haemo, '17 - Primary Visual Cortex (V1)', fold_files, atlas="Brodmann")
+spec_ifg = fold_landmark_specificity(raw_haemo, 'L IFG (p. Triangularis)', fold_files, atlas="Juelich")
 
 # Next we create a dictionary to store the weights for each channel in the ROI.
 # The weights will be the specificity to the left inferior gyrus.
 # The keys and length of each dictionary entry must match the ROI dictionary.
 weights = dict()
-weights["All_LIFG_weighted"] = specificity
+weights["Audio_weighted"] = spec_aud
+weights["Visual_weighted"] = spec_vis
+weights["LIFG_weighted"] = spec_ifg
 
-glm_est.to_dataframe_region_of_interest(rois, "Audio", weighted=weights)
+out = glm_est.to_dataframe_region_of_interest(rois, ["Video", "Control"], weighted=weights)
+out["Significant"] = out["p"] < 0.05
+out
 
 
 # %%

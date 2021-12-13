@@ -78,7 +78,7 @@ def _glm_region_of_interest(stats, group_by, cond_idx,
         can be provided.
         If a dictionary is provided, the keys and length of lists must
         match the ``group_by`` parameters.
-        The weights will be scaled internally to scale to 1.
+        The weights will be scaled internally to sum to 1.
 
     Returns
     -------

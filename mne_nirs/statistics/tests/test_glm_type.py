@@ -226,7 +226,7 @@ def test_results_glm_export_dataframe_region_of_interest_weighted():
 
     df_uw = res.to_dataframe_region_of_interest(rois, "1.0", weighted=False)
     assert df_uw.shape == (4, 9)
-    assert df_uw.Weighted[0] == "No channel weighting applied"
+    assert df_uw.Weighted[0] == "Equal"
     thetas = np.array(res_df.theta)
     # unweighted option should be the same as a simple mean
     assert np.isclose(df_uw.query("ROI == 'A'").theta,
@@ -247,7 +247,7 @@ def test_results_glm_export_dataframe_region_of_interest_weighted():
 
     df = res.to_dataframe_region_of_interest(rois, "1.0", weighted=weights)
     assert df.shape == (4, 9)
-    assert df.Weighted[0] == "Custom channel weighting applied"
+    assert df.Weighted[0] == "Custom"
     assert np.isclose(thetas[0], df.theta[0], atol=0.1e-6)
     assert np.isclose((thetas[7] + thetas[9]) / 2, df.theta[1], atol=0.1e-6)
     assert df.theta[2] > 0
