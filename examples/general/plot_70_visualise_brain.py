@@ -174,16 +174,16 @@ mne.viz.set_3d_view(fig, azimuth=140, elevation=95)
 # --------------------------------------------------------------------
 #
 # As observed above, some channels have greater specificity to the desired
-# brain region (in this case left inferior gyrus) than other channels.
+# brain region than other channels.
 # Thus, when doing a region of interest analysis you may wish to give extra
 # weight to channels with greater sensitivity to the desired ROI.
 # This can be done by manually specifying the weights used in the region of
 # interest function call.
 # The details of the GLM analysis will not be described here, instead view the
-# # :ref:`fNIRS GLM tutorial <tut-fnirs-hrf>`. Instead, comments are provided
+# :ref:`fNIRS GLM tutorial <tut-fnirs-hrf>`. Instead, comments are provided
 # for the weighted region of interest function call.
 
-# Typical
+# Basic pipeline, simplified for example
 raw_od = optical_density(raw)
 raw_haemo = beer_lambert_law(raw_od)
 raw_haemo.resample(0.3).pick("hbo")  # Speed increase for web server
@@ -194,18 +194,18 @@ design_matrix["ShortHbO"] = np.mean(sht_chans.copy().pick(picks="hbo").get_data(
 glm_est = run_glm(raw_haemo, design_matrix)
 
 # First we create a dictionary for each region of interest.
-# Here we just have a single region of interest that contains all the channels.
+# Here we include all channels in each ROI, as we will later be applying
+# weights based on their specificity to the brain regions of interest.
 rois = dict()
 rois["Audio_weighted"] = range(len(glm_est.ch_names))
 rois["Visual_weighted"] = range(len(glm_est.ch_names))
 
-# Next we compute the specificity for each channel to the auditory cortex
-# and also to the visual cortex.
+# Next we compute the specificity for each channel to the auditory and visual cortex.
 spec_aud = fold_landmark_specificity(raw_haemo, '42 - Primary and Auditory Association Cortex', fold_files, atlas="Brodmann")
 spec_vis = fold_landmark_specificity(raw_haemo, '17 - Primary Visual Cortex (V1)', fold_files, atlas="Brodmann")
 
 # Next we create a dictionary to store the weights for each channel in the ROI.
-# The weights will be the specificity to the left inferior gyrus.
+# The weights will be the specificity to the ROI.
 # The keys and length of each dictionary entry must match the ROI dictionary.
 weights = dict()
 weights["Audio_weighted"] = spec_aud
@@ -219,7 +219,9 @@ out
 
 # %%
 # In the table above we observe that the response to the visual condition
-# is only present in the visual region of interest.
+# is only present in the visual region of interest. You can use this
+# technique to load any custom weighting, including weights exported from
+# other software.
 
 
 # %%
