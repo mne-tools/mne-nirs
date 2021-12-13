@@ -228,11 +228,14 @@ def test_results_glm_export_dataframe_region_of_interest_weighted():
     assert df_uw.shape == (4, 9)
     assert df_uw.Weighted[0] == "No channel weighting applied"
     thetas = np.array(res_df.theta)
-    assert df_uw.query("ROI == 'A'").theta[0] == thetas[rois["A"]].mean()
+    # unweighted option should be the same as a simple mean
+    assert np.isclose(df_uw.query("ROI == 'A'").theta,
+                      thetas[rois["A"]].mean())
 
     df_w = res.to_dataframe_region_of_interest(rois, "1.0", weighted=True)
     assert df_w.shape == (4, 9)
     assert df_w.Weighted[0] == "Inverse standard error"
+    # weighted option should result in larger response
     assert df_uw.query("ROI == 'A'").theta[0] < \
            df_w.query("ROI == 'A'").theta[0]
 
