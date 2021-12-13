@@ -241,13 +241,17 @@ def test_results_glm_export_dataframe_region_of_interest_weighted():
 
     # Create weights
     weights = dict()
-    weights["A"] = [0.1, 0.2, 0.4, 0.4, 0.4, 0.4]
-    weights["B"] = [0.6, 0.1, 0.3, 0.4, 0.4, 0.4]
+    weights["A"] = [100000, 0.2, 0.4, 0.4, 0.4, 0.4]
+    weights["B"] = [0.6, 0.1, 0.3, 10000.4, 10000.4, 0.4]
     weights["C"] = [16, 7, 8, 9]
 
     df = res.to_dataframe_region_of_interest(rois, "1.0", weighted=weights)
     assert df.shape == (4, 9)
     assert df.Weighted[0] == "Custom channel weighting applied"
+    assert np.isclose(thetas[0], df.theta[0], atol=0.1e-6)
+    assert np.isclose((thetas[7] + thetas[9]) / 2, df.theta[1], atol=0.1e-6)
+    assert df.theta[2] > 0
+    assert df.theta[3] < 0
 
     with pytest.raises(ValueError, match='must be positive'):
         weights["C"] = [16, 7, -8, 9]

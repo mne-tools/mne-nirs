@@ -121,7 +121,9 @@ def _glm_region_of_interest(stats, group_by, cond_idx,
             elif weighted is False:
                 weights = np.ones((len(ses), 1))
             elif isinstance(weighted, dict):
-                weights = [weights_region[ci] for ci in chroma_idxs]
+                weights = [float(weights_region[ci]) for ci in chroma_idxs]
+                weights = np.asarray(weights).reshape((len(ses), 1))
+            # Ensure weights sum to one
             weights /= np.sum(weights)
 
             theta = np.sum(thetas * weights)
