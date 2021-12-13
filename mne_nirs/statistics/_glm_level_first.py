@@ -126,6 +126,8 @@ class _BaseGLM(ContainsMixin):
             Dataframe containing GLM results.
         """
         from ..utils import glm_to_tidy
+        if order is None:
+            order = self.ch_names
         return glm_to_tidy(self.info, self._data, self.design, order=order)
 
     def scatter(self, conditions=[], exclude_no_interest=True, axes=None,

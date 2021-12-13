@@ -215,24 +215,31 @@ def test_results_glm_export_dataframe_region_of_interest():
 def test_results_glm_export_dataframe_region_of_interest_weighted():
 
     res = _get_glm_result(tmax=400)
+    res_df = res.to_dataframe().query("Condition == '1.0'")
+    res_df["theta_uM"] = res_df["theta"] * 1e6
 
     # Create ROIs
     rois = dict()
-    rois["A"] = [0, 2, 4]
-    rois["B"] = [1, 3, 5]
+    rois["A"] = [0, 2, 4, 6, 8, 10]
+    rois["B"] = [1, 3, 5, 7, 9, 11]
     rois["C"] = [6, 7, 8, 9]
 
-    df = res.to_dataframe_region_of_interest(rois, "1.0", weighted=False)
-    assert df.shape == (4, 9)
-    assert df.Weighted[0] == "No channel weighting applied"
-    df = res.to_dataframe_region_of_interest(rois, "1.0", weighted=True)
-    assert df.shape == (4, 9)
-    assert df.Weighted[0] == "Inverse standard error"
+    df_uw = res.to_dataframe_region_of_interest(rois, "1.0", weighted=False)
+    assert df_uw.shape == (4, 9)
+    assert df_uw.Weighted[0] == "No channel weighting applied"
+    thetas = np.array(res_df.theta)
+    assert df_uw.query("ROI == 'A'").theta[0] == thetas[rois["A"]].mean()
+
+    df_w = res.to_dataframe_region_of_interest(rois, "1.0", weighted=True)
+    assert df_w.shape == (4, 9)
+    assert df_w.Weighted[0] == "Inverse standard error"
+    assert df_uw.query("ROI == 'A'").theta[0] < \
+           df_w.query("ROI == 'A'").theta[0]
 
     # Create weights
     weights = dict()
-    weights["A"] = [0.1, 0.2, 0.4]
-    weights["B"] = [0.6, 0.1, 0.3]
+    weights["A"] = [0.1, 0.2, 0.4, 0.4, 0.4, 0.4]
+    weights["B"] = [0.6, 0.1, 0.3, 0.4, 0.4, 0.4]
     weights["C"] = [16, 7, 8, 9]
 
     df = res.to_dataframe_region_of_interest(rois, "1.0", weighted=weights)

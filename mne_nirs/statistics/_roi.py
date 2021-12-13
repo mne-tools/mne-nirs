@@ -119,7 +119,7 @@ def _glm_region_of_interest(stats, group_by, cond_idx,
             if weighted is True:
                 weights = 1. / np.asarray(ses)
             elif weighted is False:
-                weights = np.ones(len(ses))
+                weights = np.ones((len(ses), 1))
             elif isinstance(weighted, dict):
                 weights = [weights_region[ci] for ci in chroma_idxs]
             weights /= np.sum(weights)
