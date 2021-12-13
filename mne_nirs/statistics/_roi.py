@@ -69,8 +69,16 @@ def _glm_region_of_interest(stats, group_by, cond_idx,
         Index of condition of interest.
     cond_name : str
         Name to be used for condition.
-    weighted : Bool
-        Should channels be weighted by inverse of standard error (True).
+    weighted : Bool | dict
+        Weighting to be applied to each channel in the ROI computation.
+        If False, then all channels will be weighted equally.
+        If True, channels will be weighted by the inverse of
+        the standard error of the GLM fit.
+        For manual specification of the channel weighting a dictionary
+        can be provided.
+        If a dictionary is provided, the keys and length of lists must
+        match the ``group_by`` parameters.
+        The weights will be scaled internally to scale to 1.
 
     Returns
     -------
@@ -87,13 +95,16 @@ def _glm_region_of_interest(stats, group_by, cond_idx,
 
     for region in group_by:
 
+        if isinstance(weighted, dict):
+            weights_region = weighted[region]
+
         roi_name = region
         picks = group_by[region]
 
         for chroma in np.unique(chromas[picks]):
 
-            chroma_picks = np.where([c == chroma for c in chromas[picks]])[0]
-            chroma_picks = [picks[cp] for cp in chroma_picks]
+            chroma_idxs = np.where([c == chroma for c in chromas[picks]])[0]
+            chroma_picks = [picks[ci] for ci in chroma_idxs]
 
             thetas = list()
             ses = list()
@@ -104,11 +115,13 @@ def _glm_region_of_interest(stats, group_by, cond_idx,
                 ses.append(_se(stats[ch_names[pick]])[cond_idx])
                 dfe = stats[ch_names[pick]].df_model
 
-            # Should channels be weighted by inverse of standard error
-            if weighted:
+            # Apply weighting by standard error or custom values
+            if weighted is True:
                 weights = 1. / np.asarray(ses)
-            else:
+            elif weighted is False:
                 weights = np.ones(len(ses))
+            elif isinstance(weighted, dict):
+                weights = [weights_region[ci] for ci in chroma_idxs]
             weights /= np.sum(weights)
 
             theta = np.sum(thetas * weights)

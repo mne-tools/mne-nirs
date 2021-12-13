@@ -374,12 +374,18 @@ class RegressionResults(_BaseGLM):
             integer indices of ``epochs.ch_names``). For example::
 
                 group_by=dict(Left_ROI=[1, 2, 3, 4], Right_ROI=[5, 6, 7, 8])
-
-            Note that within a dict entry all channels must have the same type.
         condition : str | list
             Name to be used for condition.
-        weighted : Bool
-            Should channels be weighted by inverse of standard error.
+        weighted : Bool | dict
+            Weighting to be applied to each channel in the ROI computation.
+            If False, then all channels will be weighted equally.
+            If True, channels will be weighted by the inverse of
+            the standard error of the GLM fit.
+            For manual specification of the channel weighting a dictionary
+            can be provided.
+            If a dictionary is provided, the keys and length of lists must
+            match the ``group_by`` parameters.
+            The weights will be scaled internally to scale to 1.
         demographic_info : Bool
             Add an extra column with demographic information from
             info["subject_info"].
@@ -391,6 +397,17 @@ class RegressionResults(_BaseGLM):
         """
         if isinstance(condition, str):
             condition = [condition]
+
+        if isinstance(weighted, dict):
+            if weighted.keys() != group_by.keys():
+                raise KeyError("Keys of group_by and weighted "
+                               "must be the same")
+            for key in weighted.keys():
+                if len(weighted[key]) != len(group_by[key]):
+                    raise ValueError("The length of the keys for group_by "
+                                     "and weighted must match")
+                if (np.array(weighted[key]) < 0).any():
+                    raise ValueError("Weights must be positive values")
 
         tidy = pd.DataFrame()
         for cond in condition:

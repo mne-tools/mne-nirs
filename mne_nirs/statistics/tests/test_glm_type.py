@@ -216,7 +216,7 @@ def test_results_glm_export_dataframe_region_of_interest_weighted():
 
     res = _get_glm_result(tmax=400)
 
-    # Create ROI with hbo only
+    # Create ROIs
     rois = dict()
     rois["A"] = [0, 2, 4]
     rois["B"] = [1, 3, 5]
@@ -226,6 +226,31 @@ def test_results_glm_export_dataframe_region_of_interest_weighted():
     assert df.shape == (4, 8)
     df = res.to_dataframe_region_of_interest(rois, "1.0", weighted=True)
     assert df.shape == (4, 8)
+
+    # Create weights
+    weights = dict()
+    weights["A"] = [0.1, 0.2, 0.4]
+    weights["B"] = [0.6, 0.1, 0.3]
+    weights["C"] = [16, 7, 8, 9]
+
+    df = res.to_dataframe_region_of_interest(rois, "1.0", weighted=weights)
+    assert df.shape == (4, 8)
+
+    with pytest.raises(ValueError, match='must be positive'):
+        weights["C"] = [16, 7, -8, 9]
+        _ = res.to_dataframe_region_of_interest(rois, "1.0",
+                                                weighted=weights)
+
+    with pytest.raises(ValueError, match='length of the keys'):
+        weights["C"] = [16, 7]
+        _ = res.to_dataframe_region_of_interest(rois, "1.0",
+                                                weighted=weights)
+
+    with pytest.raises(KeyError, match='Keys of group_by and weighted'):
+        bad_weights = dict()
+        bad_weights["Z"] = [0, 2, 4]
+        _ = res.to_dataframe_region_of_interest(rois, "1.0",
+                                                weighted=bad_weights)
 
 
 def test_create_results_glm_contrast():
