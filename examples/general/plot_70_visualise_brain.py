@@ -170,6 +170,41 @@ mne.viz.set_3d_view(fig, azimuth=140, elevation=95)
 
 
 # %%
+# Apply anatomically informed weighting to region of interest analysis
+# --------------------------------------------------------------------
+#
+# As observed above, some channels have greater specificity to the desired
+# brain region (in this case left inferior gyrus) than other channels.
+# Thus, when doing a region of interest analysis you may wish to give extra
+# weight to channels with greater sensitivity to the desired ROI.
+# This can be done by manually specifying the weights used in the region of
+# interest function call.
+# The details of the GLM analysis will not be described here, instead view the
+# # :ref:`fNIRS GLM tutorial <tut-fnirs-hrf>`. Instead, comments are provided
+# for the weighted region of interest function call.
+
+# Typical
+raw_od = optical_density(raw)
+raw_haemo = beer_lambert_law(raw_od)
+raw_haemo.resample(0.3)
+design_matrix = make_first_level_design_matrix(raw_haemo, stim_dur=5.0)
+glm_est = run_glm(raw_haemo, design_matrix)
+
+# First we create a dictionary for each region of interest.
+# Here we just have a single region of interest that contains all the channels.
+rois = dict()
+rois["All_LIFG_weighted"] = range(len(glm_est.ch_names))
+
+# Next we create a dictionary to store the weights for each channel in the ROI.
+# The weights will be the specificity to the left inferior gyrus.
+# The keys and length of each dictionary entry must match the ROI dictionary.
+weights = dict()
+weights["All_LIFG_weighted"] = specificity
+
+glm_est.to_dataframe_region_of_interest(rois, "Audio", weighted=weights)
+
+
+# %%
 # Preprocess fNIRS data
 # ---------------------
 #

@@ -123,6 +123,8 @@ def _glm_region_of_interest(stats, group_by, cond_idx,
             elif isinstance(weighted, dict):
                 weights = [float(weights_region[ci]) for ci in chroma_idxs]
                 weights = np.asarray(weights).reshape((len(ses), 1))
+            else:
+                raise ValueError("Weighted parameter is not bool or dict")
             # Ensure weights sum to one
             weights /= np.sum(weights)
 
