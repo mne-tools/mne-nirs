@@ -186,7 +186,7 @@ mne.viz.set_3d_view(fig, azimuth=140, elevation=95)
 # Typical
 raw_od = optical_density(raw)
 raw_haemo = beer_lambert_law(raw_od)
-raw_haemo.resample(0.6).pick("hbo")  # Speed increase for web server
+raw_haemo.resample(0.3).pick("hbo")  # Speed increase for web server
 sht_chans = get_short_channels(raw_haemo)
 raw_haemo = get_long_channels(raw_haemo)
 design_matrix = make_first_level_design_matrix(raw_haemo, stim_dur=13.0)
@@ -198,13 +198,11 @@ glm_est = run_glm(raw_haemo, design_matrix)
 rois = dict()
 rois["Audio_weighted"] = range(len(glm_est.ch_names))
 rois["Visual_weighted"] = range(len(glm_est.ch_names))
-rois["LIFG_weighted"] = range(len(glm_est.ch_names))
 
 # Next we compute the specificity for each channel to the auditory cortex
 # and also to the visual cortex.
 spec_aud = fold_landmark_specificity(raw_haemo, '42 - Primary and Auditory Association Cortex', fold_files, atlas="Brodmann")
 spec_vis = fold_landmark_specificity(raw_haemo, '17 - Primary Visual Cortex (V1)', fold_files, atlas="Brodmann")
-spec_ifg = fold_landmark_specificity(raw_haemo, 'L IFG (p. Triangularis)', fold_files, atlas="Juelich")
 
 # Next we create a dictionary to store the weights for each channel in the ROI.
 # The weights will be the specificity to the left inferior gyrus.
@@ -212,11 +210,16 @@ spec_ifg = fold_landmark_specificity(raw_haemo, 'L IFG (p. Triangularis)', fold_
 weights = dict()
 weights["Audio_weighted"] = spec_aud
 weights["Visual_weighted"] = spec_vis
-weights["LIFG_weighted"] = spec_ifg
 
+# Finally we compute region of interest results using the weights specified above
 out = glm_est.to_dataframe_region_of_interest(rois, ["Video", "Control"], weighted=weights)
 out["Significant"] = out["p"] < 0.05
 out
+
+
+# %%
+# In the table above we observe that the response to the visual condition
+# is only present in the visual region of interest.
 
 
 # %%
