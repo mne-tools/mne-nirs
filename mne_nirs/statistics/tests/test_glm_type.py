@@ -130,10 +130,10 @@ def test_glm_scatter():
     assert isinstance(_get_glm_contrast_result().scatter(), Axes)
 
 
-# def test_glm_surface_projection():
-#
-#     _get_glm_result(tmax=2974, tmin=0).surface_projection(condition="3.0",
-#                                                           view="dorsal")
+def test_glm_surface_projection():
+
+    _get_glm_result(tmax=2974, tmin=0).surface_projection(condition="3.0",
+                                                          view="dorsal")
 
 
 def test_results_glm_export_dataframe():
