@@ -128,6 +128,10 @@ def test_glm_scatter():
 
     assert isinstance(_get_glm_result().scatter(), Axes)
     assert isinstance(_get_glm_contrast_result().scatter(), Axes)
+
+
+def test_glm_surface_projection():
+
     _get_glm_result(tmax=2974, tmin=0).surface_projection(condition="3.0",
                                                           view="dorsal")
 
@@ -136,9 +140,71 @@ def test_results_glm_export_dataframe():
 
     n_channels = 56
     res = _get_glm_result(tmax=400)
+
     df = res.to_dataframe()
 
     assert df.shape == (6 * n_channels, 12)
+
+
+def test_results_glm_export_dataframe_region_of_interest():
+
+    n_channels = 56
+    res = _get_glm_result(tmax=400)
+
+    # Create ROI with hbo only
+    rois = dict()
+    rois["A"] = [0, 2, 4]
+
+    # Single ROI, single condition
+    df = res.to_dataframe_region_of_interest(rois, "1.0")
+    assert df.shape == (1, 8)
+    assert df.Condition[0] == "1.0"
+    assert df.ROI[0] == "A"
+    assert df.Chroma[0] == "hbo"
+
+    # Single ROI, multiple conditions
+    df = res.to_dataframe_region_of_interest(rois, ["1.0", "3.0", "drift_1"])
+    assert df.shape == (3, 8)
+    assert (df.Condition == ["1.0", "3.0", "drift_1"]).all()
+    assert (df.ROI == ["A", "A", "A"]).all()
+
+    # Single ROI, all conditions (default)
+    df = res.to_dataframe_region_of_interest(rois, "1.0")
+
+    # HbR only ROI
+    rois["B"] = [1, 3, 5]
+
+    # Multiple ROI, single condition
+    df = res.to_dataframe_region_of_interest(rois, "1.0")
+    assert df.shape == (2, 8)
+    assert df.Condition[0] == "1.0"
+    assert df.Condition[1] == "1.0"
+    assert df.ROI[0] == "A"
+    assert df.ROI[1] == "B"
+    assert df.Chroma[0] == "hbo"
+    assert df.Chroma[1] == "hbr"
+
+    # Multiple ROI, multiple conditions
+    df = res.to_dataframe_region_of_interest(rois, ["1.0", "3.0", "drift_1"])
+    assert df.shape == (6, 8)
+
+    # Multiple ROI, all conditions (default)
+    df = res.to_dataframe_region_of_interest(rois, "1.0")
+    assert df.shape == (2, 8)
+
+    # HbO and HbR ROI
+    rois["C"] = [6, 7, 8]
+
+    # Multiple ROI, single condition
+    df = res.to_dataframe_region_of_interest(rois, "1.0")
+    assert df.shape == (4, 8)
+
+    # Multiple ROI, multiple conditions
+    df = res.to_dataframe_region_of_interest(rois, ["1.0", "3.0", "drift_1"])
+    assert df.shape == (12, 8)
+
+    # Multiple ROI, all conditions (default)
+    df = res.to_dataframe_region_of_interest(rois, "1.0")
 
 
 def test_create_results_glm_contrast():
