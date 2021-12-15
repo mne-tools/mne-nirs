@@ -170,8 +170,8 @@ mne.viz.set_3d_view(fig, azimuth=140, elevation=95)
 
 
 # %%
-# Apply anatomically informed weighting to region of interest analysis
-# --------------------------------------------------------------------
+# Anatomically informed weighting in region of interest analysis
+# --------------------------------------------------------------
 #
 # As observed above, some channels have greater specificity to the desired
 # brain region than other channels.
