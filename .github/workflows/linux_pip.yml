@@ -15,7 +15,7 @@ concurrency:
 jobs:
   # PIP + non-default stim channel + log level info
   job:
-    name: 'py3.8'
+    name: 'py3.10'
     runs-on: ubuntu-20.04
     if: "!contains(github.event.head_commit.message, '[skip tests]')"
     defaults:
@@ -27,7 +27,7 @@ jobs:
       MNE_STIM_CHANNEL: 'STI101'
       OPENBLAS_NUM_THREADS: '1'
       PYTHONUNBUFFERED: '1'
-      PYTHON_VERSION: '3.9'
+      PYTHON_VERSION: '3.10'
     steps:
       - uses: actions/checkout@v2
         with:
