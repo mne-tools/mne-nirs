@@ -26,6 +26,12 @@ General
 Enhancements
 
 * Update SNIRF exporter to meet v1.0 validator requirements :meth:`mne_nirs.io.write_raw_snirf`. By `Robert Luke`_.
+* Add ability to provide custom channel weighting in :meth:`mne_nirs.statistics.RegressionResults.to_dataframe_region_of_interest` computation. By `Robert Luke`_.
+
+
+Fixes
+
+* Fix bug when using no weighting in :meth:`mne_nirs.statistics.RegressionResults.to_dataframe_region_of_interest`. By `Robert Luke`_.
 
 
 v0.1.2
