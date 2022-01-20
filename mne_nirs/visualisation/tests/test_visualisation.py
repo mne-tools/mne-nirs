@@ -7,7 +7,6 @@ from functools import partial
 import numpy as np
 import mne
 import mne_nirs
-import numpy as np
 
 from mne.utils._testing import requires_module
 from mne_nirs.experimental_design.tests.test_experimental_design import \
