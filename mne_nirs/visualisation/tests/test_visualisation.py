@@ -3,9 +3,13 @@
 # License: BSD (3-clause)
 
 import pytest
+from functools import partial
+import numpy as np
 import mne
 import mne_nirs
 import numpy as np
+
+from mne.utils._testing import requires_module
 from mne_nirs.experimental_design.tests.test_experimental_design import \
     _load_dataset
 from mne_nirs.experimental_design import make_first_level_design_matrix
@@ -14,6 +18,11 @@ from mne_nirs.visualisation import plot_glm_topo, plot_glm_surface_projection
 from mne_nirs.utils import glm_to_tidy
 
 
+def requires_pyvista():
+    return partial(requires_module, name='pyvista')
+
+
+@requires_pyvista()
 def test_plot_nirs_source_detector_pyvista():
     mne.viz.set_3d_backend('pyvista')
     data_path = mne.datasets.testing.data_path() + '/NIRx/nirscout'
@@ -141,6 +150,7 @@ def test_fig_from_axes():
         _get_fig_from_axes([1, 2, 3])
 
 
+@requires_pyvista()
 @pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
 def test_run_plot_GLM_projection():
     mne.viz.set_3d_backend('pyvista')

@@ -12,6 +12,7 @@ dependencies:
 - xlrd
 - scikit-learn
 - h5py
+- h5io
 - pillow
 - statsmodels
 - jupyter
@@ -37,6 +38,7 @@ dependencies:
 - pytables
 - pooch
 - nilearn
-- mne>=0.24
 - ipyvtklink
 - mne-qt-browser
+- pip:
+  - https://github.com/mne-tools/mne-python/archive/main.zip

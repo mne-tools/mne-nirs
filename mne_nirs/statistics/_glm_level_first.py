@@ -9,6 +9,7 @@ import warnings
 import pandas as pd
 import numpy as np
 from numpy import array_equal, where
+from h5io import read_hdf5, write_hdf5
 
 with warnings.catch_warnings(record=True):
     warnings.simplefilter('ignore')
@@ -19,7 +20,6 @@ from mne.channels.channels import ContainsMixin
 from mne.utils import fill_doc, warn, verbose, check_fname, _validate_type
 from mne.io.pick import _picks_to_idx
 from mne.io.constants import FIFF
-from mne.externals.h5io import read_hdf5, write_hdf5
 from mne import Info
 
 from ..visualisation._plot_GLM_topo import _plot_glm_topo,\

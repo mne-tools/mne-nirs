@@ -35,7 +35,8 @@ ipyvtklink
 pooch
 
 # mne-nirs specific requirements
-mne>=0.24
+https://github.com/mne-tools/mne-python/archive/main.zip
+h5io
 lxml
 patsy
 tables
