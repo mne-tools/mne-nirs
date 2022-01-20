@@ -60,7 +60,7 @@ from mne_nirs.datasets import fnirs_motor_group
 # Download the ``audio_or_visual_speech`` dataset and load the first measurement.
 
 root = mne_nirs.datasets.audio_or_visual_speech.data_path()
-dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf", subject="01",
+dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf", subject="04",
                    task="AudioVisualBroadVsRestricted", datatype="nirs", session="01")
 raw = read_raw_bids(dataset)
 
@@ -167,6 +167,61 @@ brain.show_view(azimuth=140, elevation=95, distance=360)
 fig = plot_nirs_source_detector(specificity, raw.info, surfaces='brain',
                                 subject='fsaverage', subjects_dir=subjects_dir, trans='fsaverage')
 mne.viz.set_3d_view(fig, azimuth=140, elevation=95)
+
+
+# %%
+# Anatomically informed weighting in region of interest analysis
+# --------------------------------------------------------------
+#
+# As observed above, some channels have greater specificity to the desired
+# brain region than other channels.
+# Thus, when doing a region of interest analysis you may wish to give extra
+# weight to channels with greater sensitivity to the desired ROI.
+# This can be done by manually specifying the weights used in the region of
+# interest function call.
+# The details of the GLM analysis will not be described here, instead view the
+# :ref:`fNIRS GLM tutorial <tut-fnirs-hrf>`. Instead, comments are provided
+# for the weighted region of interest function call.
+
+# Basic pipeline, simplified for example
+raw_od = optical_density(raw)
+raw_haemo = beer_lambert_law(raw_od)
+raw_haemo.resample(0.3).pick("hbo")  # Speed increase for web server
+sht_chans = get_short_channels(raw_haemo)
+raw_haemo = get_long_channels(raw_haemo)
+design_matrix = make_first_level_design_matrix(raw_haemo, stim_dur=13.0)
+design_matrix["ShortHbO"] = np.mean(sht_chans.copy().pick(picks="hbo").get_data(), axis=0)
+glm_est = run_glm(raw_haemo, design_matrix)
+
+# First we create a dictionary for each region of interest.
+# Here we include all channels in each ROI, as we will later be applying
+# weights based on their specificity to the brain regions of interest.
+rois = dict()
+rois["Audio_weighted"] = range(len(glm_est.ch_names))
+rois["Visual_weighted"] = range(len(glm_est.ch_names))
+
+# Next we compute the specificity for each channel to the auditory and visual cortex.
+spec_aud = fold_landmark_specificity(raw_haemo, '42 - Primary and Auditory Association Cortex', fold_files, atlas="Brodmann")
+spec_vis = fold_landmark_specificity(raw_haemo, '17 - Primary Visual Cortex (V1)', fold_files, atlas="Brodmann")
+
+# Next we create a dictionary to store the weights for each channel in the ROI.
+# The weights will be the specificity to the ROI.
+# The keys and length of each dictionary entry must match the ROI dictionary.
+weights = dict()
+weights["Audio_weighted"] = spec_aud
+weights["Visual_weighted"] = spec_vis
+
+# Finally we compute region of interest results using the weights specified above
+out = glm_est.to_dataframe_region_of_interest(rois, ["Video", "Control"], weighted=weights)
+out["Significant"] = out["p"] < 0.05
+out
+
+
+# %%
+# In the table above we observe that the response to the visual condition
+# is only present in the visual region of interest. You can use this
+# technique to load any custom weighting, including weights exported from
+# other software.
 
 
 # %%
