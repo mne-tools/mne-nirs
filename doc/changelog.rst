@@ -18,7 +18,14 @@ To install a specific version of the library you would run ``pip install mne-nir
 v0.1.3 development
 ------------------
 
-* No change yet
+General
+
+* MNE-NIRS now requires the latest MNE-Python development version (main branch).
+
+
+Enhancements
+
+* Update SNIRF exporter to meet v1.0 validator requirements :meth:`mne_nirs.io.write_raw_snirf`. By `Robert Luke`_.
 
 
 v0.1.2
