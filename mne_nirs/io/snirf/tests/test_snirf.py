@@ -39,6 +39,8 @@ def test_snirf_write(fname, tmpdir):
     raw = read_raw_snirf(test_file)
 
     valid, result = validateSnirf(str(test_file))
+    if not valid:
+        result.display()
     assert valid
 
     # Check annotations are the same
@@ -140,6 +142,6 @@ def _verify_snirf_required_fields(test_file):
 def _verify_snirf_version_str(test_file):
     """Verify that the version string contains the correct spec version."""
     with h5py.File(test_file, 'r') as h5:
-        version_str = h5['/formatVersion'][0].decode('UTF-8')
+        version_str = h5['/formatVersion'][()].decode('UTF-8')
         expected_str = SPEC_FORMAT_VERSION
         assert version_str == expected_str
