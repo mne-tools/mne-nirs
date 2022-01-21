@@ -12,7 +12,7 @@ from mne.io.pick import _picks_to_idx
 
 # The currently-implemented spec can be found here:
 # https://github.com/fNIRS/snirf/blob/52de9a6724ddd0c9dcd36d8d11007895fed74205/snirf_specification.md
-SPEC_FORMAT_VERSION = '1.0 - Draft 3'
+SPEC_FORMAT_VERSION = '1.0'
 
 
 def write_raw_snirf(raw, fname):
@@ -37,7 +37,7 @@ def write_raw_snirf(raw, fname):
     with h5py.File(fname, 'w') as f:
         nirs = f.create_group('/nirs')
         f.create_dataset('formatVersion',
-                         data=[_str_encode(SPEC_FORMAT_VERSION)])
+                         data=_str_encode(SPEC_FORMAT_VERSION))
 
         _add_metadata_tags(raw, nirs)
         _add_single_data_block(raw, nirs)
@@ -72,18 +72,18 @@ def _add_metadata_tags(raw, nirs):
     datestr = raw.info['meas_date'].strftime('%Y-%m-%d')
     timestr = raw.info['meas_date'].strftime('%H:%M:%SZ')
     metadata_tags.create_dataset('MeasurementDate',
-                                 data=[_str_encode(datestr)])
+                                 data=_str_encode(datestr))
     metadata_tags.create_dataset('MeasurementTime',
-                                 data=[_str_encode(timestr)])
+                                 data=_str_encode(timestr))
 
     # Store demographic info
     subject_id = raw.info['subject_info']['first_name']
-    metadata_tags.create_dataset('SubjectID', data=[_str_encode(subject_id)])
+    metadata_tags.create_dataset('SubjectID', data=_str_encode(subject_id))
 
     # Store the units of measurement
-    metadata_tags.create_dataset('LengthUnit', data=[_str_encode('m')])
-    metadata_tags.create_dataset('TimeUnit', data=[_str_encode('s')])
-    metadata_tags.create_dataset('FrequencyUnit', data=[_str_encode('Hz')])
+    metadata_tags.create_dataset('LengthUnit', data=_str_encode('m'))
+    metadata_tags.create_dataset('TimeUnit', data=_str_encode('s'))
+    metadata_tags.create_dataset('FrequencyUnit', data=_str_encode('Hz'))
 
     # Add non standard (but allowed) custom metadata tags
     if 'birthday' in raw.info['subject_info']:
@@ -147,13 +147,15 @@ def _add_measurement_lists(raw, data_block):
         source_idx = sources.index(_extract_source(ch_name)) + 1
         detector_idx = detectors.index(_extract_detector(ch_name)) + 1
         wavelength_idx = wavelengths.index(_extract_wavelength(ch_name)) + 1
-        ch_group.create_dataset('sourceIndex', data=[source_idx])
-        ch_group.create_dataset('detectorIndex', data=[detector_idx])
-        ch_group.create_dataset('wavelengthIndex', data=[wavelength_idx])
+        ch_group.create_dataset('sourceIndex', data=source_idx, dtype='int32')
+        ch_group.create_dataset('detectorIndex', data=detector_idx,
+                                dtype='int32')
+        ch_group.create_dataset('wavelengthIndex', data=wavelength_idx,
+                                dtype='int32')
 
         # Set dataType and dataTypeIndex for CW Amplitude measurements
-        ch_group.create_dataset('dataType', data=1)
-        ch_group.create_dataset('dataTypeIndex', data=1)
+        ch_group.create_dataset('dataType', data=1, dtype='int32')
+        ch_group.create_dataset('dataTypeIndex', data=1, dtype='int32')
 
 
 def _add_probe_info(raw, nirs):
@@ -243,7 +245,7 @@ def _add_stim_info(raw, nirs):
             stims[idx_t, :] = [raw.annotations.onset[trg], 5.0,
                                raw.annotations.duration[trg]]
         stim_group.create_dataset('data', data=stims)
-        stim_group.create_dataset('name', data=[_str_encode(desc)])
+        stim_group.create_dataset('name', data=_str_encode(desc))
 
 
 def _get_unique_source_list(raw):
