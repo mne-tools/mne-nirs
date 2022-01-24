@@ -199,6 +199,18 @@ fig.axes[0].set_ylabel('Filter Magnitude (dB) [invalid for other lines]')
 fig.axes[0].set_title('')
 
 
+# %%
+# Filter Neural Signal
+# ---------------------------------------------------------------------
+#
+# The effect of filtering on the neural signal is demonstrated below.
+# The green line illustrates the signal before filtering, and the red line
+# shows the signal after filtering.
+
+fig = raw_haemo.plot_psd(average=True, fmax=2, xscale='log', color='r', show=False)
+raw_haemo = raw_haemo.filter(l_freq=None, h_freq=0.4, h_trans_bandwidth=0.2)
+raw_haemo.plot_psd(average=True, fmax=2, xscale='log', ax=fig.axes, color='g')
+
 
 # %%
 # Understanding the relation between stimulus presentation and response
