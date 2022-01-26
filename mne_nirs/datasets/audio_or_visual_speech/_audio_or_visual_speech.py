@@ -4,7 +4,6 @@
 # This downloads my fnirs audio or video speech dataset.
 
 import os
-import tempfile
 import shutil
 import pooch
 from functools import partial
@@ -74,9 +73,8 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
     bad_name = os.path.join(dpath, '2021-fNIRS-Audio-visual-speech-'
                                    'Broad-vs-restricted-regions')
     if os.path.isdir(bad_name):
-        tmppath = tempfile.mkdtemp()
-        os.rename(bad_name, tmppath)
+        os.rename(bad_name, dpath + '.true')
         shutil.rmtree(dpath)
-        os.rename(tmppath, dpath)
+        os.rename(dpath + '.true', dpath)
 
     return dpath

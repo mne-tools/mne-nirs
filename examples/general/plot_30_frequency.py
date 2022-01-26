@@ -51,8 +51,8 @@ raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir,
                                      verbose=True).load_data()
 new_des = [des for des in raw_intensity.annotations.description]
 new_des = ['Control' if x == "1.0" else x for x in new_des]
-new_des = ['Tapping/Left' if x == "2.0" else x for x in new_des]
-new_des = ['Tapping/Right' if x == "3.0" else x for x in new_des]
+new_des = ['Tapping_Left' if x == "2.0" else x for x in new_des]
+new_des = ['Tapping_Right' if x == "3.0" else x for x in new_des]
 annot = mne.Annotations(raw_intensity.annotations.onset,
                         raw_intensity.annotations.duration * 5., new_des)
 raw_intensity.set_annotations(annot)
@@ -90,8 +90,8 @@ design_matrix = make_first_level_design_matrix(
 # Overwrite the first NIRS channel with the expected response.
 # Rescale to be in expected units of uM.
 hrf = raw_haemo.copy().pick(picks=[0])
-hrf._data[0] = 1e-6 * (design_matrix['Tapping/Left'] +
-                       design_matrix['Tapping/Right']).T
+hrf._data[0] = 1e-6 * (design_matrix['Tapping_Left'] +
+                       design_matrix['Tapping_Right']).T
 hrf.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log',
                                color='r', show=False)
 
@@ -129,7 +129,7 @@ raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log')
 # is still visible.
 
 events, _ = mne.events_from_annotations(raw_haemo)
-event_dict = {'Tapping/Left': 1, 'Tapping/Right': 2}
+event_dict = {'Tapping_Left': 1, 'Tapping_Right': 2}
 reject_criteria = dict(hbo=120e-6)
 tmin, tmax = -5, 15
 epochs = mne.Epochs(raw_haemo, events, event_id=event_dict,

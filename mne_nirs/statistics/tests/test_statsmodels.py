@@ -9,13 +9,17 @@ import pytest
 import pandas as pd
 import statsmodels.formula.api as smf
 
-from ...simulation import simulate_nirs_raw
-from ...experimental_design import make_first_level_design_matrix
-from ...statistics import run_glm, statsmodels_to_results
+from mne.utils import check_version
+
+from mne_nirs.simulation import simulate_nirs_raw
+from mne_nirs.experimental_design import make_first_level_design_matrix
+from mne_nirs.statistics import run_glm, statsmodels_to_results
 
 
+@pytest.mark.skipif(not check_version('lxml'), reason='Requires lxml')
 @pytest.mark.parametrize('func', ('mixedlm', 'ols', 'rlm'))
 @pytest.mark.filterwarnings('ignore:.*optimization.*:')
+@pytest.mark.filterwarnings('ignore:.*unknown kwargs.*:')
 @pytest.mark.filterwarnings('ignore:.*on the boundary.*:')
 @pytest.mark.filterwarnings('ignore:.*The Hessian matrix at the estimated.*:')
 def test_statsmodel_to_df(func):

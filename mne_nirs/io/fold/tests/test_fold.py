@@ -5,11 +5,14 @@
 
 import os.path as op
 import pathlib
+
 import numpy as np
 import pandas as pd
+import pytest
 
 from mne.datasets.testing import data_path, requires_testing_data
 from mne.io import read_raw_nirx
+from mne.utils import check_version
 
 from mne_nirs.io.fold._fold import _generate_montage_locations,\
     _find_closest_standard_location, _read_fold_xls
@@ -23,7 +26,12 @@ foldfile = op.join(thisfile, "data", "example.xls")
 fname_nirx_15_3_short = op.join(data_path(download=False),
                                 'NIRx', 'nirscout', 'nirx_15_3_recording')
 
+requires_xlrd = pytest.mark.skipif(
+    not check_version('xlrd', '1.0'), reason='Requires xlrd >= 1.0')
 
+
+
+@requires_xlrd
 def test_channel_specificity():
     raw = read_raw_nirx(fname_nirx_15_3_short, preload=True)
     raw.pick(range(2))
@@ -32,6 +40,7 @@ def test_channel_specificity():
     assert res[0].shape == (6, 10)
 
 
+@requires_xlrd
 def test_landmark_specificity():
     raw = read_raw_nirx(fname_nirx_15_3_short, preload=True)
     res = fold_landmark_specificity(raw, "L Superior Frontal Gyrus",
@@ -41,6 +50,7 @@ def test_landmark_specificity():
     assert np.min(res) >= 0
 
 
+@requires_xlrd
 def test_fold_workflow():
     # Read raw data
     raw = read_raw_nirx(fname_nirx_15_3_short, preload=True)
@@ -68,6 +78,7 @@ def test_fold_workflow():
     assert specificity.values == 12.34
 
 
+@requires_xlrd
 def test_fold_reader():
     tbl = _read_fold_xls(foldfile, atlas="Juelich")
     assert isinstance(tbl, pd.DataFrame)

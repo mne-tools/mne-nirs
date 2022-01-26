@@ -18,7 +18,7 @@ with warnings.catch_warnings(record=True):
 
 from mne.channels.channels import ContainsMixin
 from mne.utils import fill_doc, warn, verbose, check_fname, _validate_type
-from mne.io.pick import _picks_to_idx
+from mne.io.pick import _picks_to_idx, pick_info
 from mne.io.constants import FIFF
 from mne import Info
 
@@ -267,8 +267,7 @@ class RegressionResults(_BaseGLM):
         """
         picks = _picks_to_idx(self.info, picks, 'all', exclude,
                               allow_empty=False)
-        picks = [self.ch_names[p] for p in picks]
-        self.info.pick_channels(picks)
+        pick_info(self.info, picks, copy=False)
         self._data = {key: self._data[key] for key in self.info.ch_names}
         return self
 
@@ -414,6 +413,9 @@ class RegressionResults(_BaseGLM):
         tidy = pd.DataFrame()
         for cond in condition:
             cond_idx = where([c == cond for c in self.design.columns])[0]
+            if not len(cond_idx):
+                raise KeyError(f'condition {repr(cond)} not found in '
+                               f'self.design.columns: {self.design.columns}')
 
             roi = _glm_region_of_interest(self._data, group_by,
                                           cond_idx, cond, weighted)
@@ -520,8 +522,13 @@ class RegressionResults(_BaseGLM):
         df = self.to_dataframe(order=self.ch_names)
         if condition is None:
             warn("You must provide a condition to plot", ValueError)
-        df = df.query("Condition in @condition")
-        df = df.query("Chroma in @chroma")
+        df_use = df.query("Condition in @condition")
+        if len(df_use) == 0:
+            raise KeyError(
+                f'condition={repr(condition)} not found in conditions: '
+                f'{sorted(set(df["Condition"]))}')
+        df = df_use
+        df = df.query("Chroma in @chroma").copy()
         df["theta"] = df["theta"] * 1e6
 
         info = self.copy().pick(chroma).info

@@ -49,7 +49,7 @@ def test_plot_nirs_source_detector_pyvista():
         verbose=True)
 
 
-@pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
+@pytest.mark.filterwarnings('ignore:"plot_glm_topo" has been deprecated.*:')
 def test_run_plot_GLM_topo():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
@@ -102,7 +102,6 @@ def test_run_plot_GLM_topo():
         plot_glm_topo(raw_haemo, glm_estimates_subset, design_matrix)
 
 
-@pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
 def test_run_plot_GLM_contrast_topo():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
@@ -117,12 +116,15 @@ def test_run_plot_GLM_contrast_topo():
     basic_conts = dict([(column, contrast_matrix[i])
                         for i, column in enumerate(design_matrix.columns)])
     contrast_LvR = basic_conts['A'] - basic_conts['B']
-    contrast = mne_nirs.statistics.compute_contrast(glm_est.data, contrast_LvR)
-    fig = mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
+    with pytest.deprecated_call(match='comprehensive GLM'):
+        contrast = mne_nirs.statistics.compute_contrast(
+            glm_est.data, contrast_LvR)
+    with pytest.deprecated_call(match='comprehensive GLM'):
+        fig = mne_nirs.visualisation.plot_glm_contrast_topo(
+            raw_haemo, contrast)
     assert len(fig.axes) == 3
 
 
-@pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
 def test_run_plot_GLM_contrast_topo_single_chroma():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
@@ -138,8 +140,12 @@ def test_run_plot_GLM_contrast_topo_single_chroma():
     basic_conts = dict([(column, contrast_matrix[i])
                         for i, column in enumerate(design_matrix.columns)])
     contrast_LvR = basic_conts['A'] - basic_conts['B']
-    contrast = mne_nirs.statistics.compute_contrast(glm_est.data, contrast_LvR)
-    fig = mne_nirs.visualisation.plot_glm_contrast_topo(raw_haemo, contrast)
+    with pytest.deprecated_call(match='comprehensive GLM'):
+        contrast = mne_nirs.statistics.compute_contrast(
+            glm_est.data, contrast_LvR)
+    with pytest.deprecated_call(match='comprehensive GLM'):
+        fig = mne_nirs.visualisation.plot_glm_contrast_topo(
+            raw_haemo, contrast)
     assert len(fig.axes) == 2
 
 
@@ -150,7 +156,6 @@ def test_fig_from_axes():
 
 
 @requires_pyvista()
-@pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
 def test_run_plot_GLM_projection():
     mne.viz.set_3d_backend('pyvista')
     raw_intensity = _load_dataset()

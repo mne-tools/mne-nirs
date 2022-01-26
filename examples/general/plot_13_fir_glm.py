@@ -177,7 +177,8 @@ for sub in range(1, 6):  # Loop from first to fifth subject
 # Keep only tapping and FIR delay information in the dataframe
 # I.e., for this example we are not interest in the drift coefficients,
 # short channel information, or control conditions.
-df["isTapping"] = ["Tapping/Right" in n for n in df["Condition"]]
+df["isTapping"] = ["TappingRight" in n or "Tapping/Right" in n
+                   for n in df["Condition"]]
 df["isDelay"] = ["delay" in n for n in df["Condition"]]
 df = df.query("isDelay in [True]")
 df = df.query("isTapping in [True]")

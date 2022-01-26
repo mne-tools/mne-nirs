@@ -25,6 +25,8 @@ def _get_minimal_haemo_data(tmin=0, tmax=60):
     raw = mne.preprocessing.nirs.optical_density(raw)
     raw = mne.preprocessing.nirs.beer_lambert_law(raw, ppf=0.1)
     raw.resample(0.3)
+    raw.annotations.description[:] = [
+        'e' + d.replace('.', 'p') for d in raw.annotations.description]
     return raw
 
 
@@ -47,7 +49,8 @@ def _get_glm_contrast_result(tmin=60, tmax=400):
     contrast_matrix = np.eye(design_matrix.shape[1])
     basic_conts = dict([(column, contrast_matrix[i])
                         for i, column in enumerate(design_matrix.columns)])
-    contrast_LvR = basic_conts['1.0'] - basic_conts['2.0']
+    assert 'e1p' in basic_conts, sorted(basic_conts)
+    contrast_LvR = basic_conts['e1p'] - basic_conts['e2p']
 
     return glm_est.compute_contrast(contrast_LvR)
 
@@ -104,8 +107,8 @@ def test_results_glm_properties():
     assert len(res.copy().pick(picks="S1_D1 hbr")) == 1
     assert len(res.copy().pick(picks=["S1_D1 hbr"])) == 1
     assert len(res.copy().pick(picks=["S1_D1 hbr", "S1_D1 hbo"])) == 2
-    assert len(res.copy().pick(picks=["S1_D1 hbr", "S1_D1 XXX"])) == 1
-    assert len(res.copy().pick(picks=["S1_D1 hbr", "S1_D1 hbr"])) == 1
+    with pytest.raises(RuntimeWarning, match='could not be picked'):
+        assert len(res.copy().pick(picks=["S1_D1 hbr", "S1_D1 XXX"])) == 1
     assert len(res.copy().pick(picks="fnirs")) == n_channels
     assert len(res.copy().pick(picks="hbo")) == n_channels / 2
     assert len(res.copy().pick(picks="hbr")) == n_channels / 2
@@ -132,8 +135,10 @@ def test_glm_scatter():
 
 def test_glm_surface_projection():
 
-    _get_glm_result(tmax=2974, tmin=0).surface_projection(condition="3.0",
-                                                          view="dorsal")
+    res = _get_glm_result(tmax=2974, tmin=0)
+    res.surface_projection(condition="e3p0", view="dorsal")
+    with pytest.raises(KeyError, match='not found in conditions'):
+        res.surface_projection(condition='foo')
 
 
 def test_results_glm_export_dataframe():
@@ -155,58 +160,60 @@ def test_results_glm_export_dataframe_region_of_interest():
     rois["A"] = [0, 2, 4]
 
     # Single ROI, single condition
-    df = res.to_dataframe_region_of_interest(rois, "1.0")
+    with pytest.raises(KeyError, match=r'not found in self\.design\.col'):
+        res.to_dataframe_region_of_interest(rois, "1.0")
+    df = res.to_dataframe_region_of_interest(rois, "e1p0")
     assert df.shape == (1, 9)
-    assert df.Condition[0] == "1.0"
+    assert df.Condition[0] == "e1p0"
     assert df.ROI[0] == "A"
     assert df.Chroma[0] == "hbo"
 
     # Single ROI, multiple conditions
-    df = res.to_dataframe_region_of_interest(rois, ["1.0", "3.0", "drift_1"])
+    df = res.to_dataframe_region_of_interest(rois, ["e1p0", "e3p0", "drift_1"])
     assert df.shape == (3, 9)
-    assert (df.Condition == ["1.0", "3.0", "drift_1"]).all()
+    assert (df.Condition == ["e1p0", "e3p0", "drift_1"]).all()
     assert (df.ROI == ["A", "A", "A"]).all()
 
     # Single ROI, all conditions (default)
-    df = res.to_dataframe_region_of_interest(rois, "1.0")
+    df = res.to_dataframe_region_of_interest(rois, "e1p0")
 
     # HbR only ROI
     rois["B"] = [1, 3, 5]
 
     # Multiple ROI, single condition
-    df = res.to_dataframe_region_of_interest(rois, "1.0")
+    df = res.to_dataframe_region_of_interest(rois, "e1p0")
     assert df.shape == (2, 9)
-    assert df.Condition[0] == "1.0"
-    assert df.Condition[1] == "1.0"
+    assert df.Condition[0] == "e1p0"
+    assert df.Condition[1] == "e1p0"
     assert df.ROI[0] == "A"
     assert df.ROI[1] == "B"
     assert df.Chroma[0] == "hbo"
     assert df.Chroma[1] == "hbr"
 
     # Multiple ROI, multiple conditions
-    df = res.to_dataframe_region_of_interest(rois, ["1.0", "3.0", "drift_1"])
+    df = res.to_dataframe_region_of_interest(rois, ["e1p0", "e3p0", "drift_1"])
     assert df.shape == (6, 9)
 
     # Multiple ROI, all conditions (default)
-    df = res.to_dataframe_region_of_interest(rois, "1.0")
+    df = res.to_dataframe_region_of_interest(rois, "e1p0")
     assert df.shape == (2, 9)
 
     # HbO and HbR ROI
     rois["C"] = [6, 7, 8]
 
     # Multiple ROI, single condition
-    df = res.to_dataframe_region_of_interest(rois, "1.0")
+    df = res.to_dataframe_region_of_interest(rois, "e1p0")
     assert df.shape == (4, 9)
 
     # Multiple ROI, multiple conditions
-    df = res.to_dataframe_region_of_interest(rois, ["1.0", "3.0", "drift_1"])
+    df = res.to_dataframe_region_of_interest(rois, ["e1p0", "e3p0", "drift_1"])
     assert df.shape == (12, 9)
 
     # Multiple ROI, all conditions (default)
-    df = res.to_dataframe_region_of_interest(rois, "1.0")
+    df = res.to_dataframe_region_of_interest(rois, "e1p0")
 
     # With demographic information
-    df = res.to_dataframe_region_of_interest(rois, ["1.0", "3.0", "drift_1"],
+    df = res.to_dataframe_region_of_interest(rois, ["e1p0", "e3p0", "drift_1"],
                                              demographic_info=True)
     assert df.shape == (12, 10)
     assert "Sex" in df.columns
@@ -215,7 +222,8 @@ def test_results_glm_export_dataframe_region_of_interest():
 def test_results_glm_export_dataframe_region_of_interest_weighted():
 
     res = _get_glm_result(tmax=400)
-    res_df = res.to_dataframe().query("Condition == '1.0'")
+    res_df = res.to_dataframe().query("Condition == 'e1p0'")
+    assert len(res_df)
     res_df["theta_uM"] = res_df["theta"] * 1e6
 
     # Create ROIs
@@ -224,7 +232,7 @@ def test_results_glm_export_dataframe_region_of_interest_weighted():
     rois["B"] = [1, 3, 5, 7, 9, 11]
     rois["C"] = [6, 7, 8, 9]
 
-    df_uw = res.to_dataframe_region_of_interest(rois, "1.0", weighted=False)
+    df_uw = res.to_dataframe_region_of_interest(rois, "e1p0", weighted=False)
     assert df_uw.shape == (4, 9)
     assert df_uw.Weighted[0] == "Equal"
     thetas = np.array(res_df.theta)
@@ -232,7 +240,7 @@ def test_results_glm_export_dataframe_region_of_interest_weighted():
     assert np.isclose(df_uw.query("ROI == 'A'").theta,
                       thetas[rois["A"]].mean())
 
-    df_w = res.to_dataframe_region_of_interest(rois, "1.0", weighted=True)
+    df_w = res.to_dataframe_region_of_interest(rois, "e1p0", weighted=True)
     assert df_w.shape == (4, 9)
     assert df_w.Weighted[0] == "Inverse standard error"
     # weighted option should result in larger response
@@ -245,7 +253,7 @@ def test_results_glm_export_dataframe_region_of_interest_weighted():
     weights["B"] = [0.6, 0.1, 0.3, 10000.4, 10000.4, 0.4]
     weights["C"] = [16, 7, 8, 9]
 
-    df = res.to_dataframe_region_of_interest(rois, "1.0", weighted=weights)
+    df = res.to_dataframe_region_of_interest(rois, "e1p0", weighted=weights)
     assert df.shape == (4, 9)
     assert df.Weighted[0] == "Custom"
     assert np.isclose(thetas[0], df.theta[0], atol=0.1e-6)
@@ -255,18 +263,18 @@ def test_results_glm_export_dataframe_region_of_interest_weighted():
 
     with pytest.raises(ValueError, match='must be positive'):
         weights["C"] = [16, 7, -8, 9]
-        _ = res.to_dataframe_region_of_interest(rois, "1.0",
+        _ = res.to_dataframe_region_of_interest(rois, "e1p0",
                                                 weighted=weights)
 
     with pytest.raises(ValueError, match='length of the keys'):
         weights["C"] = [16, 7]
-        _ = res.to_dataframe_region_of_interest(rois, "1.0",
+        _ = res.to_dataframe_region_of_interest(rois, "e1p0",
                                                 weighted=weights)
 
     with pytest.raises(KeyError, match='Keys of group_by and weighted'):
         bad_weights = dict()
         bad_weights["Z"] = [0, 2, 4]
-        _ = res.to_dataframe_region_of_interest(rois, "1.0",
+        _ = res.to_dataframe_region_of_interest(rois, "e1p0",
                                                 weighted=bad_weights)
 
 

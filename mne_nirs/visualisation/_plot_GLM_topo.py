@@ -13,7 +13,7 @@ import mne
 from mne import Info
 from mne.utils import warn
 from mne.channels.layout import _merge_ch_data
-from mne.io.pick import _picks_to_idx, _get_channel_types
+from mne.io.pick import _picks_to_idx, _get_channel_types, pick_info
 
 
 def plot_glm_topo(inst, glm_estimates, design_matrix,
@@ -384,7 +384,7 @@ def _handle_overlaps(info, t, sphere, estimates):
     """Prepare for topomap including merging channels"""
     picks = _picks_to_idx(info, t, exclude=[], allow_empty=True)
     pick_names = [info.ch_names[p] for p in picks]
-    info_subset = info.copy().pick_channels(pick_names)
+    info_subset = pick_info(info, picks)
     _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
         mne.viz.topomap._prepare_topomap_plot(info_subset, t, sphere=sphere)
     estmrg, ch_names = _merge_ch_data(estimates.copy()[picks], t, ch_names)

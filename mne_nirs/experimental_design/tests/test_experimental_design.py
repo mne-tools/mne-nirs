@@ -60,7 +60,6 @@ def test_create_boxcar():
     assert np.max(np.mean(bc, axis=1)) * bc.shape[1] == 1
 
 
-@pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
 def test_create_design():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
