@@ -52,6 +52,7 @@ requires_lets_plot = pytest.mark.skipif(
     "plot_40_mayer.py",
     "plot_80_save_read_glm.py",
     "plot_99_bad.py"]))
+@pytest.mark.filterwarnings('ignore:Setting non-standard config type.*:')
 def test_examples(fname):
     test_file_path = examples_path() + fname
     run_script_and_check(test_file_path)
