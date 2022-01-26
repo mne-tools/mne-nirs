@@ -3,7 +3,7 @@
 # License: BSD (3-clause)
 
 import os
-import pytest
+
 import mne
 import mne_nirs
 import numpy as np

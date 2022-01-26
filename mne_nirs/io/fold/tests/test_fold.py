@@ -30,7 +30,6 @@ requires_xlrd = pytest.mark.skipif(
     not check_version('xlrd', '1.0'), reason='Requires xlrd >= 1.0')
 
 
-
 @requires_xlrd
 def test_channel_specificity():
     raw = read_raw_nirx(fname_nirx_15_3_short, preload=True)

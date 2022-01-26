@@ -383,7 +383,6 @@ def plot_glm_group_topo(inst, statsmodel_df,
 def _handle_overlaps(info, t, sphere, estimates):
     """Prepare for topomap including merging channels"""
     picks = _picks_to_idx(info, t, exclude=[], allow_empty=True)
-    pick_names = [info.ch_names[p] for p in picks]
     info_subset = pick_info(info, picks)
     _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
         mne.viz.topomap._prepare_topomap_plot(info_subset, t, sphere=sphere)
