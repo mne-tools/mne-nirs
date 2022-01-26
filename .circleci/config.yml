@@ -34,14 +34,21 @@ jobs:
             name: Set BASH_ENV
             command: |
               set -e
-              python3 -m venv ~/python_env --upgrade-deps
+              sudo apt update -qq
+              sudo apt install -qq libosmesa6 libglx-mesa0 libopengl0 libglx0 libdbus-1-3 \
+                libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 \
+                libxcb-render-util0 libxcb-shape0 libxcb-xfixes0 libxcb-xinerama0 \
+                graphviz optipng \
+                python3.8-venv python3-venv \
+                xvfb libxft2 ffmpeg
+              python3.8 -m venv ~/python_env
               echo "set -e" >> $BASH_ENV
-              echo "export DISPLAY=:99" >> $BASH_ENV
               echo "export OPENBLAS_NUM_THREADS=4" >> $BASH_ENV
               echo "export XDG_RUNTIME_DIR=/tmp/runtime-circleci" >> $BASH_ENV
-              source tools/get_minimal_commands.sh
+              echo "export MNE_FULL_DATE=true" >> $BASH_ENV
               echo "export MNE_3D_OPTION_ANTIALIAS=false" >> $BASH_ENV
-              echo "export MNE_3D_BACKEND=pyvista" >> $BASH_ENV
+              source tools/get_minimal_commands.sh
+              echo "export MNE_3D_BACKEND=pyvistaqt" >> $BASH_ENV
               echo "export PATH=~/.local/bin/:$PATH" >> $BASH_ENV
               echo "source ~/python_env/bin/activate" >> $BASH_ENV
               mkdir -p ~/.local/bin
@@ -49,16 +56,11 @@ jobs:
               echo "BASH_ENV:"
               cat $BASH_ENV
               mkdir -p ~/mne_data
-              touch pattern.txt;
-
+              touch pattern.txt
         - run:
-            name: Install 3D rendering libraries \ PyQt5 dependencies \ graphviz \ optipng (for optimized images)
+            name: check neuromag2ft
             command: |
-              sudo apt update
-              sudo apt install libosmesa6 libglx-mesa0 libopengl0 libglx0 libdbus-1-3 \
-                  libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-shape0 libxcb-xfixes0 libxcb-xinerama0 \
-                  graphviz \
-                  optipng
+              neuromag2ft --version
 
         - run:
             <<: *xvfb
