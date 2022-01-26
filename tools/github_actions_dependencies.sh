@@ -25,8 +25,12 @@ else
 	pip install $STD_ARGS --pre --only-binary ":all:" numba llvmlite https://github.com/nilearn/nilearn/zipball/main
 	echo "VTK"
 	# Have to use our own version until VTK releases a 3.10 build
-	wget -q https://osf.io/hjyvx/download -O vtk-9.1.20211213.dev0-cp310-cp310-linux_x86_64.whl
-	pip install $STD_ARGS --pre --only-binary ":all:" vtk-9.1.20211213.dev0-cp310-cp310-linux_x86_64.whl
+	if `python -c "import sys; assert sys.version_info >= (3, 10), sys.version_info"`; then
+		wget -q https://osf.io/hjyvx/download -O vtk-9.1.20211213.dev0-cp310-cp310-linux_x86_64.whl
+		pip install $STD_ARGS --pre --only-binary ":all:" vtk-9.1.20211213.dev0-cp310-cp310-linux_x86_64.whl
+	else
+		pip install $STD_ARGS --pre --only-binary ":all:" vtk
+	fi;
 	echo "PyVista"
 	pip install --progress-bar off https://github.com/pyvista/pyvista/zipball/main
 	echo "pyvistaqt"
