@@ -177,6 +177,9 @@ print(subjects)
 def individual_analysis(bids_path, ID):
 
     raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
+    # sanitize event names
+    raw_intensity.annotations.description[:] = [
+        d.replace('/', '_') for d in raw_intensity.annotations.description]
 
     # Convert signal to haemoglobin and resample
     raw_od = optical_density(raw_intensity)
@@ -218,7 +221,7 @@ def individual_analysis(bids_path, ID):
     contrast_matrix = np.eye(design_matrix.shape[1])
     basic_conts = dict([(column, contrast_matrix[i])
                         for i, column in enumerate(design_matrix.columns)])
-    contrast_LvR = basic_conts['Tapping/Left'] - basic_conts['Tapping/Right']
+    contrast_LvR = basic_conts['Tapping_Left'] - basic_conts['Tapping_Right']
 
     # Compute defined contrast
     contrast = glm_est.compute_contrast(contrast_LvR)
@@ -257,9 +260,9 @@ for sub in subjects:  # Loop from first to fifth subject
     raw_haemo, roi, channel, con = individual_analysis(bids_path, sub)
 
     # Append individual results to all participants
-    df_roi = df_roi.append(roi)
-    df_cha = df_cha.append(channel)
-    df_con = df_con.append(con)
+    df_roi = pd.concat([df_roi, roi], ignore_index=True)
+    df_cha = pd.concat([df_cha, channel], ignore_index=True)
+    df_con = pd.concat([df_con, con], ignore_index=True)
 
 
 # %%
@@ -273,7 +276,7 @@ for sub in subjects:  # Loop from first to fifth subject
 # We can already see that the control condition is always near zero,
 # and that the responses look to be contralateral to the tapping hand.
 
-grp_results = df_roi.query("Condition in ['Control', 'Tapping/Left', 'Tapping/Right']")
+grp_results = df_roi.query("Condition in ['Control', 'Tapping_Left', 'TappingRight']")
 grp_results = grp_results.query("Chroma in ['hbo']")
 
 ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
@@ -316,7 +319,7 @@ ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
 # model by using the code
 # `roi_model = rlm('theta ~ -1 + ROI:Condition:Chroma', grp_results).fit()`.
 
-grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
+grp_results = df_roi.query("Condition in ['Control','Tapping_Left', 'Tapping_Right']")
 
 roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
                         grp_results, groups=grp_results["ID"]).fit(method='nm')
@@ -346,7 +349,7 @@ roi_model.summary()
 # contralaterally dominant responses) and there is no significant
 # effect of gender.
 
-grp_results = df_roi.query("Condition in ['Tapping/Left', 'Tapping/Right']")
+grp_results = df_roi.query("Condition in ['Tapping_Left', 'Tapping_Right']")
 grp_results = grp_results.query("Chroma in ['hbo']")
 grp_results = grp_results.query("ROI in ['Right_Hemisphere']")
 
@@ -368,7 +371,7 @@ roi_model.summary()
 # Filled symbols represent HbO, unfilled symbols represent HbR.
 
 # Regenerate the results from the original group model above
-grp_results = df_roi.query("Condition in ['Control','Tapping/Left', 'Tapping/Right']")
+grp_results = df_roi.query("Condition in ['Control','Tapping_Left', 'Tapping_Right']")
 roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
                         grp_results, groups=grp_results["ID"]).fit(method='nm')
 
@@ -401,7 +404,7 @@ fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(10, 10),
                          gridspec_kw=dict(width_ratios=[1, 1]))
 
 # Cut down the dataframe just to the conditions we are interested in
-ch_summary = df_cha.query("Condition in ['Tapping/Left', 'Tapping/Right']")
+ch_summary = df_cha.query("Condition in ['Tapping_Left', 'Tapping_Right']")
 ch_summary = ch_summary.query("Chroma in ['hbo']")
 
 # Run group level model and convert to dataframe
@@ -411,17 +414,17 @@ ch_model_df = statsmodels_to_results(ch_model)
 
 # Plot the two conditions
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
-                    ch_model_df.query("Condition in ['Tapping/Left']"),
+                    ch_model_df.query("Condition in ['Tapping_Left']"),
                     colorbar=False, axes=axes[0, 0],
                     vmin=0, vmax=20, cmap=mpl.cm.Oranges)
 
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
-                    ch_model_df.query("Condition in ['Tapping/Right']"),
+                    ch_model_df.query("Condition in ['Tapping_Right']"),
                     colorbar=True, axes=axes[0, 1],
                     vmin=0, vmax=20, cmap=mpl.cm.Oranges)
 
 # Cut down the dataframe just to the conditions we are interested in
-ch_summary = df_cha.query("Condition in ['Tapping/Left', 'Tapping/Right']")
+ch_summary = df_cha.query("Condition in ['Tapping_Left', 'Tapping_Right']")
 ch_summary = ch_summary.query("Chroma in ['hbr']")
 
 # Run group level model and convert to dataframe
@@ -431,11 +434,11 @@ ch_model_df = statsmodels_to_results(ch_model)
 
 # Plot the two conditions
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
-                    ch_model_df.query("Condition in ['Tapping/Left']"),
+                    ch_model_df.query("Condition in ['Tapping_Left']"),
                     colorbar=False, axes=axes[1, 0],
                     vmin=-10, vmax=0, cmap=mpl.cm.Blues_r)
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
-                    ch_model_df.query("Condition in ['Tapping/Right']"),
+                    ch_model_df.query("Condition in ['Tapping_Right']"),
                     colorbar=True, axes=axes[1, 1],
                     vmin=-10, vmax=0, cmap=mpl.cm.Blues_r)
 
@@ -498,7 +501,7 @@ brain.add_text(0.05, 0.95, "Left-Right", 'title', font_size=16, color='k')
 
 # Run model code as above
 clim = dict(kind='value', pos_lims=(0, 11.5, 17))
-for idx, cond in enumerate(['Tapping/Left', 'Tapping/Right']):
+for idx, cond in enumerate(['Tapping_Left', 'Tapping_Right']):
 
     # Run same model as explained in the sections above
     ch_summary = df_cha.query("Condition in [@cond]")
@@ -521,7 +524,7 @@ for idx, cond in enumerate(['Tapping/Left', 'Tapping/Right']):
 # Sometimes a reviewer wants a long table of results per channel.
 # This can be generated from the statistics dataframe.
 
-ch_summary = df_cha.query("Condition in ['Tapping/Left', 'Tapping/Right']")
+ch_summary = df_cha.query("Condition in ['Tapping_Left', 'Tapping_Right']")
 ch_summary = ch_summary.query("Chroma in ['hbo']")
 
 # Run group level model and convert to dataframe

@@ -237,6 +237,9 @@ out
 def individual_analysis(bids_path, ID):
 
     raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
+     # sanitize event names
+    raw_intensity.annotations.description[:] = [
+        d.replace('/', '_') for d in raw_intensity.annotations.description]
 
     # Convert signal to haemoglobin and resample
     raw_od = optical_density(raw_intensity)
@@ -287,7 +290,8 @@ for sub in subjects:  # Loop from first to fifth subject
     # Append individual results to all participants
     df_cha = df_cha.append(channel)
 
-ch_summary = df_cha.query("Condition in 'Tapping/Right'")
+ch_summary = df_cha.query("Condition in ['Tapping_Right']")
+assert len(ch_summary)
 ch_summary = ch_summary.query("Chroma in ['hbo']")
 ch_model = smf.mixedlm("theta ~ -1 + ch_name", ch_summary,
                        groups=ch_summary["ID"]).fit(method='nm')
