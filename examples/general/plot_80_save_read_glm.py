@@ -172,7 +172,7 @@ for sub in subjects:
     individual_results["ID"] = sub
 
     # Append individual results to larger dataframe
-    df = df.append(individual_results)
+    df = pd.concat([df, individual_results], ignore_index=True)
 
 
 # %%

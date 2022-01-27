@@ -288,7 +288,7 @@ for sub in subjects:  # Loop from first to fifth subject
     raw_haemo, channel = individual_analysis(bids_path, sub)
 
     # Append individual results to all participants
-    df_cha = df_cha.append(channel)
+    df_cha = pd.concat([df_cha, channel], ignore_index=True)
 
 ch_summary = df_cha.query("Condition in ['Tapping_Right']")
 assert len(ch_summary)

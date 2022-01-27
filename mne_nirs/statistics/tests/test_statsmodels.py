@@ -40,7 +40,7 @@ def test_statsmodel_to_df(func):
         with pytest.warns(RuntimeWarning, match='Non standard source detect'):
             cha = glm_est.to_dataframe()
         cha["ID"] = '%02d' % n
-        df_cha = df_cha.append(cha)
+        df_cha = pd.concat([df_cha, cha], ignore_index=True)
     df_cha["theta"] = df_cha["theta"] * 1.0e6
     roi_model = func("theta ~ -1 + Condition", df_cha,
                      groups=df_cha["ID"]).fit()

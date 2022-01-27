@@ -33,8 +33,7 @@ requires_lets_plot = pytest.mark.skipif(
     not check_version('lets_plot'), reason='Requires lets-plot')
 
 
-# TODO: Add MNE_DATASETS_FNIRSMOTORGROUP_PATH to mne's allowed config keys
-@pytest.mark.filterwarnings('ignore:Setting non-standard config type.*:')
+@pytest.mark.filterwarnings('ignore:No bad channels to interpolate.*:')
 @pytest.mark.examples
 @pytest.mark.parametrize('fname', ([
     "plot_01_data_io.py",

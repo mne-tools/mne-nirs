@@ -144,7 +144,8 @@ def fold_landmark_specificity(raw, landmark, fold_files=[None],
 
     fold_tbl = pd.DataFrame()
     for fname in fold_files:
-        fold_tbl = fold_tbl.append(_read_fold_xls(fname, atlas=atlas))
+        fold_tbl = pd.concat([fold_tbl, _read_fold_xls(fname, atlas=atlas)],
+                             ignore_index=True)
 
     specificity = np.zeros(len(raw.ch_names))
     for cidx in range(len(raw.ch_names)):
@@ -205,7 +206,8 @@ def fold_channel_specificity(raw, fold_files=[None], atlas="Juelich"):
 
     fold_tbl = pd.DataFrame()
     for fname in fold_files:
-        fold_tbl = fold_tbl.append(_read_fold_xls(fname, atlas=atlas))
+        fold_tbl = pd.concat([fold_tbl, _read_fold_xls(fname, atlas=atlas)],
+                             ignore_index=True)
 
     chan_spec = list()
     for cidx in range(len(raw.ch_names)):
