@@ -26,6 +26,7 @@ def pytest_configure(config):
     ignore:.*Using or importing the ABCs from.*:
     ignore:.*distutils Version classes are deprecated.*:
     ignore:.*LUTSIZE was deprecated in Matplotlib.*:
+    ignore:.*pandas\.Int64Index is deprecated and will be removed.*:
     always:`np\..*is a deprecated alias for the builtin.*:DeprecationWarning
     always::ResourceWarning
     """  # noqa: E501
