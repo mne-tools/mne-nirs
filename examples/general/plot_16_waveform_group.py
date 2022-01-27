@@ -333,6 +333,7 @@ for idx, evoked in enumerate(all_evokeds):
                      'Condition': evoked, 'Value': value}, index=[0])
                 df = pd.concat([df, this_df], ignore_index=True)
 df.reset_index(inplace=True, drop=True)
+df['Value'] = pd.to_numeric(df['Value'])  # some Pandas have this as object
 
 # You can export the dataframe for analysis in your favorite stats program
 df.to_csv("stats-export.csv")

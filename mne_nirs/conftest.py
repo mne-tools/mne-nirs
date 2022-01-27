@@ -32,6 +32,7 @@ def pytest_configure(config):
     ignore:.*LUTSIZE was deprecated in Matplotlib.*:
     ignore:.*pandas\.Int64Index is deprecated and will be removed.*:
     ignore:.*Setting non-standard config type.*:
+    ignore:.*The MLE may be on the boundary.*:
     always:`np\..*is a deprecated alias for the builtin.*:DeprecationWarning
     always::ResourceWarning
     """  # noqa: E501
