@@ -419,7 +419,7 @@ class RegressionResults(_BaseGLM):
 
             roi = _glm_region_of_interest(self._data, group_by,
                                           cond_idx, cond, weighted)
-            tidy = tidy.append(roi)
+            tidy = pd.concat([tidy, roi])
 
         if weighted is True:
             tidy["Weighted"] = "Inverse standard error"

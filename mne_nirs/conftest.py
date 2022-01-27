@@ -38,12 +38,11 @@ def pytest_configure(config):
 @pytest.fixture(scope='session')
 def matplotlib_config():
     """Configure matplotlib for viz tests."""
-    import matplotlib
-    from matplotlib import cbook
+    from matplotlib import cbook, use
     want = 'agg'  # don't pop up windows
     with warnings.catch_warnings(record=True):  # ignore warning
         warnings.filterwarnings('ignore')
-        matplotlib.use(want, force=True)
+        use(want, force=True)
     import matplotlib.pyplot as plt
     assert plt.get_backend() == want
     # overwrite some params that can horribly slow down tests that

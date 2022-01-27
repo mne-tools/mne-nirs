@@ -135,15 +135,18 @@ def _glm_region_of_interest(stats, group_by, cond_idx,
 
             p = 2 * ss.t.cdf(-1.0 * np.abs(t), df=dfe)
 
-            df = df.append({'ROI': roi_name,
-                            'Condition': cond_name,
-                            'Chroma': chroma,
-                            'theta': theta / 1.0e6,
-                            'se': s,
-                            't': t,
-                            'dfe': dfe,
-                            'p': p, },
-                           ignore_index=True)
+            this_df = pd.DataFrame(
+                {'ROI': roi_name,
+                 'Condition': cond_name,
+                 'Chroma': chroma,
+                 'theta': theta / 1.0e6,
+                 'se': s,
+                 't': t,
+                 'dfe': dfe,
+                 'p': p, }, index=[0])
+            df = pd.concat([df, this_df], ignore_index=True)
+
+    df.reset_index(inplace=True, drop=True)
 
     return df
 

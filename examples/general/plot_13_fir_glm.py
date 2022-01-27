@@ -163,7 +163,7 @@ for sub in range(1, 6):  # Loop from first to fifth subject
 
     df_individual, raw, dm = analysis(bids_path, ID)
 
-    df = df.append(df_individual)
+    df = pd.concat([df, df_individual])
 
 
 # %%
@@ -268,10 +268,11 @@ dm_cond_scaled_hbr = dm_cond * vals_hbr
 # Extract the time scale for plotting.
 # Set time zero to be the onset of the finger tapping.
 index_values = dm_cond_scaled_hbo.index - np.ceil(raw.annotations.onset[0])
+index_values = np.asarray(index_values)
 
 # Plot the result
-axes[0].plot(index_values, dm_cond)
-axes[1].plot(index_values, dm_cond_scaled_hbo)
+axes[0].plot(index_values, np.asarray(dm_cond))
+axes[1].plot(index_values,np.asarray(dm_cond_scaled_hbo))
 axes[2].plot(index_values, np.sum(dm_cond_scaled_hbo, axis=1), 'r')
 axes[2].plot(index_values, np.sum(dm_cond_scaled_hbr, axis=1), 'b')
 

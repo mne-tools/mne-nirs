@@ -317,17 +317,22 @@ axes[0, 0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 df = pd.DataFrame(columns=['ID', 'ROI', 'Chroma', 'Condition', 'Value'])
 
 for idx, evoked in enumerate(all_evokeds):
+    subj_id = 0
     for subj_data in all_evokeds[evoked]:
+        subj_id += 1
         for roi in rois:
             for chroma in ["hbo", "hbr"]:
-                subj_id = subj_data.info["subject_info"]['first_name']
+                assert subj_data.info["subject_info"]['first_name'] == \
+                    'mne_anonymize'  # have been anonymized
                 data = deepcopy(subj_data).pick(picks=rois[roi]).pick(chroma)
                 value = data.crop(tmin=5.0, tmax=7.0).data.mean() * 1.0e6
 
                 # Append metadata and extracted feature to dataframe
-                df = df.append({'ID': subj_id, 'ROI': roi, 'Chroma': chroma,
-                                'Condition': evoked, 'Value': value},
-                               ignore_index=True)
+                this_df = pd.DataFrame(
+                    {'ID': subj_id, 'ROI': roi, 'Chroma': chroma,
+                     'Condition': evoked, 'Value': value}, index=[0])
+                df = pd.concat([df, this_df], ignore_index=True)
+df.reset_index(inplace=True, drop=True)
 
 # You can export the dataframe for analysis in your favorite stats program
 df.to_csv("stats-export.csv")
@@ -395,21 +400,22 @@ roi_model.summary()
 # conditions and the model is applied.
 
 # Encode the ROIs as ipsi- or contralateral to the hand that is tapping.
-df["Hemishphere"] = "Unknown"
+df["Hemisphere"] = "Unknown"
 df.loc[(df["Condition"] == "Tapping/Right") &
-       (df["ROI"] == "Right_Hemisphere"), "Hemishphere"] = "Ipsilateral"
+       (df["ROI"] == "Right_Hemisphere"), "Hemisphere"] = "Ipsilateral"
 df.loc[(df["Condition"] == "Tapping/Right") &
-       (df["ROI"] == "Left_Hemisphere"), "Hemishphere"] = "Contralateral"
+       (df["ROI"] == "Left_Hemisphere"), "Hemisphere"] = "Contralateral"
 df.loc[(df["Condition"] == "Tapping/Left") &
-       (df["ROI"] == "Left_Hemisphere"), "Hemishphere"] = "Ipsilateral"
+       (df["ROI"] == "Left_Hemisphere"), "Hemisphere"] = "Ipsilateral"
 df.loc[(df["Condition"] == "Tapping/Left") &
-       (df["ROI"] == "Right_Hemisphere"), "Hemishphere"] = "Contralateral"
+       (df["ROI"] == "Right_Hemisphere"), "Hemisphere"] = "Contralateral"
 
 # Subset the data for example model
 input_data = df.query("Condition in ['Tapping/Right', 'Tapping/Left']")
 input_data = input_data.query("Chroma in ['hbo']")
+assert len(input_data)
 
-roi_model = smf.mixedlm("Value ~ Hemishphere", input_data,
+roi_model = smf.mixedlm("Value ~ Hemisphere", input_data,
                         groups=input_data["ID"]).fit()
 roi_model.summary()
 
