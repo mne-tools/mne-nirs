@@ -33,6 +33,8 @@ requires_lets_plot = pytest.mark.skipif(
     not check_version('lets_plot'), reason='Requires lets-plot')
 
 
+# TODO: Add MNE_DATASETS_FNIRSMOTORGROUP_PATH to mne's allowed config keys
+@pytest.mark.filterwarnings('ignore:Setting non-standard config type.*:')
 @pytest.mark.examples
 @pytest.mark.parametrize('fname', ([
     "plot_01_data_io.py",
@@ -52,7 +54,6 @@ requires_lets_plot = pytest.mark.skipif(
     "plot_40_mayer.py",
     "plot_80_save_read_glm.py",
     "plot_99_bad.py"]))
-@pytest.mark.filterwarnings('ignore:Setting non-standard config type.*:')
 def test_examples(fname):
     test_file_path = examples_path() + fname
     run_script_and_check(test_file_path)

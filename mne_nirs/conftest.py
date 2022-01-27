@@ -23,6 +23,9 @@ def pytest_configure(config):
     ignore:.*np\.MachAr.*:DeprecationWarning
     ignore:.*sysconfig module is deprecated.*:DeprecationWarning
     ignore:.*nilearn.glm module is experimental.*:
+    ignore:.*Using or importing the ABCs from.*:
+    ignore:.*distutils Version classes are deprecated.*:
+    ignore:.*LUTSIZE was deprecated in Matplotlib.*:
     always:`np\..*is a deprecated alias for the builtin.*:DeprecationWarning
     always::ResourceWarning
     """  # noqa: E501
@@ -48,6 +51,7 @@ def matplotlib_config():
     # functionality)
     plt.ioff()
     plt.rcParams['figure.dpi'] = 100
+    plt.rcParams['figure.max_open_warning'] = 100
 
     # Make sure that we always reraise exceptions in handlers
     orig = cbook.CallbackRegistry
