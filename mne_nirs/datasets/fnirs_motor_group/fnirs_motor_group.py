@@ -56,7 +56,7 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
 
     dataset_params = dict(
         archive_name='BIDS-NIRS-Tapping-master.zip',
-        hash='md5:3ed36f9cd56ae7f0c54826fcf5b5eefe',
+        hash='md5:d40529b85d4b7ebdf7243168c0e8c390',
         url='https://github.com/rob-luke/BIDS-NIRS-Tapping/archive/master.zip',
         folder_name='fNIRS-motor-group',
         dataset_name='fnirs_motor_group',
