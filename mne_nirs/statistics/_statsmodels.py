@@ -31,10 +31,10 @@ def expand_summary_dataframe(summary):
         col_names.append(col_name)
 
     # Fill in values
-    indices = summary.copy(deep=True).index
     if 'Group Var' in summary.index:
         summary = summary[:-1]
-        indices = summary.index
+    summary = summary.copy(deep=True)
+    indices = summary.index
     for row_idx, row in enumerate(indices):
         col_vals = row.split(':')
         for col_idx, col in enumerate(col_names):

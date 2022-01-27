@@ -103,7 +103,8 @@ def quantify_mayer_fooof(raw, num_oscillations=1, centre_frequency=0.01,
             data["Chromaphore"] = chroma
             data = {**data, **extra_df_fields}
 
-            df = df.append(pd.DataFrame(data, index=[0]), ignore_index=True)
+            df = pd.concat([df, pd.DataFrame(data, index=[0])],
+                           ignore_index=True)
 
     return df
 
