@@ -38,10 +38,10 @@ def test_snirf_write(fname, tmpdir):
     write_raw_snirf(raw_orig, test_file)
     raw = read_raw_snirf(test_file)
 
-    valid, result = validateSnirf(str(test_file))
-    if not valid:
+    result = validateSnirf(str(test_file))
+    if result.is_valid():
         result.display()
-    assert valid
+    assert result.is_valid()
 
     # Check annotations are the same
     assert_allclose(raw.annotations.onset, raw_orig.annotations.onset)
