@@ -59,8 +59,8 @@ jobs:
         name: 'Install MNE'
       - shell: bash -el {0}
         run: |
-          pip uninstall nilearn
-          pip install nilearn==0.8.1
+          pip uninstall -yq nilearn
+          pip install -yq nilearn==0.8.1
         name: 'Install nilearn that works with older MNE-NIRS versions'
       - shell: bash -el {0}
         run: ./tools/github_actions_infos.sh
