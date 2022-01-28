@@ -105,6 +105,9 @@ import matplotlib.pyplot as plt
 def analysis(fname, ID):
 
     raw_intensity = read_raw_bids(bids_path=fname, verbose=False)
+    # sanitize event names
+    raw_intensity.annotations.description[:] = [
+        d.replace('/', '_') for d in raw_intensity.annotations.description]
 
     # Convert signal to haemoglobin and just keep hbo
     raw_od = optical_density(raw_intensity)
@@ -177,8 +180,7 @@ for sub in range(1, 6):  # Loop from first to fifth subject
 # Keep only tapping and FIR delay information in the dataframe
 # I.e., for this example we are not interest in the drift coefficients,
 # short channel information, or control conditions.
-df["isTapping"] = ["TappingRight" in n or "Tapping/Right" in n
-                   for n in df["Condition"]]
+df["isTapping"] = ["Tapping_Right" in n for n in df["Condition"]]
 df["isDelay"] = ["delay" in n for n in df["Condition"]]
 df = df.query("isDelay in [True]")
 df = df.query("isTapping in [True]")

@@ -172,6 +172,15 @@ print(subjects)
 # Here we also resample to a 0.3 Hz sample rate just to speed up the example
 # and use less memory, resampling to 0.6 Hz is a better choice for full
 # analyses.
+#
+# .. note::
+#
+#    The nilearn library does not allow backslash characters in the condition
+#    name. So we must replace the backslash with an underscore to ensure the
+#    GLM computation is successful. Hopefully future versions of MNE-NIRS will
+#    automatically handle these characters, see https://github.com/mne-tools/mne-nirs/issues/420
+#    for more information. In the meantime use the following code to replace the
+#    illegal characters.
 
 
 def individual_analysis(bids_path, ID):
@@ -276,7 +285,7 @@ for sub in subjects:  # Loop from first to fifth subject
 # We can already see that the control condition is always near zero,
 # and that the responses look to be contralateral to the tapping hand.
 
-grp_results = df_roi.query("Condition in ['Control', 'Tapping_Left', 'TappingRight']")
+grp_results = df_roi.query("Condition in ['Control', 'Tapping_Left', 'Tapping_Right']")
 grp_results = grp_results.query("Chroma in ['hbo']")
 
 ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
