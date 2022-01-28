@@ -187,7 +187,7 @@ df = df.query("isTapping in [True]")
 # Make a new column that stores the condition name for tidier model below
 df.loc[df["isTapping"] == True, "TidyCond"] = "Tapping"
 # Finally, extract the FIR delay in to its own column in data frame
-df.loc[:, "delay"] = [n.split('_')[2] for n in df.Condition]
+df.loc[:, "delay"] = [n.split('_')[-1] for n in df.Condition]
 
 # To simplify this example we will only look at the right hand tapping
 # condition so we now remove the left tapping conditions from the
