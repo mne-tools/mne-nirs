@@ -91,6 +91,6 @@ snirf_intensity.plot(n_channels=30, duration=300, show_scrollbars=False)
 # https://github.com/BUNPC/pysnirf2. Below we demonstrate that the files created
 # by MNE-NIRS are compliant with the specification.
 
-valid, result = pysnirf2.validateSnirf('test_raw.snirf')
-assert valid
-print(result)
+result = pysnirf2.validateSnirf('test_raw.snirf')
+assert result.is_valid()
+result.display()
