@@ -2,16 +2,24 @@
 numpy>=1.15.4
 scipy>=1.1.0
 matplotlib
+tqdm
+pooch>=1.5
+decorator
+h5io
+packaging
+pymatreader
 pyqt5>=5.10,<5.14; platform_system == "Darwin"
 pyqt5>=5.10,!=5.15.2,!=5.15.3; platform_system == "Linux"
-pyqt5>=5.10,!=5.15.3; platform_system != "Linux" and platform_system != "Darwin"
+pyqt5>=5.10,!=5.15.3; platform_system == "Windows"
 pyqt5-sip
+pyobjc-framework-Cocoa>=5.2.0; platform_system=="Darwin"
 sip
 scikit-learn
 nibabel
 numba
 h5py
-pandas==1.3.2
+jinja2
+pandas
 numexpr
 jupyter
 python-picard
@@ -19,20 +27,17 @@ statsmodels
 joblib
 psutil
 dipy
-vtk; platform_system == "Darwin"
-vtk; platform_system == "Linux"
-vtk<=9.0.1; platform_system == "Windows"
+vtk
 nilearn
 xlrd
 imageio>=2.6.1
 imageio-ffmpeg>=0.4.1
-pyvista>=0.30
+traitlets
+pyvista>=0.32
 pyvistaqt>=0.4
-tqdm
 mffpy>=0.5.7
 ipywidgets
 ipyvtklink
-pooch
 
 # mne-nirs specific requirements
 https://github.com/mne-tools/mne-python/archive/main.zip

@@ -105,6 +105,9 @@ import matplotlib.pyplot as plt
 def analysis(fname, ID):
 
     raw_intensity = read_raw_bids(bids_path=fname, verbose=False)
+    # sanitize event names
+    raw_intensity.annotations.description[:] = [
+        d.replace('/', '_') for d in raw_intensity.annotations.description]
 
     # Convert signal to haemoglobin and just keep hbo
     raw_od = optical_density(raw_intensity)
@@ -163,7 +166,7 @@ for sub in range(1, 6):  # Loop from first to fifth subject
 
     df_individual, raw, dm = analysis(bids_path, ID)
 
-    df = df.append(df_individual)
+    df = pd.concat([df, df_individual])
 
 
 # %%
@@ -177,14 +180,14 @@ for sub in range(1, 6):  # Loop from first to fifth subject
 # Keep only tapping and FIR delay information in the dataframe
 # I.e., for this example we are not interest in the drift coefficients,
 # short channel information, or control conditions.
-df["isTapping"] = ["Tapping/Right" in n for n in df["Condition"]]
+df["isTapping"] = ["Tapping_Right" in n for n in df["Condition"]]
 df["isDelay"] = ["delay" in n for n in df["Condition"]]
 df = df.query("isDelay in [True]")
 df = df.query("isTapping in [True]")
 # Make a new column that stores the condition name for tidier model below
 df.loc[df["isTapping"] == True, "TidyCond"] = "Tapping"
 # Finally, extract the FIR delay in to its own column in data frame
-df.loc[:, "delay"] = [n.split('_')[2] for n in df.Condition]
+df.loc[:, "delay"] = [n.split('_')[-1] for n in df.Condition]
 
 # To simplify this example we will only look at the right hand tapping
 # condition so we now remove the left tapping conditions from the
@@ -267,10 +270,11 @@ dm_cond_scaled_hbr = dm_cond * vals_hbr
 # Extract the time scale for plotting.
 # Set time zero to be the onset of the finger tapping.
 index_values = dm_cond_scaled_hbo.index - np.ceil(raw.annotations.onset[0])
+index_values = np.asarray(index_values)
 
 # Plot the result
-axes[0].plot(index_values, dm_cond)
-axes[1].plot(index_values, dm_cond_scaled_hbo)
+axes[0].plot(index_values, np.asarray(dm_cond))
+axes[1].plot(index_values,np.asarray(dm_cond_scaled_hbo))
 axes[2].plot(index_values, np.sum(dm_cond_scaled_hbo, axis=1), 'r')
 axes[2].plot(index_values, np.sum(dm_cond_scaled_hbr, axis=1), 'b')
 

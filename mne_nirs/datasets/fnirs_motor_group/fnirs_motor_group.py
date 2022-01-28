@@ -5,7 +5,6 @@
 # and the dataset complies I will add this to the MNE-Python library.
 
 import os
-import tempfile
 import shutil
 import pooch
 from functools import partial
@@ -57,7 +56,7 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
 
     dataset_params = dict(
         archive_name='BIDS-NIRS-Tapping-master.zip',
-        hash='md5:3ed36f9cd56ae7f0c54826fcf5b5eefe',
+        hash='md5:d40529b85d4b7ebdf7243168c0e8c390',
         url='https://github.com/rob-luke/BIDS-NIRS-Tapping/archive/master.zip',
         folder_name='fNIRS-motor-group',
         dataset_name='fnirs_motor_group',
@@ -72,9 +71,8 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
     # Do some wrangling to deal with nested directories
     bad_name = os.path.join(dpath, 'BIDS-NIRS-Tapping-master')
     if os.path.isdir(bad_name):
-        tmppath = tempfile.mkdtemp()
-        os.rename(bad_name, tmppath)
+        os.rename(bad_name, dpath + '.true')
         shutil.rmtree(dpath)
-        os.rename(tmppath, dpath)
+        os.rename(dpath + '.true', dpath)
 
     return dpath

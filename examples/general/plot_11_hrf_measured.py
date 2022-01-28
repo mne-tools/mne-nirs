@@ -7,10 +7,12 @@ GLM Analysis (Measured)
 In this example we analyse data from a real multichannel
 functional near-infrared spectroscopy (fNIRS)
 experiment (see :ref:`tut-fnirs-hrf-sim` for a simplified simulated
-analysis). The experiment consists of three conditions
-1) tapping with the left hand,
-2) tapping with the right hand,
-3) a control condition where the participant does nothing.
+analysis). The experiment consists of three conditions:
+
+1. tapping with the left hand,
+2. tapping with the right hand,
+3. a control condition where the participant does nothing.
+
 We use a GLM analysis to examine the neural activity associated with
 the different tapping conditions.
 An alternative epoching style analysis on the same data can be
@@ -27,12 +29,12 @@ This GLM analysis is a wrapper over the excellent
    :local:
    :depth: 2
 
-.. note:: Parts of this tutorial require the latest development version of MNE-Python. See these instructions for  
+.. note:: Parts of this tutorial require the latest development version of MNE-Python. See these instructions for
           `how to upgrade <https://mne.tools/dev/install/updating.html>`__.
           But basically boils down to running
           ``pip install -U --no-deps https://github.com/mne-tools/mne-python/archive/main.zip``.
           Sections of the code that require this version will be noted below.
-          
+
 """
 # sphinx_gallery_thumbnail_number = 9
 
@@ -98,10 +100,12 @@ raw_intensity.resample(0.7)
 # Next we update the annotations by assigning names to each trigger ID.
 # Then we crop the recording to the section containing our
 # experimental conditions.
-
+#
+# Because of limitations with ``nilearn``, we use ``'_'`` to separate conditions
+# rather than the standard ``'/'``.
 raw_intensity.annotations.rename({'1.0': 'Control',
-                                  '2.0': 'Tapping/Left',
-                                  '3.0': 'Tapping/Right'})
+                                  '2.0': 'Tapping_Left',
+                                  '3.0': 'Tapping_Right'})
 raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
 raw_intensity.annotations.set_durations(5)
 
@@ -166,7 +170,7 @@ plt.xlabel("Time (s)");
 # .. sidebar:: Relevant literature
 #
 #    For further discussion on design matrices see
-#    the Nilearn examples. Specifically the 
+#    the Nilearn examples. Specifically the
 #    `first level model example <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_first_level_details.html>`_.
 #
 # Next we create a model to fit our data to.
@@ -221,7 +225,7 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # Examine expected response
 # -------------------------
 #
-# The matrices above can be a bit abstract as they encompase multiple 
+# The matrices above can be a bit abstract as they encompase multiple
 # conditions and regressors.
 # Instead we can examine a single condition.
 # Here we observe the boxcar function for a single condition,
@@ -239,7 +243,7 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 
 s = mne_nirs.experimental_design.create_boxcar(raw_intensity, stim_dur=5.0)
 plt.plot(raw_intensity.times, s[:, 1])
-plt.plot(design_matrix['Tapping/Left'])
+plt.plot(design_matrix['Tapping_Left'])
 plt.xlim(180, 300)
 plt.legend(["Stimulus", "Expected Response"])
 plt.xlabel("Time (s)")
@@ -336,7 +340,7 @@ glm_est.scatter()
 # negative of HbO as expected.
 
 glm_est = run_glm(raw_haemo, design_matrix)
-glm_est.plot_topo(conditions=['Tapping/Left', 'Tapping/Right'])
+glm_est.plot_topo(conditions=['Tapping_Left', 'Tapping_Right'])
 
 
 # %%
@@ -364,7 +368,7 @@ glm_est.plot_topo(conditions=['Tapping/Left', 'Tapping/Right'])
 fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 6), gridspec_kw=dict(width_ratios=[0.92, 1]))
 
 glm_hbo = glm_est.copy().pick(picks="hbo")
-conditions = ['Tapping/Right']
+conditions = ['Tapping_Right']
 
 glm_hbo.plot_topo(axes=axes[0], colorbar=False, conditions=conditions)
 
@@ -380,7 +384,7 @@ axes[1].set_title("Hemispheres plotted independently")
 # Another way to view the data is to project the GLM estimates to the nearest
 # cortical surface
 
-glm_est.copy().surface_projection(condition="Tapping/Right", view="dorsal", chroma="hbo")
+glm_est.copy().surface_projection(condition="Tapping_Right", view="dorsal", chroma="hbo")
 
 
 # %%
@@ -412,7 +416,7 @@ right = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7],
 groups = dict(Left_ROI=picks_pair_to_idx(raw_haemo, left),
               Right_ROI=picks_pair_to_idx(raw_haemo, right))
 
-conditions = ['Control', 'Tapping/Left', 'Tapping/Right']
+conditions = ['Control', 'Tapping_Left', 'Tapping_Right']
 
 df = glm_est.to_dataframe_region_of_interest(groups, conditions)
 
@@ -439,7 +443,7 @@ df
 contrast_matrix = np.eye(design_matrix.shape[1])
 basic_conts = dict([(column, contrast_matrix[i])
                    for i, column in enumerate(design_matrix.columns)])
-contrast_LvR = basic_conts['Tapping/Left'] - basic_conts['Tapping/Right']
+contrast_LvR = basic_conts['Tapping_Left'] - basic_conts['Tapping_Right']
 
 contrast = glm_est.compute_contrast(contrast_LvR)
 contrast.plot_topo()
@@ -474,8 +478,8 @@ df = glm_est.to_dataframe()
 # the tapping, but we do expect 5% or less for the false positive rate.
 
 (df
- .query('Condition in ["Control", "Tapping/Left", "Tapping/Right"]')
- .groupby(['Condition', 'Chroma'])
+ .query('Condition in ["Control", "Tapping_Left", "Tapping_Right"]')
+ .drop(['df', 'mse', 'p_value', 't'], axis=1)
+ .groupby(['Condition', 'Chroma', 'ch_name'])
  .agg(['mean'])
- .drop(['df', 'mse', 'p_value', 't'], 1)
  )

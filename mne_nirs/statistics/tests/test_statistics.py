@@ -16,7 +16,6 @@ from mne_nirs.simulation import simulate_nirs_raw
 iir_filter = [1., -0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.024286]
 
 
-@pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
 def test_run_GLM():
     raw = simulate_nirs_raw(sig_dur=200, stim_dur=5.)
     design_matrix = make_first_level_design_matrix(raw, stim_dur=5.,
@@ -25,7 +24,8 @@ def test_run_GLM():
     glm_estimates = run_glm(raw, design_matrix)
 
     # Test backwards compatibility
-    old_res = run_GLM(raw, design_matrix)
+    with pytest.deprecated_call(match='more comprehensive'):
+        old_res = run_GLM(raw, design_matrix)
     assert old_res.keys() == glm_estimates.data.keys()
     assert (old_res["Simulated"].theta ==
             glm_estimates.data["Simulated"].theta).all()

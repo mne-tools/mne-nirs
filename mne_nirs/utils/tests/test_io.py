@@ -14,13 +14,16 @@ from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
 from mne_nirs.statistics import run_glm
 
 
-@pytest.mark.filterwarnings('ignore:.*nilearn.glm module is experimental.*:')
+@pytest.mark.filterwarnings('ignore:.*more comprehensive.*:')
 def test_io():
     num_chans = 6
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
     fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
     raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
     raw_intensity.resample(0.2)
+    raw_intensity.annotations.description[:] = [
+        'e' + d.replace('.', 'p')
+        for d in raw_intensity.annotations.description]
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
     raw_haemo = mne_nirs.channels.get_long_channels(raw_haemo)
@@ -52,7 +55,7 @@ def test_io():
     contrast_matrix = np.eye(design_matrix.shape[1])
     basic_conts = dict([(column, contrast_matrix[i])
                         for i, column in enumerate(design_matrix.columns)])
-    contrast_LvR = basic_conts['2.0'] - basic_conts['3.0']
+    contrast_LvR = basic_conts['e2p0'] - basic_conts['e3p0']
 
     contrast = mne_nirs.statistics.compute_contrast(glm_est.data, contrast_LvR)
     df = glm_to_tidy(raw_haemo, contrast, design_matrix)
