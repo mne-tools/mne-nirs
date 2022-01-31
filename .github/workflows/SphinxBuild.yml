@@ -79,6 +79,8 @@ jobs:
       - shell: bash -el {0}
         name: 'Copy redirect html'
         run: |
+          mkdir ./doc/_build/html/main
+          mv ./doc/_build/html/* ./doc/_build/html/main 2>/dev/null
           cp ./doc/index.html ./doc/_build/html/index.html
       - shell: bash -el {0}
         name: 'Copy dockerfile for binder'
