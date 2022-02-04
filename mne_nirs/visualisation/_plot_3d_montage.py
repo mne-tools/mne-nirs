@@ -56,8 +56,8 @@ def plot_3d_montage(info, *, view_map, src_det_names='auto',
         _check_option('src_det_names', src_det_names, ('auto',),
                       extra='when str')
         # Decide if we can map to 10-20 locations
-        names, pos = zip(*
-            transform_to_head(make_standard_montage('standard_1020'))
+        names, pos = zip(
+            *transform_to_head(make_standard_montage('standard_1020'))
             .get_positions()['ch_pos'].items())
         pos = np.array(pos, float)
         locs = dict()
