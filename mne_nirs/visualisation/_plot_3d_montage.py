@@ -35,7 +35,7 @@ def plot_3d_montage(info, *, view_map, src_det_names='auto',
         S1, S2, ..., D1, D2, ..., etc. Can also be an explicit dict mapping.
     subject : str
         The subject.
-    trans : str | Transfrom
+    trans : str | Transform
         The subjects head<->MRI transform.
     subjects_dir : str
         The subjects directory.
