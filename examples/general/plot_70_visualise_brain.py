@@ -100,7 +100,7 @@ brain.show_view(azimuth=180, elevation=80, distance=450)
 # Often for publications and sanity checking, it's convenient to create an
 # image showing the channel numbers along with the (typically) 10-20 location
 # in the correct locations in a 3D view. The function
-# :func:`mne_nirs.visualization.plot_3d_montage` gives us this once we
+# :func:`mne_nirs.visualisation.plot_3d_montage` gives us this once we
 # specify which views to use to show each channel pair:
 
 view_map = {
