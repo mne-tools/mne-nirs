@@ -7,3 +7,4 @@ from._plot_GLM_topo import (plot_glm_topo, plot_glm_contrast_topo,
                             plot_glm_group_topo)
 from ._plot_quality_metrics import plot_timechannel_quality_metric
 from ._plot_GLM_surface_projection import plot_glm_surface_projection
+from ._plot_3d_montage import plot_3d_montage

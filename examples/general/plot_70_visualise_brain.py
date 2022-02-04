@@ -94,6 +94,23 @@ brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', co
 brain.add_sensors(raw.info, trans='fsaverage', fnirs=['channels', 'pairs', 'sources', 'detectors'])
 brain.show_view(azimuth=180, elevation=80, distance=450)
 
+# %%
+# Plot sensor channel numbers
+# ---------------------------
+# Often for publications and sanity checking, it's convenient to create an
+# image showing the channel numbers along with the (typically) 10-20 location
+# in the correct locations in a 3D view. The function
+# :func:`mne_nirs.visualization.plot_3d_montage` gives us this once we
+# specify which views to use to show each channel pair:
+
+view_map = {
+    'left-lat': np.r_[np.arange(1, 27), 28],
+    'caudal': np.r_[27, np.arange(43, 53)],
+    'right-lat': np.r_[np.arange(29, 43), 44],
+}
+
+fig = mne_nirs.visualisation.plot_3d_montage(
+    raw.info, view_map=view_map, subjects_dir=subjects_dir)
 
 # %%
 # Plot sensor channels and anatomical region of interest
