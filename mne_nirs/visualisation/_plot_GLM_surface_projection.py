@@ -9,7 +9,7 @@ from copy import deepcopy
 from mne import stc_near_sensors, EvokedArray, read_source_spaces, Info
 from mne.datasets import sample
 from mne.io.constants import FIFF
-from mne import verbose
+from mne.utils import verbose, get_subjects_dir
 
 
 @verbose
@@ -120,7 +120,7 @@ def _plot_3d_evoked_array(inst, ea, picks="hbo",
         ea = ea.pick(picks=picks)
 
     if subjects_dir is None:
-        subjects_dir = sample.data_path() + '/subjects'
+        subjects_dir = get_subjects_dir(raise_error=True)
     if src is None:
         fname_src_fs = os.path.join(subjects_dir, 'fsaverage', 'bem',
                                     'fsaverage-ico-5-src.fif')

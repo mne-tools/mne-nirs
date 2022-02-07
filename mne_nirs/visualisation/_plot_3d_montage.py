@@ -10,13 +10,14 @@ from mne.channels.montage import transform_to_head
 from mne.fixes import _get_args
 from mne.io import Info
 from mne.transforms import _get_trans, apply_trans
-from mne.utils import _validate_type, _check_option
+from mne.utils import _validate_type, _check_option, verbose, logger
 from mne.viz import Brain
 
 
-def plot_3d_montage(info, *, view_map, src_det_names='auto',
+@verbose
+def plot_3d_montage(info, view_map, *, src_det_names='auto',
                     subject='fsaverage', trans='fsaverage',
-                    subjects_dir=None):
+                    subjects_dir=None, verbose=None):
     """
     Plot a 3D sensor montage.
 
@@ -48,6 +49,7 @@ def plot_3d_montage(info, *, view_map, src_det_names='auto',
         The subjects head<->MRI transform.
     subjects_dir : str
         The subjects directory.
+    %(verbose)s
 
     Returns
     -------
@@ -88,7 +90,14 @@ def plot_3d_montage(info, *, view_map, src_det_names='auto',
                 locs[name] = names[idx[0]]
             if bad:
                 break
-        src_det_names = None if bad else locs
+        if bad:
+            src_det_names = None
+            logger.info('Could not automatically map source/detector names to '
+                        '10-20 locations.')
+        else:
+            src_det_names = locs
+            logger.info('Source-detector names automatically mapped to 10-20 '
+                        'locations')
 
     trans = _get_trans('fsaverage', 'head', 'mri')[0]
     views = list()

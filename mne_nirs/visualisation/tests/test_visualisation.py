@@ -8,7 +8,10 @@ import numpy as np
 import mne
 import mne_nirs
 
-from mne.utils._testing import requires_module
+from mne.channels.montage import make_standard_montage
+from mne.datasets import testing
+from mne.utils import catch_logging
+
 from mne_nirs.experimental_design.tests.test_experimental_design import \
     _load_dataset
 from mne_nirs.experimental_design import make_first_level_design_matrix
@@ -17,23 +20,32 @@ from mne_nirs.visualisation import plot_glm_topo, plot_glm_surface_projection
 from mne_nirs.utils import glm_to_tidy
 
 
+testing_path = testing.data_path(download=False)
+raw_path = testing_path + '/NIRx/nirscout/nirx_15_2_recording_w_short'
+subjects_dir = testing_path + '/subjects'
+
+
+@pytest.fixture
+@testing.requires_testing_data
 def requires_pyvista():
-    return partial(requires_module, name='pyvista')
+    pyvista = pytest.importorskip('pyvista')
+    try:
+        mne.viz.set_3d_backend('pyvista')
+    except Exception as exc:
+        pytest.skip(f'Requires pyvista, got: {exc}')
+    yield
+    pyvista.close_all()
 
 
-@requires_pyvista()
-def test_plot_nirs_source_detector_pyvista():
-    mne.viz.set_3d_backend('pyvista')
-    data_path = mne.datasets.testing.data_path() + '/NIRx/nirscout'
-    subjects_dir = mne.datasets.sample.data_path() + '/subjects'
-    raw = mne.io.read_raw_nirx(data_path + '/nirx_15_2_recording_w_short')
+def test_plot_nirs_source_detector_pyvista(requires_pyvista):
+    raw = mne.io.read_raw_nirx(raw_path)
 
     mne_nirs.visualisation.plot_nirs_source_detector(
         np.random.randn(len(raw.ch_names)),
         raw.info, show_axes=True,
         subject='fsaverage',
         trans='fsaverage',
-        surfaces=['brain'],
+        surfaces=['white'],
         fnirs=False,
         subjects_dir=subjects_dir,
         verbose=True)
@@ -43,7 +55,7 @@ def test_plot_nirs_source_detector_pyvista():
         raw.info, show_axes=True,
         subject='fsaverage',
         trans='fsaverage',
-        surfaces=['brain'],
+        surfaces=['white'],
         fnirs=False,
         subjects_dir=subjects_dir,
         verbose=True)
@@ -155,9 +167,7 @@ def test_fig_from_axes():
         _get_fig_from_axes([1, 2, 3])
 
 
-@requires_pyvista()
-def test_run_plot_GLM_projection():
-    mne.viz.set_3d_backend('pyvista')
+def test_run_plot_GLM_projection(requires_pyvista):
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
 
@@ -176,3 +186,27 @@ def test_run_plot_GLM_projection():
                                         colorbar=True, size=(800, 700),
                                         value="theta")
     assert type(brain) == mne.viz._brain.Brain
+
+
+@pytest.mark.parametrize('fname_raw, to_1020', [
+    (raw_path, False),
+    (raw_path, True),
+])
+def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020):
+    raw = mne.io.read_raw_nirx(fname_raw)
+    if to_1020:
+        need = set(sum(
+            (ch_name.split()[0].split('_') for ch_name in raw.ch_names),
+            list()))
+        mon = mne.channels.make_standard_montage('standard_1020')
+        mon.rename_channels({h: n for h, n in zip(mon.ch_names, need)})
+        raw.set_montage(mon)
+    view_map = {'left-lat': np.arange(1, len(raw.ch_names) // 2 + 1)}
+    with catch_logging() as log:
+        mne_nirs.viz.plot_3d_montage(
+            raw.info, view_map, subjects_dir=subjects_dir, verbose=True)
+    log = log.getvalue().lower()
+    if to_1020:
+        assert 'automatically mapped' in log
+    else:
+        assert 'could not' in log
