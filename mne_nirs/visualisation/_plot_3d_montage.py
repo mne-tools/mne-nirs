@@ -102,7 +102,7 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
             logger.info('Source-detector names automatically mapped to 10-20 '
                         'locations')
 
-    head_mri_n = _get_trans(trans, 'head', 'mri')[0]
+    head_mri_t = _get_trans(trans, 'head', 'mri')[0]
     del trans
     views = list()
     for key, num in view_map.items():
