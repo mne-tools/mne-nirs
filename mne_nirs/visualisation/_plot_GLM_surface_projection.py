@@ -134,7 +134,7 @@ def _plot_3d_evoked_array(inst, ea, picks="hbo",
     # Generate source estimate
     kwargs = dict(
         evoked=ea, subject='fsaverage', trans='fsaverage',
-        distance=distance, mode=mode,
+        distance=distance, mode=mode, surface=surface,
         subjects_dir=subjects_dir, src=src, project=True)
     stc = stc_near_sensors(picks=picks, **kwargs, verbose=verbose)
 

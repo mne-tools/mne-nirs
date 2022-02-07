@@ -182,7 +182,7 @@ def test_run_plot_GLM_projection(requires_pyvista):
     brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
                                         df, clim='auto', view='dorsal',
                                         colorbar=True, size=(800, 700),
-                                        value="theta",
+                                        value="theta", surface='white',
                                         subjects_dir=subjects_dir)
     assert type(brain) == mne.viz._brain.Brain
 
@@ -204,9 +204,12 @@ def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020):
         mon.rename_channels({h: n for h, n in zip(mon.ch_names, need)})
         raw.set_montage(mon)
     view_map = {'left-lat': np.arange(1, len(raw.ch_names) // 2 + 1)}
+    # We use "sample" here even though it's wrong so that we can have a head
+    # surface
     with catch_logging() as log:
         mne_nirs.viz.plot_3d_montage(
-            raw.info, view_map, subjects_dir=subjects_dir, verbose=True)
+            raw.info, view_map, subject='sample', surface='white',
+            subjects_dir=subjects_dir, verbose=True)
     assert len(pyvista.plotting._ALL_PLOTTERS) == 0
     log = log.getvalue().lower()
     if to_1020:

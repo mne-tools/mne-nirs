@@ -17,7 +17,7 @@ from mne.viz import Brain
 
 @verbose
 def plot_3d_montage(info, view_map, *, src_det_names='auto',
-                    subject='fsaverage', trans='fsaverage',
+                    subject='fsaverage', trans='fsaverage', surface='pial',
                     subjects_dir=None, verbose=None):
     """
     Plot a 3D sensor montage.
@@ -48,6 +48,8 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
         The subject.
     trans : str | Transform
         The subjects head<->MRI transform.
+    surface : str
+        The FreeSurfer surface name (e.g., 'pial', 'white').
     subjects_dir : str
         The subjects directory.
     %(verbose)s
@@ -100,7 +102,8 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
             logger.info('Source-detector names automatically mapped to 10-20 '
                         'locations')
 
-    trans = _get_trans('fsaverage', 'head', 'mri')[0]
+    head_mri_n = _get_trans(trans, 'head', 'mri')[0]
+    del trans
     views = list()
     for key, num in view_map.items():
         _validate_type(key, str, f'view_map key {repr(key)}')
@@ -114,13 +117,13 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
     del view_map
     size = (400 * len(views), 400)
     brain = Brain(
-        subject, 'both', 'pial', views=['lat'] * len(views),
+        subject, 'both', surface, views=['lat'] * len(views),
         size=size, background='w', units='m',
         view_layout='horizontal', subjects_dir=subjects_dir)
     with _safe_brain_close(brain):
         brain.add_head(dense=False, alpha=0.1)
         brain.add_sensors(
-            info, trans='fsaverage',
+            info, trans=head_mri_t,
             fnirs=['channels', 'pairs', 'sources', 'detectors'])
         add_text_kwargs = dict()
         if 'render' in _get_args(brain.plotter.add_text):
@@ -149,8 +152,7 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
                     if name in plotted:
                         continue
                     plotted.add(name)
-                    # name = rev_dict[use_]  # XXX ADD THIS
-                    ch_pos = apply_trans(trans, ch_pos)
+                    ch_pos = apply_trans(head_mri_t, ch_pos)
                     vp.SetWorldPoint(np.r_[ch_pos, 1.])
                     vp.WorldToDisplay()
                     ch_pos = (np.array(vp.GetDisplayPoint()[:2]) -
