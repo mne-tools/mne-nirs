@@ -85,9 +85,7 @@ def close_all():
 @testing.requires_testing_data
 def requires_pyvista():
     pyvista = pytest.importorskip('pyvista')
-    try:
-        mne.viz.set_3d_backend('pyvista')
-    except Exception as exc:
-        pytest.skip(f'Requires pyvista, got: {exc}')
+    pytest.importorskip('pyvistaqt')
+    mne.viz.set_3d_backend('pyvista')
     yield
     pyvista.close_all()

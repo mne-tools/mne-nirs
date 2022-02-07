@@ -109,7 +109,7 @@ view_map = {
     'right-lat': np.r_[np.arange(29, 43), 44],
 }
 
-fig = mne_nirs.visualisation.plot_3d_montage(
+fig_montage = mne_nirs.visualisation.plot_3d_montage(
     raw.info, view_map=view_map, subjects_dir=subjects_dir)
 
 # %%

@@ -175,7 +175,4 @@ def _safe_brain_close(brain):
     try:
         yield
     finally:
-        try:
-            brain.close()
-        except Exception:
-            pass
+        brain.close()
