@@ -191,7 +191,7 @@ def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020):
         mon = mne.channels.make_standard_montage('standard_1020')
         mon.rename_channels({h: n for h, n in zip(mon.ch_names, need)})
         raw.set_montage(mon)
-    n_labels = len(raw.ch_names) // 2 + 1
+    n_labels = len(raw.ch_names) // 2
     view_map = {'left-lat': np.arange(1, n_labels // 2),
                 'caudal': np.arange(n_labels // 2, n_labels + 1)}
     # We use "sample" here even though it's wrong so that we can have a head
