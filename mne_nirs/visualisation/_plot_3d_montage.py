@@ -28,6 +28,15 @@ def plot_3d_montage(info, *, view_map, src_det_names='auto',
         Dict of view (key) to channel-pair-numbers (value) to use when
         plotting. Note that, because these get plotted as 1-based channel
         *numbers*, the values should be 1-based rather than 0-based.
+        The keys are of the form:
+
+        ``'{side}-{view}'``
+            For views like ``'left-lat'`` or ``'right-frontal'`` where the side
+            matters.
+        ``'{view}'``
+            For views like ``'caudal'`` that are along the midline.
+
+        See :meth:`mne.viz.Brain.show_view` for ``view`` options.
     src_det_names : None | dict | str
         Source and detector names to use. "auto" (default) will see if the
         channel locations correspond to standard 10-20 locations and will

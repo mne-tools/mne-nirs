@@ -10,5 +10,6 @@ from . import simulation
 from . import statistics
 from . import utils
 from . import visualisation
+from . import visualisation as viz  # for MNE-Python users
 
 __all__ = ['__version__']
