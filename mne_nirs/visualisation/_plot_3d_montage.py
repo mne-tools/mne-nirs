@@ -116,7 +116,7 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
     brain = Brain(
         subject, 'both', 'pial', views=['lat'] * len(views),
         size=size, background='w', units='m',
-        view_layout='horizontal')
+        view_layout='horizontal', subjects_dir=subjects_dir)
     with _safe_brain_close(brain):
         brain.add_head(dense=False, alpha=0.1)
         brain.add_sensors(
