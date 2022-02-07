@@ -7,7 +7,6 @@ import numpy as np
 from copy import deepcopy
 
 from mne import stc_near_sensors, EvokedArray, read_source_spaces, Info
-from mne.datasets import sample
 from mne.io.constants import FIFF
 from mne.utils import verbose, get_subjects_dir
 

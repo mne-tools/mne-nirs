@@ -3,12 +3,10 @@
 # License: BSD (3-clause)
 
 import pytest
-from functools import partial
 import numpy as np
 import mne
 import mne_nirs
 
-from mne.channels.montage import make_standard_montage
 from mne.datasets import testing
 from mne.utils import catch_logging
 
