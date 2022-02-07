@@ -182,7 +182,8 @@ def test_run_plot_GLM_projection(requires_pyvista):
     brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
                                         df, clim='auto', view='dorsal',
                                         colorbar=True, size=(800, 700),
-                                        value="theta")
+                                        value="theta",
+                                        subjects_dir=subjects_dir)
     assert type(brain) == mne.viz._brain.Brain
 
 
