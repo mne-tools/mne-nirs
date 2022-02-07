@@ -23,18 +23,6 @@ raw_path = testing_path + '/NIRx/nirscout/nirx_15_2_recording_w_short'
 subjects_dir = testing_path + '/subjects'
 
 
-@pytest.fixture
-@testing.requires_testing_data
-def requires_pyvista():
-    pyvista = pytest.importorskip('pyvista')
-    try:
-        mne.viz.set_3d_backend('pyvista')
-    except Exception as exc:
-        pytest.skip(f'Requires pyvista, got: {exc}')
-    yield
-    pyvista.close_all()
-
-
 def test_plot_nirs_source_detector_pyvista(requires_pyvista):
     raw = mne.io.read_raw_nirx(raw_path)
 

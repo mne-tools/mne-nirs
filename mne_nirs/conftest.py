@@ -6,6 +6,8 @@
 import warnings
 
 import pytest
+import mne
+from mne.datasets import testing
 
 
 # most of this adapted from MNE-Python
@@ -77,3 +79,15 @@ def close_all():
     import matplotlib.pyplot as plt
     yield
     plt.close('all')
+
+
+@pytest.fixture
+@testing.requires_testing_data
+def requires_pyvista():
+    pyvista = pytest.importorskip('pyvista')
+    try:
+        mne.viz.set_3d_backend('pyvista')
+    except Exception as exc:
+        pytest.skip(f'Requires pyvista, got: {exc}')
+    yield
+    pyvista.close_all()
