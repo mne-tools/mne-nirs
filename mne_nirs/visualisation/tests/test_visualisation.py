@@ -193,6 +193,9 @@ def test_run_plot_GLM_projection(requires_pyvista):
     (raw_path, True),
 ])
 def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020):
+    import pyvista
+    pyvista.close_all()
+    assert len(pyvista.plotting._ALL_PLOTTERS) == 0
     raw = mne.io.read_raw_nirx(fname_raw)
     if to_1020:
         need = set(sum(
@@ -205,6 +208,7 @@ def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020):
     with catch_logging() as log:
         mne_nirs.viz.plot_3d_montage(
             raw.info, view_map, subjects_dir=subjects_dir, verbose=True)
+    assert len(pyvista.plotting._ALL_PLOTTERS) == 0
     log = log.getvalue().lower()
     if to_1020:
         assert 'automatically mapped' in log

@@ -2,6 +2,7 @@
 #
 # License: BSD (3-clause)
 
+import contextlib
 import numpy as np
 
 from mne import pick_info, pick_types
@@ -116,52 +117,63 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
         subject, 'both', 'pial', views=['lat'] * len(views),
         size=size, background='w', units='m',
         view_layout='horizontal')
-    brain.add_head(dense=False, alpha=0.1)
-    brain.add_sensors(
-        info, trans='fsaverage',
-        fnirs=['channels', 'pairs', 'sources', 'detectors'])
-    add_text_kwargs = dict()
-    if 'render' in _get_args(brain.plotter.add_text):
-        add_text_kwargs['render'] = False
-    for col, view in enumerate(views):
-        plotted = set()
-        brain.show_view(
-            view[1], hemi=view[0], focalpoint=(0, -0.02, 0.02),
-            distance=0.4, row=0, col=col)
-        brain.plotter.subplot(0, col)
-        vp = brain.plotter.renderer
-        for ci in view[2]:  # figure out what we need to plot
-            ch_name = str(ci)
-            this_ch = info['chs'][ci - 1]
-            name = this_ch['ch_name']
-            s_name, d_name = name.split()[0].split('_')
-            if src_det_names is not None:
-                s_name = src_det_names[s_name]
-                d_name = src_det_names[d_name]
-            needed = [
-                (ch_name, this_ch['loc'][:3], 12, 'Centered'),
-                (s_name, this_ch['loc'][3:6], 8, 'Bottom'),
-                (d_name, this_ch['loc'][6:9], 8, 'Bottom'),
-            ]
-            for name, ch_pos, font_size, va in needed:
-                if name in plotted:
-                    continue
-                plotted.add(name)
-                # name = rev_dict[use_]  # XXX ADD THIS
-                ch_pos = apply_trans(trans, ch_pos)
-                vp.SetWorldPoint(np.r_[ch_pos, 1.])
-                vp.WorldToDisplay()
-                ch_pos = (np.array(vp.GetDisplayPoint()[:2]) -
-                          np.array(vp.GetOrigin()))
+    with _safe_brain_close(brain):
+        brain.add_head(dense=False, alpha=0.1)
+        brain.add_sensors(
+            info, trans='fsaverage',
+            fnirs=['channels', 'pairs', 'sources', 'detectors'])
+        add_text_kwargs = dict()
+        if 'render' in _get_args(brain.plotter.add_text):
+            add_text_kwargs['render'] = False
+        for col, view in enumerate(views):
+            plotted = set()
+            brain.show_view(
+                view[1], hemi=view[0], focalpoint=(0, -0.02, 0.02),
+                distance=0.4, row=0, col=col)
+            brain.plotter.subplot(0, col)
+            vp = brain.plotter.renderer
+            for ci in view[2]:  # figure out what we need to plot
+                ch_name = str(ci)
+                this_ch = info['chs'][ci - 1]
+                name = this_ch['ch_name']
+                s_name, d_name = name.split()[0].split('_')
+                if src_det_names is not None:
+                    s_name = src_det_names[s_name]
+                    d_name = src_det_names[d_name]
+                needed = [
+                    (ch_name, this_ch['loc'][:3], 12, 'Centered'),
+                    (s_name, this_ch['loc'][3:6], 8, 'Bottom'),
+                    (d_name, this_ch['loc'][6:9], 8, 'Bottom'),
+                ]
+                for name, ch_pos, font_size, va in needed:
+                    if name in plotted:
+                        continue
+                    plotted.add(name)
+                    # name = rev_dict[use_]  # XXX ADD THIS
+                    ch_pos = apply_trans(trans, ch_pos)
+                    vp.SetWorldPoint(np.r_[ch_pos, 1.])
+                    vp.WorldToDisplay()
+                    ch_pos = (np.array(vp.GetDisplayPoint()[:2]) -
+                            np.array(vp.GetOrigin()))
 
-                actor = brain.plotter.add_text(
-                    name, ch_pos, font_size=font_size, color=(0., 0., 0.),
-                    **add_text_kwargs)
-                prop = actor.GetTextProperty()
-                getattr(prop, f'SetVerticalJustificationTo{va}')()
-                prop.SetJustificationToCentered()
-                actor.SetTextProperty(prop)
-                prop.SetBold(True)
-    img = brain.screenshot()
-    brain.close()
+                    actor = brain.plotter.add_text(
+                        name, ch_pos, font_size=font_size, color=(0., 0., 0.),
+                        **add_text_kwargs)
+                    prop = actor.GetTextProperty()
+                    getattr(prop, f'SetVerticalJustificationTo{va}')()
+                    prop.SetJustificationToCentered()
+                    actor.SetTextProperty(prop)
+                    prop.SetBold(True)
+        img = brain.screenshot()
     return plt.figimage(img, resize=True).figure
+
+
+@contextlib.contextmanager
+def _safe_brain_close(brain):
+    try:
+        yield
+    finally:
+        try:
+            brain.close()
+        except Exception:
+            pass
