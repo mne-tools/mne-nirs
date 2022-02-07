@@ -154,7 +154,7 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
                     vp.SetWorldPoint(np.r_[ch_pos, 1.])
                     vp.WorldToDisplay()
                     ch_pos = (np.array(vp.GetDisplayPoint()[:2]) -
-                            np.array(vp.GetOrigin()))
+                              np.array(vp.GetOrigin()))
 
                     actor = brain.plotter.add_text(
                         name, ch_pos, font_size=font_size, color=(0., 0., 0.),
