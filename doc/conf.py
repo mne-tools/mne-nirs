@@ -232,8 +232,8 @@ intersphinx_mapping = {
     'scipy': ('https://scipy.github.io/devdocs', None),
     'matplotlib': ('https://matplotlib.org/', None),
     'mne': ('https://mne.tools/stable', None),
-    'nilearn': ('http://nilearn.github.io/', None),
-    'sklearn': ('http://scikit-learn.org/stable', None),
+    'nilearn': ('https://nilearn.github.io/', None),
+    'sklearn': ('https://scikit-learn.org/stable', None),
     'mne_bids': ('https://mne.tools/mne-bids/stable', None),
     'statsmodels': ('https://www.statsmodels.org/stable', None)
 }

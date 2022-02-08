@@ -95,6 +95,8 @@ brain.add_sensors(raw.info, trans='fsaverage', fnirs=['channels', 'pairs', 'sour
 brain.show_view(azimuth=180, elevation=80, distance=450)
 
 # %%
+# .. _tut-fnirs-vis-brain-plot-3d-montage:
+#
 # Plot sensor channel numbers
 # ---------------------------
 # Often for publications and sanity checking, it's convenient to create an

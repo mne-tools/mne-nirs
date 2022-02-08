@@ -38,12 +38,16 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
         ``'{view}'``
             For views like ``'caudal'`` that are along the midline.
 
-        See :meth:`mne.viz.Brain.show_view` for ``view`` options.
+        See :meth:`mne.viz.Brain.show_view` for ``view`` options, and the
+        Examples section below for usage examples.
     src_det_names : None | dict | str
         Source and detector names to use. "auto" (default) will see if the
         channel locations correspond to standard 10-20 locations and will
         use those if they do (otherwise will act like None). None will use
-        S1, S2, ..., D1, D2, ..., etc. Can also be an explicit dict mapping.
+        S1, S2, ..., D1, D2, ..., etc. Can also be an explicit dict mapping,
+        for example::
+
+            src_det_names=dict(S1='Fz', D1='FCz', ...)
     subject : str
         The subject.
     trans : str | Transform
@@ -58,6 +62,21 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
     -------
     figure : matplotlib.figure.Figure
         The matplotlib figimage.
+
+    Examples
+    --------
+    For a Hitachi system with two sets of 12 source-detector arrangements,
+    one on each side of the head, showing 1-12 on the left and 13-24 on the
+    right can be accomplished using the following ``view_map``::
+
+        >>> view_map = {
+        ...     'left-lat': np.arange(1, 13),
+        ...     'right-lat': np.arange(13, 25),
+        ... }
+
+    NIRx typically involves more complicated arrangements. See
+    :ref:`the 3D tutorial <tut-fnirs-vis-brain-plot-3d-montage>` for
+    an advanced example that incorporates the ``'caudal'`` view as well.
     """
     import matplotlib.pyplot as plt
     from scipy.spatial.distance import cdist
