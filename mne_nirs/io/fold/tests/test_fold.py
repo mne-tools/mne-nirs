@@ -46,7 +46,7 @@ def test_channel_specificity(monkeypatch, tmp_path, fold_files):
         assert fold_files is None
         monkeypatch.setenv('MNE_NIRS_FOLD_PATH', str(tmp_path))
         assert len(kwargs) == 0
-        with pytest.raises(FileNotFoundError, match=r'.*fold_files\[0\] no.*'):
+        with pytest.raises(FileNotFoundError, match=r'fold_files\[0\] does.*'):
             fold_channel_specificity(raw)
         n_want *= 2
     copyfile(foldfile, tmp_path / '10-10.xls')

@@ -9,7 +9,7 @@ import numpy as np
 
 import mne
 from mne.transforms import apply_trans, _get_trans
-from mne.utils import _validate_type
+from mne.utils import _validate_type, _check_fname
 from mne.io import BaseRaw
 
 
@@ -221,18 +221,15 @@ def _check_load_fold(fold_files, atlas):
                 'MNE_NIRS_FOLD_PATH not set, either set it using '
                 'mne.set_config or pass fold_files as str or list')
     if not isinstance(fold_files, list):  # path-like
-        if not op.isdir(fold_files):
-            raise ValueError(
-                'fold_files as a string must point to a directory, but '
-                f'{repr(fold_files)} is not a directory')
+        fold_files = _check_fname(
+            fold_files, overwrite='read', must_exist=True, name='fold_files',
+            need_dir=True)
         fold_files = [op.join(fold_files, f'10-{x}.xls') for x in (5, 10)]
 
     fold_tbl = pd.DataFrame()
     for fi, fname in enumerate(fold_files):
-        _validate_type(fname, 'path-like', f'fold_files[{fi}]')
-        if not op.isfile(fname):
-            raise FileNotFoundError(
-                f'fold_files[{fi}] not found: {repr(fname)}')
+        fname = _check_fname(fname, overwrite='read', must_exist=True,
+                             name=f'fold_files[{fi}]')
         fold_tbl = pd.concat([fold_tbl, _read_fold_xls(fname, atlas=atlas)],
                              ignore_index=True)
     return fold_tbl
