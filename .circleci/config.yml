@@ -102,12 +102,7 @@ jobs:
         - run:
             name: Download fOLD data
             command: |
-              curl -L https://github.com/nirx/fOLD-public/archive/master.zip --output data.zip
-              pwd
-              unzip data.zip -d ~/mne_data/fOLD
-              ls
-              ls ~
-              ls ~/mne_data/fOLD
+              ./tools/fold.sh
 
         - run:
             name: Check PyQt5

@@ -2,8 +2,11 @@
 #
 # License: BSD (3-clause)
 
+import os.path as op
+
 import pandas as pd
 import numpy as np
+
 import mne
 from mne.transforms import apply_trans, _get_trans
 from mne.utils import _validate_type
@@ -100,7 +103,7 @@ def _find_closest_standard_location(position, reference, trans_pos='mri'):
     return reference["label"][min_idx]
 
 
-def fold_landmark_specificity(raw, landmark, fold_files=[None],
+def fold_landmark_specificity(raw, landmark, fold_files=None,
                               atlas="Juelich"):
     """Return the specificity of each channel to a specified brain landmark.
 
@@ -118,8 +121,10 @@ def fold_landmark_specificity(raw, landmark, fold_files=[None],
         The fNIRS data.
     landmark : str
         Landmark of interest. Must be present in fOLD toolbox data file.
-    fold_files : list
-        Paths to fold toolbox files.
+    fold_files : list | path-like | None
+        If None, will use the MNE_NIRS_FOLD_PATH config variable.
+        If str, should be a path containing '10-10.xls' and '10-5.xls'.
+        If list, should be paths to the fold toolbox files.
     atlas : str
         Brain atlas to use.
 
@@ -132,20 +137,12 @@ def fold_landmark_specificity(raw, landmark, fold_files=[None],
     ----------
     .. footbibliography::
     """
-    if None in fold_files:
-        raise ValueError("You must specify the path to fOLD xls files")
-
-    if not isinstance(landmark, str):
-        raise ValueError(f"Landmark must be a string. Got {type(landmark)}")
-
+    _validate_type(landmark, str, 'landmark')
     _validate_type(raw, BaseRaw, 'raw')
 
     reference_locations = _generate_montage_locations()
 
-    fold_tbl = pd.DataFrame()
-    for fname in fold_files:
-        fold_tbl = pd.concat([fold_tbl, _read_fold_xls(fname, atlas=atlas)],
-                             ignore_index=True)
+    fold_tbl = _check_load_fold(fold_files, atlas)
 
     specificity = np.zeros(len(raw.ch_names))
     for cidx in range(len(raw.ch_names)):
@@ -168,7 +165,7 @@ def fold_landmark_specificity(raw, landmark, fold_files=[None],
     return np.array(specificity)
 
 
-def fold_channel_specificity(raw, fold_files=[None], atlas="Juelich"):
+def fold_channel_specificity(raw, fold_files=None, atlas="Juelich"):
     """Return the landmarks and specificity a channel is sensitive to.
 
     Specificity values as stored in the fOLD toolbox
@@ -183,8 +180,10 @@ def fold_channel_specificity(raw, fold_files=[None], atlas="Juelich"):
     ----------
     raw : BaseRaw
         The fNIRS data.
-    fold_files : list
-        Paths to fold toolbox files.
+    fold_files : list | path-like | None
+        If None, will use the MNE_NIRS_FOLD_PATH config variable.
+        If str, should be a path containing '10-10.xls' and '10-5.xls'.
+        If list, should be paths to the fold toolbox files.
     atlas : str
         Brain atlas to use.
 
@@ -197,17 +196,11 @@ def fold_channel_specificity(raw, fold_files=[None], atlas="Juelich"):
     ----------
     .. footbibliography::
     """
-    if None in fold_files:
-        raise ValueError("You must specify the path to fOLD xls files")
-
     _validate_type(raw, BaseRaw, 'raw')
 
     reference_locations = _generate_montage_locations()
 
-    fold_tbl = pd.DataFrame()
-    for fname in fold_files:
-        fold_tbl = pd.concat([fold_tbl, _read_fold_xls(fname, atlas=atlas)],
-                             ignore_index=True)
+    fold_tbl = _check_load_fold(fold_files, atlas)
 
     chan_spec = list()
     for cidx in range(len(raw.ch_names)):
@@ -217,6 +210,32 @@ def fold_channel_specificity(raw, fold_files=[None], atlas="Juelich"):
         chan_spec.append(tbl.reset_index(drop=True))
 
     return chan_spec
+
+
+def _check_load_fold(fold_files, atlas):
+    _validate_type(fold_files, (list, 'path-like', None), 'fold_files')
+    if fold_files is None:
+        fold_files = mne.get_config('MNE_NIRS_FOLD_PATH')
+        if fold_files is None:
+            raise ValueError(
+                'MNE_NIRS_FOLD_PATH not set, either set it using '
+                'mne.set_config or pass fold_files as str or list')
+    if not isinstance(fold_files, list):  # path-like
+        if not op.isdir(fold_files):
+            raise ValueError(
+                'fold_files as a string must point to a directory, but '
+                f'{repr(fold_files)} is not a directory')
+        fold_files = [op.join(fold_files, f'10-{x}.xls') for x in (5, 10)]
+
+    fold_tbl = pd.DataFrame()
+    for fi, fname in enumerate(fold_files):
+        _validate_type(fname, 'path-like', f'fold_files[{fi}]')
+        if not op.isfile(fname):
+            raise FileNotFoundError(
+                f'fold_files[{fi}] not found: {repr(fname)}')
+        fold_tbl = pd.concat([fold_tbl, _read_fold_xls(fname, atlas=atlas)],
+                             ignore_index=True)
+    return fold_tbl
 
 
 def _source_detector_fold_table(raw, cidx, reference_locations, fold_tbl):

@@ -153,12 +153,8 @@ brain.show_view(azimuth=180, elevation=80, distance=450)
 # To see more details about how to use the fOLD data see
 # `this tutorial <https://mne.tools/mne-nirs/main/auto_examples/general/plot_12_group_glm.html#id13>`_.
 
-# Specify the location of the fOLD files
-fold_files = [os.path.join(os.path.expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-10.xls"),
-              os.path.join(os.path.expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-5.xls")]
-
 # Return specificity of each channel to the Left IFG
-specificity = fold_landmark_specificity(raw, 'L IFG (p. Triangularis)', fold_files)
+specificity = fold_landmark_specificity(raw, 'L IFG (p. Triangularis)')
 
 # Retain only channels with specificity to left IFG of greater than 50%
 raw_IFG = raw.copy().pick(picks=np.where(specificity > 50)[0])
@@ -220,8 +216,8 @@ rois["Audio_weighted"] = range(len(glm_est.ch_names))
 rois["Visual_weighted"] = range(len(glm_est.ch_names))
 
 # Next we compute the specificity for each channel to the auditory and visual cortex.
-spec_aud = fold_landmark_specificity(raw_haemo, '42 - Primary and Auditory Association Cortex', fold_files, atlas="Brodmann")
-spec_vis = fold_landmark_specificity(raw_haemo, '17 - Primary Visual Cortex (V1)', fold_files, atlas="Brodmann")
+spec_aud = fold_landmark_specificity(raw_haemo, '42 - Primary and Auditory Association Cortex', atlas="Brodmann")
+spec_vis = fold_landmark_specificity(raw_haemo, '17 - Primary Visual Cortex (V1)', atlas="Brodmann")
 
 # Next we create a dictionary to store the weights for each channel in the ROI.
 # The weights will be the specificity to the ROI.
