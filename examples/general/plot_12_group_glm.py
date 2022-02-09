@@ -80,7 +80,6 @@ information about triggers, condition names, etc.
 # Import common libraries
 import numpy as np
 import pandas as pd
-import os
 
 # Import MNE processing
 from mne.preprocessing.nirs import optical_density, beer_lambert_law

@@ -27,7 +27,6 @@ This tutorial glosses over the processing details, see the
 #
 # License: BSD (3-clause)
 
-import os
 import numpy as np
 import pandas as pd
 
