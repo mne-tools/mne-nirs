@@ -11,11 +11,15 @@ import matplotlib
 from matplotlib.pyplot import Axes
 
 import mne
+from mne.datasets import testing
 import nilearn
 
 from mne_nirs.statistics import RegressionResults, read_glm
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_glm
+
+data_path = testing.data_path(download=False)
+subjects_dir = data_path + '/subjects'
 
 
 def _get_minimal_haemo_data(tmin=0, tmax=60):
@@ -133,10 +137,11 @@ def test_glm_scatter():
     assert isinstance(_get_glm_contrast_result().scatter(), Axes)
 
 
-def test_glm_surface_projection():
+def test_glm_surface_projection(requires_pyvista):
 
     res = _get_glm_result(tmax=2974, tmin=0)
-    res.surface_projection(condition="e3p0", view="dorsal")
+    res.surface_projection(condition="e3p0", view="dorsal", surface="white",
+                           subjects_dir=subjects_dir)
     with pytest.raises(KeyError, match='not found in conditions'):
         res.surface_projection(condition='foo')
 

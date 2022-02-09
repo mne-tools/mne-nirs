@@ -230,6 +230,7 @@ fNIRS specific data visualisation.
 .. autosummary::
    :toctree: generated/
 
+   plot_3d_montage
    plot_nirs_source_detector
 
 
