@@ -312,7 +312,6 @@ def _source_detector_fold_table(raw, cidx, reference, fold_tbl, atlas):
              module='mne_nirs', ignore_namespaces=('mne', 'mne_nirs'))
         tbl = fold_tbl.query("Source == @src_use and Detector == @det_use")
         assert len(tbl)
-        #raise RuntimeError
 
     tbl = tbl.copy()  # don't get warnings about setting values later
     return tbl
