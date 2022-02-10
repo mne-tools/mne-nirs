@@ -36,15 +36,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
         name: 'Setup python'
       - name: Download fOLD data
-        shell: bash -el {0}
-        run: |
-          curl -L https://github.com/nirx/fOLD-public/archive/master.zip --output data.zip
-          pwd
-          mkdir ~/mne_data
-          unzip data.zip -d ~/mne_data/fOLD
-          ls
-          ls ~
-          ls ~/mne_data/fOLD
+        run: ./tools/fold.sh
       - shell: bash -el {0}
         run: |
           ./tools/github_actions_dependencies.sh

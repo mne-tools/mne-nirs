@@ -11,10 +11,6 @@ from mne.datasets import testing
 
 
 # most of this adapted from MNE-Python
-# TODO: Add to mne's allowed config keys:
-# MNE_DATASETS_FNIRSMOTORGROUP_PATH
-# MNE_DATASETS_FNIRSSPEECHNOISE_PATH
-# MNE_DATASETS_FNIRSAUDIOVISUALSPEECH_PATH
 
 def pytest_configure(config):
     """Configure pytest options."""

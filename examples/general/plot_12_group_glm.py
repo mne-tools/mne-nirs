@@ -80,7 +80,6 @@ information about triggers, condition names, etc.
 # Import common libraries
 import numpy as np
 import pandas as pd
-import os
 
 # Import MNE processing
 from mne.preprocessing.nirs import optical_density, beer_lambert_law
@@ -551,6 +550,8 @@ ch_model_df
 
 
 # %%
+# .. _tut-fnirs-group-relating:
+#
 # Relating Responses to Brain Landmarks
 # -------------------------------------
 #
@@ -572,13 +573,9 @@ ch_model_df
 #
 # Next, we query the fOLD dataset to determine the
 # brain landmarks that this channel is most sensitive to.
-#
 # MNE-NIRS does not distribute the fOLD toolbox or the data
-# that they provide.
-# The fOLD data is hosted at https://github.com/nirx/fOLD-public
-# and you should download that first. Then you can use these functions
-# to query their data. You must cite the fOLD authors if you
-# use their tool or data.
+# that they provide. See the Notes section of
+# :func:`mne_nirs.io.fold_channel_specificity` for more information.
 
 largest_response_channel = ch_model_df.loc[ch_model_df['Coef.'].idxmax()]
 largest_response_channel
@@ -588,19 +585,12 @@ largest_response_channel
 #
 # Next we use information from the fOLD toolbox to report the
 # channel specificity to different brain regions.
-# These files are not distributedd with MNE-NIRS.
-# You need to download them from the authors website.
-# In this example I have downloaded the entire ``fOLD-public`` repository
-# as a zip and expanded it in ``/home/rob/mne_data/fOLD/``.
-# To use the functions ``fold_channel_specificity`` and ``fold_landmark_specificity``
-# you must pass the location of the fOLD xls files as an argument
-# so the software knows where you placed the data.
-
-fold_files = [os.path.join(os.path.expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-10.xls"),
-              os.path.join(os.path.expanduser("~"), "mne_data", "fOLD", "fOLD-public-master", "Supplementary", "10-5.xls")]
+# For licensing reasons, these files are not distributed with MNE-NIRS.
+# To set up your system to use the fOLD functions, see the Notes section of
+# :func:`mne_nirs.io.fold_channel_specificity`.
 
 raw_channel = raw_haemo.copy().pick(largest_response_channel.name[0])
-fold_channel_specificity(raw_channel, fold_files)[0]
+fold_channel_specificity(raw_channel)[0]
 
 
 # %%
