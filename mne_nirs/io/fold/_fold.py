@@ -115,8 +115,8 @@ def fold_landmark_specificity(raw, landmark, fold_files=None,
         Landmark of interest. Must be present in fOLD toolbox data file.
     fold_files : list | path-like | None
         If None, will use the MNE_NIRS_FOLD_PATH config variable.
-        If str, should be a path containing '10-10.xls' and '10-5.xls'.
-        If list, should be paths to the fold toolbox files.
+        If path-like, should be a path to a directory containing '10-10.xls'
+        and '10-5.xls'. If list, should be paths to the fold toolbox files.
         See the Notes section of :func:`~mne_nirs.io.fold_channel_specificity`
         for details.
     atlas : str
@@ -178,8 +178,8 @@ def fold_channel_specificity(raw, fold_files=None, atlas="Juelich"):
         The fNIRS data.
     fold_files : list | path-like | None
         If None, will use the MNE_NIRS_FOLD_PATH config variable.
-        If str, should be a path containing '10-10.xls' and '10-5.xls'.
-        If list, should be paths to the fold toolbox files.
+        If path-like, should be a path to a directory containing '10-10.xls'
+        and '10-5.xls'. If list, should be paths to the fold toolbox files.
         See Notes for details.
     atlas : str
         Brain atlas to use.
