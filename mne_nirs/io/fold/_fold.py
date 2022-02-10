@@ -107,14 +107,6 @@ def fold_landmark_specificity(raw, landmark, fold_files=None,
                               atlas="Juelich"):
     """Return the specificity of each channel to a specified brain landmark.
 
-    Specificity values as stored in the fOLD toolbox
-    :footcite:`morais2018fnirs`
-    excel files.
-
-    The data is not provided with MNE-NIRS. You must download the excel
-    spreadsheets from the authors website and provide the paths using
-    the ``fold_files`` argument.
-
     Parameters
     ----------
     raw : BaseRaw
@@ -125,30 +117,19 @@ def fold_landmark_specificity(raw, landmark, fold_files=None,
         If None, will use the MNE_NIRS_FOLD_PATH config variable.
         If str, should be a path containing '10-10.xls' and '10-5.xls'.
         If list, should be paths to the fold toolbox files.
+        See the Notes section of :func:`~mne_nirs.io.fold_channel_specificity`
+        for details.
     atlas : str
         Brain atlas to use.
-     Notes
-     --------
-     For licensing reasons, the fOLD files are not distributed with MNE-NIRS.
-     You need to download them from the author's website.
-     To utilise the MNE_NIRS_FOLD_PATH config for the fold_files parameter
-     you can download the entire ``fOLD-public`` repository
-     as a zip and expanded it in ``~/mne_data/fOLD/fOLD-public-master``,
-     and then set the config by running::
-     
-         >>> mne.set_config('MNE_NIRS_FOLD_PATH', '~/mne_data/fOLD/fOLD-public-master/Supplementary')
 
-     From then on, the functions ``fold_channel_specificity`` and
-     ``fold_landmark_specificity`` will use this location for the fOLD xls files.
-     We recommend this procedure so that the files can be reused automatically.
     Returns
     -------
     spec : array
         Specificity values for each channel to brain landmark.
 
-    References
-    ----------
-    .. footbibliography::
+    See Also
+    --------
+    fold_landmark_specificity
     """
     _validate_type(landmark, str, 'landmark')
     _validate_type(raw, BaseRaw, 'raw')
@@ -181,14 +162,6 @@ def fold_landmark_specificity(raw, landmark, fold_files=None,
 def fold_channel_specificity(raw, fold_files=None, atlas="Juelich"):
     """Return the landmarks and specificity a channel is sensitive to.
 
-    Specificity values as stored in the fOLD toolbox
-    :footcite:`morais2018fnirs`
-    excel files.
-
-    The data is not provided with MNE-NIRS. You must download the excel
-    spreadsheets from the authors website and provide the paths using
-    the ``fold_files`` argument.
-
     Parameters
     ----------
     raw : BaseRaw
@@ -197,26 +170,37 @@ def fold_channel_specificity(raw, fold_files=None, atlas="Juelich"):
         If None, will use the MNE_NIRS_FOLD_PATH config variable.
         If str, should be a path containing '10-10.xls' and '10-5.xls'.
         If list, should be paths to the fold toolbox files.
+        See Notes for details.
     atlas : str
         Brain atlas to use.
-     Notes
-     --------
-     For licensing reasons, the fOLD files are not distributed with MNE-NIRS.
-     You need to download them from the author's website.
-     To utilise the MNE_NIRS_FOLD_PATH config for the fold_files parameter
-     you can download the entire ``fOLD-public`` repository
-     as a zip and expanded it in ``~/mne_data/fOLD/fOLD-public-master``,
-     and then set the config by running::
-     
-         >>> mne.set_config('MNE_NIRS_FOLD_PATH', '~/mne_data/fOLD/fOLD-public-master/Supplementary')
 
-     From then on, the functions ``fold_channel_specificity`` and
-     ``fold_landmark_specificity`` will use this location for the fOLD xls files.
-     We recommend this procedure so that the files can be reused automatically.
     Returns
     -------
     spec : list of dataframes
         List of dataframes, one for each channel.
+
+    See Also
+    --------
+    fold_landmark_specificity
+
+    Notes
+    -----
+    Specificity values are provided by the fOLD toolbox
+    :footcite:`morais2018fnirs` excel files.
+     For licensing reasons, these files are not distributed with MNE-NIRS.
+     You need to download them from the author's website.
+     To automatically utilize the ``MNE_NIRS_FOLD_PATH`` config for the
+     ``fold_files`` parameter, you can download the entire ``fOLD-public``
+     repository as a zip and expand it to some suitable location like
+     ``~/mne_data/fOLD/fOLD-public-master``, and then set the config value
+     on your machine by running::
+
+         >>> mne.set_config('MNE_NIRS_FOLD_PATH', '~/mne_data/fOLD/fOLD-public-master/Supplementary')
+
+    From then on, this function and
+    :func:`~mne_nirs.io.fold_landmark_specificity`` will use this directory
+    to find the fOLD xls files. We recommend following this procedure so that
+    the files can be reused automatically.
 
     References
     ----------

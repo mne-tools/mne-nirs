@@ -150,7 +150,7 @@ brain.show_view(azimuth=180, elevation=80, distance=450)
 # In this example we highlight the left inferior frontal gyrus (IFG) and
 # use data from the fOLD toolbox :footcite:`morais2018fnirs`.
 # To see more details about how to use the fOLD data see
-# `this tutorial <https://mne.tools/mne-nirs/main/auto_examples/general/plot_12_group_glm.html#id13>`_.
+# :ref:`this tutorial <tut-fnirs-group-relating>`.
 
 # Return specificity of each channel to the Left IFG
 specificity = fold_landmark_specificity(raw, 'L IFG (p. Triangularis)')
