@@ -550,7 +550,7 @@ ch_model_df
 
 
 # %%
-#.. _tut-fnirs-group-relating:
+# .. _tut-fnirs-group-relating:
 #
 # Relating Responses to Brain Landmarks
 # -------------------------------------

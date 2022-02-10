@@ -197,17 +197,17 @@ def fold_channel_specificity(raw, fold_files=None, atlas="Juelich"):
     -----
     Specificity values are provided by the fOLD toolbox
     :footcite:`morais2018fnirs` excel files.
-     For licensing reasons, these files are not distributed with MNE-NIRS.
-     You need to download them from
-     `the author's website <https://github.com/nirx/fOLD-public>`__.
-     To automatically utilize the ``MNE_NIRS_FOLD_PATH`` config for the
-     ``fold_files`` parameter, you can download the entire ``fOLD-public``
-     repository `as a zip <https://github.com/nirx/fOLD-public/archive/refs/heads/master.zip>`__
-     and expand it to some suitable location like
-     ``~/mne_data/fOLD/fOLD-public-master``, and then set the config value
-     on your machine by using :func:`mne:mne.set_config` like::
+    For licensing reasons, these files are not distributed with MNE-NIRS.
+    You need to download them from
+    `the author's website <https://github.com/nirx/fOLD-public>`__.
+    To automatically utilize the ``MNE_NIRS_FOLD_PATH`` config for the
+    ``fold_files`` parameter, you can download the entire ``fOLD-public``
+    repository `as a zip <https://github.com/nirx/fOLD-public/archive/refs/heads/master.zip>`__
+    and expand it to some suitable location like
+    ``~/mne_data/fOLD/fOLD-public-master``, and then set the config value
+    on your machine by using :func:`mne:mne.set_config` like::
 
-         >>> mne.set_config('MNE_NIRS_FOLD_PATH', '~/mne_data/fOLD/fOLD-public-master/Supplementary')
+        >>> mne.set_config('MNE_NIRS_FOLD_PATH', '~/mne_data/fOLD/fOLD-public-master/Supplementary')
 
     From then on, :func:`~mne_nirs.io.fold_channel_specificity` and
     :func:`~mne_nirs.io.fold_landmark_specificity` will automatically use this
