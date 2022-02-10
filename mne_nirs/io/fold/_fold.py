@@ -210,7 +210,7 @@ def fold_channel_specificity(raw, fold_files=None, atlas="Juelich"):
          >>> mne.set_config('MNE_NIRS_FOLD_PATH', '~/mne_data/fOLD/fOLD-public-master/Supplementary')
 
     From then on, :func:`~mne_nirs.io.fold_channel_specificity` and
-    :func:`~mne_nirs.io.fold_landmark_specificity`` will automatically use this
+    :func:`~mne_nirs.io.fold_landmark_specificity` will automatically use this
     directory to find the fOLD xls files when you pass ``fold_files=None``
     (which is the default). We recommend following this procedure so that
     the files can be reused automatically.
