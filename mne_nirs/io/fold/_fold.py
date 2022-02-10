@@ -127,7 +127,20 @@ def fold_landmark_specificity(raw, landmark, fold_files=None,
         If list, should be paths to the fold toolbox files.
     atlas : str
         Brain atlas to use.
+     Notes
+     --------
+     For licensing reasons, the fOLD files are not distributed with MNE-NIRS.
+     You need to download them from the author's website.
+     To utilise the MNE_NIRS_FOLD_PATH config for the fold_files parameter
+     you can download the entire ``fOLD-public`` repository
+     as a zip and expanded it in ``~/mne_data/fOLD/fOLD-public-master``,
+     and then set the config by running::
+     
+         >>> mne.set_config('MNE_NIRS_FOLD_PATH', '~/mne_data/fOLD/fOLD-public-master/Supplementary')
 
+     From then on, the functions ``fold_channel_specificity`` and
+     ``fold_landmark_specificity`` will use this location for the fOLD xls files.
+     We recommend this procedure so that the files can be reused automatically.
     Returns
     -------
     spec : array
@@ -186,7 +199,20 @@ def fold_channel_specificity(raw, fold_files=None, atlas="Juelich"):
         If list, should be paths to the fold toolbox files.
     atlas : str
         Brain atlas to use.
+     Notes
+     --------
+     For licensing reasons, the fOLD files are not distributed with MNE-NIRS.
+     You need to download them from the author's website.
+     To utilise the MNE_NIRS_FOLD_PATH config for the fold_files parameter
+     you can download the entire ``fOLD-public`` repository
+     as a zip and expanded it in ``~/mne_data/fOLD/fOLD-public-master``,
+     and then set the config by running::
+     
+         >>> mne.set_config('MNE_NIRS_FOLD_PATH', '~/mne_data/fOLD/fOLD-public-master/Supplementary')
 
+     From then on, the functions ``fold_channel_specificity`` and
+     ``fold_landmark_specificity`` will use this location for the fOLD xls files.
+     We recommend this procedure so that the files can be reused automatically.
     Returns
     -------
     spec : list of dataframes
