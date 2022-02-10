@@ -205,7 +205,7 @@ def fold_channel_specificity(raw, fold_files=None, atlas="Juelich"):
     References
     ----------
     .. footbibliography::
-    """
+    """  # noqa: E501
     _validate_type(raw, BaseRaw, 'raw')
 
     reference_locations = _generate_montage_locations()
