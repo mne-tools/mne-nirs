@@ -130,6 +130,16 @@ def fold_landmark_specificity(raw, landmark, fold_files=None,
     See Also
     --------
     fold_landmark_specificity
+
+    Notes
+    -----
+    Specificity values are provided by the fOLD toolbox
+    :footcite:`morais2018fnirs` excel files. See the Notes section of
+    :func:`~mne_nirs.io.fold_channel_specificity` for more details.
+
+    References
+    ----------
+    .. footbibliography::
     """
     _validate_type(landmark, str, 'landmark')
     _validate_type(raw, BaseRaw, 'raw')
@@ -188,18 +198,21 @@ def fold_channel_specificity(raw, fold_files=None, atlas="Juelich"):
     Specificity values are provided by the fOLD toolbox
     :footcite:`morais2018fnirs` excel files.
      For licensing reasons, these files are not distributed with MNE-NIRS.
-     You need to download them from the author's website.
+     You need to download them from
+     `the author's website <https://github.com/nirx/fOLD-public>`__.
      To automatically utilize the ``MNE_NIRS_FOLD_PATH`` config for the
      ``fold_files`` parameter, you can download the entire ``fOLD-public``
-     repository as a zip and expand it to some suitable location like
+     repository `as a zip <https://github.com/nirx/fOLD-public/archive/refs/heads/master.zip>`__
+     and expand it to some suitable location like
      ``~/mne_data/fOLD/fOLD-public-master``, and then set the config value
-     on your machine by running::
+     on your machine by using :func:`mne:mne.set_config` like::
 
          >>> mne.set_config('MNE_NIRS_FOLD_PATH', '~/mne_data/fOLD/fOLD-public-master/Supplementary')
 
-    From then on, this function and
-    :func:`~mne_nirs.io.fold_landmark_specificity`` will use this directory
-    to find the fOLD xls files. We recommend following this procedure so that
+    From then on, :func:`~mne_nirs.io.fold_channel_specificity` and
+    :func:`~mne_nirs.io.fold_landmark_specificity`` will automatically use this
+    directory to find the fOLD xls files when you pass ``fold_files=None``
+    (which is the default). We recommend following this procedure so that
     the files can be reused automatically.
 
     References
