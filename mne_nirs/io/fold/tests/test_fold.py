@@ -11,10 +11,11 @@ from numpy.testing import assert_allclose
 import pandas as pd
 import pytest
 
+import mne
 from mne.channels import make_standard_montage
 from mne.channels.montage import transform_to_head
 from mne.datasets.testing import data_path, requires_testing_data
-from mne.io import read_raw_nirx
+from mne.io import read_raw_nirx, read_fiducials
 from mne.utils import check_version
 
 from mne_nirs.io.fold._fold import _generate_montage_locations,\
@@ -38,7 +39,7 @@ requires_xlrd = pytest.mark.skipif(
 def test_channel_specificity(monkeypatch, tmp_path, fold_files):
     raw = read_raw_nirx(fname_nirx_15_3_short, preload=True)
     raw.pick(range(2))
-    kwargs = dict(montage='standard_1020')
+    kwargs = dict()
     n_want = 6
     if fold_files is list:
         kwargs = dict(fold_files=[foldfile])
@@ -48,7 +49,7 @@ def test_channel_specificity(monkeypatch, tmp_path, fold_files):
     else:
         assert fold_files is None
         monkeypatch.setenv('MNE_NIRS_FOLD_PATH', str(tmp_path))
-        assert len(kwargs) == 1
+        assert len(kwargs) == 0
         with pytest.raises(FileNotFoundError, match=r'fold_files\[0\] does.*'):
             fold_channel_specificity(raw)
         n_want *= 2
@@ -57,19 +58,33 @@ def test_channel_specificity(monkeypatch, tmp_path, fold_files):
     res = fold_channel_specificity(raw, **kwargs)
     assert len(res) == 2
     assert res[0].shape == (n_want, 10)
-    montage = make_standard_montage('standard_1020')
+    montage = make_standard_montage(
+        'standard_1005', head_size=0.09700884729534559)
+    fids = read_fiducials(
+        Path(mne.__file__).parent / 'data' / 'fsaverage' /
+        'fsaverage-fiducials.fif')[0]
+    for f in fids:
+        f['coord_frame'] = 0
+    montage.dig[:3] = fids
     S, D = raw.ch_names[0].split()[0].split('_')
     assert S == 'S1' and D == 'D2'
     montage.rename_channels({'PO8': S, 'P6': D})  # not in the tables!
-    s_want = [0.053356, -0.070542, 0.054083]
-    d_want = [0.065061, -0.047959, 0.076765]
+    # taken from standard_1020.elc
+    s_mri = np.array([55.6666, -97.6251, 2.7300]) / 1000.
+    d_mri = np.array([67.8877, -75.9043, 28.0910]) / 1000.
+    trans = mne.transforms._get_trans('fsaverage', 'mri', 'head')[0]
+    ch_pos = montage.get_positions()['ch_pos']
+    assert_allclose(ch_pos[S], s_mri, atol=1e-6)
+    assert_allclose(ch_pos[D], d_mri, atol=1e-6)
     raw.set_montage(montage)
     montage = transform_to_head(montage)
-    assert_allclose(montage._get_ch_pos()['S1'], s_want, atol=1e-6)
-    assert_allclose(montage._get_ch_pos()['D2'], d_want, atol=1e-6)
+    s_head = mne.transforms.apply_trans(trans, s_mri)
+    d_head = mne.transforms.apply_trans(trans, d_mri)
+    assert_allclose(montage._get_ch_pos()['S1'], s_head, atol=1e-6)
+    assert_allclose(montage._get_ch_pos()['D2'], d_head, atol=1e-6)
     for ch in raw.info['chs']:
-        assert_allclose(ch['loc'][3:6], s_want, atol=1e-6)
-        assert_allclose(ch['loc'][6:9], d_want, atol=1e-6)
+        assert_allclose(ch['loc'][3:6], s_head, atol=1e-6)
+        assert_allclose(ch['loc'][6:9], d_head, atol=1e-6)
     # TODO: This is wrong, should be P08 not P08h, and distance should be 0 mm!
     with pytest.warns(RuntimeWarning, match='.*PO8h?/P6.*TP8/T8.*'):
         res_1 = fold_channel_specificity(raw, **kwargs)[0]
@@ -95,7 +110,7 @@ def test_landmark_specificity():
 def test_fold_workflow():
     # Read raw data
     raw = read_raw_nirx(fname_nirx_15_3_short, preload=True)
-    reference_locations = _generate_montage_locations('standard_1020')
+    reference_locations = _generate_montage_locations()
     channel_of_interest = raw.copy().pick(1)
 
     # Get source and detector labels
@@ -132,7 +147,7 @@ def test_fold_reader():
 def test_label_finder():
     """Test locating labels."""
     raw = read_raw_nirx(fname_nirx_15_3_short, preload=True)
-    reference_locations = _generate_montage_locations('standard_1020')
+    reference_locations = _generate_montage_locations()
 
     # Test central head position source
     raw_cz = raw.copy().pick(25)

@@ -11,6 +11,7 @@ import mne
 from mne.transforms import apply_trans, _get_trans
 from mne.utils import _validate_type, _check_fname, warn
 from mne.io import BaseRaw
+from mne.io.constants import FIFF
 
 
 def _read_fold_xls(fname, atlas="Juelich"):
@@ -53,21 +54,19 @@ def _read_fold_xls(fname, atlas="Juelich"):
     return tbl
 
 
-def _generate_montage_locations(montage, coord_frame='mri'):
-    """Get standard montage locations in dataframe.
+def _generate_montage_locations():
+    """Get standard MNI montage locations in dataframe.
 
     Data is returned in the same format as the eeg_positions library.
-
-    Parameters
-    ----------
-    montage : str
-        Standard MNE montage to use.
     """
-    montage = mne.channels.make_standard_montage(montage)
-    assert isinstance(coord_frame, str)
-    assert coord_frame in ('mri', 'head')
-    if coord_frame == 'head':
-        montage = mne.channels.montage.transform_to_head(montage)
+    # standard_1020 and standard_1005 are in MNI (fsaverage) space already,
+    # but we need to undo the scaling that head_scale will do
+    montage = mne.channels.make_standard_montage(
+        'standard_1005', head_size=0.09700884729534559)
+    for d in montage.dig:
+        d['coord_frame'] = FIFF.FIFFV_MNE_COORD_MNI_TAL
+    montage.dig[:] = montage.dig[3:]
+    montage.add_mni_fiducials()  # now in fsaverage space
     coords = pd.DataFrame.from_dict(
         montage.get_positions()['ch_pos']).T
     coords["label"] = coords.index
@@ -76,8 +75,7 @@ def _generate_montage_locations(montage, coord_frame='mri'):
     return coords.reset_index(drop=True)
 
 
-def _find_closest_standard_location(position, reference, *, coord_frame='mri',
-                                    out='label'):
+def _find_closest_standard_location(position, reference, *, out='label'):
     """Return closest montage label to coordinates.
 
     Parameters
@@ -93,12 +91,8 @@ def _find_closest_standard_location(position, reference, *, coord_frame='mri',
     from scipy.spatial.distance import cdist
     p0 = np.array(position)
     p0.shape = (-1, 3)
-    assert isinstance(coord_frame, str)
-    assert coord_frame in ('mri', 'head')
-    if coord_frame == 'mri':
-        head_mri_t, _ = _get_trans('fsaverage', 'head', 'mri')
-        p0 = apply_trans(head_mri_t, p0)
-
+    head_mri_t, _ = _get_trans('fsaverage', 'head', 'mri')
+    p0 = apply_trans(head_mri_t, p0)
     dists = cdist(p0, np.asarray(reference[['x', 'y', 'z']], float))
 
     if out == 'label':
@@ -110,8 +104,7 @@ def _find_closest_standard_location(position, reference, *, coord_frame='mri',
 
 
 def fold_landmark_specificity(raw, landmark, fold_files=None,
-                              atlas="Juelich", montage='standard_1005',
-                              coord_frame='mri'):
+                              atlas="Juelich"):
     """Return the specificity of each channel to a specified brain landmark.
 
     Parameters
@@ -128,12 +121,6 @@ def fold_landmark_specificity(raw, landmark, fold_files=None,
         for details.
     atlas : str
         Brain atlas to use.
-    montage : str
-        The standard montage name to use to find equivalent locations.
-        Defaults to ``'standard_1005'``.
-    coord_frame : str
-        The coordinate frame of the positions in info['chs']. This should be
-        "head" but can be "mri".
 
     Returns
     -------
@@ -157,8 +144,7 @@ def fold_landmark_specificity(raw, landmark, fold_files=None,
     _validate_type(landmark, str, 'landmark')
     _validate_type(raw, BaseRaw, 'raw')
 
-    reference_locations = _generate_montage_locations(
-        montage=montage, coord_frame=coord_frame)
+    reference_locations = _generate_montage_locations()
 
     fold_tbl = _check_load_fold(fold_files, atlas)
 
@@ -166,7 +152,7 @@ def fold_landmark_specificity(raw, landmark, fold_files=None,
     for cidx in range(len(raw.ch_names)):
 
         tbl = _source_detector_fold_table(
-            raw, cidx, reference_locations, fold_tbl, atlas, coord_frame)
+            raw, cidx, reference_locations, fold_tbl, atlas)
 
         if len(tbl) > 0:
             tbl["ContainsLmk"] = [landmark in la for la in tbl["Landmark"]]
@@ -183,8 +169,7 @@ def fold_landmark_specificity(raw, landmark, fold_files=None,
     return np.array(specificity)
 
 
-def fold_channel_specificity(raw, fold_files=None, atlas="Juelich",
-                             montage='standard_1005', coord_frame='mri'):
+def fold_channel_specificity(raw, fold_files=None, atlas="Juelich"):
     """Return the landmarks and specificity a channel is sensitive to.
 
     Parameters
@@ -198,9 +183,6 @@ def fold_channel_specificity(raw, fold_files=None, atlas="Juelich",
         See Notes for details.
     atlas : str
         Brain atlas to use.
-    montage : str
-        The standard montage name to use to find equivalent locations.
-        Defaults to ``'standard_1005'``.
 
     Returns
     -------
@@ -239,8 +221,7 @@ def fold_channel_specificity(raw, fold_files=None, atlas="Juelich",
     """  # noqa: E501
     _validate_type(raw, BaseRaw, 'raw')
 
-    reference_locations = _generate_montage_locations(
-        montage=montage, coord_frame=coord_frame)
+    reference_locations = _generate_montage_locations()
 
     fold_tbl = _check_load_fold(fold_files, atlas)
 
@@ -248,7 +229,7 @@ def fold_channel_specificity(raw, fold_files=None, atlas="Juelich",
     for cidx in range(len(raw.ch_names)):
 
         tbl = _source_detector_fold_table(
-            raw, cidx, reference_locations, fold_tbl, atlas, coord_frame)
+            raw, cidx, reference_locations, fold_tbl, atlas)
         chan_spec.append(tbl.reset_index(drop=True))
 
     return chan_spec
@@ -277,16 +258,13 @@ def _check_load_fold(fold_files, atlas):
     return fold_tbl
 
 
-def _source_detector_fold_table(raw, cidx, reference, fold_tbl, atlas,
-                                coord_frame):
+def _source_detector_fold_table(raw, cidx, reference, fold_tbl, atlas):
     src = raw.info['chs'][cidx]['loc'][3:6]
     det = raw.info['chs'][cidx]['loc'][6:9]
 
     ref_lab = list(reference['label'])
-    assert isinstance(coord_frame, str)
-    assert coord_frame in ('head', 'mri')
     dists = _find_closest_standard_location(
-        [src, det], reference, coord_frame=coord_frame, out='dists')
+        [src, det], reference, out='dists')
     src_min, det_min = np.argmin(dists, axis=1)
     src_name, det_name = ref_lab[src_min], ref_lab[det_min]
 
@@ -329,7 +307,7 @@ def _source_detector_fold_table(raw, cidx, reference, fold_tbl, atlas,
              'using next smallest available '
              f'src/det pairing {src_use}/{det_use} (RMS distance '
              f'{1000 * new_dist:0.1f} mm). Consider setting your channel '
-             'positions to standard 10-20 locations using raw.set_montage '
+             'positions to standard 10-05 locations using raw.set_montage '
              'if your pair does show up in the tables.',
              module='mne_nirs', ignore_namespaces=('mne', 'mne_nirs'))
         tbl = fold_tbl.query("Source == @src_use and Detector == @det_use")
