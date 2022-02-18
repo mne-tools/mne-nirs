@@ -198,9 +198,9 @@ def fold_channel_specificity(raw, fold_files=None, atlas="Juelich",
         False (default) will yield no results for that pairing, whereas
         True will use the next closest match. See Notes for an example.
 
-        .. warning::
-           The sensitivity profile can differ substantially for nearest
-           neighbors, so use ``interpolate=True`` with caution.
+        .. warning:: The sensitivity profile can differ substantially for
+                     nearest neighbors, so use ``interpolate=True`` with
+                     caution.
 
     Returns
     -------
