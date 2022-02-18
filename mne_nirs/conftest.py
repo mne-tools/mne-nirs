@@ -33,6 +33,7 @@ def pytest_configure(config):
     ignore:.*The MLE may be on the boundary.*:
     ignore:.*The Hessian matrix at the estimated parameter values.*:
     always:`np\..*is a deprecated alias for the builtin.*:DeprecationWarning
+    ignore:.*data_path functions now return.*
     always::ResourceWarning
     """  # noqa: E501
     for warning_line in warning_lines.split('\n'):
