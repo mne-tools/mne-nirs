@@ -13,6 +13,8 @@ from mne.utils import verbose
 from mne.datasets.utils import has_dataset
 from mne.datasets import fetch_dataset
 
+from ..fixes import _mne_path
+
 has_fnirs_motor_group_data = partial(has_dataset, name='fnirs_motor_group')
 
 
@@ -67,6 +69,7 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
                           update_path=update_path, download=download,
                           processor=pooch.Unzip(
                               extract_dir="./fNIRS-motor-group"))
+    dpath = str(dpath)
 
     # Do some wrangling to deal with nested directories
     bad_name = os.path.join(dpath, 'BIDS-NIRS-Tapping-master')
@@ -75,4 +78,4 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
         shutil.rmtree(dpath)
         os.rename(dpath + '.true', dpath)
 
-    return dpath
+    return _mne_path(dpath)
