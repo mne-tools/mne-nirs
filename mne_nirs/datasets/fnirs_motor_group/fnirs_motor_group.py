@@ -13,7 +13,7 @@ from mne.utils import verbose
 from mne.datasets.utils import has_dataset
 from mne.datasets import fetch_dataset
 
-from ..fixes import _mne_path
+from ...fixes import _mne_path
 
 has_fnirs_motor_group_data = partial(has_dataset, name='fnirs_motor_group')
 

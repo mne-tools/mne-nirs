@@ -12,7 +12,7 @@ from mne.utils import verbose
 from mne.datasets.utils import has_dataset
 from mne.datasets import fetch_dataset
 
-from ..fixes import _mne_path
+from ...fixes import _mne_path
 
 has_block_speech_noise_data = partial(has_dataset, name='block_speech_noise')
 
