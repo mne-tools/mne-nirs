@@ -3,6 +3,8 @@
 #
 # Compat shims for different dependency versions.
 
+from pathlib import Path
+import mne
 from mne.fixes import _compare_version
 
 # Deal with fetch_data str->Path deprecation
