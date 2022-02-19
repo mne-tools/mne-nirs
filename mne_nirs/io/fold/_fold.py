@@ -238,7 +238,7 @@ def fold_channel_specificity(raw, fold_files=None, atlas="Juelich",
     **Interpolation**
 
     For an example of interpolation, consider the pairings P5-PO7 nor P6-PO8,
-    neither of which are listed in the fOLD toolbox::
+    neither of which are listed in the fOLD toolbox:
 
     - With ``interpolate=False``, the returned ``spec`` will not have entries
       for these channels. When
