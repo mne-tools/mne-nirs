@@ -7,11 +7,15 @@ from pathlib import Path
 from shutil import copyfile
 
 import numpy as np
+from numpy.testing import assert_allclose
 import pandas as pd
 import pytest
 
+import mne
+from mne.channels import make_standard_montage
+from mne.channels.montage import transform_to_head
 from mne.datasets.testing import data_path, requires_testing_data
-from mne.io import read_raw_nirx
+from mne.io import read_raw_nirx, read_fiducials
 from mne.utils import check_version
 
 from mne_nirs.io.fold._fold import _generate_montage_locations,\
@@ -53,14 +57,52 @@ def test_channel_specificity(monkeypatch, tmp_path, fold_files):
     copyfile(foldfile, tmp_path / '10-5.xls')
     res = fold_channel_specificity(raw, **kwargs)
     assert len(res) == 2
-    assert res[0].shape == (n_want, 10)
+    assert res[0].shape == (n_want, 14)
+    montage = make_standard_montage(
+        'standard_1005', head_size=0.09700884729534559)
+    fids = read_fiducials(
+        Path(mne.__file__).parent / 'data' / 'fsaverage' /
+        'fsaverage-fiducials.fif')[0]
+    for f in fids:
+        f['coord_frame'] = montage.dig[0]['coord_frame']
+    montage.dig[:3] = fids
+    S, D = raw.ch_names[0].split()[0].split('_')
+    assert S == 'S1' and D == 'D2'
+    montage.rename_channels({'PO8': S, 'P6': D})  # not in the tables!
+    # taken from standard_1020.elc
+    s_mri = np.array([55.6666, -97.6251, 2.7300]) / 1000.
+    d_mri = np.array([67.8877, -75.9043, 28.0910]) / 1000.
+    trans = mne.transforms._get_trans('fsaverage', 'mri', 'head')[0]
+    ch_pos = montage.get_positions()['ch_pos']
+    assert_allclose(ch_pos[S], s_mri, atol=1e-6)
+    assert_allclose(ch_pos[D], d_mri, atol=1e-6)
+    raw.set_montage(montage)
+    montage = transform_to_head(montage)
+    s_head = mne.transforms.apply_trans(trans, s_mri)
+    d_head = mne.transforms.apply_trans(trans, d_mri)
+    assert_allclose(montage._get_ch_pos()['S1'], s_head, atol=1e-6)
+    assert_allclose(montage._get_ch_pos()['D2'], d_head, atol=1e-6)
+    for ch in raw.info['chs']:
+        assert_allclose(ch['loc'][3:6], s_head, atol=1e-6)
+        assert_allclose(ch['loc'][6:9], d_head, atol=1e-6)
+    res_1 = fold_channel_specificity(raw, **kwargs)[0]
+    assert res_1.shape == (0, 14)
+    # TODO: This is wrong, should be P08 not P08h, and distance should be 0 mm!
+    with pytest.warns(RuntimeWarning, match='.*PO8h?/P6.*TP8/T8.*'):
+        res_1 = fold_channel_specificity(raw, interpolate=True, **kwargs)[0]
+    montage.rename_channels({S: D, D: S})  # reversed
+    with pytest.warns(RuntimeWarning, match='.*PO8h?/P6.*TP8/T8.*'):
+        res_2 = fold_channel_specificity(raw, interpolate=True, **kwargs)[0]
+    # We should check the whole thing, but this is probably good enough
+    assert (res_1['Specificity'] == res_2['Specificity']).all()
 
 
 @requires_xlrd
 def test_landmark_specificity():
     raw = read_raw_nirx(fname_nirx_15_3_short, preload=True)
-    res = fold_landmark_specificity(raw, "L Superior Frontal Gyrus",
-                                    [foldfile])
+    with pytest.warns(RuntimeWarning, match='No fOLD table entry'):
+        res = fold_landmark_specificity(raw, "L Superior Frontal Gyrus",
+                                        [foldfile], interpolate=True)
     assert len(res) == len(raw.ch_names)
     assert np.max(res) <= 100
     assert np.min(res) >= 0
