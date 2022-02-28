@@ -13,6 +13,7 @@ from mne import Info
 from mne.utils import warn
 from mne.channels.layout import _merge_ch_data
 from mne.io.pick import _picks_to_idx, _get_channel_types, pick_info
+from mne.viz import plot_topomap
 
 
 def plot_glm_topo(inst, glm_estimates, design_matrix,
