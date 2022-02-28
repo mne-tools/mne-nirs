@@ -15,7 +15,7 @@ concurrency:
 jobs:
   # PIP + non-default stim channel + log level info
   job:
-    name: 'py3.10'
+    name: 'py3.9'
     runs-on: ubuntu-20.04
     defaults:
       run:
@@ -26,7 +26,7 @@ jobs:
       MNE_STIM_CHANNEL: 'STI101'
       OPENBLAS_NUM_THREADS: '1'
       PYTHONUNBUFFERED: '1'
-      PYTHON_VERSION: '3.10'
+      PYTHON_VERSION: '3.9'  # dipy and vtk
     strategy:
       matrix:
         MNEPYTHON: ['stable', 'main']
