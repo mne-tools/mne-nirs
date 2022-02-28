@@ -74,6 +74,6 @@ requires_mne_bids_nirs = pytest.mark.skipif(
     "plot_40_mayer.py",
     pytest.param("plot_80_save_read_glm.py", marks=requires_mne_bids_nirs),
     "plot_99_bad.py"]))
-def test_examples(fname):
+def test_examples(fname, requires_pyvista):
     test_file_path = examples_path() + fname
     run_script_and_check(test_file_path)
