@@ -24,6 +24,7 @@ jobs:
       OPENBLAS_NUM_THREADS: '1'
       PYTHONUNBUFFERED: '1'
       PYTHON_VERSION: '3.9'
+      MNEPYTHON: 'dev'
     steps:
       - uses: actions/checkout@v2
         with:

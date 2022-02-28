@@ -29,7 +29,7 @@ jobs:
       PYTHON_VERSION: '3.9'  # dipy and vtk
     strategy:
       matrix:
-        MNEPYTHON: ['stable', 'main']
+        MNEPYTHON: ['stable', 'dev']
     steps:
       - uses: actions/checkout@v2
         with:
