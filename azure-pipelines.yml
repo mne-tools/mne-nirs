@@ -78,7 +78,7 @@ stages:
         architecture: 'x64'
         addToPath: true
       displayName: 'Get Python'
-    - bash: pip install --progress-bar off --upgrade -r requirements.txt -r requirements_test.txt https://github.com/mne-tools/mne-python/zipball/main
+    - bash: pip install --progress-bar off --upgrade -r requirements.txt -r requirements_testing.txt https://github.com/mne-tools/mne-python/zipball/main
       displayName: Setup MNE-NIRS environment
     - script: pip install --progress-bar off -e .
       displayName: Install MNE-NIRS
