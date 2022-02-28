@@ -48,6 +48,7 @@ requires_mne_bids_nirs = pytest.mark.skipif(
     reason=f'Incorrect MNE-BIDS version: {missing_mne_bids_fnirs}',
 )
 
+
 @pytest.mark.filterwarnings('ignore:No bad channels to interpolate.*:')
 @pytest.mark.examples
 @pytest.mark.parametrize('fname', ([
