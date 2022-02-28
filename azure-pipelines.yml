@@ -42,6 +42,8 @@ stages:
 - stage: Main
   condition: and(succeeded(), eq(dependencies.Check.outputs['Skip.result.start_main'], 'true'))
   dependsOn: Check
+  variables:
+    AZURE_CI: 'true'
   jobs:
   - job: Pytest
     strategy:
@@ -49,6 +51,8 @@ stages:
         Windows:
           imageName: 'windows-latest'
           OS: windows
+          variables:
+            AZURE_CI_WINDOWS: 'true'
         macOS:
           imageName: 'macOS-latest'
           OS: macos
