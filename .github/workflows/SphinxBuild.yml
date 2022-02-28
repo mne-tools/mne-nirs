@@ -25,6 +25,7 @@ jobs:
       PYTHON_VERSION: '3.9'
       MNE_3D_BACKEND: 'pyvistaqt'
       MNE_3D_OPTION_ANTIALIAS: 'false'
+      MNEPYTHON: 'dev'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -43,12 +44,12 @@ jobs:
           source tools/get_minimal_commands.sh
         name: 'Install dependencies'
       - shell: bash -el {0}
+        run: ./tools/github_actions_install.sh
+        name: 'Install MNE'
+      - shell: bash -el {0}
         run: |
           pip install --progress-bar off --upgrade -r requirements_doc.txt
         name: 'Install doc dependencies'
-      - shell: bash -el {0}
-        run: ./tools/github_actions_install.sh
-        name: 'Install MNE'
       - shell: bash -el {0}
         run: |
           pip uninstall -yq nilearn

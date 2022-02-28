@@ -22,6 +22,7 @@ jobs:
       MNE_3D_BACKEND: 'pyvistaqt'
       SMV_TAG_WHITELIST: 'ignore all tags'
       MNE_3D_OPTION_ANTIALIAS: 'false'
+      MNEPYTHON: 'main'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -40,12 +41,12 @@ jobs:
           source tools/get_minimal_commands.sh
         name: 'Install dependencies'
       - shell: bash -el {0}
+        run: ./tools/github_actions_install.sh
+        name: 'Install MNE'
+      - shell: bash -el {0}
         run: |
           pip install --progress-bar off --upgrade -r requirements_doc.txt
         name: 'Install doc dependencies'
-      - shell: bash -el {0}
-        run: ./tools/github_actions_install.sh
-        name: 'Install MNE'
       - shell: bash -el {0}
         run: ./tools/github_actions_infos.sh
         name: 'Show infos'

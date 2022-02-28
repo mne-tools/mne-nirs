@@ -6,6 +6,7 @@
 
 import os
 import pytest
+import sys
 
 from mne.utils import check_version
 
@@ -50,6 +51,8 @@ requires_mne_bids_nirs = pytest.mark.skipif(
 
 
 @pytest.mark.filterwarnings('ignore:No bad channels to interpolate.*:')
+@pytest.mark.skipif(
+    sys.platform.startswith('win', reason='Unstable on Windows')
 @pytest.mark.examples
 @pytest.mark.parametrize('fname', ([
     "plot_01_data_io.py",
