@@ -2,9 +2,7 @@
 
 STD_ARGS="--progress-bar off --upgrade"
 EXTRA_ARGS=""
-if [ ! -z "$CONDA_ENV" ]; then
-	pip uninstall -yq mne
-elif [ ! -z "$CONDA_DEPENDENCIES" ]; then
+if [ ! -z "$CONDA_DEPENDENCIES" ]; then
 	conda install -y $CONDA_DEPENDENCIES
 else
 	# Changes here should also go in the interactive_test CircleCI job
@@ -46,3 +44,6 @@ fi
 
 pip install $STD_ARGS $EXTRA_ARGS -r requirements.txt
 pip install $STD_ARGS $EXTRA_ARGS -r requirements_testing.txt
+if [ "${MNEPYTHON}" == "dev" ]; then
+	pip install $STD_ARGS $EXTRA_ARGS https://github.com/mne-tools/mne-python/zipball/main
+fi

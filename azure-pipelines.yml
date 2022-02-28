@@ -1,19 +1,93 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- main
+  # start a new build for every push
+  batch: False
+  branches:
+    include:
+      - 'main'
+      - 'maint/*'
+pr:
+  branches:
+    include:
+      - '*'  # must quote since "*" is a YAML reserved character; we want a string
 
-pool:
-  vmImage: ubuntu-latest
+schedules:
+- cron: "0 0 * * *"
+  displayName: 'Daily midnight build'
+  branches:
+    include:
+      - 'main'
+  always: 'true'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stages:
+
+- stage: Check
+  jobs:
+    - job: Skip
+      pool:
+        vmImage: 'ubuntu-latest'
+      variables:
+        DECODE_PERCENTS: 'false'
+        RET: 'true'
+        BUILD_REASON: $(Build.Reason)
+      steps:
+      - bash: |
+          git_log=`git log --format=oneline -n 1 --skip=1`
+          echo "##vso[task.setvariable variable=log]$git_log"
+      - bash: echo "##vso[task.setvariable variable=RET]false"
+        condition: and(eq(variables.BUILD_REASON, 'PullRequest'), or(contains(variables.log, '[skip azp]'), contains(variables.log, '[azp skip]'), contains(variables.log, '[skip ci]'), contains(variables.log, '[ci skip]')))
+      - bash: echo "##vso[task.setvariable variable=start_main;isOutput=true]$RET"
+        name: result
+
+- stage: Main
+  condition: and(succeeded(), eq(dependencies.Check.outputs['Skip.result.start_main'], 'true'))
+  dependsOn: Check
+  jobs:
+  - job: Pytest
+    strategy:
+      matrix:
+        Windows:
+          imageName: 'windows-latest'
+          OS: windows
+        macOS:
+          imageName: 'macOS-latest'
+          OS: macos
+        Linux:
+          imageName: 'ubuntu-latest'
+          OS: linux
+          DISPLAY: ':99'
+    pool:
+      vmImage: $(imageName)
+    steps:
+    - bash: |
+        set -e
+        git clone --depth 1 https://github.com/pyvista/gl-ci-helpers.git
+        powershell gl-ci-helpers/appveyor/install_opengl.ps1
+      displayName: "Windows: install OpenGL and set conda paths"
+      condition: eq(variables['OS'], 'windows')
+    - bash: |
+        set -e
+        sudo apt update -qq
+        sudo apt install -yqq libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 libxcb-xfixes0 libopengl0
+        /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 1400x900x24 -ac +extension GLX +render -noreset
+      displayName: "Linux: start Xvfb and set conda paths"
+      condition: eq(variables['OS'], 'linux')
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.10'
+        architecture: 'x64'
+        addToPath: true
+      displayName: 'Get Python'
+    - bash: pip install --progress-bar off --upgrade -r requirements.txt -r requirements_doc.txt https://github.com/mne-tools/mne-python/zipball/main
+      displayName: Setup MNE-NIRS environment
+    - script: pip install --progress-bar off -e .
+      displayName: Install MNE-NIRS
+    - script: mne sys_info
+      displayName: 'Print config'
+    - script: python -c "import mne; mne.datasets.testing.data_path(verbose=True)"
+      displayName: 'Get test data'
+    - script: pytest --tb=short --cov=mne_nirs --cov-report=xml --cov-report=html -vv mne_nirs
+      displayName: 'Run tests'
+    - bash: bash <(curl -s https://codecov.io/bash)
+      displayName: 'Codecov'
+      condition: succeededOrFailed()
