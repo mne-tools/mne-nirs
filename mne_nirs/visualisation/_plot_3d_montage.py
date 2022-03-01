@@ -16,7 +16,7 @@ from mne.viz import Brain
 
 
 @verbose
-def plot_3d_montage(info, view_map, *, src_det_names='auto',
+def plot_3d_montage(info, view_map, *, src_det_names='auto', ch_names=None,
                     subject='fsaverage', trans='fsaverage', surface='pial',
                     subjects_dir=None, verbose=None):
     """
@@ -48,6 +48,15 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
         for example::
 
             src_det_names=dict(S1='Fz', D1='FCz', ...)
+    ch_names : dict | None
+        If None, use ``['1', '2', ...]`` for the channel names. Can be a
+        dict to provide a mapping from these to other names, e.g.,
+        ``defaultdict(lambda: '')`` will prevent showing the names, and
+        this will use names of the form ``S1_D2``::
+
+            dict(zip(str(ii), name.split()[0]) for ii, name in enumerate(raw.ch_names[::2], 1)))
+
+        .. versionadded:: 0.3
     subject : str
         The subject.
     trans : str | Transform
@@ -77,7 +86,7 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
     NIRx typically involves more complicated arrangements. See
     :ref:`the 3D tutorial <tut-fnirs-vis-brain-plot-3d-montage>` for
     an advanced example that incorporates the ``'caudal'`` view as well.
-    """
+    """  # noqa: E501
     import matplotlib.pyplot as plt
     from scipy.spatial.distance import cdist
     _validate_type(info, Info, 'info')
@@ -156,6 +165,8 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
             vp = brain.plotter.renderer
             for ci in view[2]:  # figure out what we need to plot
                 ch_name = str(ci)
+                if ch_names is not None:
+                    ch_name = ch_names[ch_name]
                 this_ch = info['chs'][ci - 1]
                 name = this_ch['ch_name']
                 s_name, d_name = name.split()[0].split('_')
