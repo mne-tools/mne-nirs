@@ -21,7 +21,10 @@ URL = 'https://mne.tools/mne-nirs/'
 LICENSE = 'BSD (3-clause)'
 DOWNLOAD_URL = 'https://github.com/mne-tools/mne-nirs'
 VERSION = __version__
-INSTALL_REQUIRES = ['numpy>=1.11.3', 'scipy>=0.17.1', 'mne>=0.21.0'],
+INSTALL_REQUIRES = ['numpy>=1.11.3',
+                    'scipy>=0.17.1',
+                    'mne>=0.24.0',
+                    'h5io>=0.1.7'],
 CLASSIFIERS = ['Intended Audience :: Science/Research',
                'Intended Audience :: Developers',
                'License :: OSI Approved',

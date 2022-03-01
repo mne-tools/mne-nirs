@@ -8,7 +8,7 @@ import mne
 import mne_nirs
 
 from mne.datasets import testing
-from mne.utils import catch_logging
+from mne.utils import catch_logging, check_version
 
 from mne_nirs.experimental_design.tests.test_experimental_design import \
     _load_dataset
@@ -21,6 +21,9 @@ from mne_nirs.utils import glm_to_tidy
 testing_path = testing.data_path(download=False)
 raw_path = testing_path + '/NIRx/nirscout/nirx_15_2_recording_w_short'
 subjects_dir = testing_path + '/subjects'
+
+requires_mne_1 = pytest.mark.skipif(not check_version('mne', '1.0'),
+                                    reason='Needs MNE-Python 1.0')
 
 
 def test_plot_nirs_source_detector_pyvista(requires_pyvista):
@@ -153,6 +156,8 @@ def test_fig_from_axes():
         _get_fig_from_axes([1, 2, 3])
 
 
+# surface arg
+@requires_mne_1
 def test_run_plot_GLM_projection(requires_pyvista):
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
@@ -175,6 +180,7 @@ def test_run_plot_GLM_projection(requires_pyvista):
     assert type(brain) == mne.viz._brain.Brain
 
 
+@requires_mne_1
 @pytest.mark.parametrize('fname_raw, to_1020', [
     (raw_path, False),
     (raw_path, True),

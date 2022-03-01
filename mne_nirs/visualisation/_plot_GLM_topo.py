@@ -9,11 +9,11 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
 
-import mne
 from mne import Info
 from mne.utils import warn
 from mne.channels.layout import _merge_ch_data
 from mne.io.pick import _picks_to_idx, _get_channel_types, pick_info
+from mne.viz import plot_topomap
 
 
 def plot_glm_topo(inst, glm_estimates, design_matrix,
@@ -134,15 +134,10 @@ def _plot_glm_topo(inst, glm_estimates, design_matrix,
                 else:
                     ax = axes[t_idx, idx]
 
-                mne.viz.topomap.plot_topomap(estmrg[:, idx], pos,
-                                             extrapolate='local',
-                                             names=chs,
-                                             vmin=vmin,
-                                             vmax=vmax,
-                                             cmap=cmap,
-                                             axes=ax,
-                                             show=False,
-                                             sphere=sphere)
+                plot_topomap(
+                    estmrg[:, idx], pos, extrapolate='local', names=chs,
+                    vmin=vmin, vmax=vmax, cmap=cmap, axes=ax, show=False,
+                    sphere=sphere)
                 ax.set_title(label)
 
         if colorbar:
@@ -216,15 +211,9 @@ def _plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None):
             ax = axes[t_idx]
 
         # Plot the topomap
-        mne.viz.topomap.plot_topomap(estmrg, pos,
-                                     extrapolate='local',
-                                     names=chs,
-                                     vmin=vmin,
-                                     vmax=vmax,
-                                     cmap=cmap,
-                                     axes=ax,
-                                     show=False,
-                                     sphere=sphere)
+        plot_topomap(
+            estmrg, pos, extrapolate='local', names=chs, vmin=vmin, vmax=vmax,
+            cmap=cmap, axes=ax, show=False, sphere=sphere)
         # Sets axes title
         if t == 'hbo':
             ax.set_title('Oxyhaemoglobin')
@@ -355,19 +344,10 @@ def plot_glm_group_topo(inst, statsmodel_df,
 
     estmrg, pos, chs, sphere = _handle_overlaps(info, t, sphere, estimates)
 
-    mne.viz.topomap.plot_topomap(estmrg, pos,
-                                 extrapolate=extrapolate,
-                                 image_interp=image_interp,
-                                 names=chs,
-                                 vmin=vmin,
-                                 vmax=vmax,
-                                 cmap=cmap,
-                                 axes=axes,
-                                 sensors=sensors,
-                                 res=res,
-                                 show=False,
-                                 show_names=show_names,
-                                 sphere=sphere)
+    plot_topomap(
+        estmrg, pos, extrapolate=extrapolate, image_interp=image_interp,
+        names=chs, vmin=vmin, vmax=vmax, cmap=cmap, axes=axes, sensors=sensors,
+        res=res, show=False, show_names=show_names, sphere=sphere)
     axes.set_title(c)
 
     if colorbar:
@@ -382,10 +362,11 @@ def plot_glm_group_topo(inst, statsmodel_df,
 
 def _handle_overlaps(info, t, sphere, estimates):
     """Prepare for topomap including merging channels"""
+    from mne.viz.topomap import _prepare_topomap_plot
     picks = _picks_to_idx(info, t, exclude=[], allow_empty=True)
     info_subset = pick_info(info, picks)
     _, pos, merge_channels, ch_names, ch_type, sphere, clip_origin = \
-        mne.viz.topomap._prepare_topomap_plot(info_subset, t, sphere=sphere)
+        _prepare_topomap_plot(info_subset, t, sphere=sphere)
     estmrg, ch_names = _merge_ch_data(estimates.copy()[picks], t, ch_names)
     return estmrg, pos, ch_names, sphere
 

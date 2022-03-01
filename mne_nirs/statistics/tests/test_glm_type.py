@@ -12,6 +12,7 @@ from matplotlib.pyplot import Axes
 
 import mne
 from mne.datasets import testing
+from mne.utils import check_version
 import nilearn
 
 from mne_nirs.statistics import RegressionResults, read_glm
@@ -137,6 +138,9 @@ def test_glm_scatter():
     assert isinstance(_get_glm_contrast_result().scatter(), Axes)
 
 
+# surface arg
+@pytest.mark.skipif(not check_version('mne', '1.0'),
+                    reason='Needs MNE-Python 1.0')
 def test_glm_surface_projection(requires_pyvista):
 
     res = _get_glm_result(tmax=2974, tmin=0)

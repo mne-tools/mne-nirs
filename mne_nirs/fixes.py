@@ -5,7 +5,7 @@
 
 from pathlib import Path
 import mne
-from mne.fixes import _compare_version
+from mne.utils import check_version
 
 # Deal with fetch_data str->Path deprecation
 # This can go away once we only support 1.1, along with the
@@ -13,7 +13,7 @@ from mne.fixes import _compare_version
 try:
     from mne.datasets.utils import _mne_path  # noqa
 except Exception:
-    if _compare_version(mne.__version__, '>=', '1.0'):
+    if check_version(mne.__version__, '1.0'):
         _mne_path = Path
     else:
         _mne_path = str  # old MNE

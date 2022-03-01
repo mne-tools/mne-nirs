@@ -23,6 +23,8 @@ fname_nirx_15_2_short = op.join(data_path(download=False),
                                 'NIRx', 'nirscout',
                                 'nirx_15_2_recording_w_short')
 
+pytest.importorskip('mne', '1.0')  # these tests are broken on 0.24!
+
 
 @requires_h5py
 @requires_testing_data
