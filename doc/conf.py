@@ -82,7 +82,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'MNE-NIRS'
-copyright = u'2020, Robert Luke'
+copyright = u'2022, MNE-NIRS Developers'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -144,7 +144,8 @@ html_sidebars = {
 html_context = {
     'build_dev_html': bool(int(os.environ.get('BUILD_DEV_HTML', False))),
     'versions_dropdown': {
-        'v0.1.2': 'v0.1.2 (stable)',
+        'v0.2.0': 'v0.2.0 (stable)',
+        'v0.1.2': 'v0.1.2',
         'v0.1.1': 'v0.1.1',
         'v0.1.0': 'v0.1.0',
         'v0.0.6': 'v0.0.6',
