@@ -21,6 +21,6 @@
     2. ~~Set docs to build all versions in [conf.py](https://github.com/mne-tools/mne-nirs/blob/714dc6f75ebc561e7974ba7d3256fe0ae8d35174/doc/conf.py#L57) by setting `smv_tag_whitelist = r'^v\d+\.\d+.\d+$'`~~
 9. Commit which rebuild all docs
 10. ~~Set docs to build current version only in [conf.py](https://github.com/mne-tools/mne-nirs/blob/714dc6f75ebc561e7974ba7d3256fe0ae8d35174/doc/conf.py#L57) by setting `smv_tag_whitelist = 'ignore all tags'`~~
-11. Commit
+11. ~~Commit~~
 
 Done!
