@@ -17,7 +17,7 @@
 7. Create a release in GitHub interface which also creates a git tag
    1. Copy change log to release notes and remove names
 8. Bump version to dev naming and regenerate docs (e.g. [6393b6dfc6](https://github.com/mne-tools/mne-nirs/pull/321/commits/6393b6dfc6f4fb8c5068c2ec728dfecd41c11897)).
-    1. Change the version number from `0.0.X` to `0.0.X+1 dev` in [mne-nirs/mne_nirs/_version.py](https://github.com/mne-tools/mne-nirs/blob/master/mne_nirs/_version.py#L1)
+    1. Change the version number from `0.0.X` to `0.0.X+1.dev0` in [mne-nirs/mne_nirs/_version.py](https://github.com/mne-tools/mne-nirs/blob/master/mne_nirs/_version.py#L1)
     2. ~~Set docs to build all versions in [conf.py](https://github.com/mne-tools/mne-nirs/blob/714dc6f75ebc561e7974ba7d3256fe0ae8d35174/doc/conf.py#L57) by setting `smv_tag_whitelist = r'^v\d+\.\d+.\d+$'`~~
 9. Commit which rebuild all docs
 10. ~~Set docs to build current version only in [conf.py](https://github.com/mne-tools/mne-nirs/blob/714dc6f75ebc561e7974ba7d3256fe0ae8d35174/doc/conf.py#L57) by setting `smv_tag_whitelist = 'ignore all tags'`~~
