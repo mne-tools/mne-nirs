@@ -15,12 +15,12 @@ Patch version changes indicate backward compatible bug fixes.
 To install a specific version of the library you would run ``pip install mne-nirs==0.0.6``, where ``0.0.6`` is the version you wish to install.
 
 
-v0.1.3 development
-------------------
+v0.2.0
+------
 
 General
 
-* MNE-NIRS now requires the latest MNE-Python development version (main branch).
+* MNE-NIRS now requires the latest MNE-Python 1.0 or later.
 
 
 Enhancements
