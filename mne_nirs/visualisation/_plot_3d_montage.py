@@ -165,23 +165,20 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto', ch_names=None,
             vp = brain.plotter.renderer
             for ci in view[2]:  # figure out what we need to plot
                 ch_name = str(ci)
-                if ch_names is not None:
-                    ch_name = ch_names[ch_name]
                 this_ch = info['chs'][ci - 1]
                 name = this_ch['ch_name']
                 s_name, d_name = name.split()[0].split('_')
-                if src_det_names is not None:
-                    s_name = src_det_names[s_name]
-                    d_name = src_det_names[d_name]
                 needed = [
-                    (ch_name, this_ch['loc'][:3], 12, 'Centered'),
-                    (s_name, this_ch['loc'][3:6], 8, 'Bottom'),
-                    (d_name, this_ch['loc'][6:9], 8, 'Bottom'),
+                    (ch_names, ch_name, this_ch['loc'][:3], 12, 'Centered'),
+                    (src_det_names, s_name, this_ch['loc'][3:6], 8, 'Bottom'),
+                    (src_det_names, d_name, this_ch['loc'][6:9], 8, 'Bottom'),
                 ]
-                for name, ch_pos, font_size, va in needed:
+                for lookup, name, ch_pos, font_size, va in needed:
                     if name in plotted:
                         continue
                     plotted.add(name)
+                    if lookup is not None:
+                        name = lookup[name]
                     ch_pos = apply_trans(head_mri_t, ch_pos)
                     vp.SetWorldPoint(np.r_[ch_pos, 1.])
                     vp.WorldToDisplay()
