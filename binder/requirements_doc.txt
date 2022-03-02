@@ -1,0 +1,27 @@
+# requirements for building docs
+sphinx
+https://github.com/numpy/numpydoc/archive/main.zip
+pydata-sphinx-theme>=0.6.3
+https://github.com/sphinx-gallery/sphinx-gallery/archive/master.zip
+sphinxcontrib-bibtex>=2.3
+memory_profiler
+seaborn
+sphinx_copybutton
+
+# mne-nirs specific requirements
+sphinx-multiversion
+matplotlib
+pillow
+numpy
+h5py
+https://codeload.github.com/rob-luke/mne-bids/zip/nirs
+lets-plot
+memory_profiler
+Ipython
+sphinx-fontawesome
+seaborn
+fooof
+pysnirf2>=0.4.2
+statsmodels
+lets-plot; python_version < '3.10'
+dabest

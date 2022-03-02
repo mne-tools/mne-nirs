@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>MNE-NIRS &#8212; MNE-NIRS 0.3.dev0 documentation</title>
+    
+    <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  
+    
+    <link rel="stylesheet"
+      href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+    
+      
+  
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/pydata-sphinx-theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css" />
+    
+    <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/js/copybutton.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="auto_examples/index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-188272121-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+<a class="navbar-brand" href="#">
+<p class="title">MNE-NIRS</p>
+</a>
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="auto_examples/index.html">
+  Examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="api.html">
+  API
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="changelog.html">
+  Changelog
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <div class="dropdown">
+    <button type="button" class="btn btn-primary btn-sm navbar-btn dropdown-toggle" id="dLabelMore" data-toggle="dropdown">
+        v0.3.dev0
+        <span class="caret"></span>
+    </button>
+    <div class="dropdown-menu list-group-flush py-0" aria-labelledby="dLabelMore">
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.2.0/index.html">v0.2.0 (stable)</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.1.2/index.html">v0.1.2</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.1.1/index.html">v0.1.1</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.1.0/index.html">v0.1.0</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.0.6/index.html">v0.0.6</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.0.5/index.html">v0.0.5</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.0.4/index.html">v0.0.4</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.0.3/index.html">v0.0.3</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.0.2/index.html">v0.0.2</a>
+    </div>
+</div>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/mne-tools/mne-nirs" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+      <div class="navbar-end-item">
+        <form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <div class="col-12 col-md-1 col-xl-2 bd-sidebar no-sidebar"></div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#usage">
+   Usage
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#features">
+   Features
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#installation">
+   Installation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#alternative-installation-options">
+     Alternative installation options
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#upgrading-your-software-version">
+     Upgrading your software version
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#acknowledgements">
+   Acknowledgements
+  </a>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-11 col-xl-8 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+<p>
+  <strong>
+    
+      <p style="border:3px; border-style:solid; border-color:#24872b; padding: 1em;">
+        You are currently reading the latest MNE-NIRS development version documentation.
+        If you wish to view the documentation associated with a stable release,
+        use the blue dropdown menu in the top right corner of the page.
+      </p>
+    
+  </strong>
+</p>
+
+  <section id="mne-nirs">
+<h1>MNE-NIRS<a class="headerlink" href="#mne-nirs" title="Permalink to this headline">¶</a></h1>
+<p>This is a library to assist with processing near-infrared spectroscopy data with MNE.</p>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference external" href="auto_examples/index.html">examples</a> and <a class="reference external" href="api.html">API documentation</a>.</p>
+</section>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<p>MNE-NIRS and MNE-Python provide a wide variety of tools to use when processing NIRS data including:</p>
+<ul class="simple">
+<li><p>Loading data from a wide variety of devices, including SNIRF files.</p></li>
+<li><p>Apply 3D sensor locations from common digitisation systems such as Polhemus.</p></li>
+<li><p>Standard preprocessing including optical density calculation and Beer-Lambert Law conversion, filtering, etc.</p></li>
+<li><p>Data quality metrics including scalp coupling index and peak power.</p></li>
+<li><p>GLM analysis with a wide variety of cusomisation including including FIR or canonical HRF analysis, higher order autoregressive noise models, short channel regression, region of interest analysis, etc.</p></li>
+<li><p>Visualisation tools for all stages of processing from raw data to processed waveforms, GLM result visualisation, including both sensor and cortical surface projections.</p></li>
+<li><p>Data cleaning functions including popular short channel techniques and negative correlation enhancement.</p></li>
+<li><p>Group level analysis using (robust) linear mixed effects models and waveform averaging.</p></li>
+<li><p>And much more! Check out the documentation examples and the API for more details.</p></li>
+</ul>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>MNE-NIRS requires you install Python and MNE-Python before installing MNE-NIRS.
+To install Python and MNE-Python follow <a class="reference external" href="https://mne.tools/stable/install/install_python.html">these instructions</a>.
+You must use MNE-Python v0.24 or above.</p>
+<p>Run the following code to install MNE-NIRS:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; pip install mne-nirs
+</pre></div>
+</div>
+<p>Or if you wish to run the latest development version of MNE-NIRS:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; pip install https://github.com/mne-tools/mne-nirs/archive/main.zip
+</pre></div>
+</div>
+<p>To load MNE-NIRS add these lines to your script:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mne</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mne_nirs</span>
+</pre></div>
+</div>
+<section id="alternative-installation-options">
+<h3>Alternative installation options<a class="headerlink" href="#alternative-installation-options" title="Permalink to this headline">¶</a></h3>
+<p>If you wish to try using MNE-NIRS without installing a python environment on your computer,
+there are two options available.</p>
+<p>If you wish to run the examples using a cloud server, you can use the binder links located at the bottom of each example.
+Clicking these binder links will spin up an online server instance for you to use.
+This will allow you to edit and run code, upload data, visualise results, etc,
+without needing to download and install anything on your computer.
+However, as this is a free cloud server the computation may be slower,
+and data on these cloud binder instances will regularly be reset,
+so this approach is best used for quickly exploring the capabilities of MNE-NIRS.</p>
+<p>Alternatively, if you wish to run code locally on your own computer with your own data, you can run a
+<a class="reference external" href="https://docs.docker.com/get-docker/">docker instance locally</a>
+using the
+<a class="reference external" href="https://github.com/mne-tools/mne-nirs/pkgs/container/mne-nirs">MNE-NIRS docker image</a> image.
+Using docker provides a notebook server running on your own computer,
+it comes pre-prepared with MNE-Python, MNE-NIRS, and other useful packages installed.
+This approach gets you up and running with a single command, and provides
+the greatest flexibility without installing python.</p>
+</section>
+<section id="upgrading-your-software-version">
+<h3>Upgrading your software version<a class="headerlink" href="#upgrading-your-software-version" title="Permalink to this headline">¶</a></h3>
+<p>See the
+<a class="reference external" href="https://mne.tools/dev/install/updating.html">MNE-Python instructions for how to update</a>
+the MNE-Python version.
+Similarly, you can update MNE-NIRS to the latest development version by running <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">--no-deps</span> <span class="pre">https://github.com/mne-tools/mne-nirs/archive/main.zip</span></code></p>
+</section>
+</section>
+<section id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
+<p>This library is built on top of other great packages. If you use MNE-NIRS you should also acknowledge these packages.</p>
+<p>MNE: <a class="reference external" href="https://mne.tools/dev/overview/cite.html">https://mne.tools/dev/overview/cite.html</a></p>
+<p>Nilearn: <a class="reference external" href="http://nilearn.github.io/authors.html#citing">http://nilearn.github.io/authors.html#citing</a></p>
+<p>statsmodels: <a class="reference external" href="https://www.statsmodels.org/stable/index.html#citation">https://www.statsmodels.org/stable/index.html#citation</a></p>
+<p>Until there is a journal article specifically on MNE-NIRS, please cite <a class="reference external" href="https://www.biorxiv.org/content/10.1101/2020.12.22.423886v1">this article</a>.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='right-next' id="next-link" href="auto_examples/index.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Examples</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+    <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, MNE-NIRS Developers.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

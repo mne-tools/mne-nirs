@@ -1,0 +1,823 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Example Datasets &#8212; MNE-NIRS 0.3.dev0 documentation</title>
+    
+    <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  
+    
+    <link rel="stylesheet"
+      href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+    
+      
+  
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/pydata-sphinx-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    
+    <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/copybutton.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="GLM Analysis (Simulated)" href="plot_10_hrf_simulation.html" />
+    <link rel="prev" title="Importing Data From fNIRS Devices" href="plot_01_data_io.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-188272121-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+<a class="navbar-brand" href="../../index.html">
+<p class="title">MNE-NIRS</p>
+</a>
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  Examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../api.html">
+  API
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../changelog.html">
+  Changelog
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <div class="dropdown">
+    <button type="button" class="btn btn-primary btn-sm navbar-btn dropdown-toggle" id="dLabelMore" data-toggle="dropdown">
+        v0.3.dev0
+        <span class="caret"></span>
+    </button>
+    <div class="dropdown-menu list-group-flush py-0" aria-labelledby="dLabelMore">
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.2.0/index.html">v0.2.0 (stable)</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.1.2/index.html">v0.1.2</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.1.1/index.html">v0.1.1</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.1.0/index.html">v0.1.0</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.0.6/index.html">v0.0.6</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.0.5/index.html">v0.0.5</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.0.4/index.html">v0.0.4</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.0.3/index.html">v0.0.3</a>
+            <a class="list-group-item list-group-item-action py-1" href="https://mne.tools/mne-nirs/v0.0.2/index.html">v0.0.2</a>
+    </div>
+</div>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/mne-tools/mne-nirs" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+      <div class="navbar-end-item">
+        <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <div class="col-12 col-md-1 col-xl-2 bd-sidebar no-sidebar"></div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finger-tapping-data">
+   Finger Tapping Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#auditory-speech-and-noise">
+   Auditory Speech and Noise
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#audio-or-visual-speech">
+   Audio or Visual Speech
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bibliography">
+     Bibliography
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-11 col-xl-8 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+<p>
+  <strong>
+    
+      <p style="border:3px; border-style:solid; border-color:#24872b; padding: 1em;">
+        You are currently reading the latest MNE-NIRS development version documentation.
+        If you wish to view the documentation associated with a stable release,
+        use the blue dropdown menu in the top right corner of the page.
+      </p>
+    
+  </strong>
+</p>
+
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-auto-examples-general-plot-05-datasets-py"><span class="std std-ref">here</span></a>
+to download the full example code or to run this example in your browser via Binder</p>
+</div>
+<section class="sphx-glr-example-title" id="example-datasets">
+<span id="ex-fnirs-datasets"></span><span id="sphx-glr-auto-examples-general-plot-05-datasets-py"></span><h1>Example Datasets<a class="headerlink" href="#example-datasets" title="Permalink to this headline">¶</a></h1>
+<p>To get you up and running with MNE-NIRS and fNIRS data analysis we provide
+some example datasets.
+Each dataset is published and if you use the data at any stage of
+your experiment (including piloting and exploration) then please cite the
+authors of the data.</p>
+<p>A brief explanation of each dataset is provided below, and a demonstration
+of how to download the data and address it with MNE.
+Each dataset is provided in BIDs format, as such we can use the MNE-BIDS
+package to quickly report the number of trials for each condition in the
+dataset.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># sphinx_gallery_thumbnail_number = 1</span>
+
+<span class="c1"># Authors: Robert Luke &lt;mail@robertluke.net&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># License: BSD (3-clause)</span>
+
+
+<span class="kn">import</span> <span class="nn">mne_nirs</span>
+<span class="kn">import</span> <span class="nn">mne_bids.stats</span>
+</pre></div>
+</div>
+<section id="finger-tapping-data">
+<h2>Finger Tapping Data<a class="headerlink" href="#finger-tapping-data" title="Permalink to this headline">¶</a></h2>
+<p>This data is from the publication
+<a class="footnote-reference brackets" href="#footcite-luke-fnirs-finger-tapping-2021" id="id1">1</a>.
+This data provides an example of the canonical finger tapping experiment.
+Data is provided from five participants. The experiment was a block design
+with three conditions. The first condition consisted of the participants
+tapping their thumb to fingers on the left hand, the second condition was the
+same but with the right hand. The final condition was a control, with no
+motor task.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">datapath</span> <span class="o">=</span> <a href="../../generated/mne_nirs.datasets.fnirs_motor_group.data_path.html#mne_nirs.datasets.fnirs_motor_group.data_path" title="mne_nirs.datasets.fnirs_motor_group.data_path" class="sphx-glr-backref-module-mne_nirs-datasets-fnirs_motor_group sphx-glr-backref-type-py-function"><span class="n">mne_nirs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fnirs_motor_group</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">()</span>
+<a href="https://mne.tools/mne-bids/stable/generated/mne_bids.stats.count_events.html#mne_bids.stats.count_events" title="mne_bids.stats.count_events" class="sphx-glr-backref-module-mne_bids-stats sphx-glr-backref-type-py-function"><span class="n">mne_bids</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">count_events</span></a><span class="p">(</span><span class="n">datapath</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Using default location ~/mne_data for fnirs_motor_group...
+
+0.00B [00:00, ?B/s]
+5.12kB [00:00, 8.40kB/s]
+432kB [00:00, 795kB/s]
+3.78MB [00:00, 7.39MB/s]
+5.24MB [00:00, 8.91MB/s]
+7.67MB [00:01, 11.8MB/s]
+9.25MB [00:01, 12.6MB/s]
+11.6MB [00:01, 14.2MB/s]
+13.2MB [00:01, 14.5MB/s]
+15.5MB [00:01, 14.9MB/s]
+18.2MB [00:01, 15.5MB/s]
+20.7MB [00:01, 17.8MB/s]
+22.6MB [00:01, 16.4MB/s]
+24.9MB [00:02, 16.0MB/s]
+26.5MB [00:02, 15.2MB/s]
+28.8MB [00:02, 16.7MB/s]
+30.6MB [00:02, 15.8MB/s]
+32.9MB [00:02, 17.5MB/s]
+34.7MB [00:02, 14.6MB/s]
+37.0MB [00:02, 16.7MB/s]
+38.8MB [00:02, 15.5MB/s]
+41.2MB [00:03, 15.7MB/s]
+43.7MB [00:03, 18.0MB/s]
+0.00B [00:00, ?B/s]
+0.00B [00:00, ?B/s]
+</pre></div>
+</div>
+<div class="output_subarea output_html rendered_html output_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="3" halign="left">tapping</th>
+    </tr>
+    <tr>
+      <th>trial_type</th>
+      <th>Control</th>
+      <th>Tapping/Left</th>
+      <th>Tapping/Right</th>
+    </tr>
+    <tr>
+      <th>subject</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>01</th>
+      <td>30</td>
+      <td>30</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>02</th>
+      <td>30</td>
+      <td>30</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>03</th>
+      <td>30</td>
+      <td>30</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>04</th>
+      <td>30</td>
+      <td>30</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>05</th>
+      <td>30</td>
+      <td>30</td>
+      <td>30</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<br />
+<br /></section>
+<section id="auditory-speech-and-noise">
+<h2>Auditory Speech and Noise<a class="headerlink" href="#auditory-speech-and-noise" title="Permalink to this headline">¶</a></h2>
+<p>This data is from the publication
+<a class="footnote-reference brackets" href="#footcite-luke2021analysis" id="id2">2</a>.
+In this experiment listeners were presented with auditory stimuli via insertphones.
+Data is provided from seventeen participants. The experiment was a block
+design with three conditions. The first condition consisted of speech,
+the second condition consisted of low frequency noise.
+The final condition was a control, no audio was presented to the listeners.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">datapath</span> <span class="o">=</span> <a href="../../generated/mne_nirs.datasets.block_speech_noise.data_path.html#mne_nirs.datasets.block_speech_noise.data_path" title="mne_nirs.datasets.block_speech_noise.data_path" class="sphx-glr-backref-module-mne_nirs-datasets-block_speech_noise sphx-glr-backref-type-py-function"><span class="n">mne_nirs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">block_speech_noise</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">()</span>
+<a href="https://mne.tools/mne-bids/stable/generated/mne_bids.stats.count_events.html#mne_bids.stats.count_events" title="mne_bids.stats.count_events" class="sphx-glr-backref-module-mne_bids-stats sphx-glr-backref-type-py-function"><span class="n">mne_bids</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">count_events</span></a><span class="p">(</span><span class="n">datapath</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Using default location ~/mne_data for block_speech_noise...
+
+  0%|                                              | 0.00/57.5M [00:00&lt;?, ?B/s]
+  0%|                                      | 26.6k/57.5M [00:00&lt;05:11, 184kB/s]
+  0%|                                      | 58.4k/57.5M [00:00&lt;03:58, 241kB/s]
+  0%|                                      | 97.3k/57.5M [00:00&lt;03:13, 297kB/s]
+  0%|                                       | 161k/57.5M [00:00&lt;02:17, 417kB/s]
+  0%|▏                                      | 263k/57.5M [00:00&lt;01:32, 620kB/s]
+  1%|▎                                      | 435k/57.5M [00:00&lt;00:58, 975kB/s]
+  1%|▍                                     | 707k/57.5M [00:00&lt;00:37, 1.53MB/s]
+  2%|▋                                    | 1.14M/57.5M [00:00&lt;00:23, 2.40MB/s]
+  3%|█▏                                   | 1.85M/57.5M [00:00&lt;00:14, 3.86MB/s]
+  5%|█▉                                   | 3.01M/57.5M [00:01&lt;00:08, 6.21MB/s]
+  8%|███▏                                 | 4.88M/57.5M [00:01&lt;00:05, 10.0MB/s]
+ 14%|█████                                | 7.78M/57.5M [00:01&lt;00:03, 15.8MB/s]
+ 18%|██████▌                              | 10.2M/57.5M [00:01&lt;00:02, 18.2MB/s]
+ 22%|████████▏                            | 12.8M/57.5M [00:01&lt;00:02, 20.6MB/s]
+ 27%|██████████▏                          | 15.7M/57.5M [00:01&lt;00:01, 22.8MB/s]
+ 32%|███████████▉                         | 18.5M/57.5M [00:01&lt;00:01, 24.1MB/s]
+ 36%|█████████████▍                       | 20.9M/57.5M [00:01&lt;00:01, 24.3MB/s]
+ 42%|███████████████▎                     | 23.9M/57.5M [00:01&lt;00:01, 25.8MB/s]
+ 46%|█████████████████                    | 26.4M/57.5M [00:01&lt;00:01, 25.8MB/s]
+ 50%|██████████████████▋                  | 29.0M/57.5M [00:02&lt;00:01, 25.4MB/s]
+ 55%|████████████████████▍                | 31.7M/57.5M [00:02&lt;00:00, 25.9MB/s]
+ 60%|██████████████████████▎              | 34.6M/57.5M [00:02&lt;00:00, 26.6MB/s]
+ 65%|███████████████████████▉             | 37.2M/57.5M [00:02&lt;00:00, 25.8MB/s]
+ 69%|█████████████████████████▋           | 39.9M/57.5M [00:02&lt;00:00, 26.1MB/s]
+ 74%|███████████████████████████▍         | 42.6M/57.5M [00:02&lt;00:00, 26.4MB/s]
+ 79%|█████████████████████████████▏       | 45.3M/57.5M [00:02&lt;00:00, 26.3MB/s]
+ 83%|██████████████████████████████▊      | 47.9M/57.5M [00:02&lt;00:00, 26.1MB/s]
+ 88%|████████████████████████████████▌    | 50.6M/57.5M [00:02&lt;00:00, 26.0MB/s]
+ 93%|██████████████████████████████████▍  | 53.6M/57.5M [00:02&lt;00:00, 27.1MB/s]
+ 98%|████████████████████████████████████▏| 56.3M/57.5M [00:03&lt;00:00, 26.2MB/s]
+  0%|                                              | 0.00/57.5M [00:00&lt;?, ?B/s]
+100%|██████████████████████████████████████| 57.5M/57.5M [00:00&lt;00:00, 116GB/s]
+</pre></div>
+</div>
+<div class="output_subarea output_html rendered_html output_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th colspan="3" halign="left">AudioSpeechNoise</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>trial_type</th>
+      <th>Control</th>
+      <th>Noise</th>
+      <th>Speech</th>
+    </tr>
+    <tr>
+      <th>subject</th>
+      <th>session</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>01</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>02</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>03</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>04</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>05</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>06</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>07</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>08</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>09</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <th>01</th>
+      <td>20</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<br />
+<br /></section>
+<section id="audio-or-visual-speech">
+<h2>Audio or Visual Speech<a class="headerlink" href="#audio-or-visual-speech" title="Permalink to this headline">¶</a></h2>
+<p>This data is from the publication
+<a class="footnote-reference brackets" href="#footcite-shader2021use" id="id3">3</a>.
+In this experiment participants were presented a continuously running story
+in blocked segments. Each segment was presented as either audio only
+or visual only.
+In addition to the audio visual stimuli, a control condition was also
+presented randomly throughout the experiment.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">datapath</span> <span class="o">=</span> <a href="../../generated/mne_nirs.datasets.audio_or_visual_speech.data_path.html#mne_nirs.datasets.audio_or_visual_speech.data_path" title="mne_nirs.datasets.audio_or_visual_speech.data_path" class="sphx-glr-backref-module-mne_nirs-datasets-audio_or_visual_speech sphx-glr-backref-type-py-function"><span class="n">mne_nirs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">audio_or_visual_speech</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">()</span>
+<a href="https://mne.tools/mne-bids/stable/generated/mne_bids.stats.count_events.html#mne_bids.stats.count_events" title="mne_bids.stats.count_events" class="sphx-glr-backref-module-mne_bids-stats sphx-glr-backref-type-py-function"><span class="n">mne_bids</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">count_events</span></a><span class="p">(</span><span class="n">datapath</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Using default location ~/mne_data for audio_or_visual_speech...
+
+  0%|                                              | 0.00/47.0M [00:00&lt;?, ?B/s]
+  0%|                                      | 43.0k/47.0M [00:00&lt;01:51, 421kB/s]
+  0%|                                      | 86.0k/47.0M [00:00&lt;02:24, 325kB/s]
+  0%|▏                                      | 166k/47.0M [00:00&lt;01:32, 505kB/s]
+  1%|▏                                      | 281k/47.0M [00:00&lt;01:04, 729kB/s]
+  1%|▍                                     | 473k/47.0M [00:00&lt;00:41, 1.13MB/s]
+  2%|▌                                     | 768k/47.0M [00:00&lt;00:27, 1.71MB/s]
+  3%|▉                                    | 1.27M/47.0M [00:00&lt;00:16, 2.74MB/s]
+  4%|█▌                                   | 2.05M/47.0M [00:00&lt;00:10, 4.32MB/s]
+  7%|██▌                                  | 3.33M/47.0M [00:00&lt;00:06, 6.92MB/s]
+ 11%|████▏                                | 5.39M/47.0M [00:01&lt;00:03, 11.1MB/s]
+ 17%|██████▍                              | 8.19M/47.0M [00:01&lt;00:02, 16.2MB/s]
+ 23%|████████▌                            | 10.9M/47.0M [00:01&lt;00:01, 19.6MB/s]
+ 28%|██████████▌                          | 13.4M/47.0M [00:01&lt;00:01, 21.0MB/s]
+ 34%|████████████▋                        | 16.2M/47.0M [00:01&lt;00:01, 22.7MB/s]
+ 41%|███████████████                      | 19.2M/47.0M [00:01&lt;00:01, 24.6MB/s]
+ 46%|█████████████████                    | 21.7M/47.0M [00:01&lt;00:01, 24.8MB/s]
+ 52%|███████████████████▏                 | 24.3M/47.0M [00:01&lt;00:00, 24.9MB/s]
+ 58%|█████████████████████▌               | 27.3M/47.0M [00:01&lt;00:00, 25.9MB/s]
+ 64%|███████████████████████▋             | 30.0M/47.0M [00:01&lt;00:00, 26.2MB/s]
+ 69%|█████████████████████████▋           | 32.7M/47.0M [00:02&lt;00:00, 25.8MB/s]
+ 75%|███████████████████████████▉         | 35.5M/47.0M [00:02&lt;00:00, 26.0MB/s]
+ 82%|██████████████████████████████▎      | 38.4M/47.0M [00:02&lt;00:00, 27.1MB/s]
+ 88%|████████████████████████████████▍    | 41.2M/47.0M [00:02&lt;00:00, 26.2MB/s]
+ 93%|██████████████████████████████████▍  | 43.8M/47.0M [00:02&lt;00:00, 25.8MB/s]
+ 99%|████████████████████████████████████▋| 46.6M/47.0M [00:02&lt;00:00, 26.5MB/s]
+  0%|                                              | 0.00/47.0M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 47.0M/47.0M [00:00&lt;00:00, 85.7GB/s]
+</pre></div>
+</div>
+<div class="output_subarea output_html rendered_html output_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th colspan="3" halign="left">AudioVisualBroadVsRestricted</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>trial_type</th>
+      <th>Audio</th>
+      <th>Control</th>
+      <th>Video</th>
+    </tr>
+    <tr>
+      <th>subject</th>
+      <th>session</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>01</th>
+      <th>01</th>
+      <td>18</td>
+      <td>10</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>02</th>
+      <th>01</th>
+      <td>18</td>
+      <td>10</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>03</th>
+      <th>01</th>
+      <td>18</td>
+      <td>10</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>04</th>
+      <th>01</th>
+      <td>18</td>
+      <td>10</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>05</th>
+      <th>01</th>
+      <td>18</td>
+      <td>10</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>06</th>
+      <th>01</th>
+      <td>18</td>
+      <td>10</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>07</th>
+      <th>01</th>
+      <td>18</td>
+      <td>10</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>08</th>
+      <th>01</th>
+      <td>18</td>
+      <td>10</td>
+      <td>18</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+<br />
+<br /><section id="bibliography">
+<h3>Bibliography<a class="headerlink" href="#bibliography" title="Permalink to this headline">¶</a></h3>
+<p id="id4"><dl class="footnote brackets">
+<dt class="label" id="footcite-luke-fnirs-finger-tapping-2021"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Robert Luke and David McAlpine. fNIRS Finger Tapping Data in BIDS Format. <em>GitHub</em>, 9 2021. <a class="reference external" href="https://doi.org/10.5281/zenodo.5529797">doi:10.5281/zenodo.5529797</a>.</p>
+</dd>
+<dt class="label" id="footcite-luke2021analysis"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>Robert Luke, Eric Larson, Maureen J Shader, Hamish Innes-Brown, Lindsey Van Yper, Adrian KC Lee, Paul F Sowman, and David McAlpine. Analysis methods for measuring passive auditory fnirs responses generated by a block-design paradigm. <em>Neurophotonics</em>, 8(2):025008, 2021. <a class="reference external" href="https://doi.org/10.1117/1.NPh.8.2.025008">doi:10.1117/1.NPh.8.2.025008</a>.</p>
+</dd>
+<dt class="label" id="footcite-shader2021use"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p>Maureen J Shader, Robert Luke, Nathalie Gouailhardou, and Colette M McKay. The use of broad vs restricted regions of interest in functional near-infrared spectroscopy for measuring cortical activation to auditory-only and visual-only speech. <em>Hearing Research</em>, 406:108256, 2021. <a class="reference external" href="https://doi.org/10.1016/j.heares.2021.108256">doi:10.1016/j.heares.2021.108256</a>.</p>
+</dd>
+</dl>
+</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  19.170 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  9 MB</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-05-datasets-py">
+<div class="binder-badge docutils container">
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_05_datasets.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/761da66fc742e22645affbe6c4640170/plot_05_datasets.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_05_datasets.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/90f3d6ff4fffafdd9e2350f8fd04082e/plot_05_datasets.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_05_datasets.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+</section>
+
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="plot_01_data_io.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Importing Data From fNIRS Devices</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="plot_10_hrf_simulation.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">GLM Analysis (Simulated)</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+    <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, MNE-NIRS Developers.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>
