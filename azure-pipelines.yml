@@ -89,6 +89,8 @@ stages:
       displayName: 'Print config'
     - script: python -c "import mne; mne.datasets.testing.data_path(verbose=True)"
       displayName: 'Get test data'
+    - bash: tools/fold.sh
+      condition: in(variables['OS'], 'linux', 'macos')
     - script: pytest --tb=short --cov=mne_nirs --cov-report=xml --cov-report=html -vv mne_nirs
       displayName: 'Run tests'
     - bash: bash <(curl -s https://codecov.io/bash)
