@@ -1,0 +1,11 @@
+{%- extends 'pydata_sphinx_theme/layout.html' %}
+
+{% block extrahead %}
+    <link rel="canonical" href="https://mne.tools/mne-nirs/stable/index.html" />
+    {{ super() }}
+{% endblock %}
+
+{%- block scripts_end %}
+    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
+    {{ super() }}
+{%- endblock %}
