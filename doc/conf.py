@@ -12,11 +12,8 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-
-import multiprocessing as mp
+from datetime import datetime, timezone
 import sys
-from distutils.version import LooseVersion
-import sphinx
 import os
 import warnings
 from sphinx_gallery.sorting import FileNameSortKey
@@ -25,9 +22,6 @@ sys.path.append("../")
 import mne
 from mne_nirs import __version__  # noqa: E402
 from mne.tests.test_docstring_parameters import error_ignores
-
-
-smv_tag_whitelist = os.getenv('SMV_TAG_WHITELIST', r'^v\d+\.\d+.\d+$')
 
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -55,14 +49,6 @@ extensions = [
     'sphinxcontrib.bibtex',
 ]
 
-smv_branch_whitelist = r'^(?!refs/heads/).*$'
-# smv_tag_whitelist = r'^v\d+\.\d+.\d+$'
-# They say to set this to None, but then Sphinx complains about it not being
-# a string, so let's just use a regex that should lead to no tags
-# smv_tag_whitelist = 'ignore all tags'
-# Mark vX.Y.Z as releases
-smv_released_pattern = r'^.*v.*$'
-
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -81,7 +67,15 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'MNE-NIRS'
-copyright = u'2022, MNE-NIRS Developers'
+td = datetime.now(tz=timezone.utc)
+
+# We need to triage which date type we use so that incremental builds work
+# (Sphinx looks at variable changes and rewrites all files if some change)
+copyright = (
+    f'2012–{td.year}, MNE Developers. Last updated <time datetime="{td.isoformat()}" class="localized">{td.strftime("%Y-%m-%d %H:%M %Z")}</time>\n'  # noqa: E501
+    '<script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script>')  # noqa: E501
+if os.getenv('MNE_FULL_DATE', 'false').lower() != 'true':
+    copyright = f'2012–{td.year}, MNE Developers. Last updated locally.'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
