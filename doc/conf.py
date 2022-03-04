@@ -142,12 +142,7 @@ html_sidebars = {
 # variables to pass to HTML templating engine
 html_context = {
     'build_dev_html': bool(int(os.environ.get('BUILD_DEV_HTML', False))),
-    'versions_dropdown': {
-        'dev': 'v0.3 (devel)',
-        'stable': 'v0.2 (stable)',
-    }
 }
-
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
