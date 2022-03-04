@@ -12,7 +12,7 @@ if [ ! -f /usr/lib/x86_64-linux-gnu/libxcb-util.so.1 ]; then
 	sudo ln -s /usr/lib/x86_64-linux-gnu/libxcb-util.so.0 /usr/lib/x86_64-linux-gnu/libxcb-util.so.1
 fi
 
-python -m pip install --progress-bar off --upgrade pip setuptools wheel
+python -m pip install --upgrade pip setuptools wheel
 python -m pip install --upgrade --progress-bar off --pre sphinx
 python -m pip install --upgrade --progress-bar off -r requirements.txt -r requirements_testing.txt -r requirements_doc.txt
 python -m pip install -e .
