@@ -153,11 +153,18 @@ html_context = {
 # further.  For a list of options available for each theme, see the
 # documentation.
 # html_theme_options = {}
+switcher_version_match = 'dev' if release.endswith('dev0') else version
 html_theme_options = {
-    "navbar_end": ["version-switcher.html", "navbar-icon-links.html", "search-field.html"],
     'github_url': 'https://github.com/mne-tools/mne-nirs',
     "show_toc_level": 1,
+    'navbar_end': ['version-switcher', 'navbar-icon-links', 'search'],
+    'footer_items': ['copyright'],
     "google_analytics_id": "UA-188272121-1",
+    'switcher': {
+        'json_url': 'https://mne.tools/mne-nirs/dev/_static/versions.json',
+        'url_template': 'https://mne.tools/mne-nirs/{version}/',
+        'version_match': switcher_version_match,
+    }
 }
 
 
