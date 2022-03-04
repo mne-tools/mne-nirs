@@ -79,23 +79,13 @@ jobs:
         - run:
             <<: *xvfb
 
-        # This command differs from MNE-Python by just installing requirements_doc.txt, which greatly speeds up install time
-        # We also don't check PyQt5 because it's not actually installed
-        - run:
-            name: Get Python running
-            command: |
-              python -m pip install --upgrade pip setuptools wheel
-              python -m pip install --upgrade --progress-bar off --pre sphinx
-              python -m pip install --upgrade --progress-bar off -r requirements.txt -r requirements_testing.txt -r requirements_doc.txt https://github.com/mne-tools/mne-python/zipball/main
-              python -m pip install -e .
-
         # Load pip cache
         - restore_cache:
             keys:
-              - pip-cache
+              - pip-cache-0
         - restore_cache:
             keys:
-              - user-install-bin-cache
+              - user-install-bin-cache-0
 
         # Hack in uninstalls of libraries as necessary if pip doesn't do the right thing in upgrading for us...
         - run:
@@ -104,11 +94,11 @@ jobs:
               ./tools/circleci_dependencies.sh
 
         - save_cache:
-            key: pip-cache
+            key: pip-cache-0
             paths:
               - ~/.cache/pip
         - save_cache:
-            key: user-install-bin-cache
+            key: user-install-bin-cache-0
             paths:
               - ~/.local/lib/python3.8/site-packages
               - ~/.local/bin
@@ -154,6 +144,7 @@ jobs:
             command: |
               git branch
               make -C doc html
+              du -hs ~/mne_data
 
         # Save the JUnit file
         - store_test_results:
@@ -171,7 +162,7 @@ jobs:
               - html
         # Cache the data
         - save_cache:
-            key: data-cache-0  # < 100 M, might as well combine
+            key: data-cache-0
             paths:
               - ~/.mne
               - ~/mne_data
