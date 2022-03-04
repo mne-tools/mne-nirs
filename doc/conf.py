@@ -128,16 +128,6 @@ bibtex_footbibliography_header = ''
 # a list of builtin themes.
 html_theme = 'pydata_sphinx_theme'
 
-# Remove left side bar
-html_sidebars = {
-  "**": []
-}
-
-# variables to pass to HTML templating engine
-html_context = {
-    'build_dev_html': bool(int(os.environ.get('BUILD_DEV_HTML', False))),
-}
-
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
