@@ -14,5 +14,5 @@ fi
 
 python -m pip install --upgrade pip setuptools wheel
 python -m pip install --upgrade --progress-bar off --pre sphinx
-python -m pip install --upgrade --progress-bar off -r requirements.txt -r requirements_testing.txt -r requirements_doc.txt
+python -m pip install --upgrade --progress-bar off -r requirements.txt -r requirements_testing.txt -r requirements_doc.txt https://github.com/mne-tools/mne-python/zipball/main
 python -m pip install -e .
