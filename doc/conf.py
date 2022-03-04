@@ -146,7 +146,7 @@ switcher_version_match = 'dev' if release.endswith('dev0') else version
 html_theme_options = {
     'github_url': 'https://github.com/mne-tools/mne-nirs',
     "show_toc_level": 1,
-    'navbar_end': ['version-switcher', 'navbar-icon-links', 'search'],
+    'navbar_end': ['version-switcher', 'navbar-icon-links'],
     'footer_items': ['copyright'],
     "google_analytics_id": "UA-188272121-1",
     'switcher': {
@@ -278,6 +278,7 @@ sphinx_gallery_conf = {
     'download_all_examples': False,
     'show_memory': True,
     'within_subsection_order': FileNameSortKey,
+    'junit': os.path.join('..', 'test-results', 'sphinx-gallery', 'junit.xml'),
     'binder': {
     # Required keys
     'org': 'mne-tools',
