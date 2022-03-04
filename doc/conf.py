@@ -50,7 +50,6 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode',
     'sphinx_fontawesome',
-    'sphinx_multiversion',
     'sphinx_gallery.gen_gallery',
     'numpydoc',
     'sphinxcontrib.bibtex',
