@@ -131,7 +131,7 @@ jobs:
         # Restore data cache
         - restore_cache:
             keys:
-              - data-cache-0
+              - data-cache-1
 
         - run:
             name: list packages
@@ -162,7 +162,7 @@ jobs:
               - html
         # Cache the data
         - save_cache:
-            key: data-cache-0
+            key: data-cache-1
             paths:
               - ~/.mne
               - ~/mne_data
