@@ -55,11 +55,11 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
     ----------
     .. footbibliography::
     """
-
+    ha = '2474b78640aa3e69a7eada881d0b275036d96e46'
     dataset_params = dict(
-        archive_name='BIDS-NIRS-Tapping-master.zip',
-        hash='md5:d40529b85d4b7ebdf7243168c0e8c390',
-        url='https://github.com/rob-luke/BIDS-NIRS-Tapping/archive/master.zip',
+        archive_name=f'BIDS-NIRS-Tapping-{ha}.zip',
+        hash='md5:18213355c2d83461c1799d6091f42946',
+        url=f'https://github.com/rob-luke/BIDS-NIRS-Tapping/archive/{ha}.zip',
         folder_name='fNIRS-motor-group',
         dataset_name='fnirs_motor_group',
         config_key='MNE_DATASETS_FNIRSMOTORGROUP_PATH',
