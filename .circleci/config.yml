@@ -15,7 +15,32 @@ jobs:
         # transparency but 21.0.3 on 20.04 does not!
         - image: cimg/base:stable-18.04
       steps:
+        - restore_cache:
+            keys:
+              - source-cache
         - checkout
+        - run:
+            name: Complete checkout
+            command: |
+              set -e
+              if ! git remote -v | grep upstream; then
+                git remote add upstream https://github.com/mne-tools/mne-nirs.git
+              fi
+              git remote set-url upstream https://github.com/mne-tools/mne-nirs.git
+              git fetch upstream
+        - save_cache:
+            key: source-cache
+            paths:
+              - ".git"
+        - run:
+            name: Check-skip
+            command: |
+              set -e
+              export COMMIT_MESSAGE=$(git log --format=oneline -n 1);
+              if [[ -v CIRCLE_PULL_REQUEST ]] && ([[ "$COMMIT_MESSAGE" == *"[skip circle]"* ]] || [[ "$COMMIT_MESSAGE" == *"[circle skip]"* ]]); then
+                echo "Skip detected, exiting job ${CIRCLE_JOB} for PR ${CIRCLE_PULL_REQUEST}."
+                circleci-agent step halt;
+              fi
         - run:
             name: Merge with upstream
             command: |
@@ -23,10 +48,6 @@ jobs:
               echo ${CI_PULL_REQUEST//*pull\//} | tee merge.txt
               if [[ $(cat merge.txt) != "" ]]; then
                 echo "Merging $(cat merge.txt)";
-                if ! git remote -v | grep upstream; then
-                  git remote add upstream https://github.com/mne-tools/mne-nirs.git
-                fi
-                git fetch upstream
                 git pull --ff-only upstream "refs/pull/$(cat merge.txt)/merge";
               fi
 
@@ -46,9 +67,6 @@ jobs:
               echo "export OPENBLAS_NUM_THREADS=4" >> $BASH_ENV
               echo "export XDG_RUNTIME_DIR=/tmp/runtime-circleci" >> $BASH_ENV
               echo "export MNE_FULL_DATE=true" >> $BASH_ENV
-              echo "export MNE_3D_OPTION_ANTIALIAS=false" >> $BASH_ENV
-              source tools/get_minimal_commands.sh
-              echo "export MNE_3D_BACKEND=pyvistaqt" >> $BASH_ENV
               echo "export PATH=~/.local/bin/:$PATH" >> $BASH_ENV
               echo "source ~/python_env/bin/activate" >> $BASH_ENV
               mkdir -p ~/.local/bin
@@ -57,47 +75,33 @@ jobs:
               cat $BASH_ENV
               mkdir -p ~/mne_data
               touch pattern.txt
-        - run:
-            name: check neuromag2ft
-            command: |
-              neuromag2ft --version
 
         - run:
             <<: *xvfb
 
-        - run:
-            name: Install fonts needed for diagrams
-            command: |
-              mkdir -p $HOME/.fonts
-              curl https://codeload.github.com/adobe-fonts/source-code-pro/tar.gz/2.038R-ro/1.058R-it/1.018R-VAR | tar xz -C $HOME/.fonts
-              curl https://codeload.github.com/adobe-fonts/source-sans-pro/tar.gz/3.028R | tar xz -C $HOME/.fonts
-              fc-cache -f
-
-
-        - run:
-            name: Install fonts needed for diagrams
-            command: |
-              mkdir -p $HOME/.fonts
-              curl https://codeload.github.com/adobe-fonts/source-code-pro/tar.gz/2.030R-ro/1.050R-it | tar xz -C $HOME/.fonts
-              curl https://codeload.github.com/adobe-fonts/source-sans-pro/tar.gz/3.006R | tar xz -C $HOME/.fonts
-              fc-cache -f
-
-        # This command differs from MNE-Python by just installing requirements_doc.txt, which greatly speeds up install time
-        # We also don't check PyQt5 because it's not actually installed
-        - run:
-            name: Get Python running
-            command: |
-              python -m pip install --upgrade pip setuptools wheel
-              python -m pip install --upgrade --progress-bar off --pre sphinx
-              python -m pip install --upgrade --progress-bar off -r requirements.txt -r requirements_testing.txt -r requirements_doc.txt https://github.com/mne-tools/mne-python/zipball/main
-              python -m pip install -e .
-
+        # Load pip cache
+        - restore_cache:
+            keys:
+              - pip-cache-0
+        - restore_cache:
+            keys:
+              - user-install-bin-cache-0
 
         # Hack in uninstalls of libraries as necessary if pip doesn't do the right thing in upgrading for us...
         - run:
             name: Get Python running
             command: |
               ./tools/circleci_dependencies.sh
+
+        - save_cache:
+            key: pip-cache-0
+            paths:
+              - ~/.cache/pip
+        - save_cache:
+            key: user-install-bin-cache-0
+            paths:
+              - ~/.local/lib/python3.8/site-packages
+              - ~/.local/bin
 
         - run:
             name: Download fOLD data
@@ -107,7 +111,6 @@ jobs:
         - run:
             name: Check PyQt5
             command: LD_DEBUG=libs python -c "from PyQt5.QtWidgets import QApplication, QWidget; app = QApplication([])"
-
 
         # Look at what we have and fail early if there is some library conflict
         # (remove irrelevant lines compared to MNE-Python)
@@ -121,35 +124,93 @@ jobs:
                python -c "import mne; mne.set_config('MNE_USE_CUDA', 'false')"  # this is needed for the config tutorial
                python -c "import mne; mne.set_config('MNE_LOGGING_LEVEL', 'info')"
                python -c "import mne; level = mne.get_config('MNE_LOGGING_LEVEL'); assert level.lower() == 'info', repr(level)"
+        - run:
+            name: List packages
+            command: python -m pip list
+
+        # Restore data cache
+        - restore_cache:
+            keys:
+              - data-cache-0
 
         - run:
             name: list packages
             command: |
                pip list
 
-
-        - run:
-            name: Only build this branch and not main
-            command: |
-              git reset --hard "$CIRCLE_SHA1"
-              git checkout -q -B "$CIRCLE_BRANCH"
-              git reset --hard "$CIRCLE_SHA1"
-              git branch -D main
-
         # Build docs
         - run:
             name: make html
             command: |
-              cd doc;
-              git status
-              git tag
               git branch
-              make html-single;
+              make -C doc html
+              du -hs ~/mne_data
 
-        # Save the outputs
+        # Save the JUnit file
+        - store_test_results:
+            path: doc/_build/test-results
+        - store_artifacts:
+            path: doc/_build/test-results
+            destination: test-results
+        # Save the HTML
         - store_artifacts:
             path: doc/_build/html/
-            destination: dev
+            destination: html
+        - persist_to_workspace:
+            root: doc/_build
+            paths:
+              - html
+        # Cache the data
+        - save_cache:
+            key: data-cache-0
+            paths:
+              - ~/.mne
+              - ~/mne_data
+
+    deploy:
+      machine:
+        image: ubuntu-2004:202111-01
+      steps:
+        - attach_workspace:
+            at: /tmp/build
+        - checkout
+        - run:
+            name: Set BASH_ENV
+            command: |
+              set -e
+              echo "set -e" >> $BASH_ENV
+        # Don't try to deploy if nothing is there or not on the right branch
+        - run:
+            name: Check docs
+            command: |
+              if [ ! -f /tmp/build/html/index.html ] ; then
+                echo "No files found to upload (build: ${CIRCLE_BRANCH}).";
+                circleci-agent step halt;
+              fi;
+        - run:
+            name: Deploy docs
+            command: |
+              git config --global user.email "circle@mne.com";
+              git config --global user.name "Circle CI";
+              git checkout -b gh-pages origin/gh-pages
+              git remote -v
+              git fetch origin
+              git reset --hard origin/gh-pages
+              git clean -xdf
+              if [ "${CIRCLE_BRANCH}" == "main" ]; then
+                echo "Deploying dev docs for ${CIRCLE_BRANCH}.";
+                rm -Rf dev;
+                cp -a /tmp/build/html dev;
+                git add -A;
+                git commit -m "CircleCI update of dev docs (${CIRCLE_BUILD_NUM}).";
+              else
+                echo "Deploying stable docs for ${CIRCLE_BRANCH}.";
+                rm -Rf stable;
+                cp -a /tmp/build/html stable;
+                git add -A;
+                git commit -m "CircleCI update of stable docs (${CIRCLE_BUILD_NUM}).";
+              fi;
+              git push origin gh-pages;
 
 workflows:
   version: 2
@@ -157,15 +218,11 @@ workflows:
   default:
     jobs:
       - build_docs
-
-  weekly:
-    jobs:
-      - build_docs
-    triggers:
-      - schedule:
-          # "At 00:00 on Sunday" should be often enough
-          cron: "0 0 * * 0"
+      - deploy:
+          requires:
+            - build_docs
           filters:
             branches:
               only:
                 - main
+                - maint/0.2

@@ -12,11 +12,8 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-
-import multiprocessing as mp
+from datetime import datetime, timezone
 import sys
-from distutils.version import LooseVersion
-import sphinx
 import os
 import warnings
 from sphinx_gallery.sorting import FileNameSortKey
@@ -25,9 +22,6 @@ sys.path.append("../")
 import mne
 from mne_nirs import __version__  # noqa: E402
 from mne.tests.test_docstring_parameters import error_ignores
-
-
-smv_tag_whitelist = os.getenv('SMV_TAG_WHITELIST', r'^v\d+\.\d+.\d+$')
 
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -50,19 +44,10 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode',
     'sphinx_fontawesome',
-    'sphinx_multiversion',
     'sphinx_gallery.gen_gallery',
     'numpydoc',
     'sphinxcontrib.bibtex',
 ]
-
-smv_branch_whitelist = r'^(?!refs/heads/).*$'
-# smv_tag_whitelist = r'^v\d+\.\d+.\d+$'
-# They say to set this to None, but then Sphinx complains about it not being
-# a string, so let's just use a regex that should lead to no tags
-# smv_tag_whitelist = 'ignore all tags'
-# Mark vX.Y.Z as releases
-smv_released_pattern = r'^.*v.*$'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -82,7 +67,15 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'MNE-NIRS'
-copyright = u'2022, MNE-NIRS Developers'
+td = datetime.now(tz=timezone.utc)
+
+# We need to triage which date type we use so that incremental builds work
+# (Sphinx looks at variable changes and rewrites all files if some change)
+copyright = (
+    f'2012–{td.year}, MNE Developers. Last updated <time datetime="{td.isoformat()}" class="localized">{td.strftime("%Y-%m-%d %H:%M %Z")}</time>\n'  # noqa: E501
+    '<script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script>')  # noqa: E501
+if os.getenv('MNE_FULL_DATE', 'false').lower() != 'true':
+    copyright = f'2012–{td.year}, MNE Developers. Last updated locally.'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -135,37 +128,22 @@ bibtex_footbibliography_header = ''
 # a list of builtin themes.
 html_theme = 'pydata_sphinx_theme'
 
-# Remove left side bar
-html_sidebars = {
-  "**": []
-}
-
-# variables to pass to HTML templating engine
-html_context = {
-    'build_dev_html': bool(int(os.environ.get('BUILD_DEV_HTML', False))),
-    'versions_dropdown': {
-        'v0.2.0': 'v0.2.0 (stable)',
-        'v0.1.2': 'v0.1.2',
-        'v0.1.1': 'v0.1.1',
-        'v0.1.0': 'v0.1.0',
-        'v0.0.6': 'v0.0.6',
-        'v0.0.5': 'v0.0.5',
-        'v0.0.4': 'v0.0.4',
-        'v0.0.3': 'v0.0.3',
-        'v0.0.2': 'v0.0.2',
-    }
-}
-
-
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 # html_theme_options = {}
+switcher_version_match = 'dev' if release.endswith('dev0') else version
 html_theme_options = {
-    "navbar_end": ["version-switcher.html", "navbar-icon-links.html", "search-field.html"],
     'github_url': 'https://github.com/mne-tools/mne-nirs',
     "show_toc_level": 1,
+    'navbar_end': ['version-switcher', 'navbar-icon-links'],
+    'footer_items': ['copyright'],
     "google_analytics_id": "UA-188272121-1",
+    'switcher': {
+        'json_url': 'https://mne.tools/mne-nirs/dev/_static/versions.json',
+        'url_template': 'https://mne.tools/mne-nirs/{version}/',
+        'version_match': switcher_version_match,
+    }
 }
 
 
@@ -290,6 +268,7 @@ sphinx_gallery_conf = {
     'download_all_examples': False,
     'show_memory': True,
     'within_subsection_order': FileNameSortKey,
+    'junit': os.path.join('..', 'test-results', 'sphinx-gallery', 'junit.xml'),
     'binder': {
     # Required keys
     'org': 'mne-tools',
