@@ -1,0 +1,713 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mne.io.snirf._snirf &#8212; MNE-NIRS 0.3.dev0 documentation</title>
+    
+    <link href="../../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  
+    
+    <link rel="stylesheet"
+      href="../../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+    
+      
+  
+    
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/pydata-sphinx-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css" />
+    
+    <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/copybutton.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="canonical" href="https://mne.tools/mne-nirs/stable/index.html" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-188272121-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+<a class="navbar-brand" href="../../../../index.html">
+<p class="title">MNE-NIRS</p>
+</a>
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../auto_examples/index.html">
+  Examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../api.html">
+  API
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../changelog.html">
+  Changelog
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <div class="dropdown" id="version_switcher">
+    <button type="button" class="btn btn-primary btn-sm navbar-btn dropdown-toggle" id="version_switcher_button" data-toggle="dropdown">
+        dev  <!-- this text may get changed later by javascript -->
+        <span class="caret"></span>
+    </button>
+    <div id="version_switcher_menu" class="dropdown-menu list-group-flush py-0" aria-labelledby="version_switcher_button">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+</div>
+
+<!-- NOTE: this JS must live here (not in our global JS file) because it relies
+     on being processed by Jinja before it is run (specifically for replacing
+     variables _modules/mne/io/snirf/_snirf and {'json_url': 'https://mne.tools/mne-nirs/dev/_static/versions.json', 'url_template': 'https://mne.tools/mne-nirs/{version}/', 'version_match': 'dev'}.
+-->
+
+<script type="text/javascript">
+// Construct the target URL from the JSON components
+function buildURL(entry) {
+    var template = "https://mne.tools/mne-nirs/{version}/";  // supplied by jinja
+    template = template.replace("{version}", entry.version);
+    return template;
+}
+
+// Check if corresponding page path exists in other version of docs
+// and, if so, go there instead of the homepage of the other docs version
+function checkPageExistsAndRedirect(event) {
+    const currentFilePath = "_modules/mne/io/snirf/_snirf.html",
+          tryUrl = event.target.getAttribute("href");
+    let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
+    $.ajax({
+        type: 'HEAD',
+        url: tryUrl,
+        // if the page exists, go there
+        success: function() {
+            location.href = tryUrl;
+        }
+    }).fail(function() {
+        location.href = otherDocsHomepage;
+    });
+    // this prevents the browser from following the href of the clicked node
+    // (which is fine because this function takes care of redirecting)
+    return false;
+}
+
+// Populate the version switcher from the JSON config file
+(function () {
+    $.getJSON("https://mne.tools/mne-nirs/dev/_static/versions.json", function(data, textStatus, jqXHR) {
+        const currentFilePath = "_modules/mne/io/snirf/_snirf.html";
+        // create links to the corresponding page in the other docs versions
+        $.each(data, function(index, entry) {
+            // if no custom name specified (e.g., "latest"), use version string
+            if (!("name" in entry)) {
+                entry.name = entry.version;
+            }
+            // create the node
+            const node = document.createElement("a");
+            node.setAttribute("class", "list-group-item list-group-item-action py-1");
+            node.textContent = `${entry.name}`;
+            // get the base URL for that doc version, add the current page's
+            // path to it, and set as `href`
+            entry.url = buildURL(entry);
+            node.setAttribute("href", `${entry.url}${currentFilePath}`);
+            // on click, AJAX calls will check if the linked page exists before
+            // trying to redirect, and if not, will redirect to the homepage
+            // for that version of the docs.
+            node.onclick = checkPageExistsAndRedirect;
+            $("#version_switcher_menu").append(node);
+            // replace dropdown button text with the preferred display name of
+            // this version, rather than using sphinx's 0.3.dev0 variable.
+            // also highlight the dropdown entry for the currently-viewed
+            // version's entry
+            if (entry.version == "dev") {
+                node.classList.add("active");
+                $("#version_switcher_button").text(entry.name);
+            }
+        });
+    });
+})();
+</script>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/mne-tools/mne-nirs" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for mne.io.snirf._snirf</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Authors: Robert Luke &lt;mail@robertluke.net&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># License: BSD-3-Clause</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">BaseRaw</span>
+<span class="kn">from</span> <span class="nn">..meas_info</span> <span class="kn">import</span> <span class="n">create_info</span><span class="p">,</span> <span class="n">_format_dig_points</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">_mult_cal_one</span>
+<span class="kn">from</span> <span class="nn">...annotations</span> <span class="kn">import</span> <span class="n">Annotations</span>
+<span class="kn">from</span> <span class="nn">...utils</span> <span class="kn">import</span> <span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">fill_doc</span><span class="p">,</span> <span class="n">warn</span><span class="p">,</span> <span class="n">_check_fname</span><span class="p">,</span>
+                      <span class="n">_import_h5py</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">..constants</span> <span class="kn">import</span> <span class="n">FIFF</span>
+<span class="kn">from</span> <span class="nn">.._digitization</span> <span class="kn">import</span> <span class="n">_make_dig_points</span>
+<span class="kn">from</span> <span class="nn">...transforms</span> <span class="kn">import</span> <span class="n">_frame_to_str</span><span class="p">,</span> <span class="n">apply_trans</span>
+<span class="kn">from</span> <span class="nn">..nirx.nirx</span> <span class="kn">import</span> <span class="n">_convert_fnirs_to_head</span>
+<span class="kn">from</span> <span class="nn">..._freesurfer</span> <span class="kn">import</span> <span class="n">get_mni_fiducials</span>
+
+
+<div class="viewcode-block" id="read_raw_snirf"><a class="viewcode-back" href="../../../../generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf">[docs]</a><span class="nd">@fill_doc</span>
+<span class="k">def</span> <span class="nf">read_raw_snirf</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">optode_frame</span><span class="o">=</span><span class="s2">&quot;unknown&quot;</span><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Reader for a continuous wave SNIRF data.</span>
+
+<span class="sd">    .. note:: This reader supports the .snirf file type only,</span>
+<span class="sd">              not the .jnirs version.</span>
+<span class="sd">              Files with either 3D or 2D locations can be read.</span>
+<span class="sd">              However, we strongly recommend using 3D positions.</span>
+<span class="sd">              If 2D positions are used the behaviour of MNE functions</span>
+<span class="sd">              can not be guaranteed.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname : str</span>
+<span class="sd">        Path to the SNIRF data file.</span>
+<span class="sd">    optode_frame : str</span>
+<span class="sd">        Coordinate frame used for the optode positions. The default is unknown,</span>
+<span class="sd">        in which case the positions are not modified. If a known coordinate</span>
+<span class="sd">        frame is provided (head, meg, mri), then the positions are transformed</span>
+<span class="sd">        in to the Neuromag head coordinate frame (head).</span>
+<span class="sd">    %(preload)s</span>
+<span class="sd">    %(verbose)s</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    raw : instance of RawSNIRF</span>
+<span class="sd">        A Raw object containing fNIRS data.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    mne.io.Raw : Documentation of attribute and methods.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">RawSNIRF</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">optode_frame</span><span class="p">,</span> <span class="n">preload</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_open</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin-1&#39;</span><span class="p">)</span>
+
+
+<span class="nd">@fill_doc</span>
+<span class="k">class</span> <span class="nc">RawSNIRF</span><span class="p">(</span><span class="n">BaseRaw</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raw object from a continuous wave SNIRF file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname : str</span>
+<span class="sd">        Path to the SNIRF data file.</span>
+<span class="sd">    optode_frame : str</span>
+<span class="sd">        Coordinate frame used for the optode positions. The default is unknown,</span>
+<span class="sd">        in which case the positions are not modified. If a known coordinate</span>
+<span class="sd">        frame is provided (head, meg, mri), then the positions are transformed</span>
+<span class="sd">        in to the Neuromag head coordinate frame (head).</span>
+<span class="sd">    %(preload)s</span>
+<span class="sd">    %(verbose)s</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    mne.io.Raw : Documentation of attribute and methods.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@verbose</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">optode_frame</span><span class="o">=</span><span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
+                 <span class="n">preload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># Must be here due to circular import error</span>
+        <span class="kn">from</span> <span class="nn">...preprocessing.nirs</span> <span class="kn">import</span> <span class="n">_validate_nirs_info</span>
+        <span class="n">h5py</span> <span class="o">=</span> <span class="n">_import_h5py</span><span class="p">()</span>
+
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">_check_fname</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;fname&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Loading </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">fname</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">dat</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="s1">&#39;data2&#39;</span> <span class="ow">in</span> <span class="n">dat</span><span class="p">[</span><span class="s1">&#39;nirs&#39;</span><span class="p">]:</span>
+                <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;File contains multiple recordings. &quot;</span>
+                     <span class="s2">&quot;MNE does not support this feature. &quot;</span>
+                     <span class="s2">&quot;Only the first dataset will be processed.&quot;</span><span class="p">)</span>
+
+            <span class="n">snirf_data_type</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/data1/measurementList1&#39;</span>
+                                               <span class="s1">&#39;/dataType&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">snirf_data_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99999</span><span class="p">]:</span>
+                <span class="c1"># 1 = Continuous Wave</span>
+                <span class="c1"># 99999 = Processed</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;MNE only supports reading continuous&#39;</span>
+                                   <span class="s1">&#39; wave amplitude and processed haemoglobin&#39;</span>
+                                   <span class="s1">&#39; SNIRF files. Expected type&#39;</span>
+                                   <span class="s1">&#39; code 1 or 99999 but received type &#39;</span>
+                                   <span class="sa">f</span><span class="s1">&#39;code </span><span class="si">{</span><span class="n">snirf_data_type</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+            <span class="n">last_samps</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/nirs/data1/dataTimeSeries&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+
+            <span class="n">samplingrate_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/data1/time&#39;</span><span class="p">))</span>
+            <span class="n">sampling_rate</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="n">samplingrate_raw</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="c1"># specified as onset/samplerate</span>
+                <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Onset/sample rate SNIRF not yet supported.&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># specified as time points</span>
+                <span class="n">fs_diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">samplingrate_raw</span><span class="p">),</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">fs_diff</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># Uniformly sampled data</span>
+                    <span class="n">sampling_rate</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">fs_diff</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># print(np.unique(fs_diff))</span>
+                    <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Non uniform sampled data not supported.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">sampling_rate</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Unable to extract sample rate from SNIRF file.&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Extract wavelengths</span>
+            <span class="n">fnirs_wavelengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/probe/wavelengths&#39;</span><span class="p">))</span>
+            <span class="n">fnirs_wavelengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">fnirs_wavelengths</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fnirs_wavelengths</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The data contains &#39;</span>
+                                   <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">fnirs_wavelengths</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+                                   <span class="sa">f</span><span class="s1">&#39; wavelengths: </span><span class="si">{</span><span class="n">fnirs_wavelengths</span><span class="si">}</span><span class="s1">. &#39;</span>
+                                   <span class="sa">f</span><span class="s1">&#39;MNE only supports reading continuous&#39;</span>
+                                   <span class="s1">&#39; wave amplitude SNIRF files &#39;</span>
+                                   <span class="s1">&#39;with two wavelengths.&#39;</span><span class="p">)</span>
+
+            <span class="c1"># Extract channels</span>
+            <span class="k">def</span> <span class="nf">atoi</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="n">text</span>
+
+            <span class="k">def</span> <span class="nf">natural_keys</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">atoi</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\d+)&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)]</span>
+
+            <span class="n">channels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">dat</span><span class="p">[</span><span class="s1">&#39;nirs&#39;</span><span class="p">][</span><span class="s1">&#39;data1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span>
+            <span class="n">channels_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;measurementList&#39;</span> <span class="ow">in</span> <span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">channels</span><span class="p">])</span>
+            <span class="n">channels</span> <span class="o">=</span> <span class="n">channels</span><span class="p">[</span><span class="n">channels_idx</span><span class="p">]</span>
+            <span class="n">channels</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">channels</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">natural_keys</span><span class="p">)</span>
+
+            <span class="c1"># Source and detector labels are optional fields.</span>
+            <span class="c1"># Use S1, S2, S3, etc if not specified.</span>
+            <span class="k">if</span> <span class="s1">&#39;sourceLabels_disabled&#39;</span> <span class="ow">in</span> <span class="n">dat</span><span class="p">[</span><span class="s1">&#39;nirs/probe&#39;</span><span class="p">]:</span>
+                <span class="c1"># This is disabled as</span>
+                <span class="c1"># MNE-Python does not currently support custom source names.</span>
+                <span class="c1"># Instead, sources must be integer values.</span>
+                <span class="n">sources</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/probe/sourceLabels&#39;</span><span class="p">))</span>
+                <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sources</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">([</span><span class="n">_correct_shape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="s1">&#39;nirs/data1/&#39;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="s1">&#39;/sourceIndex&#39;</span><span class="p">)))[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">channels</span><span class="p">])</span>
+                <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;S</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="s1">&#39;detectorLabels_disabled&#39;</span> <span class="ow">in</span> <span class="n">dat</span><span class="p">[</span><span class="s1">&#39;nirs/probe&#39;</span><span class="p">]:</span>
+                <span class="c1"># This is disabled as</span>
+                <span class="c1"># MNE-Python does not currently support custom detector names.</span>
+                <span class="c1"># Instead, detector must be integer values.</span>
+                <span class="n">detectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/probe/detectorLabels&#39;</span><span class="p">))</span>
+                <span class="n">detectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detectors</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">detectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">([</span><span class="n">_correct_shape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="s1">&#39;nirs/data1/&#39;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="s1">&#39;/detectorIndex&#39;</span><span class="p">)))[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">channels</span><span class="p">])</span>
+                <span class="n">detectors</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;D</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detectors</span><span class="p">]</span>
+
+            <span class="c1"># Extract source and detector locations</span>
+            <span class="c1"># 3D positions are optional in SNIRF,</span>
+            <span class="c1"># but highly recommended in MNE.</span>
+            <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;detectorPos3D&#39;</span> <span class="ow">in</span> <span class="n">dat</span><span class="p">[</span><span class="s1">&#39;nirs/probe&#39;</span><span class="p">])</span> <span class="o">&amp;</span>\
+                    <span class="p">(</span><span class="s1">&#39;sourcePos3D&#39;</span> <span class="ow">in</span> <span class="n">dat</span><span class="p">[</span><span class="s1">&#39;nirs/probe&#39;</span><span class="p">]):</span>
+                <span class="c1"># If 3D positions are available they are used even if 2D exists</span>
+                <span class="n">detPos3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/probe/detectorPos3D&#39;</span><span class="p">))</span>
+                <span class="n">srcPos3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/probe/sourcePos3D&#39;</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="s1">&#39;detectorPos2D&#39;</span> <span class="ow">in</span> <span class="n">dat</span><span class="p">[</span><span class="s1">&#39;nirs/probe&#39;</span><span class="p">])</span> <span class="o">&amp;</span>\
+                    <span class="p">(</span><span class="s1">&#39;sourcePos2D&#39;</span> <span class="ow">in</span> <span class="n">dat</span><span class="p">[</span><span class="s1">&#39;nirs/probe&#39;</span><span class="p">]):</span>
+                <span class="n">warn</span><span class="p">(</span><span class="s1">&#39;The data only contains 2D location information for the &#39;</span>
+                     <span class="s1">&#39;optode positions. &#39;</span>
+                     <span class="s1">&#39;It is highly recommended that data is used &#39;</span>
+                     <span class="s1">&#39;which contains 3D location information for the &#39;</span>
+                     <span class="s1">&#39;optode positions. With only 2D locations it can not be &#39;</span>
+                     <span class="s1">&#39;guaranteed that MNE functions will behave correctly &#39;</span>
+                     <span class="s1">&#39;and produce accurate results. If it is not possible to &#39;</span>
+                     <span class="s1">&#39;include 3D positions in your data, please consider &#39;</span>
+                     <span class="s1">&#39;using the set_montage() function.&#39;</span><span class="p">)</span>
+
+                <span class="n">detPos2D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/probe/detectorPos2D&#39;</span><span class="p">))</span>
+                <span class="n">srcPos2D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/probe/sourcePos2D&#39;</span><span class="p">))</span>
+                <span class="c1"># Set the third dimension to zero. See gh#9308</span>
+                <span class="n">detPos3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">detPos2D</span><span class="p">,</span>
+                                     <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">detPos2D</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">srcPos3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">srcPos2D</span><span class="p">,</span>
+                                     <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">srcPos2D</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;No optode location information is &#39;</span>
+                                   <span class="s1">&#39;provided. MNE requires at least 2D &#39;</span>
+                                   <span class="s1">&#39;location information&#39;</span><span class="p">)</span>
+
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">sources</span><span class="p">)</span> <span class="o">==</span> <span class="n">srcPos3D</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">detectors</span><span class="p">)</span> <span class="o">==</span> <span class="n">detPos3D</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">chnames</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">ch_types</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">chan</span> <span class="ow">in</span> <span class="n">channels</span><span class="p">:</span>
+                <span class="n">src_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">_correct_shape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/data1/&#39;</span> <span class="o">+</span>
+                                             <span class="n">chan</span> <span class="o">+</span> <span class="s1">&#39;/sourceIndex&#39;</span><span class="p">)))[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">det_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">_correct_shape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/data1/&#39;</span> <span class="o">+</span>
+                                             <span class="n">chan</span> <span class="o">+</span> <span class="s1">&#39;/detectorIndex&#39;</span><span class="p">)))[</span><span class="mi">0</span><span class="p">])</span>
+
+                <span class="k">if</span> <span class="n">snirf_data_type</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">wve_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">_correct_shape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                        <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/data1/&#39;</span> <span class="o">+</span> <span class="n">chan</span> <span class="o">+</span>
+                                <span class="s1">&#39;/wavelengthIndex&#39;</span><span class="p">)))[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">ch_name</span> <span class="o">=</span> <span class="n">sources</span><span class="p">[</span><span class="n">src_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span>\
+                        <span class="n">detectors</span><span class="p">[</span><span class="n">det_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span>\
+                        <span class="nb">str</span><span class="p">(</span><span class="n">fnirs_wavelengths</span><span class="p">[</span><span class="n">wve_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+                    <span class="n">chnames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ch_name</span><span class="p">)</span>
+                    <span class="n">ch_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;fnirs_cw_amplitude&#39;</span><span class="p">)</span>
+
+                <span class="k">elif</span> <span class="n">snirf_data_type</span> <span class="o">==</span> <span class="mi">99999</span><span class="p">:</span>
+                    <span class="n">hb_id</span> <span class="o">=</span> <span class="n">_correct_shape</span><span class="p">(</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/data1/&#39;</span> <span class="o">+</span> <span class="n">chan</span> <span class="o">+</span>
+                                         <span class="s1">&#39;/dataTypeLabel&#39;</span><span class="p">)))[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span>
+                    <span class="n">ch_name</span> <span class="o">=</span> <span class="n">sources</span><span class="p">[</span><span class="n">src_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> \
+                        <span class="n">detectors</span><span class="p">[</span><span class="n">det_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> \
+                        <span class="n">hb_id</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                    <span class="n">chnames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ch_name</span><span class="p">)</span>
+                    <span class="n">ch_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hb_id</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+
+            <span class="c1"># Create mne structure</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="n">create_info</span><span class="p">(</span><span class="n">chnames</span><span class="p">,</span>
+                               <span class="n">sampling_rate</span><span class="p">,</span>
+                               <span class="n">ch_types</span><span class="o">=</span><span class="n">ch_types</span><span class="p">)</span>
+
+            <span class="n">subject_info</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/metaDataTags/SubjectID&#39;</span><span class="p">))</span>
+            <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="n">_correct_shape</span><span class="p">(</span><span class="n">names</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span>
+            <span class="c1"># Read non standard (but allowed) custom metadata tags</span>
+            <span class="k">if</span> <span class="s1">&#39;lastName&#39;</span> <span class="ow">in</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/metaDataTags/&#39;</span><span class="p">):</span>
+                <span class="n">ln</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/nirs/metaDataTags/lastName&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span>
+                <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ln</span>
+            <span class="k">if</span> <span class="s1">&#39;middleName&#39;</span> <span class="ow">in</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/metaDataTags/&#39;</span><span class="p">):</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/nirs/metaDataTags/middleName&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span>
+                <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;middle_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span>
+            <span class="k">if</span> <span class="s1">&#39;sex&#39;</span> <span class="ow">in</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/metaDataTags/&#39;</span><span class="p">):</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/nirs/metaDataTags/sex&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;Male&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">}:</span>
+                    <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_SUBJ_SEX_MALE</span>
+                <span class="k">elif</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;Female&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">}:</span>
+                    <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_SUBJ_SEX_FEMALE</span>
+                <span class="k">elif</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">}:</span>
+                    <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_SUBJ_SEX_UNKNOWN</span>
+            <span class="c1"># End non standard name reading</span>
+            <span class="c1"># Update info</span>
+            <span class="n">info</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">subject_info</span><span class="o">=</span><span class="n">subject_info</span><span class="p">)</span>
+
+            <span class="n">LengthUnit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/nirs/metaDataTags/LengthUnit&#39;</span><span class="p">))</span>
+            <span class="n">LengthUnit</span> <span class="o">=</span> <span class="n">_correct_shape</span><span class="p">(</span><span class="n">LengthUnit</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span>
+            <span class="n">scal</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="s2">&quot;cm&quot;</span> <span class="ow">in</span> <span class="n">LengthUnit</span><span class="p">:</span>
+                <span class="n">scal</span> <span class="o">=</span> <span class="mi">100</span>
+            <span class="k">elif</span> <span class="s2">&quot;mm&quot;</span> <span class="ow">in</span> <span class="n">LengthUnit</span><span class="p">:</span>
+                <span class="n">scal</span> <span class="o">=</span> <span class="mi">1000</span>
+
+            <span class="n">srcPos3D</span> <span class="o">/=</span> <span class="n">scal</span>
+            <span class="n">detPos3D</span> <span class="o">/=</span> <span class="n">scal</span>
+
+            <span class="k">if</span> <span class="n">optode_frame</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;mri&quot;</span><span class="p">,</span> <span class="s2">&quot;meg&quot;</span><span class="p">]:</span>
+                <span class="c1"># These are all in MNI or MEG coordinates, so let&#39;s transform</span>
+                <span class="c1"># them to the Neuromag head coordinate frame</span>
+                <span class="n">srcPos3D</span><span class="p">,</span> <span class="n">detPos3D</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">head_t</span> <span class="o">=</span> <span class="n">_convert_fnirs_to_head</span><span class="p">(</span>
+                    <span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <span class="n">optode_frame</span><span class="p">,</span> <span class="s1">&#39;head&#39;</span><span class="p">,</span> <span class="n">srcPos3D</span><span class="p">,</span> <span class="n">detPos3D</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">head_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">optode_frame</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="s2">&quot;mri&quot;</span><span class="p">,</span> <span class="s2">&quot;meg&quot;</span><span class="p">]:</span>
+                <span class="c1"># Then the transformation to head was performed above</span>
+                <span class="n">coord_frame</span> <span class="o">=</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_COORD_HEAD</span>
+            <span class="k">elif</span> <span class="s1">&#39;MNE_coordFrame&#39;</span> <span class="ow">in</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/metaDataTags/&#39;</span><span class="p">):</span>
+                <span class="n">coord_frame</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/nirs/metaDataTags/MNE_coordFrame&#39;</span><span class="p">)</span>
+                                  <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">coord_frame</span> <span class="o">=</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_COORD_UNKNOWN</span>
+
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">chan</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">channels</span><span class="p">):</span>
+                <span class="n">src_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">_correct_shape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/data1/&#39;</span> <span class="o">+</span>
+                                             <span class="n">chan</span> <span class="o">+</span> <span class="s1">&#39;/sourceIndex&#39;</span><span class="p">)))[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">det_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">_correct_shape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/data1/&#39;</span> <span class="o">+</span>
+                                             <span class="n">chan</span> <span class="o">+</span> <span class="s1">&#39;/detectorIndex&#39;</span><span class="p">)))[</span><span class="mi">0</span><span class="p">])</span>
+
+                <span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">srcPos3D</span><span class="p">[</span><span class="n">src_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">6</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="n">detPos3D</span><span class="p">[</span><span class="n">det_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="c1"># Store channel as mid point</span>
+                <span class="n">midpoint</span> <span class="o">=</span> <span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">+</span>
+                            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">6</span><span class="p">:</span><span class="mi">9</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+                <span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">midpoint</span>
+                <span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s1">&#39;coord_frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">coord_frame</span>
+
+                <span class="k">if</span> <span class="n">snirf_data_type</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">wve_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">_correct_shape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                        <span class="s1">&#39;nirs/data1/&#39;</span> <span class="o">+</span> <span class="n">chan</span> <span class="o">+</span> <span class="s1">&#39;/wavelengthIndex&#39;</span><span class="p">)))[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="n">fnirs_wavelengths</span><span class="p">[</span><span class="n">wve_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="s1">&#39;landmarkPos3D&#39;</span> <span class="ow">in</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/probe/&#39;</span><span class="p">):</span>
+                <span class="n">diglocs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/nirs/probe/landmarkPos3D&#39;</span><span class="p">))</span>
+                <span class="n">digname</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/nirs/probe/landmarkLabels&#39;</span><span class="p">))</span>
+                <span class="n">nasion</span><span class="p">,</span> <span class="n">lpa</span><span class="p">,</span> <span class="n">rpa</span><span class="p">,</span> <span class="n">hpi</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+                <span class="n">extra_ps</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">dign</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">digname</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">dign</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;LPA&#39;</span><span class="p">:</span>
+                        <span class="n">lpa</span> <span class="o">=</span> <span class="n">diglocs</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="k">elif</span> <span class="n">dign</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;NASION&#39;</span><span class="p">:</span>
+                        <span class="n">nasion</span> <span class="o">=</span> <span class="n">diglocs</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="k">elif</span> <span class="n">dign</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;RPA&#39;</span><span class="p">:</span>
+                        <span class="n">rpa</span> <span class="o">=</span> <span class="n">diglocs</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">extra_ps</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;EEG</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">extra_ps</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="si">:</span><span class="s1">03d</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> \
+                            <span class="n">diglocs</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+                <span class="n">dig</span> <span class="o">=</span> <span class="n">_make_dig_points</span><span class="p">(</span>
+                    <span class="n">nasion</span><span class="o">=</span><span class="n">nasion</span><span class="p">,</span> <span class="n">lpa</span><span class="o">=</span><span class="n">lpa</span><span class="p">,</span> <span class="n">rpa</span><span class="o">=</span><span class="n">rpa</span><span class="p">,</span> <span class="n">hpi</span><span class="o">=</span><span class="n">hpi</span><span class="p">,</span>
+                    <span class="n">dig_ch_pos</span><span class="o">=</span><span class="n">extra_ps</span><span class="p">,</span>
+                    <span class="n">coord_frame</span><span class="o">=</span><span class="n">_frame_to_str</span><span class="p">[</span><span class="n">coord_frame</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ch_locs</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+                           <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">channels</span><span class="p">))]</span>
+                <span class="c1"># Set up digitization</span>
+                <span class="n">dig</span> <span class="o">=</span> <span class="n">get_mni_fiducials</span><span class="p">(</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">fid</span> <span class="ow">in</span> <span class="n">dig</span><span class="p">:</span>
+                    <span class="n">fid</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_trans</span><span class="p">(</span><span class="n">head_t</span><span class="p">,</span> <span class="n">fid</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">])</span>
+                    <span class="n">fid</span><span class="p">[</span><span class="s1">&#39;coord_frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_COORD_HEAD</span>
+                <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">ch_loc</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ch_locs</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="n">dig</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">kind</span><span class="o">=</span><span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_POINT_EEG</span><span class="p">,</span>  <span class="c1"># misnomer prob okay</span>
+                        <span class="n">r</span><span class="o">=</span><span class="n">ch_loc</span><span class="p">,</span>
+                        <span class="n">ident</span><span class="o">=</span><span class="n">ii</span><span class="p">,</span>
+                        <span class="n">coord_frame</span><span class="o">=</span><span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_COORD_HEAD</span><span class="p">,</span>
+                    <span class="p">))</span>
+                <span class="n">dig</span> <span class="o">=</span> <span class="n">_format_dig_points</span><span class="p">(</span><span class="n">dig</span><span class="p">)</span>
+                <span class="k">del</span> <span class="n">head_t</span>
+            <span class="k">with</span> <span class="n">info</span><span class="o">.</span><span class="n">_unlock</span><span class="p">():</span>
+                <span class="n">info</span><span class="p">[</span><span class="s1">&#39;dig&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dig</span>
+
+            <span class="n">str_date</span> <span class="o">=</span> <span class="n">_correct_shape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s1">&#39;/nirs/metaDataTags/MeasurementDate&#39;</span><span class="p">))))[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span>
+            <span class="n">str_time</span> <span class="o">=</span> <span class="n">_correct_shape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s1">&#39;/nirs/metaDataTags/MeasurementTime&#39;</span><span class="p">))))[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span>
+            <span class="n">str_datetime</span> <span class="o">=</span> <span class="n">str_date</span> <span class="o">+</span> <span class="n">str_time</span>
+
+            <span class="c1"># Several formats have been observed so we try each in turn</span>
+            <span class="k">for</span> <span class="n">dt_code</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">%H:%M:%SZ&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">%H:%M:%S&#39;</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">meas_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                        <span class="n">str_datetime</span><span class="p">,</span> <span class="n">dt_code</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Extraction of measurement date from SNIRF file failed. &quot;</span>
+                     <span class="s2">&quot;The date is being set to January 1st, 2000, &quot;</span>
+                     <span class="sa">f</span><span class="s2">&quot;instead of </span><span class="si">{</span><span class="n">str_datetime</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">meas_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">meas_date</span> <span class="o">=</span> <span class="n">meas_date</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">info</span><span class="o">.</span><span class="n">_unlock</span><span class="p">():</span>
+                <span class="n">info</span><span class="p">[</span><span class="s1">&#39;meas_date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">meas_date</span>
+
+            <span class="k">if</span> <span class="s1">&#39;DateOfBirth&#39;</span> <span class="ow">in</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nirs/metaDataTags/&#39;</span><span class="p">):</span>
+                <span class="n">str_birth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/nirs/metaDataTags/&#39;</span>
+                                              <span class="s1">&#39;DateOfBirth&#39;</span><span class="p">)))[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+                <span class="n">birth_matched</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\d+)-(\d+)-(\d+)&#39;</span><span class="p">,</span> <span class="n">str_birth</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">birth_matched</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">birthday</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">birth_matched</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">]),</span>
+                                <span class="nb">int</span><span class="p">(</span><span class="n">birth_matched</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">1</span><span class="p">]),</span>
+                                <span class="nb">int</span><span class="p">(</span><span class="n">birth_matched</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">2</span><span class="p">]))</span>
+                    <span class="k">with</span> <span class="n">info</span><span class="o">.</span><span class="n">_unlock</span><span class="p">():</span>
+                        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">][</span><span class="s1">&#39;birthday&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">birthday</span>
+
+            <span class="nb">super</span><span class="p">(</span><span class="n">RawSNIRF</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">preload</span><span class="p">,</span> <span class="n">filenames</span><span class="o">=</span><span class="p">[</span><span class="n">fname</span><span class="p">],</span>
+                                           <span class="n">last_samps</span><span class="o">=</span><span class="p">[</span><span class="n">last_samps</span><span class="p">],</span>
+                                           <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+
+            <span class="c1"># Extract annotations</span>
+            <span class="n">annot</span> <span class="o">=</span> <span class="n">Annotations</span><span class="p">([],</span> <span class="p">[],</span> <span class="p">[])</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dat</span><span class="p">[</span><span class="s1">&#39;nirs&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="s1">&#39;stim&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                        <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/nirs/&#39;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;/data&#39;</span><span class="p">)))</span>
+                    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">desc</span> <span class="o">=</span> <span class="n">_correct_shape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="s1">&#39;/nirs/&#39;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;/name&#39;</span><span class="p">)))[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">annot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">desc</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_annotations</span><span class="p">(</span><span class="n">annot</span><span class="p">,</span> <span class="n">emit_warning</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="c1"># Reorder channels to match expected ordering in MNE if required&#39;</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_validate_nirs_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="n">throw_errors</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">num_chans</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span>
+                <span class="n">chans</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_chans</span> <span class="o">//</span> <span class="mi">2</span><span class="p">):</span>
+                    <span class="n">chans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+                    <span class="n">chans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="n">num_chans</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="n">chans</span><span class="p">)</span>
+
+        <span class="c1"># Validate that the fNIRS info is correctly formatted</span>
+        <span class="n">_validate_nirs_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_read_segment_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">fi</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">cals</span><span class="p">,</span> <span class="n">mult</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read a segment of data from a file.&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">h5py</span>
+
+        <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filenames</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">dat</span><span class="p">:</span>
+            <span class="n">one</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="s1">&#39;/nirs/data1/dataTimeSeries&#39;</span><span class="p">][</span><span class="n">start</span><span class="p">:</span><span class="n">stop</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="n">_mult_cal_one</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">one</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">cals</span><span class="p">,</span> <span class="n">mult</span><span class="p">)</span>
+
+
+<span class="c1"># Helper function for when the numpy array has shape (), i.e. just one element.</span>
+<span class="k">def</span> <span class="nf">_correct_shape</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">():</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">arr</span>
+</pre></div>
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
+    
+  
+    <script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2012–2022, MNE Developers. Last updated &lt;time datetime=&#34;2022-03-06T00:48:22.537633+00:00&#34; class=&#34;localized&#34;&gt;2022-03-06 00:48 UTC&lt;/time&gt;
+&lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

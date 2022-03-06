@@ -1,0 +1,828 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Importing Data From fNIRS Devices &#8212; MNE-NIRS 0.3.dev0 documentation</title>
+    
+    <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  
+    
+    <link rel="stylesheet"
+      href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+    
+      
+  
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/pydata-sphinx-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    
+    <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/copybutton.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Example Datasets" href="plot_05_datasets.html" />
+    <link rel="prev" title="Examples" href="../index.html" />
+    <link rel="canonical" href="https://mne.tools/mne-nirs/stable/index.html" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+<script>
+                        window.ga = window.ga || function () {
+                            (ga.q = ga.q || []).push(arguments) };
+                        ga.l = +new Date;
+                        ga('create', 'UA-188272121-1', 'auto');
+                        ga('set', 'anonymizeIp', true);
+                        ga('send', 'pageview');
+                    </script>
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+<a class="navbar-brand" href="../../index.html">
+<p class="title">MNE-NIRS</p>
+</a>
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  Examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../api.html">
+  API
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../changelog.html">
+  Changelog
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <div class="dropdown" id="version_switcher">
+    <button type="button" class="btn btn-primary btn-sm navbar-btn dropdown-toggle" id="version_switcher_button" data-toggle="dropdown">
+        dev  <!-- this text may get changed later by javascript -->
+        <span class="caret"></span>
+    </button>
+    <div id="version_switcher_menu" class="dropdown-menu list-group-flush py-0" aria-labelledby="version_switcher_button">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+</div>
+
+<!-- NOTE: this JS must live here (not in our global JS file) because it relies
+     on being processed by Jinja before it is run (specifically for replacing
+     variables auto_examples/general/plot_01_data_io and {'json_url': 'https://mne.tools/mne-nirs/dev/_static/versions.json', 'url_template': 'https://mne.tools/mne-nirs/{version}/', 'version_match': 'dev'}.
+-->
+
+<script type="text/javascript">
+// Construct the target URL from the JSON components
+function buildURL(entry) {
+    var template = "https://mne.tools/mne-nirs/{version}/";  // supplied by jinja
+    template = template.replace("{version}", entry.version);
+    return template;
+}
+
+// Check if corresponding page path exists in other version of docs
+// and, if so, go there instead of the homepage of the other docs version
+function checkPageExistsAndRedirect(event) {
+    const currentFilePath = "auto_examples/general/plot_01_data_io.html",
+          tryUrl = event.target.getAttribute("href");
+    let otherDocsHomepage = tryUrl.replace(currentFilePath, "");
+    $.ajax({
+        type: 'HEAD',
+        url: tryUrl,
+        // if the page exists, go there
+        success: function() {
+            location.href = tryUrl;
+        }
+    }).fail(function() {
+        location.href = otherDocsHomepage;
+    });
+    // this prevents the browser from following the href of the clicked node
+    // (which is fine because this function takes care of redirecting)
+    return false;
+}
+
+// Populate the version switcher from the JSON config file
+(function () {
+    $.getJSON("https://mne.tools/mne-nirs/dev/_static/versions.json", function(data, textStatus, jqXHR) {
+        const currentFilePath = "auto_examples/general/plot_01_data_io.html";
+        // create links to the corresponding page in the other docs versions
+        $.each(data, function(index, entry) {
+            // if no custom name specified (e.g., "latest"), use version string
+            if (!("name" in entry)) {
+                entry.name = entry.version;
+            }
+            // create the node
+            const node = document.createElement("a");
+            node.setAttribute("class", "list-group-item list-group-item-action py-1");
+            node.textContent = `${entry.name}`;
+            // get the base URL for that doc version, add the current page's
+            // path to it, and set as `href`
+            entry.url = buildURL(entry);
+            node.setAttribute("href", `${entry.url}${currentFilePath}`);
+            // on click, AJAX calls will check if the linked page exists before
+            // trying to redirect, and if not, will redirect to the homepage
+            // for that version of the docs.
+            node.onclick = checkPageExistsAndRedirect;
+            $("#version_switcher_menu").append(node);
+            // replace dropdown button text with the preferred display name of
+            // this version, rather than using sphinx's 0.3.dev0 variable.
+            // also highlight the dropdown entry for the currently-viewed
+            // version's entry
+            if (entry.version == "dev") {
+                node.classList.add("active");
+                $("#version_switcher_button").text(entry.name);
+            }
+        });
+    });
+})();
+</script>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/mne-tools/mne-nirs" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Importing Data From fNIRS Devices
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_05_datasets.html">
+   Example Datasets
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_10_hrf_simulation.html">
+   GLM Analysis (Simulated)
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_11_hrf_measured.html">
+   GLM Analysis (Measured)
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_12_group_glm.html">
+   Group Level GLM Analysis
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_13_fir_glm.html">
+   GLM FIR Analysis
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_14_glm_components.html">
+   GLM and Design Matrix Parameters
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_15_waveform.html">
+   Waveform Averaging Analysis
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_16_waveform_group.html">
+   Group Level Waveform Analysis
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_19_snirf.html">
+   SNIRF Support in MNE
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_20_enhance.html">
+   Signal Enhancement Techniques
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_21_artifacts.html">
+   Artifact Correction Techniques
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_22_quality.html">
+   Signal Quality Evaluation
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_30_frequency.html">
+   Frequency and Filter Commentary
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_40_mayer.html">
+   Mayer Wave Parametrisation
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_50_decoding.html">
+   Decoding Analysis
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_70_visualise_brain.html">
+   Utilising Anatomical Information
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_80_save_read_glm.html">
+   Save and load GLM results
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="plot_99_bad.html">
+   Importance of Controls and Parameter Selection
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../migration/plot_01_homer.html">
+   Migrating from Homer to MNE
+  </a>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../migration/plot_02_nirstoolbox.html">
+   Migrating from nirs-toolbox to MNE
+  </a>
+ </li>
+</ul>
+
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#standardized-data">
+   Standardized data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#snirf-snirf">
+     SNIRF (.snirf)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#specifying-the-coordinate-system">
+       Specifying the coordinate system
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#continuous-wave-devices">
+   Continuous Wave Devices
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nirx-directory-or-hdr">
+     NIRx (directory or hdr)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hitachi-csv">
+     Hitachi (.csv)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#frequency-domain-devices">
+   Frequency Domain Devices
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#boxy-txt">
+     BOXY (.txt)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#custom-data-import">
+   Custom Data Import
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#loading-legacy-data-in-csv-or-tsv-format">
+     Loading legacy data in CSV or TSV format
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#applying-standard-sensor-locations-to-imported-data">
+       Applying standard sensor locations to imported data
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-auto-examples-general-plot-01-data-io-py"><span class="std std-ref">here</span></a>
+to download the full example code or to run this example in your browser via Binder</p>
+</div>
+<section class="sphx-glr-example-title" id="importing-data-from-fnirs-devices">
+<span id="tut-importing-fnirs-data"></span><span id="sphx-glr-auto-examples-general-plot-01-data-io-py"></span><h1>Importing Data From fNIRS Devices<a class="headerlink" href="#importing-data-from-fnirs-devices" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This tutorial is a mirror of the
+(<a class="reference external" href="https://mne.tools/dev/auto_tutorials/io/30_reading_fnirs_data.html">MNE tutorial</a>),
+and is reproduced in MNE-NIRS for convenience and so that all
+relevant material is easily accessible to users.</p>
+</div>
+<p>fNIRS devices consist of two kinds of optodes: light sources (AKA “emitters” or
+“transmitters”) and light detectors (AKA “receivers”). Channels are defined as
+source-detector pairs, and channel locations are defined as the midpoint
+between source and detector.</p>
+<p>MNE-Python provides functions for reading fNIRS data and optode locations from
+several file formats. Regardless of the device manufacturer or file format,
+MNE-Python’s fNIRS functions will internally store the measurement data and its
+metadata in the same way (e.g., data values are always converted into SI
+units). Supported measurement types include amplitude, optical density,
+oxyhaemoglobin concentration, and deoxyhemoglobin concentration (for continuous
+wave fNIRS), and additionally AC amplitude and phase (for
+frequency domain fNIRS).</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>MNE-Python stores metadata internally with a specific structure,
+and internal functions expect specific naming conventions.
+Manual modification of channel names and metadata
+is not recommended.</p>
+</div>
+<section id="standardized-data">
+<span id="import-snirf"></span><h2>Standardized data<a class="headerlink" href="#standardized-data" title="Permalink to this headline">¶</a></h2>
+<section id="snirf-snirf">
+<h3>SNIRF (.snirf)<a class="headerlink" href="#snirf-snirf" title="Permalink to this headline">¶</a></h3>
+<p>The Shared Near Infrared Spectroscopy Format
+(<a class="reference external" href="https://github.com/fNIRS/snirf/blob/master/snirf_specification.md">SNIRF</a>)
+is designed by the fNIRS community in an effort to facilitate
+sharing and analysis of fNIRS data. And is the official format of the
+Society for functional near-infrared spectroscopy (SfNIRS).
+SNIRF is the preferred format for reading data in to MNE-Python.
+Data stored in the SNIRF format can be read in
+using <a class="reference internal" href="../../generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="mne.io.read_raw_snirf"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.io.read_raw_snirf()</span></code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The SNIRF format has provisions for many different types of fNIRS
+recordings. MNE-Python currently only supports reading continuous
+wave or haemoglobin data stored in the .snirf format.</p>
+</div>
+<section id="specifying-the-coordinate-system">
+<h4>Specifying the coordinate system<a class="headerlink" href="#specifying-the-coordinate-system" title="Permalink to this headline">¶</a></h4>
+<p>There are a variety of coordinate systems used to specify the location of
+sensors (see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/20_source_alignment.html#tut-source-alignment" title="(in MNE v0.24)"><span>Source alignment and coordinate frames</span></a> for details). Where possible the
+coordinate system will be determined automatically when reading a SNIRF file.
+However, sometimes this is not possible and you must manually specify the
+coordinate frame the optodes are in. This is done using the <code class="docutils literal notranslate"><span class="pre">optode_frame</span></code>
+argument when loading data.</p>
+<table class="table">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 43%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Vendor</p></th>
+<th class="head"><p>Model</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">optode_frame</span></code></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>NIRx</p></td>
+<td><p>ICBM-152 MNI</p></td>
+<td><p>mri</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kernel</p></td>
+<td><p>ICBM 2009b</p></td>
+<td><p>mri</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="continuous-wave-devices">
+<h2>Continuous Wave Devices<a class="headerlink" href="#continuous-wave-devices" title="Permalink to this headline">¶</a></h2>
+<section id="nirx-directory-or-hdr">
+<span id="import-nirx"></span><h3>NIRx (directory or hdr)<a class="headerlink" href="#nirx-directory-or-hdr" title="Permalink to this headline">¶</a></h3>
+<p>NIRx produce continuous wave fNIRS devices.
+NIRx recordings can be read in using <a class="reference internal" href="../../generated/mne.io.read_raw_nirx.html#mne.io.read_raw_nirx" title="mne.io.read_raw_nirx"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.io.read_raw_nirx()</span></code></a>.
+The NIRx device stores data directly to a directory with multiple file types,
+MNE-Python extracts the appropriate information from each file.
+MNE-Python only supports NIRx files recorded with NIRStar
+version 15.0 and above.
+MNE-Python supports reading data from NIRScout and NIRSport 1 devices.</p>
+</section>
+<section id="hitachi-csv">
+<span id="import-hitachi"></span><h3>Hitachi (.csv)<a class="headerlink" href="#hitachi-csv" title="Permalink to this headline">¶</a></h3>
+<p>Hitachi produce continuous wave fNIRS devices.
+Hitachi fNIRS recordings can be read using <a class="reference external" href="https://mne.tools/stable/generated/mne.io.read_raw_hitachi.html#mne.io.read_raw_hitachi" title="(in MNE v0.24)"><code class="docutils literal notranslate"><span class="pre">mne.io.read_raw_hitachi()</span></code></a>.
+No optode information is stored so you’ll need to set the montage manually,
+see the Notes section of <a class="reference external" href="https://mne.tools/stable/generated/mne.io.read_raw_hitachi.html#mne.io.read_raw_hitachi" title="(in MNE v0.24)"><code class="docutils literal notranslate"><span class="pre">mne.io.read_raw_hitachi()</span></code></a>.</p>
+</section>
+</section>
+<section id="frequency-domain-devices">
+<h2>Frequency Domain Devices<a class="headerlink" href="#frequency-domain-devices" title="Permalink to this headline">¶</a></h2>
+<section id="boxy-txt">
+<span id="import-boxy"></span><h3>BOXY (.txt)<a class="headerlink" href="#boxy-txt" title="Permalink to this headline">¶</a></h3>
+<p>BOXY recordings can be read in using <a class="reference internal" href="../../generated/mne.io.read_raw_boxy.html#mne.io.read_raw_boxy" title="mne.io.read_raw_boxy"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.io.read_raw_boxy()</span></code></a>.
+The BOXY software and ISS Imagent I and II devices are frequency domain
+systems that store data in a single <code class="docutils literal notranslate"><span class="pre">.txt</span></code> file containing what they call
+(with MNE-Python’s name for that type of data in parens):</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>DC</dt><dd><p>All light collected by the detector (<code class="docutils literal notranslate"><span class="pre">fnirs_cw_amplitude</span></code>)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>AC</dt><dd><p>High-frequency modulated light intensity (<code class="docutils literal notranslate"><span class="pre">fnirs_fd_ac_amplitude</span></code>)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Phase</dt><dd><p>Phase of the modulated light (<code class="docutils literal notranslate"><span class="pre">fnirs_fd_phase</span></code>)</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>DC data is stored as the type <code class="docutils literal notranslate"><span class="pre">fnirs_cw_amplitude</span></code> because it
+collects both the modulated and any unmodulated light, and hence is analogous
+to what is collected by continuous wave systems such as NIRx. This helps with
+conformance to SNIRF standard types.</p>
+<p>These raw data files can be saved by the acquisition devices as parsed or
+unparsed <code class="docutils literal notranslate"><span class="pre">.txt</span></code> files, which affects how the data in the file is organised.
+MNE-Python will read either file type and extract the raw DC, AC,
+and Phase data. If triggers are sent using the <code class="docutils literal notranslate"><span class="pre">digaux</span></code> port of the
+recording hardware, MNE-Python will also read the <code class="docutils literal notranslate"><span class="pre">digaux</span></code> data and
+create annotations for any triggers.</p>
+</section>
+</section>
+<section id="custom-data-import">
+<h2>Custom Data Import<a class="headerlink" href="#custom-data-import" title="Permalink to this headline">¶</a></h2>
+<section id="loading-legacy-data-in-csv-or-tsv-format">
+<h3>Loading legacy data in CSV or TSV format<a class="headerlink" href="#loading-legacy-data-in-csv-or-tsv-format" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method is not supported and users are discouraged to use it.
+You should convert your data to the
+<a class="reference external" href="https://github.com/fNIRS/snirf">SNIRF</a> format using the tools
+provided by the Society for functional Near-Infrared Spectroscopy,
+and then load it using <a class="reference external" href="https://mne.tools/stable/generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="(in MNE v0.24)"><code class="docutils literal notranslate"><span class="pre">mne.io.read_raw_snirf()</span></code></a>.</p>
+</div>
+<p>fNIRS measurements may be stored in a non-standardised format that is not
+supported by MNE-Python and cannot be converted easily into SNIRF.
+This legacy data is often in CSV or TSV format,
+we show here a way to load it even though it is not officially supported by
+MNE-Python due to the lack of standardisation of the file format (the
+naming and ordering of channels, the type and scaling of data, and
+specification of sensor positions varies between each vendor). You will likely
+have to adapt this depending on the system from which your CSV originated.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">op</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">mne</span>
+
+<span class="c1"># sphinx_gallery_thumbnail_number = 2</span>
+</pre></div>
+</div>
+<p>First, we generate an example CSV file which will then be loaded in to
+MNE-Python. This step would be skipped if you have actual data you wish to
+load. We simulate 16 channels with 100 samples of data and save this to a
+file called fnirs.csv.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/random/generated/numpy.random.normal.html#numpy.random.normal" title="numpy.random.normal" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span></a><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">100</span><span class="p">)))</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;fnirs.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The channels must be ordered in haemoglobin pairs, such that for
+a single channel all the types are in subsequent indices. The
+type order must be ‘hbo’ then ‘hbr’.
+The data below is already in the correct order and may be
+used as a template for how data must be stored.
+If the order that your data is stored is different to the
+mandatory formatting, then you must first read the data with
+channel naming according to the data structure, then reorder
+the channels to match the required format.</p>
+</div>
+<p>Next, we will load the example CSV file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;fnirs.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then, the metadata must be specified manually as the CSV file does not
+contain information about channel names, types, sample rate etc.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In MNE-Python the naming of channels MUST follow the structure
+<code class="docutils literal notranslate"><span class="pre">S#_D#</span> <span class="pre">type</span></code> where # is replaced by the appropriate source and
+detector numbers and type is either <code class="docutils literal notranslate"><span class="pre">hbo</span></code>, <code class="docutils literal notranslate"><span class="pre">hbr</span></code> or the
+wavelength.</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_names</span></a> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;S1_D1 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S1_D1 hbr&#39;</span><span class="p">,</span> <span class="s1">&#39;S2_D1 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S2_D1 hbr&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;S3_D1 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S3_D1 hbr&#39;</span><span class="p">,</span> <span class="s1">&#39;S4_D1 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S4_D1 hbr&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;S5_D2 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S5_D2 hbr&#39;</span><span class="p">,</span> <span class="s1">&#39;S6_D2 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S6_D2 hbr&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;S7_D2 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S7_D2 hbr&#39;</span><span class="p">,</span> <span class="s1">&#39;S8_D2 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S8_D2 hbr&#39;</span><span class="p">]</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_types</span></a> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;hbr&#39;</span><span class="p">,</span> <span class="s1">&#39;hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;hbr&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;hbr&#39;</span><span class="p">,</span> <span class="s1">&#39;hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;hbr&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;hbr&#39;</span><span class="p">,</span> <span class="s1">&#39;hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;hbr&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;hbr&#39;</span><span class="p">,</span> <span class="s1">&#39;hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;hbr&#39;</span><span class="p">]</span>
+<a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sfreq</span></a> <span class="o">=</span> <span class="mf">10.</span>  <span class="c1"># in Hz</span>
+</pre></div>
+</div>
+<p>Finally, the data can be converted in to an MNE-Python data structure.
+The metadata above is used to create an <a class="reference external" href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="(in MNE v0.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.Info</span></code></a> data structure,
+and this is combined with the data to create an MNE-Python
+<a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v0.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raw</span></code></a> object. For more details on the info structure
+see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/intro/30_info.html#tut-info-class" title="(in MNE v0.24)"><span>The Info data structure</span></a>, and for additional details on how continuous data
+is stored in MNE-Python see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/raw/10_raw_overview.html#tut-raw-class" title="(in MNE v0.24)"><span>The Raw data structure: continuous data</span></a>.
+For a more extensive description of how to create MNE-Python data structures
+from raw array data see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/simulation/10_array_objs.html#tut-creating-data-structures" title="(in MNE v0.24)"><span>Creating MNE-Python data structures from scratch</span></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">info</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.create_info.html#mne.create_info" title="mne.create_info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">create_info</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_names</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_names</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_types</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_types</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sfreq</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sfreq</span></a><span class="p">)</span>
+<a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray" title="mne.io.RawArray" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray" title="mne.io.RawArray" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">RawArray</span></a><span class="p">(</span><span class="n">data</span><span class="p">,</span> <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">info</span></a><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Creating RawArray with float64 data, n_channels=16, n_times=101
+    Range : 0 ... 100 =      0.000 ...    10.000 secs
+Ready.
+</pre></div>
+</div>
+<section id="applying-standard-sensor-locations-to-imported-data">
+<h4>Applying standard sensor locations to imported data<a class="headerlink" href="#applying-standard-sensor-locations-to-imported-data" title="Permalink to this headline">¶</a></h4>
+<p>Having information about optode locations may assist in your analysis.
+Beyond the general benefits this provides (e.g. creating regions of interest,
+etc), this is may be particularly important for fNIRS as information about
+the optode locations is required to convert the optical density data in to an
+estimate of the haemoglobin concentrations.
+MNE-Python provides methods to load standard sensor configurations
+(montages) from some vendors, and this is demonstrated below.
+Some handy tutorials for understanding sensor locations, coordinate systems,
+and how to store and view this information in MNE-Python are:
+<a class="reference external" href="https://mne.tools/stable/auto_tutorials/intro/40_sensor_locations.html#tut-sensor-locations" title="(in MNE v0.24)"><span>Working with sensor locations</span></a>, <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/20_source_alignment.html#tut-source-alignment" title="(in MNE v0.24)"><span>Source alignment and coordinate frames</span></a>, and
+<a class="reference external" href="https://mne.tools/stable/auto_examples/visualization/eeg_on_scalp.html#ex-eeg-on-scalp" title="(in MNE v0.24)"><span>Plotting EEG sensors on the scalp</span></a>.</p>
+<p>Below is an example of how to load the optode positions for an Artinis
+OctaMon device.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is also possible to create a custom montage from a file for
+fNIRS with <a class="reference external" href="https://mne.tools/stable/generated/mne.channels.read_custom_montage.html#mne.channels.read_custom_montage" title="(in MNE v0.24)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.channels.read_custom_montage()</span></code></a> by setting
+<code class="docutils literal notranslate"><span class="pre">coord_frame</span></code> to <code class="docutils literal notranslate"><span class="pre">'mri'</span></code>.</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.channels.DigMontage.html#mne.channels.DigMontage" title="mne.channels.DigMontage" class="sphx-glr-backref-module-mne-channels sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">montage</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.channels.make_standard_montage.html#mne.channels.make_standard_montage" title="mne.channels.make_standard_montage" class="sphx-glr-backref-module-mne-channels sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">make_standard_montage</span></a><span class="p">(</span><span class="s1">&#39;artinis-octamon&#39;</span><span class="p">)</span>
+<a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray.set_montage" title="mne.io.RawArray.set_montage" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">raw</span><span class="o">.</span><span class="n">set_montage</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.channels.DigMontage.html#mne.channels.DigMontage" title="mne.channels.DigMontage" class="sphx-glr-backref-module-mne-channels sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">montage</span></a><span class="p">)</span>
+
+<span class="c1"># View the position of optodes in 2D to confirm the positions are correct.</span>
+<a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray.plot_sensors" title="mne.io.RawArray.plot_sensors" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">raw</span><span class="o">.</span><span class="n">plot_sensors</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_plot_01_data_io_001.png" srcset="../../_images/sphx_glr_plot_01_data_io_001.png" alt="plot 01 data io" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 640x640 with 1 Axes&gt;
+</pre></div>
+</div>
+<p>To validate the positions were loaded correctly it is also possible to view
+the location of the sources (red), detectors (black), and channels (white
+lines and orange dots) in a 3D representation.
+The ficiduals are marked in blue, green and red.
+See <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/20_source_alignment.html#tut-source-alignment" title="(in MNE v0.24)"><span>Source alignment and coordinate frames</span></a> for more details.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">op</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.datasets.sample.data_path.html#mne.datasets.sample.data_path" title="mne.datasets.sample.data_path" class="sphx-glr-backref-module-mne-datasets-sample sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">(),</span> <span class="s1">&#39;subjects&#39;</span><span class="p">)</span>
+<a href="https://mne.tools/stable/generated/mne.datasets.fetch_fsaverage.html#mne.datasets.fetch_fsaverage" title="mne.datasets.fetch_fsaverage" class="sphx-glr-backref-module-mne-datasets sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fetch_fsaverage</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">)</span>
+
+<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span>
+                      <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s1">&#39;low_contrast&#39;</span><span class="p">)</span>
+<span class="c1"># brain.add_head()</span>
+<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">)</span>
+<span class="c1"># brain.enable_depth_peeling()</span>
+<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.show_view" title="mne.viz.Brain.show_view" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">show_view</span></a><span class="p">(</span><span class="n">azimuth</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_plot_01_data_io_002.png" srcset="../../_images/sphx_glr_plot_01_data_io_002.png" alt="plot 01 data io" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>0 files missing from root.txt in /home/circleci/mne_data/MNE-sample-data/subjects
+0 files missing from bem.txt in /home/circleci/mne_data/MNE-sample-data/subjects/fsaverage
+Channel types:: hbo: 8, hbr: 8
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  15.224 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  273 MB</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-01-data-io-py">
+<div class="binder-badge docutils container">
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_01_data_io.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/2ebe5dc88f0ef82a935e6f42e0e7eab9/plot_01_data_io.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_01_data_io.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/e935415e95d52fffa2f9d0f41620f0e1/plot_01_data_io.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_01_data_io.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+</section>
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../index.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Examples</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="plot_05_datasets.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Example Datasets</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
+    
+  
+    <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2012–2022, MNE Developers. Last updated &lt;time datetime=&#34;2022-03-06T00:48:22.537633+00:00&#34; class=&#34;localized&#34;&gt;2022-03-06 00:48 UTC&lt;/time&gt;
+&lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>
