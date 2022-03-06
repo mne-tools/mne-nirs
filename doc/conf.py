@@ -245,6 +245,12 @@ else:
     report_scraper = mne.report._ReportScraper()
     scrapers += (report_scraper,)
     del backend
+try:
+    import mne_qt_browser
+    if mne.viz.get_browser_backend() == 'qt':
+        scrapers += (mne.viz._scraper._PyQtGraphScraper(),)
+except ImportError:
+    pass
 
 # Resolve binder filepath_prefix. From the docs:
 # "A prefix to append to the filepath in the Binder links. You should use this
