@@ -171,6 +171,9 @@ jobs:
       machine:
         image: ubuntu-2004:202111-01
       steps:
+        - add_ssh_keys:
+            fingerprints:
+              - "52:15:5b:e8:77:af:33:18:74:4e:ae:44:c4:8e:61:e5"
         - attach_workspace:
             at: /tmp/build
         - checkout
@@ -190,7 +193,7 @@ jobs:
         - run:
             name: Deploy docs
             command: |
-              git config --global user.email "circle@mne.com";
+              git config --global user.email "circle@mne.tools";
               git config --global user.name "Circle CI";
               git checkout -b gh-pages origin/gh-pages
               git remote -v
