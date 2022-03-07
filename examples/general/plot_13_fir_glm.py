@@ -45,12 +45,9 @@ This GLM analysis is a wrapper over the excellent
    This tutorial uses data in the BIDS format.
    The BIDS specification for NIRS data is still under development. See:
    `fNIRS BIDS proposal <https://github.com/bids-standard/bids-specification/pull/802>`_.
-   As such, to run this tutorial you must use the fNIRS development branch of MNE-BIDS.
+   As such, to run this tutorial you must use the MNE-BIDS 0.10 or later.
 
-   To install the fNIRS development branch of MNE-BIDS run:
-   `pip install -U https://codeload.github.com/rob-luke/mne-bids/zip/nirs`.
-
-   MNE-Python. allows you to process fNIRS data that is not in BIDS format too.
+   MNE-Python allows you to process fNIRS data that is not in BIDS format too.
    Simply modify the ``read_raw_`` function to match your data type.
    See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
    to use your data with MNE-Python.
