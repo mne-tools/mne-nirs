@@ -29,7 +29,7 @@ Documentation
 
 Documentation for this project is hosted `here <https://mne-tools.github.io/mne-nirs>`_.
 
-You can find a list of  `examples within the documentation <https://mne.tools/mne-nirs/main/auto_examples/index.html>`_.
+You can find a list of  `examples within the documentation <https://mne.tools/mne-nirs/stable/auto_examples/index.html>`_.
 
 
 Features
@@ -37,15 +37,15 @@ Features
 
 MNE-NIRS and MNE-Python provide a wide variety of tools to use when processing fNIRS data including:
 
-* Loading data from a `wide variety of devices <https://mne.tools/mne-nirs/main/auto_examples/general/plot_01_data_io.html>`_, including `SNIRF files <https://mne.tools/mne-nirs/master/auto_examples/general/plot_19_snirf.html>`_.
+* Loading data from a `wide variety of devices <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_01_data_io.html>`_, including `SNIRF files <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_19_snirf.html>`_.
 * `Apply 3D sensor locations <https://mne.tools/stable/overview/implementation.html#supported-formats-for-digitized-3d-locations>`_ from common digitisation systems such as Polhemus.
-* Standard preprocessing including `optical density calculation and Beer-Lambert Law conversion <https://mne.tools/mne-nirs/main/auto_examples/general/plot_15_waveform.html#id2>`_, filtering, etc.
-* Data quality metrics including `scalp coupling index <https://mne.tools/mne-nirs/main/auto_examples/general/plot_15_waveform.html#id3>`_ and `peak power <https://mne.tools/mne-nirs/master/auto_examples/general/plot_22_quality.html#peak-power>`_.
-* GLM analysis with a wide variety of cusomisation including `including FIR <https://mne.tools/mne-nirs/main/auto_examples/general/plot_13_fir_glm.html>`_ or `canonical HRF <https://mne.tools/mne-nirs/master/auto_examples/general/plot_11_hrf_measured.html>`_ analysis, higher order `autoregressive noise models <https://mne.tools/mne-nirs/master/auto_examples/general/plot_10_hrf_simulation.html#using-autoregressive-models-in-the-glm-to-account-for-noise-structure>`_, `short channel regression, region of interest analysis <https://mne.tools/mne-nirs/master/auto_examples/general/plot_11_hrf_measured.html>`_, etc.
+* Standard preprocessing including `optical density calculation and Beer-Lambert Law conversion <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_15_waveform.html#id2>`_, filtering, etc.
+* Data quality metrics including `scalp coupling index <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_15_waveform.html#id3>`_ and `peak power <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_22_quality.html#peak-power>`_.
+* GLM analysis with a wide variety of cusomisation including `including FIR <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_13_fir_glm.html>`_ or `canonical HRF <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_11_hrf_measured.html>`_ analysis, higher order `autoregressive noise models <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_10_hrf_simulation.html#using-autoregressive-models-in-the-glm-to-account-for-noise-structure>`_, `short channel regression, region of interest analysis <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_11_hrf_measured.html>`_, etc.
 * Visualisation tools for all stages of processing from raw data to processed waveforms, GLM result visualisation, including both sensor and cortical surface projections.
 * Data cleaning functions including popular short channel techniques and negative correlation enhancement.
-* Group level analysis using `(robust) linear mixed effects models <https://mne.tools/mne-nirs/main/auto_examples/general/plot_12_group_glm.html>`_ and `waveform averaging <https://mne.tools/mne-nirs/master/auto_examples/general/plot_16_waveform_group.html>`_.
-* And much more! Check out the documentation `examples <https://mne.tools/mne-nirs/main/auto_examples/index.html>`_ and the API `for more details <https://mne.tools/mne-nirs/master/api.html>`_.
+* Group level analysis using `(robust) linear mixed effects models <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_12_group_glm.html>`_ and `waveform averaging <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_16_waveform_group.html>`_.
+* And much more! Check out the documentation `examples <https://mne.tools/mne-nirs/stable/auto_examples/index.html>`_ and the API `for more details <https://mne.tools/mne-nirs/stable/api.html>`_.
 
 
 Contributing
