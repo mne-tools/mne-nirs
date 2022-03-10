@@ -17,7 +17,8 @@ from mne.viz import Brain
 
 @verbose
 def plot_3d_montage(info, view_map, *, src_det_names='auto',
-                    subject='fsaverage', trans='fsaverage', surface='pial',
+                    ch_names='numbered', subject='fsaverage',
+                    trans='fsaverage', surface='pial',
                     subjects_dir=None, verbose=None):
     """
     Plot a 3D sensor montage.
@@ -48,6 +49,14 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
         for example::
 
             src_det_names=dict(S1='Fz', D1='FCz', ...)
+    ch_names : str | dict | None
+        If ``'numbered'`` (default), use ``['1', '2', ...]`` for the channel
+        names, or ``None`` to use ``['S1_D2', 'S2_D1', ...]``. Can also be a
+        dict to provide a mapping from the ``'S1_D2'``-style names (keys) to
+        other names, e.g., ``defaultdict(lambda: '')`` will prevent showing
+        the names altogether.
+
+        .. versionadded:: 0.3
     subject : str
         The subject.
     trans : str | Transform
@@ -77,13 +86,19 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
     NIRx typically involves more complicated arrangements. See
     :ref:`the 3D tutorial <tut-fnirs-vis-brain-plot-3d-montage>` for
     an advanced example that incorporates the ``'caudal'`` view as well.
-    """
+    """  # noqa: E501
     import matplotlib.pyplot as plt
     from scipy.spatial.distance import cdist
     _validate_type(info, Info, 'info')
     _validate_type(view_map, dict, 'views')
     _validate_type(src_det_names, (None, dict, str), 'src_det_names')
+    _validate_type(ch_names, (dict, str, None), 'ch_names')
     info = pick_info(info, pick_types(info, fnirs=True, exclude=())[::2])
+    if isinstance(ch_names, str):
+        _check_option('ch_names', ch_names, ('numbered',), extra='when str')
+        ch_names = {
+            name.split()[0]: str(ni)
+            for ni, name in enumerate(info['ch_names'], 1)}
     info['bads'] = []
     if isinstance(src_det_names, str):
         _check_option('src_det_names', src_det_names, ('auto',),
@@ -155,28 +170,30 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
             brain.plotter.subplot(0, col)
             vp = brain.plotter.renderer
             for ci in view[2]:  # figure out what we need to plot
-                ch_name = str(ci)
                 this_ch = info['chs'][ci - 1]
-                name = this_ch['ch_name']
-                s_name, d_name = name.split()[0].split('_')
-                if src_det_names is not None:
-                    s_name = src_det_names[s_name]
-                    d_name = src_det_names[d_name]
+                ch_name = this_ch['ch_name'].split()[0]
+                s_name, d_name = ch_name.split('_')
                 needed = [
-                    (ch_name, this_ch['loc'][:3], 12, 'Centered'),
-                    (s_name, this_ch['loc'][3:6], 8, 'Bottom'),
-                    (d_name, this_ch['loc'][6:9], 8, 'Bottom'),
+                    (ch_names, 'ch_names', ch_name,
+                     this_ch['loc'][:3], 12, 'Centered'),
+                    (src_det_names, 'src_det_names', s_name,
+                     this_ch['loc'][3:6], 8, 'Bottom'),
+                    (src_det_names, 'src_det_names', d_name,
+                     this_ch['loc'][6:9], 8, 'Bottom'),
                 ]
-                for name, ch_pos, font_size, va in needed:
+                for lookup, lname, name, ch_pos, font_size, va in needed:
                     if name in plotted:
                         continue
                     plotted.add(name)
+                    orig_name = name
+                    if lookup is not None:
+                        name = lookup[name]
+                    _validate_type(name, str, f'{lname}[{repr(orig_name)}]')
                     ch_pos = apply_trans(head_mri_t, ch_pos)
                     vp.SetWorldPoint(np.r_[ch_pos, 1.])
                     vp.WorldToDisplay()
                     ch_pos = (np.array(vp.GetDisplayPoint()[:2]) -
                               np.array(vp.GetOrigin()))
-
                     actor = brain.plotter.add_text(
                         name, ch_pos, font_size=font_size, color=(0., 0., 0.),
                         **add_text_kwargs)
