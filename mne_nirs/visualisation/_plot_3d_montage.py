@@ -49,7 +49,7 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
         for example::
 
             src_det_names=dict(S1='Fz', D1='FCz', ...)
-    ch_names : str | dict
+    ch_names : str | dict | None
         If ``'numbered'`` (default), use ``['1', '2', ...]`` for the channel
         names, or ``None`` to use ``['S1_D2', 'S2_D1', ...]``. Can also be a
         dict to provide a mapping from the ``'S1_D2'``-style names (keys) to
@@ -92,11 +92,12 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
     _validate_type(info, Info, 'info')
     _validate_type(view_map, dict, 'views')
     _validate_type(src_det_names, (None, dict, str), 'src_det_names')
-    _validate_type(ch_names, (dict, str), 'ch_names')
+    _validate_type(ch_names, (dict, str, None), 'ch_names')
     info = pick_info(info, pick_types(info, fnirs=True, exclude=())[::2])
     if isinstance(ch_names, str):
         _check_option('ch_names', ch_names, ('numbered',), extra='when str')
-        ch_names = {name: ni for ni, name in enumerate(info['ch_names'], 1)}
+        ch_names = {
+            name.split()[0]: ni for ni, name in enumerate(info['ch_names'], 1)}
     info['bads'] = []
     if isinstance(src_det_names, str):
         _check_option('src_det_names', src_det_names, ('auto',),
