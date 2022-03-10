@@ -97,7 +97,8 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
     if isinstance(ch_names, str):
         _check_option('ch_names', ch_names, ('numbered',), extra='when str')
         ch_names = {
-            name.split()[0]: ni for ni, name in enumerate(info['ch_names'], 1)}
+            name.split()[0]: str(ni)
+            for ni, name in enumerate(info['ch_names'], 1)}
     info['bads'] = []
     if isinstance(src_det_names, str):
         _check_option('src_det_names', src_det_names, ('auto',),
@@ -173,22 +174,26 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
                 ch_name = this_ch['ch_name'].split()[0]
                 s_name, d_name = ch_name.split('_')
                 needed = [
-                    (ch_names, ch_name, this_ch['loc'][:3], 12, 'Centered'),
-                    (src_det_names, s_name, this_ch['loc'][3:6], 8, 'Bottom'),
-                    (src_det_names, d_name, this_ch['loc'][6:9], 8, 'Bottom'),
+                    (ch_names, 'ch_names', ch_name,
+                     this_ch['loc'][:3], 12, 'Centered'),
+                    (src_det_names, 'src_det_names', s_name,
+                     this_ch['loc'][3:6], 8, 'Bottom'),
+                    (src_det_names, 'src_det_names', d_name,
+                     this_ch['loc'][6:9], 8, 'Bottom'),
                 ]
-                for lookup, name, ch_pos, font_size, va in needed:
+                for lookup, lname, name, ch_pos, font_size, va in needed:
                     if name in plotted:
                         continue
                     plotted.add(name)
+                    orig_name = name
                     if lookup is not None:
                         name = lookup[name]
+                    _validate_type(name, str, f'{lname}[{repr(orig_name)}]')
                     ch_pos = apply_trans(head_mri_t, ch_pos)
                     vp.SetWorldPoint(np.r_[ch_pos, 1.])
                     vp.WorldToDisplay()
                     ch_pos = (np.array(vp.GetDisplayPoint()[:2]) -
                               np.array(vp.GetOrigin()))
-
                     actor = brain.plotter.add_text(
                         name, ch_pos, font_size=font_size, color=(0., 0., 0.),
                         **add_text_kwargs)
