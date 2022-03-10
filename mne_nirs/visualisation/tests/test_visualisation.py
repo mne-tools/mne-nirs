@@ -2,6 +2,8 @@
 #
 # License: BSD (3-clause)
 
+from collections import defaultdict
+
 import pytest
 import numpy as np
 import mne
@@ -181,11 +183,12 @@ def test_run_plot_GLM_projection(requires_pyvista):
 
 
 @requires_mne_1
-@pytest.mark.parametrize('fname_raw, to_1020', [
-    (raw_path, False),
-    (raw_path, True),
+@pytest.mark.parametrize('fname_raw, to_1020, ch_names', [
+    (raw_path, False, None),
+    (raw_path, True, 'numbered'),
+    (raw_path, True, defaultdict(lambda: '')),
 ])
-def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020):
+def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020, ch_names):
     import pyvista
     pyvista.close_all()
     assert len(pyvista.plotting._ALL_PLOTTERS) == 0
@@ -205,7 +208,7 @@ def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020):
     with catch_logging() as log:
         mne_nirs.viz.plot_3d_montage(
             raw.info, view_map, subject='sample', surface='white',
-            subjects_dir=subjects_dir, verbose=True)
+            subjects_dir=subjects_dir, ch_names=ch_names, verbose=True)
     assert len(pyvista.plotting._ALL_PLOTTERS) == 0
     log = log.getvalue().lower()
     if to_1020:

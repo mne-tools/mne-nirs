@@ -16,8 +16,9 @@ from mne.viz import Brain
 
 
 @verbose
-def plot_3d_montage(info, view_map, *, src_det_names='auto', ch_names=None,
-                    subject='fsaverage', trans='fsaverage', surface='pial',
+def plot_3d_montage(info, view_map, *, src_det_names='auto',
+                    ch_names='numbered', subject='fsaverage',
+                    trans='fsaverage', surface='pial',
                     subjects_dir=None, verbose=None):
     """
     Plot a 3D sensor montage.
@@ -48,13 +49,12 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto', ch_names=None,
         for example::
 
             src_det_names=dict(S1='Fz', D1='FCz', ...)
-    ch_names : dict | None
-        If None, use ``['1', '2', ...]`` for the channel names. Can be a
-        dict to provide a mapping from these to other names, e.g.,
-        ``defaultdict(lambda: '')`` will prevent showing the names, and
-        this will use names of the form ``S1_D2``::
-
-            dict(zip(str(ii), name.split()[0]) for ii, name in enumerate(raw.ch_names[::2], 1)))
+    ch_names : str | dict
+        If ``'numbered'`` (default), use ``['1', '2', ...]`` for the channel
+        names, or ``None`` to use ``['S1_D2', 'S2_D1', ...]``. Can also be a
+        dict to provide a mapping from the ``'S1_D2'``-style names (keys) to
+        other names, e.g., ``defaultdict(lambda: '')`` will prevent showing
+        the names altogether.
 
         .. versionadded:: 0.3
     subject : str
@@ -92,7 +92,11 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto', ch_names=None,
     _validate_type(info, Info, 'info')
     _validate_type(view_map, dict, 'views')
     _validate_type(src_det_names, (None, dict, str), 'src_det_names')
+    _validate_type(ch_names, (dict, str), 'ch_names')
     info = pick_info(info, pick_types(info, fnirs=True, exclude=())[::2])
+    if isinstance(ch_names, str):
+        _check_option('ch_names', ch_names, ('numbered',), extra='when str')
+        ch_names = {name: ni for ni, name in enumerate(info['ch_names'], 1)}
     info['bads'] = []
     if isinstance(src_det_names, str):
         _check_option('src_det_names', src_det_names, ('auto',),
@@ -164,10 +168,9 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto', ch_names=None,
             brain.plotter.subplot(0, col)
             vp = brain.plotter.renderer
             for ci in view[2]:  # figure out what we need to plot
-                ch_name = str(ci)
                 this_ch = info['chs'][ci - 1]
-                name = this_ch['ch_name']
-                s_name, d_name = name.split()[0].split('_')
+                ch_name = this_ch['ch_name'].split()[0]
+                s_name, d_name = ch_name.split('_')
                 needed = [
                     (ch_names, ch_name, this_ch['loc'][:3], 12, 'Centered'),
                     (src_det_names, s_name, this_ch['loc'][3:6], 8, 'Bottom'),
