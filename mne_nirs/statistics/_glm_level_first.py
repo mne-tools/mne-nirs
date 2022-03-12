@@ -16,7 +16,7 @@ with warnings.catch_warnings(record=True):
     import nilearn.glm
     from nilearn.glm.first_level import run_glm as nilearn_glm
 
-try:
+try:  # remove once MNE 1.0 is required
     from mne.io.meas_info import ContainsMixin
 except ImportError:
     from mne.channels.channels import ContainsMixin
