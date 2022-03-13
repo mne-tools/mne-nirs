@@ -12,7 +12,15 @@ Major version changes indicate incompatible API changes.
 Minor version changes indicate new functionality was added in a backwards compatible manner.
 Patch version changes indicate backward compatible bug fixes.
 
-To install a specific version of the library you would run ``pip install mne-nirs==0.0.6``, where ``0.0.6`` is the version you wish to install.
+To install a specific version of the library you would run ``pip install mne-nirs==0.2.1``, where ``0.2.1`` is the version you wish to install.
+
+
+v0.2.1
+------
+
+General
+
+* Maintenance release to align with MNE-Python 1.0 changes. By `Alex Rockhill`_.
 
 
 v0.2.0
@@ -155,3 +163,4 @@ Enhancements
 .. _Eric Larson: https://github.com/larsoner/
 .. _Darin Erat Sleiter: https://github.com/dsleiter
 .. _Christian Arthur: https://github.com/chrsthur
+.. _Alex Rockhill: https://github.com/alexrockhill
