@@ -43,7 +43,7 @@ Install via Standalone Installer
 4. Double click on the `Prompt (MNE)`
 5. Once the prompt has loaded, run `jupyter lab` and it will open Jupyter in your web browser.
 6. Now try one of the MNE-NIRS example notebooks by clicking `Download Jupyter notebook` at the bottom of any example.
-7. Use the file broswer in the jupyter lab web interface (top left of page) to browse to where you downloaded the example to. Double click to open it.
+7. Use the file browser in the jupyter lab web interface (top left of page) to browse to where you downloaded the example to. Double click to open it.
 
 If you need the latest version of MNE-Python or MNE-NIRS you can enter the following at the prompt:
 
