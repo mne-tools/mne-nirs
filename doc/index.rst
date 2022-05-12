@@ -47,10 +47,10 @@ Install via Standalone Installer
 
 If you need the latest version of MNE-Python or MNE-NIRS you can enter the following at the prompt:
 
-.. code:: bash
+.. code:: console
 
-   >>> pip install -U --no-deps https://github.com/mne-tools/mne-python/archive/main.zip
-   >>> pip install -U --no-deps https://github.com/mne-tools/mne-nirs/archive/main.zip
+   $ pip install -U --no-deps https://github.com/mne-tools/mne-python/archive/main.zip
+   $ pip install -U --no-deps https://github.com/mne-tools/mne-nirs/archive/main.zip
 
 
 Install via Conda or Pip
@@ -69,9 +69,9 @@ Then run the following code to install MNE-NIRS:
 
 Or if you wish to run the latest development version of MNE-NIRS:
 
-.. code:: bash
+.. code:: console
 
-    >>> pip install https://github.com/mne-tools/mne-nirs/archive/main.zip
+    $ pip install https://github.com/mne-tools/mne-nirs/archive/main.zip
 
 
 Upgrading your software version
@@ -83,9 +83,9 @@ the MNE-Python version.
 Similarly, you can update MNE-NIRS to the latest development version by running
 
 
-.. code:: bash
+.. code:: console
 
-   >>> pip install -U --no-deps https://github.com/mne-tools/mne-nirs/archive/main.zip
+   $ pip install -U --no-deps https://github.com/mne-tools/mne-nirs/archive/main.zip
 
 
 Acknowledgements

@@ -73,12 +73,12 @@ Docker
 
 To start a jupyter lab server with a specified MNE-NIRS version, and mount a local directory on a mac or nix computer use:
 
-.. code-block:: bash
+.. code-block:: console
 
    docker run -p 8888:8888 -v `pwd`:/home/mne_user ghcr.io/mne-tools/mne-nirs:v0.1.2 jupyter-lab --ip="*"
 
 Or on windows:
 
-.. code-block:: bash
+.. code-block:: console
 
    docker run -p 8888:8888 -v %cd%:/home/mne_user ghcr.io/mne-tools/mne-nirs:v0.1.2 jupyter-lab --ip="*"
