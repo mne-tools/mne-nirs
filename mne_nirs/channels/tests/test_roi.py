@@ -3,9 +3,11 @@
 # License: BSD (3-clause)
 
 
+
 import os
 import mne
 import pytest
+import numpy as np
 from mne_nirs.channels import picks_pair_to_idx
 
 
@@ -13,6 +15,9 @@ def test_roi_picks():
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
     fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
     raw = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
+
+    sort_idx = np.argsort(raw.ch_names)
+    raw.pick(picks=sort_idx)
 
     picks = picks_pair_to_idx(raw, [[1, 1], [1, 2], [5, 13], [8, 16]])
 
@@ -44,8 +49,8 @@ def test_roi_picks():
     # Test usage for ROI downstream functions
     group_by = dict(Left_ROI=picks_pair_to_idx(raw, [[1, 1], [1, 2], [5, 13]]),
                     Right_ROI=picks_pair_to_idx(raw, [[3, 3], [3, 11]]))
-    assert group_by['Left_ROI'] == [0, 1, 2, 3, 34, 35]
-    assert group_by['Right_ROI'] == [18, 19, 20, 21]
+    assert group_by['Left_ROI'] == [0, 1, 2, 3, 28, 29]
+    assert group_by['Right_ROI'] == [20, 21, 16, 17]
 
     # Ensure we dont match [1, 1] to S1_D11
     # Check easy condition

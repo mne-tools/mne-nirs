@@ -181,8 +181,7 @@ def test_label_finder():
         raw_cz.info['chs'][0]['loc'][6:9],
         reference_locations) == "TP7"
 
-    # Test rear position detector
     raw_cz = raw.copy().pick(9)
     assert _find_closest_standard_location(
         raw_cz.info['chs'][0]['loc'][6:9],
-        reference_locations) == "PO2"
+        reference_locations) == "PO3h"
