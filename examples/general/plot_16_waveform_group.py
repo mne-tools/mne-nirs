@@ -103,11 +103,10 @@ import statsmodels.formula.api as smf
 
 # Import Plotting Library
 import matplotlib.pyplot as plt
-from lets_plot import *
+import seaborn as sns
 
 # Set general parameters
 set_log_level("WARNING")  # Don't show info, as it is repetitive for many subjects
-LetsPlot.setup_html()
 
 
 # %%
@@ -353,12 +352,7 @@ df.head()
 # For this reason, fNIRS is most appropriate for detecting changes within a
 # single ROI between conditions.
 
-ggplot(df.query("Chroma == 'hbo'"),
-       aes(x='Condition', y='Value', color='ID', shape='ROI')) \
-    + geom_hline(y_intercept=0, linetype="dashed", size=1) \
-    + geom_point(size=5) \
-    + scale_shape_manual(values=[16, 17]) \
-    + ggsize(800, 300)
+sns.catplot(x="Condition", y="Value", hue="ID", data=df.query("Chroma == 'hbo'"), ci=None, palette="muted", height=4, s=10)
 
 
 # %%
