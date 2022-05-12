@@ -61,7 +61,7 @@ from mne_nirs.datasets import fnirs_motor_group
 root = mne_nirs.datasets.audio_or_visual_speech.data_path()
 dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf", subject="04",
                    task="AudioVisualBroadVsRestricted", datatype="nirs", session="01")
-raw = read_raw_bids(dataset)
+raw = mne.io.read_raw_snirf(dataset.fpath)
 
 
 # %%

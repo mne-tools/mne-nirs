@@ -60,7 +60,7 @@ from mne.decoding import (Scaler,
                           Vectorizer)
 
 # Import MNE-NIRS processing
-from mne_nirs.datasets.audio_or_visual_speech import data_path
+from mne_nirs.datasets.fnirs_motor_group import data_path
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
@@ -83,8 +83,8 @@ from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
 # In this example we use the example dataset ``audio_or_visual_speech``.
 
 root = data_path()
-dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf", session="01",
-                   task="AudioVisualBroadVsRestricted", datatype="nirs")
+dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf",
+                   task="tapping", datatype="nirs")
 subjects = get_entity_vals(root, 'subject')
 
 
@@ -117,7 +117,7 @@ def epoch_preprocessing(bids_path):
                     proj=True, baseline=(None, 0), detrend=1,
                     preload=True, verbose=False)
 
-    epochs = epochs[["Control", "Audio"]]
+    epochs = epochs[["Tapping/Right", "Tapping/Left"]]
     return raw_haemo, epochs
 
 
