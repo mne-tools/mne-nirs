@@ -102,6 +102,8 @@ import matplotlib.pyplot as plt
 def analysis(fname, ID):
 
     raw_intensity = read_raw_bids(bids_path=fname, verbose=False)
+    # Delete annotation labeled 15, as these just signify the start and end of experiment.
+    raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
     # sanitize event names
     raw_intensity.annotations.description[:] = [
         d.replace('/', '_') for d in raw_intensity.annotations.description]
