@@ -138,6 +138,11 @@ jobs:
             command: |
                pip list
 
+        - run:
+            name: Download data
+            command: |
+              ./tools/github_actions_download.sh
+
         # Build docs
         - run:
             name: make html
