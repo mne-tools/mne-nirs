@@ -62,9 +62,9 @@ Follow the installation instructions on the
 
 Then run the following code to install MNE-NIRS:
 
-.. code:: bash
+.. code:: console
 
-    >>> pip install mne-nirs
+    $ pip install mne-nirs
 
 
 Or if you wish to run the latest development version of MNE-NIRS:
