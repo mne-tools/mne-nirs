@@ -254,6 +254,7 @@ out
 def individual_analysis(bids_path, ID):
 
     raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
+    raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
      # sanitize event names
     raw_intensity.annotations.description[:] = [
         d.replace('/', '_') for d in raw_intensity.annotations.description]

@@ -180,4 +180,3 @@ def test_label_finder():
     assert _find_closest_standard_location(
         raw_tmp.info['chs'][0]['loc'][6:9],
         reference_locations) == "TP7"
-
