@@ -152,36 +152,32 @@ def test_label_finder():
     reference_locations = _generate_montage_locations()
 
     # Test central head position source
-    raw_cz = raw.copy().pick(25)
+    raw_tmp = raw.copy().pick(25)
     assert _find_closest_standard_location(
-        raw_cz.info['chs'][0]['loc'][3:6],
+        raw_tmp.info['chs'][0]['loc'][3:6],
         reference_locations) == "Cz"
 
     # Test right auditory position detector
-    raw_cz = raw.copy().pick(4)
+    raw_tmp = raw.copy().pick(4)
     assert _find_closest_standard_location(
-        raw_cz.info['chs'][0]['loc'][6:9],
+        raw_tmp.info['chs'][0]['loc'][6:9],
         reference_locations) == "T8"
 
     # Test right auditory position source
-    raw_cz = raw.copy().pick(4)
+    raw_tmp = raw.copy().pick(4)
     assert _find_closest_standard_location(
-        raw_cz.info['chs'][0]['loc'][3:6],
+        raw_tmp.info['chs'][0]['loc'][3:6],
         reference_locations) == "TP8"
 
     # Test left auditory position source
-    raw_cz = raw.copy().pick(1)
+    raw_tmp = raw.copy().pick(1)
     assert _find_closest_standard_location(
-        raw_cz.info['chs'][0]['loc'][3:6],
+        raw_tmp.info['chs'][0]['loc'][3:6],
         reference_locations) == "T7"
 
     # Test left auditory position detector
-    raw_cz = raw.copy().pick(1)
+    raw_tmp = raw.copy().pick(1)
     assert _find_closest_standard_location(
-        raw_cz.info['chs'][0]['loc'][6:9],
+        raw_tmp.info['chs'][0]['loc'][6:9],
         reference_locations) == "TP7"
 
-    raw_cz = raw.copy().pick(9)
-    assert _find_closest_standard_location(
-        raw_cz.info['chs'][0]['loc'][6:9],
-        reference_locations) == "PO3h"
