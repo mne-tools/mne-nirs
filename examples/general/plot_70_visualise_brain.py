@@ -62,7 +62,10 @@ root = mne_nirs.datasets.audio_or_visual_speech.data_path()
 dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf", subject="04",
                    task="AudioVisualBroadVsRestricted", datatype="nirs", session="01")
 raw = mne.io.read_raw_snirf(dataset.fpath)
-
+raw.annotations.rename({'1.0': 'Audio',
+                        '2.0': 'Video',
+                        '3.0': 'Control',
+                        '15.0': 'Ends'})
 
 # %%
 # Download annotation information
