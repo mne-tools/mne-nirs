@@ -12,7 +12,7 @@ Detailed information about decoding of neural signals can be found
 in the MNE-Python documentation. For example see
 `Decoding (MVPA) <https://mne.tools/stable/auto_examples/decoding/decoding_csp_eeg.html>`_,
 :ref:`Linear classifier on sensor data  <mne:ex-linear-patterns>`,
-:ref:`Decoding source space data <mne:tut-dec-st-source>`.
+:ref:`Decoding source space data <mne:ex-dec-st-source>`.
 This example will use the techniques covered in the MNE-Python tutorials,
 but applied specifically to fNIRS data.
 
