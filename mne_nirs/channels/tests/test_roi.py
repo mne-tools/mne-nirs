@@ -5,7 +5,6 @@
 import os
 import mne
 import pytest
-import numpy as np
 from mne_nirs.channels import picks_pair_to_idx
 
 
