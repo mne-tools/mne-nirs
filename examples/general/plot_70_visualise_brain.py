@@ -61,8 +61,11 @@ from mne_nirs.datasets import fnirs_motor_group
 root = mne_nirs.datasets.audio_or_visual_speech.data_path()
 dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf", subject="04",
                    task="AudioVisualBroadVsRestricted", datatype="nirs", session="01")
-raw = read_raw_bids(dataset)
-
+raw = mne.io.read_raw_snirf(dataset.fpath)
+raw.annotations.rename({'1.0': 'Audio',
+                        '2.0': 'Video',
+                        '3.0': 'Control',
+                        '15.0': 'Ends'})
 
 # %%
 # Download annotation information
@@ -251,6 +254,7 @@ out
 def individual_analysis(bids_path, ID):
 
     raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
+    raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
      # sanitize event names
     raw_intensity.annotations.description[:] = [
         d.replace('/', '_') for d in raw_intensity.annotations.description]

@@ -20,6 +20,7 @@ from sphinx_gallery.sorting import FileNameSortKey
 
 sys.path.append("../")
 import mne
+from mne.fixes import _compare_version
 from mne_nirs import __version__  # noqa: E402
 from mne.tests.test_docstring_parameters import error_ignores
 
@@ -247,8 +248,9 @@ else:
     del backend
 try:
     import mne_qt_browser
-    if mne.viz.get_browser_backend() == 'qt':
-        scrapers += (mne.viz._scraper._PyQtGraphScraper(),)
+    _min_ver = _compare_version(mne_qt_browser.__version__, '>=', '0.2')
+    if mne.viz.get_browser_backend() == 'qt' and _min_ver:
+        scrapers += (mne.viz._scraper._MNEQtBrowserScraper(),)
 except ImportError:
     pass
 
