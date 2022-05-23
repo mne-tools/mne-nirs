@@ -245,7 +245,7 @@ def plot_glm_group_topo(inst, statsmodel_df,
                         colorbar=True,
                         show_names=False,
                         extrapolate='local',
-                        image_interp='bilinear'):
+                        image_interp='cubic'):
     """
     Plot topomap of NIRS group level GLM results.
 
