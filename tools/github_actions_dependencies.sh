@@ -24,10 +24,10 @@ else
 	echo "Numba, nilearn"
 	pip install $STD_ARGS --pre --only-binary ":all:" numba llvmlite https://github.com/nilearn/nilearn/zipball/main
 	echo "VTK"
-# 	# Have to use our own version until VTK releases a 3.10 build
-# 	wget -q https://osf.io/ajder/download -O vtk-9.1.20220406.dev0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
-# 	pip install $STD_ARGS --pre --only-binary ":all:" vtk-9.1.20220406.dev0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
-# 	python -c "import vtk"
+	# Have to use our own version until VTK releases a 3.10 build
+	wget -q https://osf.io/ajder/download -O vtk-9.1.20220406.dev0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+	pip install $STD_ARGS --pre --only-binary ":all:" vtk-9.1.20220406.dev0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+	python -c "import vtk"
 	echo "PyVista"
 	pip install --progress-bar off https://github.com/pyvista/pyvista/zipball/main
 	echo "pyvistaqt"
@@ -41,8 +41,8 @@ else
 	EXTRA_ARGS="--pre"
 fi
 
-pip install $STD_ARGS $EXTRA_ARGS -r requirements.txt
-pip install $STD_ARGS $EXTRA_ARGS -r requirements_testing.txt
+pip install --progress-bar off -r requirements.txt
+pip install --progress-bar off -r requirements_testing.txt
 if [ "${MNEPYTHON}" == "dev" ]; then
 	pip install $STD_ARGS $EXTRA_ARGS https://github.com/mne-tools/mne-python/zipball/main
 fi
