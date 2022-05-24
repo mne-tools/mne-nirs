@@ -11,12 +11,8 @@ Waveform Averaging Analysis
 
 This tutorial covers how to convert functional near-infrared spectroscopy
 (fNIRS) data from raw measurements to relative oxyhaemoglobin (HbO) and
-deoxyhaemoglobin (HbR) concentration.
-
-
-.. contents:: Page contents
-   :local:
-   :depth: 2
+deoxyhaemoglobin (HbR) concentration, view the average waveform, and
+topographic representation of the response.
 
 Here we will work with the :ref:`fNIRS motor data <mne:fnirs-motor-dataset>`.
 """
@@ -26,7 +22,9 @@ Here we will work with the :ref:`fNIRS motor data <mne:fnirs-motor-dataset>`.
 #
 # License: BSD (3-clause)
 
-import os
+# %%
+
+import os.path as op
 import numpy as np
 import matplotlib.pyplot as plt
 from itertools import compress
@@ -35,7 +33,7 @@ import mne
 
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-fnirs_cw_amplitude_dir = os.path.join(fnirs_data_folder, 'Participant-1')
+fnirs_cw_amplitude_dir = op.join(fnirs_data_folder, 'Participant-1')
 raw_intensity = mne.io.read_raw_nirx(fnirs_cw_amplitude_dir, verbose=True)
 raw_intensity.load_data()
 
@@ -54,9 +52,28 @@ raw_intensity.annotations.set_durations(5)
 raw_intensity.annotations.rename({'1.0': 'Control',
                                   '2.0': 'Tapping/Left',
                                   '3.0': 'Tapping/Right'})
-raw_intensity.annotations.delete(
-    raw_intensity.annotations.description == '15.0')
+unwanted = np.nonzero(raw_intensity.annotations.description == '15.0')
+raw_intensity.annotations.delete(unwanted)
 
+
+# %%
+# Viewing location of sensors over brain surface
+# ----------------------------------------------
+#
+# Here we validate that the location of sources-detector pairs and channels
+# are in the expected locations. Source-detector pairs are shown as lines
+# between the optodes, channels (the mid point of source-detector pairs) are
+# optionally shown as orange dots. Source are optionally shown as red dots and
+# detectors as black.
+
+subjects_dir = op.join(mne.datasets.sample.data_path(), 'subjects')
+
+brain = mne.viz.Brain(
+    'fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5')
+brain.add_sensors(
+    raw_intensity.info, trans='fsaverage',
+    fnirs=['channels', 'pairs', 'sources', 'detectors'])
+brain.show_view(azimuth=20, elevation=60, distance=400)
 
 # %%
 # Selecting channels appropriate for detecting neural responses
@@ -331,7 +348,7 @@ mne.viz.plot_evoked_topo(epochs['Left'].average(picks='hbo'), color='b',
 mne.viz.plot_evoked_topo(epochs['Right'].average(picks='hbo'), color='r',
                          axes=axes, legend=False)
 
-# Tidy the legend.
+# Tidy the legend:
 leg_lines = [line for line in axes.lines if line.get_c() == 'b'][:1]
 leg_lines.append([line for line in axes.lines if line.get_c() == 'r'][0])
 fig.legend(leg_lines, ['Left', 'Right'], loc='lower right')
