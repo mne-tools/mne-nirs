@@ -3,7 +3,7 @@
 STD_ARGS="--progress-bar off --upgrade"
 EXTRA_ARGS=""
 if [ ! -z "$CONDA_ENV" ]; then
-	conda install -y $CONDA_ENV
+	pip uninstall -yq mne-nirs
 else
 	# Changes here should also go in the interactive_test CircleCI job
 	python -m pip install $STD_ARGS pip setuptools wheel
