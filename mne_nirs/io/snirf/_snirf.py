@@ -29,11 +29,6 @@ def write_raw_snirf(raw, fname):
     picks = _picks_to_idx(raw.info, 'fnirs_cw_amplitude', exclude=[])
     assert len(picks) == len(raw.ch_names), 'Data must be fnirs_cw_amplitude'
 
-    # Reordering channels
-    num_chans = len(raw.ch_names)
-    raw = raw.copy()
-    raw.pick(picks=list(range(num_chans)[0::2]) + list(range(num_chans)[1::2]))
-
     with h5py.File(fname, 'w') as f:
         nirs = f.create_group('/nirs')
         f.create_dataset('formatVersion',

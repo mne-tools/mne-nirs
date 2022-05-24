@@ -101,8 +101,7 @@ import statsmodels.formula.api as smf
 # Import Plotting Library
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-from lets_plot import *
-LetsPlot.setup_html()
+import seaborn as sns
 
 
 # %%
@@ -286,11 +285,7 @@ for sub in subjects:  # Loop from first to fifth subject
 grp_results = df_roi.query("Condition in ['Control', 'Tapping_Left', 'Tapping_Right']")
 grp_results = grp_results.query("Chroma in ['hbo']")
 
-ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
-    + geom_hline(y_intercept=0, linetype="dashed", size=1) \
-    + geom_point(size=5) \
-    + facet_grid('ID') \
-    + ggsize(900, 350)
+sns.catplot(x="Condition", y="theta", col="ID", hue="ROI", data=grp_results, col_wrap=5, ci=None, palette="muted", height=4, s=10)
 
 
 # %%
@@ -384,16 +379,7 @@ roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
 
 df = statsmodels_to_results(roi_model)
 
-ggplot(df.query("Chroma == 'hbo'"),
-       aes(x='Condition', y='Coef.', color='Significant', shape='ROI')) \
-    + geom_hline(y_intercept=0, linetype="dashed", size=1) \
-    + geom_point(size=5) \
-    + scale_shape_manual(values=[16, 17]) \
-    + ggsize(900, 300) \
-    + geom_point(data=df.query("Chroma == 'hbr'")
-                 .query("ROI == 'Left_Hemisphere'"), size=5, shape=1) \
-    + geom_point(data=df.query("Chroma == 'hbr'")
-                 .query("ROI == 'Right_Hemisphere'"), size=5, shape=2)
+sns.catplot(x="Condition", y="Coef.", hue="ROI", data=df.query("Chroma == 'hbo'"), ci=None, palette="muted", height=4, s=10)
 
 
 # %%

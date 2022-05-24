@@ -58,8 +58,8 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
 
     dataset_params = dict(
         archive_name='BIDS-NIRS-Tapping-master.zip',
-        hash='md5:f30ddeaebadd911a60531300c8bafa62',
-        url='https://github.com/rob-luke/BIDS-NIRS-Tapping/archive/master.zip',
+        hash='md5:da3cac7252005f0a64fdba5c683cf3dd',
+        url='https://github.com/rob-luke/BIDS-NIRS-Tapping/archive/v0.1.0.zip',
         folder_name='fNIRS-motor-group',
         dataset_name='fnirs_motor_group',
         config_key='MNE_DATASETS_FNIRSMOTORGROUP_PATH',
@@ -72,7 +72,7 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
     dpath = str(dpath)
 
     # Do some wrangling to deal with nested directories
-    bad_name = os.path.join(dpath, 'BIDS-NIRS-Tapping-master')
+    bad_name = os.path.join(dpath, 'BIDS-NIRS-Tapping-0.1.0')
     if os.path.isdir(bad_name):
         os.rename(bad_name, dpath + '.true')
         shutil.rmtree(dpath)
