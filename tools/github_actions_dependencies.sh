@@ -2,7 +2,7 @@
 
 STD_ARGS="--progress-bar off --upgrade"
 EXTRA_ARGS=""
-if [ ! -z "$CONDA_DEPENDENCIES" ]; then
+if [ ! -z "$CONDA_ENV" ]; then
 	conda install -y $CONDA_DEPENDENCIES
 else
 	# Changes here should also go in the interactive_test CircleCI job
