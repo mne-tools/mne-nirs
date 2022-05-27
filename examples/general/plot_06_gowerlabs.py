@@ -77,3 +77,47 @@ raw
 # Next, we visualise the raw data to visually inspect the data quality.
 
 raw.plot()
+
+# %%
+# By looking at the traces above we see that there are no flat channels
+# and the signal includes event annotations. Next, we can view the
+# annotations to ensure that they match what we expect from our experiment.
+# Annotations provide a flexible tool to represent events in your
+# experiment. They can also be used to annotate other useful information
+# such as bad segments of data, participant movements, etc.
+
+raw.annotations
+
+
+# %%
+# And we observe that there were six `A` annotations, one `Cat` annotation,
+# and two `Dog` annotations. We can view the specific data for each annotation
+# by converting the annotations to a dataframe.
+
+raw.annotations.to_data_frame()
+
+
+# %%
+# View Optode Positions in 3D Space
+# ---------------------------------
+# The position of optodes in 3D space is recorded and stored in the SNIRF file.
+# These positions are stored in head coordinate frame,
+# for a detailed overview of coordinate frames and how they are handled in MNE
+# see :ref:`mne:tut-source-alignment`.
+# The position of each optode is stored, along with scalp landmarks (“fiducials”).
+# These positions are in an arbitrary space, and must be aligned to a scan of
+# the participants, or a generic, head.
+#
+# For this data, we do not have a MRI scan of the participants head.
+# Instead, we will align the positions to a generic head created from
+# a collection of 40 MRI scans of real brains called
+# `fsaverage. <https://mne.tools/stable/auto_tutorials/forward/10_background_freesurfer.html#fsaverage>`__.
+#
+# First, lets just look at the sensors in arbitrary space.
+
+subjects_dir = op.join(mne.datasets.sample.data_path(), 'subjects')
+mne.datasets.fetch_fsaverage(subjects_dir=subjects_dir)
+
+brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, alpha=0.0, cortex='low_contrast', background="w")
+brain.add_sensors(raw.info, trans='fsaverage', fnirs=["sources", "detectors"])
+brain.show_view(azimuth=130, elevation=80, distance=700)
