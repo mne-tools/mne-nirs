@@ -178,3 +178,27 @@ set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
 brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5', alpha=0.3)
 brain.add_sensors(raw.info, trans=coreg.trans, fnirs=['sources', 'detectors'])
 brain.show_view(azimuth=90, elevation=90, distance=500)
+
+
+# %%
+# Apply Transformation to Raw Object
+# ----------------------------------
+# You may wish to apply the coregistration tranformation to the raw
+# object. This can be useful if you want to save the file back to disk
+# and not coregister again when rereading the file. Or for simpler
+# interface using the `fsaverage` head.
+
+mtg = raw.get_montage()
+mtg.apply_trans(coreg.trans)
+raw.set_montage(mtg)
+
+# Now you can simply use `trans = "fsaverage"`.
+brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5', alpha=0.3)
+brain.add_sensors(raw.info, trans="fsaverage", fnirs=['sources', 'detectors'])
+
+
+# %%
+# Next Steps
+# ----------
+# From here you can use your favorite analysis technique such as
+# :ref:`tut-fnirs-processing` :ref:`tut-fnirs-hrf`.
