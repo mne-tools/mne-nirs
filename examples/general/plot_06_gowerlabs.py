@@ -168,12 +168,7 @@ set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
 
 coreg = mne.coreg.Coregistration(raw.info, "fsaverage", subjects_dir, fiducials="estimated")
 coreg.fit_fiducials(lpa_weight=1., nasion_weight=1., rpa_weight=1.)
-mne.viz.plot_alignment(raw.info, trans=coreg.trans, subject="fsaverage", **plot_kwargs)
-
-
-# %%
-# A
-
+fig = mne.viz.plot_alignment(raw.info, trans=coreg.trans, subject="fsaverage", **plot_kwargs)
 set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
 
 
