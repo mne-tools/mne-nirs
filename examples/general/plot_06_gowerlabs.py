@@ -6,14 +6,16 @@ r"""
 Read Gowerlabs data
 ===================
 
-High Density Diffuse Optical Tomography (HD-DOT) results in a greater
+ results in a greater
 number of channels than traditional fNIRS devices.
 
 `Gowerlabs. <https://www.gowerlabs.co.uk>`__
 produces the `Lumo <https://www.gowerlabs.co.uk/lumo>`__,
-HD-DOT device.
-This tutorial demonstrates how to load data from Gowerlabs devices,
-including how to utilise 3D digitisation information collected with
+a High Density Diffuse Optical Tomography (HD-DOT) device.
+These devices result in a greater number of channels than
+other fNIRS devices.
+This tutorial demonstrates how to load data from Gowerlabs devices.
+We also demonstrate how to utilise 3D digitisation information collected with
 the HD-DOT measurement.
 
 Data should be collected using the guidelines provided by Gowerlabs.
@@ -30,6 +32,10 @@ to ensure you have all the required packages installed we recommend using the
 `official MNE installers. <https://mne.tools/stable/install/index.html>`__
 """
 # sphinx_gallery_thumbnail_number = 6
+
+# Authors: Robert Luke <code@robertluke.net>
+#
+# License: BSD (3-clause)
 
 import os.path as op
 import mne
@@ -50,6 +56,7 @@ from mne.viz import set_3d_view
 # .. note:: This will be updated to demonstrate how to load data with a
 #           greater number of tiles and more meaningful measurement.
 #           In the meantime, a small sample file is used.
+import mne_nirs.io
 
 testing_path = data_path(download=True)
 fname = op.join(testing_path, 'SNIRF', 'GowerLabs', 'lumomat-1-1-0.snirf')
@@ -66,16 +73,17 @@ fname
 raw = mne.io.read_raw_snirf(fname, preload=True)
 
 # %%
-# We can then look at the file metadata by calling the variable `raw`.
+# And we can look at the file metadata by calling the variable `raw`.
 
 raw
 
 # %%
 # Visualise Data
 # --------------
-# Next, we visualise the raw data to visually inspect the data quality.
+# Next, we visually inspect the data to broadly view the data quality
+# and signal annotations.
 
-raw.plot()
+raw.plot(duration=60)
 
 # %%
 # By looking at the traces above we see that there are no flat channels
@@ -89,7 +97,7 @@ raw.annotations
 
 
 # %%
-# And we observe that there were six `A` annotations, one `Cat` annotation,
+# We observe above that there were six `A` annotations, one `Cat` annotation,
 # and two `Dog` annotations. We can view the specific data for each annotation
 # by converting the annotations to a dataframe.
 
@@ -103,7 +111,9 @@ raw.annotations.to_data_frame()
 # These positions are stored in head coordinate frame,
 # for a detailed overview of coordinate frames and how they are handled in MNE
 # see :ref:`mne:tut-source-alignment`.
-# The position of each optode is stored, along with scalp landmarks (“fiducials”).
+#
+# Within the SNIRF file, the position of each optode is stored,
+# along with scalp landmarks (“fiducials”).
 # These positions are in an arbitrary space, and must be aligned to a scan of
 # the participants, or a generic, head.
 #
@@ -129,7 +139,11 @@ brain.show_view(azimuth=130, elevation=80, distance=700)
 # -----------------------------------
 # The optode locations displayed above are floating in free space
 # and need to be aligned to our chosen head.
-# First, lets just look at the fsaverage head we will use.
+# First, lets just look at the `fsaverage` head that we will use.
+#
+# .. note:: In this tutorial we use an automated code based approach
+#           to coregistration. You can also use the MNE-Python
+#           coregistration GUI :func:`mne:mne.gui.coregistration`.
 
 plot_kwargs = dict(subjects_dir=subjects_dir,
                    surfaces="brain", dig=True, eeg=[],
@@ -151,25 +165,37 @@ set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
 # The nasion fiducial is marked in green, the left and right
 # preauricular points (LPA and RPA) in red and blue respectively.
 #
-# Next, we can plot the positions of the optodes with the head model.
+# Next, we simultaneously plot the `fsaverage` head, and the
+# data we wish to align to this head. This process is called
+# coregistration and is described in several MNE-Python tutorials
+# including :ref:`mne:tut-auto-coreg`.
+#
 
 fig = mne.viz.plot_alignment(raw.info, trans="fsaverage", subject="fsaverage", **plot_kwargs)
 set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
 
 # %%
-# In the figure above we can see the Gowerlabs optode data
-# and the fiducials that were digitised with the recording in circles.
-# The digitised fiducials are a large distance from fiducials
-# on the head. To coregister the
+# In the figure above we can see the Gowerlabs optode positions
+# and the participants digitised fiducials represented by circles.
+# The participant digitised fiducials are a large distance from MRI fiducials
+# on the head. To coregister the optodes to the head we will perform
+# a rotation and translation of the optode frame to minimise the
+# distance between the fiducials.
 
 coreg = mne.coreg.Coregistration(raw.info, "fsaverage", subjects_dir, fiducials="estimated")
 coreg.fit_fiducials(lpa_weight=1., nasion_weight=1., rpa_weight=1.)
+
 fig = mne.viz.plot_alignment(raw.info, trans=coreg.trans, subject="fsaverage", **plot_kwargs)
 set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
 
 
 # %%
-# A
+# We see in the figure above that after the `fit_fiducials` method was called,
+# the optodes are well aligned to the brain, and the distance between diamonds (MRI)
+# and circles (subject) fiducials is minimised. There is still some distance
+# between the fiducial pairs, this is because we used a generic head rather than
+# an individualised MRI scan. You can also :func:`mne:mne.scale_mri` to scale
+# the generic MRI head.
 
 brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5', alpha=0.3)
 brain.add_sensors(raw.info, trans=coreg.trans, fnirs=['sources', 'detectors'])
@@ -188,9 +214,20 @@ mtg = raw.get_montage()
 mtg.apply_trans(coreg.trans)
 raw.set_montage(mtg)
 
+# %%
+# You can then save the coregistered object.
+
+mne_nirs.io.write_raw_snirf(raw, "raw_coregistered_to_fsaverage.snirf")
+
+# %%
+# You can then load this data and use it immediately as it has
+# already been coregistered to fsaverage.
+
+raw_w_coreg = mne.io.read_raw_snirf("raw_coregistered_to_fsaverage.snirf")
+
 # Now you can simply use `trans = "fsaverage"`.
 brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5', alpha=0.3)
-brain.add_sensors(raw.info, trans="fsaverage", fnirs=['sources', 'detectors'])
+brain.add_sensors(raw_w_coreg.info, trans="fsaverage", fnirs=['sources', 'detectors'])
 
 
 # %%
