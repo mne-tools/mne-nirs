@@ -37,6 +37,9 @@ import os.path as op
 import mne
 from mne.datasets.testing import data_path
 
+from mne.viz import set_3d_view
+
+
 # sphinx_gallery_thumbnail_number = 1
 
 # %%
@@ -114,6 +117,8 @@ raw.annotations.to_data_frame()
 # `fsaverage. <https://mne.tools/stable/auto_tutorials/forward/10_background_freesurfer.html#fsaverage>`__.
 #
 # First, lets just look at the sensors in arbitrary space.
+# Below we see that there are three lumo tiles, each with three sources
+# and four detectors.
 
 subjects_dir = op.join(mne.datasets.sample.data_path(), 'subjects')
 mne.datasets.fetch_fsaverage(subjects_dir=subjects_dir)
@@ -121,3 +126,59 @@ mne.datasets.fetch_fsaverage(subjects_dir=subjects_dir)
 brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, alpha=0.0, cortex='low_contrast', background="w")
 brain.add_sensors(raw.info, trans='fsaverage', fnirs=["sources", "detectors"])
 brain.show_view(azimuth=130, elevation=80, distance=700)
+
+
+# %%
+# Coregister Optodes to Template Head
+# -----------------------------------
+# The optode locations displayed above are floating in free space
+# and need to be aligned to our chosen head.
+# First, lets just look at the fsaverage head we will use.
+
+plot_kwargs = dict(subjects_dir=subjects_dir,
+                   surfaces="brain", dig=True, eeg=[],
+                   fnirs=['sources', 'detectors'], show_axes=True,
+                   coord_frame='head', mri_fiducials=True)
+
+fig = mne.viz.plot_alignment(trans="fsaverage", subject="fsaverage", **plot_kwargs)
+set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
+
+
+# %%
+# This is what a head model will look like. If you have an MRI from
+# the participant you can use freesurfer to generate the required files.
+# For further details on generating freesurfer reconstructions see
+# :ref:`mne:tut-freesurfer-reconstruction`.
+#
+# In the figure above you can see the brain in grey. You can also
+# see the MRI fiducial positions marked with diamonds.
+# The nasion fiducial is marked in green, the left and right
+# preauricular points (LPA and RPA) in red and blue respectively.
+#
+# Next, we can plot the positions of the optodes with the head model.
+
+fig = mne.viz.plot_alignment(raw.info, trans="fsaverage", subject="fsaverage", **plot_kwargs)
+set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
+
+# %%
+# In the figure above we can see the Gowerlabs optode data
+# and the fiducials that were digitised with the recording in circles.
+# The digitised fiducials are a large distance from fiducials
+# on the head. To coregister the
+
+coreg = mne.coreg.Coregistration(raw.info, "fsaverage", subjects_dir, fiducials="estimated")
+coreg.fit_fiducials(lpa_weight=1., nasion_weight=1., rpa_weight=1.)
+mne.viz.plot_alignment(raw.info, trans=coreg.trans, subject="fsaverage", **plot_kwargs)
+
+
+# %%
+# A
+
+set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
+
+
+# %%
+# A
+
+brain = mne.viz.Brain('gowerlabsdemodata', subjects_dir=subjects_dir, background='w', cortex='0.5', alpha=0.3)
+brain.add_sensors(raw.info, trans=coreg.trans, fnirs=['sources', 'detectors'])
