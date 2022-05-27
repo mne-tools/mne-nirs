@@ -10,8 +10,8 @@ High Density Diffuse Optical Tomography (HD-DOT) results in a greater
 number of channels than traditional fNIRS devices.
 
 `Gowerlabs. <https://www.gowerlabs.co.uk>`__
-produces the `Lumo. <https://www.gowerlabs.co.uk/lumo>`__,
-a HD-DOT device.
+produces the `Lumo <https://www.gowerlabs.co.uk/lumo>`__,
+HD-DOT device.
 This tutorial demonstrates how to load data from Gowerlabs devices,
 including how to utilise 3D digitisation information collected with
 the HD-DOT measurement.
@@ -19,7 +19,6 @@ the HD-DOT measurement.
 Data should be collected using the guidelines provided by Gowerlabs.
 Once collected, the data should be converted to the SNIRF format using
 `the lumomat software. <https://github.com/Gowerlabs/lumomat>`__.
-
 
 HD-DOT data is often
 collected with individual registration of the sensor positions. In this
@@ -30,8 +29,7 @@ This tutorial uses the 3d graphical functionality provided by MNE-Python,
 to ensure you have all the required packages installed we recommend using the
 `official MNE installers. <https://mne.tools/stable/install/index.html>`__
 """
-
-# %%
+# sphinx_gallery_thumbnail_number = 6
 
 import os.path as op
 import mne
@@ -39,8 +37,6 @@ from mne.datasets.testing import data_path
 
 from mne.viz import set_3d_view
 
-
-# sphinx_gallery_thumbnail_number = 1
 
 # %%
 # Import Gowerlabs Example File
@@ -201,4 +197,7 @@ brain.add_sensors(raw.info, trans="fsaverage", fnirs=['sources', 'detectors'])
 # Next Steps
 # ----------
 # From here you can use your favorite analysis technique such as
-# :ref:`tut-fnirs-processing` :ref:`tut-fnirs-hrf`.
+# :ref:`tut-fnirs-processing` or :ref:`tut-fnirs-hrf`.
+#
+# .. note:: HD-DOT specific tutorials will be coming soon once we
+#           have acquired some data.
