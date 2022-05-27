@@ -175,5 +175,5 @@ set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
 # %%
 # A
 
-brain = mne.viz.Brain('gowerlabsdemodata', subjects_dir=subjects_dir, background='w', cortex='0.5', alpha=0.3)
+brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5', alpha=0.3)
 brain.add_sensors(raw.info, trans=coreg.trans, fnirs=['sources', 'detectors'])
