@@ -6,12 +6,9 @@ r"""
 Read Gowerlabs data
 ===================
 
- results in a greater
-number of channels than traditional fNIRS devices.
-
 `Gowerlabs. <https://www.gowerlabs.co.uk>`__
 produces the `Lumo <https://www.gowerlabs.co.uk/lumo>`__,
-a High Density Diffuse Optical Tomography (HD-DOT) device.
+high density diffuse optical tomography (HD-DOT) device.
 These devices result in a greater number of channels than
 other fNIRS devices.
 This tutorial demonstrates how to load data from Gowerlabs devices.
