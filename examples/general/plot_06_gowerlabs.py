@@ -6,7 +6,7 @@ r"""
 Read Gowerlabs data
 ===================
 
-`Gowerlabs. <https://www.gowerlabs.co.uk>`__
+`Gowerlabs <https://www.gowerlabs.co.uk>`__
 produces the `Lumo <https://www.gowerlabs.co.uk/lumo>`__,
 high density diffuse optical tomography (HD-DOT) device.
 These devices result in a greater number of channels than
