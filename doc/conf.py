@@ -142,7 +142,6 @@ html_theme_options = {
     "google_analytics_id": "UA-188272121-1",
     'switcher': {
         'json_url': 'https://mne.tools/mne-nirs/dev/_static/versions.json',
-        'url_template': 'https://mne.tools/mne-nirs/{version}/',
         'version_match': switcher_version_match,
     }
 }
