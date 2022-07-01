@@ -142,7 +142,6 @@ html_theme_options = {
     "google_analytics_id": "UA-188272121-1",
     'switcher': {
         'json_url': 'https://mne.tools/mne-nirs/dev/_static/versions.json',
-        'url_template': 'https://mne.tools/mne-nirs/{version}/',
         'version_match': switcher_version_match,
     }
 }
@@ -210,9 +209,9 @@ intersphinx_mapping = {
         sys.version_info), None),
     'numpy': ('https://numpy.org/devdocs', None),
     'scipy': ('https://scipy.github.io/devdocs', None),
-    'matplotlib': ('https://matplotlib.org/', None),
+    'matplotlib': ('https://matplotlib.org/stable', None),
     'mne': ('https://mne.tools/stable', None),
-    'nilearn': ('https://nilearn.github.io/', None),
+    'nilearn': ('http://nilearn.github.io/stable', None),
     'sklearn': ('https://scikit-learn.org/stable', None),
     'mne_bids': ('https://mne.tools/mne-bids/stable', None),
     'statsmodels': ('https://www.statsmodels.org/stable', None)
