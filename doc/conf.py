@@ -209,9 +209,9 @@ intersphinx_mapping = {
         sys.version_info), None),
     'numpy': ('https://numpy.org/devdocs', None),
     'scipy': ('https://scipy.github.io/devdocs', None),
-    'matplotlib': ('https://matplotlib.org/', None),
+    'matplotlib': ('https://matplotlib.org/stable', None),
     'mne': ('https://mne.tools/stable', None),
-    'nilearn': ('https://nilearn.github.io/', None),
+    'nilearn': ('http://nilearn.github.io/stable', None),
     'sklearn': ('https://scikit-learn.org/stable', None),
     'mne_bids': ('https://mne.tools/mne-bids/stable', None),
     'statsmodels': ('https://www.statsmodels.org/stable', None)
