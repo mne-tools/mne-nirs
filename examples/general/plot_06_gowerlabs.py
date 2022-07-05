@@ -3,26 +3,24 @@ r"""
 .. _tut-gowerlabs-data:
 
 ===================
-Read Gowerlabs data
+Read Gowerlabs LUMO data
 ===================
 
-`Gowerlabs <https://www.gowerlabs.co.uk>`__
-produces the `LUMO <https://www.gowerlabs.co.uk/lumo>`__,
-high density diffuse optical tomography (HD-DOT) device.
-These devices result in a greater number of channels than
-other fNIRS devices.
-This tutorial demonstrates how to load data from Gowerlabs devices.
-We also demonstrate how to utilise 3D digitisation information collected with
-the HD-DOT measurement.
+`LUMO <https://www.gowerlabs.co.uk/lumo>`__, is a modular, wearable, 
+high-density diffuse optical tomography (HD-DOT) device produced by
+`Gowerlabs <https://www.gowerlabs.co.uk>`__. 
 
-Data should be collected using the guidelines provided by Gowerlabs.
-Once collected, the data should be converted to the SNIRF format using
+This tutorial demonstrates how to load data from LUMO, and how to utilise 3D
+digitisation information collected with the HD-DOT measurement.
+
+Data should be collected according to the manufacturer's instructions. Once
+collected, the data should be converted to the SNIRF format using
 `the lumomat software <https://github.com/Gowerlabs/lumomat>`__.
 
-HD-DOT data is often
-collected with individual registration of the sensor positions. In this
-tutorial we demonstrate how to load HD-DOT data from a Gowerlabs LUMO device,
-co-register the channels to a head, and visualise the resulting channel space.
+HD-DOT data is often collected with individual registration of the sensor
+positions. In this tutorial we demonstrate how to load HD-DOT data from a
+LUMO device, co-register the channels to a head, and visualise the resulting
+channel space.
 
 This tutorial uses the 3D graphical functionality provided by MNE-Python,
 to ensure you have all the required packages installed we recommend using the
@@ -50,9 +48,8 @@ from mne.viz import set_3d_view
 # the path stored in the `fname` variable by
 # running `fname = /path/to/data.snirf`.
 #
-# .. note:: This will be updated to demonstrate how to load data with a
-#           greater number of tiles and more meaningful measurement.
-#           In the meantime, a small sample file is used.
+# .. note:: The provided sample file includes only a small number of tiles
+#           to minimise complexity of the example.
 import mne_nirs.io
 
 testing_path = data_path(download=True)
@@ -83,20 +80,25 @@ raw
 raw.plot(duration=60)
 
 # %%
-# By looking at the traces above we see that there are no flat channels
-# and the signal includes event annotations. Next, we can view the
-# annotations to ensure that they match what we expect from our experiment.
+#
+# We observe valid data in each channel, and the file includes a number
+# of event annotations.
 # Annotations provide a flexible tool to represent events in your
 # experiment. They can also be used to annotate other useful information
-# such as bad segments of data, participant movements, etc.
+# such as bad segments of data, participant movements, etc. We can inspect
+# the annotations to ensure they match what we expect from our experiment.
 
 raw.annotations
 
 
 # %%
-# We observe above that there were six `A` annotations, one `Cat` annotation,
-# and two `Dog` annotations. We can view the specific data for each annotation
-# by converting the annotations to a dataframe.
+# The implementation of annotations varies between manufacturers. Rather
+# than recording the onset and duration of a stimulus condition, LUMO records
+# discrete event markers which have a nominal one second duration. Each
+# maker can consist of an arbitrary character or string. In this sample, 
+# there were six `A` annotations, one `Cat` annotation, and two `Dog` 
+# annotations. We can view the specific data for each annotation by converting
+# the annotations to a dataframe.
 
 raw.annotations.to_data_frame()
 
@@ -233,5 +235,4 @@ brain.add_sensors(raw_w_coreg.info, trans="fsaverage", fnirs=['sources', 'detect
 # From here you can use your favorite analysis technique such as
 # :ref:`tut-fnirs-processing` or :ref:`tut-fnirs-hrf`.
 #
-# .. note:: HD-DOT specific tutorials will be coming soon once we
-#           have acquired some data.
+# .. note:: HD-DOT specific tutorials are currently under development.
