@@ -12,9 +12,8 @@ high-density diffuse optical tomography (HD-DOT) system produced by
 how to load data from LUMO, and how to utilise 3D digitisation
 information collected with the HD-DOT measurement.
 
-Data should be collected according to the manufacturer's instructions. Once
-collected, the data should be converted to the SNIRF format using
-`the lumomat software <https://github.com/Gowerlabs/lumomat>`__.
+To analyse LUMO data using MNE-NIRS, use the `lumomat <https://github.com/Gowerlabs/lumomat>`__
+package to convert the native data to the SNIRF format.
 
 HD-DOT data is often collected with individual registration of the sensor
 positions. In this tutorial we demonstrate how to load HD-DOT data from a
@@ -80,8 +79,8 @@ raw.plot(duration=60)
 
 # %%
 #
-# We observe valid data in each channel, and the file includes a number
-# of event annotations.
+# We observe valid data in each channel, and note that the file includes a
+# number of event annotations.
 # Annotations are a flexible tool to represent events in your experiment. 
 # They can also be used to annotate other useful information such as bad
 # segments of data, participant movements, etc. We can inspect the
@@ -94,7 +93,7 @@ raw.annotations
 # The implementation of annotations varies between manufacturers. Rather
 # than recording the onset and duration of a stimulus condition, LUMO records
 # discrete event markers which have a nominal one second duration. Each
-# maker can consist of an arbitrary character or string. In this sample, 
+# marker can consist of an arbitrary character or string. In this sample, 
 # there were six `A` annotations, one `Cat` annotation, and two `Dog` 
 # annotations. We can view the specific data for each annotation by converting
 # the annotations to a dataframe.
