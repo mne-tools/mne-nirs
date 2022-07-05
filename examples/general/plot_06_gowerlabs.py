@@ -2,16 +2,15 @@
 r"""
 .. _tut-gowerlabs-data:
 
-===================
+========================
 Read Gowerlabs LUMO data
-===================
+========================
 
-`LUMO <https://www.gowerlabs.co.uk/lumo>`__, is a modular, wearable, 
-high-density diffuse optical tomography (HD-DOT) device produced by
-`Gowerlabs <https://www.gowerlabs.co.uk>`__. 
-
-This tutorial demonstrates how to load data from LUMO, and how to utilise 3D
-digitisation information collected with the HD-DOT measurement.
+`LUMO <https://www.gowerlabs.co.uk/lumo>`__ is a modular, wearable, 
+high-density diffuse optical tomography (HD-DOT) system produced by
+`Gowerlabs <https://www.gowerlabs.co.uk>`__. This tutorial demonstrates
+how to load data from LUMO, and how to utilise 3D digitisation
+information collected with the HD-DOT measurement.
 
 Data should be collected according to the manufacturer's instructions. Once
 collected, the data should be converted to the SNIRF format using
@@ -48,8 +47,8 @@ from mne.viz import set_3d_view
 # the path stored in the `fname` variable by
 # running `fname = /path/to/data.snirf`.
 #
-# .. note:: The provided sample file includes only a small number of tiles
-#           to minimise complexity of the example.
+# .. note:: The provided sample file includes only a small number of LUMO
+#           tiles, and thus channels.
 import mne_nirs.io
 
 testing_path = data_path(download=True)
@@ -74,7 +73,7 @@ raw
 # %%
 # Visualise Data
 # --------------
-# Next, we visually inspect the data to broadly view the data quality
+# Next, we visually inspect the data to get an overview of the data quality
 # and signal annotations.
 
 raw.plot(duration=60)
@@ -83,10 +82,10 @@ raw.plot(duration=60)
 #
 # We observe valid data in each channel, and the file includes a number
 # of event annotations.
-# Annotations provide a flexible tool to represent events in your
-# experiment. They can also be used to annotate other useful information
-# such as bad segments of data, participant movements, etc. We can inspect
-# the annotations to ensure they match what we expect from our experiment.
+# Annotations are a flexible tool to represent events in your experiment. 
+# They can also be used to annotate other useful information such as bad
+# segments of data, participant movements, etc. We can inspect the
+# annotations to ensure they match what we expect from our experiment.
 
 raw.annotations
 
