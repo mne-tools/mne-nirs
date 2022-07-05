@@ -7,7 +7,7 @@ Read Gowerlabs data
 ===================
 
 `Gowerlabs <https://www.gowerlabs.co.uk>`__
-produces the `Lumo <https://www.gowerlabs.co.uk/lumo>`__,
+produces the `LUMO <https://www.gowerlabs.co.uk/lumo>`__,
 high density diffuse optical tomography (HD-DOT) device.
 These devices result in a greater number of channels than
 other fNIRS devices.
@@ -17,14 +17,14 @@ the HD-DOT measurement.
 
 Data should be collected using the guidelines provided by Gowerlabs.
 Once collected, the data should be converted to the SNIRF format using
-`the lumomat software. <https://github.com/Gowerlabs/lumomat>`__.
+`the lumomat software <https://github.com/Gowerlabs/lumomat>`__.
 
 HD-DOT data is often
 collected with individual registration of the sensor positions. In this
-tutorial we demonstrate how to load HD-DOT data from a Gowerlabs Lumo device,
+tutorial we demonstrate how to load HD-DOT data from a Gowerlabs LUMO device,
 co-register the channels to a head, and visualise the resulting channel space.
 
-This tutorial uses the 3d graphical functionality provided by MNE-Python,
+This tutorial uses the 3D graphical functionality provided by MNE-Python,
 to ensure you have all the required packages installed we recommend using the
 `official MNE installers. <https://mne.tools/stable/install/index.html>`__
 """
@@ -112,15 +112,15 @@ raw.annotations.to_data_frame()
 # Within the SNIRF file, the position of each optode is stored,
 # along with scalp landmarks (“fiducials”).
 # These positions are in an arbitrary space, and must be aligned to a scan of
-# the participants, or a generic, head.
+# the participants, or a generic head.
 #
 # For this data, we do not have a MRI scan of the participants head.
 # Instead, we will align the positions to a generic head created from
 # a collection of 40 MRI scans of real brains called
-# `fsaverage. <https://mne.tools/stable/auto_tutorials/forward/10_background_freesurfer.html#fsaverage>`__.
+# `fsaverage <https://mne.tools/stable/auto_tutorials/forward/10_background_freesurfer.html#fsaverage>`__.
 #
 # First, lets just look at the sensors in arbitrary space.
-# Below we see that there are three lumo tiles, each with three sources
+# Below we see that there are three LUMO tiles, each with three sources
 # and four detectors.
 
 subjects_dir = op.join(mne.datasets.sample.data_path(), 'subjects')
