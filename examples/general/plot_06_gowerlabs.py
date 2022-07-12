@@ -202,7 +202,7 @@ brain.show_view(azimuth=90, elevation=90, distance=500)
 # %%
 # Apply Transformation to Raw Object
 # ----------------------------------
-# You may wish to apply the coregistration tranformation to the raw
+# You may wish to apply the coregistration transformation to the raw
 # object. This can be useful if you want to save the file back to disk
 # and not coregister again when rereading the file. Or for simpler
 # interface using the `fsaverage` head.
