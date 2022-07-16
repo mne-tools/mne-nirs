@@ -91,7 +91,7 @@ Similarly, you can update MNE-NIRS to the latest development version by running
 Acknowledgements
 ----------------
 
-This library is built on top of other great packages. If you use MNE-NIRS you should also acknowledge these packages.
+This library is built on top of other great packages. If you use MNE-NIRS you should also acknowledge these packages:
 
 MNE: https://mne.tools/dev/overview/cite.html
 
