@@ -21,8 +21,8 @@ from mne_nirs.utils import glm_to_tidy
 
 
 testing_path = testing.data_path(download=False)
-raw_path = testing_path + '/NIRx/nirscout/nirx_15_2_recording_w_short'
-subjects_dir = testing_path + '/subjects'
+raw_path = testing_path / '/NIRx/nirscout/nirx_15_2_recording_w_short'
+subjects_dir = testing_path / '/subjects'
 
 requires_mne_1 = pytest.mark.skipif(not check_version('mne', '1.0'),
                                     reason='Needs MNE-Python 1.0')
