@@ -11,7 +11,7 @@ ARG mne_nirs_v
 
 USER root
 
-RUN pip install statsmodels lets-plot dabest fooof h5io
+RUN pip install statsmodels dabest fooof h5io
 RUN pip install https://github.com/nilearn/nilearn/archive/${nilearn_v}.zip
 RUN pip install https://github.com/mne-tools/mne-bids/archive/${mne_bids_v}.zip
 RUN pip install https://github.com/mne-tools/mne-nirs/archive/${mne_nirs_v}.zip
