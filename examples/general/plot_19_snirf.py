@@ -32,7 +32,7 @@ You can read the SNIRF protocol at the official site https://github.com/fNIRS/sn
 
 import os
 import mne
-import pysnirf2
+import snirf
 
 from mne.io import read_raw_nirx, read_raw_snirf
 from mne_nirs.io import write_raw_snirf
@@ -87,10 +87,10 @@ snirf_intensity.plot(n_channels=30, duration=300, show_scrollbars=False)
 #
 # To validate that a file complies with the SNIRF standard you should use the
 # official SNIRF validator from the Boston University Neurophotonics Center
-# called ``pysnirf2``. Detailed instructions for this program can be found at
+# called ``snirf``. Detailed instructions for this program can be found at
 # https://github.com/BUNPC/pysnirf2. Below we demonstrate that the files created
 # by MNE-NIRS are compliant with the specification.
 
-result = pysnirf2.validateSnirf('test_raw.snirf')
+result = snirf.validateSnirf('test_raw.snirf')
 assert result.is_valid()
 result.display()

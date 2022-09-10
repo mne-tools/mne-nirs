@@ -7,7 +7,7 @@ import datetime
 import h5py
 from numpy.testing import assert_allclose
 import pytest
-from pysnirf2 import validateSnirf
+from snirf import validateSnirf
 
 from mne.datasets.testing import data_path, requires_testing_data
 from mne.utils import requires_h5py, object_diff
@@ -64,6 +64,7 @@ def test_snirf_write(fname, tmpdir):
         if ('logno' not in line) and \
                 ('scanno' not in line) and \
                 ('his_id' not in line) and\
+                ('dig' not in line) and\
                 ('datetime mismatch' not in line):
             # logno and scanno are not used in processing
             diffs += f'\n{line}'
