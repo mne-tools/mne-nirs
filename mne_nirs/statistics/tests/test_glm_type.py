@@ -20,7 +20,7 @@ from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_glm
 
 data_path = testing.data_path(download=False)
-subjects_dir = data_path + '/subjects'
+subjects_dir = data_path / '/subjects'
 
 
 def _get_minimal_haemo_data(tmin=0, tmax=60):
