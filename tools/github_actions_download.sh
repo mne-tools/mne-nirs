@@ -7,3 +7,6 @@ fi
 python -c 'from mne_nirs.datasets import fnirs_motor_group; fnirs_motor_group.data_path(force_update=True)'
 python -c 'from mne_nirs.datasets import block_speech_noise; block_speech_noise.data_path(force_update=True)'
 python -c 'from mne_nirs.datasets import audio_or_visual_speech; audio_or_visual_speech.data_path(force_update=True)'
+
+python -c 'from mne.datasets import testing; print(testing.data_path(download=False)'
+ls /home/runner/mne_data
