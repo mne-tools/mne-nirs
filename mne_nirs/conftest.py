@@ -37,6 +37,7 @@ def pytest_configure(config):
     always:`np\..*is a deprecated alias for the builtin.*:DeprecationWarning
     ignore:.*data_path functions now return.*
     ignore:.*default value of `n_init`*
+    ignore:.*get_cmap function will be deprecated`*
     ignore:.*is not yet supported for.*in qdarkstyle.*:RuntimeWarning
     always::ResourceWarning
     """  # noqa: E501
