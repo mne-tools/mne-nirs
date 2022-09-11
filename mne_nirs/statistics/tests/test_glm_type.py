@@ -12,7 +12,6 @@ from matplotlib.pyplot import Axes
 
 import mne
 from mne.datasets import testing
-from mne.utils import check_version
 import nilearn
 
 from mne_nirs.statistics import RegressionResults, read_glm

@@ -18,6 +18,7 @@ from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_glm
 from mne_nirs.visualisation import plot_glm_topo, plot_glm_surface_projection
 from mne_nirs.utils import glm_to_tidy
+from mne_nirs.statistics.tests.test_glm_type import _get_glm_result
 
 
 testing_path = testing.data_path(download=False)
