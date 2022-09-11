@@ -109,7 +109,7 @@ def scale_up_spectra(spectra, freqs):
     return spectra, freqs
 
 # Prepare data for FOOOF
-spectra, freqs = psd_welch(raw, fmin=0.001, fmax=1, tmin=0, tmax=None, n_overlap=300, n_fft=600)
+spectra, freqs = psd_welch(raw, fmin=0.001, fmax=0.75, tmin=0, tmax=None, n_overlap=300, n_fft=600)
 spectra, freqs = scale_up_spectra(spectra, freqs)
 
 # Specify the model, note that frequency values here are times 10

@@ -74,7 +74,7 @@ raw.annotations.rename({'1.0': 'Audio',
 # Download the HCP-MMP parcellation.
 
 # Download anatomical locations
-subjects_dir = mne.datasets.sample.data_path() + '/subjects'
+subjects_dir = str(mne.datasets.sample.data_path()) + '/subjects'
 mne.datasets.fetch_hcp_mmp_parcellation(subjects_dir=subjects_dir, accept=True)
 labels = mne.read_labels_from_annot('fsaverage', 'HCPMMP1', 'lh', subjects_dir=subjects_dir)
 labels_combined = mne.read_labels_from_annot('fsaverage', 'HCPMMP1_combined', 'lh', subjects_dir=subjects_dir)

@@ -18,11 +18,16 @@ from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_glm
 from mne_nirs.visualisation import plot_glm_topo, plot_glm_surface_projection
 from mne_nirs.utils import glm_to_tidy
+from mne_nirs.statistics.tests.test_glm_type import _get_glm_result
 
 
 testing_path = testing.data_path(download=False)
-raw_path = testing_path / '/NIRx/nirscout/nirx_15_2_recording_w_short'
-subjects_dir = testing_path / '/subjects'
+raw_path = str(testing_path) + '/NIRx/nirscout/nirx_15_2_recording_w_short'
+subjects_dir = str(testing_path) + '/subjects'
+
+print(testing_path)
+print(raw_path)
+print(subjects_dir)
 
 requires_mne_1 = pytest.mark.skipif(not check_version('mne', '1.0'),
                                     reason='Needs MNE-Python 1.0')
@@ -215,3 +220,15 @@ def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020, ch_names):
         assert 'automatically mapped' in log
     else:
         assert 'could not' in log
+
+
+# surface arg
+@pytest.mark.skipif(not check_version('mne', '1.0'),
+                    reason='Needs MNE-Python 1.0')
+def test_glm_surface_projection(requires_pyvista):
+
+    res = _get_glm_result(tmax=2974, tmin=0)
+    res.surface_projection(condition="e3p0", view="dorsal", surface="white",
+                           subjects_dir=subjects_dir)
+    with pytest.raises(KeyError, match='not found in conditions'):
+        res.surface_projection(condition='foo')
