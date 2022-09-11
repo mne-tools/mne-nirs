@@ -138,18 +138,6 @@ def test_glm_scatter():
     assert isinstance(_get_glm_contrast_result().scatter(), Axes)
 
 
-# surface arg
-@pytest.mark.skipif(not check_version('mne', '1.0'),
-                    reason='Needs MNE-Python 1.0')
-def test_glm_surface_projection(requires_pyvista):
-
-    res = _get_glm_result(tmax=2974, tmin=0)
-    res.surface_projection(condition="e3p0", view="dorsal", surface="white",
-                           subjects_dir=subjects_dir)
-    with pytest.raises(KeyError, match='not found in conditions'):
-        res.surface_projection(condition='foo')
-
-
 def test_results_glm_export_dataframe():
 
     n_channels = 56
