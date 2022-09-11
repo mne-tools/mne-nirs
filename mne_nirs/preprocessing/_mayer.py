@@ -117,11 +117,10 @@ def _run_fooof(raw,
     """Prepare data for FOOOF including welch and scaling, then apply."""
     from fooof import FOOOF
 
-    spectrum = raw.compute_psd(method="welch",
+    spectra, freqs = psd_welch(raw,
                                fmin=fmin, fmax=fmax,
                                tmin=tmin, tmax=tmax,
                                n_overlap=n_overlap, n_fft=n_fft)
-    spectra, freqs = spectrum.get_data(return_freqs=True)
 
     # FOOOF doesn't like low frequencies, so multiple by 10.
     # This is corrected for in the output below.
