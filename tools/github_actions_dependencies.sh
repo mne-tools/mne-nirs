@@ -52,7 +52,7 @@ pip install $STD_ARGS $EXTRA_ARGS https://github.com/mne-tools/mne-python/zipbal
 if [ -z "$CONDA_ENV" ]; then
 	echo "requirements.txt"
 	pip install $STD_ARGS $EXTRA_ARGS --progress-bar off -r requirements.txt
-else
+fi
 
 echo "requirements_testing.txt"
 pip install --progress-bar off -r requirements_testing.txt
