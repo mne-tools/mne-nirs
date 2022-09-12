@@ -2,7 +2,7 @@
 #
 # License: BSD (3-clause)
 
-from collections import defaultdict
+# from collections import defaultdict
 
 import pytest
 import numpy as np
@@ -10,7 +10,8 @@ import mne
 import mne_nirs
 
 from mne.datasets import testing
-from mne.utils import catch_logging, check_version
+# from mne.utils import catch_logging, check_version
+from mne.utils import check_version
 
 from mne_nirs.experimental_design.tests.test_experimental_design import \
     _load_dataset
@@ -24,10 +25,6 @@ from mne_nirs.statistics.tests.test_glm_type import _get_glm_result
 testing_path = testing.data_path(download=False)
 raw_path = str(testing_path) + '/NIRx/nirscout/nirx_15_2_recording_w_short'
 subjects_dir = str(testing_path) + '/subjects'
-
-print(testing_path)
-print(raw_path)
-print(subjects_dir)
 
 requires_mne_1 = pytest.mark.skipif(not check_version('mne', '1.0'),
                                     reason='Needs MNE-Python 1.0')
