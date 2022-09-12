@@ -28,6 +28,7 @@ jobs:
       PYTHONUNBUFFERED: '1'
       PYTHON_VERSION: '3.10'
     strategy:
+      fail-fast: false
       matrix:
         MNEPYTHON: ['stable', 'dev']
     steps:
@@ -45,11 +46,11 @@ jobs:
           ./tools/github_actions_dependencies.sh
           source tools/get_minimal_commands.sh
         name: 'Install dependencies'
-      - shell: bash -el {0}
-        run: ./tools/github_actions_install.sh
-        name: 'Install MNE'
         env:
           MNEPYTHON: ${{ matrix.MNEPYTHON }}
+      - shell: bash -el {0}
+        run: ./tools/github_actions_install.sh
+        name: 'Install MNE-NIRS'
       - shell: bash -el {0}
         run: ./tools/github_actions_infos.sh
         name: 'Show infos'

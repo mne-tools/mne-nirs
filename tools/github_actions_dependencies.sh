@@ -41,8 +41,18 @@ else
 	EXTRA_ARGS="--pre"
 fi
 
-pip install --progress-bar off -r requirements.txt
-pip install --progress-bar off -r requirements_testing.txt
 if [ "${MNEPYTHON}" == "dev" ]; then
-	pip install $STD_ARGS $EXTRA_ARGS https://github.com/mne-tools/mne-python/zipball/main
+	MNE_BRANCH="main"
+else
+	MNE_BRANCH="maint/1.1"
 fi
+echo "MNE"
+pip install $STD_ARGS $EXTRA_ARGS https://github.com/mne-tools/mne-python/zipball/${MNE_BRANCH}
+
+if [ -z "$CONDA_ENV" ]; then
+	echo "requirements.txt"
+	pip install $STD_ARGS $EXTRA_ARGS --progress-bar off -r requirements.txt
+fi
+
+echo "requirements_testing.txt"
+pip install --progress-bar off -r requirements_testing.txt
