@@ -39,8 +39,6 @@ else
 	  pip install --progress-bar off pyobjc-framework-Cocoa>=5.2.0
 	fi
 	EXTRA_ARGS="--pre"
-	echo "requirements.txt"
-	pip install $STD_ARGS $EXTRA_ARGS --progress-bar off -r requirements.txt
 fi
 
 if [ "${MNEPYTHON}" == "dev" ]; then
@@ -50,5 +48,7 @@ else
 fi
 echo "MNE"
 pip install $STD_ARGS $EXTRA_ARGS https://github.com/mne-tools/mne-python/zipball/${MNE_BRANCH}
+echo "requirements.txt"
+pip install $STD_ARGS $EXTRA_ARGS --progress-bar off -r requirements.txt
 echo "requirements_testing.txt"
 pip install --progress-bar off -r requirements_testing.txt
