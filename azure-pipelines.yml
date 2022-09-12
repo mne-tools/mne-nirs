@@ -68,11 +68,7 @@ stages:
         echo "##vso[task.setvariable variable=AZURE_CI_WINDOWS]true"
       displayName: "Windows: install OpenGL and set AZURE_CI_WINDOWS"
       condition: eq(variables['OS'], 'windows')
-    - bash: |
-        set -e
-        sudo apt update -qq
-        sudo apt install -yqq libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 libxcb-xfixes0 libopengl0
-        /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 1400x900x24 -ac +extension GLX +render -noreset
+    - bash: ./tools/setup_xvfb.sh
       displayName: "Linux: start Xvfb"
       condition: eq(variables['OS'], 'linux')
     - task: UsePythonVersion@0

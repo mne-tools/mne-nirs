@@ -50,7 +50,9 @@ requires_mne_bids_nirs = pytest.mark.skipif(
 )
 
 
+# TODO: Change from psd_welch once MNE 1.2 comes out
 @pytest.mark.filterwarnings('ignore:No bad channels to interpolate.*:')
+@pytest.mark.filterwarnings('ignore:.*psd_welch.*is a deprecated.*:')
 @pytest.mark.skipif(
     sys.platform.startswith('win'), reason='Unstable on Windows')
 @pytest.mark.examples
