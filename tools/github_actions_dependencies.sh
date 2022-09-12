@@ -48,7 +48,11 @@ else
 fi
 echo "MNE"
 pip install $STD_ARGS $EXTRA_ARGS https://github.com/mne-tools/mne-python/zipball/${MNE_BRANCH}
-echo "requirements.txt"
-pip install $STD_ARGS $EXTRA_ARGS --progress-bar off -r requirements.txt
+
+if [ -z "$CONDA_ENV" ]; then
+	echo "requirements.txt"
+	pip install $STD_ARGS $EXTRA_ARGS --progress-bar off -r requirements.txt
+else
+
 echo "requirements_testing.txt"
 pip install --progress-bar off -r requirements_testing.txt
