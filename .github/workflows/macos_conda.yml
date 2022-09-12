@@ -40,7 +40,6 @@ jobs:
       - shell: bash -el {0}
         run: |
           ./tools/github_actions_dependencies.sh
-          source tools/get_minimal_commands.sh
         name: 'Install dependencies'
       - shell: bash -el {0}
         run: ./tools/github_actions_install.sh
