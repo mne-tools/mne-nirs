@@ -41,8 +41,11 @@ else
 	EXTRA_ARGS="--pre"
 fi
 
+if [ "${MNEPYTHON}" == "dev" ]; then
+	MNE_BRANCH="main"
+else
+	MNE_BRANCH="maint/1.1"
+fi
+pip install $STD_ARGS $EXTRA_ARGS https://github.com/mne-tools/mne-python/zipball/${MNE_BRANCH}
 pip install --progress-bar off -r requirements.txt
 pip install --progress-bar off -r requirements_testing.txt
-if [ "${MNEPYTHON}" == "dev" ]; then
-	pip install $STD_ARGS $EXTRA_ARGS https://github.com/mne-tools/mne-python/zipball/main
-fi
