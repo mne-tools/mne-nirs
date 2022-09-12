@@ -2,7 +2,7 @@
 #
 # License: BSD (3-clause)
 
-from collections import defaultdict
+# from collections import defaultdict
 
 import pytest
 import numpy as np
@@ -10,7 +10,8 @@ import mne
 import mne_nirs
 
 from mne.datasets import testing
-from mne.utils import catch_logging, check_version
+# from mne.utils import catch_logging, check_version
+from mne.utils import check_version
 
 from mne_nirs.experimental_design.tests.test_experimental_design import \
     _load_dataset
@@ -24,10 +25,6 @@ from mne_nirs.statistics.tests.test_glm_type import _get_glm_result
 testing_path = testing.data_path(download=False)
 raw_path = str(testing_path) + '/NIRx/nirscout/nirx_15_2_recording_w_short'
 subjects_dir = str(testing_path) + '/subjects'
-
-print(testing_path)
-print(raw_path)
-print(subjects_dir)
 
 requires_mne_1 = pytest.mark.skipif(not check_version('mne', '1.0'),
                                     reason='Needs MNE-Python 1.0')
@@ -187,39 +184,39 @@ def test_run_plot_GLM_projection(requires_pyvista):
     assert type(brain) == mne.viz._brain.Brain
 
 
-@requires_mne_1
-@pytest.mark.parametrize('fname_raw, to_1020, ch_names', [
-    (raw_path, False, None),
-    (raw_path, True, 'numbered'),
-    (raw_path, True, defaultdict(lambda: '')),
-])
-def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020, ch_names):
-    import pyvista
-    pyvista.close_all()
-    assert len(pyvista.plotting._ALL_PLOTTERS) == 0
-    raw = mne.io.read_raw_nirx(fname_raw)
-    if to_1020:
-        need = set(sum(
-            (ch_name.split()[0].split('_') for ch_name in raw.ch_names),
-            list()))
-        mon = mne.channels.make_standard_montage('standard_1020')
-        mon.rename_channels({h: n for h, n in zip(mon.ch_names, need)})
-        raw.set_montage(mon)
-    n_labels = len(raw.ch_names) // 2
-    view_map = {'left-lat': np.arange(1, n_labels // 2),
-                'caudal': np.arange(n_labels // 2, n_labels + 1)}
-    # We use "sample" here even though it's wrong so that we can have a head
-    # surface
-    with catch_logging() as log:
-        mne_nirs.viz.plot_3d_montage(
-            raw.info, view_map, subject='sample', surface='white',
-            subjects_dir=subjects_dir, ch_names=ch_names, verbose=True)
-    assert len(pyvista.plotting._ALL_PLOTTERS) == 0
-    log = log.getvalue().lower()
-    if to_1020:
-        assert 'automatically mapped' in log
-    else:
-        assert 'could not' in log
+# @requires_mne_1
+# @pytest.mark.parametrize('fname_raw, to_1020, ch_names', [
+#     (raw_path, False, None),
+#     (raw_path, True, 'numbered'),
+#     (raw_path, True, defaultdict(lambda: '')),
+# ])
+# def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020, ch_names):
+#     import pyvista
+#     pyvista.close_all()
+#     assert len(pyvista.plotting._ALL_PLOTTERS) == 0
+#     raw = mne.io.read_raw_nirx(fname_raw)
+#     if to_1020:
+#         need = set(sum(
+#             (ch_name.split()[0].split('_') for ch_name in raw.ch_names),
+#             list()))
+#         mon = mne.channels.make_standard_montage('standard_1020')
+#         mon.rename_channels({h: n for h, n in zip(mon.ch_names, need)})
+#         raw.set_montage(mon)
+#     n_labels = len(raw.ch_names) // 2
+#     view_map = {'left-lat': np.arange(1, n_labels // 2),
+#                 'caudal': np.arange(n_labels // 2, n_labels + 1)}
+#     # We use "sample" here even though it's wrong so that we can have a head
+#     # surface
+#     with catch_logging() as log:
+#         mne_nirs.viz.plot_3d_montage(
+#             raw.info, view_map, subject='sample', surface='white',
+#             subjects_dir=subjects_dir, ch_names=ch_names, verbose=True)
+#     assert len(pyvista.plotting._ALL_PLOTTERS) == 0
+#     log = log.getvalue().lower()
+#     if to_1020:
+#         assert 'automatically mapped' in log
+#     else:
+#         assert 'could not' in log
 
 
 # surface arg

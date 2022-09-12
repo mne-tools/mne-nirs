@@ -70,7 +70,7 @@ fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
 raw = mne.io.read_raw_nirx(fnirs_raw_dir, verbose=True).load_data()
 
 raw = optical_density(raw)
-raw.resample(1.5)
+raw.resample(2)
 raw = beer_lambert_law(raw, ppf=0.1)
 raw = raw.pick(picks="hbo")
 raw = get_long_channels(raw, min_dist=0.025, max_dist=0.045)
@@ -109,7 +109,7 @@ def scale_up_spectra(spectra, freqs):
     return spectra, freqs
 
 # Prepare data for FOOOF
-spectra, freqs = psd_welch(raw, fmin=0.001, fmax=0.75, tmin=0, tmax=None, n_overlap=300, n_fft=600)
+spectra, freqs = psd_welch(raw, fmin=0.001, fmax=1.0, tmin=0, tmax=None, n_overlap=300, n_fft=600)
 spectra, freqs = scale_up_spectra(spectra, freqs)
 
 # Specify the model, note that frequency values here are times 10
