@@ -15,6 +15,13 @@ Patch version changes indicate backward compatible bug fixes.
 To install a specific version of the library you would run ``pip install mne-nirs==0.2.1``, where ``0.2.1`` is the version you wish to install.
 
 
+v0.3.0
+------
+
+* Add support for Gowerlabs device and added tutorial. By `Robert Luke`_ and `Samuel Powell`_.
+* Remove requirement on lets-plot library. By `Robert Luke`_.
+
+
 v0.2.1
 ------
 
@@ -164,3 +171,4 @@ Enhancements
 .. _Darin Erat Sleiter: https://github.com/dsleiter
 .. _Christian Arthur: https://github.com/chrsthur
 .. _Alex Rockhill: https://github.com/alexrockhill
+.. _Samuel Powell: https://github.com/samuelpowell
