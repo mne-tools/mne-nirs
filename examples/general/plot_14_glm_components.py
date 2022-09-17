@@ -211,7 +211,7 @@ for n in [1, 3, 5, 10, 15, 20, 25, 30, 35]:
 axes.set_xlabel("Time (s)")
 axes.set_ylabel("Amplitude (AU)")
 plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap), ax=axes)
-plt.show()
+
 
 # %%
 # Inclusion in Design matrix
