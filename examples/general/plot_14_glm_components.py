@@ -199,17 +199,18 @@ plot_regressor(onset, amplitude, duration, hrf_model)
 # We can plot multiple durations together to see how the
 # resulting regressor varies as a function of this parameter.
 
+fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(7, 7))
 cmap = mpl.cm.viridis
 norm = mpl.colors.Normalize(vmin=0, vmax=40)
 
 for n in [1, 3, 5, 10, 15, 20, 25, 30, 35]:
     frame_times, stim, signal = generate_stim(
         onset, amplitude, n, hrf_model, maxtime=50)
-    plt.plot(frame_times, signal.T[0], label="Regressor", c=cmap(norm(n)))
+    axes.plot(frame_times, signal.T[0], label="Regressor", c=cmap(norm(n)))
 
-plt.xlabel("Time (s)")
-plt.ylabel("Amplitude (AU)")
-plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap))
+axes.set_xlabel("Time (s)")
+axes.set_ylabel("Amplitude (AU)")
+plt.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap), cax=axes)
 
 
 # %%
