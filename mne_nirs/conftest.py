@@ -38,6 +38,7 @@ def pytest_configure(config):
     ignore:.*data_path functions now return.*
     ignore:.*default value of `n_init`*
     ignore:.*get_cmap function will be deprecated`*
+    ignore:.*The register_cmap function`*
     ignore:.*is not yet supported for.*in qdarkstyle.*:RuntimeWarning
     always::ResourceWarning
     """  # noqa: E501
