@@ -537,7 +537,7 @@ class RegressionResults(_BaseGLM):
         info = self.copy().pick(chroma).info
 
         return plot_glm_surface_projection(info, df, value="theta",
-                                           background=background,
+                                           picks=chroma, background=background,
                                            figure=figure, clim=clim,
                                            mode=mode, colormap=colormap,
                                            surface=surface, hemi=hemi,
