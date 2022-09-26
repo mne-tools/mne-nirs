@@ -173,14 +173,6 @@ design_matrix = pd.concat([design_matrix, aux_df], axis=1)
 
 # %%
 #
-# We can print the design matrix and see that the auxiliary
-# channels are now included as columns.
-
-design_matrix
-
-
-# %%
-#
 # And we can visually display the design matrix and verify
 # the data is included.
 fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
