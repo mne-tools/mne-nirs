@@ -7,12 +7,14 @@ import datetime
 import h5py
 from numpy.testing import assert_allclose
 import pytest
+import pandas as pd
 from snirf import validateSnirf
 
 from mne.datasets.testing import data_path, requires_testing_data
 from mne.utils import requires_h5py, object_diff
 from mne.io import read_raw_snirf, read_raw_nirx
-from mne_nirs.io.snirf import write_raw_snirf, SPEC_FORMAT_VERSION
+from mne_nirs.io.snirf import write_raw_snirf, SPEC_FORMAT_VERSION, read_snirf_aux_data
+from mne_nirs.datasets.snirf_with_aux import data_path
 
 
 fname_nirx_15_0 = op.join(data_path(download=False),
@@ -22,6 +24,7 @@ fname_nirx_15_2 = op.join(data_path(download=False),
 fname_nirx_15_2_short = op.join(data_path(download=False),
                                 'NIRx', 'nirscout',
                                 'nirx_15_2_recording_w_short')
+fname_snirf_aux = data_path()
 
 pytest.importorskip('mne', '1.0')  # these tests are broken on 0.24!
 
@@ -148,3 +151,12 @@ def _verify_snirf_version_str(test_file):
         version_str = h5['/formatVersion'][()].decode('UTF-8')
         expected_str = SPEC_FORMAT_VERSION
         assert version_str == expected_str
+
+
+def test_aux_read():
+    """Test reading auxiliary data from SNIRF file."""
+    raw = read_raw_snirf(fname_snirf_aux)
+    a = read_snirf_aux_data(fname_snirf_aux, raw)
+    assert type(a) is pd.DataFrame
+    assert 'accelerometer_2_z' in a
+    assert len(a['gyroscope_1_z']) == len(raw.times)
