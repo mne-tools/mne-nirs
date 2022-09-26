@@ -18,7 +18,7 @@ To install a specific version of the library you would run ``pip install mne-nir
 v0.4.0 dev
 ----------
 
-* Add support for reading auxiliary data in SNIRF files :func:`mne_nirs.io.snirf.read_snirf_aux_data`. By `Robert Luke`_.
+* Add support for reading auxiliary data from SNIRF files. By `Robert Luke`_.
 
 
 v0.3.0
