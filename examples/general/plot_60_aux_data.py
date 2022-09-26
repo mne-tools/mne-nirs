@@ -20,12 +20,6 @@ this can be incorporated in to your analysis.
    :local:
    :depth: 2
 
-.. note:: Parts of this tutorial require the latest development version of MNE-Python. See these instructions for
-          `how to upgrade <https://mne.tools/dev/install/updating.html>`__.
-          But basically boils down to running
-          ``pip install -U --no-deps https://github.com/mne-tools/mne-python/archive/main.zip``.
-          Sections of the code that require this version will be noted below.
-
 """
 # sphinx_gallery_thumbnail_number = 2
 
@@ -39,13 +33,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 import mne
-import mne_nirs
 
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import run_glm
 from mne_nirs.channels import (get_long_channels,
-                               get_short_channels,
-                               picks_pair_to_idx)
+                               get_short_channels)
 from mne_nirs.io.snirf import read_snirf_aux_data
 from mne_nirs.datasets.snirf_with_aux import data_path
 

@@ -9,6 +9,7 @@ from scipy import interpolate
 from pandas import DataFrame
 from mne.io.snirf._snirf import RawSNIRF
 
+
 def read_snirf_aux_data(fname: str, raw: RawSNIRF):
     """Read auxiliary data from SNIRF file.
 
@@ -40,7 +41,8 @@ def read_snirf_aux_data(fname: str, raw: RawSNIRF):
 
         all_keys = list(dat.get(basename).keys())
         aux_keys = [i for i in all_keys if i.startswith('aux')]
-        aux_names = [_decode_name(dat.get(f'{basename}/{k}/name')) for k in aux_keys]
+        aux_names = [_decode_name(dat.get(f'{basename}/{k}/name'))
+                     for k in aux_keys]
         logging.debug(f"Found auxiliary channels {aux_names}")
 
         d = {'times': raw.times}

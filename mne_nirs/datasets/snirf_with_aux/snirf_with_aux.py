@@ -4,7 +4,6 @@
 # This downloads SNIRF data that includes auxiliary channels.
 
 import os
-import shutil
 import pooch
 from functools import partial
 
@@ -63,7 +62,7 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
     dpath = fetch_dataset(dataset_params, path=path, force_update=force_update,
                           update_path=update_path, download=download,
                           processor=pooch.Unzip(
-                              extract_dir=f"./fNIRS-SNIRF-aux"))
+                              extract_dir="./fNIRS-SNIRF-aux"))
     dpath = str(dpath)
 
     return _mne_path(os.path.join(dpath, "2022-08-05_002.snirf"))
