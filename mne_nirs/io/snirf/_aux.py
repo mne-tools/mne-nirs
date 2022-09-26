@@ -1,4 +1,4 @@
-# Author: Robert Luke <mail@robertluke.net>
+# Author: Robert Luke <code@robertluke.net>
 #
 # License: BSD (3-clause)
 

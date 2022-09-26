@@ -12,7 +12,13 @@ Major version changes indicate incompatible API changes.
 Minor version changes indicate new functionality was added in a backwards compatible manner.
 Patch version changes indicate backward compatible bug fixes.
 
-To install a specific version of the library you would run ``pip install mne-nirs==0.2.1``, where ``0.2.1`` is the version you wish to install.
+To install a specific version of the library you would run ``pip install mne-nirs==0.3.0``, where ``0.3.0`` is the version you wish to install.
+
+
+v0.4.0 dev
+----------
+
+* Add support for reading auxiliary data in SNIRF files :func:`mne_nirs.io.snirf.read_snirf_aux_data`. By `Robert Luke`_.
 
 
 v0.3.0

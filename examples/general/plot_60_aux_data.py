@@ -27,7 +27,6 @@ this can be incorporated in to your analysis.
 #
 # License: BSD (3-clause)
 
-import os
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -81,12 +80,6 @@ raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
 
 # %%
 #
-# .. sidebar:: Relevant literature
-#
-#    Tachtsidis, Ilias, and Felix Scholkmann. "False positives and false
-#    negatives in functional near-infrared spectroscopy: issues, challenges,
-#    and the way forward." Neurophotonics 3.3 (2016): 031405.
-#
 # We then split the data in to
 # short channels which predominantly contain systemic responses and
 # long channels which have both neural and systemic contributions.
@@ -108,15 +101,6 @@ raw_haemo = get_long_channels(raw_haemo)
 # Next we create a model to fit our data to.
 # The model consists of various components to model different things we assume
 # contribute to the measured signal.
-# We model the expected neural response for each experimental condition
-# using the SPM haemodynamic response
-# function (HRF) combined with the known stimulus event times and durations
-# (as described above).
-# We also include a cosine drift model with components up to the high pass
-# parameter value. See the nilearn documentation for recommendations on setting
-# these values. In short, they suggest `"The cutoff period (1/high_pass) should be
-# set as the longest period between two trials of the same condition multiplied by 2.
-# For instance, if the longest period is 32s, the high_pass frequency shall be 1/64 Hz ~ 0.016 Hz"`.
 
 design_matrix = make_first_level_design_matrix(raw_haemo,
                                                drift_model='cosine',
@@ -146,7 +130,8 @@ design_matrix["ShortHbR"] = np.mean(short_chs.copy().pick(
 # and we see that it includes the standard regressors, but does
 # not yet contain any auxiliary data.
 
-design_matrix
+fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
+fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
 
@@ -167,17 +152,12 @@ aux_df = read_snirf_aux_data(fnirs_snirf_file, raw_haemo)
 
 # %%
 #
-# We can view the auxiliary data by calling the variable.
-
-aux_df
-
-
-# %%
-#
 # And you can verify the data looks reasonable by plotting
 # individual fields.
 
 plt.plot(raw_haemo.times, aux_df['HR'])
+plt.xlabel("Time (s)")
+plt.ylabel("Heart Rate (bpm)")
 
 
 # %%
