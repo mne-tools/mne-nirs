@@ -59,6 +59,7 @@ MNE-NIRS
    :toctree: generated/
 
    write_raw_snirf
+   read_snirf_aux_data
 
 .. currentmodule:: mne_nirs.io
 
