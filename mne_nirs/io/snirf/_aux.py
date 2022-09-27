@@ -7,10 +7,10 @@ import logging
 import h5py
 from scipy import interpolate
 from pandas import DataFrame
-from mne.io.snirf._snirf import RawSNIRF
+from mne.io import Raw
 
 
-def read_snirf_aux_data(fname: str, raw: RawSNIRF):
+def read_snirf_aux_data(fname: str, raw: Raw):
     """Read auxiliary data from SNIRF file.
 
     Reads the auxiliary channel data (e.g. heart rate data,
@@ -21,7 +21,7 @@ def read_snirf_aux_data(fname: str, raw: RawSNIRF):
     ----------
     fname : str
         Path to the SNIRF data file.
-    raw : RawSNIRF
+    raw : Raw
         Instance of raw snirf data as created by read_raw_snirf.
 
 
