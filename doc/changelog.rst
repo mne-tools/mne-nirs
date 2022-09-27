@@ -19,6 +19,7 @@ v0.4.0 dev
 ----------
 
 * Add support for reading auxiliary data from SNIRF files. By `Robert Luke`_.
+* Fix bug in surface projection of HbR signals. By `Johann Benerradi`_.
 
 
 v0.3.0
@@ -178,3 +179,4 @@ Enhancements
 .. _Christian Arthur: https://github.com/chrsthur
 .. _Alex Rockhill: https://github.com/alexrockhill
 .. _Samuel Powell: https://github.com/samuelpowell
+.. _Johann Benerradi: https://github.com/HanBnrd
