@@ -24,7 +24,6 @@ def read_snirf_aux_data(fname: str, raw: Raw):
     raw : Raw
         Instance of raw snirf data as created by read_raw_snirf.
 
-
     Returns
     -------
     fname : str
