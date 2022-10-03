@@ -30,8 +30,8 @@ def run_script_and_check(test_file_path):
         return exec(fid.read(), locals(), locals())
 
 
-requires_mne_1 = pytest.mark.skipif(
-    not check_version('mne', '1.0'), reason='Needs MNE-Python 1.0')
+requires_mne_1p2 = pytest.mark.skipif(
+    not check_version('mne', '1.2'), reason='Needs MNE-Python 1.2')
 # https://github.com/mne-tools/mne-bids/pull/406
 try:
     from mne_bids.config import EPHY_ALLOWED_DATATYPES
@@ -58,14 +58,13 @@ requires_mne_bids_nirs = pytest.mark.skipif(
     "plot_01_data_io.py",
     pytest.param("plot_05_datasets.py", marks=requires_mne_bids_nirs),
     "plot_10_hrf_simulation.py",
-    pytest.param("plot_11_hrf_measured.py", marks=requires_mne_1),
-    pytest.param("plot_12_group_glm.py", marks=requires_mne_1),
+    pytest.param("plot_11_hrf_measured.py", marks=requires_mne_1p2),
+    pytest.param("plot_12_group_glm.py", marks=requires_mne_1p2),
     pytest.param("plot_13_fir_glm.py", marks=requires_mne_bids_nirs),
-    "plot_14_glm_components.py",
-    "plot_15_waveform.py",
+    pytest.param("plot_14_glm_components.py", marks=requires_mne_1p2),
+    "plot_15_waveform.py"
     "plot_16_waveform_group.py",
-    pytest.param("plot_19_snirf.py", marks=(requires_mne_bids_nirs,
-                                            requires_mne_1)),
+    pytest.param("plot_19_snirf.py", requires_mne_bids_nirs),
     "plot_20_enhance.py",
     "plot_21_artifacts.py",
     "plot_22_quality.py",
