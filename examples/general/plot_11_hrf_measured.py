@@ -372,8 +372,8 @@ conditions = ['Tapping_Right']
 
 glm_hbo.plot_topo(axes=axes[0], colorbar=False, conditions=conditions)
 
-glm_hbo.copy().pick(picks=range(10)).plot_topo(conditions=conditions, axes=axes[1], colorbar=False, vmin=-16, vmax=16)
-glm_hbo.copy().pick(picks=range(10, 20)).plot_topo(conditions=conditions, axes=axes[1], colorbar=False, vmin=-16, vmax=16)
+glm_hbo.copy().pick(picks=range(10)).plot_topo(conditions=conditions, axes=axes[1], colorbar=False, vlim=(-16, 16))
+glm_hbo.copy().pick(picks=range(10, 20)).plot_topo(conditions=conditions, axes=axes[1], colorbar=False, vlim=(-16, 16))
 
 axes[0].set_title("Smoothed across hemispheres")
 axes[1].set_title("Hemispheres plotted independently")
