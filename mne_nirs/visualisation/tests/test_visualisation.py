@@ -16,7 +16,7 @@ from mne_nirs.experimental_design.tests.test_experimental_design import \
     _load_dataset
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_glm
-from mne_nirs.visualisation import plot_glm_topo, plot_glm_surface_projection
+from mne_nirs.visualisation import plot_glm_surface_projection
 from mne_nirs.utils import glm_to_tidy
 from mne_nirs.statistics.tests.test_glm_type import _get_glm_result
 
@@ -53,7 +53,6 @@ def test_plot_nirs_source_detector_pyvista(requires_pyvista):
         verbose=True)
 
 
-@pytest.mark.filterwarnings('ignore:"plot_glm_topo" has been deprecated.*:')
 def test_run_plot_GLM_topo():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
@@ -64,6 +63,7 @@ def test_run_plot_GLM_topo():
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
     glm_estimates = run_glm(raw_haemo, design_matrix)
+    plot_glm_topo = glm_estimates.plot_topo
     fig = plot_glm_topo(raw_haemo, glm_estimates.data, design_matrix)
     # 5 conditions (A,B,C,Drift,Constant) * two chroma + 2xcolorbar
     assert len(fig.axes) == 12

@@ -328,9 +328,9 @@ class RegressionResults(_BaseGLM):
                                  contrast_type=contrast_type)
         return ContrastResults(self.info, cont, self.design)
 
-    def plot_topo(self, conditions=None,
-                  axes=None, vmin=None, vmax=None, colorbar=True,
-                  figsize=(12, 7), sphere=None):
+    def plot_topo(self, conditions=None, axes=None, *, vlim=(None, None),
+                  vmin=None, vmax=None, colorbar=True, figsize=(12, 7),
+                  sphere=None):
         """Plot 2D topography of GLM data.
 
         Parameters
@@ -339,13 +339,16 @@ class RegressionResults(_BaseGLM):
             Which conditions should be displayed.
         axes : instance of Axes | None
             The axes to plot to. If None, a new figure is used.
+        vlim : tuple of length 2
+            Colormap limits to use. If a :class:`tuple` of floats, specifies
+            the lower and upper bounds of the colormap (in that order);
+            providing ``None`` for either entry will set the corresponding
+            boundary at the positive or negative max of the absolute value of
+            the data.
         vmin : float | None
-            The value specifying the lower bound of the color range.
-            If None, and vmax is None, -vmax is used. Else np.min(data).
-            Defaults to None.
+            Deprecated, use vlim instead.
         vmax : float | None
-            The value specifying the upper bound of the color range.
-            If None, the maximum absolute value is used. Defaults to None.
+            Deprecated, use vlim instead.
         colorbar : Bool
             Should a colorbar be plotted.
         figsize : two values
@@ -361,7 +364,7 @@ class RegressionResults(_BaseGLM):
         """
         return _plot_glm_topo(self.info, self._data, self.design,
                               requested_conditions=conditions,
-                              axes=axes, vmin=vmin, vmax=vmax,
+                              axes=axes, vlim=vlim, vmin=vmin, vmax=vmax,
                               colorbar=colorbar,
                               figsize=figsize, sphere=sphere)
 

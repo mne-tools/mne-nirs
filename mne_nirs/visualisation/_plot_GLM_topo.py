@@ -3,6 +3,7 @@
 # License: BSD (3-clause)
 
 from copy import deepcopy
+import inspect
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -16,62 +17,9 @@ from mne.io.pick import _picks_to_idx, _get_channel_types, pick_info
 from mne.viz import plot_topomap
 
 
-def plot_glm_topo(inst, glm_estimates, design_matrix,
-                  requested_conditions=None,
-                  axes=None, vmin=None, vmax=None, colorbar=True,
-                  figsize=(12, 7), sphere=None):
-    """
-    Plot topomap of NIRS GLM data.
-
-    If the channels in raw is a subset of those in the GLM estimate,
-    then only the subset in raw will be plotted.
-
-    Parameters
-    ----------
-    inst : instance of Info or Raw
-        Raw data or info structure used to generate the GLM results.
-    glm_estimates : dict
-        Keys correspond to the different labels values values are
-        RegressionResults instances corresponding to the voxels.
-    design_matrix : DataFrame
-        As specified in Nilearn.
-    requested_conditions : array
-        Which conditions should be displayed.
-    axes : instance of Axes | None
-        The axes to plot to. If None, a new figure is used.
-    vmin : float | None
-        The value specifying the lower bound of the color range.
-        If None, and vmax is None, -vmax is used. Else np.min(data).
-        Defaults to None.
-    vmax : float | None
-        The value specifying the upper bound of the color range.
-        If None, the maximum absolute value is used. Defaults to None.
-    colorbar : Bool
-        Should a colorbar be plotted.
-    figsize : two values
-        Figure size.
-    sphere : As specified in MNE
-        Sphere parameter from mne.viz.topomap.plot_topomap.
-
-    Returns
-    -------
-    fig : figure
-        Figure of each design matrix componenent for hbo (top row)
-        and hbr (bottom row).
-    """
-    warn('"plot_glm_topo" has been deprecated in favor of the more '
-         'comprehensive GLM class and will be removed in v1.0.0. '
-         'Use the RegressionResults class "plot_topo()" method instead.',
-         DeprecationWarning)
-    return _plot_glm_topo(inst, glm_estimates, design_matrix,
-                          requested_conditions=requested_conditions,
-                          axes=axes, vmin=vmin, vmax=vmax, colorbar=colorbar,
-                          figsize=figsize, sphere=sphere)
-
-
-def _plot_glm_topo(inst, glm_estimates, design_matrix,
+def _plot_glm_topo(inst, glm_estimates, design_matrix, *,
                    requested_conditions=None,
-                   axes=None, vmin=None, vmax=None, colorbar=True,
+                   axes=None, vlim=None, vmin=None, vmax=None, colorbar=True,
                    figsize=(12, 7), sphere=None):
 
     info = deepcopy(inst if isinstance(inst, Info) else inst.info)
@@ -108,13 +56,10 @@ def _plot_glm_topo(inst, glm_estimates, design_matrix,
 
     estimates = estimates * 1e6
     design_matrix = design_matrix[requested_conditions]
-
-    if vmax is None:
-        vmax = np.max(np.abs(estimates))
-    if vmin is None:
-        vmin = vmax * -1.
+    vlim, vlim_kwargs = _handle_vlim(vlim, vmin, vmax, estimates)
+    del vmin, vmax
     cmap = mpl.cm.RdBu_r
-    norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
+    norm = mpl.colors.Normalize(vmin=vlim[0], vmax=vlim[1])
 
     for t_idx, t in enumerate(types):
 
@@ -136,8 +81,8 @@ def _plot_glm_topo(inst, glm_estimates, design_matrix,
 
                 plot_topomap(
                     estmrg[:, idx], pos, extrapolate='local', names=chs,
-                    vmin=vmin, vmax=vmax, cmap=cmap, axes=ax, show=False,
-                    sphere=sphere)
+                    cmap=cmap, axes=ax, show=False, sphere=sphere,
+                    **vlim_kwargs)
                 ax.set_title(label)
 
         if colorbar:
@@ -148,35 +93,6 @@ def _plot_glm_topo(inst, glm_estimates, design_matrix,
             cbar.set_label('Haemoglobin (uM)', rotation=270)
 
     return _get_fig_from_axes(axes)
-
-
-def plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None):
-    """
-    Plot topomap of NIRS GLM data.
-
-    Parameters
-    ----------
-    inst : instance of Info or Raw
-        Raw data or info structure used to generate the GLM results.
-    contrast : dict
-        As in nilearn.stats.compute_contrast.
-    figsize : numbers
-        TODO: Remove this, how does MNE usually deal with this.
-    sphere : numbers
-        As specified in MNE.
-
-    Returns
-    -------
-    fig : figure
-        Figure of each design matrix componenent for hbo (top row)
-        and hbr (bottom row).
-    """
-    warn('"plot_glm_contrast_topo" has been deprecated in favor of the more '
-         'comprehensive GLM class and will be removed in v1.0.0. '
-         'Use the ContrastResults class "plot_topo()" method instead.',
-         DeprecationWarning)
-    return _plot_glm_contrast_topo(inst, contrast, figsize=figsize,
-                                   sphere=sphere)
 
 
 def _plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None):
@@ -195,10 +111,9 @@ def _plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None):
                              ncols=len(types),
                              figsize=figsize)
     # Create limits for colorbar
-    vmax = np.max(np.abs(estimates))
-    vmin = vmax * -1.
+    vlim, vlim_kwargs = _handle_vlim((None, None), None, None, estimates)
     cmap = mpl.cm.RdBu_r
-    norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
+    norm = mpl.colors.Normalize(vmin=vlim[0], vmax=vlim[1])
 
     for t_idx, t in enumerate(types):
 
@@ -212,8 +127,8 @@ def _plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None):
 
         # Plot the topomap
         plot_topomap(
-            estmrg, pos, extrapolate='local', names=chs, vmin=vmin, vmax=vmax,
-            cmap=cmap, axes=ax, show=False, sphere=sphere)
+            estmrg, pos, extrapolate='local', names=chs, cmap=cmap, axes=ax,
+            show=False, sphere=sphere, **vlim_kwargs)
         # Sets axes title
         if t == 'hbo':
             ax.set_title('Oxyhaemoglobin')
@@ -236,6 +151,8 @@ def plot_glm_group_topo(inst, statsmodel_df,
                         value="Coef.",
                         axes=None,
                         threshold=False,
+                        *,
+                        vlim=(None, None),
                         vmin=None,
                         vmax=None,
                         cmap=None,
@@ -262,13 +179,15 @@ def plot_glm_group_topo(inst, statsmodel_df,
     threshold : Bool
         If threshold is true, all values with P>|z| greater than 0.05 will
         be set to zero.
+    vlim : tuple of length 2
+        Colormap limits to use. If a :class:`tuple` of floats, specifies the
+        lower and upper bounds of the colormap (in that order); providing
+        ``None`` for either entry will set the corresponding boundary at the
+        min/max of the data (separately for each topomap).
     vmin : float | None
-        The value specifying the lower bound of the color range.
-        If None, and vmax is None, -vmax is used. Else np.min(data).
-        Defaults to None.
+        Deprecated, use 'vlim' instead.
     vmax : float | None
-        The value specifying the upper bound of the color range.
-        If None, the maximum absolute value is used. Defaults to None.
+        Deprecated, use 'vlim' instead.
     cmap : matplotlib colormap | None
         Colormap to use. If None, 'Reds' is used for all positive data,
         otherwise defaults to 'RdBu_r'.
@@ -334,20 +253,18 @@ def plot_glm_group_topo(inst, statsmodel_df,
                                  ncols=1,
                                  figsize=(12, 7))
     # Set limits of topomap and colors
-    if vmax is None:
-        vmax = np.max(np.abs(estimates))
-    if vmin is None:
-        vmin = vmax * -1.
+    vlim, vlim_kwargs = _handle_vlim(vlim, vmin, vmax, estimates)
+    del vmin, vmax
     if cmap is None:
         cmap = mpl.cm.RdBu_r
-    norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
+    norm = mpl.colors.Normalize(vmin=vlim[0], vmax=vlim[1])
 
     estmrg, pos, chs, sphere = _handle_overlaps(info, t, sphere, estimates)
 
     plot_topomap(
         estmrg, pos, extrapolate=extrapolate, image_interp=image_interp,
-        names=chs, vmin=vmin, vmax=vmax, cmap=cmap, axes=axes, sensors=sensors,
-        res=res, show=False, show_names=show_names, sphere=sphere)
+        names=chs, cmap=cmap, axes=axes, sensors=sensors, res=res, show=False,
+        show_names=show_names, sphere=sphere, **vlim_kwargs)
     axes.set_title(c)
 
     if colorbar:
@@ -378,3 +295,23 @@ def _get_fig_from_axes(ax):
         return _get_fig_from_axes(ax[0])
     else:
         raise RuntimeError(f"Unable to extract figure from {ax}")
+
+
+def _handle_vlim(vlim, vmin, vmax, estimates):
+    if vmin is not None or vmax is not None:
+        warn('vmin and vmax are deprecated and will be removed in the next '
+             'release, please use vlim instead')
+        vlim = (vmin, vmax)
+    else:
+        vmin, vmax = vlim
+    if vmax is None:
+        vmax = np.max(np.abs(estimates))
+    if vmin is None:
+        vmin = vmax * -1.
+    vlim = tuple(vlim)
+    kwargs = dict()
+    if 'vlim' in inspect.get_signature('plot_topomap').parameters:
+        kwargs = dict(vlim=(vmin, vmax))
+    else:
+        kwargs = dict(vmin=vmin, vmax=vmax)
+    return vlim, kwargs
