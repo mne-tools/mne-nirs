@@ -62,7 +62,7 @@ requires_mne_bids_nirs = pytest.mark.skipif(
     pytest.param("plot_12_group_glm.py", marks=requires_mne_1p2),
     pytest.param("plot_13_fir_glm.py", marks=requires_mne_bids_nirs),
     pytest.param("plot_14_glm_components.py", marks=requires_mne_1p2),
-    "plot_15_waveform.py"
+    "plot_15_waveform.py",
     "plot_16_waveform_group.py",
     pytest.param("plot_19_snirf.py", requires_mne_bids_nirs),
     "plot_20_enhance.py",
