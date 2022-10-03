@@ -160,8 +160,8 @@ def plot_glm_group_topo(inst, statsmodel_df,
                         res=64,
                         sphere=None,
                         colorbar=True,
-                        show_names=None,
                         names=False,
+                        show_names=None,
                         extrapolate='local',
                         image_interp='cubic'):
     """
@@ -203,7 +203,7 @@ def plot_glm_group_topo(inst, statsmodel_df,
     colorbar : bool
         Should a colorbar be plotted.
     names : list of str
-        The channel names to display
+        The channel names to display.
     show_names : bool
         Deprecated, use ``names`` instead.
     extrapolate : str
