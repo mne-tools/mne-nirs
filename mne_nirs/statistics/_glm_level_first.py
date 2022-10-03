@@ -723,34 +723,6 @@ def run_glm(raw, design_matrix, noise_model='ar1', bins=0,
     return RegressionResults(raw.info, results, design_matrix)
 
 
-def compute_contrast(glm_est, contrast, contrast_type=None):
-    """
-    Compute contrasts on regression results.
-
-    This is a wrapper function for nilearn.stats.contrasts.
-
-    Parameters
-    ----------
-    glm_est : dict
-        Dictionary of nilearn regression results as returned by `run_glm`.
-    contrast : numpy.ndarray of shape (p) or (q, p),
-        Where q = number of contrast vectors and p = number of regressors.
-    contrast_type : {None, ‘t’, ‘F’}, optional
-        Type of the contrast. If None, then defaults to ‘t’ for 1D con_val
-        and ‘F’ for 2D con_val.
-
-    Returns
-    -------
-    contrast : Contrast instance,
-        Yields the statistics of the contrast (effects, variance, p-values).
-    """
-    warn('"compute_contrast" has been deprecated in favor of the more '
-         'comprehensive GLM class and will be removed in v1.0.0. '
-         'Use the ResultsGLM class "compute_contrast()" method instead.',
-         DeprecationWarning)
-    return _compute_contrast(glm_est, contrast, contrast_type=contrast_type)
-
-
 def _compute_contrast(glm_est, contrast, contrast_type=None):
     from nilearn.glm.contrasts import compute_contrast as _cc
     return _cc(np.array(list(glm_est.keys())), glm_est, contrast,
