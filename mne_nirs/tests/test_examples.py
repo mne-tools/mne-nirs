@@ -30,8 +30,6 @@ def run_script_and_check(test_file_path):
         return exec(fid.read(), locals(), locals())
 
 
-requires_lets_plot = pytest.mark.skipif(
-    not check_version('lets_plot'), reason='Requires lets-plot')
 requires_mne_1 = pytest.mark.skipif(
     not check_version('mne', '1.0'), reason='Needs MNE-Python 1.0')
 # https://github.com/mne-tools/mne-bids/pull/406

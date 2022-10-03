@@ -310,7 +310,7 @@ def _handle_vlim(vlim, vmin, vmax, estimates):
         vmin = vmax * -1.
     vlim = tuple(vlim)
     kwargs = dict()
-    if 'vlim' in inspect.get_signature('plot_topomap').parameters:
+    if 'vlim' in inspect.signature(plot_topomap).parameters:
         kwargs = dict(vlim=(vmin, vmax))
     else:
         kwargs = dict(vmin=vmin, vmax=vmax)
