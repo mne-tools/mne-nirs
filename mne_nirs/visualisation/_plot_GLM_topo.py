@@ -160,7 +160,8 @@ def plot_glm_group_topo(inst, statsmodel_df,
                         res=64,
                         sphere=None,
                         colorbar=True,
-                        show_names=False,
+                        show_names=None,
+                        names=False,
                         extrapolate='local',
                         image_interp='cubic'):
     """
@@ -201,8 +202,10 @@ def plot_glm_group_topo(inst, statsmodel_df,
         As specified in mne.
     colorbar : bool
         Should a colorbar be plotted.
+    names : list of str
+        The channel names to display
     show_names : bool
-        Display the channel names.
+        Deprecated, use ``names`` instead.
     extrapolate : str
         Type of extrapolation for image.
     image_interp : str
@@ -214,6 +217,11 @@ def plot_glm_group_topo(inst, statsmodel_df,
         Figure with topographic representation of statsmodel_df value.
     """
     info = deepcopy(inst if isinstance(inst, Info) else inst.info)
+    if show_names is not None:
+        names = show_names
+        warn('show_names is deprecated and will be removed in the next '
+             'release, use names instead', FutureWarning)
+    del show_names
 
     # Check that the channels in two inputs match
     if not (info.ch_names == list(statsmodel_df["ch_name"].values)):
@@ -260,11 +268,15 @@ def plot_glm_group_topo(inst, statsmodel_df,
     norm = mpl.colors.Normalize(vmin=vlim[0], vmax=vlim[1])
 
     estmrg, pos, chs, sphere = _handle_overlaps(info, t, sphere, estimates)
+    if 'names' in inspect.signature(plot_topomap).parameters:
+        names_kwarg = dict(names=chs if names else [''] * len(chs))
+    else:
+        names_kwarg = dict(show_names=names, names=chs)
 
     plot_topomap(
         estmrg, pos, extrapolate=extrapolate, image_interp=image_interp,
-        names=chs, cmap=cmap, axes=axes, sensors=sensors, res=res, show=False,
-        show_names=show_names, sphere=sphere, **vlim_kwargs)
+        cmap=cmap, axes=axes, sensors=sensors, res=res, show=False,
+        sphere=sphere, **vlim_kwargs, **names_kwarg)
     axes.set_title(c)
 
     if colorbar:
@@ -300,7 +312,7 @@ def _get_fig_from_axes(ax):
 def _handle_vlim(vlim, vmin, vmax, estimates):
     if vmin is not None or vmax is not None:
         warn('vmin and vmax are deprecated and will be removed in the next '
-             'release, please use vlim instead')
+             'release, please use vlim instead', FutureWarning)
         vlim = (vmin, vmax)
     else:
         vmin, vmax = vlim
