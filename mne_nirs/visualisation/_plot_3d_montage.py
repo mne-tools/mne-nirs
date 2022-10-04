@@ -3,12 +3,13 @@
 # License: BSD (3-clause)
 
 import contextlib
+import inspect
+
 import numpy as np
 
 from mne import pick_info, pick_types
 from mne.channels import make_standard_montage
 from mne.channels.montage import transform_to_head
-from mne.fixes import _get_args
 from mne.io import Info
 from mne.transforms import _get_trans, apply_trans
 from mne.utils import _validate_type, _check_option, verbose, logger
@@ -160,7 +161,7 @@ def plot_3d_montage(info, view_map, *, src_det_names='auto',
             info, trans=head_mri_t,
             fnirs=['channels', 'pairs', 'sources', 'detectors'])
         add_text_kwargs = dict()
-        if 'render' in _get_args(brain.plotter.add_text):
+        if 'render' in inspect.signature(brain.plotter.add_text).parameters:
             add_text_kwargs['render'] = False
         for col, view in enumerate(views):
             plotted = set()

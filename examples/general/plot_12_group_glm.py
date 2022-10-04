@@ -409,12 +409,12 @@ ch_model_df = statsmodels_to_results(ch_model)
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                     ch_model_df.query("Condition in ['Tapping_Left']"),
                     colorbar=False, axes=axes[0, 0],
-                    vmin=0, vmax=20, cmap=mpl.cm.Oranges)
+                    vlim=(0, 20), cmap=mpl.cm.Oranges)
 
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                     ch_model_df.query("Condition in ['Tapping_Right']"),
                     colorbar=True, axes=axes[0, 1],
-                    vmin=0, vmax=20, cmap=mpl.cm.Oranges)
+                    vlim=(0, 20), cmap=mpl.cm.Oranges)
 
 # Cut down the dataframe just to the conditions we are interested in
 ch_summary = df_cha.query("Condition in ['Tapping_Left', 'Tapping_Right']")
@@ -429,11 +429,11 @@ ch_model_df = statsmodels_to_results(ch_model)
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
                     ch_model_df.query("Condition in ['Tapping_Left']"),
                     colorbar=False, axes=axes[1, 0],
-                    vmin=-10, vmax=0, cmap=mpl.cm.Blues_r)
+                    vlim=(-10, 0), cmap=mpl.cm.Blues_r)
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
                     ch_model_df.query("Condition in ['Tapping_Right']"),
                     colorbar=True, axes=axes[1, 1],
-                    vmin=-10, vmax=0, cmap=mpl.cm.Blues_r)
+                    vlim=(-10, 0), cmap=mpl.cm.Blues_r)
 
 
 # %%

@@ -247,8 +247,6 @@ GLM result visualisation.
 .. autosummary::
    :toctree: generated/
 
-   plot_glm_topo
-   plot_glm_contrast_topo
    plot_glm_group_topo
    plot_glm_surface_projection
 

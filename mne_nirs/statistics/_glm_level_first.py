@@ -328,9 +328,9 @@ class RegressionResults(_BaseGLM):
                                  contrast_type=contrast_type)
         return ContrastResults(self.info, cont, self.design)
 
-    def plot_topo(self, conditions=None,
-                  axes=None, vmin=None, vmax=None, colorbar=True,
-                  figsize=(12, 7), sphere=None):
+    def plot_topo(self, conditions=None, axes=None, *, vlim=(None, None),
+                  vmin=None, vmax=None, colorbar=True, figsize=(12, 7),
+                  sphere=None):
         """Plot 2D topography of GLM data.
 
         Parameters
@@ -339,13 +339,16 @@ class RegressionResults(_BaseGLM):
             Which conditions should be displayed.
         axes : instance of Axes | None
             The axes to plot to. If None, a new figure is used.
+        vlim : tuple of length 2
+            Colormap limits to use. If a :class:`tuple` of floats, specifies
+            the lower and upper bounds of the colormap (in that order);
+            providing ``None`` for either entry will set the corresponding
+            boundary at the positive or negative max of the absolute value of
+            the data.
         vmin : float | None
-            The value specifying the lower bound of the color range.
-            If None, and vmax is None, -vmax is used. Else np.min(data).
-            Defaults to None.
+            Deprecated, use vlim instead.
         vmax : float | None
-            The value specifying the upper bound of the color range.
-            If None, the maximum absolute value is used. Defaults to None.
+            Deprecated, use vlim instead.
         colorbar : Bool
             Should a colorbar be plotted.
         figsize : two values
@@ -361,7 +364,7 @@ class RegressionResults(_BaseGLM):
         """
         return _plot_glm_topo(self.info, self._data, self.design,
                               requested_conditions=conditions,
-                              axes=axes, vmin=vmin, vmax=vmax,
+                              axes=axes, vlim=vlim, vmin=vmin, vmax=vmax,
                               colorbar=colorbar,
                               figsize=figsize, sphere=sphere)
 
@@ -718,34 +721,6 @@ def run_glm(raw, design_matrix, noise_model='ar1', bins=0,
         results[ch_names[pick]] = glm_estimates[labels[0]]
 
     return RegressionResults(raw.info, results, design_matrix)
-
-
-def compute_contrast(glm_est, contrast, contrast_type=None):
-    """
-    Compute contrasts on regression results.
-
-    This is a wrapper function for nilearn.stats.contrasts.
-
-    Parameters
-    ----------
-    glm_est : dict
-        Dictionary of nilearn regression results as returned by `run_glm`.
-    contrast : numpy.ndarray of shape (p) or (q, p),
-        Where q = number of contrast vectors and p = number of regressors.
-    contrast_type : {None, ‘t’, ‘F’}, optional
-        Type of the contrast. If None, then defaults to ‘t’ for 1D con_val
-        and ‘F’ for 2D con_val.
-
-    Returns
-    -------
-    contrast : Contrast instance,
-        Yields the statistics of the contrast (effects, variance, p-values).
-    """
-    warn('"compute_contrast" has been deprecated in favor of the more '
-         'comprehensive GLM class and will be removed in v1.0.0. '
-         'Use the ResultsGLM class "compute_contrast()" method instead.',
-         DeprecationWarning)
-    return _compute_contrast(glm_est, contrast, contrast_type=contrast_type)
 
 
 def _compute_contrast(glm_est, contrast, contrast_type=None):

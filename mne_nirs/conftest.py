@@ -41,6 +41,7 @@ def pytest_configure(config):
     ignore:.*The register_cmap function`*
     ignore:.*is not yet supported for.*in qdarkstyle.*:RuntimeWarning
     always::ResourceWarning
+    ignore:_SixMetaPathImporter.find_spec\(\) not found.*:ImportWarning
     """  # noqa: E501
     for warning_line in warning_lines.split('\n'):
         warning_line = warning_line.strip()

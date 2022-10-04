@@ -105,6 +105,6 @@ def simulate_nirs_raw(sfreq=3.,
     a = a.reshape(-1, 1).T
 
     raw = RawArray(a, info, verbose=False)
-    raw.set_annotations(annotations)
+    raw.set_annotations(annotations, verbose='error')
 
     return raw
