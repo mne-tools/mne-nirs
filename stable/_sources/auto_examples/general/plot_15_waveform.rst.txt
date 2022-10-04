@@ -154,7 +154,7 @@ Here we will work with the :ref:`fNIRS motor data <mne:fnirs-motor-dataset>`.
     
         <tr>
             <th>Duration</th>
-            <td>00:49:34 (HH:MM:SS)</td>
+            <td>00:49:35 (HH:MM:SS)</td>
         </tr>
     </table>
     </div>
@@ -272,7 +272,7 @@ To achieve this we pick all the channels that are not considered to be short.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fbf86abd160>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f106c53f8b0>
 
 
 
@@ -307,7 +307,7 @@ The raw intensity values are then converted to optical density.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fbfd9ddc9d0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f104da8ec10>
 
 
 
@@ -415,7 +415,7 @@ the modified Beer-Lambert law.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fbf027845e0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f104da58af0>
 
 
 
@@ -621,14 +621,14 @@ the HbO peak.
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_010.png
-         :alt: Deoxyhemoglobin (mean)
+         :alt: Oxyhemoglobin (mean)
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_010.png
          :class: sphx-glr-multi-img
 
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_011.png
-         :alt: Oxyhemoglobin (mean)
+         :alt: Deoxyhemoglobin (mean)
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_011.png
          :class: sphx-glr-multi-img
 
@@ -676,14 +676,14 @@ that it does not show the expected morphology.
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_012.png
-         :alt: Deoxyhemoglobin (mean)
+         :alt: Oxyhemoglobin (mean)
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_012.png
          :class: sphx-glr-multi-img
 
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_013.png
-         :alt: Oxyhemoglobin (mean)
+         :alt: Deoxyhemoglobin (mean)
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_013.png
          :class: sphx-glr-multi-img
 
@@ -928,39 +928,33 @@ And we also view the HbR activity for the two conditions.
 
 And we can plot the comparison at a single time point for two conditions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 305-341
+.. GENERATED FROM PYTHON SOURCE LINES 305-335
 
 .. code-block:: default
 
 
     fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(9, 5),
                              gridspec_kw=dict(width_ratios=[1, 1, 1, 0.1]))
-    vmin, vmax, ts = -8, 8, 9.0
+    vlim, ts = (-8, 8), 9.0
 
     evoked_left = epochs['Tapping/Left'].average()
     evoked_right = epochs['Tapping/Right'].average()
 
     evoked_left.plot_topomap(ch_type='hbo', times=ts, axes=axes[0, 0],
-                             vmin=vmin, vmax=vmax, colorbar=False,
-                             **topomap_args)
+                             vlim=vlim, colorbar=False, **topomap_args)
     evoked_left.plot_topomap(ch_type='hbr', times=ts, axes=axes[1, 0],
-                             vmin=vmin, vmax=vmax, colorbar=False,
-                             **topomap_args)
+                             vlim=vlim, colorbar=False, **topomap_args)
     evoked_right.plot_topomap(ch_type='hbo', times=ts, axes=axes[0, 1],
-                              vmin=vmin, vmax=vmax, colorbar=False,
-                              **topomap_args)
+                              vlim=vlim, colorbar=False, **topomap_args)
     evoked_right.plot_topomap(ch_type='hbr', times=ts, axes=axes[1, 1],
-                              vmin=vmin, vmax=vmax, colorbar=False,
-                              **topomap_args)
+                              vlim=vlim, colorbar=False, **topomap_args)
 
     evoked_diff = mne.combine_evoked([evoked_left, evoked_right], weights=[1, -1])
 
     evoked_diff.plot_topomap(ch_type='hbo', times=ts, axes=axes[0, 2:],
-                             vmin=vmin, vmax=vmax, colorbar=True,
-                             **topomap_args)
+                             vlim=vlim, colorbar=True, **topomap_args)
     evoked_diff.plot_topomap(ch_type='hbr', times=ts, axes=axes[1, 2:],
-                             vmin=vmin, vmax=vmax, colorbar=True,
-                             **topomap_args)
+                             vlim=vlim, colorbar=True, **topomap_args)
 
     for column, condition in enumerate(
             ['Tapping Left', 'Tapping Right', 'Left-Right']):
@@ -980,12 +974,12 @@ And we can plot the comparison at a single time point for two conditions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 342-344
+.. GENERATED FROM PYTHON SOURCE LINES 336-338
 
 Lastly, we can also look at the individual waveforms to see what is
 driving the topographic plot above.
 
-.. GENERATED FROM PYTHON SOURCE LINES 344-355
+.. GENERATED FROM PYTHON SOURCE LINES 338-349
 
 .. code-block:: default
 
@@ -1014,16 +1008,16 @@ driving the topographic plot above.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fbf023d1d00>
+    <matplotlib.legend.Legend object at 0x7f104d133bb0>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  19.459 seconds)
+   **Total running time of the script:** ( 0 minutes  23.289 seconds)
 
-**Estimated memory usage:**  57 MB
+**Estimated memory usage:**  55 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_15_waveform.py:
@@ -1036,7 +1030,7 @@ driving the topographic plot above.
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_15_waveform.ipynb
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_15_waveform.ipynb
         :alt: Launch binder
         :width: 150 px
 

@@ -1,0 +1,883 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Signal Enhancement Techniques &#8212; MNE-NIRS 0.3.0 documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/copybutton.js"></script>
+    <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
+    <script>
+                    window.ga = window.ga || function () {
+                        (ga.q = ga.q || []).push(arguments) };
+                    ga.l = +new Date;
+                    ga('create', 'UA-188272121-1', 'auto');
+                    ga('set', 'anonymizeIp', true);
+                    ga('send', 'pageview');
+                </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/general/plot_20_enhance';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.3.0';
+        </script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Artifact Correction Techniques" href="plot_21_artifacts.html" />
+    <link rel="prev" title="SNIRF Support in MNE" href="plot_19_snirf.html" />
+    <link rel="canonical" href="https://mne.tools/mne-nirs/stable/index.html" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fas fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">MNE-NIRS 0.3.0 documentation</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item current active">
+                    <a class="nav-link" href="../index.html">
+                        Examples
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../../api.html">
+                        API
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../../changelog.html">
+                        Changelog
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
+  <i class="fas fa-search"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
+        0.3.0  <!-- this text may get changed later by javascript -->
+        <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+</div>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mne-tools/mne-nirs" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
+  <i class="fas fa-search"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fas fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item current active">
+                    <a class="nav-link" href="../index.html">
+                        Examples
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../../api.html">
+                        API
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../../changelog.html">
+                        Changelog
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
+        0.3.0  <!-- this text may get changed later by javascript -->
+        <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+</div>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mne-tools/mne-nirs" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="index.html">
+   Analysis examples
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label class="toctree-toggle" for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_01_data_io.html">
+     Importing Data From fNIRS Devices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_05_datasets.html">
+     Example Datasets
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_06_gowerlabs.html">
+     Read Gowerlabs LUMO data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_10_hrf_simulation.html">
+     GLM Analysis (Simulated)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_11_hrf_measured.html">
+     GLM Analysis (Measured)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_12_group_glm.html">
+     Group Level GLM Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_13_fir_glm.html">
+     GLM FIR Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_14_glm_components.html">
+     GLM and Design Matrix Parameters
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_15_waveform.html">
+     Waveform Averaging Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_16_waveform_group.html">
+     Group Level Waveform Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_19_snirf.html">
+     SNIRF Support in MNE
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Signal Enhancement Techniques
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_21_artifacts.html">
+     Artifact Correction Techniques
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_22_quality.html">
+     Signal Quality Evaluation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_30_frequency.html">
+     Frequency and Filter Commentary
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_40_mayer.html">
+     Mayer Wave Parametrisation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_50_decoding.html">
+     Decoding Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_70_visualise_brain.html">
+     Utilising Anatomical Information
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_80_save_read_glm.html">
+     Save and load GLM results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_99_bad.html">
+     Importance of Controls and Parameter Selection
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../migration/index.html">
+   Migrating from other software packages
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label class="toctree-toggle" for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../migration/plot_01_homer.html">
+     Migrating from Homer to MNE
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../migration/plot_02_nirstoolbox.html">
+     Migrating from nirs-toolbox to MNE
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-auto-examples-general-plot-20-enhance-py"><span class="std std-ref">here</span></a>
+to download the full example code or to run this example in your browser via Binder</p>
+</div>
+<section class="sphx-glr-example-title" id="signal-enhancement-techniques">
+<span id="tut-fnirs-enhance"></span><span id="sphx-glr-auto-examples-general-plot-20-enhance-py"></span><h1>Signal Enhancement Techniques<a class="headerlink" href="#signal-enhancement-techniques" title="Permalink to this heading">#</a></h1>
+<p>In this document we investigate the effect of different signal enhancement
+techniques on
+functional near-infrared spectroscopy (fNIRS)
+data.</p>
+<nav class="contents local" id="page-contents">
+<p class="topic-title">Page contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#import-and-preprocess-data" id="id1">Import and preprocess data</a></p></li>
+<li><p><a class="reference internal" href="#extract-epochs-with-no-additional-processing" id="id2">Extract epochs with no additional processing</a></p></li>
+<li><p><a class="reference internal" href="#apply-negative-correlation-enhancement-algorithm" id="id3">Apply negative correlation enhancement algorithm</a></p></li>
+<li><p><a class="reference internal" href="#apply-short-channel-correction" id="id4">Apply short channel correction</a></p></li>
+<li><p><a class="reference internal" href="#plot-approaches-for-comparison" id="id5">Plot approaches for comparison</a></p></li>
+<li><p><a class="reference internal" href="#plot-hemisphere-for-each-approach" id="id6">Plot hemisphere for each approach</a></p></li>
+</ul>
+</nav>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Authors: Robert Luke &lt;mail@robertluke.net&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># License: BSD (3-clause)</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">import</span> <span class="nn">mne</span>
+<span class="kn">import</span> <span class="nn">mne_nirs</span>
+<span class="kn">from</span> <span class="nn">mne_nirs.channels</span> <span class="kn">import</span> <a href="../../generated/mne_nirs.channels.picks_pair_to_idx.html#mne_nirs.channels.picks_pair_to_idx" title="mne_nirs.channels.picks_pair_to_idx" class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function"><span class="n">picks_pair_to_idx</span></a>
+</pre></div>
+</div>
+<section id="import-and-preprocess-data">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Import and preprocess data</a><a class="headerlink" href="#import-and-preprocess-data" title="Permalink to this heading">#</a></h2>
+<p>This code is exactly the same as the first sections in the MNE tutorial.
+See
+<a class="reference external" href="https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html">https://mne.tools/dev/auto_tutorials/preprocessing/plot_70_fnirs_processing.html</a>
+for more details.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_data_folder</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.datasets.fnirs_motor.data_path.html#mne.datasets.fnirs_motor.data_path" title="mne.datasets.fnirs_motor.data_path" class="sphx-glr-backref-module-mne-datasets-fnirs_motor sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fnirs_motor</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">()</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_raw_dir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_data_folder</span></a><span class="p">,</span> <span class="s1">&#39;Participant-1&#39;</span><span class="p">)</span>
+<span class="n">raw_intensity</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.read_raw_nirx.html#mne.io.read_raw_nirx" title="mne.io.read_raw_nirx" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_raw_nirx</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_raw_dir</span></a><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+<span class="n">raw_od</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.optical_density.html#mne.preprocessing.nirs.optical_density" title="mne.preprocessing.nirs.optical_density" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">nirs</span><span class="o">.</span><span class="n">optical_density</span></a><span class="p">(</span><span class="n">raw_intensity</span><span class="p">)</span>
+<span class="n">raw_haemo</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.beer_lambert_law.html#mne.preprocessing.nirs.beer_lambert_law" title="mne.preprocessing.nirs.beer_lambert_law" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">nirs</span><span class="o">.</span><span class="n">beer_lambert_law</span></a><span class="p">(</span><span class="n">raw_od</span><span class="p">,</span> <span class="n">ppf</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">raw_haemo</span> <span class="o">=</span> <a href="../../generated/mne_nirs.channels.get_long_channels.html#mne_nirs.channels.get_long_channels" title="mne_nirs.channels.get_long_channels" class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function"><span class="n">mne_nirs</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">get_long_channels</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">)</span>
+
+<span class="n">raw_haemo</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw.filter" title="mne.io.BaseRaw.filter" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">raw_haemo</span><span class="o">.</span><span class="n">filter</span></a><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">h_trans_bandwidth</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                             <span class="n">l_trans_bandwidth</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
+<a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">events</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">_</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.events_from_annotations.html#mne.events_from_annotations" title="mne.events_from_annotations" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">events_from_annotations</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">,</span> <span class="n">event_id</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;1.0&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                                                             <span class="s1">&#39;2.0&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                                                             <span class="s1">&#39;3.0&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">})</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">event_dict</span></a> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Control&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Tapping/Left&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tapping/Right&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
+</pre></div>
+</div>
+</section>
+<section id="extract-epochs-with-no-additional-processing">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Extract epochs with no additional processing</a><a class="headerlink" href="#extract-epochs-with-no-additional-processing" title="Permalink to this heading">#</a></h2>
+<p>First we extract the epochs with no additional processing,
+this result should be the same as the MNE tutorial.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">reject_criteria</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">hbo</span><span class="o">=</span><span class="mf">100e-6</span><span class="p">)</span>
+<a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmin</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmax</span></a> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span>
+
+<a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">Epochs</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">events</span></a><span class="p">,</span> <span class="n">event_id</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">event_dict</span></a><span class="p">,</span>
+                    <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmin</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmin</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmax</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmax</span></a><span class="p">,</span>
+                    <span class="n">reject</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">reject_criteria</span></a><span class="p">,</span> <span class="n">reject_by_annotation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">proj</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">baseline</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">preload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">detrend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict</span></a> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Tapping/HbO&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs</span></a><span class="p">[</span><span class="s1">&#39;Tapping&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbo&#39;</span><span class="p">),</span>
+               <span class="s1">&#39;Tapping/HbR&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs</span></a><span class="p">[</span><span class="s1">&#39;Tapping&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbr&#39;</span><span class="p">),</span>
+               <span class="s1">&#39;Control/HbO&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs</span></a><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbo&#39;</span><span class="p">),</span>
+               <span class="s1">&#39;Control/HbR&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs</span></a><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbr&#39;</span><span class="p">)}</span>
+
+<span class="c1"># Rename channels until the encoding of frequency in ch_name is fixed</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict</span></a><span class="p">:</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a><span class="p">]</span><span class="o">.</span><span class="n">rename_channels</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Not setting metadata
+90 matching events found
+Setting baseline interval to [-4.992, 0.0] sec
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 90 events and 157 original time points ...
+    Rejecting  epoch based on HBO : [&#39;S4_D4 hbo&#39;]
+    Rejecting  epoch based on HBO : [&#39;S4_D4 hbo&#39;]
+    Rejecting  epoch based on HBO : [&#39;S4_D4 hbo&#39;, &#39;S8_D8 hbo&#39;]
+    Rejecting  epoch based on HBO : [&#39;S8_D8 hbo&#39;]
+    Rejecting  epoch based on HBO : [&#39;S4_D4 hbo&#39;]
+5 bad epochs dropped
+</pre></div>
+</div>
+</section>
+<section id="apply-negative-correlation-enhancement-algorithm">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Apply negative correlation enhancement algorithm</a><a class="headerlink" href="#apply-negative-correlation-enhancement-algorithm" title="Permalink to this heading">#</a></h2>
+<p>Apply Cui et. al. 2010 and extract epochs.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">raw_anti</span> <span class="o">=</span> <a href="../../generated/mne_nirs.signal_enhancement.enhance_negative_correlation.html#mne_nirs.signal_enhancement.enhance_negative_correlation" title="mne_nirs.signal_enhancement.enhance_negative_correlation" class="sphx-glr-backref-module-mne_nirs-signal_enhancement sphx-glr-backref-type-py-function"><span class="n">mne_nirs</span><span class="o">.</span><span class="n">signal_enhancement</span><span class="o">.</span><span class="n">enhance_negative_correlation</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">)</span>
+
+<a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_anti</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">Epochs</span></a><span class="p">(</span><span class="n">raw_anti</span><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">events</span></a><span class="p">,</span> <span class="n">event_id</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">event_dict</span></a><span class="p">,</span>
+                         <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmin</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmin</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmax</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmax</span></a><span class="p">,</span>
+                         <span class="n">reject</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">reject_criteria</span></a><span class="p">,</span> <span class="n">reject_by_annotation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                         <span class="n">proj</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">baseline</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">preload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                         <span class="n">detrend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_anti</span></a> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Tapping/HbO&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_anti</span></a><span class="p">[</span><span class="s1">&#39;Tapping&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbo&#39;</span><span class="p">),</span>
+                    <span class="s1">&#39;Tapping/HbR&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_anti</span></a><span class="p">[</span><span class="s1">&#39;Tapping&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbr&#39;</span><span class="p">),</span>
+                    <span class="s1">&#39;Control/HbO&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_anti</span></a><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbo&#39;</span><span class="p">),</span>
+                    <span class="s1">&#39;Control/HbR&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_anti</span></a><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbr&#39;</span><span class="p">)}</span>
+
+<span class="c1"># Rename channels until the encoding of frequency in ch_name is fixed</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_anti</span></a><span class="p">:</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_anti</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a><span class="p">]</span><span class="o">.</span><span class="n">rename_channels</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Not setting metadata
+90 matching events found
+Setting baseline interval to [-4.992, 0.0] sec
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 90 events and 157 original time points ...
+0 bad epochs dropped
+</pre></div>
+</div>
+</section>
+<section id="apply-short-channel-correction">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Apply short channel correction</a><a class="headerlink" href="#apply-short-channel-correction" title="Permalink to this heading">#</a></h2>
+<p>Apply Scholkmann et al 2014 and extract epochs.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">od_corrected</span> <span class="o">=</span> <a href="../../generated/mne_nirs.signal_enhancement.short_channel_regression.html#mne_nirs.signal_enhancement.short_channel_regression" title="mne_nirs.signal_enhancement.short_channel_regression" class="sphx-glr-backref-module-mne_nirs-signal_enhancement sphx-glr-backref-type-py-function"><span class="n">mne_nirs</span><span class="o">.</span><span class="n">signal_enhancement</span><span class="o">.</span><span class="n">short_channel_regression</span></a><span class="p">(</span><span class="n">raw_od</span><span class="p">)</span>
+<span class="n">raw_haemo</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.beer_lambert_law.html#mne.preprocessing.nirs.beer_lambert_law" title="mne.preprocessing.nirs.beer_lambert_law" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">nirs</span><span class="o">.</span><span class="n">beer_lambert_law</span></a><span class="p">(</span><span class="n">od_corrected</span><span class="p">,</span> <span class="n">ppf</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">raw_haemo</span> <span class="o">=</span> <a href="../../generated/mne_nirs.channels.get_long_channels.html#mne_nirs.channels.get_long_channels" title="mne_nirs.channels.get_long_channels" class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function"><span class="n">mne_nirs</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">get_long_channels</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">)</span>
+
+<span class="n">raw_haemo</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw.filter" title="mne.io.BaseRaw.filter" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">raw_haemo</span><span class="o">.</span><span class="n">filter</span></a><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">h_trans_bandwidth</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                             <span class="n">l_trans_bandwidth</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
+
+<a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_corr</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">Epochs</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">events</span></a><span class="p">,</span> <span class="n">event_id</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">event_dict</span></a><span class="p">,</span>
+                         <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmin</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmin</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmax</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">tmax</span></a><span class="p">,</span>
+                         <span class="n">reject</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">reject_criteria</span></a><span class="p">,</span> <span class="n">reject_by_annotation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                         <span class="n">proj</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">baseline</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">preload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                         <span class="n">detrend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_corr</span></a> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Tapping/HbO&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_corr</span></a><span class="p">[</span><span class="s1">&#39;Tapping&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbo&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;Tapping/HbR&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_corr</span></a><span class="p">[</span><span class="s1">&#39;Tapping&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbr&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;Control/HbO&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_corr</span></a><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbo&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;Control/HbR&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_corr</span></a><span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbr&#39;</span><span class="p">)}</span>
+
+<span class="c1"># Rename channels until the encoding of frequency in ch_name is fixed</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_corr</span></a><span class="p">:</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_corr</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a><span class="p">]</span><span class="o">.</span><span class="n">rename_channels</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Not setting metadata
+90 matching events found
+Setting baseline interval to [-4.992, 0.0] sec
+Applying baseline correction (mode: mean)
+0 projection items activated
+Using data from preloaded Raw for 90 events and 157 original time points ...
+    Rejecting  epoch based on HBO : [&#39;S4_D4 hbo&#39;, &#39;S8_D8 hbo&#39;]
+    Rejecting  epoch based on HBO : [&#39;S1_D1 hbo&#39;, &#39;S7_D6 hbo&#39;, &#39;S7_D7 hbo&#39;, &#39;S8_D8 hbo&#39;]
+    Rejecting  epoch based on HBO : [&#39;S4_D4 hbo&#39;, &#39;S8_D8 hbo&#39;]
+3 bad epochs dropped
+</pre></div>
+</div>
+</section>
+<section id="plot-approaches-for-comparison">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Plot approaches for comparison</a><a class="headerlink" href="#plot-approaches-for-comparison" title="Permalink to this heading">#</a></h2>
+<p>Plot the average epochs with and without Cui 2010 applied.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color_dict</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">HbO</span><span class="o">=</span><span class="s1">&#39;#AA3377&#39;</span><span class="p">,</span> <span class="n">HbR</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">styles_dict</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">Control</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">))</span>
+
+<a href="https://mne.tools/stable/generated/mne.viz.plot_compare_evokeds.html#mne.viz.plot_compare_evokeds" title="mne.viz.plot_compare_evokeds" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_compare_evokeds</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict</span></a><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+                             <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="o">=</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color_dict</span></a><span class="p">,</span>
+                             <span class="n">styles</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">styles_dict</span></a><span class="p">,</span>
+                             <span class="n">ylim</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">hbo</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">]))</span>
+
+<a href="https://mne.tools/stable/generated/mne.viz.plot_compare_evokeds.html#mne.viz.plot_compare_evokeds" title="mne.viz.plot_compare_evokeds" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_compare_evokeds</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_anti</span></a><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+                             <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="o">=</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color_dict</span></a><span class="p">,</span>
+                             <span class="n">styles</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">styles_dict</span></a><span class="p">,</span>
+                             <span class="n">ylim</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">hbo</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">]))</span>
+
+<a href="https://mne.tools/stable/generated/mne.viz.plot_compare_evokeds.html#mne.viz.plot_compare_evokeds" title="mne.viz.plot_compare_evokeds" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_compare_evokeds</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_corr</span></a><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+                             <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="o">=</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color_dict</span></a><span class="p">,</span>
+                             <span class="n">styles</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">styles_dict</span></a><span class="p">,</span>
+                             <span class="n">ylim</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">hbo</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">]))</span>
+
+<span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">column</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;Original Data&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;With Enhanced Anticorrelation&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;With Short Regression&#39;</span><span class="p">]):</span>
+    <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">column</span></a><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a><span class="p">))</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_plot_20_enhance_001.png" srcset="../../_images/sphx_glr_plot_20_enhance_001.png" alt="Original Data, With Enhanced Anticorrelation, With Short Regression" class = "sphx-glr-single-img"/></section>
+<section id="plot-hemisphere-for-each-approach">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Plot hemisphere for each approach</a><a class="headerlink" href="#plot-hemisphere-for-each-approach" title="Permalink to this heading">#</a></h2>
+<p>Plot the epoch image for each approach. First we specify the source
+detector pairs for analysis.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">left</span></a> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">right</span></a> <span class="o">=</span> <span class="p">[[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">]]</span>
+
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">groups</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">Left_ROI</span><span class="o">=</span><a href="../../generated/mne_nirs.channels.picks_pair_to_idx.html#mne_nirs.channels.picks_pair_to_idx" title="mne_nirs.channels.picks_pair_to_idx" class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function"><span class="n">picks_pair_to_idx</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw.pick" title="mne.io.BaseRaw.pick" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">raw_anti</span><span class="o">.</span><span class="n">pick</span></a><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbo&#39;</span><span class="p">),</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">left</span></a><span class="p">,</span>
+                                         <span class="n">on_missing</span><span class="o">=</span><span class="s1">&#39;warning&#39;</span><span class="p">),</span>
+              <span class="n">Right_ROI</span><span class="o">=</span><a href="../../generated/mne_nirs.channels.picks_pair_to_idx.html#mne_nirs.channels.picks_pair_to_idx" title="mne_nirs.channels.picks_pair_to_idx" class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function"><span class="n">picks_pair_to_idx</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw.pick" title="mne.io.BaseRaw.pick" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">raw_anti</span><span class="o">.</span><span class="n">pick</span></a><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbo&#39;</span><span class="p">),</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">right</span></a><span class="p">,</span>
+                                         <span class="n">on_missing</span><span class="o">=</span><span class="s1">&#39;warning&#39;</span><span class="p">))</span>
+
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict</span></a> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Left/HbO&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs</span></a><span class="p">[</span><span class="s1">&#39;Tapping/Left&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbo&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;Left/HbR&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs</span></a><span class="p">[</span><span class="s1">&#39;Tapping/Left&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbr&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;Right/HbO&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs</span></a><span class="p">[</span><span class="s1">&#39;Tapping/Right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbo&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;Right/HbR&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs</span></a><span class="p">[</span><span class="s1">&#39;Tapping/Right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbr&#39;</span><span class="p">)}</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict</span></a><span class="p">:</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a><span class="p">]</span><span class="o">.</span><span class="n">rename_channels</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">])</span>
+
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_anti</span></a> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Left/HbO&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_anti</span></a><span class="p">[</span><span class="s1">&#39;Tapping/Left&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbo&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;Left/HbR&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_anti</span></a><span class="p">[</span><span class="s1">&#39;Tapping/Left&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbr&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;Right/HbO&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_anti</span></a><span class="p">[</span><span class="s1">&#39;Tapping/Right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbo&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;Right/HbR&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_anti</span></a><span class="p">[</span><span class="s1">&#39;Tapping/Right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbr&#39;</span><span class="p">)}</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_anti</span></a><span class="p">:</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_anti</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a><span class="p">]</span><span class="o">.</span><span class="n">rename_channels</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">])</span>
+
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_corr</span></a> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Left/HbO&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_corr</span></a><span class="p">[</span><span class="s1">&#39;Tapping/Left&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbo&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;Left/HbR&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_corr</span></a><span class="p">[</span><span class="s1">&#39;Tapping/Left&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbr&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;Right/HbO&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_corr</span></a><span class="p">[</span><span class="s1">&#39;Tapping/Right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbo&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;Right/HbR&#39;</span><span class="p">:</span> <a href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="mne.Epochs" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">epochs_corr</span></a><span class="p">[</span><span class="s1">&#39;Tapping/Right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s1">&#39;hbr&#39;</span><span class="p">)}</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_corr</span></a><span class="p">:</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_corr</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a><span class="p">]</span><span class="o">.</span><span class="n">rename_channels</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">])</span>
+
+
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color_dict</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">HbO</span><span class="o">=</span><span class="s1">&#39;#AA3377&#39;</span><span class="p">,</span> <span class="n">HbR</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">styles_dict</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">Left</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">))</span>
+
+<a href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+
+<a href="https://mne.tools/stable/generated/mne.viz.plot_compare_evokeds.html#mne.viz.plot_compare_evokeds" title="mne.viz.plot_compare_evokeds" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_compare_evokeds</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict</span></a><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+                             <span class="n">picks</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">groups</span></a><span class="p">[</span><span class="s1">&#39;Left_ROI&#39;</span><span class="p">],</span>
+                             <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="o">=</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color_dict</span></a><span class="p">,</span>
+                             <span class="n">styles</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">styles_dict</span></a><span class="p">,</span>
+                             <span class="n">ylim</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">hbo</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">]))</span>
+
+<a href="https://mne.tools/stable/generated/mne.viz.plot_compare_evokeds.html#mne.viz.plot_compare_evokeds" title="mne.viz.plot_compare_evokeds" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_compare_evokeds</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict</span></a><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+                             <span class="n">picks</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">groups</span></a><span class="p">[</span><span class="s1">&#39;Right_ROI&#39;</span><span class="p">],</span>
+                             <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="o">=</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color_dict</span></a><span class="p">,</span>
+                             <span class="n">styles</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">styles_dict</span></a><span class="p">,</span>
+                             <span class="n">ylim</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">hbo</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">]))</span>
+
+<a href="https://mne.tools/stable/generated/mne.viz.plot_compare_evokeds.html#mne.viz.plot_compare_evokeds" title="mne.viz.plot_compare_evokeds" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_compare_evokeds</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_anti</span></a><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+                             <span class="n">picks</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">groups</span></a><span class="p">[</span><span class="s1">&#39;Left_ROI&#39;</span><span class="p">],</span>
+                             <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="o">=</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color_dict</span></a><span class="p">,</span>
+                             <span class="n">styles</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">styles_dict</span></a><span class="p">,</span>
+                             <span class="n">ylim</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">hbo</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">]))</span>
+
+<a href="https://mne.tools/stable/generated/mne.viz.plot_compare_evokeds.html#mne.viz.plot_compare_evokeds" title="mne.viz.plot_compare_evokeds" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_compare_evokeds</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_anti</span></a><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+                             <span class="n">picks</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">groups</span></a><span class="p">[</span><span class="s1">&#39;Right_ROI&#39;</span><span class="p">],</span>
+                             <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="o">=</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color_dict</span></a><span class="p">,</span>
+                             <span class="n">styles</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">styles_dict</span></a><span class="p">,</span>
+                             <span class="n">ylim</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">hbo</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">]))</span>
+
+<a href="https://mne.tools/stable/generated/mne.viz.plot_compare_evokeds.html#mne.viz.plot_compare_evokeds" title="mne.viz.plot_compare_evokeds" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_compare_evokeds</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_corr</span></a><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+                             <span class="n">picks</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">groups</span></a><span class="p">[</span><span class="s1">&#39;Left_ROI&#39;</span><span class="p">],</span>
+                             <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="o">=</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color_dict</span></a><span class="p">,</span>
+                             <span class="n">styles</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">styles_dict</span></a><span class="p">,</span>
+                             <span class="n">ylim</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">hbo</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">]))</span>
+
+<a href="https://mne.tools/stable/generated/mne.viz.plot_compare_evokeds.html#mne.viz.plot_compare_evokeds" title="mne.viz.plot_compare_evokeds" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_compare_evokeds</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evoked_dict_corr</span></a><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+                             <span class="n">picks</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">groups</span></a><span class="p">[</span><span class="s1">&#39;Right_ROI&#39;</span><span class="p">],</span>
+                             <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="o">=</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color_dict</span></a><span class="p">,</span>
+                             <span class="n">styles</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">styles_dict</span></a><span class="p">,</span>
+                             <span class="n">ylim</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">hbo</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">]))</span>
+
+<span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">row</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;Original&#39;</span><span class="p">,</span>
+                                 <span class="s1">&#39;Anticorrelation&#39;</span><span class="p">,</span>
+                                 <span class="s1">&#39;Short Regression&#39;</span><span class="p">]):</span>
+    <span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">column</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hemi</span></a> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;Left&#39;</span><span class="p">,</span> <span class="s1">&#39;Right&#39;</span><span class="p">]):</span>
+        <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">row</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">column</span></a><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">condition</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">hemi</span></a><span class="p">))</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_plot_20_enhance_002.png" srcset="../../_images/sphx_glr_plot_20_enhance_002.png" alt="Original: Left, Original: Right, Anticorrelation: Left, Anticorrelation: Right, Short Regression: Left, Short Regression: Right" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  3.808 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  9 MB</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-20-enhance-py">
+<div class="binder-badge docutils container">
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_20_enhance.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/832c1e9bfe777f64f5380ce1e257fc60/plot_20_enhance.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_20_enhance.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/00f267f637c782d4699fbb918d71e3c3/plot_20_enhance.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_20_enhance.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="plot_19_snirf.html" title="previous page">
+      <i class="fas fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">SNIRF Support in MNE</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="plot_21_artifacts.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Artifact Correction Techniques</p>
+  </div>
+  <i class="fas fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fas fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#import-and-preprocess-data">
+   Import and preprocess data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extract-epochs-with-no-additional-processing">
+   Extract epochs with no additional processing
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#apply-negative-correlation-enhancement-algorithm">
+   Apply negative correlation enhancement algorithm
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#apply-short-channel-correction">
+   Apply short channel correction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plot-approaches-for-comparison">
+   Plot approaches for comparison
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plot-hemisphere-for-each-approach">
+   Plot hemisphere for each approach
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
+    
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2012–2022, MNE Developers. Last updated &lt;time datetime=&#34;2022-09-17T09:28:06.114719+00:00&#34; class=&#34;localized&#34;&gt;2022-09-17 09:28 UTC&lt;/time&gt;
+&lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.<br>
+
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

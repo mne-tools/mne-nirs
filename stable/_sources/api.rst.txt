@@ -59,6 +59,7 @@ MNE-NIRS
    :toctree: generated/
 
    write_raw_snirf
+   read_snirf_aux_data
 
 .. currentmodule:: mne_nirs.io
 
@@ -246,8 +247,6 @@ GLM result visualisation.
 .. autosummary::
    :toctree: generated/
 
-   plot_glm_topo
-   plot_glm_contrast_topo
    plot_glm_group_topo
    plot_glm_surface_projection
 

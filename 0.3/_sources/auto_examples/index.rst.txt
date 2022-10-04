@@ -1,0 +1,450 @@
+:orphan:
+
+.. _all_examples:
+
+Examples
+========
+
+The examples gallery provides working code samples demonstrating various
+analysis and visualization techniques.
+
+Each example includes a binder link at the base of the page.
+Clicking on the binder link will allow you to run the example code in your browser,
+upload data, visualise output, all without downloading any code to your computer.
+
+.. warning::
+
+   These examples sometimes use simulations or shortcuts (such as intentionally
+   adding noise to recordings) to illustrate a point. Use caution when
+   copy-pasting code samples.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    </div>
+
+
+Analysis examples
+-----------------
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="fNIRS devices consist of two kinds of optodes: light sources (AKA &quot;emitters&quot; or &quot;transmitters&quot;)...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_01_data_io_thumb.png
+    :alt: Importing Data From fNIRS Devices
+
+  :ref:`sphx_glr_auto_examples_general_plot_01_data_io.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Importing Data From fNIRS Devices</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="To get you up and running with MNE-NIRS and fNIRS data analysis we provide some example dataset...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_05_datasets_thumb.png
+    :alt: Example Datasets
+
+  :ref:`sphx_glr_auto_examples_general_plot_05_datasets.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Example Datasets</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="`LUMO &lt;https://www.gowerlabs.co.uk/lumo&gt;`__ is a modular, wearable,  high-density diffuse optic...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_06_gowerlabs_thumb.png
+    :alt: Read Gowerlabs LUMO data
+
+  :ref:`sphx_glr_auto_examples_general_plot_06_gowerlabs.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Read Gowerlabs LUMO data</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we simulate a block design functional near-infrared spectroscopy (fNIRS) experi...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_10_hrf_simulation_thumb.png
+    :alt: GLM Analysis (Simulated)
+
+  :ref:`sphx_glr_auto_examples_general_plot_10_hrf_simulation.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">GLM Analysis (Simulated)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we analyse data from a real multichannel functional near-infrared spectroscopy ...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_11_hrf_measured_thumb.png
+    :alt: GLM Analysis (Measured)
+
+  :ref:`sphx_glr_auto_examples_general_plot_11_hrf_measured.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">GLM Analysis (Measured)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This is an example of a group level GLM based functional near-infrared spectroscopy (fNIRS) ana...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_12_group_glm_thumb.png
+    :alt: Group Level GLM Analysis
+
+  :ref:`sphx_glr_auto_examples_general_plot_12_group_glm.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Group Level GLM Analysis</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we analyse data from a real multi-channel functional near-infrared spectroscopy...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_13_fir_glm_thumb.png
+    :alt: GLM FIR Analysis
+
+  :ref:`sphx_glr_auto_examples_general_plot_13_fir_glm.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">GLM FIR Analysis</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This tutorial describes the various design choices available when analysing fNIRS data with a G...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_14_glm_components_thumb.png
+    :alt: GLM and Design Matrix Parameters
+
+  :ref:`sphx_glr_auto_examples_general_plot_14_glm_components.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">GLM and Design Matrix Parameters</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This tutorial covers how to convert functional near-infrared spectroscopy (fNIRS) data from raw...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_15_waveform_thumb.png
+    :alt: Waveform Averaging Analysis
+
+  :ref:`sphx_glr_auto_examples_general_plot_15_waveform.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Waveform Averaging Analysis</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This is an example of a group-level waveform-based functional near-infrared spectroscopy (fNIRS...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_16_waveform_group_thumb.png
+    :alt: Group Level Waveform Analysis
+
+  :ref:`sphx_glr_auto_examples_general_plot_16_waveform_group.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Group Level Waveform Analysis</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="   MNE does not support reading .nirs files. If you have .nirs files that    you would like to ...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_19_snirf_thumb.png
+    :alt: SNIRF Support in MNE
+
+  :ref:`sphx_glr_auto_examples_general_plot_19_snirf.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">SNIRF Support in MNE</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this document we investigate the effect of different signal enhancement techniques on functi...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_20_enhance_thumb.png
+    :alt: Signal Enhancement Techniques
+
+  :ref:`sphx_glr_auto_examples_general_plot_20_enhance.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Signal Enhancement Techniques</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Here we artificially introduce several artifacts in a functional near-infrared spectroscopy (fN...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_21_artifacts_thumb.png
+    :alt: Artifact Correction Techniques
+
+  :ref:`sphx_glr_auto_examples_general_plot_21_artifacts.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Artifact Correction Techniques</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This tutorial demonstrates how signal quality can be evaluated using MNE-NIRS.">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_22_quality_thumb.png
+    :alt: Signal Quality Evaluation
+
+  :ref:`sphx_glr_auto_examples_general_plot_22_quality.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Signal Quality Evaluation</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we discuss frequency and filters in the context of functional near-infrared spe...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_30_frequency_thumb.png
+    :alt: Frequency and Filter Commentary
+
+  :ref:`sphx_glr_auto_examples_general_plot_30_frequency.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Frequency and Filter Commentary</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="   This tutorial is only possible due to the excellent and generous work of    the FOOOF author...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_40_mayer_thumb.png
+    :alt: Mayer Wave Parametrisation
+
+  :ref:`sphx_glr_auto_examples_general_plot_40_mayer.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Mayer Wave Parametrisation</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This is an example of a decoding analysis performed on functional near-infrared spectroscopy (f...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_50_decoding_thumb.png
+    :alt: Decoding Analysis
+
+  :ref:`sphx_glr_auto_examples_general_plot_50_decoding.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Decoding Analysis</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how you can utilise anatomical and sensor position information in you...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_70_visualise_brain_thumb.png
+    :alt: Utilising Anatomical Information
+
+  :ref:`sphx_glr_auto_examples_general_plot_70_visualise_brain.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Utilising Anatomical Information</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This is an example of how to save and load functional near-infrared spectroscopy (fNIRS) GLM re...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_80_save_read_glm_thumb.png
+    :alt: Save and load GLM results
+
+  :ref:`sphx_glr_auto_examples_general_plot_80_save_read_glm.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Save and load GLM results</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="   Huppert TJ. Commentary on the statistical properties of noise and its    implication on gene...">
+
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_99_bad_thumb.png
+    :alt: Importance of Controls and Parameter Selection
+
+  :ref:`sphx_glr_auto_examples_general_plot_99_bad.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Importance of Controls and Parameter Selection</div>
+    </div>
+
+
+.. raw:: html
+
+    </div>
+
+
+Migrating from other software packages
+--------------------------------------
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This tutorial will demonstrate how to do convert a basic Homer script to MNE and highlight diff...">
+
+.. only:: html
+
+  .. image:: /auto_examples/migration/images/thumb/sphx_glr_plot_01_homer_thumb.png
+    :alt: Migrating from Homer to MNE
+
+  :ref:`sphx_glr_auto_examples_migration_plot_01_homer.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Migrating from Homer to MNE</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This tutorial will demonstrate how to do convert a nirs-toolbox script to MNE and highlight dif...">
+
+.. only:: html
+
+  .. image:: /auto_examples/migration/images/thumb/sphx_glr_plot_02_nirstoolbox_thumb.png
+    :alt: Migrating from nirs-toolbox to MNE
+
+  :ref:`sphx_glr_auto_examples_migration_plot_02_nirstoolbox.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Migrating from nirs-toolbox to MNE</div>
+    </div>
+
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+   :includehidden:
+
+   /auto_examples/general/index.rst
+   /auto_examples/migration/index.rst
+
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.github.io>`_

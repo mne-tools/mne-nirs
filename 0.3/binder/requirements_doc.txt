@@ -1,0 +1,25 @@
+# requirements for building docs
+sphinx
+https://github.com/numpy/numpydoc/archive/main.zip
+pydata-sphinx-theme>=0.6.3
+https://github.com/sphinx-gallery/sphinx-gallery/archive/master.zip
+sphinxcontrib-bibtex>=2.3
+memory_profiler
+seaborn
+sphinx_copybutton
+
+# mne-nirs specific requirements
+matplotlib
+pillow
+numpy
+h5py
+mne-bids
+memory_profiler
+Ipython
+sphinx-fontawesome
+seaborn
+fooof
+snirf
+statsmodels
+dabest
+mne-qt-browser

@@ -163,7 +163,7 @@ appear as if a fNIRS response is observed.
     
         <tr>
             <th>Duration</th>
-            <td>00:49:34 (HH:MM:SS)</td>
+            <td>00:49:35 (HH:MM:SS)</td>
         </tr>
     </table>
     </div>
@@ -207,7 +207,7 @@ To achieve this we pick all the channels that are not considered to be short.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fbf86a82790>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f10d435cf70>
 
 
 
@@ -242,7 +242,7 @@ The raw intensity values are then converted to optical density.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fbf186b5ca0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f104deb2790>
 
 
 
@@ -279,7 +279,7 @@ the modified Beer-Lambert law.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fbfff8343a0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f0fec5f2700>
 
 
 
@@ -540,7 +540,7 @@ approach, and the benefits of the GLM style of analysis
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  8.692 seconds)
+   **Total running time of the script:** ( 0 minutes  10.435 seconds)
 
 **Estimated memory usage:**  40 MB
 
@@ -555,7 +555,7 @@ approach, and the benefits of the GLM style of analysis
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_99_bad.ipynb
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_99_bad.ipynb
         :alt: Launch binder
         :width: 150 px
 

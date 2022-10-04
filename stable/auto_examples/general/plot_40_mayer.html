@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Mayer Wave Parametrisation &#8212; MNE-NIRS 0.3.0 documentation</title>
+    <title>Mayer Wave Parametrisation &#8212; MNE-NIRS 0.4.0 documentation</title>
   <script>
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
@@ -39,6 +39,7 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/copybutton.js"></script>
     <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
     <script>
@@ -52,7 +53,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/general/plot_40_mayer';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.3.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.4.0';
         </script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -112,7 +113,7 @@
 
   
   
-    <p class="title logo__title">MNE-NIRS 0.3.0 documentation</p>
+    <p class="title logo__title">MNE-NIRS 0.4.0 documentation</p>
   
 </a>
     
@@ -166,7 +167,7 @@
       <div class="navbar-end-item">
         <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
-        0.3.0  <!-- this text may get changed later by javascript -->
+        0.4.0  <!-- this text may get changed later by javascript -->
         <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -263,7 +264,7 @@
       <div class="navbar-end-item">
         <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
-        0.3.0  <!-- this text may get changed later by javascript -->
+        0.4.0  <!-- this text may get changed later by javascript -->
         <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -392,6 +393,11 @@
    <li class="toctree-l2">
     <a class="reference internal" href="plot_50_decoding.html">
      Decoding Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_60_aux_data.html">
+     Utilising Auxiliary Data
     </a>
    </li>
    <li class="toctree-l2">
@@ -656,7 +662,7 @@ it matches well to the data.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xticks.html#matplotlib.pyplot.xticks" title="matplotlib.pyplot.xticks" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">xticks</span></a><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">]);</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_40_mayer_001.png" srcset="../../_images/sphx_glr_plot_40_mayer_001.png" alt="plot 40 mayer" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>([&lt;matplotlib.axis.XTick object at 0x7fbf1809bd00&gt;, &lt;matplotlib.axis.XTick object at 0x7fbf1822ddc0&gt;, &lt;matplotlib.axis.XTick object at 0x7fc000977730&gt;, &lt;matplotlib.axis.XTick object at 0x7fbf8698eee0&gt;, &lt;matplotlib.axis.XTick object at 0x7fbf0223bc10&gt;, &lt;matplotlib.axis.XTick object at 0x7fbf0223b580&gt;, &lt;matplotlib.axis.XTick object at 0x7fbfffb01cd0&gt;], [Text(0, 0, &#39;0.0&#39;), Text(1, 0, &#39;0.1&#39;), Text(2, 0, &#39;0.2&#39;), Text(3, 0, &#39;0.3&#39;), Text(4, 0, &#39;0.4&#39;), Text(5, 0, &#39;0.5&#39;), Text(6, 0, &#39;0.6&#39;)])
+<img src="../../_images/sphx_glr_plot_40_mayer_001.png" srcset="../../_images/sphx_glr_plot_40_mayer_001.png" alt="plot 40 mayer" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>([&lt;matplotlib.axis.XTick object at 0x7f114d2c6f70&gt;, &lt;matplotlib.axis.XTick object at 0x7f114d2c6dc0&gt;, &lt;matplotlib.axis.XTick object at 0x7f0fec7d3940&gt;, &lt;matplotlib.axis.XTick object at 0x7f114a2194c0&gt;, &lt;matplotlib.axis.XTick object at 0x7f114a219ee0&gt;, &lt;matplotlib.axis.XTick object at 0x7f10cc1c4640&gt;, &lt;matplotlib.axis.XTick object at 0x7f104dc12220&gt;], [Text(0, 0, &#39;0.0&#39;), Text(1, 0, &#39;0.1&#39;), Text(2, 0, &#39;0.2&#39;), Text(3, 0, &#39;0.3&#39;), Text(4, 0, &#39;0.4&#39;), Text(5, 0, &#39;0.5&#39;), Text(6, 0, &#39;0.6&#39;)])
 </pre></div>
 </div>
 </section>
@@ -748,11 +754,11 @@ for how to use short channels in either a GLM or averaging analysis with MNE-NIR
 </aside>
 </aside>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  3.122 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  3.739 seconds)</p>
 <p><strong>Estimated memory usage:</strong>  9 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-40-mayer-py">
 <div class="binder-badge docutils container">
-<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_40_mayer.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_40_mayer.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
 </div>
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/991d75f9e37a8c8640f1e02fc0b39e55/plot_40_mayer.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_40_mayer.py</span></code></a></p>
@@ -868,7 +874,7 @@ for how to use short channels in either a GLM or averaging analysis with MNE-NIR
     
 <p class="copyright">
 
-    &copy; Copyright 2012–2022, MNE Developers. Last updated &lt;time datetime=&#34;2022-09-17T09:28:06.114719+00:00&#34; class=&#34;localized&#34;&gt;2022-09-17 09:28 UTC&lt;/time&gt;
+    &copy; Copyright 2012–2022, MNE Developers. Last updated &lt;time datetime=&#34;2022-10-06T00:07:22.643633+00:00&#34; class=&#34;localized&#34;&gt;2022-10-06 00:07 UTC&lt;/time&gt;
 &lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.<br>
 
 </p>

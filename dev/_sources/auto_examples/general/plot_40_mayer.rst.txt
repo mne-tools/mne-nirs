@@ -10,7 +10,7 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_auto_examples_general_plot_40_mayer.py>`
+        :ref:`Go to the end <sphx_glr_download_auto_examples_general_plot_40_mayer.py>`
         to download the full example code or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
@@ -58,7 +58,7 @@ data for the purpose of extracting Mayer waves oscillation parameters.
    :local:
    :depth: 2
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-62
+.. GENERATED FROM PYTHON SOURCE LINES 43-61
 
 .. code-block:: default
 
@@ -73,7 +73,6 @@ data for the purpose of extracting Mayer waves oscillation parameters.
     import matplotlib.pyplot as plt
 
     from mne.preprocessing.nirs import optical_density, beer_lambert_law
-    from mne.time_frequency import psd_welch
 
     from mne_nirs.channels import get_long_channels
     from mne_nirs.preprocessing import quantify_mayer_fooof
@@ -88,14 +87,14 @@ data for the purpose of extracting Mayer waves oscillation parameters.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-67
+.. GENERATED FROM PYTHON SOURCE LINES 62-66
 
 Import and preprocess data
 --------------------------
 
 We read in the data and convert to haemoglobin concentration.
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-80
+.. GENERATED FROM PYTHON SOURCE LINES 66-79
 
 .. code-block:: default
 
@@ -201,7 +200,7 @@ We read in the data and convert to haemoglobin concentration.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-101
+.. GENERATED FROM PYTHON SOURCE LINES 80-100
 
 Process data with FOOOF
 -----------------------
@@ -224,7 +223,7 @@ at exactly 0.1 Hz, but instead seems to peak at approximately 0.09 Hz.
 The shaded area illustrates the oscillation fitted by the FOOOF algorithm,
 it matches well to the data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 101-128
+.. GENERATED FROM PYTHON SOURCE LINES 100-129
 
 .. code-block:: default
 
@@ -239,7 +238,9 @@ it matches well to the data.
         return spectra, freqs
 
     # Prepare data for FOOOF
-    spectra, freqs = psd_welch(raw, fmin=0.001, fmax=1.0, tmin=0, tmax=None, n_overlap=300, n_fft=600)
+    psd = raw.compute_psd(
+        fmin=0.001, fmax=1.0, tmin=0, tmax=None, n_overlap=300, n_fft=600)
+    spectra, freqs = psd.get_data(return_freqs=True)
     spectra, freqs = scale_up_spectra(spectra, freqs)
 
     # Specify the model, note that frequency values here are times 10
@@ -252,7 +253,7 @@ it matches well to the data.
     fig, axs = plt.subplots(1, 1, figsize=(10, 5))
     fm.plot(plot_peaks='shade', data_kwargs={'color': 'orange'}, ax=axs)
     # Correct for x10 scaling above
-    plt.xticks([0, 1, 2, 3, 4, 5, 6], [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]);
+    plt.xticks([0, 1, 2, 3, 4, 5, 6], [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6])
 
 
 
@@ -269,11 +270,11 @@ it matches well to the data.
  .. code-block:: none
 
 
-    ([<matplotlib.axis.XTick object at 0x7f4e902550a0>, <matplotlib.axis.XTick object at 0x7f4e902556d0>, <matplotlib.axis.XTick object at 0x7f4f5e87c340>, <matplotlib.axis.XTick object at 0x7f4ee472b940>, <matplotlib.axis.XTick object at 0x7f4f386d7070>, <matplotlib.axis.XTick object at 0x7f4eac318190>, <matplotlib.axis.XTick object at 0x7f4eefa8bfa0>], [Text(0, 0, '0.0'), Text(1, 0, '0.1'), Text(2, 0, '0.2'), Text(3, 0, '0.3'), Text(4, 0, '0.4'), Text(5, 0, '0.5'), Text(6, 0, '0.6')])
+    ([<matplotlib.axis.XTick object at 0x7f9aca2fe1f0>, <matplotlib.axis.XTick object at 0x7f9aca2fe610>, <matplotlib.axis.XTick object at 0x7f9aca2fe250>, <matplotlib.axis.XTick object at 0x7f9aca2db8e0>, <matplotlib.axis.XTick object at 0x7f9a6b187df0>, <matplotlib.axis.XTick object at 0x7f99df249190>, <matplotlib.axis.XTick object at 0x7f9a6b187c40>], [Text(0, 0, '0.0'), Text(1, 0, '0.1'), Text(2, 0, '0.2'), Text(3, 0, '0.3'), Text(4, 0, '0.4'), Text(5, 0, '0.5'), Text(6, 0, '0.6')])
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 129-138
+.. GENERATED FROM PYTHON SOURCE LINES 130-139
 
 Use MNE-NIRS to quantify Mayer wave oscillation
 -----------------------------------------------
@@ -285,7 +286,7 @@ dataframe for your convenience.
 It uses the FOOOF algorithm under the hood, so ensure you cite the original
 authors if you use this function.
 
-.. GENERATED FROM PYTHON SOURCE LINES 138-142
+.. GENERATED FROM PYTHON SOURCE LINES 139-143
 
 .. code-block:: default
 
@@ -342,7 +343,7 @@ authors if you use this function.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 143-167
+.. GENERATED FROM PYTHON SOURCE LINES 144-168
 
 Conclusion
 ----------
@@ -369,7 +370,7 @@ and
 :ref:`signal enhancement tutorial <tut-fnirs-enhance>`
 for how to use short channels in either a GLM or averaging analysis with MNE-NIRS.
 
-.. GENERATED FROM PYTHON SOURCE LINES 170-174
+.. GENERATED FROM PYTHON SOURCE LINES 171-175
 
 Bibliography
 -----------------------------------------------
@@ -379,7 +380,7 @@ Bibliography
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.922 seconds)
+   **Total running time of the script:** ( 0 minutes  3.394 seconds)
 
 **Estimated memory usage:**  9 MB
 
@@ -394,7 +395,7 @@ Bibliography
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_40_mayer.ipynb
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=dev/notebooks/auto_examples/general/plot_40_mayer.ipynb
         :alt: Launch binder
         :width: 150 px
 

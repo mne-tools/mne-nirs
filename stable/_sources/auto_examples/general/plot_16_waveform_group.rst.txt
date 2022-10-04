@@ -343,7 +343,7 @@ as illustrated by the head inset in the top right corner of the figure.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fbf0248af40>
+    <matplotlib.legend.Legend object at 0x7f106c543670>
 
 
 
@@ -459,7 +459,7 @@ regions of the brain for each condition.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fc000ace490>
+    <matplotlib.legend.Legend object at 0x7f104dcbd070>
 
 
 
@@ -483,7 +483,7 @@ chromophore. The data is then stored in a dataframe, which is saved
 to a csv file for easy analysis in any statistical analysis software.
 We also demonstrate two example analyses on these values below.
 
-.. GENERATED FROM PYTHON SOURCE LINES 312-341
+.. GENERATED FROM PYTHON SOURCE LINES 312-339
 
 .. code-block:: default
 
@@ -496,8 +496,6 @@ We also demonstrate two example analyses on these values below.
             subj_id += 1
             for roi in rois:
                 for chroma in ["hbo", "hbr"]:
-                    assert subj_data.info["subject_info"]['first_name'] == \
-                        'mne_anonymize'  # have been anonymized
                     data = deepcopy(subj_data).pick(picks=rois[roi]).pick(chroma)
                     value = data.crop(tmin=5.0, tmax=7.0).data.mean() * 1.0e6
 
@@ -597,7 +595,7 @@ We also demonstrate two example analyses on these values below.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 342-354
+.. GENERATED FROM PYTHON SOURCE LINES 340-352
 
 View individual results
 -----------------------
@@ -612,7 +610,7 @@ skull thickness, both of which vary across the head and across participants.
 For this reason, fNIRS is most appropriate for detecting changes within a
 single ROI between conditions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 354-358
+.. GENERATED FROM PYTHON SOURCE LINES 352-356
 
 .. code-block:: default
 
@@ -634,11 +632,11 @@ single ROI between conditions.
  .. code-block:: none
 
 
-    <seaborn.axisgrid.FacetGrid object at 0x7fbf181432b0>
+    <seaborn.axisgrid.FacetGrid object at 0x7f0fec59f790>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 359-367
+.. GENERATED FROM PYTHON SOURCE LINES 357-365
 
 Research question 1: Comparison of conditions
 ---------------------------------------------------------------------------------------------------
@@ -649,7 +647,7 @@ than the response when not tapping (control)?
 For this token example we subset the dataframe and then apply the mixed
 effect model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 367-376
+.. GENERATED FROM PYTHON SOURCE LINES 365-374
 
 .. code-block:: default
 
@@ -708,13 +706,13 @@ effect model.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 377-380
+.. GENERATED FROM PYTHON SOURCE LINES 375-378
 
 The model indicates that for the oxyhaemoglobin (HbO) data in the left
 ROI, that the tapping condition with the right hand evokes
 a 9.0 μMol larger response than the control condition.
 
-.. GENERATED FROM PYTHON SOURCE LINES 383-393
+.. GENERATED FROM PYTHON SOURCE LINES 381-391
 
 Research question 2: Are responses larger on the contralateral side to tapping?
 -------------------------------------------------------------------------------
@@ -727,7 +725,7 @@ First, the ROI data in the dataframe is encoded as ipsi- and contralateral
 to the tapping hand. Then the data is subset to just examine the two tapping
 conditions and the model is applied.
 
-.. GENERATED FROM PYTHON SOURCE LINES 393-414
+.. GENERATED FROM PYTHON SOURCE LINES 391-412
 
 .. code-block:: default
 
@@ -798,7 +796,7 @@ conditions and the model is applied.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 415-418
+.. GENERATED FROM PYTHON SOURCE LINES 413-416
 
 The model indicates that for the oxyhaemoglobin (HbO) data, the ipsilateral
 responses are 4.2 μMol smaller than those on the contralateral side to the
@@ -807,7 +805,7 @@ hand that is tapping.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  8.519 seconds)
+   **Total running time of the script:** ( 0 minutes  10.287 seconds)
 
 **Estimated memory usage:**  9 MB
 
@@ -822,7 +820,7 @@ hand that is tapping.
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_16_waveform_group.ipynb
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_16_waveform_group.ipynb
         :alt: Launch binder
         :width: 150 px
 

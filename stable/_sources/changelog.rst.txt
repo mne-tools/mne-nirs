@@ -12,7 +12,14 @@ Major version changes indicate incompatible API changes.
 Minor version changes indicate new functionality was added in a backwards compatible manner.
 Patch version changes indicate backward compatible bug fixes.
 
-To install a specific version of the library you would run ``pip install mne-nirs==0.2.1``, where ``0.2.1`` is the version you wish to install.
+To install a specific version of the library you would run ``pip install mne-nirs==0.3.0``, where ``0.3.0`` is the version you wish to install.
+
+
+v0.4.0 dev
+----------
+
+* Add support for reading auxiliary data from SNIRF files. By `Robert Luke`_.
+* Fix bug in surface projection of HbR signals. By `Johann Benerradi`_.
 
 
 v0.3.0
@@ -172,3 +179,4 @@ Enhancements
 .. _Christian Arthur: https://github.com/chrsthur
 .. _Alex Rockhill: https://github.com/alexrockhill
 .. _Samuel Powell: https://github.com/samuelpowell
+.. _Johann Benerradi: https://github.com/HanBnrd

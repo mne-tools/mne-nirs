@@ -10,7 +10,7 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_auto_examples_general_plot_22_quality.py>`
+        :ref:`Go to the end <sphx_glr_download_auto_examples_general_plot_22_quality.py>`
         to download the full example code or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
@@ -128,7 +128,7 @@ We then convert the data to optical density and plot the raw signal.
 
     Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f4dec18cdc0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f99df1faaf0>
 
 
 
@@ -241,7 +241,7 @@ channels are now displayed in grey to indicate they are bad.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f4e6c302430>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f995e0c4160>
 
 
 
@@ -460,7 +460,7 @@ has been added.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f4ee93191f0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f9a3c6e5700>
 
 
 
@@ -548,7 +548,7 @@ on S2-D4).
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f4e90320550>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f995e226550>
 
 
 
@@ -583,7 +583,7 @@ and bad time segments are marked in red.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f4e6c6e49d0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f99df08aee0>
 
 
 
@@ -603,7 +603,7 @@ are treated in downstream analysis.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  22.195 seconds)
+   **Total running time of the script:** ( 0 minutes  22.857 seconds)
 
 **Estimated memory usage:**  10 MB
 
@@ -618,7 +618,7 @@ are treated in downstream analysis.
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_22_quality.ipynb
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=dev/notebooks/auto_examples/general/plot_22_quality.ipynb
         :alt: Launch binder
         :width: 150 px
 

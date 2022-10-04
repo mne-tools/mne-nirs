@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Group Level Waveform Analysis &#8212; MNE-NIRS 0.3.0 documentation</title>
+    <title>Group Level Waveform Analysis &#8212; MNE-NIRS 0.4.0 documentation</title>
   <script>
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
@@ -39,6 +39,7 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/copybutton.js"></script>
     <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
     <script>
@@ -52,7 +53,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/general/plot_16_waveform_group';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.3.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.4.0';
         </script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -112,7 +113,7 @@
 
   
   
-    <p class="title logo__title">MNE-NIRS 0.3.0 documentation</p>
+    <p class="title logo__title">MNE-NIRS 0.4.0 documentation</p>
   
 </a>
     
@@ -166,7 +167,7 @@
       <div class="navbar-end-item">
         <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
-        0.3.0  <!-- this text may get changed later by javascript -->
+        0.4.0  <!-- this text may get changed later by javascript -->
         <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -263,7 +264,7 @@
       <div class="navbar-end-item">
         <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
-        0.3.0  <!-- this text may get changed later by javascript -->
+        0.4.0  <!-- this text may get changed later by javascript -->
         <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -392,6 +393,11 @@
    <li class="toctree-l2">
     <a class="reference internal" href="plot_50_decoding.html">
      Decoding Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plot_60_aux_data.html">
+     Utilising Auxiliary Data
     </a>
    </li>
    <li class="toctree-l2">
@@ -708,7 +714,7 @@ as illustrated by the head inset in the top right corner of the figure.</p>
 <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Oxyhaemoglobin&quot;</span><span class="p">,</span> <span class="s2">&quot;Deoxyhaemoglobin&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_16_waveform_group_001.png" srcset="../../_images/sphx_glr_plot_16_waveform_group_001.png" alt="15.0, Control, Tapping/Left, Tapping/Right" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7fbf0248af40&gt;
+<img src="../../_images/sphx_glr_plot_16_waveform_group_001.png" srcset="../../_images/sphx_glr_plot_16_waveform_group_001.png" alt="15.0, Control, Tapping/Left, Tapping/Right" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7f106c543670&gt;
 </pre></div>
 </div>
 <p>From this figure we observe that the response to the tapping condition
@@ -781,7 +787,7 @@ regions of the brain for each condition.</p>
 <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Oxyhaemoglobin&quot;</span><span class="p">,</span> <span class="s2">&quot;Deoxyhaemoglobin&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_16_waveform_group_002.png" srcset="../../_images/sphx_glr_plot_16_waveform_group_002.png" alt="Tapping/Right" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7fc000ace490&gt;
+<img src="../../_images/sphx_glr_plot_16_waveform_group_002.png" srcset="../../_images/sphx_glr_plot_16_waveform_group_002.png" alt="Tapping/Right" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7f104dcbd070&gt;
 </pre></div>
 </div>
 <p>From this figure we observe that the response to tapping appears
@@ -806,8 +812,6 @@ We also demonstrate two example analyses on these values below.</p>
         <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subj_id</span></a> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">roi</span></a> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">rois</span></a><span class="p">:</span>
             <span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">chroma</span></a> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span> <span class="s2">&quot;hbr&quot;</span><span class="p">]:</span>
-                <span class="k">assert</span> <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subj_data</span><span class="o">.</span><span class="n">info</span></a><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">][</span><span class="s1">&#39;first_name&#39;</span><span class="p">]</span> <span class="o">==</span> \
-                    <span class="s1">&#39;mne_anonymize&#39;</span>  <span class="c1"># have been anonymized</span>
                 <a href="https://mne.tools/stable/generated/mne.EvokedArray.html#mne.EvokedArray" title="mne.EvokedArray" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/copy.html#copy.deepcopy" title="copy.deepcopy" class="sphx-glr-backref-module-copy sphx-glr-backref-type-py-function"><span class="n">deepcopy</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.EvokedArray.html#mne.EvokedArray" title="mne.EvokedArray" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subj_data</span></a><span class="p">)</span><span class="o">.</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pick</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">picks</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">rois</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">roi</span></a><span class="p">])</span><span class="o">.</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pick</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">chroma</span></a><span class="p">)</span>
                 <a href="https://numpy.org/devdocs/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">value</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.EvokedArray.html#mne.EvokedArray.crop" title="mne.EvokedArray.crop" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-method"><span class="n">data</span><span class="o">.</span><span class="n">crop</span></a><span class="p">(</span><span class="n">tmin</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="mf">7.0</span><span class="p">)</span><span class="o">.</span><a href="https://mne.tools/stable/generated/mne.EvokedArray.html#mne.EvokedArray" title="mne.EvokedArray" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.0e6</span>
 
@@ -913,7 +917,7 @@ single ROI between conditions.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;Condition&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Value&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <a href="https://mne.tools/stable/generated/mne.EvokedArray.html#mne.EvokedArray" title="mne.EvokedArray" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Chroma == &#39;hbo&#39;&quot;</span><span class="p">),</span> <span class="n">ci</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;muted&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_16_waveform_group_003.png" srcset="../../_images/sphx_glr_plot_16_waveform_group_003.png" alt="plot 16 waveform group" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid object at 0x7fbf181432b0&gt;
+<img src="../../_images/sphx_glr_plot_16_waveform_group_003.png" srcset="../../_images/sphx_glr_plot_16_waveform_group_003.png" alt="plot 16 waveform group" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid object at 0x7f0fec59f790&gt;
 </pre></div>
 </div>
 </section>
@@ -1043,11 +1047,11 @@ conditions and the model is applied.</p>
 <br /><p>The model indicates that for the oxyhaemoglobin (HbO) data, the ipsilateral
 responses are 4.2 μMol smaller than those on the contralateral side to the
 hand that is tapping.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  8.519 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  10.287 seconds)</p>
 <p><strong>Estimated memory usage:</strong>  9 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-16-waveform-group-py">
 <div class="binder-badge docutils container">
-<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_16_waveform_group.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_16_waveform_group.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
 </div>
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/dbf2d5f5770776e46b2030610adfa52f/plot_16_waveform_group.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_16_waveform_group.py</span></code></a></p>
@@ -1183,7 +1187,7 @@ hand that is tapping.</p>
     
 <p class="copyright">
 
-    &copy; Copyright 2012–2022, MNE Developers. Last updated &lt;time datetime=&#34;2022-09-17T09:28:06.114719+00:00&#34; class=&#34;localized&#34;&gt;2022-09-17 09:28 UTC&lt;/time&gt;
+    &copy; Copyright 2012–2022, MNE Developers. Last updated &lt;time datetime=&#34;2022-10-06T00:07:22.643633+00:00&#34; class=&#34;localized&#34;&gt;2022-10-06 00:07 UTC&lt;/time&gt;
 &lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.<br>
 
 </p>

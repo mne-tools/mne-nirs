@@ -10,7 +10,7 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_auto_examples_general_plot_11_hrf_measured.py>`
+        :ref:`Go to the end <sphx_glr_download_auto_examples_general_plot_11_hrf_measured.py>`
         to download the full example code or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
@@ -130,7 +130,7 @@ to meet github memory constraints.
  .. code-block:: none
 
     Using default location ~/mne_data for fnirs_motor...
-      0%|                                              | 0.00/17.9M [00:00<?, ?B/s]     31%|███████████▍                         | 5.51M/17.9M [00:00<00:00, 55.1MB/s]     74%|███████████████████████████▍         | 13.2M/17.9M [00:00<00:00, 68.1MB/s]      0%|                                              | 0.00/17.9M [00:00<?, ?B/s]    100%|█████████████████████████████████████| 17.9M/17.9M [00:00<00:00, 23.1GB/s]
+      0%|                                              | 0.00/17.9M [00:00<?, ?B/s]     38%|██████████████                       | 6.82M/17.9M [00:00<00:00, 68.2MB/s]     89%|████████████████████████████████▊    | 15.9M/17.9M [00:00<00:00, 81.2MB/s]      0%|                                              | 0.00/17.9M [00:00<?, ?B/s]    100%|█████████████████████████████████████| 17.9M/17.9M [00:00<00:00, 30.4GB/s]
     Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
     Reading 0 ... 23238  =      0.000 ...  2974.464 secs...
 
@@ -1034,7 +1034,7 @@ cortical surface
  .. code-block:: none
 
 
-    <mne.viz._brain._brain.Brain object at 0x7f4e6c45e430>
+    <mne.viz._brain._brain.Brain object at 0x7f9a3c45b130>
 
 
 
@@ -1549,9 +1549,9 @@ the tapping, but we do expect 5% or less for the false positive rate.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  19.389 seconds)
+   **Total running time of the script:** ( 0 minutes  20.886 seconds)
 
-**Estimated memory usage:**  282 MB
+**Estimated memory usage:**  209 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_11_hrf_measured.py:
@@ -1564,7 +1564,7 @@ the tapping, but we do expect 5% or less for the false positive rate.
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_11_hrf_measured.ipynb
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=dev/notebooks/auto_examples/general/plot_11_hrf_measured.ipynb
         :alt: Launch binder
         :width: 150 px
 

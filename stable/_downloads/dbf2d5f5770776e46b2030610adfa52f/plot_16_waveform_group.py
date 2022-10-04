@@ -318,8 +318,6 @@ for idx, evoked in enumerate(all_evokeds):
         subj_id += 1
         for roi in rois:
             for chroma in ["hbo", "hbr"]:
-                assert subj_data.info["subject_info"]['first_name'] == \
-                    'mne_anonymize'  # have been anonymized
                 data = deepcopy(subj_data).pick(picks=rois[roi]).pick(chroma)
                 value = data.crop(tmin=5.0, tmax=7.0).data.mean() * 1.0e6
 

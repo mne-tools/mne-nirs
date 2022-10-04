@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>mne_nirs.statistics.RegressionResults &#8212; MNE-NIRS 0.3.0 documentation</title>
+    <title>mne_nirs.statistics.RegressionResults &#8212; MNE-NIRS 0.4.0 documentation</title>
   <script>
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
@@ -39,6 +39,7 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/copybutton.js"></script>
     <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
     <script>
@@ -52,7 +53,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'generated/mne_nirs.statistics.RegressionResults';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.3.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.4.0';
         </script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -112,7 +113,7 @@
 
   
   
-    <p class="title logo__title">MNE-NIRS 0.3.0 documentation</p>
+    <p class="title logo__title">MNE-NIRS 0.4.0 documentation</p>
   
 </a>
     
@@ -166,7 +167,7 @@
       <div class="navbar-end-item">
         <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
-        0.3.0  <!-- this text may get changed later by javascript -->
+        0.4.0  <!-- this text may get changed later by javascript -->
         <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -263,7 +264,7 @@
       <div class="navbar-end-item">
         <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
-        0.3.0  <!-- this text may get changed later by javascript -->
+        0.4.0  <!-- this text may get changed later by javascript -->
         <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -324,6 +325,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="mne_nirs.io.snirf.write_raw_snirf.html">
    mne_nirs.io.snirf.write_raw_snirf
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mne_nirs.io.snirf.read_snirf_aux_data.html">
+   mne_nirs.io.snirf.read_snirf_aux_data
   </a>
  </li>
 </ul>
@@ -466,16 +472,6 @@
  </li>
 </ul>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="mne_nirs.visualisation.plot_glm_topo.html">
-   mne_nirs.visualisation.plot_glm_topo
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="mne_nirs.visualisation.plot_glm_contrast_topo.html">
-   mne_nirs.visualisation.plot_glm_contrast_topo
-  </a>
- </li>
  <li class="toctree-l1">
   <a class="reference internal" href="mne_nirs.visualisation.plot_glm_group_topo.html">
    mne_nirs.visualisation.plot_glm_group_topo
@@ -650,7 +646,7 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#mne_nirs.statistics.RegressionResults.pick" title="mne_nirs.statistics.RegressionResults.pick"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pick</span></code></a>(picks[, exclude])</p></td>
 <td><p>Pick a subset of channels.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#mne_nirs.statistics.RegressionResults.plot_topo" title="mne_nirs.statistics.RegressionResults.plot_topo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_topo</span></code></a>([conditions, axes, vmin, vmax, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_nirs.statistics.RegressionResults.plot_topo" title="mne_nirs.statistics.RegressionResults.plot_topo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_topo</span></code></a>([conditions, axes, vlim, vmin, ...])</p></td>
 <td><p>Plot 2D topography of GLM data.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#mne_nirs.statistics.RegressionResults.save" title="mne_nirs.statistics.RegressionResults.save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save</span></code></a>(fname[, overwrite])</p></td>
@@ -856,7 +852,7 @@ types (e.g., exclude=”bads” when picks=”meg”).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mne_nirs.statistics.RegressionResults.plot_topo">
-<span class="sig-name descname"><span class="pre">plot_topo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conditions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(12,</span> <span class="pre">7)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sphere</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mne_nirs/statistics/_glm_level_first.html#RegressionResults.plot_topo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_nirs.statistics.RegressionResults.plot_topo" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_topo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conditions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(None,</span> <span class="pre">None)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(12,</span> <span class="pre">7)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sphere</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mne_nirs/statistics/_glm_level_first.html#RegressionResults.plot_topo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_nirs.statistics.RegressionResults.plot_topo" title="Permalink to this definition">#</a></dt>
 <dd><p>Plot 2D topography of GLM data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -865,12 +861,15 @@ types (e.g., exclude=”bads” when picks=”meg”).</p>
 </dd>
 <dt><strong>axes</strong><span class="classifier">instance of Axes | None</span></dt><dd><p>The axes to plot to. If None, a new figure is used.</p>
 </dd>
-<dt><strong>vmin</strong><span class="classifier">float | None</span></dt><dd><p>The value specifying the lower bound of the color range.
-If None, and vmax is None, -vmax is used. Else np.min(data).
-Defaults to None.</p>
+<dt><strong>vlim</strong><span class="classifier">tuple of length 2</span></dt><dd><p>Colormap limits to use. If a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a> of floats, specifies
+the lower and upper bounds of the colormap (in that order);
+providing <code class="docutils literal notranslate"><span class="pre">None</span></code> for either entry will set the corresponding
+boundary at the positive or negative max of the absolute value of
+the data.</p>
 </dd>
-<dt><strong>vmax</strong><span class="classifier">float | None</span></dt><dd><p>The value specifying the upper bound of the color range.
-If None, the maximum absolute value is used. Defaults to None.</p>
+<dt><strong>vmin</strong><span class="classifier">float | None</span></dt><dd><p>Deprecated, use vlim instead.</p>
+</dd>
+<dt><strong>vmax</strong><span class="classifier">float | None</span></dt><dd><p>Deprecated, use vlim instead.</p>
 </dd>
 <dt><strong>colorbar</strong><span class="classifier">Bool</span></dt><dd><p>Should a colorbar be plotted.</p>
 </dd>
@@ -1167,6 +1166,170 @@ info[“subject_info”].</p>
 <nav id="bd-toc-nav" class="page-toc">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     RegressionResults
+    </span>
+   </code>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.MSE">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.MSE()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.__contains__">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.__contains__()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.__hash__">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.__hash__
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.ch_names">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.ch_names
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.compensation_grade">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.compensation_grade
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.compute_contrast">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.compute_contrast()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.copy">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.copy()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.get_channel_types">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.get_channel_types()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.model">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.model()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.pick">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.pick()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.plot_topo">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.plot_topo()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.save">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.save()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.scatter">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.scatter()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.surface_projection">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.surface_projection()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.theta">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.theta()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.to_dataframe">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.to_dataframe()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mne_nirs.statistics.RegressionResults.to_dataframe_region_of_interest">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       RegressionResults.to_dataframe_region_of_interest()
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#examples-using-mne-nirs-statistics-regressionresults">
    Examples using
    <code class="docutils literal notranslate">
@@ -1216,7 +1379,7 @@ info[“subject_info”].</p>
     
 <p class="copyright">
 
-    &copy; Copyright 2012–2022, MNE Developers. Last updated &lt;time datetime=&#34;2022-09-17T09:28:06.114719+00:00&#34; class=&#34;localized&#34;&gt;2022-09-17 09:28 UTC&lt;/time&gt;
+    &copy; Copyright 2012–2022, MNE Developers. Last updated &lt;time datetime=&#34;2022-10-06T00:07:22.643633+00:00&#34; class=&#34;localized&#34;&gt;2022-10-06 00:07 UTC&lt;/time&gt;
 &lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.<br>
 
 </p>
