@@ -14,9 +14,14 @@ Patch version changes indicate backward compatible bug fixes.
 
 To install a specific version of the library you would run ``pip install mne-nirs==0.3.0``, where ``0.3.0`` is the version you wish to install.
 
+v0.5.dev0
+---------
 
-v0.4.0 dev
-----------
+* Nothing yet
+
+
+v0.4.0
+------
 
 * Add support for reading auxiliary data from SNIRF files. By `Robert Luke`_.
 * Fix bug in surface projection of HbR signals. By `Johann Benerradi`_.
