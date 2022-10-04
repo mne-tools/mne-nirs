@@ -129,6 +129,8 @@ to meet github memory constraints.
 
  .. code-block:: none
 
+    Using default location ~/mne_data for fnirs_motor...
+      0%|                                              | 0.00/17.9M [00:00<?, ?B/s]     31%|███████████▍                         | 5.51M/17.9M [00:00<00:00, 55.1MB/s]     74%|███████████████████████████▍         | 13.2M/17.9M [00:00<00:00, 68.1MB/s]      0%|                                              | 0.00/17.9M [00:00<?, ?B/s]    100%|█████████████████████████████████████| 17.9M/17.9M [00:00<00:00, 23.1GB/s]
     Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
     Reading 0 ... 23238  =      0.000 ...  2974.464 secs...
 
@@ -159,7 +161,7 @@ to meet github memory constraints.
         <tr>
             <th>Digitized points</th>
         
-            <td>0 points</td>
+            <td>31 points</td>
         
         </tr>
         <tr>
@@ -204,7 +206,7 @@ to meet github memory constraints.
     
         <tr>
             <th>Duration</th>
-            <td>00:49:32 (HH:MM:SS)</td>
+            <td>00:49:33 (HH:MM:SS)</td>
         </tr>
     </table>
     </div>
@@ -642,7 +644,7 @@ estimates for two channels you would call:
  .. code-block:: none
 
 
-    [3.635950128126077e-11, 9.48201077576092e-12]
+    [3.6359501281260763e-11, 9.482010775760916e-12]
 
 
 
@@ -669,7 +671,7 @@ you would call:
  .. code-block:: none
 
 
-    [9.48201077576092e-12]
+    [9.482010775760916e-12]
 
 
 
@@ -903,7 +905,7 @@ is seen in the epoching tutorial.
  .. code-block:: none
 
 
-    <AxesSubplot:xlabel='Condition', ylabel='Theta'>
+    <AxesSubplot: xlabel='Condition', ylabel='Theta'>
 
 
 
@@ -980,8 +982,8 @@ the center of the head.
 
     glm_hbo.plot_topo(axes=axes[0], colorbar=False, conditions=conditions)
 
-    glm_hbo.copy().pick(picks=range(10)).plot_topo(conditions=conditions, axes=axes[1], colorbar=False, vmin=-16, vmax=16)
-    glm_hbo.copy().pick(picks=range(10, 20)).plot_topo(conditions=conditions, axes=axes[1], colorbar=False, vmin=-16, vmax=16)
+    glm_hbo.copy().pick(picks=range(10)).plot_topo(conditions=conditions, axes=axes[1], colorbar=False, vlim=(-16, 16))
+    glm_hbo.copy().pick(picks=range(10, 20)).plot_topo(conditions=conditions, axes=axes[1], colorbar=False, vlim=(-16, 16))
 
     axes[0].set_title("Smoothed across hemispheres")
     axes[1].set_title("Hemispheres plotted independently")
@@ -1032,7 +1034,7 @@ cortical surface
  .. code-block:: none
 
 
-    <mne.viz._brain._brain.Brain object at 0x7fca03800190>
+    <mne.viz._brain._brain.Brain object at 0x7f4e6c45e430>
 
 
 
@@ -1547,37 +1549,32 @@ the tapping, but we do expect 5% or less for the false positive rate.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  19.432 seconds)
+   **Total running time of the script:** ( 0 minutes  19.389 seconds)
 
-**Estimated memory usage:**  368 MB
+**Estimated memory usage:**  282 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_11_hrf_measured.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
-  .. container:: binder-badge
+    .. container:: binder-badge
 
-    .. image:: images/binder_badge_logo.svg
-      :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_11_hrf_measured.ipynb
-      :alt: Launch binder
-      :width: 150 px
+      .. image:: images/binder_badge_logo.svg
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_11_hrf_measured.ipynb
+        :alt: Launch binder
+        :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: plot_11_hrf_measured.py <plot_11_hrf_measured.py>`
 
-     :download:`Download Python source code: plot_11_hrf_measured.py <plot_11_hrf_measured.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: plot_11_hrf_measured.ipynb <plot_11_hrf_measured.ipynb>`
+      :download:`Download Jupyter notebook: plot_11_hrf_measured.ipynb <plot_11_hrf_measured.ipynb>`
 
 
 .. only:: html

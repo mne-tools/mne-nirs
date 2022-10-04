@@ -1,9 +1,5 @@
 :orphan:
 
-
-
-.. _sphx_glr_auto_examples:
-
 .. _all_examples:
 
 Examples
@@ -34,11 +30,6 @@ upload data, visualise output, all without downloading any code to your computer
     </div>
 
 
-
-.. _sphx_glr_auto_examples_general:
-
-.. _general_examples:
-
 Analysis examples
 -----------------
 
@@ -66,12 +57,6 @@ Analysis examples
     </div>
 
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_01_data_io
-
 .. raw:: html
 
     <div class="sphx-glr-thumbcontainer" tooltip="To get you up and running with MNE-NIRS and fNIRS data analysis we provide some example dataset...">
@@ -89,11 +74,22 @@ Analysis examples
     </div>
 
 
+.. raw:: html
 
-.. toctree::
-   :hidden:
+    <div class="sphx-glr-thumbcontainer" tooltip="`LUMO &lt;https://www.gowerlabs.co.uk/lumo&gt;`__ is a modular, wearable,  high-density diffuse optic...">
 
-   /auto_examples/general/plot_05_datasets
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_06_gowerlabs_thumb.png
+    :alt: Read Gowerlabs LUMO data
+
+  :ref:`sphx_glr_auto_examples_general_plot_06_gowerlabs.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Read Gowerlabs LUMO data</div>
+    </div>
+
 
 .. raw:: html
 
@@ -112,12 +108,6 @@ Analysis examples
     </div>
 
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_10_hrf_simulation
-
 .. raw:: html
 
     <div class="sphx-glr-thumbcontainer" tooltip="In this example we analyse data from a real multichannel functional near-infrared spectroscopy ...">
@@ -134,12 +124,6 @@ Analysis examples
       <div class="sphx-glr-thumbnail-title">GLM Analysis (Measured)</div>
     </div>
 
-
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_11_hrf_measured
 
 .. raw:: html
 
@@ -158,12 +142,6 @@ Analysis examples
     </div>
 
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_12_group_glm
-
 .. raw:: html
 
     <div class="sphx-glr-thumbcontainer" tooltip="In this example we analyse data from a real multi-channel functional near-infrared spectroscopy...">
@@ -180,12 +158,6 @@ Analysis examples
       <div class="sphx-glr-thumbnail-title">GLM FIR Analysis</div>
     </div>
 
-
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_13_fir_glm
 
 .. raw:: html
 
@@ -204,12 +176,6 @@ Analysis examples
     </div>
 
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_14_glm_components
-
 .. raw:: html
 
     <div class="sphx-glr-thumbcontainer" tooltip="This tutorial covers how to convert functional near-infrared spectroscopy (fNIRS) data from raw...">
@@ -226,12 +192,6 @@ Analysis examples
       <div class="sphx-glr-thumbnail-title">Waveform Averaging Analysis</div>
     </div>
 
-
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_15_waveform
 
 .. raw:: html
 
@@ -250,12 +210,6 @@ Analysis examples
     </div>
 
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_16_waveform_group
-
 .. raw:: html
 
     <div class="sphx-glr-thumbcontainer" tooltip="   MNE does not support reading .nirs files. If you have .nirs files that    you would like to ...">
@@ -272,12 +226,6 @@ Analysis examples
       <div class="sphx-glr-thumbnail-title">SNIRF Support in MNE</div>
     </div>
 
-
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_19_snirf
 
 .. raw:: html
 
@@ -296,12 +244,6 @@ Analysis examples
     </div>
 
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_20_enhance
-
 .. raw:: html
 
     <div class="sphx-glr-thumbcontainer" tooltip="Here we artificially introduce several artifacts in a functional near-infrared spectroscopy (fN...">
@@ -318,12 +260,6 @@ Analysis examples
       <div class="sphx-glr-thumbnail-title">Artifact Correction Techniques</div>
     </div>
 
-
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_21_artifacts
 
 .. raw:: html
 
@@ -342,12 +278,6 @@ Analysis examples
     </div>
 
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_22_quality
-
 .. raw:: html
 
     <div class="sphx-glr-thumbcontainer" tooltip="In this example we discuss frequency and filters in the context of functional near-infrared spe...">
@@ -364,12 +294,6 @@ Analysis examples
       <div class="sphx-glr-thumbnail-title">Frequency and Filter Commentary</div>
     </div>
 
-
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_30_frequency
 
 .. raw:: html
 
@@ -388,12 +312,6 @@ Analysis examples
     </div>
 
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_40_mayer
-
 .. raw:: html
 
     <div class="sphx-glr-thumbcontainer" tooltip="This is an example of a decoding analysis performed on functional near-infrared spectroscopy (f...">
@@ -411,11 +329,22 @@ Analysis examples
     </div>
 
 
+.. raw:: html
 
-.. toctree::
-   :hidden:
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we demonstrate how to load auxiliary data from a SNIRF file and include it in t...">
 
-   /auto_examples/general/plot_50_decoding
+.. only:: html
+
+  .. image:: /auto_examples/general/images/thumb/sphx_glr_plot_60_aux_data_thumb.png
+    :alt: Utilising Auxiliary Data
+
+  :ref:`sphx_glr_auto_examples_general_plot_60_aux_data.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Utilising Auxiliary Data</div>
+    </div>
+
 
 .. raw:: html
 
@@ -434,12 +363,6 @@ Analysis examples
     </div>
 
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_70_visualise_brain
-
 .. raw:: html
 
     <div class="sphx-glr-thumbcontainer" tooltip="This is an example of how to save and load functional near-infrared spectroscopy (fNIRS) GLM re...">
@@ -456,12 +379,6 @@ Analysis examples
       <div class="sphx-glr-thumbnail-title">Save and load GLM results</div>
     </div>
 
-
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_80_save_read_glm
 
 .. raw:: html
 
@@ -480,21 +397,10 @@ Analysis examples
     </div>
 
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/general/plot_99_bad
-
 .. raw:: html
 
     </div>
 
-
-
-.. _sphx_glr_auto_examples_migration:
-
-.. _migration:
 
 Migrating from other software packages
 --------------------------------------
@@ -523,12 +429,6 @@ Migrating from other software packages
     </div>
 
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/migration/plot_01_homer
-
 .. raw:: html
 
     <div class="sphx-glr-thumbcontainer" tooltip="This tutorial will demonstrate how to do convert a nirs-toolbox script to MNE and highlight dif...">
@@ -546,15 +446,17 @@ Migrating from other software packages
     </div>
 
 
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/migration/plot_02_nirstoolbox
-
 .. raw:: html
 
     </div>
+
+
+.. toctree::
+   :hidden:
+   :includehidden:
+
+   /auto_examples/general/index.rst
+   /auto_examples/migration/index.rst
 
 
 

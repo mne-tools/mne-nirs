@@ -88,7 +88,7 @@ Download example fNIRS data
 
 Download the ``audio_or_visual_speech`` dataset and load the first measurement.
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-67
+.. GENERATED FROM PYTHON SOURCE LINES 60-70
 
 .. code-block:: default
 
@@ -96,34 +96,11 @@ Download the ``audio_or_visual_speech`` dataset and load the first measurement.
     root = mne_nirs.datasets.audio_or_visual_speech.data_path()
     dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf", subject="04",
                        task="AudioVisualBroadVsRestricted", datatype="nirs", session="01")
-    raw = read_raw_bids(dataset)
-
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 68-72
-
-Download annotation information
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Download the HCP-MMP parcellation.
-
-.. GENERATED FROM PYTHON SOURCE LINES 72-80
-
-.. code-block:: default
-
-
-    # Download anatomical locations
-    subjects_dir = mne.datasets.sample.data_path() + '/subjects'
-    mne.datasets.fetch_hcp_mmp_parcellation(subjects_dir=subjects_dir, accept=True)
-    labels = mne.read_labels_from_annot('fsaverage', 'HCPMMP1', 'lh', subjects_dir=subjects_dir)
-    labels_combined = mne.read_labels_from_annot('fsaverage', 'HCPMMP1_combined', 'lh', subjects_dir=subjects_dir)
-
+    raw = mne.io.read_raw_snirf(dataset.fpath)
+    raw.annotations.rename({'1.0': 'Audio',
+                            '2.0': 'Video',
+                            '3.0': 'Control',
+                            '15.0': 'Ends'})
 
 
 
@@ -133,13 +110,38 @@ Download the HCP-MMP parcellation.
 
  .. code-block:: none
 
-    /home/circleci/project/examples/general/plot_70_visualise_brain.py:74: DeprecationWarning: data_path functions now return pathlib.Path objects which do not natively support the plus (+) operator, switch to using forward slash (/) instead. Support for plus will be removed in 1.2.
-      subjects_dir = mne.datasets.sample.data_path() + '/subjects'
+
+    <Annotations | 48 segments: Audio (18), Control (10), Ends (2), Video (18)>
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 71-75
+
+Download annotation information
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Download the HCP-MMP parcellation.
+
+.. GENERATED FROM PYTHON SOURCE LINES 75-83
+
+.. code-block:: default
+
+
+    # Download anatomical locations
+    subjects_dir = str(mne.datasets.sample.data_path()) + '/subjects'
+    mne.datasets.fetch_hcp_mmp_parcellation(subjects_dir=subjects_dir, accept=True)
+    labels = mne.read_labels_from_annot('fsaverage', 'HCPMMP1', 'lh', subjects_dir=subjects_dir)
+    labels_combined = mne.read_labels_from_annot('fsaverage', 'HCPMMP1_combined', 'lh', subjects_dir=subjects_dir)
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-91
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 84-94
 
 Verify placement of sensors
 ---------------------------
@@ -152,7 +154,7 @@ pairs, and the orange dots represent channel locations.
 In this example we can see channels over the left inferior frontal gyrus,
 auditory cortex, planum temporale, and occipital lobe.
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-96
+.. GENERATED FROM PYTHON SOURCE LINES 94-99
 
 .. code-block:: default
 
@@ -173,7 +175,7 @@ auditory cortex, planum temporale, and occipital lobe.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 97-106
+.. GENERATED FROM PYTHON SOURCE LINES 100-109
 
 .. _tut-fnirs-vis-brain-plot-3d-montage:
 
@@ -185,7 +187,7 @@ in the correct locations in a 3D view. The function
 :func:`mne_nirs.visualisation.plot_3d_montage` gives us this once we
 specify which views to use to show each channel pair:
 
-.. GENERATED FROM PYTHON SOURCE LINES 106-116
+.. GENERATED FROM PYTHON SOURCE LINES 109-119
 
 .. code-block:: default
 
@@ -211,7 +213,7 @@ specify which views to use to show each channel pair:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-125
+.. GENERATED FROM PYTHON SOURCE LINES 120-128
 
 Plot sensor channels and anatomical region of interest
 ------------------------------------------------------
@@ -222,7 +224,7 @@ the relevant brain structures.
 In this example we highlight the primary auditory cortex in blue,
 and we can see that a number of channels are placed over this structure.
 
-.. GENERATED FROM PYTHON SOURCE LINES 125-134
+.. GENERATED FROM PYTHON SOURCE LINES 128-137
 
 .. code-block:: default
 
@@ -247,7 +249,7 @@ and we can see that a number of channels are placed over this structure.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 135-154
+.. GENERATED FROM PYTHON SOURCE LINES 138-157
 
 Plot channels sensitive to anatomical region of interest
 --------------------------------------------------------
@@ -269,7 +271,7 @@ use data from the fOLD toolbox :footcite:`morais2018fnirs`.
 To see more details about how to use the fOLD data see
 :ref:`this tutorial <tut-fnirs-group-relating>`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 154-170
+.. GENERATED FROM PYTHON SOURCE LINES 157-173
 
 .. code-block:: default
 
@@ -301,7 +303,7 @@ To see more details about how to use the fOLD data see
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 171-179
+.. GENERATED FROM PYTHON SOURCE LINES 174-182
 
 Alternatively, we can retain all channels and visualise the specificity of each channel the ROI
 by encoding the specificty in the color of the line between each source and detector.
@@ -312,7 +314,7 @@ Note: this function currently doesn't support the new MNE brain API, so does
 not allow the same behaviour as above (adding sensors, highlighting ROIs etc).
 It should be updated in the near future.
 
-.. GENERATED FROM PYTHON SOURCE LINES 180-186
+.. GENERATED FROM PYTHON SOURCE LINES 183-189
 
 .. code-block:: default
 
@@ -334,7 +336,7 @@ It should be updated in the near future.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 187-199
+.. GENERATED FROM PYTHON SOURCE LINES 190-202
 
 Anatomically informed weighting in region of interest analysis
 --------------------------------------------------------------
@@ -349,7 +351,7 @@ The details of the GLM analysis will not be described here, instead view the
 :ref:`fNIRS GLM tutorial <tut-fnirs-hrf>`. Instead, comments are provided
 for the weighted region of interest function call.
 
-.. GENERATED FROM PYTHON SOURCE LINES 199-234
+.. GENERATED FROM PYTHON SOURCE LINES 202-237
 
 .. code-block:: default
 
@@ -432,11 +434,11 @@ for the weighted region of interest function call.
           <td>Audio_weighted</td>
           <td>Video</td>
           <td>hbo</td>
-          <td>-1.120219e-08</td>
-          <td>0.028269</td>
-          <td>-0.396266</td>
-          <td>42</td>
-          <td>0.693915</td>
+          <td>-1.116166e-08</td>
+          <td>0.027915</td>
+          <td>-0.399851</td>
+          <td>43</td>
+          <td>0.691246</td>
           <td>Custom</td>
           <td>False</td>
         </tr>
@@ -445,11 +447,11 @@ for the weighted region of interest function call.
           <td>Visual_weighted</td>
           <td>Video</td>
           <td>hbo</td>
-          <td>1.029475e-07</td>
-          <td>0.025472</td>
-          <td>4.041636</td>
-          <td>42</td>
-          <td>0.000221</td>
+          <td>9.230472e-08</td>
+          <td>0.025380</td>
+          <td>3.636926</td>
+          <td>43</td>
+          <td>0.000734</td>
           <td>Custom</td>
           <td>True</td>
         </tr>
@@ -458,11 +460,11 @@ for the weighted region of interest function call.
           <td>Audio_weighted</td>
           <td>Control</td>
           <td>hbo</td>
-          <td>-3.485795e-10</td>
-          <td>0.037376</td>
-          <td>-0.009326</td>
-          <td>42</td>
-          <td>0.992603</td>
+          <td>-4.551715e-10</td>
+          <td>0.036879</td>
+          <td>-0.012342</td>
+          <td>43</td>
+          <td>0.990210</td>
           <td>Custom</td>
           <td>False</td>
         </tr>
@@ -471,11 +473,11 @@ for the weighted region of interest function call.
           <td>Visual_weighted</td>
           <td>Control</td>
           <td>hbo</td>
-          <td>-2.474280e-08</td>
-          <td>0.033658</td>
-          <td>-0.735124</td>
-          <td>42</td>
-          <td>0.466349</td>
+          <td>-1.807595e-08</td>
+          <td>0.033537</td>
+          <td>-0.538982</td>
+          <td>43</td>
+          <td>0.592679</td>
           <td>Custom</td>
           <td>False</td>
         </tr>
@@ -486,14 +488,14 @@ for the weighted region of interest function call.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 235-239
+.. GENERATED FROM PYTHON SOURCE LINES 238-242
 
 In the table above we observe that the response to the visual condition
 is only present in the visual region of interest. You can use this
 technique to load any custom weighting, including weights exported from
 other software.
 
-.. GENERATED FROM PYTHON SOURCE LINES 242-249
+.. GENERATED FROM PYTHON SOURCE LINES 245-252
 
 Preprocess fNIRS data
 ---------------------
@@ -503,7 +505,7 @@ First, we process the fNIRS data. This is a duplication of the GLM tutorial
 analysis. The details will not be described here, instead view the
 :ref:`fNIRS GLM tutorial <tut-fnirs-hrf>`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 249-316
+.. GENERATED FROM PYTHON SOURCE LINES 252-320
 
 .. code-block:: default
 
@@ -512,6 +514,7 @@ analysis. The details will not be described here, instead view the
     def individual_analysis(bids_path, ID):
 
         raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
+        raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
          # sanitize event names
         raw_intensity.annotations.description[:] = [
             d.replace('/', '_') for d in raw_intensity.annotations.description]
@@ -581,7 +584,7 @@ analysis. The details will not be described here, instead view the
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 317-324
+.. GENERATED FROM PYTHON SOURCE LINES 321-328
 
 Plot surface projection of GLM results
 --------------------------------------
@@ -591,7 +594,7 @@ and overlay the sensor positions and two different regions of interest.
 In this example we also highlight the premotor cortex and auditory association cortex
 in green and blue respectively.
 
-.. GENERATED FROM PYTHON SOURCE LINES 324-340
+.. GENERATED FROM PYTHON SOURCE LINES 328-344
 
 .. code-block:: default
 
@@ -623,7 +626,7 @@ in green and blue respectively.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 341-345
+.. GENERATED FROM PYTHON SOURCE LINES 345-349
 
 Bibliography
 -----------------------------------------------
@@ -633,37 +636,32 @@ Bibliography
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 2 minutes  3.308 seconds)
+   **Total running time of the script:** ( 0 minutes  49.856 seconds)
 
-**Estimated memory usage:**  38 MB
+**Estimated memory usage:**  29 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_70_visualise_brain.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
-  .. container:: binder-badge
+    .. container:: binder-badge
 
-    .. image:: images/binder_badge_logo.svg
-      :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_70_visualise_brain.ipynb
-      :alt: Launch binder
-      :width: 150 px
+      .. image:: images/binder_badge_logo.svg
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_70_visualise_brain.ipynb
+        :alt: Launch binder
+        :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: plot_70_visualise_brain.py <plot_70_visualise_brain.py>`
 
-     :download:`Download Python source code: plot_70_visualise_brain.py <plot_70_visualise_brain.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: plot_70_visualise_brain.ipynb <plot_70_visualise_brain.ipynb>`
+      :download:`Download Jupyter notebook: plot_70_visualise_brain.ipynb <plot_70_visualise_brain.ipynb>`
 
 
 .. only:: html

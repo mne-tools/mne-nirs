@@ -54,7 +54,7 @@ You can read the SNIRF protocol at the official site https://github.com/fNIRS/sn
 
     import os
     import mne
-    import pysnirf2
+    import snirf
 
     from mne.io import read_raw_nirx, read_raw_snirf
     from mne_nirs.io import write_raw_snirf
@@ -169,7 +169,7 @@ ensure that the values are the same.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.PyQtGraphBrowser object at 0x7fca03831820>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f4dec3c65e0>
 
 
 
@@ -180,7 +180,7 @@ Validate SNIRF File
 
 To validate that a file complies with the SNIRF standard you should use the
 official SNIRF validator from the Boston University Neurophotonics Center
-called ``pysnirf2``. Detailed instructions for this program can be found at
+called ``snirf``. Detailed instructions for this program can be found at
 https://github.com/BUNPC/pysnirf2. Below we demonstrate that the files created
 by MNE-NIRS are compliant with the specification.
 
@@ -189,7 +189,7 @@ by MNE-NIRS are compliant with the specification.
 .. code-block:: default
 
 
-    result = pysnirf2.validateSnirf('test_raw.snirf')
+    result = snirf.validateSnirf('test_raw.snirf')
     assert result.is_valid()
     result.display()
 
@@ -200,7 +200,7 @@ by MNE-NIRS are compliant with the specification.
 
  .. code-block:: none
 
-    <pysnirf2.pysnirf2.ValidationResult object at 0x7fca7d876d60>
+    <snirf.pysnirf2.ValidationResult object at 0x7f4e4c044280>
 
     Found 304 OK      (hidden)
     Found 522 INFO    (hidden)
@@ -215,37 +215,32 @@ by MNE-NIRS are compliant with the specification.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  6.047 seconds)
+   **Total running time of the script:** ( 0 minutes  4.976 seconds)
 
-**Estimated memory usage:**  9 MB
+**Estimated memory usage:**  12 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_19_snirf.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
-  .. container:: binder-badge
+    .. container:: binder-badge
 
-    .. image:: images/binder_badge_logo.svg
-      :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_19_snirf.ipynb
-      :alt: Launch binder
-      :width: 150 px
+      .. image:: images/binder_badge_logo.svg
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_19_snirf.ipynb
+        :alt: Launch binder
+        :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: plot_19_snirf.py <plot_19_snirf.py>`
 
-     :download:`Download Python source code: plot_19_snirf.py <plot_19_snirf.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: plot_19_snirf.ipynb <plot_19_snirf.ipynb>`
+      :download:`Download Jupyter notebook: plot_19_snirf.ipynb <plot_19_snirf.ipynb>`
 
 
 .. only:: html

@@ -64,12 +64,9 @@ information about triggers, condition names, etc.
    This tutorial uses data in the BIDS format.
    The BIDS specification for NIRS data is still under development. See:
    `fNIRS BIDS proposal <https://github.com/bids-standard/bids-specification/pull/802>`_.
-   As such, to run this tutorial you must use the fNIRS development branch of MNE-BIDS.
+   As such, to run this tutorial you must use the MNE-BIDS 0.10 or later.
 
-   To install the fNIRS development branch of MNE-BIDS run:
-   `pip install -U https://codeload.github.com/rob-luke/mne-bids/zip/nirs`.
-
-   MNE-Python. allows you to process fNIRS data that is not in BIDS format too.
+   MNE-Python allows you to process fNIRS data that is not in BIDS format too.
    Simply modify the ``read_raw_`` function to match your data type.
    See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
    to use your data with MNE-Python.
@@ -89,7 +86,7 @@ information about triggers, condition names, etc.
    :local:
    :depth: 2
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-111
+.. GENERATED FROM PYTHON SOURCE LINES 70-107
 
 .. code-block:: default
 
@@ -127,8 +124,7 @@ information about triggers, condition names, etc.
     # Import Plotting Library
     import matplotlib.pyplot as plt
     import matplotlib as mpl
-    from lets_plot import *
-    LetsPlot.setup_html()
+    import seaborn as sns
 
 
 
@@ -138,7 +134,7 @@ information about triggers, condition names, etc.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 112-126
+.. GENERATED FROM PYTHON SOURCE LINES 108-122
 
 Set up directories
 ------------------
@@ -155,7 +151,7 @@ without manually specifying the trigger names etc.
 We first define where the root directory of our dataset is.
 In this example we use the example dataset ``fnirs_motor_group``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 126-131
+.. GENERATED FROM PYTHON SOURCE LINES 122-127
 
 .. code-block:: default
 
@@ -177,14 +173,14 @@ In this example we use the example dataset ``fnirs_motor_group``.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 132-136
+.. GENERATED FROM PYTHON SOURCE LINES 128-132
 
 And as we are using MNE-BIDS we can create a BIDSPath object.
 This class helps to handle all the path wrangling.
 We inform the software that we are analysing nirs data that is saved in
 the snirf format.
 
-.. GENERATED FROM PYTHON SOURCE LINES 136-142
+.. GENERATED FROM PYTHON SOURCE LINES 132-138
 
 .. code-block:: default
 
@@ -207,11 +203,11 @@ the snirf format.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 143-144
+.. GENERATED FROM PYTHON SOURCE LINES 139-140
 
 For example we can automatically query the subjects, tasks, and sessions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 144-149
+.. GENERATED FROM PYTHON SOURCE LINES 140-145
 
 .. code-block:: default
 
@@ -233,7 +229,7 @@ For example we can automatically query the subjects, tasks, and sessions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 150-183
+.. GENERATED FROM PYTHON SOURCE LINES 146-179
 
 Define individual analysis
 --------------------------
@@ -269,7 +265,7 @@ analyses.
    for more information. In the meantime use the following code to replace the
    illegal characters.
 
-.. GENERATED FROM PYTHON SOURCE LINES 183-249
+.. GENERATED FROM PYTHON SOURCE LINES 179-247
 
 .. code-block:: default
 
@@ -278,6 +274,8 @@ analyses.
     def individual_analysis(bids_path, ID):
 
         raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
+        # Delete annotation labeled 15, as these just signify the start and end of experiment.
+        raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
         # sanitize event names
         raw_intensity.annotations.description[:] = [
             d.replace('/', '_') for d in raw_intensity.annotations.description]
@@ -346,7 +344,7 @@ analyses.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 250-257
+.. GENERATED FROM PYTHON SOURCE LINES 248-255
 
 Run analysis on all participants
 --------------------------------
@@ -356,7 +354,7 @@ on each. We append the individual results in to a large dataframe that
 will contain the results from all measurements. We create a group dataframe
 for the region of interest, channel level, and contrast results.
 
-.. GENERATED FROM PYTHON SOURCE LINES 257-276
+.. GENERATED FROM PYTHON SOURCE LINES 255-274
 
 .. code-block:: default
 
@@ -396,7 +394,7 @@ for the region of interest, channel level, and contrast results.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 277-286
+.. GENERATED FROM PYTHON SOURCE LINES 275-284
 
 Visualise Individual results
 ----------------------------
@@ -408,7 +406,7 @@ values and observe they are in the expect range.
 We can already see that the control condition is always near zero,
 and that the responses look to be contralateral to the tapping hand.
 
-.. GENERATED FROM PYTHON SOURCE LINES 286-297
+.. GENERATED FROM PYTHON SOURCE LINES 284-291
 
 .. code-block:: default
 
@@ -416,87 +414,28 @@ and that the responses look to be contralateral to the tapping hand.
     grp_results = df_roi.query("Condition in ['Control', 'Tapping_Left', 'Tapping_Right']")
     grp_results = grp_results.query("Chroma in ['hbo']")
 
-    ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
-        + geom_hline(y_intercept=0, linetype="dashed", size=1) \
-        + geom_point(size=5) \
-        + facet_grid('ID') \
-        + ggsize(900, 350)
+    sns.catplot(x="Condition", y="theta", col="ID", hue="ROI", data=grp_results, col_wrap=5, ci=None, palette="muted", height=4, s=10)
 
 
 
 
 
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_12_group_glm_001.png
+   :alt: ID = 01, ID = 02, ID = 03, ID = 04, ID = 05
+   :srcset: /auto_examples/general/images/sphx_glr_plot_12_group_glm_001.png
+   :class: sphx-glr-single-img
 
 
-.. raw:: html
+.. rst-class:: sphx-glr-script-out
 
-    <div class="output_subarea output_html rendered_html output_result">
-    <html lang="en">
-       <head>
-           <script type="text/javascript" data-lets-plot-script="library" src="https://cdn.jsdelivr.net/gh/JetBrains/lets-plot@v2.2.1/js-package/distr/lets-plot.min.js"></script>
-       </head>
-       <body>
-              <div id="WkIviH"></div>
-       <script type="text/javascript" data-lets-plot-script="plot">
-           var plotSpec={
-    "data":{
-    "ROI":["Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere"],
-    "Condition":["Control","Control","Tapping_Left","Tapping_Left","Tapping_Right","Tapping_Right","Control","Control","Tapping_Left","Tapping_Left","Tapping_Right","Tapping_Right","Control","Control","Tapping_Left","Tapping_Left","Tapping_Right","Tapping_Right","Control","Control","Tapping_Left","Tapping_Left","Tapping_Right","Tapping_Right","Control","Control","Tapping_Left","Tapping_Left","Tapping_Right","Tapping_Right"],
-    "theta":[0.3665201796697628,0.2767052477835225,2.253306244266545,5.6534390983062766,7.09222928310739,3.1843575972302505,-0.9143790325342371,-1.8651492092869062,3.148509079774935,5.773968178090172,7.8175269761667545,1.8613712743539153,-0.8896275974260125,-2.1196440112667942,0.9805964990331454,5.062971026916059,3.4573458561528483,2.9490687218187146,-0.03231701254773656,-0.20974555678099766,-3.1943037212384047,10.659305305835868,4.992717421877636,-0.6397740924614838,0.041583220360206355,-0.47821308970614845,6.662184919667521,23.340210278146003,22.989542590901294,11.577755280370013],
-    "ID":["01","01","01","01","01","01","02","02","02","02","02","02","03","03","03","03","03","03","04","04","04","04","04","04","05","05","05","05","05","05"]
-    },
-    "mapping":{
-    "x":"Condition",
-    "y":"theta",
-    "color":"ROI",
-    "shape":"ROI"
-    },
-    "data_meta":{
-    },
-    "facet":{
-    "name":"grid",
-    "x":"ID",
-    "x_order":1,
-    "y_order":1
-    },
-    "ggsize":{
-    "width":900,
-    "height":350
-    },
-    "kind":"plot",
-    "scales":[],
-    "layers":[{
-    "geom":"hline",
-    "mapping":{
-    },
-    "data_meta":{
-    },
-    "y_intercept":0,
-    "linetype":"dashed",
-    "size":1,
-    "data":{
-    }
-    },{
-    "geom":"point",
-    "mapping":{
-    },
-    "data_meta":{
-    },
-    "size":5,
-    "data":{
-    }
-    }]
-    };
-           var plotContainer = document.getElementById("WkIviH");
-           LetsPlot.buildPlotFromProcessedSpecs(plotSpec, -1, -1, plotContainer);
-       </script>
-       </body>
-    </html>
-    </div>
-    <br />
-    <br />
+ .. code-block:: none
 
-.. GENERATED FROM PYTHON SOURCE LINES 298-329
+
+    <seaborn.axisgrid.FacetGrid object at 0x7f4ee952af70>
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 292-323
 
 Compute group level results
 ---------------------------
@@ -530,7 +469,7 @@ Alternatively, we could use a robust linear
 model by using the code
 `roi_model = rlm('theta ~ -1 + ROI:Condition:Chroma', grp_results).fit()`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 329-337
+.. GENERATED FROM PYTHON SOURCE LINES 323-331
 
 .. code-block:: default
 
@@ -565,10 +504,10 @@ model by using the code
       <td>No. Observations:</td>   <td>60</td>          <td>Method:</td>         <td>REML</td>   
     </tr>
     <tr>
-         <td>No. Groups:</td>       <td>5</td>          <td>Scale:</td>         <td>15.9978</td> 
+         <td>No. Groups:</td>       <td>5</td>          <td>Scale:</td>         <td>10.1637</td> 
     </tr>
     <tr>
-      <td>Min. group size:</td>    <td>12</td>      <td>Log-Likelihood:</td>   <td>-144.3046</td>
+      <td>Min. group size:</td>    <td>12</td>      <td>Log-Likelihood:</td>   <td>-133.4174</td>
     </tr>
     <tr>
       <td>Max. group size:</td>    <td>12</td>        <td>Converged:</td>         <td>Yes</td>   
@@ -582,50 +521,50 @@ model by using the code
                                    <td></td>                               <th>Coef.</th> <th>Std.Err.</th>    <th>z</th>   <th>P>|z|</th> <th>[0.025</th> <th>0.975]</th>
     </tr>
     <tr>
-      <th>ROI[Left_Hemisphere]:Condition[Control]:Chroma[hbo]</th>        <td>-0.286</td>   <td>1.789</td>  <td>-0.160</td> <td>0.873</td> <td>-3.791</td>  <td>3.220</td>
+      <th>ROI[Left_Hemisphere]:Condition[Control]:Chroma[hbo]</th>        <td>-0.320</td>   <td>1.426</td>  <td>-0.224</td> <td>0.823</td> <td>-3.114</td>  <td>2.475</td>
     </tr>
     <tr>
-      <th>ROI[Right_Hemisphere]:Condition[Control]:Chroma[hbo]</th>       <td>-0.879</td>   <td>1.789</td>  <td>-0.492</td> <td>0.623</td> <td>-4.385</td>  <td>2.627</td>
+      <th>ROI[Right_Hemisphere]:Condition[Control]:Chroma[hbo]</th>       <td>-0.930</td>   <td>1.426</td>  <td>-0.652</td> <td>0.514</td> <td>-3.725</td>  <td>1.864</td>
     </tr>
     <tr>
-      <th>ROI[Left_Hemisphere]:Condition[Tapping_Left]:Chroma[hbo]</th>    <td>1.970</td>   <td>1.789</td>   <td>1.101</td> <td>0.271</td> <td>-1.536</td>  <td>5.476</td>
+      <th>ROI[Left_Hemisphere]:Condition[Tapping_Left]:Chroma[hbo]</th>    <td>2.506</td>   <td>1.426</td>   <td>1.758</td> <td>0.079</td> <td>-0.288</td>  <td>5.301</td>
     </tr>
     <tr>
-      <th>ROI[Right_Hemisphere]:Condition[Tapping_Left]:Chroma[hbo]</th>  <td>10.098</td>   <td>1.789</td>   <td>5.645</td> <td>0.000</td>  <td>6.592</td> <td>13.604</td>
+      <th>ROI[Right_Hemisphere]:Condition[Tapping_Left]:Chroma[hbo]</th>   <td>9.576</td>   <td>1.426</td>   <td>6.717</td> <td>0.000</td>  <td>6.782</td> <td>12.370</td>
     </tr>
     <tr>
-      <th>ROI[Left_Hemisphere]:Condition[Tapping_Right]:Chroma[hbo]</th>   <td>9.270</td>   <td>1.789</td>   <td>5.182</td> <td>0.000</td>  <td>5.764</td> <td>12.776</td>
+      <th>ROI[Left_Hemisphere]:Condition[Tapping_Right]:Chroma[hbo]</th>   <td>8.851</td>   <td>1.426</td>   <td>6.208</td> <td>0.000</td>  <td>6.057</td> <td>11.646</td>
     </tr>
     <tr>
-      <th>ROI[Right_Hemisphere]:Condition[Tapping_Right]:Chroma[hbo]</th>  <td>3.787</td>   <td>1.789</td>   <td>2.117</td> <td>0.034</td>  <td>0.281</td>  <td>7.292</td>
+      <th>ROI[Right_Hemisphere]:Condition[Tapping_Right]:Chroma[hbo]</th>  <td>3.862</td>   <td>1.426</td>   <td>2.709</td> <td>0.007</td>  <td>1.067</td>  <td>6.656</td>
     </tr>
     <tr>
-      <th>ROI[Left_Hemisphere]:Condition[Control]:Chroma[hbr]</th>         <td>0.269</td>   <td>1.789</td>   <td>0.150</td> <td>0.881</td> <td>-3.237</td>  <td>3.775</td>
+      <th>ROI[Left_Hemisphere]:Condition[Control]:Chroma[hbr]</th>         <td>0.296</td>   <td>1.426</td>   <td>0.208</td> <td>0.836</td> <td>-2.499</td>  <td>3.090</td>
     </tr>
     <tr>
-      <th>ROI[Right_Hemisphere]:Condition[Control]:Chroma[hbr]</th>        <td>0.140</td>   <td>1.789</td>   <td>0.078</td> <td>0.937</td> <td>-3.365</td>  <td>3.646</td>
+      <th>ROI[Right_Hemisphere]:Condition[Control]:Chroma[hbr]</th>        <td>0.159</td>   <td>1.426</td>   <td>0.112</td> <td>0.911</td> <td>-2.635</td>  <td>2.954</td>
     </tr>
     <tr>
-      <th>ROI[Left_Hemisphere]:Condition[Tapping_Left]:Chroma[hbr]</th>   <td>-2.010</td>   <td>1.789</td>  <td>-1.124</td> <td>0.261</td> <td>-5.516</td>  <td>1.496</td>
+      <th>ROI[Left_Hemisphere]:Condition[Tapping_Left]:Chroma[hbr]</th>   <td>-1.927</td>   <td>1.426</td>  <td>-1.352</td> <td>0.176</td> <td>-4.722</td>  <td>0.867</td>
     </tr>
     <tr>
-      <th>ROI[Right_Hemisphere]:Condition[Tapping_Left]:Chroma[hbr]</th>  <td>-4.428</td>   <td>1.789</td>  <td>-2.476</td> <td>0.013</td> <td>-7.934</td> <td>-0.923</td>
+      <th>ROI[Right_Hemisphere]:Condition[Tapping_Left]:Chroma[hbr]</th>  <td>-3.756</td>   <td>1.426</td>  <td>-2.634</td> <td>0.008</td> <td>-6.550</td> <td>-0.961</td>
     </tr>
     <tr>
-      <th>ROI[Left_Hemisphere]:Condition[Tapping_Right]:Chroma[hbr]</th>  <td>-4.130</td>   <td>1.789</td>  <td>-2.309</td> <td>0.021</td> <td>-7.636</td> <td>-0.624</td>
+      <th>ROI[Left_Hemisphere]:Condition[Tapping_Right]:Chroma[hbr]</th>  <td>-3.755</td>   <td>1.426</td>  <td>-2.634</td> <td>0.008</td> <td>-6.549</td> <td>-0.960</td>
     </tr>
     <tr>
-      <th>ROI[Right_Hemisphere]:Condition[Tapping_Right]:Chroma[hbr]</th> <td>-1.956</td>   <td>1.789</td>  <td>-1.094</td> <td>0.274</td> <td>-5.462</td>  <td>1.550</td>
+      <th>ROI[Right_Hemisphere]:Condition[Tapping_Right]:Chroma[hbr]</th> <td>-1.692</td>   <td>1.426</td>  <td>-1.187</td> <td>0.235</td> <td>-4.486</td>  <td>1.102</td>
     </tr>
     <tr>
-      <th>Group Var</th>                                                   <td>0.000</td>   <td>0.275</td>     <td></td>      <td></td>       <td></td>       <td></td>   
+      <th>Group Var</th>                                                   <td>0.000</td>   <td>0.226</td>     <td></td>      <td></td>       <td></td>       <td></td>   
     </tr>
     </table>
     </div>
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 338-359
+.. GENERATED FROM PYTHON SOURCE LINES 332-353
 
 Second level analysis with covariates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -649,7 +588,7 @@ are smaller when the right hand was used (as expected for these
 contralaterally dominant responses) and there is no significant
 effect of gender.
 
-.. GENERATED FROM PYTHON SOURCE LINES 359-368
+.. GENERATED FROM PYTHON SOURCE LINES 353-362
 
 .. code-block:: default
 
@@ -678,10 +617,10 @@ effect of gender.
       <td>No. Observations:</td>   <td>10</td>          <td>Method:</td>         <td>REML</td>  
     </tr>
     <tr>
-         <td>No. Groups:</td>       <td>5</td>          <td>Scale:</td>         <td>11.5908</td>
+         <td>No. Groups:</td>       <td>5</td>          <td>Scale:</td>         <td>5.8912</td> 
     </tr>
     <tr>
-      <td>Min. group size:</td>     <td>2</td>      <td>Log-Likelihood:</td>   <td>-22.9508</td>
+      <td>Min. group size:</td>     <td>2</td>      <td>Log-Likelihood:</td>   <td>-20.8959</td>
     </tr>
     <tr>
       <td>Max. group size:</td>     <td>2</td>        <td>Converged:</td>         <td>Yes</td>  
@@ -692,26 +631,26 @@ effect of gender.
     </table>
     <table class="simpletable">
     <tr>
-                   <td></td>               <th>Coef.</th> <th>Std.Err.</th>    <th>z</th>   <th>P>|z|</th> <th>[0.025</th>  <th>0.975]</th>
+                   <td></td>               <th>Coef.</th> <th>Std.Err.</th>    <th>z</th>   <th>P>|z|</th> <th>[0.025</th> <th>0.975]</th>
     </tr>
     <tr>
-      <th>Intercept</th>                   <td>7.434</td>   <td>3.271</td>   <td>2.273</td> <td>0.023</td>  <td>1.023</td>  <td>13.844</td>
+      <th>Intercept</th>                   <td>7.496</td>   <td>2.562</td>   <td>2.926</td> <td>0.003</td>  <td>2.474</td> <td>12.518</td>
     </tr>
     <tr>
-      <th>Condition[T.Tapping_Right]</th> <td>-6.311</td>   <td>2.153</td>  <td>-2.931</td> <td>0.003</td> <td>-10.532</td> <td>-2.091</td>
+      <th>Condition[T.Tapping_Right]</th> <td>-5.714</td>   <td>1.535</td>  <td>-3.723</td> <td>0.000</td> <td>-8.723</td> <td>-2.706</td>
     </tr>
     <tr>
-      <th>Sex[T.male]</th>                 <td>6.661</td>   <td>4.883</td>   <td>1.364</td> <td>0.173</td> <td>-2.910</td>  <td>16.232</td>
+      <th>Sex[T.male]</th>                 <td>5.200</td>   <td>3.865</td>   <td>1.345</td> <td>0.179</td> <td>-2.376</td> <td>12.776</td>
     </tr>
     <tr>
-      <th>Group Var</th>                  <td>22.820</td>   <td>9.079</td>     <td></td>      <td></td>       <td></td>        <td></td>   
+      <th>Group Var</th>                  <td>14.982</td>   <td>7.978</td>     <td></td>      <td></td>       <td></td>       <td></td>   
     </tr>
     </table>
     </div>
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 369-380
+.. GENERATED FROM PYTHON SOURCE LINES 363-374
 
 Visualise group results
 -----------------------
@@ -725,7 +664,7 @@ We also observe the the tapping response is
 larger in the contralateral hemisphere.
 Filled symbols represent HbO, unfilled symbols represent HbR.
 
-.. GENERATED FROM PYTHON SOURCE LINES 380-400
+.. GENERATED FROM PYTHON SOURCE LINES 374-385
 
 .. code-block:: default
 
@@ -737,20 +676,16 @@ Filled symbols represent HbO, unfilled symbols represent HbR.
 
     df = statsmodels_to_results(roi_model)
 
-    ggplot(df.query("Chroma == 'hbo'"),
-           aes(x='Condition', y='Coef.', color='Significant', shape='ROI')) \
-        + geom_hline(y_intercept=0, linetype="dashed", size=1) \
-        + geom_point(size=5) \
-        + scale_shape_manual(values=[16, 17]) \
-        + ggsize(900, 300) \
-        + geom_point(data=df.query("Chroma == 'hbr'")
-                     .query("ROI == 'Left_Hemisphere'"), size=5, shape=1) \
-        + geom_point(data=df.query("Chroma == 'hbr'")
-                     .query("ROI == 'Right_Hemisphere'"), size=5, shape=2)
+    sns.catplot(x="Condition", y="Coef.", hue="ROI", data=df.query("Chroma == 'hbo'"), ci=None, palette="muted", height=4, s=10)
 
 
 
 
+
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_12_group_glm_002.png
+   :alt: plot 12 group glm
+   :srcset: /auto_examples/general/images/sphx_glr_plot_12_group_glm_002.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -760,99 +695,11 @@ Filled symbols represent HbO, unfilled symbols represent HbR.
     /home/circleci/python_env/lib/python3.8/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
       warnings.warn(msg, ConvergenceWarning)
 
+    <seaborn.axisgrid.FacetGrid object at 0x7f4e4c7c8b80>
 
-.. raw:: html
 
-    <div class="output_subarea output_html rendered_html output_result">
-    <html lang="en">
-       <head>
-           <script type="text/javascript" data-lets-plot-script="library" src="https://cdn.jsdelivr.net/gh/JetBrains/lets-plot@v2.2.1/js-package/distr/lets-plot.min.js"></script>
-       </head>
-       <body>
-              <div id="FDhQeq"></div>
-       <script type="text/javascript" data-lets-plot-script="plot">
-           var plotSpec={
-    "data":{
-    "Coef.":[-0.2856440484956034,-0.8792093238514651,1.9700586043007478,10.097978777458874,9.269872425641186,3.7865557562622816],
-    "ROI":["Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere"],
-    "Condition":["Control","Control","Tapping_Left","Tapping_Left","Tapping_Right","Tapping_Right"],
-    "Significant":[false,false,false,true,true,true]
-    },
-    "mapping":{
-    "x":"Condition",
-    "y":"Coef.",
-    "color":"Significant",
-    "shape":"ROI"
-    },
-    "data_meta":{
-    },
-    "ggsize":{
-    "width":900,
-    "height":300
-    },
-    "kind":"plot",
-    "scales":[{
-    "aesthetic":"shape",
-    "values":[16,17]
-    }],
-    "layers":[{
-    "geom":"hline",
-    "mapping":{
-    },
-    "data_meta":{
-    },
-    "y_intercept":0,
-    "linetype":"dashed",
-    "size":1,
-    "data":{
-    }
-    },{
-    "geom":"point",
-    "mapping":{
-    },
-    "data_meta":{
-    },
-    "size":5,
-    "data":{
-    }
-    },{
-    "geom":"point",
-    "data":{
-    "Coef.":[0.2686572808024663,-2.0102302437528126,-4.130176130166136],
-    "Condition":["Control","Tapping_Left","Tapping_Right"],
-    "Significant":[false,false,true]
-    },
-    "mapping":{
-    },
-    "data_meta":{
-    },
-    "size":5,
-    "shape":1
-    },{
-    "geom":"point",
-    "data":{
-    "Coef.":[0.14039044097632813,-4.428427669197263,-1.9560838108166996],
-    "Condition":["Control","Tapping_Left","Tapping_Right"],
-    "Significant":[false,true,false]
-    },
-    "mapping":{
-    },
-    "data_meta":{
-    },
-    "size":5,
-    "shape":2
-    }]
-    };
-           var plotContainer = document.getElementById("FDhQeq");
-           LetsPlot.buildPlotFromProcessedSpecs(plotSpec, -1, -1, plotContainer);
-       </script>
-       </body>
-    </html>
-    </div>
-    <br />
-    <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 401-410
+.. GENERATED FROM PYTHON SOURCE LINES 386-395
 
 Group topographic visualisation
 -------------------------------
@@ -864,7 +711,7 @@ First we compute the mixed effects model for each channel (rather
 than region of interest as above).
 Then we pass these results to the topomap function.
 
-.. GENERATED FROM PYTHON SOURCE LINES 410-454
+.. GENERATED FROM PYTHON SOURCE LINES 395-439
 
 .. code-block:: default
 
@@ -885,12 +732,12 @@ Then we pass these results to the topomap function.
     plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                         ch_model_df.query("Condition in ['Tapping_Left']"),
                         colorbar=False, axes=axes[0, 0],
-                        vmin=0, vmax=20, cmap=mpl.cm.Oranges)
+                        vlim=(0, 20), cmap=mpl.cm.Oranges)
 
     plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                         ch_model_df.query("Condition in ['Tapping_Right']"),
                         colorbar=True, axes=axes[0, 1],
-                        vmin=0, vmax=20, cmap=mpl.cm.Oranges)
+                        vlim=(0, 20), cmap=mpl.cm.Oranges)
 
     # Cut down the dataframe just to the conditions we are interested in
     ch_summary = df_cha.query("Condition in ['Tapping_Left', 'Tapping_Right']")
@@ -905,19 +752,19 @@ Then we pass these results to the topomap function.
     plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
                         ch_model_df.query("Condition in ['Tapping_Left']"),
                         colorbar=False, axes=axes[1, 0],
-                        vmin=-10, vmax=0, cmap=mpl.cm.Blues_r)
+                        vlim=(-10, 0), cmap=mpl.cm.Blues_r)
     plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
                         ch_model_df.query("Condition in ['Tapping_Right']"),
                         colorbar=True, axes=axes[1, 1],
-                        vmin=-10, vmax=0, cmap=mpl.cm.Blues_r)
+                        vlim=(-10, 0), cmap=mpl.cm.Blues_r)
 
 
 
 
 
-.. image-sg:: /auto_examples/general/images/sphx_glr_plot_12_group_glm_001.png
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_12_group_glm_003.png
    :alt: Tapping_Left, Tapping_Right, Tapping_Left, Tapping_Right
-   :srcset: /auto_examples/general/images/sphx_glr_plot_12_group_glm_001.png
+   :srcset: /auto_examples/general/images/sphx_glr_plot_12_group_glm_003.png
    :class: sphx-glr-single-img
 
 
@@ -926,11 +773,11 @@ Then we pass these results to the topomap function.
  .. code-block:: none
 
 
-    <AxesSubplot:title={'center':'Tapping_Right'}>
+    <AxesSubplot: title={'center': 'Tapping_Right'}>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 455-461
+.. GENERATED FROM PYTHON SOURCE LINES 440-446
 
 Contrasts
 ---------
@@ -939,7 +786,7 @@ Finally we can examine the difference between the left and right hand
 tapping conditions by viewing the contrast results
 in a topographic representation.
 
-.. GENERATED FROM PYTHON SOURCE LINES 461-476
+.. GENERATED FROM PYTHON SOURCE LINES 446-461
 
 .. code-block:: default
 
@@ -961,9 +808,9 @@ in a topographic representation.
 
 
 
-.. image-sg:: /auto_examples/general/images/sphx_glr_plot_12_group_glm_002.png
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_12_group_glm_004.png
    :alt: Contrast
-   :srcset: /auto_examples/general/images/sphx_glr_plot_12_group_glm_002.png
+   :srcset: /auto_examples/general/images/sphx_glr_plot_12_group_glm_004.png
    :class: sphx-glr-single-img
 
 
@@ -973,20 +820,18 @@ in a topographic representation.
 
     /home/circleci/python_env/lib/python3.8/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
       warnings.warn(msg, ConvergenceWarning)
-    /home/circleci/python_env/lib/python3.8/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
-      warnings.warn(msg, ConvergenceWarning)
 
-    <AxesSubplot:title={'center':'Contrast'}>
+    <AxesSubplot: title={'center': 'Contrast'}>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 477-480
+.. GENERATED FROM PYTHON SOURCE LINES 462-465
 
 Or we can view only the left hemisphere for the contrast.
 And set all channels that dont have a significant response to zero.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 481-486
+.. GENERATED FROM PYTHON SOURCE LINES 466-471
 
 .. code-block:: default
 
@@ -998,9 +843,9 @@ And set all channels that dont have a significant response to zero.
 
 
 
-.. image-sg:: /auto_examples/general/images/sphx_glr_plot_12_group_glm_003.png
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_12_group_glm_005.png
    :alt: Contrast
-   :srcset: /auto_examples/general/images/sphx_glr_plot_12_group_glm_003.png
+   :srcset: /auto_examples/general/images/sphx_glr_plot_12_group_glm_005.png
    :class: sphx-glr-single-img
 
 
@@ -1010,11 +855,11 @@ And set all channels that dont have a significant response to zero.
 
     Reducing GLM results to match MNE data
 
-    <AxesSubplot:title={'center':'Contrast'}>
+    <AxesSubplot: title={'center': 'Contrast'}>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 487-501
+.. GENERATED FROM PYTHON SOURCE LINES 472-486
 
 Cortical Surface Projections
 ----------------------------
@@ -1031,7 +876,7 @@ fashion.
 As in the topo plots above you can see that the activity is predominately
 contralateral to the side of finger tapping.
 
-.. GENERATED FROM PYTHON SOURCE LINES 501-528
+.. GENERATED FROM PYTHON SOURCE LINES 486-513
 
 .. code-block:: default
 
@@ -1065,9 +910,9 @@ contralateral to the side of finger tapping.
 
 
 
-.. image-sg:: /auto_examples/general/images/sphx_glr_plot_12_group_glm_004.png
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_12_group_glm_006.png
    :alt: plot 12 group glm
-   :srcset: /auto_examples/general/images/sphx_glr_plot_12_group_glm_004.png
+   :srcset: /auto_examples/general/images/sphx_glr_plot_12_group_glm_006.png
    :class: sphx-glr-single-img
 
 .. rst-class:: sphx-glr-horizontal
@@ -1075,23 +920,23 @@ contralateral to the side of finger tapping.
 
     *
 
-      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_12_group_glm_005.png
+      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_12_group_glm_007.png
           :alt: plot 12 group glm
-          :srcset: /auto_examples/general/images/sphx_glr_plot_12_group_glm_005.png
+          :srcset: /auto_examples/general/images/sphx_glr_plot_12_group_glm_007.png
           :class: sphx-glr-multi-img
 
     *
 
-      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_12_group_glm_006.png
+      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_12_group_glm_008.png
           :alt: plot 12 group glm
-          :srcset: /auto_examples/general/images/sphx_glr_plot_12_group_glm_006.png
+          :srcset: /auto_examples/general/images/sphx_glr_plot_12_group_glm_008.png
           :class: sphx-glr-multi-img
 
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 529-534
+.. GENERATED FROM PYTHON SOURCE LINES 514-519
 
 Table of channel level results
 ------------------------------
@@ -1099,7 +944,7 @@ Table of channel level results
 Sometimes a reviewer wants a long table of results per channel.
 This can be generated from the statistics dataframe.
 
-.. GENERATED FROM PYTHON SOURCE LINES 534-552
+.. GENERATED FROM PYTHON SOURCE LINES 519-537
 
 .. code-block:: default
 
@@ -1174,460 +1019,460 @@ This can be generated from the statistics dataframe.
         <tr>
           <th rowspan="2" valign="top">S1_D1 hbo</th>
           <th>Tapping_Left</th>
-          <td>2.725038</td>
-          <td>4.189391</td>
-          <td>0.650462</td>
-          <td>0.515394</td>
-          <td>-5.486018</td>
-          <td>10.936094</td>
+          <td>3.032008</td>
+          <td>3.536881</td>
+          <td>0.857255</td>
+          <td>3.913041e-01</td>
+          <td>-3.900152</td>
+          <td>9.964168</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>6.592228</td>
-          <td>4.189391</td>
-          <td>1.573553</td>
-          <td>0.115591</td>
-          <td>-1.618829</td>
-          <td>14.803284</td>
+          <td>6.415630</td>
+          <td>3.536881</td>
+          <td>1.813923</td>
+          <td>6.968959e-02</td>
+          <td>-0.51653</td>
+          <td>13.34779</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S1_D2 hbo</th>
           <th>Tapping_Left</th>
-          <td>0.747997</td>
-          <td>4.189391</td>
-          <td>0.178546</td>
-          <td>0.858295</td>
-          <td>-7.463059</td>
-          <td>8.959054</td>
+          <td>1.777202</td>
+          <td>3.536881</td>
+          <td>0.502477</td>
+          <td>6.153319e-01</td>
+          <td>-5.154958</td>
+          <td>8.709362</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>7.154465</td>
-          <td>4.189391</td>
-          <td>1.707758</td>
-          <td>0.087681</td>
-          <td>-1.056591</td>
-          <td>15.365521</td>
+          <td>6.927322</td>
+          <td>3.536881</td>
+          <td>1.958596</td>
+          <td>5.016009e-02</td>
+          <td>-0.004838</td>
+          <td>13.859482</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S1_D3 hbo</th>
           <th>Tapping_Left</th>
-          <td>2.003291</td>
-          <td>4.189391</td>
-          <td>0.478182</td>
-          <td>0.632521</td>
-          <td>-6.207765</td>
-          <td>10.214347</td>
+          <td>2.682615</td>
+          <td>3.536881</td>
+          <td>0.758469</td>
+          <td>4.481702e-01</td>
+          <td>-4.249545</td>
+          <td>9.614775</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>17.029723</td>
-          <td>4.189391</td>
-          <td>4.064963</td>
-          <td>0.000048</td>
-          <td>8.818667</td>
-          <td>25.24078</td>
+          <td>15.816878</td>
+          <td>3.536881</td>
+          <td>4.471984</td>
+          <td>7.749711e-06</td>
+          <td>8.884718</td>
+          <td>22.749038</td>
           <td>hbo</td>
           <td>True</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S2_D1 hbo</th>
           <th>Tapping_Left</th>
-          <td>-0.030335</td>
-          <td>4.189391</td>
-          <td>-0.007241</td>
-          <td>0.994223</td>
-          <td>-8.241391</td>
-          <td>8.180721</td>
+          <td>0.327063</td>
+          <td>3.536881</td>
+          <td>0.092472</td>
+          <td>9.263229e-01</td>
+          <td>-6.605097</td>
+          <td>7.259223</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>1.185932</td>
-          <td>4.189391</td>
-          <td>0.283080</td>
-          <td>0.777116</td>
-          <td>-7.025124</td>
-          <td>9.396988</td>
+          <td>1.270148</td>
+          <td>3.536881</td>
+          <td>0.359115</td>
+          <td>7.195088e-01</td>
+          <td>-5.662011</td>
+          <td>8.202308</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S2_D3 hbo</th>
           <th>Tapping_Left</th>
-          <td>1.009418</td>
-          <td>4.189391</td>
-          <td>0.240946</td>
-          <td>0.809597</td>
-          <td>-7.201638</td>
-          <td>9.220475</td>
+          <td>1.471616</td>
+          <td>3.536881</td>
+          <td>0.416077</td>
+          <td>6.773534e-01</td>
+          <td>-5.460544</td>
+          <td>8.403776</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>6.895600</td>
-          <td>4.189391</td>
-          <td>1.645967</td>
-          <td>0.099771</td>
-          <td>-1.315456</td>
-          <td>15.106657</td>
+          <td>6.643579</td>
+          <td>3.536881</td>
+          <td>1.878372</td>
+          <td>6.033028e-02</td>
+          <td>-0.288581</td>
+          <td>13.575739</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S2_D4 hbo</th>
           <th>Tapping_Left</th>
-          <td>-1.272552</td>
-          <td>4.189391</td>
-          <td>-0.303756</td>
-          <td>0.761314</td>
-          <td>-9.483608</td>
-          <td>6.938504</td>
+          <td>-0.770107</td>
+          <td>3.536881</td>
+          <td>-0.217736</td>
+          <td>8.276347e-01</td>
+          <td>-7.702267</td>
+          <td>6.162053</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>0.170163</td>
-          <td>4.189391</td>
-          <td>0.040618</td>
-          <td>0.967601</td>
-          <td>-8.040893</td>
-          <td>8.381219</td>
+          <td>-0.036873</td>
+          <td>3.536881</td>
+          <td>-0.010425</td>
+          <td>9.916820e-01</td>
+          <td>-6.969033</td>
+          <td>6.895287</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S3_D2 hbo</th>
           <th>Tapping_Left</th>
-          <td>3.601137</td>
-          <td>4.189391</td>
-          <td>0.859585</td>
-          <td>0.390018</td>
-          <td>-4.60992</td>
-          <td>11.812193</td>
+          <td>4.722142</td>
+          <td>3.536881</td>
+          <td>1.335115</td>
+          <td>1.818388e-01</td>
+          <td>-2.210018</td>
+          <td>11.654302</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>9.612044</td>
-          <td>4.189391</td>
-          <td>2.294377</td>
-          <td>0.021769</td>
-          <td>1.400987</td>
-          <td>17.8231</td>
+          <td>9.560889</td>
+          <td>3.536881</td>
+          <td>2.703198</td>
+          <td>6.867589e-03</td>
+          <td>2.628729</td>
+          <td>16.493049</td>
           <td>hbo</td>
           <td>True</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S3_D3 hbo</th>
           <th>Tapping_Left</th>
-          <td>3.058901</td>
-          <td>4.189391</td>
-          <td>0.730154</td>
-          <td>0.465296</td>
-          <td>-5.152155</td>
-          <td>11.269957</td>
+          <td>3.624990</td>
+          <td>3.536881</td>
+          <td>1.024911</td>
+          <td>3.054050e-01</td>
+          <td>-3.30717</td>
+          <td>10.55715</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>13.372372</td>
-          <td>4.189391</td>
-          <td>3.191961</td>
-          <td>0.001413</td>
-          <td>5.161316</td>
-          <td>21.583429</td>
+          <td>12.830392</td>
+          <td>3.536881</td>
+          <td>3.627600</td>
+          <td>2.860675e-04</td>
+          <td>5.898232</td>
+          <td>19.762552</td>
           <td>hbo</td>
           <td>True</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S4_D3 hbo</th>
           <th>Tapping_Left</th>
-          <td>2.828156</td>
-          <td>4.189391</td>
-          <td>0.675076</td>
-          <td>0.499628</td>
-          <td>-5.382901</td>
-          <td>11.039212</td>
+          <td>3.286504</td>
+          <td>3.536881</td>
+          <td>0.929209</td>
+          <td>3.527805e-01</td>
+          <td>-3.645656</td>
+          <td>10.218664</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>9.813455</td>
-          <td>4.189391</td>
-          <td>2.342453</td>
-          <td>0.019157</td>
-          <td>1.602398</td>
-          <td>18.024511</td>
+          <td>9.610416</td>
+          <td>3.536881</td>
+          <td>2.717201</td>
+          <td>6.583667e-03</td>
+          <td>2.678256</td>
+          <td>16.542576</td>
           <td>hbo</td>
           <td>True</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S4_D4 hbo</th>
           <th>Tapping_Left</th>
-          <td>5.163194</td>
-          <td>4.189391</td>
-          <td>1.232445</td>
-          <td>0.217783</td>
-          <td>-3.047862</td>
-          <td>13.374251</td>
+          <td>5.673063</td>
+          <td>3.536881</td>
+          <td>1.603973</td>
+          <td>1.087199e-01</td>
+          <td>-1.259097</td>
+          <td>12.605223</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>7.303296</td>
-          <td>4.189391</td>
-          <td>1.743283</td>
-          <td>0.081284</td>
-          <td>-0.907761</td>
-          <td>15.514352</td>
+          <td>7.008687</td>
+          <td>3.536881</td>
+          <td>1.981601</td>
+          <td>4.752393e-02</td>
+          <td>0.076527</td>
+          <td>13.940847</td>
           <td>hbo</td>
-          <td>False</td>
+          <td>True</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S5_D5 hbo</th>
           <th>Tapping_Left</th>
-          <td>5.693955</td>
-          <td>4.189391</td>
-          <td>1.359137</td>
-          <td>0.174103</td>
-          <td>-2.517101</td>
-          <td>13.905011</td>
+          <td>5.856888</td>
+          <td>3.536881</td>
+          <td>1.655947</td>
+          <td>9.773257e-02</td>
+          <td>-1.075272</td>
+          <td>12.789048</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>3.160458</td>
-          <td>4.189391</td>
-          <td>0.754395</td>
-          <td>0.450612</td>
-          <td>-5.050599</td>
-          <td>11.371514</td>
+          <td>3.251541</td>
+          <td>3.536881</td>
+          <td>0.919324</td>
+          <td>3.579260e-01</td>
+          <td>-3.680619</td>
+          <td>10.183701</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S5_D6 hbo</th>
           <th>Tapping_Left</th>
-          <td>2.682824</td>
-          <td>4.189391</td>
-          <td>0.640385</td>
-          <td>0.521922</td>
-          <td>-5.528233</td>
-          <td>10.89388</td>
+          <td>3.062157</td>
+          <td>3.536881</td>
+          <td>0.865779</td>
+          <td>3.866114e-01</td>
+          <td>-3.870003</td>
+          <td>9.994317</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>1.507595</td>
-          <td>4.189391</td>
-          <td>0.359860</td>
-          <td>0.718952</td>
-          <td>-6.703461</td>
-          <td>9.718652</td>
+          <td>1.885486</td>
+          <td>3.536881</td>
+          <td>0.533093</td>
+          <td>5.939693e-01</td>
+          <td>-5.046674</td>
+          <td>8.817646</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S5_D7 hbo</th>
           <th>Tapping_Left</th>
-          <td>19.332204</td>
-          <td>4.189391</td>
-          <td>4.614561</td>
-          <td>0.000004</td>
-          <td>11.121148</td>
-          <td>27.54326</td>
+          <td>17.880876</td>
+          <td>3.536881</td>
+          <td>5.055549</td>
+          <td>4.291550e-07</td>
+          <td>10.948716</td>
+          <td>24.813036</td>
           <td>hbo</td>
           <td>True</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>4.468471</td>
-          <td>4.189391</td>
-          <td>1.066616</td>
-          <td>0.286145</td>
-          <td>-3.742586</td>
-          <td>12.679527</td>
+          <td>4.686052</td>
+          <td>3.536881</td>
+          <td>1.324911</td>
+          <td>1.852007e-01</td>
+          <td>-2.246107</td>
+          <td>11.618212</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S6_D5 hbo</th>
           <th>Tapping_Left</th>
-          <td>3.000136</td>
-          <td>4.189391</td>
-          <td>0.716127</td>
-          <td>0.473913</td>
-          <td>-5.21092</td>
-          <td>11.211193</td>
+          <td>2.600497</td>
+          <td>3.536881</td>
+          <td>0.735251</td>
+          <td>4.621864e-01</td>
+          <td>-4.331663</td>
+          <td>9.532657</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>2.584979</td>
-          <td>4.189391</td>
-          <td>0.617030</td>
-          <td>0.537215</td>
-          <td>-5.626078</td>
-          <td>10.796035</td>
+          <td>2.180645</td>
+          <td>3.536881</td>
+          <td>0.616544</td>
+          <td>5.375352e-01</td>
+          <td>-4.751515</td>
+          <td>9.112804</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S6_D7 hbo</th>
           <th>Tapping_Left</th>
-          <td>12.589845</td>
-          <td>4.189391</td>
-          <td>3.005173</td>
-          <td>0.002654</td>
-          <td>4.378789</td>
-          <td>20.800902</td>
+          <td>11.862971</td>
+          <td>3.536881</td>
+          <td>3.354077</td>
+          <td>7.963031e-04</td>
+          <td>4.930811</td>
+          <td>18.795131</td>
           <td>hbo</td>
           <td>True</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>4.669816</td>
-          <td>4.189391</td>
-          <td>1.114677</td>
-          <td>0.264989</td>
-          <td>-3.54124</td>
-          <td>12.880873</td>
+          <td>4.851630</td>
+          <td>3.536881</td>
+          <td>1.371725</td>
+          <td>1.701489e-01</td>
+          <td>-2.08053</td>
+          <td>11.78379</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S6_D8 hbo</th>
           <th>Tapping_Left</th>
-          <td>10.559629</td>
-          <td>4.189391</td>
-          <td>2.520564</td>
-          <td>0.011717</td>
-          <td>2.348573</td>
-          <td>18.770685</td>
+          <td>9.425000</td>
+          <td>3.536881</td>
+          <td>2.664777</td>
+          <td>7.703938e-03</td>
+          <td>2.49284</td>
+          <td>16.35716</td>
           <td>hbo</td>
           <td>True</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>6.095097</td>
-          <td>4.189391</td>
-          <td>1.454889</td>
-          <td>0.145700</td>
-          <td>-2.115959</td>
-          <td>14.306154</td>
+          <td>5.667118</td>
+          <td>3.536881</td>
+          <td>1.602292</td>
+          <td>1.090910e-01</td>
+          <td>-1.265042</td>
+          <td>12.599278</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S7_D6 hbo</th>
           <th>Tapping_Left</th>
-          <td>8.613836</td>
-          <td>4.189391</td>
-          <td>2.056107</td>
-          <td>0.039772</td>
-          <td>0.40278</td>
-          <td>16.824892</td>
+          <td>8.757646</td>
+          <td>3.536881</td>
+          <td>2.476093</td>
+          <td>1.328291e-02</td>
+          <td>1.825486</td>
+          <td>15.689806</td>
           <td>hbo</td>
           <td>True</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>3.928645</td>
-          <td>4.189391</td>
-          <td>0.937760</td>
-          <td>0.348368</td>
-          <td>-4.282412</td>
-          <td>12.139701</td>
+          <td>4.375866</td>
+          <td>3.536881</td>
+          <td>1.237210</td>
+          <td>2.160090e-01</td>
+          <td>-2.556294</td>
+          <td>11.308026</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S7_D7 hbo</th>
           <th>Tapping_Left</th>
-          <td>10.974402</td>
-          <td>4.189391</td>
-          <td>2.619570</td>
-          <td>0.008804</td>
-          <td>2.763346</td>
-          <td>19.185459</td>
+          <td>10.806506</td>
+          <td>3.536881</td>
+          <td>3.055377</td>
+          <td>2.247777e-03</td>
+          <td>3.874346</td>
+          <td>17.738666</td>
           <td>hbo</td>
           <td>True</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>3.907378</td>
-          <td>4.189391</td>
-          <td>0.932684</td>
-          <td>0.350983</td>
-          <td>-4.303678</td>
-          <td>12.118435</td>
+          <td>4.022244</td>
+          <td>3.536881</td>
+          <td>1.137229</td>
+          <td>2.554426e-01</td>
+          <td>-2.909916</td>
+          <td>10.954404</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S8_D7 hbo</th>
           <th>Tapping_Left</th>
-          <td>16.481581</td>
-          <td>4.189391</td>
-          <td>3.934123</td>
-          <td>0.000084</td>
-          <td>8.270524</td>
-          <td>24.692637</td>
+          <td>14.968237</td>
+          <td>3.536881</td>
+          <td>4.232044</td>
+          <td>2.315773e-05</td>
+          <td>8.036077</td>
+          <td>21.900397</td>
           <td>hbo</td>
           <td>True</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>6.938884</td>
-          <td>4.189391</td>
-          <td>1.656299</td>
-          <td>0.097661</td>
-          <td>-1.272172</td>
-          <td>15.14994</td>
+          <td>6.547861</td>
+          <td>3.536881</td>
+          <td>1.851309</td>
+          <td>6.412509e-02</td>
+          <td>-0.384299</td>
+          <td>13.480021</td>
           <td>hbo</td>
           <td>False</td>
         </tr>
         <tr>
           <th rowspan="2" valign="top">S8_D8 hbo</th>
           <th>Tapping_Left</th>
-          <td>11.664569</td>
-          <td>4.189391</td>
-          <td>2.784311</td>
-          <td>0.005364</td>
-          <td>3.453512</td>
-          <td>19.875625</td>
+          <td>11.497395</td>
+          <td>3.536881</td>
+          <td>3.250716</td>
+          <td>1.151150e-03</td>
+          <td>4.565235</td>
+          <td>18.429555</td>
           <td>hbo</td>
           <td>True</td>
         </tr>
         <tr>
           <th>Tapping_Right</th>
-          <td>8.740735</td>
-          <td>4.189391</td>
-          <td>2.086397</td>
-          <td>0.036943</td>
-          <td>0.529679</td>
-          <td>16.951792</td>
+          <td>8.740161</td>
+          <td>3.536881</td>
+          <td>2.471149</td>
+          <td>1.346796e-02</td>
+          <td>1.808001</td>
+          <td>15.672321</td>
           <td>hbo</td>
           <td>True</td>
         </tr>
@@ -1638,7 +1483,7 @@ This can be generated from the statistics dataframe.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 553-579
+.. GENERATED FROM PYTHON SOURCE LINES 538-564
 
 .. _tut-fnirs-group-relating:
 
@@ -1667,7 +1512,7 @@ MNE-NIRS does not distribute the fOLD toolbox or the data
 that they provide. See the Notes section of
 :func:`mne_nirs.io.fold_channel_specificity` for more information.
 
-.. GENERATED FROM PYTHON SOURCE LINES 579-584
+.. GENERATED FROM PYTHON SOURCE LINES 564-569
 
 .. code-block:: default
 
@@ -1685,19 +1530,19 @@ that they provide. See the Notes section of
  .. code-block:: none
 
 
-    Coef.          19.332204
-    Std.Err.        4.189391
-    z               4.614561
-    P>|z|           0.000004
-    [0.025         11.121148
-    0.975]          27.54326
+    Coef.          17.880876
+    Std.Err.        3.536881
+    z               5.055549
+    P>|z|                0.0
+    [0.025         10.948716
+    0.975]         24.813036
     Chroma               hbo
     Significant         True
     Name: (S5_D7 hbo, Tapping_Left), dtype: object
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 585-590
+.. GENERATED FROM PYTHON SOURCE LINES 570-575
 
 Next we use information from the fOLD toolbox to report the
 channel specificity to different brain regions.
@@ -1705,7 +1550,7 @@ For licensing reasons, these files are not distributed with MNE-NIRS.
 To set up your system to use the fOLD functions, see the Notes section of
 :func:`mne_nirs.io.fold_channel_specificity`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 591-596
+.. GENERATED FROM PYTHON SOURCE LINES 576-581
 
 .. code-block:: default
 
@@ -1866,14 +1711,14 @@ To set up your system to use the fOLD functions, see the Notes section of
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 597-601
+.. GENERATED FROM PYTHON SOURCE LINES 582-586
 
 We observe that the channel with the largest response to tapping
 had the greatest specificity to the Precentral Gyrus, which is
 the site of the primary motor cortex. This is consistent
 with the expectation for a finger tapping task.
 
-.. GENERATED FROM PYTHON SOURCE LINES 605-612
+.. GENERATED FROM PYTHON SOURCE LINES 590-597
 
 Conclusion
 ----------
@@ -1886,37 +1731,32 @@ hand of tapping and most likely originate from the primary motor cortex.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  39.454 seconds)
+   **Total running time of the script:** ( 0 minutes  34.746 seconds)
 
-**Estimated memory usage:**  418 MB
+**Estimated memory usage:**  358 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_12_group_glm.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
-  .. container:: binder-badge
+    .. container:: binder-badge
 
-    .. image:: images/binder_badge_logo.svg
-      :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_12_group_glm.ipynb
-      :alt: Launch binder
-      :width: 150 px
+      .. image:: images/binder_badge_logo.svg
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_12_group_glm.ipynb
+        :alt: Launch binder
+        :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: plot_12_group_glm.py <plot_12_group_glm.py>`
 
-     :download:`Download Python source code: plot_12_group_glm.py <plot_12_group_glm.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: plot_12_group_glm.ipynb <plot_12_group_glm.ipynb>`
+      :download:`Download Jupyter notebook: plot_12_group_glm.ipynb <plot_12_group_glm.ipynb>`
 
 
 .. only:: html

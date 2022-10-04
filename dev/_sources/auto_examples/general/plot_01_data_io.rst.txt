@@ -63,6 +63,8 @@ The Shared Near Infrared Spectroscopy Format
 is designed by the fNIRS community in an effort to facilitate
 sharing and analysis of fNIRS data. And is the official format of the
 Society for functional near-infrared spectroscopy (SfNIRS).
+The manufacturers Gowerlabs, NIRx, Kernel, and Cortivision
+export data in the SNIRF format, and these files can be imported in to MNE.
 SNIRF is the preferred format for reading data in to MNE-Python.
 Data stored in the SNIRF format can be read in
 using :func:`mne.io.read_raw_snirf`.
@@ -89,6 +91,7 @@ NIRx     ICBM-152 MNI        mri
 Kernel   ICBM 2009b          mri
 =======  ==================  =================
 
+The coordinate system is automatically detected for Gowerlabs SNIRF files.
 
 
 ***********************
@@ -106,8 +109,8 @@ NIRx recordings can be read in using :func:`mne.io.read_raw_nirx`.
 The NIRx device stores data directly to a directory with multiple file types,
 MNE-Python extracts the appropriate information from each file.
 MNE-Python only supports NIRx files recorded with NIRStar
-version 15.0 and above.
-MNE-Python supports reading data from NIRScout and NIRSport 1 devices.
+version 15.0 and above and Aurora version 2021 and above.
+MNE-Python supports reading data from NIRScout and NIRSport devices.
 
 
 .. _import-hitachi:
@@ -177,7 +180,7 @@ naming and ordering of channels, the type and scaling of data, and
 specification of sensor positions varies between each vendor). You will likely
 have to adapt this depending on the system from which your CSV originated.
 
-.. GENERATED FROM PYTHON SOURCE LINES 164-172
+.. GENERATED FROM PYTHON SOURCE LINES 167-175
 
 .. code-block:: default
 
@@ -196,14 +199,14 @@ have to adapt this depending on the system from which your CSV originated.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 173-177
+.. GENERATED FROM PYTHON SOURCE LINES 176-180
 
 First, we generate an example CSV file which will then be loaded in to
 MNE-Python. This step would be skipped if you have actual data you wish to
 load. We simulate 16 channels with 100 samples of data and save this to a
 file called fnirs.csv.
 
-.. GENERATED FROM PYTHON SOURCE LINES 177-181
+.. GENERATED FROM PYTHON SOURCE LINES 180-184
 
 .. code-block:: default
 
@@ -218,21 +221,11 @@ file called fnirs.csv.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 182-193
-
-.. warning:: The channels must be ordered in haemoglobin pairs, such that for
-             a single channel all the types are in subsequent indices. The
-             type order must be 'hbo' then 'hbr'.
-             The data below is already in the correct order and may be
-             used as a template for how data must be stored.
-             If the order that your data is stored is different to the
-             mandatory formatting, then you must first read the data with
-             channel naming according to the data structure, then reorder
-             the channels to match the required format.
+.. GENERATED FROM PYTHON SOURCE LINES 185-186
 
 Next, we will load the example CSV file.
 
-.. GENERATED FROM PYTHON SOURCE LINES 194-198
+.. GENERATED FROM PYTHON SOURCE LINES 186-190
 
 .. code-block:: default
 
@@ -247,7 +240,7 @@ Next, we will load the example CSV file.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 199-206
+.. GENERATED FROM PYTHON SOURCE LINES 191-198
 
 Then, the metadata must be specified manually as the CSV file does not
 contain information about channel names, types, sample rate etc.
@@ -257,7 +250,7 @@ contain information about channel names, types, sample rate etc.
              detector numbers and type is either ``hbo``, ``hbr`` or the
              wavelength.
 
-.. GENERATED FROM PYTHON SOURCE LINES 206-218
+.. GENERATED FROM PYTHON SOURCE LINES 198-210
 
 .. code-block:: default
 
@@ -280,7 +273,7 @@ contain information about channel names, types, sample rate etc.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 219-227
+.. GENERATED FROM PYTHON SOURCE LINES 211-219
 
 Finally, the data can be converted in to an MNE-Python data structure.
 The metadata above is used to create an :class:`mne.Info` data structure,
@@ -291,7 +284,7 @@ is stored in MNE-Python see :ref:`tut-raw-class`.
 For a more extensive description of how to create MNE-Python data structures
 from raw array data see :ref:`mne:tut-creating-data-structures`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 227-232
+.. GENERATED FROM PYTHON SOURCE LINES 219-224
 
 .. code-block:: default
 
@@ -315,7 +308,7 @@ from raw array data see :ref:`mne:tut-creating-data-structures`.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 233-254
+.. GENERATED FROM PYTHON SOURCE LINES 225-246
 
 Applying standard sensor locations to imported data
 ---------------------------------------------------
@@ -339,7 +332,7 @@ OctaMon device.
           fNIRS with :func:`mne.channels.read_custom_montage` by setting
           ``coord_frame`` to ``'mri'``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 254-261
+.. GENERATED FROM PYTHON SOURCE LINES 246-253
 
 .. code-block:: default
 
@@ -368,7 +361,7 @@ OctaMon device.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 262-267
+.. GENERATED FROM PYTHON SOURCE LINES 254-259
 
 To validate the positions were loaded correctly it is also possible to view
 the location of the sources (red), detectors (black), and channels (white
@@ -376,7 +369,7 @@ lines and orange dots) in a 3D representation.
 The ficiduals are marked in blue, green and red.
 See :ref:`tut-source-alignment` for more details.
 
-.. GENERATED FROM PYTHON SOURCE LINES 267-277
+.. GENERATED FROM PYTHON SOURCE LINES 259-268
 
 .. code-block:: default
 
@@ -386,9 +379,8 @@ See :ref:`tut-source-alignment` for more details.
 
     brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir,
                           alpha=0.5, cortex='low_contrast')
-    # brain.add_head()
+    brain.add_head()
     brain.add_sensors(raw.info, trans='fsaverage')
-    # brain.enable_depth_peeling()
     brain.show_view(azimuth=90, elevation=90, distance=500)
 
 
@@ -403,8 +395,21 @@ See :ref:`tut-source-alignment` for more details.
 
  .. code-block:: none
 
-    0 files missing from root.txt in /home/circleci/mne_data/MNE-sample-data/subjects
-    0 files missing from bem.txt in /home/circleci/mne_data/MNE-sample-data/subjects/fsaverage
+    Using default location ~/mne_data for sample...
+      0%|                                              | 0.00/1.65G [00:00<?, ?B/s]      0%|                                     | 4.20M/1.65G [00:00<00:45, 36.2MB/s]      1%|▎                                    | 12.1M/1.65G [00:00<00:27, 59.7MB/s]      1%|▍                                    | 20.5M/1.65G [00:00<00:23, 70.4MB/s]      2%|▋                                    | 27.9M/1.65G [00:00<00:22, 72.0MB/s]      2%|▊                                    | 36.5M/1.65G [00:00<00:21, 76.8MB/s]      3%|█                                    | 45.2M/1.65G [00:00<00:19, 80.4MB/s]      3%|█▏                                   | 54.2M/1.65G [00:00<00:19, 83.5MB/s]      4%|█▍                                   | 62.9M/1.65G [00:00<00:18, 84.6MB/s]      4%|█▌                                   | 71.7M/1.65G [00:00<00:18, 85.7MB/s]      5%|█▊                                   | 80.3M/1.65G [00:01<00:18, 85.3MB/s]      5%|█▉                                   | 89.2M/1.65G [00:01<00:18, 86.4MB/s]      6%|██▏                                  | 98.2M/1.65G [00:01<00:17, 87.5MB/s]      6%|██▍                                   | 107M/1.65G [00:01<00:17, 86.2MB/s]      7%|██▋                                   | 116M/1.65G [00:01<00:17, 86.1MB/s]      8%|██▊                                   | 124M/1.65G [00:01<00:17, 85.0MB/s]      8%|███                                   | 133M/1.65G [00:01<00:18, 84.2MB/s]      9%|███▏                                  | 141M/1.65G [00:01<00:18, 83.7MB/s]      9%|███▍                                  | 150M/1.65G [00:01<00:17, 84.4MB/s]     10%|███▋                                  | 158M/1.65G [00:01<00:17, 84.5MB/s]     10%|███▊                                  | 167M/1.65G [00:02<00:17, 84.7MB/s]     11%|████                                  | 175M/1.65G [00:02<00:17, 84.9MB/s]     11%|████▏                                 | 184M/1.65G [00:02<00:17, 83.8MB/s]     12%|████▍                                 | 192M/1.65G [00:02<00:17, 84.1MB/s]     12%|████▌                                 | 201M/1.65G [00:02<00:17, 83.5MB/s]     13%|████▊                                 | 209M/1.65G [00:02<00:17, 83.1MB/s]     13%|█████                                 | 218M/1.65G [00:02<00:17, 84.0MB/s]     14%|█████▏                                | 226M/1.65G [00:02<00:16, 84.8MB/s]     14%|█████▍                                | 235M/1.65G [00:02<00:16, 85.0MB/s]     15%|█████▌                                | 244M/1.65G [00:02<00:16, 85.5MB/s]     15%|█████▊                                | 252M/1.65G [00:03<00:16, 84.4MB/s]     16%|█████▉                                | 261M/1.65G [00:03<00:16, 84.6MB/s]     16%|██████▏                               | 269M/1.65G [00:03<00:16, 84.0MB/s]     17%|██████▍                               | 277M/1.65G [00:03<00:16, 83.8MB/s]     17%|██████▌                               | 286M/1.65G [00:03<00:16, 83.4MB/s]     18%|██████▊                               | 294M/1.65G [00:03<00:16, 83.5MB/s]     18%|██████▉                               | 303M/1.65G [00:03<00:16, 83.8MB/s]     19%|███████▏                              | 311M/1.65G [00:03<00:16, 81.3MB/s]     19%|███████▎                              | 319M/1.65G [00:03<00:16, 80.4MB/s]     20%|███████▌                              | 327M/1.65G [00:03<00:16, 80.5MB/s]     20%|███████▋                              | 335M/1.65G [00:04<00:16, 78.9MB/s]     21%|███████▉                              | 345M/1.65G [00:04<00:15, 83.0MB/s]     21%|████████▏                             | 354M/1.65G [00:04<00:15, 85.8MB/s]     22%|████████▎                             | 363M/1.65G [00:04<00:14, 88.1MB/s]     23%|████████▌                             | 373M/1.65G [00:04<00:14, 90.2MB/s]     23%|████████▊                             | 382M/1.65G [00:04<00:14, 86.7MB/s]     24%|████████▉                             | 391M/1.65G [00:04<00:14, 86.5MB/s]     24%|█████████▏                            | 399M/1.65G [00:04<00:14, 87.0MB/s]     25%|█████████▍                            | 408M/1.65G [00:04<00:14, 87.4MB/s]     25%|█████████▌                            | 417M/1.65G [00:04<00:13, 88.5MB/s]     26%|█████████▊                            | 426M/1.65G [00:05<00:13, 88.1MB/s]     26%|██████████                            | 435M/1.65G [00:05<00:15, 80.6MB/s]     27%|██████████▏                           | 443M/1.65G [00:05<00:14, 81.6MB/s]     27%|██████████▍                           | 452M/1.65G [00:05<00:14, 81.4MB/s]     28%|██████████▌                           | 460M/1.65G [00:05<00:15, 74.7MB/s]     28%|██████████▊                           | 468M/1.65G [00:05<00:15, 76.6MB/s]     29%|██████████▉                           | 476M/1.65G [00:05<00:15, 78.4MB/s]     29%|███████████▏                          | 485M/1.65G [00:05<00:14, 79.7MB/s]     30%|███████████▎                          | 493M/1.65G [00:05<00:14, 80.9MB/s]     30%|███████████▌                          | 501M/1.65G [00:06<00:14, 82.1MB/s]     31%|███████████▋                          | 510M/1.65G [00:06<00:13, 82.4MB/s]     31%|███████████▉                          | 518M/1.65G [00:06<00:14, 77.7MB/s]     32%|████████████                          | 526M/1.65G [00:06<00:19, 59.1MB/s]     32%|████████████▎                         | 534M/1.65G [00:06<00:17, 64.4MB/s]     33%|████████████▍                         | 541M/1.65G [00:06<00:18, 60.7MB/s]     33%|████████████▋                         | 550M/1.65G [00:06<00:16, 67.7MB/s]     34%|████████████▊                         | 559M/1.65G [00:06<00:14, 73.8MB/s]     34%|█████████████                         | 568M/1.65G [00:07<00:13, 78.2MB/s]     35%|█████████████▎                        | 577M/1.65G [00:07<00:13, 81.4MB/s]     35%|█████████████▍                        | 586M/1.65G [00:07<00:12, 84.3MB/s]     36%|█████████████▋                        | 595M/1.65G [00:07<00:12, 86.4MB/s]     37%|█████████████▉                        | 604M/1.65G [00:07<00:11, 87.7MB/s]     37%|██████████████                        | 613M/1.65G [00:07<00:20, 51.0MB/s]     38%|██████████████▎                       | 622M/1.65G [00:07<00:17, 57.7MB/s]     38%|██████████████▍                       | 629M/1.65G [00:07<00:17, 60.0MB/s]     39%|██████████████▋                       | 638M/1.65G [00:08<00:15, 65.6MB/s]     39%|██████████████▊                       | 646M/1.65G [00:08<00:14, 69.4MB/s]     40%|███████████████                       | 654M/1.65G [00:08<00:13, 73.8MB/s]     40%|███████████████▎                      | 664M/1.65G [00:08<00:12, 78.7MB/s]     41%|███████████████▍                      | 672M/1.65G [00:08<00:12, 80.5MB/s]     41%|███████████████▋                      | 681M/1.65G [00:08<00:11, 82.3MB/s]     42%|███████████████▊                      | 690M/1.65G [00:08<00:11, 84.5MB/s]     42%|████████████████                      | 699M/1.65G [00:08<00:10, 87.0MB/s]     43%|████████████████▎                     | 708M/1.65G [00:08<00:10, 87.8MB/s]     43%|████████████████▍                     | 717M/1.65G [00:08<00:10, 89.7MB/s]     44%|████████████████▋                     | 727M/1.65G [00:09<00:10, 90.7MB/s]     45%|████████████████▉                     | 736M/1.65G [00:09<00:10, 91.5MB/s]     45%|█████████████████▏                    | 745M/1.65G [00:09<00:09, 91.3MB/s]     46%|█████████████████▎                    | 754M/1.65G [00:09<00:09, 91.6MB/s]     46%|█████████████████▌                    | 764M/1.65G [00:09<00:09, 92.4MB/s]     47%|█████████████████▊                    | 773M/1.65G [00:09<00:09, 92.5MB/s]     47%|█████████████████▉                    | 782M/1.65G [00:09<00:09, 92.3MB/s]     48%|██████████████████▏                   | 792M/1.65G [00:09<00:09, 92.5MB/s]     48%|██████████████████▍                   | 801M/1.65G [00:09<00:09, 92.1MB/s]     49%|██████████████████▋                   | 810M/1.65G [00:09<00:09, 92.4MB/s]     50%|██████████████████▊                   | 820M/1.65G [00:10<00:09, 92.3MB/s]     50%|███████████████████                   | 829M/1.65G [00:10<00:08, 92.9MB/s]     51%|███████████████████▎                  | 838M/1.65G [00:10<00:08, 92.9MB/s]     51%|███████████████████▍                  | 848M/1.65G [00:10<00:09, 88.1MB/s]     52%|███████████████████▋                  | 857M/1.65G [00:10<00:08, 89.8MB/s]     52%|███████████████████▉                  | 866M/1.65G [00:10<00:09, 81.9MB/s]     53%|████████████████████                  | 874M/1.65G [00:10<00:09, 79.5MB/s]     53%|████████████████████▎                 | 883M/1.65G [00:10<00:09, 81.2MB/s]     54%|████████████████████▌                 | 892M/1.65G [00:10<00:09, 83.6MB/s]     55%|████████████████████▋                 | 901M/1.65G [00:11<00:08, 86.6MB/s]     55%|████████████████████▉                 | 910M/1.65G [00:11<00:08, 88.0MB/s]     56%|█████████████████████▏                | 920M/1.65G [00:11<00:08, 88.9MB/s]     56%|█████████████████████▎                | 929M/1.65G [00:11<00:08, 89.8MB/s]     57%|█████████████████████▌                | 938M/1.65G [00:11<00:07, 90.4MB/s]     57%|█████████████████████▊                | 947M/1.65G [00:11<00:07, 91.1MB/s]     58%|█████████████████████▉                | 956M/1.65G [00:11<00:07, 91.1MB/s]     58%|██████████████████████▏               | 965M/1.65G [00:11<00:07, 87.4MB/s]     59%|██████████████████████▍               | 974M/1.65G [00:11<00:08, 81.0MB/s]     59%|██████████████████████▌               | 983M/1.65G [00:11<00:08, 83.1MB/s]     60%|██████████████████████▊               | 992M/1.65G [00:12<00:09, 67.4MB/s]     60%|██████████████████████▉               | 999M/1.65G [00:12<00:10, 63.2MB/s]     61%|██████████████████████▌              | 1.01G/1.65G [00:12<00:11, 58.6MB/s]     61%|██████████████████████▋              | 1.01G/1.65G [00:12<00:10, 58.6MB/s]     62%|██████████████████████▊              | 1.02G/1.65G [00:12<00:09, 65.1MB/s]     62%|███████████████████████              | 1.03G/1.65G [00:12<00:08, 71.5MB/s]     63%|███████████████████████▏             | 1.04G/1.65G [00:12<00:08, 73.8MB/s]     63%|███████████████████████▍             | 1.05G/1.65G [00:12<00:07, 78.5MB/s]     64%|███████████████████████▌             | 1.05G/1.65G [00:13<00:07, 81.8MB/s]     64%|███████████████████████▊             | 1.06G/1.65G [00:13<00:07, 83.2MB/s]     65%|███████████████████████▉             | 1.07G/1.65G [00:13<00:07, 79.8MB/s]     65%|████████████████████████▏            | 1.08G/1.65G [00:13<00:07, 73.7MB/s]     66%|████████████████████████▎            | 1.09G/1.65G [00:13<00:07, 73.1MB/s]     66%|████████████████████████▌            | 1.10G/1.65G [00:13<00:07, 73.9MB/s]     67%|████████████████████████▋            | 1.10G/1.65G [00:13<00:07, 75.5MB/s]     67%|████████████████████████▉            | 1.11G/1.65G [00:13<00:06, 78.0MB/s]     68%|█████████████████████████            | 1.12G/1.65G [00:13<00:06, 79.5MB/s]     68%|█████████████████████████▏           | 1.13G/1.65G [00:14<00:06, 78.7MB/s]     69%|█████████████████████████▍           | 1.14G/1.65G [00:14<00:06, 77.8MB/s]     69%|█████████████████████████▌           | 1.14G/1.65G [00:14<00:06, 79.6MB/s]     70%|█████████████████████████▊           | 1.15G/1.65G [00:14<00:06, 77.5MB/s]     70%|█████████████████████████▉           | 1.16G/1.65G [00:14<00:06, 79.8MB/s]     71%|██████████████████████████▏          | 1.17G/1.65G [00:14<00:06, 76.7MB/s]     71%|██████████████████████████▎          | 1.18G/1.65G [00:14<00:06, 76.4MB/s]     72%|██████████████████████████▌          | 1.18G/1.65G [00:14<00:05, 78.0MB/s]     72%|██████████████████████████▋          | 1.19G/1.65G [00:14<00:05, 79.4MB/s]     73%|██████████████████████████▉          | 1.20G/1.65G [00:14<00:05, 80.8MB/s]     73%|███████████████████████████          | 1.21G/1.65G [00:15<00:05, 78.2MB/s]     74%|███████████████████████████▏         | 1.22G/1.65G [00:15<00:05, 77.1MB/s]     74%|███████████████████████████▍         | 1.23G/1.65G [00:15<00:05, 79.2MB/s]     75%|███████████████████████████▋         | 1.23G/1.65G [00:15<00:05, 80.5MB/s]     75%|███████████████████████████▊         | 1.24G/1.65G [00:15<00:05, 79.6MB/s]     76%|███████████████████████████▉         | 1.25G/1.65G [00:15<00:05, 79.6MB/s]     76%|████████████████████████████▏        | 1.26G/1.65G [00:15<00:05, 78.7MB/s]     77%|████████████████████████████▎        | 1.27G/1.65G [00:15<00:05, 77.1MB/s]     77%|████████████████████████████▌        | 1.27G/1.65G [00:15<00:04, 78.8MB/s]     78%|████████████████████████████▋        | 1.28G/1.65G [00:16<00:07, 49.2MB/s]     78%|████████████████████████████▉        | 1.29G/1.65G [00:16<00:06, 55.7MB/s]     79%|█████████████████████████████        | 1.30G/1.65G [00:16<00:05, 62.2MB/s]     79%|█████████████████████████████▏       | 1.31G/1.65G [00:16<00:05, 66.0MB/s]     80%|█████████████████████████████▍       | 1.31G/1.65G [00:16<00:04, 69.7MB/s]     80%|█████████████████████████████▌       | 1.32G/1.65G [00:16<00:05, 66.0MB/s]     80%|█████████████████████████████▊       | 1.33G/1.65G [00:16<00:04, 70.5MB/s]     81%|█████████████████████████████▉       | 1.34G/1.65G [00:16<00:04, 73.4MB/s]     81%|██████████████████████████████▏      | 1.35G/1.65G [00:17<00:04, 75.9MB/s]     82%|██████████████████████████████▎      | 1.36G/1.65G [00:17<00:03, 78.8MB/s]     83%|██████████████████████████████▌      | 1.36G/1.65G [00:17<00:03, 80.6MB/s]     83%|██████████████████████████████▋      | 1.37G/1.65G [00:17<00:03, 81.3MB/s]     84%|██████████████████████████████▉      | 1.38G/1.65G [00:17<00:03, 81.9MB/s]     84%|███████████████████████████████      | 1.39G/1.65G [00:17<00:03, 83.1MB/s]     85%|███████████████████████████████▎     | 1.40G/1.65G [00:17<00:03, 83.6MB/s]     85%|███████████████████████████████▍     | 1.41G/1.65G [00:17<00:02, 83.0MB/s]     86%|███████████████████████████████▋     | 1.41G/1.65G [00:17<00:02, 80.0MB/s]     86%|███████████████████████████████▊     | 1.42G/1.65G [00:17<00:02, 81.8MB/s]     87%|████████████████████████████████     | 1.43G/1.65G [00:18<00:02, 82.9MB/s]     87%|████████████████████████████████▏    | 1.44G/1.65G [00:18<00:02, 81.3MB/s]     88%|████████████████████████████████▍    | 1.45G/1.65G [00:18<00:02, 81.0MB/s]     88%|████████████████████████████████▌    | 1.46G/1.65G [00:18<00:02, 82.3MB/s]     89%|████████████████████████████████▊    | 1.46G/1.65G [00:18<00:02, 83.0MB/s]     89%|████████████████████████████████▉    | 1.47G/1.65G [00:18<00:02, 83.1MB/s]     90%|█████████████████████████████████▏   | 1.48G/1.65G [00:18<00:02, 83.6MB/s]     90%|█████████████████████████████████▎   | 1.49G/1.65G [00:18<00:01, 84.2MB/s]     91%|█████████████████████████████████▌   | 1.50G/1.65G [00:18<00:01, 83.7MB/s]     91%|█████████████████████████████████▋   | 1.51G/1.65G [00:18<00:01, 84.0MB/s]     92%|█████████████████████████████████▉   | 1.52G/1.65G [00:19<00:01, 84.3MB/s]     92%|██████████████████████████████████   | 1.52G/1.65G [00:19<00:01, 83.7MB/s]     93%|██████████████████████████████████▎  | 1.53G/1.65G [00:19<00:01, 83.1MB/s]     93%|██████████████████████████████████▍  | 1.54G/1.65G [00:19<00:01, 83.8MB/s]     94%|██████████████████████████████████▋  | 1.55G/1.65G [00:19<00:01, 84.3MB/s]     94%|██████████████████████████████████▉  | 1.56G/1.65G [00:19<00:01, 84.6MB/s]     95%|███████████████████████████████████  | 1.57G/1.65G [00:19<00:01, 68.7MB/s]     95%|███████████████████████████████████▏ | 1.57G/1.65G [00:19<00:01, 58.8MB/s]     96%|███████████████████████████████████▍ | 1.58G/1.65G [00:19<00:01, 63.2MB/s]     96%|███████████████████████████████████▌ | 1.59G/1.65G [00:20<00:01, 63.5MB/s]     97%|███████████████████████████████████▋ | 1.60G/1.65G [00:20<00:00, 63.1MB/s]     97%|███████████████████████████████████▊ | 1.60G/1.65G [00:20<00:00, 65.3MB/s]     97%|████████████████████████████████████ | 1.61G/1.65G [00:20<00:00, 69.6MB/s]     98%|████████████████████████████████████▏| 1.62G/1.65G [00:20<00:00, 70.6MB/s]     98%|████████████████████████████████████▎| 1.62G/1.65G [00:20<00:00, 70.2MB/s]     99%|████████████████████████████████████▌| 1.63G/1.65G [00:20<00:00, 74.2MB/s]     99%|████████████████████████████████████▊| 1.64G/1.65G [00:20<00:00, 77.5MB/s]    100%|████████████████████████████████████▉| 1.65G/1.65G [00:20<00:00, 79.8MB/s]      0%|                                              | 0.00/1.65G [00:00<?, ?B/s]    100%|█████████████████████████████████████| 1.65G/1.65G [00:00<00:00, 3.29TB/s]
+    16 files missing from root.txt in /home/circleci/mne_data/MNE-sample-data/subjects
+    Downloading missing files remotely
+    Extracting missing files
+    Successfully extracted 16 files
+    10 files missing from bem.txt in /home/circleci/mne_data/MNE-sample-data/subjects/fsaverage
+    Downloading missing files remotely
+    Extracting missing files
+    Successfully extracted 10 files
+    Using fsaverage-head-dense.fif for head surface.
+        1 BEM surfaces found
+        Reading a surface...
+    [done]
+        1 BEM surfaces read
     Channel types:: hbo: 8, hbr: 8
 
 
@@ -413,37 +418,32 @@ See :ref:`tut-source-alignment` for more details.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  15.224 seconds)
+   **Total running time of the script:** ( 1 minutes  9.762 seconds)
 
-**Estimated memory usage:**  273 MB
+**Estimated memory usage:**  423 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_01_data_io.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
-  .. container:: binder-badge
+    .. container:: binder-badge
 
-    .. image:: images/binder_badge_logo.svg
-      :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_01_data_io.ipynb
-      :alt: Launch binder
-      :width: 150 px
+      .. image:: images/binder_badge_logo.svg
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_01_data_io.ipynb
+        :alt: Launch binder
+        :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: plot_01_data_io.py <plot_01_data_io.py>`
 
-     :download:`Download Python source code: plot_01_data_io.py <plot_01_data_io.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: plot_01_data_io.ipynb <plot_01_data_io.ipynb>`
+      :download:`Download Jupyter notebook: plot_01_data_io.ipynb <plot_01_data_io.ipynb>`
 
 
 .. only:: html

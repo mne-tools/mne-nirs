@@ -47,12 +47,9 @@ information about triggers, condition names, etc.
    This tutorial uses data in the BIDS format.
    The BIDS specification for NIRS data is still under development. See:
    `fNIRS BIDS proposal <https://github.com/bids-standard/bids-specification/pull/802>`_.
-   As such, to run this tutorial you must use the fNIRS development branch of MNE-BIDS.
+   As such, to run this tutorial you must use the MNE-BIDS 0.10 or later.
 
-   To install the fNIRS development branch of MNE-BIDS run:
-   `pip install -U https://codeload.github.com/rob-luke/mne-bids/zip/nirs`.
-
-   MNE-Python. allows you to process fNIRS data that is not in BIDS format too.
+   MNE-Python allows you to process fNIRS data that is not in BIDS format too.
    Simply modify the ``read_raw_`` function to match your data type.
    See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
    to use your data with MNE-Python.
@@ -106,11 +103,10 @@ import statsmodels.formula.api as smf
 
 # Import Plotting Library
 import matplotlib.pyplot as plt
-from lets_plot import *
+import seaborn as sns
 
 # Set general parameters
 set_log_level("WARNING")  # Don't show info, as it is repetitive for many subjects
-LetsPlot.setup_html()
 
 
 # %%
@@ -322,8 +318,6 @@ for idx, evoked in enumerate(all_evokeds):
         subj_id += 1
         for roi in rois:
             for chroma in ["hbo", "hbr"]:
-                assert subj_data.info["subject_info"]['first_name'] == \
-                    'mne_anonymize'  # have been anonymized
                 data = deepcopy(subj_data).pick(picks=rois[roi]).pick(chroma)
                 value = data.crop(tmin=5.0, tmax=7.0).data.mean() * 1.0e6
 
@@ -356,12 +350,7 @@ df.head()
 # For this reason, fNIRS is most appropriate for detecting changes within a
 # single ROI between conditions.
 
-ggplot(df.query("Chroma == 'hbo'"),
-       aes(x='Condition', y='Value', color='ID', shape='ROI')) \
-    + geom_hline(y_intercept=0, linetype="dashed", size=1) \
-    + geom_point(size=5) \
-    + scale_shape_manual(values=[16, 17]) \
-    + ggsize(800, 300)
+sns.catplot(x="Condition", y="Value", hue="ID", data=df.query("Chroma == 'hbo'"), ci=None, palette="muted", height=4, s=10)
 
 
 # %%

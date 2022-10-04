@@ -45,12 +45,9 @@ information about triggers, condition names, etc.
    This tutorial uses data in the BIDS format.
    The BIDS specification for NIRS data is still under development. See:
    `fNIRS BIDS proposal <https://github.com/bids-standard/bids-specification/pull/802>`_.
-   As such, to run this tutorial you must use the fNIRS development branch of MNE-BIDS.
+   As such, to run this tutorial you must use the MNE-BIDS 0.10 or later.
 
-   To install the fNIRS development branch of MNE-BIDS run:
-   `pip install -U https://codeload.github.com/rob-luke/mne-bids/zip/nirs`.
-
-   MNE-Python. allows you to process fNIRS data that is not in BIDS format too.
+   MNE-Python allows you to process fNIRS data that is not in BIDS format too.
    Simply modify the ``read_raw_`` function to match your data type.
    See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
    to use your data with MNE-Python.
@@ -104,8 +101,7 @@ import statsmodels.formula.api as smf
 # Import Plotting Library
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-from lets_plot import *
-LetsPlot.setup_html()
+import seaborn as sns
 
 
 # %%
@@ -185,6 +181,8 @@ print(subjects)
 def individual_analysis(bids_path, ID):
 
     raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
+    # Delete annotation labeled 15, as these just signify the start and end of experiment.
+    raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
     # sanitize event names
     raw_intensity.annotations.description[:] = [
         d.replace('/', '_') for d in raw_intensity.annotations.description]
@@ -287,11 +285,7 @@ for sub in subjects:  # Loop from first to fifth subject
 grp_results = df_roi.query("Condition in ['Control', 'Tapping_Left', 'Tapping_Right']")
 grp_results = grp_results.query("Chroma in ['hbo']")
 
-ggplot(grp_results, aes(x='Condition', y='theta', color='ROI', shape='ROI')) \
-    + geom_hline(y_intercept=0, linetype="dashed", size=1) \
-    + geom_point(size=5) \
-    + facet_grid('ID') \
-    + ggsize(900, 350)
+sns.catplot(x="Condition", y="theta", col="ID", hue="ROI", data=grp_results, col_wrap=5, ci=None, palette="muted", height=4, s=10)
 
 
 # %%
@@ -385,16 +379,7 @@ roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
 
 df = statsmodels_to_results(roi_model)
 
-ggplot(df.query("Chroma == 'hbo'"),
-       aes(x='Condition', y='Coef.', color='Significant', shape='ROI')) \
-    + geom_hline(y_intercept=0, linetype="dashed", size=1) \
-    + geom_point(size=5) \
-    + scale_shape_manual(values=[16, 17]) \
-    + ggsize(900, 300) \
-    + geom_point(data=df.query("Chroma == 'hbr'")
-                 .query("ROI == 'Left_Hemisphere'"), size=5, shape=1) \
-    + geom_point(data=df.query("Chroma == 'hbr'")
-                 .query("ROI == 'Right_Hemisphere'"), size=5, shape=2)
+sns.catplot(x="Condition", y="Coef.", hue="ROI", data=df.query("Chroma == 'hbo'"), ci=None, palette="muted", height=4, s=10)
 
 
 # %%
@@ -424,12 +409,12 @@ ch_model_df = statsmodels_to_results(ch_model)
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                     ch_model_df.query("Condition in ['Tapping_Left']"),
                     colorbar=False, axes=axes[0, 0],
-                    vmin=0, vmax=20, cmap=mpl.cm.Oranges)
+                    vlim=(0, 20), cmap=mpl.cm.Oranges)
 
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
                     ch_model_df.query("Condition in ['Tapping_Right']"),
                     colorbar=True, axes=axes[0, 1],
-                    vmin=0, vmax=20, cmap=mpl.cm.Oranges)
+                    vlim=(0, 20), cmap=mpl.cm.Oranges)
 
 # Cut down the dataframe just to the conditions we are interested in
 ch_summary = df_cha.query("Condition in ['Tapping_Left', 'Tapping_Right']")
@@ -444,11 +429,11 @@ ch_model_df = statsmodels_to_results(ch_model)
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
                     ch_model_df.query("Condition in ['Tapping_Left']"),
                     colorbar=False, axes=axes[1, 0],
-                    vmin=-10, vmax=0, cmap=mpl.cm.Blues_r)
+                    vlim=(-10, 0), cmap=mpl.cm.Blues_r)
 plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
                     ch_model_df.query("Condition in ['Tapping_Right']"),
                     colorbar=True, axes=axes[1, 1],
-                    vmin=-10, vmax=0, cmap=mpl.cm.Blues_r)
+                    vlim=(-10, 0), cmap=mpl.cm.Blues_r)
 
 
 # %%

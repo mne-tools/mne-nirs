@@ -89,7 +89,7 @@ and plot these signals.
 
     Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
 
-    <mne_qt_browser._pg_figure.PyQtGraphBrowser object at 0x7fca55282f70>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f4ee4787ca0>
 
 
 
@@ -143,7 +143,7 @@ seconds to the data.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.PyQtGraphBrowser object at 0x7fca038c7790>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f4dec4df310>
 
 
 
@@ -178,7 +178,7 @@ for any user-supplied parameters FishburnEtAl2019.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.PyQtGraphBrowser object at 0x7fca0c0690d0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f4e6c7cf3a0>
 
 
 
@@ -201,37 +201,32 @@ for fNIRS. NeuroImage,
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  4.555 seconds)
+   **Total running time of the script:** ( 0 minutes  4.504 seconds)
 
-**Estimated memory usage:**  9 MB
+**Estimated memory usage:**  10 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_21_artifacts.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
-  .. container:: binder-badge
+    .. container:: binder-badge
 
-    .. image:: images/binder_badge_logo.svg
-      :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_21_artifacts.ipynb
-      :alt: Launch binder
-      :width: 150 px
+      .. image:: images/binder_badge_logo.svg
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_21_artifacts.ipynb
+        :alt: Launch binder
+        :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: plot_21_artifacts.py <plot_21_artifacts.py>`
 
-     :download:`Download Python source code: plot_21_artifacts.py <plot_21_artifacts.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: plot_21_artifacts.ipynb <plot_21_artifacts.ipynb>`
+      :download:`Download Jupyter notebook: plot_21_artifacts.ipynb <plot_21_artifacts.ipynb>`
 
 
 .. only:: html

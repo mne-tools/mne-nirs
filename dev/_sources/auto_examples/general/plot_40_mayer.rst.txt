@@ -105,7 +105,7 @@ We read in the data and convert to haemoglobin concentration.
     raw = mne.io.read_raw_nirx(fnirs_raw_dir, verbose=True).load_data()
 
     raw = optical_density(raw)
-    raw.resample(1.5)
+    raw.resample(2)
     raw = beer_lambert_law(raw, ppf=0.1)
     raw = raw.pick(picks="hbo")
     raw = get_long_channels(raw, min_dist=0.025, max_dist=0.045)
@@ -149,7 +149,7 @@ We read in the data and convert to haemoglobin concentration.
         <tr>
             <th>Digitized points</th>
         
-            <td>0 points</td>
+            <td>31 points</td>
         
         </tr>
         <tr>
@@ -170,7 +170,7 @@ We read in the data and convert to haemoglobin concentration.
     
         <tr>
             <th>Sampling frequency</th>
-            <td>1.50 Hz</td>
+            <td>2.00 Hz</td>
         </tr>
     
     
@@ -182,7 +182,7 @@ We read in the data and convert to haemoglobin concentration.
     
         <tr>
             <th>Lowpass</th>
-            <td>0.75 Hz</td>
+            <td>1.00 Hz</td>
         </tr>
     
     
@@ -239,7 +239,7 @@ it matches well to the data.
         return spectra, freqs
 
     # Prepare data for FOOOF
-    spectra, freqs = psd_welch(raw, fmin=0.001, fmax=1, tmin=0, tmax=None, n_overlap=300, n_fft=600)
+    spectra, freqs = psd_welch(raw, fmin=0.001, fmax=1.0, tmin=0, tmax=None, n_overlap=300, n_fft=600)
     spectra, freqs = scale_up_spectra(spectra, freqs)
 
     # Specify the model, note that frequency values here are times 10
@@ -269,7 +269,7 @@ it matches well to the data.
  .. code-block:: none
 
 
-    ([<matplotlib.axis.XTick object at 0x7fc9f869aee0>, <matplotlib.axis.XTick object at 0x7fc9f869ae20>, <matplotlib.axis.XTick object at 0x7fc9f87c8b50>, <matplotlib.axis.XTick object at 0x7fca5f34e430>, <matplotlib.axis.XTick object at 0x7fca7e5a3bb0>, <matplotlib.axis.XTick object at 0x7fca7e543310>, <matplotlib.axis.XTick object at 0x7fca7e42b220>], [Text(0, 0, '0.0'), Text(1, 0, '0.1'), Text(2, 0, '0.2'), Text(3, 0, '0.3'), Text(4, 0, '0.4'), Text(5, 0, '0.5'), Text(6, 0, '0.6')])
+    ([<matplotlib.axis.XTick object at 0x7f4e902550a0>, <matplotlib.axis.XTick object at 0x7f4e902556d0>, <matplotlib.axis.XTick object at 0x7f4f5e87c340>, <matplotlib.axis.XTick object at 0x7f4ee472b940>, <matplotlib.axis.XTick object at 0x7f4f386d7070>, <matplotlib.axis.XTick object at 0x7f4eac318190>, <matplotlib.axis.XTick object at 0x7f4eefa8bfa0>], [Text(0, 0, '0.0'), Text(1, 0, '0.1'), Text(2, 0, '0.2'), Text(3, 0, '0.3'), Text(4, 0, '0.4'), Text(5, 0, '0.5'), Text(6, 0, '0.6')])
 
 
 
@@ -329,9 +329,9 @@ authors if you use this function.
       <tbody>
         <tr>
           <th>0</th>
-          <td>0.08996</td>
-          <td>0.053645</td>
-          <td>0.751052</td>
+          <td>0.090168</td>
+          <td>0.069643</td>
+          <td>0.763865</td>
           <td>hbo</td>
           <td>Online tutorial</td>
         </tr>
@@ -379,37 +379,32 @@ Bibliography
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  4.858 seconds)
+   **Total running time of the script:** ( 0 minutes  3.922 seconds)
 
 **Estimated memory usage:**  9 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_40_mayer.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
-  .. container:: binder-badge
+    .. container:: binder-badge
 
-    .. image:: images/binder_badge_logo.svg
-      :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_40_mayer.ipynb
-      :alt: Launch binder
-      :width: 150 px
+      .. image:: images/binder_badge_logo.svg
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_40_mayer.ipynb
+        :alt: Launch binder
+        :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: plot_40_mayer.py <plot_40_mayer.py>`
 
-     :download:`Download Python source code: plot_40_mayer.py <plot_40_mayer.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: plot_40_mayer.ipynb <plot_40_mayer.ipynb>`
+      :download:`Download Jupyter notebook: plot_40_mayer.ipynb <plot_40_mayer.ipynb>`
 
 
 .. only:: html

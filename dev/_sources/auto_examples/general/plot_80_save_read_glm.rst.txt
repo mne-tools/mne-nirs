@@ -48,16 +48,13 @@ information about triggers, condition names, etc.
 
    The BIDS specification for NIRS data is still under development. See:
    `fNIRS BIDS proposal <https://github.com/bids-standard/bids-specification/pull/802>`_.
-   As such, you must use the development branch of MNE-BIDS.
-
-   To install the fNIRS development branch of MNE-BIDS run:
-   `pip install https://codeload.github.com/rob-luke/mne-bids/zip/nirs`
+   As such, to run this tutorial you must use the MNE-BIDS 0.10 or later.
 
 .. contents:: Page contents
    :local:
    :depth: 2
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-62
+.. GENERATED FROM PYTHON SOURCE LINES 38-59
 
 .. code-block:: default
 
@@ -89,7 +86,7 @@ information about triggers, condition names, etc.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-72
+.. GENERATED FROM PYTHON SOURCE LINES 60-69
 
 Set up directories
 ------------------
@@ -101,7 +98,7 @@ as described above.
 
 We first define the root directory of our dataset.
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-77
+.. GENERATED FROM PYTHON SOURCE LINES 69-74
 
 .. code-block:: default
 
@@ -123,12 +120,12 @@ We first define the root directory of our dataset.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-80
+.. GENERATED FROM PYTHON SOURCE LINES 75-77
 
 And as we are using MNE-BIDS we can create a BIDSPath.
 This helps to handle all the path wrangling.
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-85
+.. GENERATED FROM PYTHON SOURCE LINES 77-82
 
 .. code-block:: default
 
@@ -150,11 +147,11 @@ This helps to handle all the path wrangling.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-87
+.. GENERATED FROM PYTHON SOURCE LINES 83-84
 
 For example we can automatically query the subjects, tasks, and sessions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 87-92
+.. GENERATED FROM PYTHON SOURCE LINES 84-89
 
 .. code-block:: default
 
@@ -176,11 +173,11 @@ For example we can automatically query the subjects, tasks, and sessions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-94
+.. GENERATED FROM PYTHON SOURCE LINES 90-91
 
 But for this example we will only process the first two subjects
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-97
+.. GENERATED FROM PYTHON SOURCE LINES 91-94
 
 .. code-block:: default
 
@@ -194,7 +191,7 @@ But for this example we will only process the first two subjects
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 98-105
+.. GENERATED FROM PYTHON SOURCE LINES 95-102
 
 Define individual analysis
 --------------------------
@@ -204,7 +201,7 @@ This is a GLM analysis as described in the
 :ref:`individual GLM tutorial <tut-fnirs-hrf>`,
 so this example will skim over the individual level details.
 
-.. GENERATED FROM PYTHON SOURCE LINES 105-118
+.. GENERATED FROM PYTHON SOURCE LINES 102-117
 
 .. code-block:: default
 
@@ -213,6 +210,8 @@ so this example will skim over the individual level details.
     def individual_analysis(bids_path):
 
         raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
+        # Delete annotation labeled 15, as these just signify the start and end of experiment.
+        raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
         raw_intensity.pick(picks=range(20)).crop(200).resample(0.3)  # Reduce load
         raw_haemo = beer_lambert_law(optical_density(raw_intensity), ppf=0.1)
         design_matrix = make_first_level_design_matrix(raw_haemo)
@@ -228,7 +227,7 @@ so this example will skim over the individual level details.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-124
+.. GENERATED FROM PYTHON SOURCE LINES 118-123
 
 Run analysis and save to disk
 -----------------------------
@@ -236,7 +235,7 @@ Run analysis and save to disk
 Next we loop through the five measurements and run the individual analysis
 on each. We will then save the GLM results to disk as ``.h5`` files.
 
-.. GENERATED FROM PYTHON SOURCE LINES 124-151
+.. GENERATED FROM PYTHON SOURCE LINES 123-150
 
 .. code-block:: default
 
@@ -274,14 +273,14 @@ on each. We will then save the GLM results to disk as ``.h5`` files.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 152-156
+.. GENERATED FROM PYTHON SOURCE LINES 151-155
 
 Reload results and extract summary statistics
 ---------------------------------------------
 
 Next we loop through the five measurements and reload all the results.
 
-.. GENERATED FROM PYTHON SOURCE LINES 156-178
+.. GENERATED FROM PYTHON SOURCE LINES 155-177
 
 .. code-block:: default
 
@@ -314,7 +313,7 @@ Next we loop through the five measurements and reload all the results.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 179-184
+.. GENERATED FROM PYTHON SOURCE LINES 178-183
 
 View the resulting dataframe
 ----------------------------
@@ -322,7 +321,7 @@ View the resulting dataframe
 Finally we can view the resulting dataframe which contains data from all
 subjects.
 
-.. GENERATED FROM PYTHON SOURCE LINES 184-186
+.. GENERATED FROM PYTHON SOURCE LINES 183-185
 
 .. code-block:: default
 
@@ -374,11 +373,11 @@ subjects.
           <th>0</th>
           <td>Control</td>
           <td>59.0</td>
-          <td>1.936874e-10</td>
-          <td>5.633150e-01</td>
-          <td>1.130253e-05</td>
-          <td>-0.581207</td>
-          <td>-0.000007</td>
+          <td>1.872860e-10</td>
+          <td>5.717960e-01</td>
+          <td>9.972242e-06</td>
+          <td>-0.568585</td>
+          <td>-0.000006</td>
           <td>1</td>
           <td>1</td>
           <td>hbo</td>
@@ -390,11 +389,11 @@ subjects.
           <th>1</th>
           <td>TappingLeft</td>
           <td>59.0</td>
-          <td>1.936874e-10</td>
-          <td>1.530850e-06</td>
-          <td>1.081466e-05</td>
-          <td>5.345064</td>
-          <td>0.000058</td>
+          <td>1.872860e-10</td>
+          <td>1.013405e-08</td>
+          <td>9.608094e-06</td>
+          <td>6.660502</td>
+          <td>0.000064</td>
           <td>1</td>
           <td>1</td>
           <td>hbo</td>
@@ -406,11 +405,11 @@ subjects.
           <th>2</th>
           <td>TappingRight</td>
           <td>59.0</td>
-          <td>1.936874e-10</td>
-          <td>1.349231e-12</td>
-          <td>1.103474e-05</td>
-          <td>8.956647</td>
-          <td>0.000099</td>
+          <td>1.872860e-10</td>
+          <td>7.118233e-14</td>
+          <td>9.752480e-06</td>
+          <td>9.729188</td>
+          <td>0.000095</td>
           <td>1</td>
           <td>1</td>
           <td>hbo</td>
@@ -422,10 +421,10 @@ subjects.
           <th>3</th>
           <td>constant</td>
           <td>59.0</td>
-          <td>1.936874e-10</td>
-          <td>2.064010e-01</td>
-          <td>9.832145e-07</td>
-          <td>-1.277582</td>
+          <td>1.872860e-10</td>
+          <td>1.855546e-01</td>
+          <td>9.631380e-07</td>
+          <td>-1.339471</td>
           <td>-0.000001</td>
           <td>1</td>
           <td>1</td>
@@ -438,10 +437,10 @@ subjects.
           <th>4</th>
           <td>drift_1</td>
           <td>59.0</td>
-          <td>1.936874e-10</td>
-          <td>1.080810e-10</td>
-          <td>2.776802e-05</td>
-          <td>7.825307</td>
+          <td>1.872860e-10</td>
+          <td>6.643284e-11</td>
+          <td>2.730230e-05</td>
+          <td>7.950188</td>
           <td>0.000217</td>
           <td>1</td>
           <td>1</td>
@@ -470,10 +469,10 @@ subjects.
           <th>2135</th>
           <td>drift_5</td>
           <td>48.0</td>
-          <td>1.730649e-11</td>
-          <td>3.534167e-01</td>
-          <td>5.206179e-06</td>
-          <td>-0.937064</td>
+          <td>1.819120e-11</td>
+          <td>4.253409e-01</td>
+          <td>5.688788e-06</td>
+          <td>-0.804035</td>
           <td>-0.000005</td>
           <td>3</td>
           <td>3</td>
@@ -486,10 +485,10 @@ subjects.
           <th>2136</th>
           <td>drift_6</td>
           <td>48.0</td>
-          <td>1.730649e-11</td>
-          <td>1.580445e-03</td>
-          <td>5.201862e-06</td>
-          <td>3.350042</td>
+          <td>1.819120e-11</td>
+          <td>4.021019e-03</td>
+          <td>5.685045e-06</td>
+          <td>3.021884</td>
           <td>0.000017</td>
           <td>3</td>
           <td>3</td>
@@ -502,11 +501,11 @@ subjects.
           <th>2137</th>
           <td>drift_7</td>
           <td>48.0</td>
-          <td>1.730649e-11</td>
-          <td>2.022146e-04</td>
-          <td>5.213859e-06</td>
-          <td>-4.023748</td>
-          <td>-0.000021</td>
+          <td>1.819120e-11</td>
+          <td>8.224216e-04</td>
+          <td>5.694861e-06</td>
+          <td>-3.570288</td>
+          <td>-0.000020</td>
           <td>3</td>
           <td>3</td>
           <td>hbr</td>
@@ -518,10 +517,10 @@ subjects.
           <th>2138</th>
           <td>drift_8</td>
           <td>48.0</td>
-          <td>1.730649e-11</td>
-          <td>1.932323e-02</td>
-          <td>5.201099e-06</td>
-          <td>-2.420693</td>
+          <td>1.819120e-11</td>
+          <td>2.788908e-02</td>
+          <td>5.683923e-06</td>
+          <td>-2.267672</td>
           <td>-0.000013</td>
           <td>3</td>
           <td>3</td>
@@ -534,11 +533,11 @@ subjects.
           <th>2139</th>
           <td>drift_9</td>
           <td>48.0</td>
-          <td>1.730649e-11</td>
-          <td>4.559054e-05</td>
-          <td>5.204411e-06</td>
-          <td>4.483749</td>
-          <td>0.000023</td>
+          <td>1.819120e-11</td>
+          <td>1.271330e-04</td>
+          <td>5.686768e-06</td>
+          <td>4.169065</td>
+          <td>0.000024</td>
           <td>3</td>
           <td>3</td>
           <td>hbr</td>
@@ -557,37 +556,32 @@ subjects.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  8.578 seconds)
+   **Total running time of the script:** ( 0 minutes  7.097 seconds)
 
 **Estimated memory usage:**  15 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_80_save_read_glm.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
-  .. container:: binder-badge
+    .. container:: binder-badge
 
-    .. image:: images/binder_badge_logo.svg
-      :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_80_save_read_glm.ipynb
-      :alt: Launch binder
-      :width: 150 px
+      .. image:: images/binder_badge_logo.svg
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_80_save_read_glm.ipynb
+        :alt: Launch binder
+        :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: plot_80_save_read_glm.py <plot_80_save_read_glm.py>`
 
-     :download:`Download Python source code: plot_80_save_read_glm.py <plot_80_save_read_glm.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: plot_80_save_read_glm.ipynb <plot_80_save_read_glm.ipynb>`
+      :download:`Download Jupyter notebook: plot_80_save_read_glm.ipynb <plot_80_save_read_glm.ipynb>`
 
 
 .. only:: html

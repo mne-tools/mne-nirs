@@ -66,12 +66,9 @@ information about triggers, condition names, etc.
    This tutorial uses data in the BIDS format.
    The BIDS specification for NIRS data is still under development. See:
    `fNIRS BIDS proposal <https://github.com/bids-standard/bids-specification/pull/802>`_.
-   As such, to run this tutorial you must use the fNIRS development branch of MNE-BIDS.
+   As such, to run this tutorial you must use the MNE-BIDS 0.10 or later.
 
-   To install the fNIRS development branch of MNE-BIDS run:
-   `pip install -U https://codeload.github.com/rob-luke/mne-bids/zip/nirs`.
-
-   MNE-Python. allows you to process fNIRS data that is not in BIDS format too.
+   MNE-Python allows you to process fNIRS data that is not in BIDS format too.
    Simply modify the ``read_raw_`` function to match your data type.
    See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
    to use your data with MNE-Python.
@@ -92,7 +89,7 @@ information about triggers, condition names, etc.
    :local:
    :depth: 2
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-116
+.. GENERATED FROM PYTHON SOURCE LINES 73-112
 
 .. code-block:: default
 
@@ -129,11 +126,10 @@ information about triggers, condition names, etc.
 
     # Import Plotting Library
     import matplotlib.pyplot as plt
-    from lets_plot import *
+    import seaborn as sns
 
     # Set general parameters
     set_log_level("WARNING")  # Don't show info, as it is repetitive for many subjects
-    LetsPlot.setup_html()
 
 
 
@@ -143,7 +139,7 @@ information about triggers, condition names, etc.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-131
+.. GENERATED FROM PYTHON SOURCE LINES 113-127
 
 Define individual analysis
 --------------------------
@@ -160,7 +156,7 @@ This is the same waveform analysis as described in the
 and :ref:`artifact correction tutorial <ex-fnirs-artifacts>`.
 As such, this example will skim over the individual-level details.
 
-.. GENERATED FROM PYTHON SOURCE LINES 131-168
+.. GENERATED FROM PYTHON SOURCE LINES 127-164
 
 .. code-block:: default
 
@@ -208,7 +204,7 @@ As such, this example will skim over the individual-level details.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 169-178
+.. GENERATED FROM PYTHON SOURCE LINES 165-174
 
 Run analysis on all data
 ------------------------
@@ -220,7 +216,7 @@ then averaged to obtain an evoked response from each participant.
 The individual-evoked data is stored in a
 dictionary (`all_evokeds`) for each condition.
 
-.. GENERATED FROM PYTHON SOURCE LINES 178-196
+.. GENERATED FROM PYTHON SOURCE LINES 174-192
 
 .. code-block:: default
 
@@ -250,15 +246,15 @@ dictionary (`all_evokeds`) for each condition.
 
  .. code-block:: none
 
-    /home/circleci/project/examples/general/plot_16_waveform_group.py:142: RuntimeWarning: No bad channels to interpolate. Doing nothing...
+    /home/circleci/project/examples/general/plot_16_waveform_group.py:138: RuntimeWarning: No bad channels to interpolate. Doing nothing...
       raw_od.interpolate_bads()
-    /home/circleci/project/examples/general/plot_16_waveform_group.py:142: RuntimeWarning: No bad channels to interpolate. Doing nothing...
+    /home/circleci/project/examples/general/plot_16_waveform_group.py:138: RuntimeWarning: No bad channels to interpolate. Doing nothing...
       raw_od.interpolate_bads()
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 197-202
+.. GENERATED FROM PYTHON SOURCE LINES 193-198
 
 The end result is a dictionary that is indexed per condition,
 with each item in the dictionary being a list of evoked responses.
@@ -266,7 +262,7 @@ See below that for each condition we have obtained a MNE evoked type
 that is generated from the average of all 30 trials and epoched from -5 to
 20 seconds.
 
-.. GENERATED FROM PYTHON SOURCE LINES 202-205
+.. GENERATED FROM PYTHON SOURCE LINES 198-201
 
 .. code-block:: default
 
@@ -282,26 +278,31 @@ that is generated from the average of all 30 trials and epoched from -5 to
  .. code-block:: none
 
     defaultdict(<class 'list'>,
-                {'Control': [<Evoked | 'Control' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~62 kB>,
-                             <Evoked | 'Control' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~62 kB>,
-                             <Evoked | 'Control' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~62 kB>,
-                             <Evoked | 'Control' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~62 kB>,
-                             <Evoked | 'Control' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~62 kB>],
-                 'Tapping/Left': [<Evoked | 'Tapping/Left' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~62 kB>,
-                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~62 kB>,
-                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~62 kB>,
-                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~62 kB>,
-                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~62 kB>],
-                 'Tapping/Right': [<Evoked | 'Tapping/Right' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~62 kB>,
-                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~62 kB>,
-                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~62 kB>,
-                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~62 kB>,
-                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~62 kB>]})
+                {'15.0': [<Evoked | '15.0' (average, N=1), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                          <Evoked | '15.0' (average, N=2), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                          <Evoked | '15.0' (average, N=1), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                          <Evoked | '15.0' (average, N=2), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                          <Evoked | '15.0' (average, N=1), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>],
+                 'Control': [<Evoked | 'Control' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                             <Evoked | 'Control' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                             <Evoked | 'Control' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                             <Evoked | 'Control' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                             <Evoked | 'Control' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>],
+                 'Tapping/Left': [<Evoked | 'Tapping/Left' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>],
+                 'Tapping/Right': [<Evoked | 'Tapping/Right' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
+                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>]})
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 206-212
+.. GENERATED FROM PYTHON SOURCE LINES 202-208
 
 View average waveform
 ---------------------
@@ -310,7 +311,7 @@ Next, a grand average epoch waveform is generated for each condition.
 This is generated using all of the standard (long) fNIRS channels,
 as illustrated by the head inset in the top right corner of the figure.
 
-.. GENERATED FROM PYTHON SOURCE LINES 212-226
+.. GENERATED FROM PYTHON SOURCE LINES 208-222
 
 .. code-block:: default
 
@@ -332,7 +333,7 @@ as illustrated by the head inset in the top right corner of the figure.
 
 
 .. image-sg:: /auto_examples/general/images/sphx_glr_plot_16_waveform_group_001.png
-   :alt: Control, Tapping/Left, Tapping/Right
+   :alt: 15.0, Control, Tapping/Left, Tapping/Right
    :srcset: /auto_examples/general/images/sphx_glr_plot_16_waveform_group_001.png
    :class: sphx-glr-single-img
 
@@ -342,18 +343,18 @@ as illustrated by the head inset in the top right corner of the figure.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fc9f875fa30>
+    <matplotlib.legend.Legend object at 0x7f4e90433910>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 227-231
+.. GENERATED FROM PYTHON SOURCE LINES 223-227
 
 From this figure we observe that the response to the tapping condition
 with the right hand appears larger than when no tapping occurred in the
 control condition (similar for when tapping occurred with the left hand).
 We test if this is the case in the analysis below.
 
-.. GENERATED FROM PYTHON SOURCE LINES 234-257
+.. GENERATED FROM PYTHON SOURCE LINES 230-253
 
 Generate regions of interest
 --------------------------------
@@ -379,7 +380,7 @@ In this example, two ROIs are generated. One for the left motor cortex
 and one for the right motor cortex. These are called `Left_Hemisphere` and
 `Right_Hemisphere` and are stored in the `rois` dictionary.
 
-.. GENERATED FROM PYTHON SOURCE LINES 257-268
+.. GENERATED FROM PYTHON SOURCE LINES 253-264
 
 .. code-block:: default
 
@@ -408,7 +409,7 @@ and one for the right motor cortex. These are called `Left_Hemisphere` and
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 269-275
+.. GENERATED FROM PYTHON SOURCE LINES 265-271
 
 Create average waveform per ROI
 -------------------------------
@@ -417,7 +418,7 @@ Next, an average waveform is generated per condition per region of interest.
 This allows the researcher to view the responses elicited in different
 regions of the brain for each condition.
 
-.. GENERATED FROM PYTHON SOURCE LINES 275-298
+.. GENERATED FROM PYTHON SOURCE LINES 271-294
 
 .. code-block:: default
 
@@ -458,17 +459,17 @@ regions of the brain for each condition.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fca0385fc40>
+    <matplotlib.legend.Legend object at 0x7f4e9025eee0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 299-302
+.. GENERATED FROM PYTHON SOURCE LINES 295-298
 
 From this figure we observe that the response to tapping appears
 largest in the brain region that is contralateral to the hand
 that is tapping. We test if this is the case in the analysis below.
 
-.. GENERATED FROM PYTHON SOURCE LINES 305-316
+.. GENERATED FROM PYTHON SOURCE LINES 301-312
 
 Extract evoked amplitude
 ------------------------
@@ -482,7 +483,7 @@ chromophore. The data is then stored in a dataframe, which is saved
 to a csv file for easy analysis in any statistical analysis software.
 We also demonstrate two example analyses on these values below.
 
-.. GENERATED FROM PYTHON SOURCE LINES 316-345
+.. GENERATED FROM PYTHON SOURCE LINES 312-339
 
 .. code-block:: default
 
@@ -495,8 +496,6 @@ We also demonstrate two example analyses on these values below.
             subj_id += 1
             for roi in rois:
                 for chroma in ["hbo", "hbr"]:
-                    assert subj_data.info["subject_info"]['first_name'] == \
-                        'mne_anonymize'  # have been anonymized
                     data = deepcopy(subj_data).pick(picks=rois[roi]).pick(chroma)
                     value = data.crop(tmin=5.0, tmax=7.0).data.mean() * 1.0e6
 
@@ -554,40 +553,40 @@ We also demonstrate two example analyses on these values below.
           <td>1</td>
           <td>Left_Hemisphere</td>
           <td>hbo</td>
-          <td>Control</td>
-          <td>-0.329553</td>
+          <td>15.0</td>
+          <td>1.754645</td>
         </tr>
         <tr>
           <th>1</th>
           <td>1</td>
           <td>Left_Hemisphere</td>
           <td>hbr</td>
-          <td>Control</td>
-          <td>0.069297</td>
+          <td>15.0</td>
+          <td>-0.408665</td>
         </tr>
         <tr>
           <th>2</th>
           <td>1</td>
           <td>Right_Hemisphere</td>
           <td>hbo</td>
-          <td>Control</td>
-          <td>-0.613374</td>
+          <td>15.0</td>
+          <td>0.965787</td>
         </tr>
         <tr>
           <th>3</th>
           <td>1</td>
           <td>Right_Hemisphere</td>
           <td>hbr</td>
-          <td>Control</td>
-          <td>0.132863</td>
+          <td>15.0</td>
+          <td>-0.254560</td>
         </tr>
         <tr>
           <th>4</th>
           <td>2</td>
           <td>Left_Hemisphere</td>
           <td>hbo</td>
-          <td>Control</td>
-          <td>-0.167296</td>
+          <td>15.0</td>
+          <td>0.838258</td>
         </tr>
       </tbody>
     </table>
@@ -596,7 +595,7 @@ We also demonstrate two example analyses on these values below.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 346-358
+.. GENERATED FROM PYTHON SOURCE LINES 340-352
 
 View individual results
 -----------------------
@@ -611,90 +610,33 @@ skull thickness, both of which vary across the head and across participants.
 For this reason, fNIRS is most appropriate for detecting changes within a
 single ROI between conditions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 358-367
+.. GENERATED FROM PYTHON SOURCE LINES 352-356
 
 .. code-block:: default
 
 
-    ggplot(df.query("Chroma == 'hbo'"),
-           aes(x='Condition', y='Value', color='ID', shape='ROI')) \
-        + geom_hline(y_intercept=0, linetype="dashed", size=1) \
-        + geom_point(size=5) \
-        + scale_shape_manual(values=[16, 17]) \
-        + ggsize(800, 300)
+    sns.catplot(x="Condition", y="Value", hue="ID", data=df.query("Chroma == 'hbo'"), ci=None, palette="muted", height=4, s=10)
 
 
 
 
 
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_16_waveform_group_003.png
+   :alt: plot 16 waveform group
+   :srcset: /auto_examples/general/images/sphx_glr_plot_16_waveform_group_003.png
+   :class: sphx-glr-single-img
 
 
-.. raw:: html
+.. rst-class:: sphx-glr-script-out
 
-    <div class="output_subarea output_html rendered_html output_result">
-    <html lang="en">
-       <head>
-           <script type="text/javascript" data-lets-plot-script="library" src="https://cdn.jsdelivr.net/gh/JetBrains/lets-plot@v2.2.1/js-package/distr/lets-plot.min.js"></script>
-       </head>
-       <body>
-              <div id="UJMNTz"></div>
-       <script type="text/javascript" data-lets-plot-script="plot">
-           var plotSpec={
-    "data":{
-    "ID":[1.0,1.0,2.0,2.0,3.0,3.0,4.0,4.0,5.0,5.0,1.0,1.0,2.0,2.0,3.0,3.0,4.0,4.0,5.0,5.0,1.0,1.0,2.0,2.0,3.0,3.0,4.0,4.0,5.0,5.0],
-    "ROI":["Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere","Left_Hemisphere","Right_Hemisphere"],
-    "Condition":["Control","Control","Control","Control","Control","Control","Control","Control","Control","Control","Tapping/Left","Tapping/Left","Tapping/Left","Tapping/Left","Tapping/Left","Tapping/Left","Tapping/Left","Tapping/Left","Tapping/Left","Tapping/Left","Tapping/Right","Tapping/Right","Tapping/Right","Tapping/Right","Tapping/Right","Tapping/Right","Tapping/Right","Tapping/Right","Tapping/Right","Tapping/Right"],
-    "Value":[-0.3295528573408294,-0.6133735919400463,-0.16729631089212582,-0.6047449882561289,-0.15189216881524575,1.1555431609075368,0.3507133742685943,0.19914298445674486,1.2588913480438846,1.7414193732773384,8.211843698809334,11.294978700456657,7.655505813602197,9.056724059326118,2.7505908391955725,5.522052629704331,8.196649348247904,16.76441982515798,7.083026405396802,14.4912813825726,10.262367793693695,6.436869388619838,11.778355113774397,4.504846370846224,1.860814131700518,2.4750090383741137,8.184910132924283,3.935061732446456,14.305775852714698,10.221162137455625]
-    },
-    "mapping":{
-    "x":"Condition",
-    "y":"Value",
-    "color":"ID",
-    "shape":"ROI"
-    },
-    "data_meta":{
-    },
-    "ggsize":{
-    "width":800,
-    "height":300
-    },
-    "kind":"plot",
-    "scales":[{
-    "aesthetic":"shape",
-    "values":[16,17]
-    }],
-    "layers":[{
-    "geom":"hline",
-    "mapping":{
-    },
-    "data_meta":{
-    },
-    "y_intercept":0,
-    "linetype":"dashed",
-    "size":1,
-    "data":{
-    }
-    },{
-    "geom":"point",
-    "mapping":{
-    },
-    "data_meta":{
-    },
-    "size":5,
-    "data":{
-    }
-    }]
-    };
-           var plotContainer = document.getElementById("UJMNTz");
-           LetsPlot.buildPlotFromProcessedSpecs(plotSpec, -1, -1, plotContainer);
-       </script>
-       </body>
-    </html>
-    </div>
-    <br />
-    <br />
+ .. code-block:: none
 
-.. GENERATED FROM PYTHON SOURCE LINES 368-376
+
+    <seaborn.axisgrid.FacetGrid object at 0x7f4e6c68ad00>
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 357-365
 
 Research question 1: Comparison of conditions
 ---------------------------------------------------------------------------------------------------
@@ -705,7 +647,7 @@ than the response when not tapping (control)?
 For this token example we subset the dataframe and then apply the mixed
 effect model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 376-385
+.. GENERATED FROM PYTHON SOURCE LINES 365-374
 
 .. code-block:: default
 
@@ -764,13 +706,13 @@ effect model.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 386-389
+.. GENERATED FROM PYTHON SOURCE LINES 375-378
 
 The model indicates that for the oxyhaemoglobin (HbO) data in the left
 ROI, that the tapping condition with the right hand evokes
 a 9.0 μMol larger response than the control condition.
 
-.. GENERATED FROM PYTHON SOURCE LINES 392-402
+.. GENERATED FROM PYTHON SOURCE LINES 381-391
 
 Research question 2: Are responses larger on the contralateral side to tapping?
 -------------------------------------------------------------------------------
@@ -783,7 +725,7 @@ First, the ROI data in the dataframe is encoded as ipsi- and contralateral
 to the tapping hand. Then the data is subset to just examine the two tapping
 conditions and the model is applied.
 
-.. GENERATED FROM PYTHON SOURCE LINES 402-423
+.. GENERATED FROM PYTHON SOURCE LINES 391-412
 
 .. code-block:: default
 
@@ -854,7 +796,7 @@ conditions and the model is applied.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 424-427
+.. GENERATED FROM PYTHON SOURCE LINES 413-416
 
 The model indicates that for the oxyhaemoglobin (HbO) data, the ipsilateral
 responses are 4.2 μMol smaller than those on the contralateral side to the
@@ -863,37 +805,32 @@ hand that is tapping.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  12.364 seconds)
+   **Total running time of the script:** ( 0 minutes  10.117 seconds)
 
 **Estimated memory usage:**  9 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_16_waveform_group.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
-  .. container:: binder-badge
+    .. container:: binder-badge
 
-    .. image:: images/binder_badge_logo.svg
-      :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_16_waveform_group.ipynb
-      :alt: Launch binder
-      :width: 150 px
+      .. image:: images/binder_badge_logo.svg
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_16_waveform_group.ipynb
+        :alt: Launch binder
+        :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: plot_16_waveform_group.py <plot_16_waveform_group.py>`
 
-     :download:`Download Python source code: plot_16_waveform_group.py <plot_16_waveform_group.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: plot_16_waveform_group.ipynb <plot_16_waveform_group.ipynb>`
+      :download:`Download Jupyter notebook: plot_16_waveform_group.ipynb <plot_16_waveform_group.ipynb>`
 
 
 .. only:: html

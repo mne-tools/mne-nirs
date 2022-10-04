@@ -30,16 +30,12 @@ Waveform Averaging Analysis
 
 This tutorial covers how to convert functional near-infrared spectroscopy
 (fNIRS) data from raw measurements to relative oxyhaemoglobin (HbO) and
-deoxyhaemoglobin (HbR) concentration.
-
-
-.. contents:: Page contents
-   :local:
-   :depth: 2
+deoxyhaemoglobin (HbR) concentration, view the average waveform, and
+topographic representation of the response.
 
 Here we will work with the :ref:`fNIRS motor data <mne:fnirs-motor-dataset>`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 23-43
+.. GENERATED FROM PYTHON SOURCE LINES 19-25
 
 .. code-block:: default
 
@@ -49,7 +45,19 @@ Here we will work with the :ref:`fNIRS motor data <mne:fnirs-motor-dataset>`.
     #
     # License: BSD (3-clause)
 
-    import os
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 26-41
+
+.. code-block:: default
+
+
+    import os.path as op
     import numpy as np
     import matplotlib.pyplot as plt
     from itertools import compress
@@ -58,7 +66,7 @@ Here we will work with the :ref:`fNIRS motor data <mne:fnirs-motor-dataset>`.
 
 
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-    fnirs_cw_amplitude_dir = os.path.join(fnirs_data_folder, 'Participant-1')
+    fnirs_cw_amplitude_dir = op.join(fnirs_data_folder, 'Participant-1')
     raw_intensity = mne.io.read_raw_nirx(fnirs_cw_amplitude_dir, verbose=True)
     raw_intensity.load_data()
 
@@ -101,7 +109,7 @@ Here we will work with the :ref:`fNIRS motor data <mne:fnirs-motor-dataset>`.
         <tr>
             <th>Digitized points</th>
         
-            <td>0 points</td>
+            <td>31 points</td>
         
         </tr>
         <tr>
@@ -146,14 +154,14 @@ Here we will work with the :ref:`fNIRS motor data <mne:fnirs-motor-dataset>`.
     
         <tr>
             <th>Duration</th>
-            <td>00:49:34 (HH:MM:SS)</td>
+            <td>00:49:35 (HH:MM:SS)</td>
         </tr>
     </table>
     </div>
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 44-52
+.. GENERATED FROM PYTHON SOURCE LINES 42-50
 
 Providing more meaningful annotation information
 ------------------------------------------------
@@ -164,7 +172,7 @@ each stimulus, which was 5 seconds for all conditions in this experiment.
 Third, we remove the trigger code 15, which signaled the start and end
 of the experiment and is not relevant to our analysis.
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-61
+.. GENERATED FROM PYTHON SOURCE LINES 50-59
 
 .. code-block:: default
 
@@ -173,8 +181,8 @@ of the experiment and is not relevant to our analysis.
     raw_intensity.annotations.rename({'1.0': 'Control',
                                       '2.0': 'Tapping/Left',
                                       '3.0': 'Tapping/Right'})
-    raw_intensity.annotations.delete(
-        raw_intensity.annotations.description == '15.0')
+    unwanted = np.nonzero(raw_intensity.annotations.description == '15.0')
+    raw_intensity.annotations.delete(unwanted)
 
 
 
@@ -184,7 +192,50 @@ of the experiment and is not relevant to our analysis.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-69
+.. GENERATED FROM PYTHON SOURCE LINES 60-68
+
+Viewing location of sensors over brain surface
+----------------------------------------------
+
+Here we validate that the location of sources-detector pairs and channels
+are in the expected locations. Source-detector pairs are shown as lines
+between the optodes, channels (the mid point of source-detector pairs) are
+optionally shown as orange dots. Source are optionally shown as red dots and
+detectors as black.
+
+.. GENERATED FROM PYTHON SOURCE LINES 68-78
+
+.. code-block:: default
+
+
+    subjects_dir = op.join(mne.datasets.sample.data_path(), 'subjects')
+
+    brain = mne.viz.Brain(
+        'fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5')
+    brain.add_sensors(
+        raw_intensity.info, trans='fsaverage',
+        fnirs=['channels', 'pairs', 'sources', 'detectors'])
+    brain.show_view(azimuth=20, elevation=60, distance=400)
+
+
+
+
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_001.png
+   :alt: plot 15 waveform
+   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_001.png
+   :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Channel types:: fnirs_cw_amplitude: 56
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 79-86
 
 Selecting channels appropriate for detecting neural responses
 -------------------------------------------------------------
@@ -194,7 +245,7 @@ detect a neural response (less than 1 cm distance between optodes).
 These short channels can be seen in the figure above.
 To achieve this we pick all the channels that are not considered to be short.
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-78
+.. GENERATED FROM PYTHON SOURCE LINES 86-95
 
 .. code-block:: default
 
@@ -210,9 +261,9 @@ To achieve this we pick all the channels that are not considered to be short.
 
 
 
-.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_001.png
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_002.png
    :alt: Raw plot
-   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_001.png
+   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_002.png
    :class: sphx-glr-single-img
 
 
@@ -220,20 +271,19 @@ To achieve this we pick all the channels that are not considered to be short.
 
  .. code-block:: none
 
-    Opening raw-browser...
 
-    <mne_qt_browser._pg_figure.PyQtGraphBrowser object at 0x7fca5564dee0>
-
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f4e6c448af0>
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 79-83
+
+.. GENERATED FROM PYTHON SOURCE LINES 96-100
 
 Converting from raw intensity to optical density
 ------------------------------------------------
 
 The raw intensity values are then converted to optical density.
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-89
+.. GENERATED FROM PYTHON SOURCE LINES 100-106
 
 .. code-block:: default
 
@@ -246,9 +296,9 @@ The raw intensity values are then converted to optical density.
 
 
 
-.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_002.png
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_003.png
    :alt: Raw plot
-   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_002.png
+   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_003.png
    :class: sphx-glr-single-img
 
 
@@ -256,13 +306,12 @@ The raw intensity values are then converted to optical density.
 
  .. code-block:: none
 
-    Opening raw-browser...
 
-    <mne_qt_browser._pg_figure.PyQtGraphBrowser object at 0x7fca555f15e0>
-
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f4e6c366040>
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 90-101
+
+.. GENERATED FROM PYTHON SOURCE LINES 107-118
 
 Evaluating the quality of the data
 ----------------------------------
@@ -276,7 +325,7 @@ In this example the data is clean and the coupling is good for all
 channels, so we will not mark any channels as bad based on the scalp
 coupling index.
 
-.. GENERATED FROM PYTHON SOURCE LINES 101-108
+.. GENERATED FROM PYTHON SOURCE LINES 118-125
 
 .. code-block:: default
 
@@ -290,9 +339,9 @@ coupling index.
 
 
 
-.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_003.png
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_004.png
    :alt: plot 15 waveform
-   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_003.png
+   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_004.png
    :class: sphx-glr-single-img
 
 
@@ -305,12 +354,12 @@ coupling index.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 109-111
+.. GENERATED FROM PYTHON SOURCE LINES 126-128
 
 In this example we will mark all channels with a SCI less than 0.5 as bad
 (this dataset is quite clean, so no channels are marked as bad).
 
-.. GENERATED FROM PYTHON SOURCE LINES 111-115
+.. GENERATED FROM PYTHON SOURCE LINES 128-132
 
 .. code-block:: default
 
@@ -325,7 +374,7 @@ In this example we will mark all channels with a SCI less than 0.5 as bad
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 116-122
+.. GENERATED FROM PYTHON SOURCE LINES 133-139
 
 At this stage it is appropriate to inspect your data
 (for instructions on how to use the interactive data visualisation tool
@@ -334,7 +383,7 @@ to ensure that channels with poor scalp coupling have been removed.
 If your data contains lots of artifacts you may decide to apply
 artifact reduction techniques as described in :ref:`ex-fnirs-artifacts`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 125-130
+.. GENERATED FROM PYTHON SOURCE LINES 142-147
 
 Converting from optical density to haemoglobin
 ----------------------------------------------
@@ -342,7 +391,7 @@ Converting from optical density to haemoglobin
 Next we convert the optical density data to haemoglobin concentration using
 the modified Beer-Lambert law.
 
-.. GENERATED FROM PYTHON SOURCE LINES 130-136
+.. GENERATED FROM PYTHON SOURCE LINES 147-153
 
 .. code-block:: default
 
@@ -355,9 +404,9 @@ the modified Beer-Lambert law.
 
 
 
-.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_004.png
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_005.png
    :alt: Raw plot
-   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_004.png
+   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_005.png
    :class: sphx-glr-single-img
 
 
@@ -365,13 +414,12 @@ the modified Beer-Lambert law.
 
  .. code-block:: none
 
-    Opening raw-browser...
 
-    <mne_qt_browser._pg_figure.PyQtGraphBrowser object at 0x7fca7e6d9f70>
-
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f4e902fa940>
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 137-145
+
+.. GENERATED FROM PYTHON SOURCE LINES 154-162
 
 Removing heart rate from signal
 -------------------------------
@@ -382,7 +430,7 @@ the person's heart beat and is unwanted. So we use a low pass filter to
 remove this. A high pass filter is also included to remove slow drifts
 in the data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 145-155
+.. GENERATED FROM PYTHON SOURCE LINES 162-172
 
 .. code-block:: default
 
@@ -404,16 +452,16 @@ in the data.
 
     *
 
-      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_005.png
+      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_006.png
          :alt: Before filtering, Oxyhemoglobin, Deoxyhemoglobin
-         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_005.png
+         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_006.png
          :class: sphx-glr-multi-img
 
     *
 
-      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_006.png
+      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_007.png
          :alt: After filtering, Oxyhemoglobin, Deoxyhemoglobin
-         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_006.png
+         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_007.png
          :class: sphx-glr-multi-img
 
 
@@ -421,8 +469,8 @@ in the data.
 
  .. code-block:: none
 
-    Effective window size : 262.144 (s)
-    Effective window size : 262.144 (s)
+    NOTE: plot_psd() is a legacy function. New code should use .compute_psd().plot().
+    Effective window size : 32.768 (s)
     Filtering raw data in 1 contiguous segment
     Setting up band-pass filter from 0.05 - 0.7 Hz
 
@@ -437,13 +485,19 @@ in the data.
     - Upper transition bandwidth: 0.20 Hz (-6 dB cutoff frequency: 0.80 Hz)
     - Filter length: 1291 samples (165.248 sec)
 
-    Effective window size : 262.144 (s)
-    Effective window size : 262.144 (s)
+    [Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+    [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
+    [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s remaining:    0.0s
+    [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s remaining:    0.0s
+    [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s remaining:    0.0s
+    [Parallel(n_jobs=1)]: Done  40 out of  40 | elapsed:    0.1s finished
+    NOTE: plot_psd() is a legacy function. New code should use .compute_psd().plot().
+    Effective window size : 32.768 (s)
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 156-165
+.. GENERATED FROM PYTHON SOURCE LINES 173-182
 
 Extract epochs
 --------------
@@ -455,7 +509,7 @@ related to each of the experimental conditions.
 First we extract the events of interest and visualise them to ensure they are
 correct.
 
-.. GENERATED FROM PYTHON SOURCE LINES 165-172
+.. GENERATED FROM PYTHON SOURCE LINES 182-189
 
 .. code-block:: default
 
@@ -469,9 +523,9 @@ correct.
 
 
 
-.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_007.png
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_008.png
    :alt: plot 15 waveform
-   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_007.png
+   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_008.png
    :class: sphx-glr-single-img
 
 
@@ -484,13 +538,13 @@ correct.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 173-176
+.. GENERATED FROM PYTHON SOURCE LINES 190-193
 
 Next we define the range of our epochs, the rejection criteria,
 baseline correction, and extract the epochs. We visualise the log of which
 epochs were dropped.
 
-.. GENERATED FROM PYTHON SOURCE LINES 176-188
+.. GENERATED FROM PYTHON SOURCE LINES 193-205
 
 .. code-block:: default
 
@@ -509,9 +563,9 @@ epochs were dropped.
 
 
 
-.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_008.png
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_009.png
    :alt: 6 of 90 epochs removed (6.7%)
-   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_008.png
+   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_009.png
    :class: sphx-glr-single-img
 
 
@@ -537,7 +591,7 @@ epochs were dropped.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 189-197
+.. GENERATED FROM PYTHON SOURCE LINES 206-214
 
 View consistency of responses across trials
 -------------------------------------------
@@ -548,7 +602,7 @@ observe the expected peak in HbO at around 6 seconds consistently across
 trials, and the consistent dip in HbR that is slightly delayed relative to
 the HbO peak.
 
-.. GENERATED FROM PYTHON SOURCE LINES 197-203
+.. GENERATED FROM PYTHON SOURCE LINES 214-220
 
 .. code-block:: default
 
@@ -566,16 +620,16 @@ the HbO peak.
 
     *
 
-      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_009.png
+      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_010.png
          :alt: Deoxyhemoglobin (mean)
-         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_009.png
+         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_010.png
          :class: sphx-glr-multi-img
 
     *
 
-      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_010.png
+      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_011.png
          :alt: Oxyhemoglobin (mean)
-         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_010.png
+         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_011.png
          :class: sphx-glr-multi-img
 
 
@@ -587,12 +641,10 @@ the HbO peak.
     55 matching events found
     No baseline correction applied
     0 projection items activated
-    0 bad epochs dropped
     Not setting metadata
     55 matching events found
     No baseline correction applied
     0 projection items activated
-    0 bad epochs dropped
     combining channels using "mean"
     combining channels using "mean"
 
@@ -600,12 +652,12 @@ the HbO peak.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 204-206
+.. GENERATED FROM PYTHON SOURCE LINES 221-223
 
 We can also view the epoched data for the control condition and observe
 that it does not show the expected morphology.
 
-.. GENERATED FROM PYTHON SOURCE LINES 206-212
+.. GENERATED FROM PYTHON SOURCE LINES 223-229
 
 .. code-block:: default
 
@@ -623,16 +675,16 @@ that it does not show the expected morphology.
 
     *
 
-      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_011.png
+      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_012.png
          :alt: Deoxyhemoglobin (mean)
-         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_011.png
+         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_012.png
          :class: sphx-glr-multi-img
 
     *
 
-      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_012.png
+      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_013.png
          :alt: Oxyhemoglobin (mean)
-         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_012.png
+         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_013.png
          :class: sphx-glr-multi-img
 
 
@@ -644,12 +696,10 @@ that it does not show the expected morphology.
     29 matching events found
     No baseline correction applied
     0 projection items activated
-    0 bad epochs dropped
     Not setting metadata
     29 matching events found
     No baseline correction applied
     0 projection items activated
-    0 bad epochs dropped
     combining channels using "mean"
     combining channels using "mean"
 
@@ -657,7 +707,7 @@ that it does not show the expected morphology.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 213-219
+.. GENERATED FROM PYTHON SOURCE LINES 230-236
 
 View consistency of responses across channels
 ---------------------------------------------
@@ -666,7 +716,7 @@ Similarly we can view how consistent the response is across the optode
 pairs that we selected. All the channels in this data are located over the
 motor cortex, and all channels show a similar pattern in the data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 219-229
+.. GENERATED FROM PYTHON SOURCE LINES 236-246
 
 .. code-block:: default
 
@@ -683,16 +733,16 @@ motor cortex, and all channels show a similar pattern in the data.
 
 
 
-.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_013.png
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_014.png
    :alt: Control: Oxyhemoglobin (20 channels), Tapping: Oxyhemoglobin (20 channels), Control: Deoxyhemoglobin (20 channels), Tapping: Deoxyhemoglobin (20 channels), µM, µM, µM, µM
-   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_013.png
+   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_014.png
    :class: sphx-glr-single-img
 
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 230-236
+.. GENERATED FROM PYTHON SOURCE LINES 247-253
 
 Plot standard fNIRS response image
 ----------------------------------
@@ -701,7 +751,7 @@ Next we generate the most common visualisation of fNIRS data: plotting
 both the HbO and HbR on the same figure to illustrate the relation between
 the two signals.
 
-.. GENERATED FROM PYTHON SOURCE LINES 236-253
+.. GENERATED FROM PYTHON SOURCE LINES 253-270
 
 .. code-block:: default
 
@@ -725,9 +775,9 @@ the two signals.
 
 
 
-.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_014.png
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_015.png
    :alt: plot 15 waveform
-   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_014.png
+   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_015.png
    :class: sphx-glr-single-img
 
 
@@ -744,14 +794,14 @@ the two signals.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 254-258
+.. GENERATED FROM PYTHON SOURCE LINES 271-275
 
 View topographic representation of activity
 -------------------------------------------
 
 Next we view how the topographic activity changes throughout the response.
 
-.. GENERATED FROM PYTHON SOURCE LINES 258-265
+.. GENERATED FROM PYTHON SOURCE LINES 275-282
 
 .. code-block:: default
 
@@ -765,9 +815,9 @@ Next we view how the topographic activity changes throughout the response.
 
 
 
-.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_015.png
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_016.png
    :alt: -3.500 s, -0.500 s, 2.500 s, 5.500 s, 8.500 s, 11.500 s
-   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_015.png
+   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_016.png
    :class: sphx-glr-single-img
 
 
@@ -781,7 +831,7 @@ Next we view how the topographic activity changes throughout the response.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 266-271
+.. GENERATED FROM PYTHON SOURCE LINES 283-288
 
 Compare tapping of left and right hands
 ---------------------------------------
@@ -789,7 +839,7 @@ Compare tapping of left and right hands
 Finally we generate topo maps for the left and right conditions to view
 the location of activity. First we visualise the HbO activity.
 
-.. GENERATED FROM PYTHON SOURCE LINES 271-278
+.. GENERATED FROM PYTHON SOURCE LINES 288-295
 
 .. code-block:: default
 
@@ -808,16 +858,16 @@ the location of activity. First we visualise the HbO activity.
 
     *
 
-      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_016.png
+      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_017.png
          :alt: 4.000 s, 5.000 s, 6.000 s, 7.000 s, 8.000 s, 9.000 s, 10.000 s, µM
-         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_016.png
+         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_017.png
          :class: sphx-glr-multi-img
 
     *
 
-      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_017.png
+      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_018.png
          :alt: 4.000 s, 5.000 s, 6.000 s, 7.000 s, 8.000 s, 9.000 s, 10.000 s, µM
-         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_017.png
+         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_018.png
          :class: sphx-glr-multi-img
 
 
@@ -830,11 +880,11 @@ the location of activity. First we visualise the HbO activity.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 279-280
+.. GENERATED FROM PYTHON SOURCE LINES 296-297
 
 And we also view the HbR activity for the two conditions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 280-286
+.. GENERATED FROM PYTHON SOURCE LINES 297-303
 
 .. code-block:: default
 
@@ -852,16 +902,16 @@ And we also view the HbR activity for the two conditions.
 
     *
 
-      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_018.png
+      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_019.png
          :alt: 4.000 s, 5.000 s, 6.000 s, 7.000 s, 8.000 s, 9.000 s, 10.000 s, µM
-         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_018.png
+         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_019.png
          :class: sphx-glr-multi-img
 
     *
 
-      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_019.png
+      .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_020.png
          :alt: 4.000 s, 5.000 s, 6.000 s, 7.000 s, 8.000 s, 9.000 s, 10.000 s, µM
-         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_019.png
+         :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_020.png
          :class: sphx-glr-multi-img
 
 
@@ -874,43 +924,37 @@ And we also view the HbR activity for the two conditions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 287-288
+.. GENERATED FROM PYTHON SOURCE LINES 304-305
 
 And we can plot the comparison at a single time point for two conditions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 288-324
+.. GENERATED FROM PYTHON SOURCE LINES 305-335
 
 .. code-block:: default
 
 
     fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(9, 5),
                              gridspec_kw=dict(width_ratios=[1, 1, 1, 0.1]))
-    vmin, vmax, ts = -8, 8, 9.0
+    vlim, ts = (-8, 8), 9.0
 
     evoked_left = epochs['Tapping/Left'].average()
     evoked_right = epochs['Tapping/Right'].average()
 
     evoked_left.plot_topomap(ch_type='hbo', times=ts, axes=axes[0, 0],
-                             vmin=vmin, vmax=vmax, colorbar=False,
-                             **topomap_args)
+                             vlim=vlim, colorbar=False, **topomap_args)
     evoked_left.plot_topomap(ch_type='hbr', times=ts, axes=axes[1, 0],
-                             vmin=vmin, vmax=vmax, colorbar=False,
-                             **topomap_args)
+                             vlim=vlim, colorbar=False, **topomap_args)
     evoked_right.plot_topomap(ch_type='hbo', times=ts, axes=axes[0, 1],
-                              vmin=vmin, vmax=vmax, colorbar=False,
-                              **topomap_args)
+                              vlim=vlim, colorbar=False, **topomap_args)
     evoked_right.plot_topomap(ch_type='hbr', times=ts, axes=axes[1, 1],
-                              vmin=vmin, vmax=vmax, colorbar=False,
-                              **topomap_args)
+                              vlim=vlim, colorbar=False, **topomap_args)
 
     evoked_diff = mne.combine_evoked([evoked_left, evoked_right], weights=[1, -1])
 
     evoked_diff.plot_topomap(ch_type='hbo', times=ts, axes=axes[0, 2:],
-                             vmin=vmin, vmax=vmax, colorbar=True,
-                             **topomap_args)
+                             vlim=vlim, colorbar=True, **topomap_args)
     evoked_diff.plot_topomap(ch_type='hbr', times=ts, axes=axes[1, 2:],
-                             vmin=vmin, vmax=vmax, colorbar=True,
-                             **topomap_args)
+                             vlim=vlim, colorbar=True, **topomap_args)
 
     for column, condition in enumerate(
             ['Tapping Left', 'Tapping Right', 'Left-Right']):
@@ -921,21 +965,21 @@ And we can plot the comparison at a single time point for two conditions.
 
 
 
-.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_020.png
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_021.png
    :alt: HbO: Tapping Left, HbO: Tapping Right, HbO: Left-Right, µM, HbR: Tapping Left, HbR: Tapping Right, HbR: Left-Right, µM
-   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_020.png
+   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_021.png
    :class: sphx-glr-single-img
 
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 325-327
+.. GENERATED FROM PYTHON SOURCE LINES 336-338
 
 Lastly, we can also look at the individual waveforms to see what is
 driving the topographic plot above.
 
-.. GENERATED FROM PYTHON SOURCE LINES 327-338
+.. GENERATED FROM PYTHON SOURCE LINES 338-349
 
 .. code-block:: default
 
@@ -946,16 +990,16 @@ driving the topographic plot above.
     mne.viz.plot_evoked_topo(epochs['Right'].average(picks='hbo'), color='r',
                              axes=axes, legend=False)
 
-    # Tidy the legend.
+    # Tidy the legend:
     leg_lines = [line for line in axes.lines if line.get_c() == 'b'][:1]
     leg_lines.append([line for line in axes.lines if line.get_c() == 'r'][0])
     fig.legend(leg_lines, ['Left', 'Right'], loc='lower right')
 
 
 
-.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_021.png
+.. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_022.png
    :alt: plot 15 waveform
-   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_021.png
+   :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_022.png
    :class: sphx-glr-single-img
 
 
@@ -964,44 +1008,39 @@ driving the topographic plot above.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fca0c01cc10>
+    <matplotlib.legend.Legend object at 0x7f4ee45d5f40>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  21.525 seconds)
+   **Total running time of the script:** ( 0 minutes  22.485 seconds)
 
-**Estimated memory usage:**  54 MB
+**Estimated memory usage:**  56 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_15_waveform.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
-  .. container:: binder-badge
+    .. container:: binder-badge
 
-    .. image:: images/binder_badge_logo.svg
-      :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_15_waveform.ipynb
-      :alt: Launch binder
-      :width: 150 px
+      .. image:: images/binder_badge_logo.svg
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_15_waveform.ipynb
+        :alt: Launch binder
+        :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: plot_15_waveform.py <plot_15_waveform.py>`
 
-     :download:`Download Python source code: plot_15_waveform.py <plot_15_waveform.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: plot_15_waveform.ipynb <plot_15_waveform.ipynb>`
+      :download:`Download Jupyter notebook: plot_15_waveform.ipynb <plot_15_waveform.ipynb>`
 
 
 .. only:: html

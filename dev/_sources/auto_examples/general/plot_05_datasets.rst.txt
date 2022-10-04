@@ -112,10 +112,11 @@ motor task.
       <thead>
         <tr>
           <th></th>
-          <th colspan="3" halign="left">tapping</th>
+          <th colspan="4" halign="left">tapping</th>
         </tr>
         <tr>
           <th>trial_type</th>
+          <th>15.0</th>
           <th>Control</th>
           <th>Tapping/Left</th>
           <th>Tapping/Right</th>
@@ -125,35 +126,41 @@ motor task.
           <th></th>
           <th></th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <th>01</th>
+          <td>2</td>
           <td>30</td>
           <td>30</td>
           <td>30</td>
         </tr>
         <tr>
           <th>02</th>
+          <td>2</td>
           <td>30</td>
           <td>30</td>
           <td>30</td>
         </tr>
         <tr>
           <th>03</th>
+          <td>2</td>
           <td>30</td>
           <td>30</td>
           <td>30</td>
         </tr>
         <tr>
           <th>04</th>
+          <td>2</td>
           <td>30</td>
           <td>30</td>
           <td>30</td>
         </tr>
         <tr>
           <th>05</th>
+          <td>2</td>
           <td>30</td>
           <td>30</td>
           <td>30</td>
@@ -508,37 +515,32 @@ Bibliography
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.815 seconds)
+   **Total running time of the script:** ( 0 minutes  1.681 seconds)
 
 **Estimated memory usage:**  10 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_05_datasets.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
-  .. container:: binder-badge
+    .. container:: binder-badge
 
-    .. image:: images/binder_badge_logo.svg
-      :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_05_datasets.ipynb
-      :alt: Launch binder
-      :width: 150 px
+      .. image:: images/binder_badge_logo.svg
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=notebooks/auto_examples/general/plot_05_datasets.ipynb
+        :alt: Launch binder
+        :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: plot_05_datasets.py <plot_05_datasets.py>`
 
-     :download:`Download Python source code: plot_05_datasets.py <plot_05_datasets.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: plot_05_datasets.ipynb <plot_05_datasets.ipynb>`
+      :download:`Download Jupyter notebook: plot_05_datasets.ipynb <plot_05_datasets.ipynb>`
 
 
 .. only:: html
