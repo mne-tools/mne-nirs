@@ -259,11 +259,10 @@ except ImportError:
 # instead of in the root."
 # we will store dev docs in a `dev` subdirectory and all other docs in a
 # directory "v" + version_str. E.g., "v0.3"
-# if 'dev' in version:
-#     filepath_prefix = 'main'
-# else:
-#     filepath_prefix = 'v{}'.format(version)
-filepath_prefix = None
+if 'dev' in version:
+    filepath_prefix = 'dev'
+else:
+    filepath_prefix = 'stable'
 
 # sphinx-gallery configuration
 sphinx_gallery_conf = {
