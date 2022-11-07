@@ -135,15 +135,21 @@ html_theme = 'pydata_sphinx_theme'
 # html_theme_options = {}
 switcher_version_match = 'dev' if release.endswith('dev0') else version
 html_theme_options = {
-    'github_url': 'https://github.com/mne-tools/mne-nirs',
+    'icon_links': [
+        dict(name='GitHub',
+             url='https://github.com/mne-tools/mne-python',
+             icon='fa-brands fa-square-github'),
+    ],
     "show_toc_level": 1,
-    'navbar_end': ['version-switcher', 'navbar-icon-links'],
+    'navbar_end': ['theme-switcher', 'version-switcher', 'navbar-icon-links'],
     'footer_items': ['copyright'],
-    "google_analytics_id": "UA-188272121-1",
+    'analytics': dict(google_analytics_id='UA-188272121-1'),
     'switcher': {
         'json_url': 'https://mne.tools/mne-nirs/dev/_static/versions.json',
         'version_match': switcher_version_match,
-    }
+    },
+    'pygment_light_style': 'default',
+    'pygment_dark_style': 'github-dark',
 }
 
 
