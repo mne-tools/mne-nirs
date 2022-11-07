@@ -44,7 +44,7 @@ fi
 if [ "${MNEPYTHON}" == "dev" ]; then
 	MNE_BRANCH="main"
 else
-	MNE_BRANCH="maint/1.1"
+	MNE_BRANCH="maint/1.2"
 fi
 echo "MNE"
 pip install $STD_ARGS $EXTRA_ARGS https://github.com/mne-tools/mne-python/zipball/${MNE_BRANCH}
