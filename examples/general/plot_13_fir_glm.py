@@ -314,13 +314,13 @@ fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(7, 7))
 axes.plot(index_values, np.sum(dm_cond_scaled_hbo, axis=1), 'r')
 axes.plot(index_values, np.sum(dm_cond_scaled_hbr, axis=1), 'b')
 axes.fill_between(index_values,
-                     np.sum(dm_cond_scaled_hbo_l95, axis=1),
-                     np.sum(dm_cond_scaled_hbo_u95, axis=1),
-                     facecolor='red', alpha=0.25)
+                  np.asarray(np.sum(dm_cond_scaled_hbo_l95, axis=1)),
+                  np.asarray(np.sum(dm_cond_scaled_hbo_u95, axis=1)),
+                  facecolor='red', alpha=0.25)
 axes.fill_between(index_values,
-                     np.sum(dm_cond_scaled_hbr_l95, axis=1),
-                     np.sum(dm_cond_scaled_hbr_u95, axis=1),
-                     facecolor='blue', alpha=0.25)
+                  np.asarray(np.sum(dm_cond_scaled_hbr_l95, axis=1)),
+                  np.asarray(np.sum(dm_cond_scaled_hbr_u95, axis=1)),
+                  facecolor='blue', alpha=0.25)
 
 # Format the plot
 axes.set_xlim(-5, 30)
