@@ -2,15 +2,12 @@
 #
 # License: BSD (3-clause)
 
-import warnings
-
 import numpy as np
 import pandas as pd
 
 from mne import pick_types
 from mne.io import BaseRaw
 from mne.utils import _validate_type, _require_version
-from mne.time_frequency import psd_welch
 
 
 def quantify_mayer_fooof(raw, num_oscillations=1, centre_frequency=0.01,
@@ -119,14 +116,10 @@ def _run_fooof(raw,
     """Prepare data for FOOOF including welch and scaling, then apply."""
     from fooof import FOOOF
 
-    # Ignore warning until MNE 1.0 is required
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", category=FutureWarning)
-
-        spectra, freqs = psd_welch(raw,
-                                   fmin=fmin, fmax=fmax,
-                                   tmin=tmin, tmax=tmax,
-                                   n_overlap=n_overlap, n_fft=n_fft)
+    psd = raw.compute_psd(
+        fmin=fmin, fmax=fmax, tmin=tmin, tmax=tmax,
+        n_overlap=n_overlap, n_fft=n_fft)
+    spectra, freqs = psd.get_data(return_freqs=True)
 
     # FOOOF doesn't like low frequencies, so multiple by 10.
     # This is corrected for in the output below.

@@ -51,7 +51,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from mne.preprocessing.nirs import optical_density, beer_lambert_law
-from mne.time_frequency import psd_welch
 
 from mne_nirs.channels import get_long_channels
 from mne_nirs.preprocessing import quantify_mayer_fooof
@@ -109,7 +108,9 @@ def scale_up_spectra(spectra, freqs):
     return spectra, freqs
 
 # Prepare data for FOOOF
-spectra, freqs = psd_welch(raw, fmin=0.001, fmax=1.0, tmin=0, tmax=None, n_overlap=300, n_fft=600)
+psd = raw.compute_psd(
+    fmin=0.001, fmax=1.0, tmin=0, tmax=None, n_overlap=300, n_fft=600)
+spectra, freqs = psd.get_data(return_freqs=True)
 spectra, freqs = scale_up_spectra(spectra, freqs)
 
 # Specify the model, note that frequency values here are times 10
@@ -122,7 +123,7 @@ fm.fit(freqs, np.mean(spectra, axis=0), freq_range)
 fig, axs = plt.subplots(1, 1, figsize=(10, 5))
 fm.plot(plot_peaks='shade', data_kwargs={'color': 'orange'}, ax=axs)
 # Correct for x10 scaling above
-plt.xticks([0, 1, 2, 3, 4, 5, 6], [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]);
+plt.xticks([0, 1, 2, 3, 4, 5, 6], [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6])
 
 
 # %%
@@ -171,5 +172,3 @@ quantify_mayer_fooof(raw.pick("hbo"), extra_df_fields={"Study": "Online tutorial
 # -----------------------------------------------
 #
 # .. footbibliography::
-
-

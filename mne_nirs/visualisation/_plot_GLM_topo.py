@@ -301,7 +301,7 @@ def _handle_overlaps(info, t, sphere, estimates):
 
 
 def _get_fig_from_axes(ax):
-    if issubclass(type(ax), mpl.axes.SubplotBase):
+    if isinstance(ax, mpl.axes.SubplotBase):
         return ax.figure
     elif type(ax) is np.ndarray:
         return _get_fig_from_axes(ax[0])

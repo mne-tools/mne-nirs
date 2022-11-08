@@ -135,16 +135,31 @@ html_theme = 'pydata_sphinx_theme'
 # html_theme_options = {}
 switcher_version_match = 'dev' if release.endswith('dev0') else version
 html_theme_options = {
-    'github_url': 'https://github.com/mne-tools/mne-nirs',
+    'icon_links': [
+        dict(name='GitHub',
+             url='https://github.com/mne-tools/mne-python',
+             icon='fa-brands fa-square-github'),
+    ],
     "show_toc_level": 1,
-    'navbar_end': ['version-switcher', 'navbar-icon-links'],
+    'navbar_end': ['theme-switcher', 'version-switcher', 'navbar-icon-links'],
     'footer_items': ['copyright'],
-    "google_analytics_id": "UA-188272121-1",
+    'analytics': dict(google_analytics_id='UA-188272121-1'),
     'switcher': {
         'json_url': 'https://mne.tools/mne-nirs/dev/_static/versions.json',
         'version_match': switcher_version_match,
-    }
+    },
+    'pygment_light_style': 'default',
+    'pygment_dark_style': 'github-dark',
 }
+
+# The name of an image file (relative to this directory) to place at the top
+# of the sidebar.
+html_logo = "_static/mne_nirs_logo_small.svg"
+
+# The name of an image file (within the static path) to use as favicon of the
+# docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
+# pixels large.
+html_favicon = "_static/favicon.ico"
 
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -224,24 +239,17 @@ except Exception:
     report_scraper = None
 else:
     backend = mne.viz.get_3d_backend()
-    if backend == 'mayavi':
-        from traits.api import push_exception_handler
-        mlab = mne.utils._import_mlab()
-        # Do not pop up any mayavi windows while running the
-        # examples. These are very annoying since they steal the focus.
-        mlab.options.offscreen = True
-        # hack to initialize the Mayavi Engine
-        mlab.test_plot3d()
-        mlab.close()
-        scrapers += ('mayavi',)
-        push_exception_handler(reraise_exceptions=True)
-    elif backend in ('notebook', 'pyvistaqt'):
+    if backend in ('notebook', 'pyvistaqt'):
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=DeprecationWarning)
             import pyvista
         pyvista.OFF_SCREEN = False
-        brain_scraper = mne.viz._brain._BrainScraper()
-        scrapers += (brain_scraper, 'pyvista')
+        pyvista.BUILDING_GALLERY = True
+        scrapers += (
+            mne.gui._GUIScraper(),
+            mne.viz._brain._BrainScraper(),
+            'pyvista',
+        )
     report_scraper = mne.report._ReportScraper()
     scrapers += (report_scraper,)
     del backend
