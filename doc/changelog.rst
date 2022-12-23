@@ -14,10 +14,10 @@ Patch version changes indicate backward compatible bug fixes.
 
 To install a specific version of the library you would run ``pip install mne-nirs==0.3.0``, where ``0.3.0`` is the version you wish to install.
 
-v0.5.dev0
+v0.5.0
 ---------
 
-* Nothing yet
+* Compatibility release for MNE 1.2+. By `Eric Larson`_.
 
 
 v0.4.0
