@@ -38,7 +38,7 @@ that is applied to the data.
 
 .. GENERATED FROM PYTHON SOURCE LINES 21-35
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Authors: Robert Luke <mail@robertluke.net>
@@ -77,7 +77,7 @@ for a detailed introduction to processing NIRS with MNE.
 
 .. GENERATED FROM PYTHON SOURCE LINES 47-68
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
@@ -134,7 +134,7 @@ the repetition rate of the experiment.
 
 .. GENERATED FROM PYTHON SOURCE LINES 85-99
 
-.. code-block:: default
+.. code-block:: Python
 
 
     design_matrix = make_first_level_design_matrix(
@@ -182,7 +182,7 @@ There is also a small bump around 0.3 Hz that is likely the breathing rate.
 
 .. GENERATED FROM PYTHON SOURCE LINES 109-121
 
-.. code-block:: default
+.. code-block:: Python
 
 
 
@@ -227,7 +227,7 @@ is still visible.
 
 .. GENERATED FROM PYTHON SOURCE LINES 130-145
 
-.. code-block:: default
+.. code-block:: Python
 
 
     events, _ = mne.events_from_annotations(raw_haemo)
@@ -259,7 +259,7 @@ is still visible.
 
     Not setting metadata
     60 matching events found
-    Setting baseline interval to [-4.992, 0.0] sec
+    Setting baseline interval to [-4.992, 0.0] s
     Applying baseline correction (mode: mean)
     0 projection items activated
     Using data from preloaded Raw for 60 events and 157 original time points ...
@@ -283,7 +283,7 @@ after epoching.
 
 .. GENERATED FROM PYTHON SOURCE LINES 155-165
 
-.. code-block:: default
+.. code-block:: Python
 
 
     filter_params = mne.filter.create_filter(
@@ -335,7 +335,7 @@ epoched data.
 
 .. GENERATED FROM PYTHON SOURCE LINES 183-202
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
@@ -385,7 +385,7 @@ shows the signal after filtering.
 
 .. GENERATED FROM PYTHON SOURCE LINES 209-215
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fig = raw_haemo.plot_psd(average=True, fmax=2, xscale='log', color='r', show=False)
@@ -425,7 +425,7 @@ Some common high pass filter values from literature are shown in red.
 
 .. GENERATED FROM PYTHON SOURCE LINES 225-249
 
-.. code-block:: default
+.. code-block:: Python
 
 
 
@@ -466,7 +466,7 @@ Some common high pass filter values from literature are shown in red.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  27.764 seconds)
+   **Total running time of the script:** (0 minutes 29.589 seconds)
 
 **Estimated memory usage:**  9 MB
 
@@ -477,21 +477,20 @@ Some common high pass filter values from literature are shown in red.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=dev/notebooks/auto_examples/general/plot_30_frequency.ipynb
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_30_frequency.ipynb
         :alt: Launch binder
         :width: 150 px
-
-    .. container:: sphx-glr-download sphx-glr-download-python
-
-      :download:`Download Python source code: plot_30_frequency.py <plot_30_frequency.py>`
 
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
       :download:`Download Jupyter notebook: plot_30_frequency.ipynb <plot_30_frequency.ipynb>`
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download Python source code: plot_30_frequency.py <plot_30_frequency.py>`
 
 
 .. only:: html

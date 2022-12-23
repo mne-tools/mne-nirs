@@ -34,7 +34,7 @@ data.
 
 .. GENERATED FROM PYTHON SOURCE LINES 17-32
 
-.. code-block:: default
+.. code-block:: Python
 
 
 
@@ -70,7 +70,7 @@ for more details.
 
 .. GENERATED FROM PYTHON SOURCE LINES 40-56
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
@@ -111,7 +111,7 @@ this result should be the same as the MNE tutorial.
 
 .. GENERATED FROM PYTHON SOURCE LINES 62-82
 
-.. code-block:: default
+.. code-block:: Python
 
 
     reject_criteria = dict(hbo=100e-6)
@@ -143,7 +143,7 @@ this result should be the same as the MNE tutorial.
 
     Not setting metadata
     90 matching events found
-    Setting baseline interval to [-4.992, 0.0] sec
+    Setting baseline interval to [-4.992, 0.0] s
     Applying baseline correction (mode: mean)
     0 projection items activated
     Using data from preloaded Raw for 90 events and 157 original time points ...
@@ -166,7 +166,7 @@ Apply Cui et. al. 2010 and extract epochs.
 
 .. GENERATED FROM PYTHON SOURCE LINES 87-106
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw_anti = mne_nirs.signal_enhancement.enhance_negative_correlation(raw_haemo)
@@ -197,7 +197,7 @@ Apply Cui et. al. 2010 and extract epochs.
 
     Not setting metadata
     90 matching events found
-    Setting baseline interval to [-4.992, 0.0] sec
+    Setting baseline interval to [-4.992, 0.0] s
     Applying baseline correction (mode: mean)
     0 projection items activated
     Using data from preloaded Raw for 90 events and 157 original time points ...
@@ -215,7 +215,7 @@ Apply Scholkmann et al 2014 and extract epochs.
 
 .. GENERATED FROM PYTHON SOURCE LINES 111-136
 
-.. code-block:: default
+.. code-block:: Python
 
 
     od_corrected = mne_nirs.signal_enhancement.short_channel_regression(raw_od)
@@ -252,7 +252,7 @@ Apply Scholkmann et al 2014 and extract epochs.
 
     Not setting metadata
     90 matching events found
-    Setting baseline interval to [-4.992, 0.0] sec
+    Setting baseline interval to [-4.992, 0.0] s
     Applying baseline correction (mode: mean)
     0 projection items activated
     Using data from preloaded Raw for 90 events and 157 original time points ...
@@ -273,7 +273,7 @@ Plot the average epochs with and without Cui 2010 applied.
 
 .. GENERATED FROM PYTHON SOURCE LINES 141-168
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(15, 6))
@@ -324,7 +324,7 @@ detector pairs for analysis.
 
 .. GENERATED FROM PYTHON SOURCE LINES 174-255
 
-.. code-block:: default
+.. code-block:: Python
 
 
     left = [[1, 3], [2, 3], [1, 2], [4, 3]]
@@ -422,7 +422,7 @@ detector pairs for analysis.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  4.514 seconds)
+   **Total running time of the script:** (0 minutes 4.970 seconds)
 
 **Estimated memory usage:**  9 MB
 
@@ -433,21 +433,20 @@ detector pairs for analysis.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=dev/notebooks/auto_examples/general/plot_20_enhance.ipynb
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_20_enhance.ipynb
         :alt: Launch binder
         :width: 150 px
-
-    .. container:: sphx-glr-download sphx-glr-download-python
-
-      :download:`Download Python source code: plot_20_enhance.py <plot_20_enhance.py>`
 
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
       :download:`Download Jupyter notebook: plot_20_enhance.ipynb <plot_20_enhance.ipynb>`
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download Python source code: plot_20_enhance.py <plot_20_enhance.py>`
 
 
 .. only:: html

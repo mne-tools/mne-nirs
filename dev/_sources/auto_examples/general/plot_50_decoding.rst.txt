@@ -41,12 +41,11 @@ Luke et. al. (2021)
 
 .. note::
 
-   This tutorial uses data in the BIDS format.
-   The BIDS specification for NIRS data is still under development. See:
-   `fNIRS BIDS proposal <https://github.com/bids-standard/bids-specification/pull/802>`_.
-   As such, to run this tutorial you must use the MNE-BIDS 0.10 or later.
+   This tutorial uses data stored using
+   `the BIDS format <https://bids-specification.readthedocs.io/en/stable/04-modality-specific-files/11-near-infrared-spectroscopy.html>`_
+   :footcite:p:`luke2023bids`.
 
-   MNE-Python allows you to process fNIRS data that is not in BIDS format too.
+   MNE-Python allows you to process fNIRS data that is not in BIDS format.
    Simply modify the ``read_raw_`` function to match your data type.
    See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
    to use your data with MNE-Python.
@@ -56,9 +55,9 @@ Luke et. al. (2021)
    :local:
    :depth: 2
 
-.. GENERATED FROM PYTHON SOURCE LINES 40-69
+.. GENERATED FROM PYTHON SOURCE LINES 39-68
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Authors: Robert Luke <mail@robertluke.net>
@@ -96,7 +95,7 @@ Luke et. al. (2021)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-84
+.. GENERATED FROM PYTHON SOURCE LINES 69-83
 
 Set up directories
 ------------------
@@ -113,9 +112,9 @@ without manually specifying the trigger names etc.
 We first define where the root directory of our dataset is.
 In this example we use the example dataset ``audio_or_visual_speech``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-91
+.. GENERATED FROM PYTHON SOURCE LINES 83-90
 
-.. code-block:: default
+.. code-block:: Python
 
 
     root = data_path()
@@ -131,7 +130,7 @@ In this example we use the example dataset ``audio_or_visual_speech``.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-101
+.. GENERATED FROM PYTHON SOURCE LINES 91-100
 
 Define individual analysis
 --------------------------
@@ -143,9 +142,9 @@ of this tutorial is to demonstrate the decoding pipeline.
 In this example only the epochs for the two conditions we wish to decode
 between are retained.
 
-.. GENERATED FROM PYTHON SOURCE LINES 101-124
+.. GENERATED FROM PYTHON SOURCE LINES 100-123
 
-.. code-block:: default
+.. code-block:: Python
 
 
 
@@ -177,7 +176,7 @@ between are retained.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 125-137
+.. GENERATED FROM PYTHON SOURCE LINES 124-136
 
 Run analysis on all participants
 --------------------------------
@@ -192,9 +191,9 @@ comply with the scikit-learn data structure, and a logistic regression
 classifier was applied using the liblinear solver.
 This approach classifies the data within, rather than across, subjects.
 
-.. GENERATED FROM PYTHON SOURCE LINES 137-165
+.. GENERATED FROM PYTHON SOURCE LINES 136-164
 
-.. code-block:: default
+.. code-block:: Python
 
 
 
@@ -238,7 +237,7 @@ This approach classifies the data within, rather than across, subjects.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 166-174
+.. GENERATED FROM PYTHON SOURCE LINES 165-173
 
 Conclusion
 ----------
@@ -249,7 +248,7 @@ than the HbR signal. For further discussion about the efficacy of fNIRS
 signals in decoding experimental condition see Luke et. al. (2021)
 :footcite:`Luke2021.11.19.469225`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 177-181
+.. GENERATED FROM PYTHON SOURCE LINES 176-180
 
 Bibliography
 -----------------------------------------------
@@ -259,7 +258,7 @@ Bibliography
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.058 seconds)
+   **Total running time of the script:** (0 minutes 5.102 seconds)
 
 **Estimated memory usage:**  9 MB
 
@@ -270,21 +269,20 @@ Bibliography
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=dev/notebooks/auto_examples/general/plot_50_decoding.ipynb
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_50_decoding.ipynb
         :alt: Launch binder
         :width: 150 px
-
-    .. container:: sphx-glr-download sphx-glr-download-python
-
-      :download:`Download Python source code: plot_50_decoding.py <plot_50_decoding.py>`
 
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
       :download:`Download Jupyter notebook: plot_50_decoding.ipynb <plot_50_decoding.ipynb>`
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download Python source code: plot_50_decoding.py <plot_50_decoding.py>`
 
 
 .. only:: html

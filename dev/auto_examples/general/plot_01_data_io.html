@@ -1,30 +1,33 @@
 
+
 <!DOCTYPE html>
 
-<html lang="en">
+
+<html lang="en" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Importing Data From fNIRS Devices &#8212; MNE-NIRS 0.5.dev0 documentation</title>
-  <script>
+    <title>Importing Data From fNIRS Devices &#8212; MNE-NIRS 0.6.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+  <link href="../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
 
   
-  <link rel="stylesheet"
-    href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/font-awesome.css" />
@@ -34,7 +37,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -53,7 +57,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/general/plot_01_data_io';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'dev';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.6.0';
         </script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -62,132 +66,162 @@
     <link rel="prev" title="Analysis examples" href="index.html" />
     <link rel="canonical" href="https://mne.tools/mne-nirs/stable/index.html" />
     
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="docsearch:language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
 
   </head>
   
   
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
   
-  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
   <label class="overlay overlay-primary" for="__primary"></label>
-
   
-  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
   <label class="overlay overlay-secondary" for="__secondary"></label>
-
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container">
-      
-<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-    </div>
+</form></div>
   </div>
-
   
-  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
   <label class="sidebar-toggle primary-toggle" for="__primary">
-      <span class="fa-solid fa-bars"></span>
+    <span class="fa-solid fa-bars"></span>
   </label>
-  <div id="navbar-start">
-    
-    
   
-
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
 
 <a class="navbar-brand logo" href="../../index.html">
-
   
   
   
   
+    
+    
+      
+    
+    
+    <img src="../../_static/mne_nirs_logo_small.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/mne_nirs_logo_small.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
   
-  
-
-  
-    <img src="../../_static/mne_nirs_logo_small.svg" class="logo__image only-light" alt="Logo image">
-    <img src="../../_static/mne_nirs_logo_small.svg" class="logo__image only-dark" alt="Logo image">
-  
-  
-</a>
+</a></div>
     
   </div>
-
+  
   
   <div class="col-lg-9 navbar-header-items">
-    <div id="navbar-center" class="mr-auto">
+    
+    <div class="me-auto navbar-header-items__center">
       
-      <div class="navbar-center-item">
-        <nav class="navbar-nav">
-    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
-        Site Navigation
-    </p>
-    <ul id="navbar-main-elements" class="navbar-nav">
-        
-                <li class="nav-item current active">
-                  <a class="nav-link" href="../index.html">
-                    Examples
-                  </a>
-                </li>
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        Examples
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                  <a class="nav-link" href="../../api.html">
-                    API
-                  </a>
-                </li>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api.html">
+                        API
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                  <a class="nav-link" href="../../changelog.html">
-                    Changelog
-                  </a>
-                </li>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../changelog.html">
+                        Changelog
+                      </a>
+                    </li>
                 
-    </ul>
-</nav>
-      </div>
+  </ul>
+</nav></div>
       
     </div>
-
-    <div id="navbar-end">
-      <div class="navbar-end-item navbar-end__search-button-container">
-        
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
-  <i class="fa-solid fa-magnifying-glass"></i>
-</button>
-      </div>
+    
+    
+    <div class="navbar-header-items__end">
       
-      <div class="navbar-end-item">
-        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
-    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
-    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
-    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
-</span>
-      </div>
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
       
-      <div class="navbar-end-item">
-        <div class="version-switcher__container dropdown">
-    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
-        dev  <!-- this text may get changed later by javascript -->
-        <span class="caret"></span>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      0.6.0  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
     <!-- dropdown will be populated by javascript on page load -->
     </div>
-</div>
-      </div>
+  </div>
+`);
+</script></div>
       
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
         <li class="nav-item">
           
           
@@ -196,104 +230,115 @@
           
           
           
-          <a href="https://github.com/mne-tools/mne-python" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+          
+          <a href="https://github.com/mne-tools/mne-nirs" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
-      </ul>
-      </div>
+</ul></div>
       
     </div>
+    
   </div>
-
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
 
   
-  <div class="search-button-container--mobile">
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
-  <i class="fa-solid fa-magnifying-glass"></i>
-</button>
-  </div>
-
-  
-  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
       <span class="fa-solid fa-outdent"></span>
-  </label>
+    </label>
   
-
 </div>
-  </nav>
-  
 
+    </nav>
+  
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
       <div class="bd-sidebar-primary bd-sidebar">
         
+
   
   <div class="sidebar-header-items sidebar-primary__section">
     
     
       <div class="sidebar-header-items__center">
-      
-      <div class="navbar-center-item">
-        <nav class="navbar-nav">
-    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
-        Site Navigation
-    </p>
-    <ul id="navbar-main-elements" class="navbar-nav">
         
-                <li class="nav-item current active">
-                  <a class="nav-link" href="../index.html">
-                    Examples
-                  </a>
-                </li>
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        Examples
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                  <a class="nav-link" href="../../api.html">
-                    API
-                  </a>
-                </li>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api.html">
+                        API
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                  <a class="nav-link" href="../../changelog.html">
-                    Changelog
-                  </a>
-                </li>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../changelog.html">
+                        Changelog
+                      </a>
+                    </li>
                 
-    </ul>
-</nav>
-      </div>
-      
+  </ul>
+</nav></div>
+        
       </div>
     
-
     
     
-    <div class="sidebar-header-items__end">
-      
-      <div class="navbar-end-item">
-        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
-    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
-    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
-    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
-</span>
-      </div>
-      
-      <div class="navbar-end-item">
-        <div class="version-switcher__container dropdown">
-    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
-        dev  <!-- this text may get changed later by javascript -->
-        <span class="caret"></span>
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      0.6.0  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
     <!-- dropdown will be populated by javascript on page load -->
     </div>
-</div>
-      </div>
-      
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+  </div>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
         <li class="nav-item">
           
           
@@ -302,24 +347,21 @@
           
           
           
-          <a href="https://github.com/mne-tools/mne-python" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+          
+          <a href="https://github.com/mne-tools/mne-nirs" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
-      </ul>
+</ul></div>
+        
       </div>
-      
-    </div>
     
   </div>
-
   
-  <div class="sidebar-start-items sidebar-primary__section">
-    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
-  <p class="bd-links__title" role="heading" aria-level="1">
-    Section Navigation
-  </p>
-  <div class="bd-toc-item navbar-nav">
-    <ul class="current nav bd-sidenav">
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Analysis examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Importing Data From fNIRS Devices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_05_datasets.html">Example Datasets</a></li>
@@ -354,33 +396,65 @@
 </ul>
 </li>
 </ul>
-
-  </div>
-</nav>
+</div>
+</nav></div>
     </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
   
+  <div id="rtd-footer-container"></div>
 
-  
-  <div class="sidebar-end-items sidebar-primary__section">
-    <div class="sidebar-end-items__item">
-    </div>
-  </div>
 
       </div>
-      <main class="bd-main">
+      
+      <main id="main-content" class="bd-main">
         
         
-        <div class="bd-content">
-          <div class="bd-article-container">
-            
-            <div class="bd-header-article">
-                
-            </div>
-            
-            
-            <article class="bd-article" role="main">
+          <div class="bd-content">
+            <div class="bd-article-container">
               
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Examples</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Analysis examples</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Importing Data From fNIRS Devices</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
 <p><a class="reference internal" href="#sphx-glr-download-auto-examples-general-plot-01-data-io-py"><span class="std std-ref">Go to the end</span></a>
@@ -437,12 +511,17 @@ wave or haemoglobin data stored in the .snirf format.</p>
 <section id="specifying-the-coordinate-system">
 <h4>Specifying the coordinate system<a class="headerlink" href="#specifying-the-coordinate-system" title="Permalink to this heading">#</a></h4>
 <p>There are a variety of coordinate systems used to specify the location of
-sensors (see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/20_source_alignment.html#tut-source-alignment" title="(in MNE v1.2)"><span>Source alignment and coordinate frames</span></a> for details). Where possible the
+sensors (see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/20_source_alignment.html#tut-source-alignment" title="(in MNE v1.5)"><span>Source alignment and coordinate frames</span></a> for details). Where possible the
 coordinate system will be determined automatically when reading a SNIRF file.
 However, sometimes this is not possible and you must manually specify the
 coordinate frame the optodes are in. This is done using the <code class="docutils literal notranslate"><span class="pre">optode_frame</span></code>
 argument when loading data.</p>
 <table class="table">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 43%" />
+<col style="width: 40%" />
+</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Vendor</p></th>
 <th class="head"><p>Model</p></th>
@@ -479,9 +558,9 @@ MNE-Python supports reading data from NIRScout and NIRSport devices.</p>
 <section id="hitachi-csv">
 <span id="import-hitachi"></span><h3>Hitachi (.csv)<a class="headerlink" href="#hitachi-csv" title="Permalink to this heading">#</a></h3>
 <p>Hitachi produce continuous wave fNIRS devices.
-Hitachi fNIRS recordings can be read using <a class="reference external" href="https://mne.tools/stable/generated/mne.io.read_raw_hitachi.html#mne.io.read_raw_hitachi" title="(in MNE v1.2)"><code class="docutils literal notranslate"><span class="pre">mne.io.read_raw_hitachi()</span></code></a>.
+Hitachi fNIRS recordings can be read using <a class="reference external" href="https://mne.tools/stable/generated/mne.io.read_raw_hitachi.html#mne.io.read_raw_hitachi" title="(in MNE v1.5)"><code class="docutils literal notranslate"><span class="pre">mne.io.read_raw_hitachi()</span></code></a>.
 No optode information is stored so you’ll need to set the montage manually,
-see the Notes section of <a class="reference external" href="https://mne.tools/stable/generated/mne.io.read_raw_hitachi.html#mne.io.read_raw_hitachi" title="(in MNE v1.2)"><code class="docutils literal notranslate"><span class="pre">mne.io.read_raw_hitachi()</span></code></a>.</p>
+see the Notes section of <a class="reference external" href="https://mne.tools/stable/generated/mne.io.read_raw_hitachi.html#mne.io.read_raw_hitachi" title="(in MNE v1.5)"><code class="docutils literal notranslate"><span class="pre">mne.io.read_raw_hitachi()</span></code></a>.</p>
 </section>
 </section>
 <section id="frequency-domain-devices">
@@ -531,7 +610,7 @@ create annotations for any triggers.</p>
 You should convert your data to the
 <a class="reference external" href="https://github.com/fNIRS/snirf">SNIRF</a> format using the tools
 provided by the Society for functional Near-Infrared Spectroscopy,
-and then load it using <a class="reference external" href="https://mne.tools/stable/generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="(in MNE v1.2)"><code class="docutils literal notranslate"><span class="pre">mne.io.read_raw_snirf()</span></code></a>.</p>
+and then load it using <a class="reference external" href="https://mne.tools/stable/generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="(in MNE v1.5)"><code class="docutils literal notranslate"><span class="pre">mne.io.read_raw_snirf()</span></code></a>.</p>
 </div>
 <p>fNIRS measurements may be stored in a non-standardised format that is not
 supported by MNE-Python and cannot be converted easily into SNIRF.
@@ -541,7 +620,7 @@ MNE-Python due to the lack of standardisation of the file format (the
 naming and ordering of channels, the type and scaling of data, and
 specification of sensor positions varies between each vendor). You will likely
 have to adapt this depending on the system from which your CSV originated.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">op</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">op</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">mne</span>
@@ -553,11 +632,11 @@ have to adapt this depending on the system from which your CSV originated.</p>
 MNE-Python. This step would be skipped if you have actual data you wish to
 load. We simulate 16 channels with 100 samples of data and save this to a
 file called fnirs.csv.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/random/generated/numpy.random.normal.html#numpy.random.normal" title="numpy.random.normal" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span></a><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">100</span><span class="p">)))</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;fnirs.csv&quot;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/random/generated/numpy.random.normal.html#numpy.random.normal" title="numpy.random.normal" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span></a><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">100</span><span class="p">)))</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;fnirs.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Next, we will load the example CSV file.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;fnirs.csv&#39;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;fnirs.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Then, the metadata must be specified manually as the CSV file does not
@@ -569,7 +648,7 @@ contain information about channel names, types, sample rate etc.</p>
 detector numbers and type is either <code class="docutils literal notranslate"><span class="pre">hbo</span></code>, <code class="docutils literal notranslate"><span class="pre">hbr</span></code> or the
 wavelength.</p>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_names</span></a> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;S1_D1 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S1_D1 hbr&#39;</span><span class="p">,</span> <span class="s1">&#39;S2_D1 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S2_D1 hbr&#39;</span><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_names</span></a> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;S1_D1 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S1_D1 hbr&#39;</span><span class="p">,</span> <span class="s1">&#39;S2_D1 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S2_D1 hbr&#39;</span><span class="p">,</span>
             <span class="s1">&#39;S3_D1 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S3_D1 hbr&#39;</span><span class="p">,</span> <span class="s1">&#39;S4_D1 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S4_D1 hbr&#39;</span><span class="p">,</span>
             <span class="s1">&#39;S5_D2 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S5_D2 hbr&#39;</span><span class="p">,</span> <span class="s1">&#39;S6_D2 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S6_D2 hbr&#39;</span><span class="p">,</span>
             <span class="s1">&#39;S7_D2 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S7_D2 hbr&#39;</span><span class="p">,</span> <span class="s1">&#39;S8_D2 hbo&#39;</span><span class="p">,</span> <span class="s1">&#39;S8_D2 hbr&#39;</span><span class="p">]</span>
@@ -581,14 +660,14 @@ wavelength.</p>
 </pre></div>
 </div>
 <p>Finally, the data can be converted in to an MNE-Python data structure.
-The metadata above is used to create an <a class="reference external" href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="(in MNE v1.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.Info</span></code></a> data structure,
+The metadata above is used to create an <a class="reference external" href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="(in MNE v1.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.Info</span></code></a> data structure,
 and this is combined with the data to create an MNE-Python
-<a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raw</span></code></a> object. For more details on the info structure
-see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/intro/30_info.html#tut-info-class" title="(in MNE v1.2)"><span>The Info data structure</span></a>, and for additional details on how continuous data
-is stored in MNE-Python see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/raw/10_raw_overview.html#tut-raw-class" title="(in MNE v1.2)"><span>The Raw data structure: continuous data</span></a>.
+<a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Raw</span></code></a> object. For more details on the info structure
+see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/intro/30_info.html#tut-info-class" title="(in MNE v1.5)"><span>The Info data structure</span></a>, and for additional details on how continuous data
+is stored in MNE-Python see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/raw/10_raw_overview.html#tut-raw-class" title="(in MNE v1.5)"><span>The Raw data structure: continuous data</span></a>.
 For a more extensive description of how to create MNE-Python data structures
-from raw array data see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/simulation/10_array_objs.html#tut-creating-data-structures" title="(in MNE v1.2)"><span>Creating MNE-Python data structures from scratch</span></a>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">info</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.create_info.html#mne.create_info" title="mne.create_info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">create_info</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_names</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_names</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_types</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_types</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sfreq</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sfreq</span></a><span class="p">)</span>
+from raw array data see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/simulation/10_array_objs.html#tut-creating-data-structures" title="(in MNE v1.5)"><span>Creating MNE-Python data structures from scratch</span></a>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">info</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.create_info.html#mne.create_info" title="mne.create_info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">create_info</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_names</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_names</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_types</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_types</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sfreq</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sfreq</span></a><span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray" title="mne.io.RawArray" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray" title="mne.io.RawArray" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">RawArray</span></a><span class="p">(</span><span class="n">data</span><span class="p">,</span> <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">info</span></a><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -608,17 +687,17 @@ MNE-Python provides methods to load standard sensor configurations
 (montages) from some vendors, and this is demonstrated below.
 Some handy tutorials for understanding sensor locations, coordinate systems,
 and how to store and view this information in MNE-Python are:
-<a class="reference external" href="https://mne.tools/stable/auto_tutorials/intro/40_sensor_locations.html#tut-sensor-locations" title="(in MNE v1.2)"><span>Working with sensor locations</span></a>, <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/20_source_alignment.html#tut-source-alignment" title="(in MNE v1.2)"><span>Source alignment and coordinate frames</span></a>, and
-<a class="reference external" href="https://mne.tools/stable/auto_examples/visualization/eeg_on_scalp.html#ex-eeg-on-scalp" title="(in MNE v1.2)"><span>Plotting EEG sensors on the scalp</span></a>.</p>
+<a class="reference external" href="https://mne.tools/stable/auto_tutorials/intro/40_sensor_locations.html#tut-sensor-locations" title="(in MNE v1.5)"><span>Working with sensor locations</span></a>, <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/20_source_alignment.html#tut-source-alignment" title="(in MNE v1.5)"><span>Source alignment and coordinate frames</span></a>, and
+<a class="reference external" href="https://mne.tools/stable/auto_examples/visualization/eeg_on_scalp.html#ex-eeg-on-scalp" title="(in MNE v1.5)"><span>Plotting EEG sensors on the scalp</span></a>.</p>
 <p>Below is an example of how to load the optode positions for an Artinis
 OctaMon device.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>It is also possible to create a custom montage from a file for
-fNIRS with <a class="reference external" href="https://mne.tools/stable/generated/mne.channels.read_custom_montage.html#mne.channels.read_custom_montage" title="(in MNE v1.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.channels.read_custom_montage()</span></code></a> by setting
+fNIRS with <a class="reference external" href="https://mne.tools/stable/generated/mne.channels.read_custom_montage.html#mne.channels.read_custom_montage" title="(in MNE v1.5)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.channels.read_custom_montage()</span></code></a> by setting
 <code class="docutils literal notranslate"><span class="pre">coord_frame</span></code> to <code class="docutils literal notranslate"><span class="pre">'mri'</span></code>.</p>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.channels.DigMontage.html#mne.channels.DigMontage" title="mne.channels.DigMontage" class="sphx-glr-backref-module-mne-channels sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">montage</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.channels.make_standard_montage.html#mne.channels.make_standard_montage" title="mne.channels.make_standard_montage" class="sphx-glr-backref-module-mne-channels sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">make_standard_montage</span></a><span class="p">(</span><span class="s1">&#39;artinis-octamon&#39;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.channels.DigMontage.html#mne.channels.DigMontage" title="mne.channels.DigMontage" class="sphx-glr-backref-module-mne-channels sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">montage</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.channels.make_standard_montage.html#mne.channels.make_standard_montage" title="mne.channels.make_standard_montage" class="sphx-glr-backref-module-mne-channels sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">make_standard_montage</span></a><span class="p">(</span><span class="s1">&#39;artinis-octamon&#39;</span><span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray.set_montage" title="mne.io.RawArray.set_montage" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">raw</span><span class="o">.</span><span class="n">set_montage</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.channels.DigMontage.html#mne.channels.DigMontage" title="mne.channels.DigMontage" class="sphx-glr-backref-module-mne-channels sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">montage</span></a><span class="p">)</span>
 
 <span class="c1"># View the position of optodes in 2D to confirm the positions are correct.</span>
@@ -632,8 +711,8 @@ fNIRS with <a class="reference external" href="https://mne.tools/stable/generate
 the location of the sources (red), detectors (black), and channels (white
 lines and orange dots) in a 3D representation.
 The ficiduals are marked in blue, green and red.
-See <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/20_source_alignment.html#tut-source-alignment" title="(in MNE v1.2)"><span>Source alignment and coordinate frames</span></a> for more details.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">op</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.datasets.sample.data_path.html#mne.datasets.sample.data_path" title="mne.datasets.sample.data_path" class="sphx-glr-backref-module-mne-datasets-sample sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">(),</span> <span class="s1">&#39;subjects&#39;</span><span class="p">)</span>
+See <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/20_source_alignment.html#tut-source-alignment" title="(in MNE v1.5)"><span>Source alignment and coordinate frames</span></a> for more details.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">op</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.datasets.sample.data_path.html#mne.datasets.sample.data_path" title="mne.datasets.sample.data_path" class="sphx-glr-backref-module-mne-datasets-sample sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">(),</span> <span class="s1">&#39;subjects&#39;</span><span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.datasets.fetch_fsaverage.html#mne.datasets.fetch_fsaverage" title="mne.datasets.fetch_fsaverage" class="sphx-glr-backref-module-mne-datasets sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fetch_fsaverage</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">)</span>
 
 <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span>
@@ -646,195 +725,661 @@ See <a class="reference external" href="https://mne.tools/stable/auto_tutorials/
 <img src="../../_images/sphx_glr_plot_01_data_io_002.png" srcset="../../_images/sphx_glr_plot_01_data_io_002.png" alt="plot 01 data io" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Using default location ~/mne_data for sample...
 
   0%|                                              | 0.00/1.65G [00:00&lt;?, ?B/s]
-  0%|▏                                    | 6.16M/1.65G [00:00&lt;00:26, 61.6MB/s]
-  1%|▎                                    | 14.4M/1.65G [00:00&lt;00:22, 74.0MB/s]
-  1%|▌                                    | 23.1M/1.65G [00:00&lt;00:20, 79.9MB/s]
-  2%|▋                                    | 31.8M/1.65G [00:00&lt;00:19, 82.6MB/s]
-  2%|▉                                    | 40.6M/1.65G [00:00&lt;00:19, 84.4MB/s]
-  3%|█                                    | 49.5M/1.65G [00:00&lt;00:18, 86.3MB/s]
-  4%|█▎                                   | 58.3M/1.65G [00:00&lt;00:18, 86.7MB/s]
-  4%|█▌                                   | 67.4M/1.65G [00:00&lt;00:18, 88.1MB/s]
-  5%|█▋                                   | 76.3M/1.65G [00:00&lt;00:17, 88.2MB/s]
-  5%|█▉                                   | 85.1M/1.65G [00:01&lt;00:17, 88.3MB/s]
-  6%|██                                   | 94.0M/1.65G [00:01&lt;00:17, 86.9MB/s]
-  6%|██▎                                   | 103M/1.65G [00:01&lt;00:17, 86.2MB/s]
-  7%|██▌                                   | 111M/1.65G [00:01&lt;00:18, 84.8MB/s]
-  7%|██▊                                   | 120M/1.65G [00:01&lt;00:18, 84.7MB/s]
-  8%|██▉                                   | 129M/1.65G [00:01&lt;00:17, 85.7MB/s]
-  8%|███▏                                  | 137M/1.65G [00:01&lt;00:17, 85.0MB/s]
-  9%|███▎                                  | 146M/1.65G [00:01&lt;00:17, 84.7MB/s]
-  9%|███▌                                  | 154M/1.65G [00:01&lt;00:17, 84.8MB/s]
- 10%|███▋                                  | 163M/1.65G [00:01&lt;00:17, 84.2MB/s]
- 10%|███▉                                  | 171M/1.65G [00:02&lt;00:17, 83.2MB/s]
- 11%|████▏                                 | 180M/1.65G [00:02&lt;00:17, 84.0MB/s]
- 11%|████▎                                 | 188M/1.65G [00:02&lt;00:17, 85.0MB/s]
- 12%|████▌                                 | 197M/1.65G [00:02&lt;00:17, 85.5MB/s]
- 12%|████▋                                 | 206M/1.65G [00:02&lt;00:16, 86.0MB/s]
- 13%|████▉                                 | 215M/1.65G [00:02&lt;00:16, 86.6MB/s]
- 14%|█████▏                                | 223M/1.65G [00:02&lt;00:16, 87.3MB/s]
- 14%|█████▎                                | 232M/1.65G [00:02&lt;00:16, 87.9MB/s]
- 15%|█████▌                                | 241M/1.65G [00:02&lt;00:16, 87.9MB/s]
- 15%|█████▋                                | 250M/1.65G [00:02&lt;00:16, 86.6MB/s]
- 16%|█████▉                                | 259M/1.65G [00:03&lt;00:16, 87.1MB/s]
- 16%|██████▏                               | 268M/1.65G [00:03&lt;00:15, 89.1MB/s]
- 17%|██████▍                               | 278M/1.65G [00:03&lt;00:15, 90.6MB/s]
- 17%|██████▌                               | 287M/1.65G [00:03&lt;00:14, 91.4MB/s]
- 18%|██████▊                               | 296M/1.65G [00:03&lt;00:14, 92.6MB/s]
- 19%|███████                               | 306M/1.65G [00:03&lt;00:14, 93.7MB/s]
- 19%|███████▎                              | 316M/1.65G [00:03&lt;00:14, 94.1MB/s]
- 20%|███████▍                              | 325M/1.65G [00:03&lt;00:15, 88.5MB/s]
- 20%|███████▋                              | 334M/1.65G [00:03&lt;00:14, 88.0MB/s]
- 21%|███████▉                              | 343M/1.65G [00:03&lt;00:14, 87.5MB/s]
- 21%|████████                              | 352M/1.65G [00:04&lt;00:15, 86.7MB/s]
- 22%|████████▎                             | 360M/1.65G [00:04&lt;00:14, 86.9MB/s]
- 22%|████████▍                             | 369M/1.65G [00:04&lt;00:14, 86.6MB/s]
- 23%|████████▋                             | 378M/1.65G [00:04&lt;00:14, 88.1MB/s]
- 23%|████████▉                             | 388M/1.65G [00:04&lt;00:13, 90.5MB/s]
- 24%|█████████▏                            | 397M/1.65G [00:04&lt;00:13, 92.4MB/s]
- 25%|█████████▎                            | 407M/1.65G [00:04&lt;00:13, 93.0MB/s]
- 25%|█████████▌                            | 416M/1.65G [00:04&lt;00:13, 93.4MB/s]
- 26%|█████████▊                            | 426M/1.65G [00:04&lt;00:13, 93.1MB/s]
- 26%|██████████                            | 435M/1.65G [00:04&lt;00:12, 94.2MB/s]
- 27%|██████████▏                           | 445M/1.65G [00:05&lt;00:12, 94.7MB/s]
- 28%|██████████▍                           | 455M/1.65G [00:05&lt;00:12, 95.0MB/s]
- 28%|██████████▋                           | 464M/1.65G [00:05&lt;00:12, 93.5MB/s]
- 29%|██████████▉                           | 473M/1.65G [00:05&lt;00:12, 92.0MB/s]
- 29%|███████████                           | 483M/1.65G [00:05&lt;00:12, 92.2MB/s]
- 30%|███████████▎                          | 492M/1.65G [00:05&lt;00:13, 89.0MB/s]
- 30%|███████████▌                          | 501M/1.65G [00:05&lt;00:12, 90.1MB/s]
- 31%|███████████▋                          | 511M/1.65G [00:05&lt;00:12, 91.6MB/s]
- 31%|███████████▉                          | 520M/1.65G [00:05&lt;00:12, 92.1MB/s]
- 32%|████████████▏                         | 530M/1.65G [00:05&lt;00:12, 93.0MB/s]
- 33%|████████████▍                         | 539M/1.65G [00:06&lt;00:11, 93.7MB/s]
- 33%|████████████▌                         | 549M/1.65G [00:06&lt;00:11, 94.0MB/s]
- 34%|████████████▊                         | 558M/1.65G [00:06&lt;00:11, 94.4MB/s]
- 34%|█████████████                         | 568M/1.65G [00:06&lt;00:11, 94.8MB/s]
- 35%|█████████████▎                        | 577M/1.65G [00:06&lt;00:11, 94.0MB/s]
- 35%|█████████████▍                        | 587M/1.65G [00:06&lt;00:11, 94.2MB/s]
- 36%|█████████████▋                        | 596M/1.65G [00:06&lt;00:11, 93.9MB/s]
- 37%|█████████████▉                        | 605M/1.65G [00:06&lt;00:11, 93.7MB/s]
- 37%|██████████████▏                       | 615M/1.65G [00:06&lt;00:11, 93.6MB/s]
- 38%|██████████████▎                       | 624M/1.65G [00:06&lt;00:10, 94.3MB/s]
- 38%|██████████████▌                       | 634M/1.65G [00:07&lt;00:10, 94.3MB/s]
- 39%|██████████████▊                       | 643M/1.65G [00:07&lt;00:10, 94.4MB/s]
- 39%|███████████████                       | 653M/1.65G [00:07&lt;00:10, 93.8MB/s]
- 40%|███████████████▏                      | 662M/1.65G [00:07&lt;00:10, 93.7MB/s]
- 41%|███████████████▍                      | 672M/1.65G [00:07&lt;00:10, 93.0MB/s]
- 41%|███████████████▋                      | 681M/1.65G [00:07&lt;00:10, 93.0MB/s]
- 42%|███████████████▊                      | 690M/1.65G [00:07&lt;00:10, 93.2MB/s]
- 42%|████████████████                      | 699M/1.65G [00:07&lt;00:10, 92.6MB/s]
- 43%|████████████████▎                     | 709M/1.65G [00:07&lt;00:10, 92.2MB/s]
- 43%|████████████████▌                     | 718M/1.65G [00:08&lt;00:10, 92.7MB/s]
- 44%|████████████████▋                     | 728M/1.65G [00:08&lt;00:09, 93.4MB/s]
- 45%|████████████████▉                     | 737M/1.65G [00:08&lt;00:09, 93.2MB/s]
- 45%|█████████████████▏                    | 746M/1.65G [00:08&lt;00:09, 93.6MB/s]
- 46%|█████████████████▍                    | 756M/1.65G [00:08&lt;00:09, 92.4MB/s]
- 46%|█████████████████▌                    | 765M/1.65G [00:08&lt;00:09, 89.2MB/s]
- 47%|█████████████████▊                    | 774M/1.65G [00:08&lt;00:09, 89.6MB/s]
- 47%|██████████████████                    | 783M/1.65G [00:08&lt;00:09, 90.3MB/s]
- 48%|██████████████████▏                   | 792M/1.65G [00:08&lt;00:09, 90.7MB/s]
- 48%|██████████████████▍                   | 802M/1.65G [00:08&lt;00:09, 90.6MB/s]
- 49%|██████████████████▋                   | 811M/1.65G [00:09&lt;00:09, 91.0MB/s]
- 50%|██████████████████▊                   | 820M/1.65G [00:09&lt;00:09, 87.3MB/s]
- 50%|███████████████████                   | 829M/1.65G [00:09&lt;00:09, 85.2MB/s]
- 51%|███████████████████▏                  | 837M/1.65G [00:09&lt;00:10, 79.0MB/s]
- 51%|███████████████████▍                  | 845M/1.65G [00:09&lt;00:12, 67.2MB/s]
- 52%|███████████████████▋                  | 854M/1.65G [00:09&lt;00:10, 73.5MB/s]
- 52%|███████████████████▊                  | 864M/1.65G [00:09&lt;00:10, 78.7MB/s]
- 53%|████████████████████                  | 873M/1.65G [00:09&lt;00:09, 82.8MB/s]
- 53%|████████████████████▎                 | 882M/1.65G [00:09&lt;00:09, 85.3MB/s]
- 54%|████████████████████▍                 | 892M/1.65G [00:10&lt;00:08, 87.8MB/s]
- 55%|████████████████████▋                 | 901M/1.65G [00:10&lt;00:08, 89.5MB/s]
- 55%|████████████████████▉                 | 910M/1.65G [00:10&lt;00:08, 90.7MB/s]
- 56%|█████████████████████▏                | 920M/1.65G [00:10&lt;00:07, 91.9MB/s]
- 56%|█████████████████████▎                | 929M/1.65G [00:10&lt;00:07, 92.1MB/s]
- 57%|█████████████████████▌                | 939M/1.65G [00:10&lt;00:07, 92.8MB/s]
- 57%|█████████████████████▊                | 948M/1.65G [00:10&lt;00:07, 92.4MB/s]
- 58%|██████████████████████                | 957M/1.65G [00:10&lt;00:07, 92.2MB/s]
- 58%|██████████████████████▏               | 966M/1.65G [00:10&lt;00:07, 91.5MB/s]
- 59%|██████████████████████▍               | 976M/1.65G [00:10&lt;00:07, 92.3MB/s]
- 60%|██████████████████████▋               | 985M/1.65G [00:11&lt;00:07, 92.5MB/s]
- 60%|██████████████████████▊               | 994M/1.65G [00:11&lt;00:07, 92.6MB/s]
- 61%|██████████████████████▍              | 1.00G/1.65G [00:11&lt;00:07, 92.5MB/s]
- 61%|██████████████████████▋              | 1.01G/1.65G [00:11&lt;00:06, 92.0MB/s]
- 62%|██████████████████████▉              | 1.02G/1.65G [00:11&lt;00:06, 92.2MB/s]
- 62%|███████████████████████              | 1.03G/1.65G [00:11&lt;00:06, 92.5MB/s]
- 63%|███████████████████████▎             | 1.04G/1.65G [00:11&lt;00:06, 92.9MB/s]
- 64%|███████████████████████▌             | 1.05G/1.65G [00:11&lt;00:06, 93.0MB/s]
- 64%|███████████████████████▋             | 1.06G/1.65G [00:11&lt;00:06, 93.5MB/s]
- 65%|███████████████████████▉             | 1.07G/1.65G [00:11&lt;00:06, 93.0MB/s]
- 65%|████████████████████████▏            | 1.08G/1.65G [00:12&lt;00:06, 92.9MB/s]
- 66%|████████████████████████▎            | 1.09G/1.65G [00:12&lt;00:06, 93.0MB/s]
- 66%|████████████████████████▌            | 1.10G/1.65G [00:12&lt;00:05, 93.0MB/s]
- 67%|████████████████████████▊            | 1.11G/1.65G [00:12&lt;00:05, 91.3MB/s]
- 67%|████████████████████████▉            | 1.12G/1.65G [00:12&lt;00:05, 91.3MB/s]
- 68%|█████████████████████████▏           | 1.12G/1.65G [00:12&lt;00:05, 91.6MB/s]
- 69%|█████████████████████████▍           | 1.13G/1.65G [00:12&lt;00:05, 92.0MB/s]
- 69%|█████████████████████████▌           | 1.14G/1.65G [00:12&lt;00:05, 92.2MB/s]
- 70%|█████████████████████████▊           | 1.15G/1.65G [00:12&lt;00:05, 92.4MB/s]
- 70%|██████████████████████████           | 1.16G/1.65G [00:12&lt;00:05, 92.5MB/s]
- 71%|██████████████████████████▏          | 1.17G/1.65G [00:13&lt;00:05, 92.5MB/s]
- 71%|██████████████████████████▍          | 1.18G/1.65G [00:13&lt;00:05, 92.3MB/s]
- 72%|██████████████████████████▋          | 1.19G/1.65G [00:13&lt;00:05, 92.2MB/s]
- 73%|██████████████████████████▊          | 1.20G/1.65G [00:13&lt;00:04, 92.4MB/s]
- 73%|███████████████████████████          | 1.21G/1.65G [00:13&lt;00:04, 91.6MB/s]
- 74%|███████████████████████████▏         | 1.22G/1.65G [00:13&lt;00:04, 92.0MB/s]
- 74%|███████████████████████████▍         | 1.23G/1.65G [00:13&lt;00:04, 92.0MB/s]
- 75%|███████████████████████████▋         | 1.24G/1.65G [00:13&lt;00:04, 91.9MB/s]
- 75%|███████████████████████████▊         | 1.24G/1.65G [00:13&lt;00:04, 91.9MB/s]
- 76%|████████████████████████████         | 1.25G/1.65G [00:13&lt;00:04, 88.9MB/s]
- 76%|████████████████████████████▎        | 1.26G/1.65G [00:14&lt;00:04, 89.3MB/s]
- 77%|████████████████████████████▍        | 1.27G/1.65G [00:14&lt;00:04, 87.4MB/s]
- 77%|████████████████████████████▋        | 1.28G/1.65G [00:14&lt;00:04, 85.6MB/s]
- 78%|████████████████████████████▊        | 1.29G/1.65G [00:14&lt;00:04, 84.5MB/s]
- 79%|█████████████████████████████        | 1.30G/1.65G [00:14&lt;00:04, 86.1MB/s]
- 79%|█████████████████████████████▎       | 1.31G/1.65G [00:14&lt;00:04, 85.0MB/s]
- 80%|█████████████████████████████▍       | 1.32G/1.65G [00:14&lt;00:03, 86.8MB/s]
- 80%|█████████████████████████████▋       | 1.33G/1.65G [00:14&lt;00:03, 87.8MB/s]
- 81%|█████████████████████████████▊       | 1.33G/1.65G [00:14&lt;00:03, 88.5MB/s]
- 81%|██████████████████████████████       | 1.34G/1.65G [00:14&lt;00:03, 89.0MB/s]
- 82%|██████████████████████████████▎      | 1.35G/1.65G [00:15&lt;00:03, 89.0MB/s]
- 82%|██████████████████████████████▍      | 1.36G/1.65G [00:15&lt;00:03, 89.6MB/s]
- 83%|██████████████████████████████▋      | 1.37G/1.65G [00:15&lt;00:03, 90.0MB/s]
- 83%|██████████████████████████████▉      | 1.38G/1.65G [00:15&lt;00:03, 90.4MB/s]
- 84%|███████████████████████████████      | 1.39G/1.65G [00:15&lt;00:02, 89.9MB/s]
- 85%|███████████████████████████████▎     | 1.40G/1.65G [00:15&lt;00:02, 90.0MB/s]
- 85%|███████████████████████████████▍     | 1.41G/1.65G [00:15&lt;00:02, 86.5MB/s]
- 86%|███████████████████████████████▋     | 1.42G/1.65G [00:15&lt;00:02, 87.8MB/s]
- 86%|███████████████████████████████▉     | 1.42G/1.65G [00:15&lt;00:02, 88.7MB/s]
- 87%|████████████████████████████████     | 1.43G/1.65G [00:16&lt;00:02, 89.1MB/s]
- 87%|████████████████████████████████▎    | 1.44G/1.65G [00:16&lt;00:02, 87.3MB/s]
- 88%|████████████████████████████████▌    | 1.45G/1.65G [00:16&lt;00:02, 88.8MB/s]
- 88%|████████████████████████████████▋    | 1.46G/1.65G [00:16&lt;00:02, 89.6MB/s]
- 89%|████████████████████████████████▉    | 1.47G/1.65G [00:16&lt;00:02, 89.8MB/s]
- 89%|█████████████████████████████████    | 1.48G/1.65G [00:16&lt;00:01, 88.9MB/s]
- 90%|█████████████████████████████████▎   | 1.49G/1.65G [00:16&lt;00:01, 89.7MB/s]
- 91%|█████████████████████████████████▌   | 1.50G/1.65G [00:16&lt;00:01, 90.5MB/s]
- 91%|█████████████████████████████████▋   | 1.51G/1.65G [00:16&lt;00:01, 89.2MB/s]
- 92%|█████████████████████████████████▉   | 1.52G/1.65G [00:16&lt;00:01, 89.9MB/s]
- 92%|██████████████████████████████████▏  | 1.52G/1.65G [00:17&lt;00:01, 90.7MB/s]
- 93%|██████████████████████████████████▎  | 1.53G/1.65G [00:17&lt;00:01, 91.1MB/s]
- 93%|██████████████████████████████████▌  | 1.54G/1.65G [00:17&lt;00:01, 91.6MB/s]
- 94%|██████████████████████████████████▊  | 1.55G/1.65G [00:17&lt;00:01, 89.5MB/s]
- 94%|██████████████████████████████████▉  | 1.56G/1.65G [00:17&lt;00:01, 90.1MB/s]
- 95%|███████████████████████████████████▏ | 1.57G/1.65G [00:17&lt;00:00, 88.2MB/s]
- 96%|███████████████████████████████████▎ | 1.58G/1.65G [00:17&lt;00:00, 89.3MB/s]
- 96%|███████████████████████████████████▌ | 1.59G/1.65G [00:17&lt;00:00, 87.9MB/s]
- 97%|███████████████████████████████████▊ | 1.60G/1.65G [00:17&lt;00:00, 88.7MB/s]
- 97%|███████████████████████████████████▉ | 1.61G/1.65G [00:17&lt;00:00, 89.5MB/s]
- 98%|████████████████████████████████████▏| 1.62G/1.65G [00:18&lt;00:00, 90.1MB/s]
- 98%|████████████████████████████████████▍| 1.63G/1.65G [00:18&lt;00:00, 88.5MB/s]
- 99%|████████████████████████████████████▌| 1.63G/1.65G [00:18&lt;00:00, 83.8MB/s]
- 99%|████████████████████████████████████▊| 1.64G/1.65G [00:18&lt;00:00, 83.2MB/s]
-100%|████████████████████████████████████▉| 1.65G/1.65G [00:18&lt;00:00, 82.0MB/s]
+  0%|                                     | 1.86M/1.65G [00:00&lt;01:46, 15.4MB/s]
+  0%|                                     | 3.40M/1.65G [00:00&lt;02:06, 13.1MB/s]
+  0%|                                     | 4.72M/1.65G [00:00&lt;02:16, 12.1MB/s]
+  0%|▏                                    | 5.93M/1.65G [00:00&lt;02:16, 12.1MB/s]
+  0%|▏                                    | 7.14M/1.65G [00:00&lt;02:17, 12.0MB/s]
+  1%|▏                                    | 8.42M/1.65G [00:00&lt;02:14, 12.2MB/s]
+  1%|▏                                    | 9.97M/1.65G [00:00&lt;02:06, 12.9MB/s]
+  1%|▎                                    | 14.1M/1.65G [00:00&lt;01:16, 21.5MB/s]
+  1%|▌                                    | 22.5M/1.65G [00:00&lt;00:40, 40.5MB/s]
+  2%|▋                                    | 31.1M/1.65G [00:01&lt;00:29, 54.1MB/s]
+  2%|▉                                    | 39.5M/1.65G [00:01&lt;00:25, 63.3MB/s]
+  3%|█                                    | 46.6M/1.65G [00:01&lt;00:25, 62.9MB/s]
+  3%|█▏                                   | 52.9M/1.65G [00:01&lt;00:32, 49.6MB/s]
+  4%|█▎                                   | 58.3M/1.65G [00:01&lt;00:44, 35.7MB/s]
+  4%|█▍                                   | 64.2M/1.65G [00:01&lt;00:39, 40.2MB/s]
+  4%|█▌                                   | 69.4M/1.65G [00:01&lt;00:36, 42.8MB/s]
+  5%|█▋                                   | 74.8M/1.65G [00:02&lt;00:35, 45.0MB/s]
+  5%|█▊                                   | 79.8M/1.65G [00:02&lt;01:15, 20.8MB/s]
+  5%|█▊                                   | 83.6M/1.65G [00:02&lt;01:09, 22.5MB/s]
+  5%|██                                   | 90.7M/1.65G [00:02&lt;00:51, 30.4MB/s]
+  6%|██▏                                  | 95.3M/1.65G [00:03&lt;01:09, 22.3MB/s]
+  6%|██▎                                   | 101M/1.65G [00:03&lt;01:14, 20.9MB/s]
+  6%|██▍                                   | 104M/1.65G [00:03&lt;01:11, 21.7MB/s]
+  7%|██▌                                   | 111M/1.65G [00:03&lt;00:50, 30.8MB/s]
+  7%|██▋                                   | 117M/1.65G [00:03&lt;00:43, 35.1MB/s]
+  7%|██▊                                   | 122M/1.65G [00:04&lt;00:44, 34.4MB/s]
+  8%|██▉                                   | 126M/1.65G [00:04&lt;00:52, 29.1MB/s]
+  8%|███                                   | 134M/1.65G [00:04&lt;00:38, 39.7MB/s]
+  9%|███▎                                  | 143M/1.65G [00:04&lt;00:30, 50.0MB/s]
+  9%|███▍                                  | 151M/1.65G [00:04&lt;00:29, 51.2MB/s]
+ 10%|███▋                                  | 159M/1.65G [00:04&lt;00:25, 58.7MB/s]
+ 10%|███▊                                  | 166M/1.65G [00:04&lt;00:26, 55.8MB/s]
+ 10%|███▉                                  | 172M/1.65G [00:05&lt;00:39, 37.1MB/s]
+ 11%|████                                  | 178M/1.65G [00:05&lt;00:36, 40.6MB/s]
+ 11%|████▏                                 | 185M/1.65G [00:05&lt;00:38, 38.6MB/s]
+ 11%|████▎                                 | 189M/1.65G [00:05&lt;00:51, 28.4MB/s]
+ 12%|████▍                                 | 193M/1.65G [00:05&lt;00:52, 27.6MB/s]
+ 12%|████▌                                 | 199M/1.65G [00:05&lt;00:42, 34.5MB/s]
+ 12%|████▋                                 | 204M/1.65G [00:06&lt;00:45, 31.7MB/s]
+ 13%|████▊                                 | 211M/1.65G [00:06&lt;00:36, 40.0MB/s]
+ 13%|████▉                                 | 217M/1.65G [00:06&lt;00:32, 43.7MB/s]
+ 13%|█████                                 | 222M/1.65G [00:06&lt;00:42, 33.7MB/s]
+ 14%|█████▎                                | 229M/1.65G [00:06&lt;00:34, 41.6MB/s]
+ 14%|█████▍                                | 235M/1.65G [00:06&lt;00:41, 34.4MB/s]
+ 14%|█████▍                                | 239M/1.65G [00:07&lt;00:51, 27.7MB/s]
+ 15%|█████▌                                | 243M/1.65G [00:07&lt;00:51, 27.4MB/s]
+ 15%|█████▋                                | 249M/1.65G [00:07&lt;00:41, 33.7MB/s]
+ 15%|█████▊                                | 253M/1.65G [00:07&lt;00:43, 32.5MB/s]
+ 16%|█████▉                                | 258M/1.65G [00:07&lt;00:36, 37.9MB/s]
+ 16%|██████                                | 263M/1.65G [00:07&lt;00:45, 30.5MB/s]
+ 16%|██████▏                               | 268M/1.65G [00:08&lt;00:43, 31.6MB/s]
+ 17%|██████▎                               | 273M/1.65G [00:08&lt;00:39, 35.3MB/s]
+ 17%|██████▍                               | 277M/1.65G [00:08&lt;00:59, 23.0MB/s]
+ 17%|██████▍                               | 280M/1.65G [00:08&lt;01:22, 16.7MB/s]
+ 17%|██████▌                               | 283M/1.65G [00:09&lt;01:35, 14.3MB/s]
+ 17%|██████▌                               | 285M/1.65G [00:09&lt;01:39, 13.7MB/s]
+ 17%|██████▌                               | 287M/1.65G [00:09&lt;01:50, 12.4MB/s]
+ 17%|██████▌                               | 288M/1.65G [00:09&lt;01:54, 11.9MB/s]
+ 18%|██████▋                               | 289M/1.65G [00:09&lt;02:11, 10.4MB/s]
+ 18%|██████▋                               | 291M/1.65G [00:09&lt;02:16, 9.97MB/s]
+ 18%|██████▋                               | 292M/1.65G [00:10&lt;02:17, 9.88MB/s]
+ 18%|██████▋                               | 293M/1.65G [00:10&lt;02:24, 9.42MB/s]
+ 18%|██████▊                               | 294M/1.65G [00:10&lt;02:27, 9.22MB/s]
+ 18%|██████▊                               | 295M/1.65G [00:10&lt;02:41, 8.43MB/s]
+ 18%|██████▊                               | 295M/1.65G [00:10&lt;02:42, 8.33MB/s]
+ 18%|██████▊                               | 296M/1.65G [00:10&lt;02:39, 8.52MB/s]
+ 18%|██████▊                               | 298M/1.65G [00:10&lt;02:23, 9.47MB/s]
+ 18%|██████▊                               | 299M/1.65G [00:10&lt;02:22, 9.48MB/s]
+ 18%|██████▉                               | 300M/1.65G [00:11&lt;02:15, 9.96MB/s]
+ 18%|██████▉                               | 301M/1.65G [00:11&lt;02:15, 9.98MB/s]
+ 18%|██████▉                               | 303M/1.65G [00:11&lt;01:46, 12.7MB/s]
+ 19%|███████                               | 307M/1.65G [00:11&lt;01:02, 21.5MB/s]
+ 19%|███████▏                              | 314M/1.65G [00:11&lt;01:02, 21.4MB/s]
+ 19%|███████▎                              | 319M/1.65G [00:11&lt;00:58, 22.7MB/s]
+ 19%|███████▍                              | 321M/1.65G [00:11&lt;01:02, 21.4MB/s]
+ 20%|███████▍                              | 323M/1.65G [00:12&lt;01:12, 18.3MB/s]
+ 20%|███████▌                              | 330M/1.65G [00:12&lt;00:56, 23.5MB/s]
+ 20%|███████▋                              | 336M/1.65G [00:12&lt;00:43, 30.5MB/s]
+ 21%|███████▊                              | 341M/1.65G [00:12&lt;00:38, 33.7MB/s]
+ 21%|███████▉                              | 344M/1.65G [00:12&lt;00:41, 31.3MB/s]
+ 21%|███████▉                              | 348M/1.65G [00:12&lt;01:00, 21.6MB/s]
+ 21%|████████                              | 353M/1.65G [00:13&lt;00:48, 26.8MB/s]
+ 22%|████████▏                             | 356M/1.65G [00:13&lt;01:05, 19.8MB/s]
+ 22%|████████▎                             | 360M/1.65G [00:13&lt;00:56, 23.0MB/s]
+ 22%|████████▍                             | 367M/1.65G [00:13&lt;00:41, 31.0MB/s]
+ 22%|████████▌                             | 371M/1.65G [00:13&lt;00:44, 29.1MB/s]
+ 23%|████████▋                             | 377M/1.65G [00:13&lt;00:35, 36.3MB/s]
+ 23%|████████▊                             | 384M/1.65G [00:13&lt;00:29, 42.5MB/s]
+ 24%|████████▉                             | 389M/1.65G [00:14&lt;00:39, 32.0MB/s]
+ 24%|█████████                             | 393M/1.65G [00:14&lt;00:38, 32.3MB/s]
+ 24%|█████████▏                            | 400M/1.65G [00:14&lt;00:29, 41.9MB/s]
+ 25%|█████████▎                            | 405M/1.65G [00:14&lt;00:36, 34.4MB/s]
+ 25%|█████████▍                            | 411M/1.65G [00:14&lt;00:32, 38.2MB/s]
+ 25%|█████████▌                            | 415M/1.65G [00:14&lt;00:37, 33.3MB/s]
+ 25%|█████████▋                            | 419M/1.65G [00:15&lt;00:46, 26.7MB/s]
+ 26%|█████████▋                            | 422M/1.65G [00:15&lt;00:46, 26.6MB/s]
+ 26%|█████████▊                            | 429M/1.65G [00:15&lt;00:34, 35.6MB/s]
+ 26%|█████████▉                            | 433M/1.65G [00:15&lt;00:35, 34.0MB/s]
+ 27%|██████████                            | 439M/1.65G [00:15&lt;00:31, 39.1MB/s]
+ 27%|██████████▏                           | 445M/1.65G [00:15&lt;00:35, 34.3MB/s]
+ 27%|██████████▎                           | 448M/1.65G [00:16&lt;00:43, 27.6MB/s]
+ 27%|██████████▍                           | 454M/1.65G [00:16&lt;00:35, 33.6MB/s]
+ 28%|██████████▌                           | 461M/1.65G [00:16&lt;00:38, 31.2MB/s]
+ 28%|██████████▋                           | 465M/1.65G [00:16&lt;00:51, 23.2MB/s]
+ 29%|██████████▊                           | 473M/1.65G [00:16&lt;00:37, 31.8MB/s]
+ 29%|██████████▉                           | 478M/1.65G [00:17&lt;00:41, 28.5MB/s]
+ 29%|███████████                           | 482M/1.65G [00:17&lt;00:42, 27.8MB/s]
+ 29%|███████████▏                          | 487M/1.65G [00:17&lt;00:45, 25.5MB/s]
+ 30%|███████████▎                          | 490M/1.65G [00:17&lt;00:55, 21.1MB/s]
+ 30%|███████████▍                          | 496M/1.65G [00:17&lt;00:39, 29.2MB/s]
+ 30%|███████████▍                          | 500M/1.65G [00:17&lt;00:42, 27.4MB/s]
+ 30%|███████████▌                          | 503M/1.65G [00:18&lt;00:55, 20.6MB/s]
+ 31%|███████████▋                          | 506M/1.65G [00:18&lt;00:56, 20.2MB/s]
+ 31%|███████████▋                          | 509M/1.65G [00:18&lt;01:00, 19.0MB/s]
+ 31%|███████████▊                          | 515M/1.65G [00:18&lt;00:42, 26.9MB/s]
+ 32%|████████████                          | 523M/1.65G [00:18&lt;00:28, 39.2MB/s]
+ 32%|████████████▏                         | 528M/1.65G [00:19&lt;00:36, 31.2MB/s]
+ 32%|████████████▏                         | 533M/1.65G [00:19&lt;00:35, 31.2MB/s]
+ 33%|████████████▍                         | 540M/1.65G [00:19&lt;00:26, 41.2MB/s]
+ 33%|████████████▌                         | 548M/1.65G [00:19&lt;00:22, 49.2MB/s]
+ 34%|████████████▋                         | 554M/1.65G [00:19&lt;00:33, 32.4MB/s]
+ 34%|████████████▉                         | 561M/1.65G [00:19&lt;00:27, 39.2MB/s]
+ 34%|█████████████                         | 566M/1.65G [00:19&lt;00:28, 37.5MB/s]
+ 35%|█████████████                         | 571M/1.65G [00:20&lt;00:41, 26.2MB/s]
+ 35%|█████████████▏                        | 574M/1.65G [00:20&lt;00:38, 27.8MB/s]
+ 35%|█████████████▎                        | 578M/1.65G [00:20&lt;00:48, 22.2MB/s]
+ 35%|█████████████▍                        | 584M/1.65G [00:20&lt;00:37, 28.7MB/s]
+ 36%|█████████████▌                        | 591M/1.65G [00:20&lt;00:30, 34.3MB/s]
+ 36%|█████████████▋                        | 595M/1.65G [00:21&lt;00:42, 24.8MB/s]
+ 36%|█████████████▊                        | 600M/1.65G [00:21&lt;00:36, 29.1MB/s]
+ 37%|█████████████▉                        | 604M/1.65G [00:21&lt;00:39, 26.7MB/s]
+ 37%|██████████████                        | 609M/1.65G [00:21&lt;00:32, 32.2MB/s]
+ 37%|██████████████▏                       | 617M/1.65G [00:21&lt;00:24, 42.3MB/s]
+ 38%|██████████████▎                       | 624M/1.65G [00:21&lt;00:21, 48.7MB/s]
+ 38%|██████████████▍                       | 630M/1.65G [00:22&lt;00:26, 38.1MB/s]
+ 39%|██████████████▋                       | 636M/1.65G [00:22&lt;00:23, 44.2MB/s]
+ 39%|██████████████▊                       | 642M/1.65G [00:22&lt;00:22, 44.3MB/s]
+ 39%|██████████████▊                       | 647M/1.65G [00:22&lt;00:24, 41.5MB/s]
+ 40%|███████████████                       | 654M/1.65G [00:22&lt;00:20, 48.8MB/s]
+ 40%|███████████████▏                      | 659M/1.65G [00:22&lt;00:27, 36.2MB/s]
+ 40%|███████████████▎                      | 664M/1.65G [00:22&lt;00:25, 38.8MB/s]
+ 41%|███████████████▍                      | 671M/1.65G [00:22&lt;00:22, 43.9MB/s]
+ 41%|███████████████▌                      | 679M/1.65G [00:23&lt;00:18, 52.1MB/s]
+ 41%|███████████████▋                      | 685M/1.65G [00:23&lt;00:31, 30.9MB/s]
+ 42%|███████████████▊                      | 689M/1.65G [00:23&lt;00:49, 19.5MB/s]
+ 42%|███████████████▉                      | 693M/1.65G [00:24&lt;00:56, 16.9MB/s]
+ 42%|███████████████▉                      | 695M/1.65G [00:24&lt;01:00, 15.9MB/s]
+ 42%|████████████████                      | 698M/1.65G [00:24&lt;01:01, 15.6MB/s]
+ 42%|████████████████                      | 700M/1.65G [00:24&lt;01:03, 15.0MB/s]
+ 42%|████████████████▏                     | 701M/1.65G [00:24&lt;01:04, 14.8MB/s]
+ 43%|████████████████▏                     | 703M/1.65G [00:25&lt;01:06, 14.3MB/s]
+ 43%|████████████████▏                     | 705M/1.65G [00:25&lt;01:07, 14.0MB/s]
+ 43%|████████████████▏                     | 706M/1.65G [00:25&lt;01:06, 14.2MB/s]
+ 43%|████████████████▎                     | 708M/1.65G [00:25&lt;01:05, 14.5MB/s]
+ 43%|████████████████▎                     | 709M/1.65G [00:25&lt;01:04, 14.6MB/s]
+ 43%|████████████████▎                     | 711M/1.65G [00:25&lt;01:07, 14.0MB/s]
+ 43%|████████████████▍                     | 713M/1.65G [00:25&lt;00:54, 17.1MB/s]
+ 44%|████████████████▌                     | 720M/1.65G [00:25&lt;00:29, 31.3MB/s]
+ 44%|████████████████▋                     | 726M/1.65G [00:25&lt;00:23, 39.8MB/s]
+ 44%|████████████████▊                     | 731M/1.65G [00:26&lt;00:29, 31.2MB/s]
+ 44%|████████████████▉                     | 734M/1.65G [00:26&lt;00:29, 31.1MB/s]
+ 45%|█████████████████                     | 741M/1.65G [00:26&lt;00:22, 40.3MB/s]
+ 45%|█████████████████▏                    | 745M/1.65G [00:26&lt;00:31, 28.4MB/s]
+ 45%|█████████████████▏                    | 749M/1.65G [00:26&lt;00:34, 26.5MB/s]
+ 46%|█████████████████▎                    | 755M/1.65G [00:26&lt;00:31, 28.2MB/s]
+ 46%|█████████████████▍                    | 759M/1.65G [00:27&lt;00:39, 22.6MB/s]
+ 46%|█████████████████▌                    | 765M/1.65G [00:27&lt;00:29, 30.5MB/s]
+ 47%|█████████████████▋                    | 772M/1.65G [00:27&lt;00:26, 32.9MB/s]
+ 47%|█████████████████▊                    | 776M/1.65G [00:27&lt;00:32, 27.3MB/s]
+ 47%|█████████████████▉                    | 782M/1.65G [00:27&lt;00:26, 32.3MB/s]
+ 48%|██████████████████                    | 785M/1.65G [00:28&lt;00:37, 22.9MB/s]
+ 48%|██████████████████▏                   | 793M/1.65G [00:28&lt;00:26, 32.3MB/s]
+ 48%|██████████████████▎                   | 798M/1.65G [00:28&lt;00:29, 28.8MB/s]
+ 48%|██████████████████▍                   | 801M/1.65G [00:28&lt;00:33, 25.2MB/s]
+ 49%|██████████████████▌                   | 805M/1.65G [00:28&lt;00:35, 24.1MB/s]
+ 49%|██████████████████▋                   | 811M/1.65G [00:28&lt;00:28, 29.7MB/s]
+ 49%|██████████████████▊                   | 817M/1.65G [00:29&lt;00:23, 35.6MB/s]
+ 50%|██████████████████▉                   | 822M/1.65G [00:29&lt;00:23, 35.9MB/s]
+ 50%|███████████████████                   | 827M/1.65G [00:29&lt;00:21, 39.0MB/s]
+ 50%|███████████████████                   | 831M/1.65G [00:29&lt;00:21, 38.3MB/s]
+ 51%|███████████████████▎                  | 838M/1.65G [00:29&lt;00:17, 45.7MB/s]
+ 51%|███████████████████▍                  | 843M/1.65G [00:29&lt;00:18, 44.5MB/s]
+ 51%|███████████████████▌                  | 848M/1.65G [00:29&lt;00:17, 45.9MB/s]
+ 52%|███████████████████▋                  | 856M/1.65G [00:29&lt;00:17, 45.4MB/s]
+ 52%|███████████████████▊                  | 863M/1.65G [00:29&lt;00:15, 51.8MB/s]
+ 53%|███████████████████▉                  | 868M/1.65G [00:30&lt;00:18, 41.7MB/s]
+ 53%|████████████████████                  | 873M/1.65G [00:30&lt;00:17, 43.5MB/s]
+ 53%|████████████████████▏                 | 879M/1.65G [00:30&lt;00:16, 46.1MB/s]
+ 54%|████████████████████▎                 | 885M/1.65G [00:30&lt;00:14, 51.6MB/s]
+ 54%|████████████████████▍                 | 891M/1.65G [00:30&lt;00:14, 53.9MB/s]
+ 54%|████████████████████▋                 | 898M/1.65G [00:30&lt;00:14, 51.0MB/s]
+ 55%|████████████████████▊                 | 904M/1.65G [00:30&lt;00:13, 53.9MB/s]
+ 55%|████████████████████▉                 | 909M/1.65G [00:31&lt;00:34, 21.4MB/s]
+ 55%|█████████████████████                 | 914M/1.65G [00:31&lt;00:44, 16.8MB/s]
+ 55%|█████████████████████                 | 917M/1.65G [00:32&lt;00:51, 14.4MB/s]
+ 56%|█████████████████████▏                | 919M/1.65G [00:32&lt;00:55, 13.1MB/s]
+ 56%|█████████████████████▏                | 921M/1.65G [00:32&lt;00:58, 12.6MB/s]
+ 56%|█████████████████████▏                | 923M/1.65G [00:32&lt;01:00, 12.0MB/s]
+ 56%|█████████████████████▎                | 925M/1.65G [00:33&lt;01:06, 11.0MB/s]
+ 56%|█████████████████████▎                | 926M/1.65G [00:33&lt;01:07, 10.7MB/s]
+ 56%|█████████████████████▎                | 927M/1.65G [00:33&lt;01:09, 10.4MB/s]
+ 56%|█████████████████████▎                | 928M/1.65G [00:33&lt;01:12, 10.0MB/s]
+ 56%|█████████████████████▎                | 929M/1.65G [00:33&lt;01:08, 10.6MB/s]
+ 56%|█████████████████████▍                | 931M/1.65G [00:33&lt;01:12, 9.95MB/s]
+ 56%|█████████████████████▍                | 932M/1.65G [00:33&lt;01:09, 10.4MB/s]
+ 56%|█████████████████████▍                | 933M/1.65G [00:33&lt;01:05, 11.1MB/s]
+ 57%|█████████████████████▍                | 935M/1.65G [00:34&lt;00:59, 12.1MB/s]
+ 57%|█████████████████████▌                | 936M/1.65G [00:34&lt;00:55, 12.9MB/s]
+ 57%|█████████████████████▌                | 938M/1.65G [00:34&lt;00:56, 12.7MB/s]
+ 57%|█████████████████████▌                | 939M/1.65G [00:34&lt;00:53, 13.4MB/s]
+ 57%|█████████████████████▋                | 941M/1.65G [00:34&lt;00:51, 13.8MB/s]
+ 57%|█████████████████████▋                | 942M/1.65G [00:34&lt;00:50, 14.0MB/s]
+ 57%|█████████████████████▋                | 944M/1.65G [00:34&lt;00:49, 14.4MB/s]
+ 58%|█████████████████████▉                | 952M/1.65G [00:34&lt;00:21, 33.2MB/s]
+ 58%|██████████████████████                | 960M/1.65G [00:34&lt;00:17, 40.2MB/s]
+ 58%|██████████████████████▏               | 966M/1.65G [00:35&lt;00:17, 39.8MB/s]
+ 59%|██████████████████████▎               | 970M/1.65G [00:35&lt;00:21, 32.2MB/s]
+ 59%|██████████████████████▍               | 974M/1.65G [00:35&lt;00:19, 34.5MB/s]
+ 59%|██████████████████████▍               | 978M/1.65G [00:35&lt;00:21, 30.9MB/s]
+ 60%|██████████████████████▌               | 984M/1.65G [00:35&lt;00:24, 27.6MB/s]
+ 60%|██████████████████████▋               | 989M/1.65G [00:35&lt;00:19, 33.9MB/s]
+ 60%|██████████████████████▊               | 993M/1.65G [00:35&lt;00:19, 33.4MB/s]
+ 60%|██████████████████████▉               | 999M/1.65G [00:36&lt;00:18, 34.4MB/s]
+ 61%|██████████████████████▍              | 1.00G/1.65G [00:36&lt;00:16, 39.1MB/s]
+ 61%|██████████████████████▌              | 1.01G/1.65G [00:36&lt;00:16, 37.9MB/s]
+ 61%|██████████████████████▋              | 1.02G/1.65G [00:36&lt;00:15, 40.1MB/s]
+ 62%|██████████████████████▉              | 1.02G/1.65G [00:36&lt;00:12, 50.1MB/s]
+ 62%|███████████████████████              | 1.03G/1.65G [00:37&lt;00:24, 25.1MB/s]
+ 62%|███████████████████████              | 1.03G/1.65G [00:37&lt;00:35, 17.6MB/s]
+ 63%|███████████████████████▏             | 1.04G/1.65G [00:37&lt;00:42, 14.4MB/s]
+ 63%|███████████████████████▏             | 1.04G/1.65G [00:38&lt;00:46, 13.3MB/s]
+ 63%|███████████████████████▎             | 1.04G/1.65G [00:38&lt;00:48, 12.8MB/s]
+ 63%|███████████████████████▎             | 1.04G/1.65G [00:38&lt;00:47, 12.7MB/s]
+ 63%|███████████████████████▎             | 1.04G/1.65G [00:38&lt;00:43, 13.9MB/s]
+ 64%|███████████████████████▌             | 1.05G/1.65G [00:38&lt;00:22, 26.4MB/s]
+ 64%|███████████████████████▋             | 1.06G/1.65G [00:39&lt;00:32, 18.5MB/s]
+ 64%|███████████████████████▋             | 1.06G/1.65G [00:39&lt;00:25, 22.8MB/s]
+ 64%|███████████████████████▊             | 1.06G/1.65G [00:39&lt;00:27, 21.4MB/s]
+ 65%|███████████████████████▊             | 1.07G/1.65G [00:39&lt;00:35, 16.3MB/s]
+ 65%|███████████████████████▉             | 1.07G/1.65G [00:39&lt;00:29, 20.1MB/s]
+ 65%|████████████████████████             | 1.07G/1.65G [00:40&lt;00:38, 15.2MB/s]
+ 65%|████████████████████████▏            | 1.08G/1.65G [00:40&lt;00:23, 24.2MB/s]
+ 66%|████████████████████████▎            | 1.08G/1.65G [00:40&lt;00:20, 27.9MB/s]
+ 66%|████████████████████████▎            | 1.09G/1.65G [00:40&lt;00:29, 19.1MB/s]
+ 66%|████████████████████████▌            | 1.10G/1.65G [00:40&lt;00:20, 27.1MB/s]
+ 67%|████████████████████████▌            | 1.10G/1.65G [00:41&lt;00:26, 20.6MB/s]
+ 67%|████████████████████████▋            | 1.10G/1.65G [00:41&lt;00:23, 23.6MB/s]
+ 67%|████████████████████████▊            | 1.11G/1.65G [00:41&lt;00:19, 28.3MB/s]
+ 67%|████████████████████████▉            | 1.11G/1.65G [00:41&lt;00:24, 22.4MB/s]
+ 68%|████████████████████████▉            | 1.12G/1.65G [00:41&lt;00:25, 20.8MB/s]
+ 68%|█████████████████████████            | 1.12G/1.65G [00:42&lt;00:30, 17.5MB/s]
+ 68%|█████████████████████████▏           | 1.12G/1.65G [00:42&lt;00:22, 23.4MB/s]
+ 68%|█████████████████████████▎           | 1.13G/1.65G [00:42&lt;00:17, 29.4MB/s]
+ 69%|█████████████████████████▍           | 1.13G/1.65G [00:42&lt;00:15, 33.7MB/s]
+ 69%|█████████████████████████▍           | 1.14G/1.65G [00:42&lt;00:15, 32.3MB/s]
+ 69%|█████████████████████████▌           | 1.14G/1.65G [00:42&lt;00:15, 32.1MB/s]
+ 69%|█████████████████████████▋           | 1.15G/1.65G [00:42&lt;00:15, 31.8MB/s]
+ 70%|█████████████████████████▋           | 1.15G/1.65G [00:42&lt;00:15, 32.8MB/s]
+ 70%|█████████████████████████▊           | 1.15G/1.65G [00:43&lt;00:20, 24.6MB/s]
+ 70%|█████████████████████████▉           | 1.16G/1.65G [00:43&lt;00:21, 22.5MB/s]
+ 70%|█████████████████████████▉           | 1.16G/1.65G [00:43&lt;00:22, 21.8MB/s]
+ 71%|██████████████████████████           | 1.17G/1.65G [00:43&lt;00:15, 30.9MB/s]
+ 71%|██████████████████████████▎          | 1.17G/1.65G [00:43&lt;00:14, 33.5MB/s]
+ 71%|██████████████████████████▍          | 1.18G/1.65G [00:43&lt;00:12, 37.4MB/s]
+ 72%|██████████████████████████▌          | 1.18G/1.65G [00:43&lt;00:14, 32.6MB/s]
+ 72%|██████████████████████████▋          | 1.19G/1.65G [00:44&lt;00:12, 37.7MB/s]
+ 72%|██████████████████████████▋          | 1.19G/1.65G [00:44&lt;00:18, 24.7MB/s]
+ 73%|██████████████████████████▊          | 1.20G/1.65G [00:44&lt;00:16, 27.7MB/s]
+ 73%|███████████████████████████          | 1.21G/1.65G [00:44&lt;00:12, 35.9MB/s]
+ 73%|███████████████████████████          | 1.21G/1.65G [00:45&lt;00:19, 22.6MB/s]
+ 74%|███████████████████████████▎         | 1.22G/1.65G [00:45&lt;00:13, 31.5MB/s]
+ 74%|███████████████████████████▍         | 1.22G/1.65G [00:45&lt;00:21, 19.9MB/s]
+ 74%|███████████████████████████▌         | 1.23G/1.65G [00:45&lt;00:20, 21.0MB/s]
+ 75%|███████████████████████████▌         | 1.23G/1.65G [00:45&lt;00:16, 25.2MB/s]
+ 75%|███████████████████████████▊         | 1.24G/1.65G [00:46&lt;00:12, 33.5MB/s]
+ 75%|███████████████████████████▉         | 1.25G/1.65G [00:46&lt;00:10, 39.6MB/s]
+ 76%|████████████████████████████         | 1.25G/1.65G [00:46&lt;00:14, 27.5MB/s]
+ 76%|████████████████████████████▏        | 1.26G/1.65G [00:46&lt;00:15, 26.4MB/s]
+ 76%|████████████████████████████▏        | 1.26G/1.65G [00:46&lt;00:15, 25.4MB/s]
+ 76%|████████████████████████████▎        | 1.26G/1.65G [00:47&lt;00:16, 23.6MB/s]
+ 77%|████████████████████████████▍        | 1.27G/1.65G [00:47&lt;00:11, 33.1MB/s]
+ 77%|████████████████████████████▌        | 1.28G/1.65G [00:47&lt;00:08, 42.2MB/s]
+ 78%|████████████████████████████▋        | 1.28G/1.65G [00:47&lt;00:09, 40.3MB/s]
+ 78%|████████████████████████████▊        | 1.29G/1.65G [00:47&lt;00:12, 29.4MB/s]
+ 78%|████████████████████████████▉        | 1.29G/1.65G [00:47&lt;00:10, 33.6MB/s]
+ 79%|█████████████████████████████        | 1.30G/1.65G [00:47&lt;00:09, 36.7MB/s]
+ 79%|█████████████████████████████▏       | 1.30G/1.65G [00:48&lt;00:12, 27.7MB/s]
+ 79%|█████████████████████████████▎       | 1.31G/1.65G [00:48&lt;00:10, 32.1MB/s]
+ 80%|█████████████████████████████▍       | 1.31G/1.65G [00:48&lt;00:09, 34.7MB/s]
+ 80%|█████████████████████████████▌       | 1.32G/1.65G [00:48&lt;00:14, 23.4MB/s]
+ 80%|█████████████████████████████▋       | 1.33G/1.65G [00:48&lt;00:09, 33.0MB/s]
+ 81%|█████████████████████████████▊       | 1.33G/1.65G [00:49&lt;00:09, 34.8MB/s]
+ 81%|█████████████████████████████▉       | 1.34G/1.65G [00:49&lt;00:13, 23.2MB/s]
+ 81%|██████████████████████████████       | 1.34G/1.65G [00:49&lt;00:15, 20.2MB/s]
+ 82%|██████████████████████████████▏      | 1.35G/1.65G [00:49&lt;00:10, 28.0MB/s]
+ 82%|██████████████████████████████▎      | 1.35G/1.65G [00:50&lt;00:14, 21.3MB/s]
+ 82%|██████████████████████████████▍      | 1.36G/1.65G [00:50&lt;00:12, 23.1MB/s]
+ 82%|██████████████████████████████▍      | 1.36G/1.65G [00:50&lt;00:15, 18.7MB/s]
+ 83%|██████████████████████████████▌      | 1.36G/1.65G [00:50&lt;00:14, 19.9MB/s]
+ 83%|██████████████████████████████▋      | 1.37G/1.65G [00:50&lt;00:11, 23.8MB/s]
+ 83%|██████████████████████████████▋      | 1.37G/1.65G [00:50&lt;00:10, 27.7MB/s]
+ 83%|██████████████████████████████▊      | 1.38G/1.65G [00:51&lt;00:08, 31.5MB/s]
+ 84%|██████████████████████████████▉      | 1.38G/1.65G [00:51&lt;00:07, 36.0MB/s]
+ 84%|███████████████████████████████▏     | 1.39G/1.65G [00:51&lt;00:05, 45.5MB/s]
+ 85%|███████████████████████████████▎     | 1.40G/1.65G [00:52&lt;00:15, 16.5MB/s]
+ 85%|███████████████████████████████▍     | 1.40G/1.65G [00:52&lt;00:10, 22.7MB/s]
+ 85%|███████████████████████████████▌     | 1.41G/1.65G [00:52&lt;00:12, 20.1MB/s]
+ 86%|███████████████████████████████▋     | 1.41G/1.65G [00:52&lt;00:10, 23.0MB/s]
+ 86%|███████████████████████████████▊     | 1.42G/1.65G [00:52&lt;00:08, 29.1MB/s]
+ 86%|███████████████████████████████▉     | 1.43G/1.65G [00:52&lt;00:07, 30.2MB/s]
+ 87%|████████████████████████████████     | 1.43G/1.65G [00:53&lt;00:06, 35.8MB/s]
+ 87%|████████████████████████████████▏    | 1.44G/1.65G [00:53&lt;00:09, 23.7MB/s]
+ 87%|████████████████████████████████▎    | 1.44G/1.65G [00:53&lt;00:08, 25.3MB/s]
+ 88%|████████████████████████████████▍    | 1.45G/1.65G [00:53&lt;00:05, 33.8MB/s]
+ 88%|████████████████████████████████▌    | 1.46G/1.65G [00:54&lt;00:08, 23.5MB/s]
+ 88%|████████████████████████████████▋    | 1.46G/1.65G [00:54&lt;00:09, 19.6MB/s]
+ 88%|████████████████████████████████▋    | 1.46G/1.65G [00:54&lt;00:10, 17.6MB/s]
+ 89%|████████████████████████████████▊    | 1.46G/1.65G [00:54&lt;00:11, 16.4MB/s]
+ 89%|████████████████████████████████▊    | 1.47G/1.65G [00:55&lt;00:12, 15.3MB/s]
+ 89%|████████████████████████████████▉    | 1.47G/1.65G [00:55&lt;00:12, 14.6MB/s]
+ 89%|████████████████████████████████▉    | 1.47G/1.65G [00:55&lt;00:13, 13.9MB/s]
+ 89%|████████████████████████████████▉    | 1.47G/1.65G [00:55&lt;00:13, 13.2MB/s]
+ 89%|████████████████████████████████▉    | 1.47G/1.65G [00:55&lt;00:14, 12.8MB/s]
+ 89%|█████████████████████████████████    | 1.47G/1.65G [00:55&lt;00:13, 12.8MB/s]
+ 89%|█████████████████████████████████    | 1.48G/1.65G [00:55&lt;00:13, 13.1MB/s]
+ 89%|█████████████████████████████████    | 1.48G/1.65G [00:55&lt;00:12, 13.5MB/s]
+ 90%|█████████████████████████████████▏   | 1.48G/1.65G [00:56&lt;00:10, 16.8MB/s]
+ 90%|█████████████████████████████████▎   | 1.49G/1.65G [00:56&lt;00:06, 26.9MB/s]
+ 90%|█████████████████████████████████▍   | 1.49G/1.65G [00:56&lt;00:04, 36.9MB/s]
+ 91%|█████████████████████████████████▌   | 1.50G/1.65G [00:56&lt;00:03, 48.9MB/s]
+ 91%|█████████████████████████████████▋   | 1.51G/1.65G [00:56&lt;00:04, 30.4MB/s]
+ 91%|█████████████████████████████████▊   | 1.51G/1.65G [00:56&lt;00:04, 32.2MB/s]
+ 92%|█████████████████████████████████▉   | 1.51G/1.65G [00:57&lt;00:06, 22.5MB/s]
+ 92%|██████████████████████████████████   | 1.52G/1.65G [00:57&lt;00:04, 27.8MB/s]
+ 92%|██████████████████████████████████   | 1.52G/1.65G [00:57&lt;00:05, 23.3MB/s]
+ 92%|██████████████████████████████████▏  | 1.53G/1.65G [00:57&lt;00:05, 23.7MB/s]
+ 93%|██████████████████████████████████▎  | 1.54G/1.65G [00:57&lt;00:03, 33.8MB/s]
+ 93%|██████████████████████████████████▍  | 1.54G/1.65G [00:57&lt;00:03, 28.5MB/s]
+ 93%|██████████████████████████████████▌  | 1.54G/1.65G [00:58&lt;00:03, 29.7MB/s]
+ 94%|██████████████████████████████████▋  | 1.55G/1.65G [00:58&lt;00:02, 39.5MB/s]
+ 94%|██████████████████████████████████▊  | 1.56G/1.65G [00:58&lt;00:04, 22.5MB/s]
+ 94%|██████████████████████████████████▉  | 1.56G/1.65G [00:58&lt;00:03, 24.7MB/s]
+ 95%|███████████████████████████████████  | 1.56G/1.65G [00:59&lt;00:04, 18.2MB/s]
+ 95%|███████████████████████████████████  | 1.57G/1.65G [00:59&lt;00:04, 17.4MB/s]
+ 95%|███████████████████████████████████  | 1.57G/1.65G [00:59&lt;00:05, 15.8MB/s]
+ 95%|███████████████████████████████████▎ | 1.58G/1.65G [00:59&lt;00:04, 16.3MB/s]
+ 96%|███████████████████████████████████▍ | 1.58G/1.65G [01:00&lt;00:02, 23.8MB/s]
+ 96%|███████████████████████████████████▌ | 1.59G/1.65G [01:00&lt;00:02, 23.7MB/s]
+ 96%|███████████████████████████████████▋ | 1.59G/1.65G [01:00&lt;00:02, 28.6MB/s]
+ 97%|███████████████████████████████████▊ | 1.60G/1.65G [01:00&lt;00:01, 37.1MB/s]
+ 97%|███████████████████████████████████▉ | 1.61G/1.65G [01:00&lt;00:01, 36.2MB/s]
+ 97%|████████████████████████████████████ | 1.61G/1.65G [01:00&lt;00:01, 36.3MB/s]
+ 98%|████████████████████████████████████▏| 1.62G/1.65G [01:00&lt;00:00, 46.7MB/s]
+ 98%|████████████████████████████████████▎| 1.62G/1.65G [01:01&lt;00:00, 38.4MB/s]
+ 99%|████████████████████████████████████▍| 1.63G/1.65G [01:01&lt;00:00, 25.4MB/s]
+ 99%|████████████████████████████████████▌| 1.63G/1.65G [01:01&lt;00:00, 21.6MB/s]
+ 99%|████████████████████████████████████▌| 1.64G/1.65G [01:01&lt;00:01, 16.9MB/s]
+ 99%|████████████████████████████████████▋| 1.64G/1.65G [01:02&lt;00:01, 15.1MB/s]
+ 99%|████████████████████████████████████▋| 1.64G/1.65G [01:02&lt;00:00, 13.6MB/s]
+ 99%|████████████████████████████████████▋| 1.64G/1.65G [01:02&lt;00:00, 12.8MB/s]
+ 99%|████████████████████████████████████▊| 1.64G/1.65G [01:02&lt;00:00, 12.4MB/s]
+ 99%|████████████████████████████████████▊| 1.64G/1.65G [01:02&lt;00:00, 12.2MB/s]
+100%|████████████████████████████████████▊| 1.65G/1.65G [01:02&lt;00:00, 12.1MB/s]
+100%|████████████████████████████████████▊| 1.65G/1.65G [01:03&lt;00:00, 12.0MB/s]
+100%|████████████████████████████████████▉| 1.65G/1.65G [01:03&lt;00:00, 11.0MB/s]
+100%|████████████████████████████████████▉| 1.65G/1.65G [01:03&lt;00:00, 10.8MB/s]
+100%|████████████████████████████████████▉| 1.65G/1.65G [01:03&lt;00:00, 9.99MB/s]
+100%|████████████████████████████████████▉| 1.65G/1.65G [01:03&lt;00:00, 9.08MB/s]
+100%|████████████████████████████████████▉| 1.65G/1.65G [01:03&lt;00:00, 10.5MB/s]
   0%|                                              | 0.00/1.65G [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 1.65G/1.65G [00:00&lt;00:00, 3.38TB/s]
+100%|█████████████████████████████████████| 1.65G/1.65G [00:00&lt;00:00, 5.65TB/s]
+Download complete in 01m24s (1576.2 MB)
 16 files missing from root.txt in /home/circleci/mne_data/MNE-sample-data/subjects
 Downloading missing files remotely
+
+  0%|                                               | 0.00/196M [00:00&lt;?, ?B/s]
+  2%|▋                                     | 3.62M/196M [00:00&lt;00:05, 36.2MB/s]
+  4%|█▍                                    | 7.25M/196M [00:00&lt;00:07, 26.4MB/s]
+  6%|██▏                                   | 11.4M/196M [00:00&lt;00:05, 32.1MB/s]
+ 10%|███▉                                  | 20.2M/196M [00:00&lt;00:03, 52.0MB/s]
+ 15%|█████▋                                | 29.3M/196M [00:00&lt;00:02, 64.9MB/s]
+ 20%|███████▍                              | 38.3M/196M [00:00&lt;00:02, 73.0MB/s]
+ 24%|█████████▏                            | 47.4M/196M [00:00&lt;00:01, 78.8MB/s]
+ 29%|██████████▉                           | 56.4M/196M [00:00&lt;00:01, 82.3MB/s]
+ 33%|████████████▋                         | 65.4M/196M [00:00&lt;00:01, 84.7MB/s]
+ 38%|██████████████▍                       | 74.6M/196M [00:01&lt;00:01, 86.7MB/s]
+ 43%|████████████████▎                     | 83.8M/196M [00:01&lt;00:01, 88.4MB/s]
+ 47%|██████████████████                    | 92.9M/196M [00:01&lt;00:01, 89.2MB/s]
+ 52%|████████████████████▎                  | 102M/196M [00:01&lt;00:01, 90.2MB/s]
+ 57%|██████████████████████▏                | 111M/196M [00:01&lt;00:01, 70.9MB/s]
+ 61%|███████████████████████▊               | 120M/196M [00:01&lt;00:01, 74.1MB/s]
+ 65%|█████████████████████████▌             | 128M/196M [00:01&lt;00:00, 77.0MB/s]
+ 70%|███████████████████████████▏           | 137M/196M [00:01&lt;00:00, 79.5MB/s]
+ 74%|████████████████████████████▊          | 145M/196M [00:01&lt;00:00, 75.3MB/s]
+ 78%|██████████████████████████████▍        | 153M/196M [00:02&lt;00:00, 76.7MB/s]
+ 82%|████████████████████████████████▏      | 161M/196M [00:02&lt;00:00, 78.8MB/s]
+ 87%|█████████████████████████████████▊     | 170M/196M [00:02&lt;00:00, 80.7MB/s]
+ 91%|███████████████████████████████████▍   | 178M/196M [00:02&lt;00:00, 61.2MB/s]
+ 94%|████████████████████████████████████▊  | 185M/196M [00:02&lt;00:00, 43.5MB/s]
+ 98%|██████████████████████████████████████▏| 191M/196M [00:02&lt;00:00, 47.5MB/s]
+  0%|                                               | 0.00/196M [00:00&lt;?, ?B/s]
+100%|████████████████████████████████████████| 196M/196M [00:00&lt;00:00, 543GB/s]
 Extracting missing files
 Successfully extracted 16 files
 10 files missing from bem.txt in /home/circleci/mne_data/MNE-sample-data/subjects/fsaverage
 Downloading missing files remotely
+
+  0%|                                               | 0.00/239M [00:00&lt;?, ?B/s]
+  0%|                                       | 556k/239M [00:00&lt;00:44, 5.40MB/s]
+  1%|▏                                     | 1.33M/239M [00:00&lt;00:41, 5.75MB/s]
+  1%|▎                                     | 2.11M/239M [00:00&lt;00:39, 5.97MB/s]
+  1%|▍                                     | 2.90M/239M [00:00&lt;00:40, 5.78MB/s]
+  2%|▌                                     | 3.69M/239M [00:00&lt;00:41, 5.61MB/s]
+  2%|▋                                     | 4.46M/239M [00:00&lt;00:38, 6.02MB/s]
+  2%|▊                                     | 5.25M/239M [00:00&lt;00:37, 6.19MB/s]
+  3%|▉                                     | 6.04M/239M [00:00&lt;00:36, 6.43MB/s]
+  3%|█                                     | 6.82M/239M [00:01&lt;00:34, 6.69MB/s]
+  3%|█▏                                    | 7.60M/239M [00:01&lt;00:34, 6.68MB/s]
+  4%|█▎                                    | 8.39M/239M [00:01&lt;00:34, 6.75MB/s]
+  4%|█▍                                    | 9.18M/239M [00:01&lt;00:33, 6.96MB/s]
+  4%|█▌                                    | 9.96M/239M [00:01&lt;00:36, 6.30MB/s]
+  4%|█▋                                    | 10.7M/239M [00:01&lt;00:35, 6.52MB/s]
+  5%|█▊                                    | 11.5M/239M [00:01&lt;00:34, 6.54MB/s]
+  5%|█▉                                    | 12.2M/239M [00:01&lt;00:36, 6.22MB/s]
+  5%|██                                    | 12.8M/239M [00:02&lt;00:36, 6.13MB/s]
+  6%|██▏                                   | 13.6M/239M [00:02&lt;00:35, 6.27MB/s]
+  6%|██▎                                   | 14.2M/239M [00:02&lt;00:36, 6.21MB/s]
+  6%|██▍                                   | 15.0M/239M [00:02&lt;00:33, 6.65MB/s]
+  7%|██▌                                   | 16.0M/239M [00:02&lt;00:31, 7.07MB/s]
+  7%|██▋                                   | 16.8M/239M [00:02&lt;00:30, 7.21MB/s]
+  7%|██▊                                   | 17.8M/239M [00:02&lt;00:28, 7.82MB/s]
+  8%|██▉                                   | 18.8M/239M [00:02&lt;00:27, 8.15MB/s]
+  8%|███▏                                  | 19.9M/239M [00:02&lt;00:26, 8.21MB/s]
+  9%|███▎                                  | 20.9M/239M [00:03&lt;00:26, 8.31MB/s]
+  9%|███▍                                  | 22.0M/239M [00:03&lt;00:25, 8.60MB/s]
+ 10%|███▋                                  | 23.0M/239M [00:03&lt;00:23, 9.05MB/s]
+ 10%|███▊                                  | 24.1M/239M [00:03&lt;00:22, 9.39MB/s]
+ 11%|███▉                                  | 25.1M/239M [00:03&lt;00:22, 9.39MB/s]
+ 11%|████▏                                 | 26.2M/239M [00:03&lt;00:22, 9.63MB/s]
+ 11%|████▎                                 | 27.2M/239M [00:03&lt;00:21, 9.80MB/s]
+ 12%|████▍                                 | 28.3M/239M [00:03&lt;00:21, 9.66MB/s]
+ 12%|████▋                                 | 29.3M/239M [00:03&lt;00:22, 9.20MB/s]
+ 13%|████▊                                 | 30.4M/239M [00:04&lt;00:22, 9.33MB/s]
+ 13%|████▉                                 | 31.4M/239M [00:04&lt;00:22, 9.18MB/s]
+ 14%|█████▏                                | 32.3M/239M [00:04&lt;00:25, 8.18MB/s]
+ 14%|█████▎                                | 33.2M/239M [00:04&lt;00:25, 8.13MB/s]
+ 14%|█████▍                                | 34.0M/239M [00:04&lt;00:28, 7.28MB/s]
+ 15%|█████▌                                | 34.7M/239M [00:04&lt;00:32, 6.31MB/s]
+ 15%|█████▋                                | 35.4M/239M [00:04&lt;00:36, 5.62MB/s]
+ 15%|█████▋                                | 36.1M/239M [00:05&lt;00:36, 5.51MB/s]
+ 15%|█████▊                                | 36.9M/239M [00:05&lt;00:35, 5.73MB/s]
+ 16%|█████▉                                | 37.7M/239M [00:05&lt;00:33, 6.01MB/s]
+ 16%|██████                                | 38.4M/239M [00:05&lt;00:31, 6.38MB/s]
+ 16%|██████▏                               | 39.1M/239M [00:05&lt;00:35, 5.62MB/s]
+ 17%|██████▎                               | 39.8M/239M [00:05&lt;00:36, 5.42MB/s]
+ 17%|██████▍                               | 40.5M/239M [00:05&lt;00:35, 5.56MB/s]
+ 17%|██████▌                               | 41.3M/239M [00:05&lt;00:34, 5.69MB/s]
+ 18%|██████▋                               | 41.9M/239M [00:06&lt;00:38, 5.14MB/s]
+ 18%|██████▊                               | 42.6M/239M [00:06&lt;00:37, 5.27MB/s]
+ 18%|██████▉                               | 43.4M/239M [00:06&lt;00:35, 5.54MB/s]
+ 19%|███████                               | 44.2M/239M [00:06&lt;00:33, 5.82MB/s]
+ 19%|███████▏                              | 44.8M/239M [00:06&lt;00:33, 5.80MB/s]
+ 19%|███████▏                              | 45.5M/239M [00:06&lt;00:31, 6.05MB/s]
+ 19%|███████▎                              | 46.3M/239M [00:06&lt;00:29, 6.47MB/s]
+ 20%|███████▍                              | 47.1M/239M [00:06&lt;00:28, 6.76MB/s]
+ 20%|███████▌                              | 47.9M/239M [00:06&lt;00:28, 6.80MB/s]
+ 20%|███████▋                              | 48.6M/239M [00:07&lt;00:27, 7.03MB/s]
+ 21%|███████▊                              | 49.4M/239M [00:07&lt;00:28, 6.72MB/s]
+ 21%|███████▉                              | 50.2M/239M [00:07&lt;00:28, 6.68MB/s]
+ 21%|████████                              | 51.0M/239M [00:07&lt;00:28, 6.69MB/s]
+ 22%|████████▏                             | 51.7M/239M [00:07&lt;00:30, 6.17MB/s]
+ 22%|████████▎                             | 52.3M/239M [00:07&lt;00:31, 5.86MB/s]
+ 22%|████████▍                             | 52.9M/239M [00:07&lt;00:33, 5.48MB/s]
+ 22%|████████▌                             | 53.6M/239M [00:07&lt;00:34, 5.31MB/s]
+ 23%|████████▋                             | 54.4M/239M [00:08&lt;00:31, 5.78MB/s]
+ 23%|████████▊                             | 55.2M/239M [00:08&lt;00:30, 5.98MB/s]
+ 23%|████████▉                             | 56.0M/239M [00:08&lt;00:30, 6.06MB/s]
+ 24%|█████████                             | 56.8M/239M [00:08&lt;00:27, 6.54MB/s]
+ 24%|█████████▏                            | 57.5M/239M [00:08&lt;00:27, 6.65MB/s]
+ 24%|█████████▎                            | 58.3M/239M [00:08&lt;00:26, 6.90MB/s]
+ 25%|█████████▍                            | 59.1M/239M [00:08&lt;00:26, 6.89MB/s]
+ 25%|█████████▌                            | 59.9M/239M [00:08&lt;00:25, 7.02MB/s]
+ 25%|█████████▋                            | 60.8M/239M [00:08&lt;00:23, 7.56MB/s]
+ 26%|█████████▊                            | 61.6M/239M [00:09&lt;00:23, 7.61MB/s]
+ 26%|█████████▉                            | 62.3M/239M [00:09&lt;00:23, 7.52MB/s]
+ 26%|██████████                            | 63.1M/239M [00:09&lt;00:23, 7.44MB/s]
+ 27%|██████████▏                           | 64.1M/239M [00:09&lt;00:23, 7.54MB/s]
+ 27%|██████████▎                           | 64.9M/239M [00:09&lt;00:22, 7.61MB/s]
+ 28%|██████████▍                           | 65.8M/239M [00:09&lt;00:21, 8.06MB/s]
+ 28%|██████████▌                           | 66.6M/239M [00:09&lt;00:21, 7.88MB/s]
+ 28%|██████████▋                           | 67.5M/239M [00:09&lt;00:22, 7.56MB/s]
+ 29%|██████████▊                           | 68.3M/239M [00:09&lt;00:23, 7.40MB/s]
+ 29%|██████████▉                           | 69.0M/239M [00:10&lt;00:23, 7.29MB/s]
+ 29%|███████████                           | 69.8M/239M [00:10&lt;00:23, 7.13MB/s]
+ 30%|███████████▏                          | 70.6M/239M [00:10&lt;00:23, 7.19MB/s]
+ 30%|███████████▎                          | 71.4M/239M [00:10&lt;00:24, 6.86MB/s]
+ 30%|███████████▍                          | 72.2M/239M [00:10&lt;00:23, 6.96MB/s]
+ 31%|███████████▌                          | 73.0M/239M [00:10&lt;00:24, 6.84MB/s]
+ 31%|███████████▋                          | 73.6M/239M [00:10&lt;00:26, 6.32MB/s]
+ 31%|███████████▊                          | 74.3M/239M [00:10&lt;00:26, 6.19MB/s]
+ 31%|███████████▉                          | 75.1M/239M [00:10&lt;00:26, 6.25MB/s]
+ 32%|████████████                          | 76.1M/239M [00:11&lt;00:25, 6.34MB/s]
+ 32%|████████████▏                         | 76.9M/239M [00:11&lt;00:24, 6.52MB/s]
+ 33%|████████████▎                         | 77.7M/239M [00:11&lt;00:24, 6.59MB/s]
+ 33%|████████████▍                         | 78.5M/239M [00:11&lt;00:24, 6.59MB/s]
+ 33%|████████████▌                         | 79.3M/239M [00:11&lt;00:22, 7.13MB/s]
+ 34%|████████████▋                         | 80.1M/239M [00:11&lt;00:21, 7.26MB/s]
+ 34%|████████████▊                         | 80.8M/239M [00:11&lt;00:23, 6.72MB/s]
+ 34%|█████████████                         | 81.9M/239M [00:11&lt;00:21, 7.34MB/s]
+ 35%|█████████████▏                        | 82.9M/239M [00:12&lt;00:19, 7.93MB/s]
+ 35%|█████████████▎                        | 83.9M/239M [00:12&lt;00:18, 8.59MB/s]
+ 36%|█████████████▌                        | 85.0M/239M [00:12&lt;00:17, 8.96MB/s]
+ 36%|█████████████▋                        | 86.0M/239M [00:12&lt;00:16, 9.27MB/s]
+ 36%|█████████████▊                        | 87.1M/239M [00:12&lt;00:16, 9.38MB/s]
+ 37%|██████████████                        | 88.1M/239M [00:12&lt;00:16, 9.18MB/s]
+ 37%|██████████████▏                       | 89.2M/239M [00:12&lt;00:15, 9.52MB/s]
+ 38%|██████████████▎                       | 90.2M/239M [00:12&lt;00:15, 9.69MB/s]
+ 38%|██████████████▌                       | 91.3M/239M [00:12&lt;00:15, 9.48MB/s]
+ 39%|██████████████▋                       | 92.3M/239M [00:13&lt;00:15, 9.66MB/s]
+ 39%|██████████████▊                       | 93.4M/239M [00:13&lt;00:14, 9.84MB/s]
+ 40%|███████████████                       | 94.4M/239M [00:13&lt;00:14, 9.96MB/s]
+ 40%|███████████████▏                      | 95.4M/239M [00:13&lt;00:14, 10.1MB/s]
+ 40%|███████████████▎                      | 96.5M/239M [00:13&lt;00:14, 9.90MB/s]
+ 41%|███████████████▌                      | 97.8M/239M [00:13&lt;00:13, 10.7MB/s]
+ 41%|███████████████▋                      | 98.8M/239M [00:13&lt;00:13, 10.6MB/s]
+ 42%|███████████████▉                      | 99.9M/239M [00:13&lt;00:13, 9.98MB/s]
+ 42%|████████████████▌                      | 101M/239M [00:13&lt;00:13, 10.5MB/s]
+ 43%|████████████████▋                      | 102M/239M [00:13&lt;00:13, 10.4MB/s]
+ 43%|████████████████▊                      | 103M/239M [00:14&lt;00:12, 10.4MB/s]
+ 44%|█████████████████                      | 104M/239M [00:14&lt;00:12, 10.7MB/s]
+ 44%|█████████████████▏                     | 105M/239M [00:14&lt;00:12, 10.6MB/s]
+ 45%|█████████████████▍                     | 106M/239M [00:14&lt;00:13, 9.88MB/s]
+ 45%|█████████████████▌                     | 107M/239M [00:14&lt;00:13, 9.47MB/s]
+ 45%|█████████████████▋                     | 108M/239M [00:14&lt;00:15, 8.51MB/s]
+ 46%|█████████████████▊                     | 109M/239M [00:14&lt;00:15, 8.25MB/s]
+ 46%|█████████████████▉                     | 110M/239M [00:14&lt;00:18, 6.93MB/s]
+ 46%|██████████████████                     | 111M/239M [00:15&lt;00:17, 7.18MB/s]
+ 47%|██████████████████▏                    | 112M/239M [00:15&lt;00:17, 7.26MB/s]
+ 47%|██████████████████▎                    | 112M/239M [00:15&lt;00:17, 7.20MB/s]
+ 47%|██████████████████▍                    | 113M/239M [00:15&lt;00:17, 7.23MB/s]
+ 48%|██████████████████▌                    | 114M/239M [00:15&lt;00:17, 7.17MB/s]
+ 48%|██████████████████▋                    | 115M/239M [00:15&lt;00:17, 7.21MB/s]
+ 48%|██████████████████▉                    | 116M/239M [00:15&lt;00:15, 8.06MB/s]
+ 49%|███████████████████                    | 117M/239M [00:15&lt;00:16, 7.26MB/s]
+ 49%|███████████████████▏                   | 117M/239M [00:15&lt;00:17, 7.09MB/s]
+ 50%|███████████████████▎                   | 118M/239M [00:16&lt;00:15, 7.53MB/s]
+ 50%|███████████████████▍                   | 119M/239M [00:16&lt;00:15, 7.51MB/s]
+ 50%|███████████████████▌                   | 120M/239M [00:16&lt;00:15, 7.59MB/s]
+ 51%|███████████████████▊                   | 121M/239M [00:16&lt;00:15, 7.69MB/s]
+ 51%|███████████████████▉                   | 122M/239M [00:16&lt;00:14, 7.92MB/s]
+ 52%|████████████████████                   | 123M/239M [00:16&lt;00:14, 8.06MB/s]
+ 52%|████████████████████▏                  | 124M/239M [00:16&lt;00:14, 7.97MB/s]
+ 52%|████████████████████▎                  | 125M/239M [00:16&lt;00:15, 7.53MB/s]
+ 53%|████████████████████▌                  | 126M/239M [00:16&lt;00:14, 7.71MB/s]
+ 53%|████████████████████▋                  | 127M/239M [00:17&lt;00:15, 7.47MB/s]
+ 53%|████████████████████▊                  | 127M/239M [00:17&lt;00:15, 7.08MB/s]
+ 54%|████████████████████▉                  | 128M/239M [00:17&lt;00:15, 7.25MB/s]
+ 54%|█████████████████████▏                 | 129M/239M [00:17&lt;00:14, 7.43MB/s]
+ 55%|█████████████████████▎                 | 130M/239M [00:17&lt;00:15, 7.18MB/s]
+ 55%|█████████████████████▍                 | 131M/239M [00:17&lt;00:14, 7.46MB/s]
+ 55%|█████████████████████▌                 | 132M/239M [00:17&lt;00:15, 7.03MB/s]
+ 56%|█████████████████████▋                 | 133M/239M [00:17&lt;00:15, 7.04MB/s]
+ 56%|█████████████████████▊                 | 134M/239M [00:18&lt;00:15, 7.00MB/s]
+ 56%|█████████████████████▉                 | 135M/239M [00:18&lt;00:14, 7.27MB/s]
+ 57%|██████████████████████                 | 135M/239M [00:18&lt;00:14, 7.20MB/s]
+ 57%|██████████████████████▏                | 136M/239M [00:18&lt;00:14, 6.94MB/s]
+ 57%|██████████████████████▍                | 137M/239M [00:18&lt;00:13, 7.50MB/s]
+ 58%|██████████████████████▌                | 138M/239M [00:18&lt;00:13, 7.49MB/s]
+ 58%|██████████████████████▋                | 139M/239M [00:18&lt;00:13, 7.67MB/s]
+ 58%|██████████████████████▊                | 140M/239M [00:18&lt;00:12, 7.67MB/s]
+ 59%|██████████████████████▉                | 140M/239M [00:19&lt;00:12, 7.67MB/s]
+ 59%|███████████████████████                | 141M/239M [00:19&lt;00:12, 7.66MB/s]
+ 60%|███████████████████████▏               | 142M/239M [00:19&lt;00:12, 7.86MB/s]
+ 60%|███████████████████████▎               | 143M/239M [00:19&lt;00:12, 7.56MB/s]
+ 60%|███████████████████████▍               | 144M/239M [00:19&lt;00:12, 7.49MB/s]
+ 61%|███████████████████████▌               | 145M/239M [00:19&lt;00:14, 6.58MB/s]
+ 61%|███████████████████████▋               | 145M/239M [00:19&lt;00:15, 6.21MB/s]
+ 61%|███████████████████████▊               | 146M/239M [00:19&lt;00:15, 5.90MB/s]
+ 61%|███████████████████████▉               | 147M/239M [00:19&lt;00:15, 6.13MB/s]
+ 62%|████████████████████████               | 147M/239M [00:20&lt;00:14, 6.38MB/s]
+ 62%|████████████████████████▏              | 148M/239M [00:20&lt;00:14, 6.05MB/s]
+ 62%|████████████████████████▎              | 149M/239M [00:20&lt;00:14, 6.08MB/s]
+ 63%|████████████████████████▍              | 150M/239M [00:20&lt;00:14, 6.09MB/s]
+ 63%|████████████████████████▌              | 150M/239M [00:20&lt;00:14, 6.09MB/s]
+ 63%|████████████████████████▋              | 151M/239M [00:20&lt;00:13, 6.37MB/s]
+ 64%|████████████████████████▊              | 152M/239M [00:20&lt;00:13, 6.54MB/s]
+ 64%|████████████████████████▉              | 153M/239M [00:20&lt;00:13, 6.54MB/s]
+ 64%|█████████████████████████              | 153M/239M [00:21&lt;00:12, 6.87MB/s]
+ 65%|█████████████████████████▏             | 154M/239M [00:21&lt;00:12, 7.03MB/s]
+ 65%|█████████████████████████▎             | 155M/239M [00:21&lt;00:11, 7.17MB/s]
+ 65%|█████████████████████████▍             | 156M/239M [00:21&lt;00:11, 7.29MB/s]
+ 66%|█████████████████████████▌             | 157M/239M [00:21&lt;00:11, 7.24MB/s]
+ 66%|█████████████████████████▋             | 158M/239M [00:21&lt;00:11, 7.27MB/s]
+ 66%|█████████████████████████▉             | 158M/239M [00:21&lt;00:12, 6.68MB/s]
+ 67%|██████████████████████████             | 159M/239M [00:21&lt;00:11, 6.84MB/s]
+ 67%|██████████████████████████▏            | 160M/239M [00:21&lt;00:10, 7.29MB/s]
+ 67%|██████████████████████████▎            | 161M/239M [00:22&lt;00:10, 7.40MB/s]
+ 68%|██████████████████████████▍            | 162M/239M [00:22&lt;00:10, 7.46MB/s]
+ 68%|██████████████████████████▌            | 163M/239M [00:22&lt;00:09, 7.81MB/s]
+ 69%|██████████████████████████▋            | 164M/239M [00:22&lt;00:09, 7.69MB/s]
+ 69%|██████████████████████████▉            | 165M/239M [00:22&lt;00:09, 7.97MB/s]
+ 69%|███████████████████████████            | 166M/239M [00:22&lt;00:08, 8.18MB/s]
+ 70%|███████████████████████████▏           | 167M/239M [00:22&lt;00:08, 8.10MB/s]
+ 70%|███████████████████████████▎           | 168M/239M [00:22&lt;00:08, 8.60MB/s]
+ 71%|███████████████████████████▌           | 169M/239M [00:22&lt;00:07, 8.92MB/s]
+ 71%|███████████████████████████▋           | 170M/239M [00:23&lt;00:07, 9.22MB/s]
+ 72%|███████████████████████████▉           | 171M/239M [00:23&lt;00:06, 9.88MB/s]
+ 72%|████████████████████████████           | 172M/239M [00:23&lt;00:06, 9.94MB/s]
+ 72%|████████████████████████████▎          | 173M/239M [00:23&lt;00:06, 9.82MB/s]
+ 73%|████████████████████████████▍          | 174M/239M [00:23&lt;00:06, 9.33MB/s]
+ 73%|████████████████████████████▌          | 175M/239M [00:23&lt;00:06, 9.42MB/s]
+ 74%|████████████████████████████▊          | 176M/239M [00:23&lt;00:06, 9.15MB/s]
+ 74%|████████████████████████████▉          | 177M/239M [00:23&lt;00:06, 9.00MB/s]
+ 75%|█████████████████████████████          | 178M/239M [00:23&lt;00:06, 8.83MB/s]
+ 75%|█████████████████████████████▏         | 179M/239M [00:24&lt;00:07, 8.45MB/s]
+ 75%|█████████████████████████████▎         | 180M/239M [00:24&lt;00:07, 8.41MB/s]
+ 76%|█████████████████████████████▌         | 181M/239M [00:24&lt;00:07, 8.26MB/s]
+ 76%|█████████████████████████████▋         | 182M/239M [00:24&lt;00:06, 8.52MB/s]
+ 76%|█████████████████████████████▊         | 183M/239M [00:24&lt;00:07, 7.78MB/s]
+ 77%|█████████████████████████████▉         | 183M/239M [00:24&lt;00:07, 7.78MB/s]
+ 77%|██████████████████████████████         | 184M/239M [00:24&lt;00:06, 7.96MB/s]
+ 77%|██████████████████████████████▏        | 185M/239M [00:24&lt;00:07, 7.65MB/s]
+ 78%|██████████████████████████████▎        | 186M/239M [00:24&lt;00:07, 6.80MB/s]
+ 78%|██████████████████████████████▍        | 186M/239M [00:25&lt;00:08, 6.38MB/s]
+ 78%|██████████████████████████████▌        | 187M/239M [00:25&lt;00:07, 6.63MB/s]
+ 79%|██████████████████████████████▋        | 188M/239M [00:25&lt;00:07, 7.07MB/s]
+ 79%|██████████████████████████████▊        | 189M/239M [00:25&lt;00:07, 6.75MB/s]
+ 79%|██████████████████████████████▉        | 190M/239M [00:25&lt;00:07, 6.65MB/s]
+ 80%|███████████████████████████████▏       | 191M/239M [00:25&lt;00:07, 6.83MB/s]
+ 80%|███████████████████████████████▎       | 191M/239M [00:25&lt;00:07, 6.77MB/s]
+ 80%|███████████████████████████████▎       | 192M/239M [00:25&lt;00:07, 6.38MB/s]
+ 81%|███████████████████████████████▌       | 193M/239M [00:26&lt;00:06, 6.67MB/s]
+ 81%|███████████████████████████████▋       | 194M/239M [00:26&lt;00:06, 6.76MB/s]
+ 81%|███████████████████████████████▊       | 195M/239M [00:26&lt;00:07, 6.26MB/s]
+ 82%|███████████████████████████████▊       | 195M/239M [00:26&lt;00:07, 6.11MB/s]
+ 82%|████████████████████████████████       | 196M/239M [00:26&lt;00:06, 6.50MB/s]
+ 83%|████████████████████████████████▏      | 197M/239M [00:26&lt;00:05, 7.39MB/s]
+ 83%|████████████████████████████████▎      | 198M/239M [00:26&lt;00:05, 8.11MB/s]
+ 86%|█████████████████████████████████▍     | 205M/239M [00:26&lt;00:01, 25.0MB/s]
+ 87%|█████████████████████████████████▉     | 208M/239M [00:27&lt;00:01, 16.8MB/s]
+ 88%|██████████████████████████████████▎    | 210M/239M [00:27&lt;00:02, 13.3MB/s]
+ 89%|██████████████████████████████████▌    | 212M/239M [00:27&lt;00:02, 10.1MB/s]
+ 89%|██████████████████████████████████▊    | 213M/239M [00:27&lt;00:02, 9.13MB/s]
+ 90%|██████████████████████████████████▉    | 214M/239M [00:28&lt;00:02, 9.18MB/s]
+ 90%|███████████████████████████████████▏   | 215M/239M [00:28&lt;00:02, 8.56MB/s]
+ 91%|███████████████████████████████████▎   | 216M/239M [00:28&lt;00:02, 8.36MB/s]
+ 91%|███████████████████████████████████▍   | 217M/239M [00:28&lt;00:02, 8.31MB/s]
+ 92%|███████████████████████████████████▊   | 219M/239M [00:28&lt;00:01, 11.2MB/s]
+ 92%|████████████████████████████████████   | 221M/239M [00:28&lt;00:01, 9.16MB/s]
+ 93%|████████████████████████████████████▏  | 222M/239M [00:28&lt;00:02, 8.38MB/s]
+ 93%|████████████████████████████████████▎  | 223M/239M [00:29&lt;00:02, 7.97MB/s]
+ 96%|█████████████████████████████████████▎ | 229M/239M [00:29&lt;00:00, 19.7MB/s]
+ 99%|██████████████████████████████████████▍| 235M/239M [00:29&lt;00:00, 31.3MB/s]
+  0%|                                               | 0.00/239M [00:00&lt;?, ?B/s]
+100%|████████████████████████████████████████| 239M/239M [00:00&lt;00:00, 746GB/s]
 Extracting missing files
 Successfully extracted 10 files
 Using fsaverage-head-dense.fif for head surface.
@@ -845,17 +1390,17 @@ Using fsaverage-head-dense.fif for head surface.
 Channel types:: hbo: 8, hbr: 8
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 1 minutes  4.520 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  422 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (2 minutes 13.153 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  470 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-01-data-io-py">
 <div class="binder-badge docutils container">
-<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=dev/notebooks/auto_examples/general/plot_01_data_io.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
-</div>
-<div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/2ebe5dc88f0ef82a935e6f42e0e7eab9/plot_01_data_io.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_01_data_io.py</span></code></a></p>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_01_data_io.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
 </div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/e935415e95d52fffa2f9d0f41620f0e1/plot_01_data_io.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_01_data_io.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/2ebe5dc88f0ef82a935e6f42e0e7eab9/plot_01_data_io.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_01_data_io.py</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -865,163 +1410,110 @@ Channel types:: hbo: 8, hbr: 8
 </section>
 
 
-            </article>
-            
-            
-            
-            <footer class="bd-footer-article">
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-  <a class='left-prev' id="prev-link" href="index.html" title="previous page">
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
-          <p class="prev-next-subtitle">previous</p>
-          <p class="prev-next-title">Analysis examples</p>
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Analysis examples</p>
       </div>
-  </a>
-  <a class='right-next' id="next-link" href="plot_05_datasets.html" title="next page">
-  <div class="prev-next-info">
-      <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">Example Datasets</p>
-  </div>
-  <i class="fa-solid fa-angle-right"></i>
-  </a>
+    </a>
+    <a class="right-next"
+       href="plot_05_datasets.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Example Datasets</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
-            </footer>
-            
-          </div>
-          
-          
-          
-            <div class="bd-sidebar-secondary bd-toc">
+                </footer>
               
-<div class="toc-item">
-  
-<div class="tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-</div>
-<nav id="bd-toc-nav" class="page-toc">
-    <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#standardized-data">
-   Standardized data
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#snirf-snirf">
-     SNIRF (.snirf)
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#specifying-the-coordinate-system">
-       Specifying the coordinate system
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#continuous-wave-devices">
-   Continuous Wave Devices
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#nirx-directory-or-hdr">
-     NIRx (directory or hdr)
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hitachi-csv">
-     Hitachi (.csv)
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#frequency-domain-devices">
-   Frequency Domain Devices
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#boxy-txt">
-     BOXY (.txt)
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#custom-data-import">
-   Custom Data Import
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#loading-legacy-data-in-csv-or-tsv-format">
-     Loading legacy data in CSV or TSV format
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#applying-standard-sensor-locations-to-imported-data">
-       Applying standard sensor locations to imported data
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
-</ul>
-
-</nav>
-</div>
-
-<div class="toc-item">
-  
-<div id="searchbox"></div>
-</div>
-
-<div class="toc-item">
-  
-</div>
-
-<div class="toc-item">
-  
-</div>
-
             </div>
-          
-          
-        </div>
-        <footer class="bd-footer-content">
-          <div class="bd-footer-content__inner">
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardized-data">Standardized data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#snirf-snirf">SNIRF (.snirf)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#specifying-the-coordinate-system">Specifying the coordinate system</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-wave-devices">Continuous Wave Devices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nirx-directory-or-hdr">NIRx (directory or hdr)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitachi-csv">Hitachi (.csv)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#frequency-domain-devices">Frequency Domain Devices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#boxy-txt">BOXY (.txt)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-data-import">Custom Data Import</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-legacy-data-in-csv-or-tsv-format">Loading legacy data in CSV or TSV format</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-standard-sensor-locations-to-imported-data">Applying standard sensor locations to imported data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
             
           </div>
-        </footer>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner"></div>
+          </footer>
         
       </main>
     </div>
   </div>
-
   
     <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
     
-    
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
 
-  <footer class="bd-footer"><div class="bd-footer__inner container">
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
   
-  <div class="footer-item">
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
     
-<p class="copyright">
-
-    &copy; Copyright 2012–2022, MNE Developers. Last updated &lt;time datetime=&#34;2022-11-30T17:33:17.622942+00:00&#34; class=&#34;localized&#34;&gt;2022-11-30 17:33 UTC&lt;/time&gt;
-&lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.<br>
-
-</p>
-
-  </div>
+      © Copyright 2012–2023, MNE Developers. Last updated &lt;time datetime=&#34;2023-11-21T03:21:06.396486+00:00&#34; class=&#34;localized&#34;&gt;2023-11-21 03:21 UTC&lt;/time&gt;
+&lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
   
 </div>
+
   </footer>
   </body>
 </html>

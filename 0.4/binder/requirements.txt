@@ -1,0 +1,48 @@
+# requirements for full MNE-Python functionality (other than raw/epochs export)
+numpy>=1.15.4
+scipy>=1.1.0
+matplotlib
+tqdm
+pooch>=1.5
+decorator
+h5io
+packaging
+pymatreader
+pyqt5>=5.10,<5.14; platform_system == "Darwin"
+pyqt5>=5.10,!=5.15.2,!=5.15.3; platform_system == "Linux"
+pyqt5>=5.10,!=5.15.3; platform_system == "Windows"
+pyqt5-sip
+pyobjc-framework-Cocoa>=5.2.0; platform_system=="Darwin"
+sip
+scikit-learn
+nibabel
+numba
+h5py
+jinja2
+pandas
+numexpr
+jupyter
+python-picard
+statsmodels
+joblib
+psutil
+dipy
+vtk
+nilearn
+xlrd
+imageio>=2.6.1
+imageio-ffmpeg>=0.4.1
+traitlets
+pyvista>=0.32
+pyvistaqt>=0.4
+mffpy>=0.5.7
+ipywidgets
+ipyvtklink
+
+# mne-nirs specific requirements
+mne
+h5io
+lxml
+patsy
+tables
+typing_extensions

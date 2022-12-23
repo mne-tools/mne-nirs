@@ -37,7 +37,7 @@ Here we will work with the :ref:`fNIRS motor data <mne:fnirs-motor-dataset>`.
 
 .. GENERATED FROM PYTHON SOURCE LINES 19-25
 
-.. code-block:: default
+.. code-block:: Python
 
     # sphinx_gallery_thumbnail_number = 14
 
@@ -54,7 +54,7 @@ Here we will work with the :ref:`fNIRS motor data <mne:fnirs-motor-dataset>`.
 
 .. GENERATED FROM PYTHON SOURCE LINES 26-41
 
-.. code-block:: default
+.. code-block:: Python
 
 
     import os.path as op
@@ -86,77 +86,94 @@ Here we will work with the :ref:`fNIRS motor data <mne:fnirs-motor-dataset>`.
 .. raw:: html
 
     <div class="output_subarea output_html rendered_html output_result">
-    <table class="table table-hover table-striped table-sm table-responsive small">
-        <tr>
-            <th>Measurement date</th>
-        
-            <td>November 02, 2019  13:16:16 GMT</td>
-        
-        </tr>
-        <tr>
-            <th>Experimenter</th>
-        
-            <td>Unknown</td>
-        
-        </tr>
-            <th>Participant</th>
-        
+    <details open>
+        <summary><strong>General</strong></summary>
+        <table class="table table-hover table-striped table-sm table-responsive small">
+            <tr>
+                <th>Measurement date</th>
+            
+                <td>November 02, 2019  13:16:16 GMT</td>
+            
+            </tr>
+            <tr>
+                <th>Experimenter</th>
+            
+                <td>Unknown</td>
+            
+            </tr>
+            <tr>
+                <th>Participant</th>
+            
             
                 <td>P1</td>
             
-        
-        </tr>
-        <tr>
-            <th>Digitized points</th>
-        
-            <td>31 points</td>
-        
-        </tr>
-        <tr>
-            <th>Good channels</th>
-            <td>56 fNIRS (CW amplitude)</td>
-        </tr>
-        <tr>
-            <th>Bad channels</th>
-            <td>None</td>
-        </tr>
-        <tr>
-            <th>EOG channels</th>
-            <td>Not available</td>
-        </tr>
-        <tr>
-            <th>ECG channels</th>
-            <td>Not available</td>
-    
-        <tr>
-            <th>Sampling frequency</th>
-            <td>7.81 Hz</td>
-        </tr>
-    
-    
-        <tr>
-            <th>Highpass</th>
-            <td>0.00 Hz</td>
-        </tr>
-    
-    
-        <tr>
-            <th>Lowpass</th>
-            <td>3.91 Hz</td>
-        </tr>
-    
-    
-    
-        <tr>
-            <th>Filenames</th>
-            <td>Participant-1</td>
-        </tr>
-    
-        <tr>
-            <th>Duration</th>
-            <td>00:49:35 (HH:MM:SS)</td>
-        </tr>
-    </table>
+            
+            </tr>
+        </table>
+        </details>
+        <details open>
+            <summary><strong>Channels</strong></summary>
+            <table class="table table-hover table-striped table-sm table-responsive small">
+                <tr>
+                    <th>Digitized points</th>
+                
+                    <td>31 points</td>
+                
+                </tr>
+                <tr>
+                    <th>Good channels</th>
+                    <td>56 fNIRS (CW amplitude)</td>
+                </tr>
+                <tr>
+                    <th>Bad channels</th>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <th>EOG channels</th>
+                    <td>Not available</td>
+                </tr>
+                <tr>
+                    <th>ECG channels</th>
+                    <td>Not available</td>
+                </tr>
+            </table>
+            </details>
+            <details open>
+                <summary><strong>Data</strong></summary>
+                <table class="table table-hover table-striped table-sm table-responsive small">
+                
+                    <tr>
+                        <th>Sampling frequency</th>
+                        <td>7.81 Hz</td>
+                    </tr>
+                
+                
+                    <tr>
+                        <th>Highpass</th>
+                        <td>0.00 Hz</td>
+                    </tr>
+                
+                
+                    <tr>
+                        <th>Lowpass</th>
+                        <td>3.91 Hz</td>
+                    </tr>
+                
+                
+                
+                    <tr>
+                        <th>Filenames</th>
+                        <td>Participant-1</td>
+                    </tr>
+                
+                
+                    <tr>
+                        <th>Duration</th>
+                        <td>00:49:35 (HH:MM:SS)</td>
+                    </tr>
+                
+                </table>
+                </details>
     </div>
     <br />
     <br />
@@ -174,7 +191,7 @@ of the experiment and is not relevant to our analysis.
 
 .. GENERATED FROM PYTHON SOURCE LINES 50-59
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw_intensity.annotations.set_durations(5)
@@ -205,7 +222,7 @@ detectors as black.
 
 .. GENERATED FROM PYTHON SOURCE LINES 68-78
 
-.. code-block:: default
+.. code-block:: Python
 
 
     subjects_dir = op.join(mne.datasets.sample.data_path(), 'subjects')
@@ -247,7 +264,7 @@ To achieve this we pick all the channels that are not considered to be short.
 
 .. GENERATED FROM PYTHON SOURCE LINES 86-95
 
-.. code-block:: default
+.. code-block:: Python
 
 
     picks = mne.pick_types(raw_intensity.info, meg=False, fnirs=True)
@@ -272,7 +289,7 @@ To achieve this we pick all the channels that are not considered to be short.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f9a3c44c5e0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff2a8870080>
 
 
 
@@ -285,7 +302,7 @@ The raw intensity values are then converted to optical density.
 
 .. GENERATED FROM PYTHON SOURCE LINES 100-106
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
@@ -307,7 +324,7 @@ The raw intensity values are then converted to optical density.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f9a3c6e8550>
+    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff2a87d2a80>
 
 
 
@@ -327,7 +344,7 @@ coupling index.
 
 .. GENERATED FROM PYTHON SOURCE LINES 118-125
 
-.. code-block:: default
+.. code-block:: Python
 
 
     sci = mne.preprocessing.nirs.scalp_coupling_index(raw_od)
@@ -361,7 +378,7 @@ In this example we will mark all channels with a SCI less than 0.5 as bad
 
 .. GENERATED FROM PYTHON SOURCE LINES 128-132
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw_od.info['bads'] = list(compress(raw_od.ch_names, sci < 0.5))
@@ -393,7 +410,7 @@ the modified Beer-Lambert law.
 
 .. GENERATED FROM PYTHON SOURCE LINES 147-153
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
@@ -415,7 +432,7 @@ the modified Beer-Lambert law.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f99df1fbf70>
+    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff274f2cf00>
 
 
 
@@ -430,19 +447,17 @@ the person's heart beat and is unwanted. So we use a low pass filter to
 remove this. A high pass filter is also included to remove slow drifts
 in the data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 162-172
+.. GENERATED FROM PYTHON SOURCE LINES 162-170
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fig = raw_haemo.plot_psd(average=True)
     fig.suptitle('Before filtering', weight='bold', size='x-large')
-    fig.subplots_adjust(top=0.88)
     raw_haemo = raw_haemo.filter(0.05, 0.7, h_trans_bandwidth=0.2,
                                  l_trans_bandwidth=0.02)
     fig = raw_haemo.plot_psd(average=True)
     fig.suptitle('After filtering', weight='bold', size='x-large')
-    fig.subplots_adjust(top=0.88)
 
 
 
@@ -470,7 +485,7 @@ in the data.
  .. code-block:: none
 
     NOTE: plot_psd() is a legacy function. New code should use .compute_psd().plot().
-    Effective window size : 32.768 (s)
+    Effective window size : 262.144 (s)
     Filtering raw data in 1 contiguous segment
     Setting up band-pass filter from 0.05 - 0.7 Hz
 
@@ -483,21 +498,17 @@ in the data.
     - Lower transition bandwidth: 0.02 Hz (-6 dB cutoff frequency: 0.04 Hz)
     - Upper passband edge: 0.70 Hz
     - Upper transition bandwidth: 0.20 Hz (-6 dB cutoff frequency: 0.80 Hz)
-    - Filter length: 1291 samples (165.248 sec)
+    - Filter length: 1291 samples (165.248 s)
 
-    [Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
-    [Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.0s remaining:    0.0s
-    [Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.0s remaining:    0.0s
-    [Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.0s remaining:    0.0s
-    [Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.0s remaining:    0.0s
-    [Parallel(n_jobs=1)]: Done  40 out of  40 | elapsed:    0.1s finished
+    [Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.0s
     NOTE: plot_psd() is a legacy function. New code should use .compute_psd().plot().
-    Effective window size : 32.768 (s)
+    Effective window size : 262.144 (s)
+
+    Text(0.5, 0.993055, 'After filtering')
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 173-182
+.. GENERATED FROM PYTHON SOURCE LINES 171-180
 
 Extract epochs
 --------------
@@ -509,15 +520,14 @@ related to each of the experimental conditions.
 First we extract the events of interest and visualise them to ensure they are
 correct.
 
-.. GENERATED FROM PYTHON SOURCE LINES 182-189
+.. GENERATED FROM PYTHON SOURCE LINES 180-186
 
-.. code-block:: default
+.. code-block:: Python
 
 
     events, event_dict = mne.events_from_annotations(raw_haemo)
     fig = mne.viz.plot_events(events, event_id=event_dict,
                               sfreq=raw_haemo.info['sfreq'])
-    fig.subplots_adjust(right=0.7)  # make room for the legend
 
 
 
@@ -538,15 +548,15 @@ correct.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 190-193
+.. GENERATED FROM PYTHON SOURCE LINES 187-190
 
 Next we define the range of our epochs, the rejection criteria,
 baseline correction, and extract the epochs. We visualise the log of which
 epochs were dropped.
 
-.. GENERATED FROM PYTHON SOURCE LINES 193-205
+.. GENERATED FROM PYTHON SOURCE LINES 190-202
 
-.. code-block:: default
+.. code-block:: Python
 
 
     reject_criteria = dict(hbo=80e-6)
@@ -575,7 +585,7 @@ epochs were dropped.
 
     Not setting metadata
     90 matching events found
-    Setting baseline interval to [-4.992, 0.0] sec
+    Setting baseline interval to [-4.992, 0.0] s
     Applying baseline correction (mode: mean)
     0 projection items activated
     Using data from preloaded Raw for 90 events and 157 original time points ...
@@ -591,7 +601,7 @@ epochs were dropped.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 206-214
+.. GENERATED FROM PYTHON SOURCE LINES 203-211
 
 View consistency of responses across trials
 -------------------------------------------
@@ -602,9 +612,9 @@ observe the expected peak in HbO at around 6 seconds consistently across
 trials, and the consistent dip in HbR that is slightly delayed relative to
 the HbO peak.
 
-.. GENERATED FROM PYTHON SOURCE LINES 214-220
+.. GENERATED FROM PYTHON SOURCE LINES 211-217
 
-.. code-block:: default
+.. code-block:: Python
 
 
     epochs['Tapping'].plot_image(combine='mean', vmin=-30, vmax=30,
@@ -621,14 +631,14 @@ the HbO peak.
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_010.png
-         :alt: Deoxyhemoglobin (mean)
+         :alt: Oxyhemoglobin (mean), µM
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_010.png
          :class: sphx-glr-multi-img
 
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_011.png
-         :alt: Oxyhemoglobin (mean)
+         :alt: Deoxyhemoglobin (mean), µM
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_011.png
          :class: sphx-glr-multi-img
 
@@ -652,14 +662,14 @@ the HbO peak.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 221-223
+.. GENERATED FROM PYTHON SOURCE LINES 218-220
 
 We can also view the epoched data for the control condition and observe
 that it does not show the expected morphology.
 
-.. GENERATED FROM PYTHON SOURCE LINES 223-229
+.. GENERATED FROM PYTHON SOURCE LINES 220-226
 
-.. code-block:: default
+.. code-block:: Python
 
 
     epochs['Control'].plot_image(combine='mean', vmin=-30, vmax=30,
@@ -676,14 +686,14 @@ that it does not show the expected morphology.
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_012.png
-         :alt: Deoxyhemoglobin (mean)
+         :alt: Oxyhemoglobin (mean), µM
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_012.png
          :class: sphx-glr-multi-img
 
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_013.png
-         :alt: Oxyhemoglobin (mean)
+         :alt: Deoxyhemoglobin (mean), µM
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_013.png
          :class: sphx-glr-multi-img
 
@@ -707,7 +717,7 @@ that it does not show the expected morphology.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 230-236
+.. GENERATED FROM PYTHON SOURCE LINES 227-233
 
 View consistency of responses across channels
 ---------------------------------------------
@@ -716,9 +726,9 @@ Similarly we can view how consistent the response is across the optode
 pairs that we selected. All the channels in this data are located over the
 motor cortex, and all channels show a similar pattern in the data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 236-246
+.. GENERATED FROM PYTHON SOURCE LINES 233-243
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(15, 6))
@@ -742,7 +752,7 @@ motor cortex, and all channels show a similar pattern in the data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 247-253
+.. GENERATED FROM PYTHON SOURCE LINES 244-250
 
 Plot standard fNIRS response image
 ----------------------------------
@@ -751,9 +761,9 @@ Next we generate the most common visualisation of fNIRS data: plotting
 both the HbO and HbR on the same figure to illustrate the relation between
 the two signals.
 
-.. GENERATED FROM PYTHON SOURCE LINES 253-270
+.. GENERATED FROM PYTHON SOURCE LINES 250-267
 
-.. code-block:: default
+.. code-block:: Python
 
 
     evoked_dict = {'Tapping/HbO': epochs['Tapping'].average(picks='hbo'),
@@ -794,16 +804,16 @@ the two signals.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 271-275
+.. GENERATED FROM PYTHON SOURCE LINES 268-272
 
 View topographic representation of activity
 -------------------------------------------
 
 Next we view how the topographic activity changes throughout the response.
 
-.. GENERATED FROM PYTHON SOURCE LINES 275-282
+.. GENERATED FROM PYTHON SOURCE LINES 272-279
 
-.. code-block:: default
+.. code-block:: Python
 
 
     times = np.arange(-3.5, 13.2, 3.0)
@@ -816,7 +826,7 @@ Next we view how the topographic activity changes throughout the response.
 
 
 .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_016.png
-   :alt: -3.500 s, -0.500 s, 2.500 s, 5.500 s, 8.500 s, 11.500 s
+   :alt: Oxyhemoglobin (20 channels), -3.500 s, -0.500 s, 2.500 s, 5.500 s, 8.500 s, 11.500 s
    :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_016.png
    :class: sphx-glr-single-img
 
@@ -827,11 +837,11 @@ Next we view how the topographic activity changes throughout the response.
 
     No projector specified for this dataset. Please consider the method self.add_proj.
 
-    <Figure size 800x420 with 10 Axes>
+    <Figure size 800x420 with 9 Axes>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 283-288
+.. GENERATED FROM PYTHON SOURCE LINES 280-285
 
 Compare tapping of left and right hands
 ---------------------------------------
@@ -839,9 +849,9 @@ Compare tapping of left and right hands
 Finally we generate topo maps for the left and right conditions to view
 the location of activity. First we visualise the HbO activity.
 
-.. GENERATED FROM PYTHON SOURCE LINES 288-295
+.. GENERATED FROM PYTHON SOURCE LINES 285-292
 
-.. code-block:: default
+.. code-block:: Python
 
 
     times = np.arange(4.0, 11.0, 1.0)
@@ -876,17 +886,17 @@ the location of activity. First we visualise the HbO activity.
  .. code-block:: none
 
 
-    <MNEFigure size 1200x220 with 8 Axes>
+    <MNEFigure size 1050x220 with 8 Axes>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 296-297
+.. GENERATED FROM PYTHON SOURCE LINES 293-294
 
 And we also view the HbR activity for the two conditions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 297-303
+.. GENERATED FROM PYTHON SOURCE LINES 294-300
 
-.. code-block:: default
+.. code-block:: Python
 
 
     epochs['Tapping/Left'].average(picks='hbr').plot_topomap(
@@ -920,17 +930,17 @@ And we also view the HbR activity for the two conditions.
  .. code-block:: none
 
 
-    <MNEFigure size 1200x220 with 8 Axes>
+    <MNEFigure size 1050x220 with 8 Axes>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 304-305
+.. GENERATED FROM PYTHON SOURCE LINES 301-302
 
 And we can plot the comparison at a single time point for two conditions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 305-335
+.. GENERATED FROM PYTHON SOURCE LINES 302-331
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(9, 5),
@@ -960,7 +970,6 @@ And we can plot the comparison at a single time point for two conditions.
             ['Tapping Left', 'Tapping Right', 'Left-Right']):
         for row, chroma in enumerate(['HbO', 'HbR']):
             axes[row, column].set_title('{}: {}'.format(chroma, condition))
-    fig.tight_layout()
 
 
 
@@ -974,14 +983,14 @@ And we can plot the comparison at a single time point for two conditions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 336-338
+.. GENERATED FROM PYTHON SOURCE LINES 332-334
 
 Lastly, we can also look at the individual waveforms to see what is
 driving the topographic plot above.
 
-.. GENERATED FROM PYTHON SOURCE LINES 338-349
+.. GENERATED FROM PYTHON SOURCE LINES 334-345
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(6, 4))
@@ -1008,16 +1017,16 @@ driving the topographic plot above.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f9aca398dc0>
+    <matplotlib.legend.Legend object at 0x7ff2a88b2d40>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  22.514 seconds)
+   **Total running time of the script:** (0 minutes 23.822 seconds)
 
-**Estimated memory usage:**  10 MB
+**Estimated memory usage:**  23 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_15_waveform.py:
@@ -1026,21 +1035,20 @@ driving the topographic plot above.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=dev/notebooks/auto_examples/general/plot_15_waveform.ipynb
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_15_waveform.ipynb
         :alt: Launch binder
         :width: 150 px
-
-    .. container:: sphx-glr-download sphx-glr-download-python
-
-      :download:`Download Python source code: plot_15_waveform.py <plot_15_waveform.py>`
 
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
       :download:`Download Jupyter notebook: plot_15_waveform.ipynb <plot_15_waveform.ipynb>`
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download Python source code: plot_15_waveform.py <plot_15_waveform.py>`
 
 
 .. only:: html

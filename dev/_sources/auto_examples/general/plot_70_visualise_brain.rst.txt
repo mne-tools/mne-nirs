@@ -40,7 +40,7 @@ This tutorial glosses over the processing details, see the
 
 .. GENERATED FROM PYTHON SOURCE LINES 24-49
 
-.. code-block:: default
+.. code-block:: Python
 
     # sphinx_gallery_thumbnail_number = 5
 
@@ -90,7 +90,7 @@ Download the ``audio_or_visual_speech`` dataset and load the first measurement.
 
 .. GENERATED FROM PYTHON SOURCE LINES 60-70
 
-.. code-block:: default
+.. code-block:: Python
 
 
     root = mne_nirs.datasets.audio_or_visual_speech.data_path()
@@ -124,7 +124,7 @@ Download the HCP-MMP parcellation.
 
 .. GENERATED FROM PYTHON SOURCE LINES 75-83
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Download anatomical locations
@@ -156,7 +156,7 @@ auditory cortex, planum temporale, and occipital lobe.
 
 .. GENERATED FROM PYTHON SOURCE LINES 94-99
 
-.. code-block:: default
+.. code-block:: Python
 
 
     brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5')
@@ -189,7 +189,7 @@ specify which views to use to show each channel pair:
 
 .. GENERATED FROM PYTHON SOURCE LINES 109-119
 
-.. code-block:: default
+.. code-block:: Python
 
 
     view_map = {
@@ -226,7 +226,7 @@ and we can see that a number of channels are placed over this structure.
 
 .. GENERATED FROM PYTHON SOURCE LINES 128-137
 
-.. code-block:: default
+.. code-block:: Python
 
 
     brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5')
@@ -273,7 +273,7 @@ To see more details about how to use the fOLD data see
 
 .. GENERATED FROM PYTHON SOURCE LINES 157-173
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Return specificity of each channel to the Left IFG
@@ -316,7 +316,7 @@ It should be updated in the near future.
 
 .. GENERATED FROM PYTHON SOURCE LINES 183-189
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fig = plot_nirs_source_detector(specificity, raw.info, surfaces='brain',
@@ -353,7 +353,7 @@ for the weighted region of interest function call.
 
 .. GENERATED FROM PYTHON SOURCE LINES 202-237
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Basic pipeline, simplified for example
@@ -507,7 +507,7 @@ analysis. The details will not be described here, instead view the
 
 .. GENERATED FROM PYTHON SOURCE LINES 252-320
 
-.. code-block:: default
+.. code-block:: Python
 
 
 
@@ -596,7 +596,7 @@ in green and blue respectively.
 
 .. GENERATED FROM PYTHON SOURCE LINES 328-344
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Plot the projection and sensor locations
@@ -636,9 +636,9 @@ Bibliography
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  52.048 seconds)
+   **Total running time of the script:** (0 minutes 33.742 seconds)
 
-**Estimated memory usage:**  9 MB
+**Estimated memory usage:**  34 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_70_visualise_brain.py:
@@ -647,21 +647,20 @@ Bibliography
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=dev/notebooks/auto_examples/general/plot_70_visualise_brain.ipynb
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_70_visualise_brain.ipynb
         :alt: Launch binder
         :width: 150 px
-
-    .. container:: sphx-glr-download sphx-glr-download-python
-
-      :download:`Download Python source code: plot_70_visualise_brain.py <plot_70_visualise_brain.py>`
 
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
       :download:`Download Jupyter notebook: plot_70_visualise_brain.ipynb <plot_70_visualise_brain.ipynb>`
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download Python source code: plot_70_visualise_brain.py <plot_70_visualise_brain.py>`
 
 
 .. only:: html

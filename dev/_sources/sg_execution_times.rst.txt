@@ -1,0 +1,103 @@
+
+:orphan:
+
+.. _sphx_glr_sg_execution_times:
+
+
+Computation times
+=================
+**07:31.506** total execution time for 23 files **from all galleries**:
+
+.. container::
+
+  .. raw:: html
+
+    <style scoped>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" class="init">
+    $(document).ready( function () {
+        $('table.sg-datatable').DataTable({order: [[1, 'desc']]});
+    } );
+    </script>
+
+  .. list-table::
+   :header-rows: 1
+   :class: table table-striped sg-datatable
+
+   * - Example
+     - Time
+     - Mem (MB)
+   * - :ref:`sphx_glr_auto_examples_general_plot_01_data_io.py` (``../examples/general/plot_01_data_io.py``)
+     - 02:13.153
+     - 470.2
+   * - :ref:`sphx_glr_auto_examples_general_plot_70_visualise_brain.py` (``../examples/general/plot_70_visualise_brain.py``)
+     - 00:33.742
+     - 34.1
+   * - :ref:`sphx_glr_auto_examples_general_plot_12_group_glm.py` (``../examples/general/plot_12_group_glm.py``)
+     - 00:30.511
+     - 475.8
+   * - :ref:`sphx_glr_auto_examples_general_plot_30_frequency.py` (``../examples/general/plot_30_frequency.py``)
+     - 00:29.589
+     - 9.1
+   * - :ref:`sphx_glr_auto_examples_general_plot_06_gowerlabs.py` (``../examples/general/plot_06_gowerlabs.py``)
+     - 00:29.580
+     - 162.2
+   * - :ref:`sphx_glr_auto_examples_general_plot_22_quality.py` (``../examples/general/plot_22_quality.py``)
+     - 00:27.146
+     - 10.5
+   * - :ref:`sphx_glr_auto_examples_general_plot_13_fir_glm.py` (``../examples/general/plot_13_fir_glm.py``)
+     - 00:25.077
+     - 10.6
+   * - :ref:`sphx_glr_auto_examples_general_plot_15_waveform.py` (``../examples/general/plot_15_waveform.py``)
+     - 00:23.822
+     - 23.3
+   * - :ref:`sphx_glr_auto_examples_general_plot_11_hrf_measured.py` (``../examples/general/plot_11_hrf_measured.py``)
+     - 00:22.563
+     - 244.1
+   * - :ref:`sphx_glr_auto_examples_general_plot_14_glm_components.py` (``../examples/general/plot_14_glm_components.py``)
+     - 00:21.033
+     - 9.0
+   * - :ref:`sphx_glr_auto_examples_general_plot_16_waveform_group.py` (``../examples/general/plot_16_waveform_group.py``)
+     - 00:10.915
+     - 9.0
+   * - :ref:`sphx_glr_auto_examples_general_plot_99_bad.py` (``../examples/general/plot_99_bad.py``)
+     - 00:09.060
+     - 9.6
+   * - :ref:`sphx_glr_auto_examples_general_plot_60_aux_data.py` (``../examples/general/plot_60_aux_data.py``)
+     - 00:09.036
+     - 9.0
+   * - :ref:`sphx_glr_auto_examples_general_plot_80_save_read_glm.py` (``../examples/general/plot_80_save_read_glm.py``)
+     - 00:07.942
+     - 16.0
+   * - :ref:`sphx_glr_auto_examples_general_plot_19_snirf.py` (``../examples/general/plot_19_snirf.py``)
+     - 00:07.592
+     - 9.6
+   * - :ref:`sphx_glr_auto_examples_general_plot_10_hrf_simulation.py` (``../examples/general/plot_10_hrf_simulation.py``)
+     - 00:07.041
+     - 10.8
+   * - :ref:`sphx_glr_auto_examples_general_plot_50_decoding.py` (``../examples/general/plot_50_decoding.py``)
+     - 00:05.102
+     - 9.5
+   * - :ref:`sphx_glr_auto_examples_general_plot_20_enhance.py` (``../examples/general/plot_20_enhance.py``)
+     - 00:04.970
+     - 9.0
+   * - :ref:`sphx_glr_auto_examples_general_plot_21_artifacts.py` (``../examples/general/plot_21_artifacts.py``)
+     - 00:04.704
+     - 9.7
+   * - :ref:`sphx_glr_auto_examples_general_plot_40_mayer.py` (``../examples/general/plot_40_mayer.py``)
+     - 00:04.297
+     - 8.9
+   * - :ref:`sphx_glr_auto_examples_migration_plot_01_homer.py` (``../examples/migration/plot_01_homer.py``)
+     - 00:02.646
+     - 8.9
+   * - :ref:`sphx_glr_auto_examples_general_plot_05_datasets.py` (``../examples/general/plot_05_datasets.py``)
+     - 00:01.985
+     - 11.3
+   * - :ref:`sphx_glr_auto_examples_migration_plot_02_nirstoolbox.py` (``../examples/migration/plot_02_nirstoolbox.py``)
+     - 00:00.000
+     - 8.9

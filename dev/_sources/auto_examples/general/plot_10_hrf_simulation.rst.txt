@@ -35,7 +35,7 @@ measurement length has on response amplitude estimates.
 
 .. GENERATED FROM PYTHON SOURCE LINES 18-34
 
-.. code-block:: default
+.. code-block:: Python
 
     # sphinx_gallery_thumbnail_number = 3
 
@@ -73,7 +73,7 @@ The simulated signal is plotted below.
 
 .. GENERATED FROM PYTHON SOURCE LINES 43-52
 
-.. code-block:: default
+.. code-block:: Python
 
 
     sfreq = 3.
@@ -98,7 +98,7 @@ The simulated signal is plotted below.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f99fc168f70>
+    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff2a8a17840>
 
 
 
@@ -113,13 +113,13 @@ For more details on this procedure see :ref:`tut-fnirs-hrf`.
 
 .. GENERATED FROM PYTHON SOURCE LINES 59-67
 
-.. code-block:: default
+.. code-block:: Python
 
 
     design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
                                                    drift_order=1,
                                                    drift_model='polynomial')
-    fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
+    fig, ax1 = plt.subplots(figsize=(10, 6), constrained_layout=True)
     fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
@@ -131,6 +131,13 @@ For more details on this procedure see :ref:`tut-fnirs-hrf`.
    :srcset: /auto_examples/general/images/sphx_glr_plot_10_hrf_simulation_002.png
    :class: sphx-glr-single-img
 
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /home/circleci/python_env/lib/python3.10/site-packages/nilearn/plotting/matrix_plotting.py:463: UserWarning: The figure layout has changed to tight
+      plt.tight_layout()
 
 
 
@@ -149,7 +156,7 @@ We also see that the mean square error of the model fit is close to zero.
 
 .. GENERATED FROM PYTHON SOURCE LINES 77-91
 
-.. code-block:: default
+.. code-block:: Python
 
 
     glm_est = run_glm(raw, design_matrix)
@@ -173,7 +180,7 @@ We also see that the mean square error of the model fit is close to zero.
 
  .. code-block:: none
 
-    Estimate: [4.e-06]   MSE: 6.046582635002311e-43   Error (uM): [1.69406589e-15]
+    Estimate: [4.e-06]   MSE: 4.437545829889748e-43   Error (uM): [0.]
 
 
 
@@ -189,11 +196,11 @@ We run the GLM analysis exactly as in the previous section
 and plot the noisy data and the GLM fitted model.
 We print the response estimate and see that is close, but not exactly correct,
 we observe the mean square error is similar to the added noise.
-Note that the clean data plot is so similar to the GLM estimate that it is hard to see unless zoomed in. 
+Note that the clean data plot is so similar to the GLM estimate that it is hard to see unless zoomed in.
 
 .. GENERATED FROM PYTHON SOURCE LINES 102-119
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # First take a copy of noise free data for comparison
@@ -202,12 +209,12 @@ Note that the clean data plot is so similar to the GLM estimate that it is hard 
     raw._data += np.random.normal(0, np.sqrt(1e-11), raw._data.shape)
     glm_est = run_glm(raw, design_matrix)
 
-    plt.plot(raw.times, raw_noise_free.get_data().T * 1e6)
-    plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
-    plt.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
-    plt.xlabel("Time (s)")
-    plt.ylabel("Haemoglobin (uM)")
-    plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
+    fig, ax = plt.subplots(constrained_layout=True)
+    ax.plot(raw.times, raw_noise_free.get_data().T * 1e6)
+    ax.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
+    ax.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
+    ax.set(xlabel="Time (s)", ylabel="Haemoglobin (μM)")
+    ax.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 
     print_results(glm_est, amp)
 
@@ -243,7 +250,7 @@ However, the error is greater for the colored than white noise.
 
 .. GENERATED FROM PYTHON SOURCE LINES 128-151
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw = raw_noise_free.copy()
@@ -258,12 +265,12 @@ However, the error is greater for the colored than white noise.
                                                    drift_model='polynomial')
     glm_est = run_glm(raw, design_matrix)
 
-    plt.plot(raw.times, raw_noise_free.get_data().T * 1e6)
-    plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
-    plt.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
-    plt.xlabel("Time (s)")
-    plt.ylabel("Haemoglobin (uM)")
-    plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
+    fig, ax = plt.subplots(constrained_layout=True)
+    ax.plot(raw.times, raw_noise_free.get_data().T * 1e6)
+    ax.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
+    ax.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
+    ax.set(xlabel="Time (s)", ylabel="Haemoglobin (μM)")
+    ax.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 
     print_results(glm_est, amp)
 
@@ -299,7 +306,7 @@ approximately 0.6 uM for 5 minutes of data to 0.25 uM for 30 minutes of data.
 
 .. GENERATED FROM PYTHON SOURCE LINES 159-183
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw = mne_nirs.simulation.simulate_nirs_raw(
@@ -316,11 +323,11 @@ approximately 0.6 uM for 5 minutes of data to 0.25 uM for 30 minutes of data.
                                                    drift_model='polynomial')
     glm_est = run_glm(raw, design_matrix)
 
-    plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
-    plt.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
-    plt.xlabel("Time (s)")
-    plt.ylabel("Haemoglobin (uM)")
-    plt.legend(["Noisy Data", "GLM Estimate"])
+    fig, ax = plt.subplots(constrained_layout=True)
+    ax.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
+    ax.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
+    ax.set(xlabel="Time (s)", ylabel="Haemoglobin (μM)")
+    ax.legend(["Noisy Data", "GLM Estimate"])
 
     print_results(glm_est, amp)
 
@@ -358,17 +365,17 @@ improved the response estimate.
 
 .. GENERATED FROM PYTHON SOURCE LINES 193-204
 
-.. code-block:: default
+.. code-block:: Python
 
 
     glm_est = run_glm(raw, design_matrix, noise_model='ar5')
 
-    fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(15, 6))
-    plt.plot([-0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.02428681],
-             axes=axes)  # actual values from model above
-    plt.plot(glm_est.model()[0].rho * -1.0,  axes=axes)  # estimates
-    plt.legend(["Simulation AR coefficients", "Estimated AR coefficients"])
-    plt.xlabel("Coefficient")
+    fig, ax = plt.subplots(figsize=(15, 6), constrained_layout=True)
+    # actual values from model above
+    ax.plot([-0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.02428681])
+    ax.plot(glm_est.model()[0].rho * -1.0)  # estimates
+    ax.legend(["Simulation AR coefficients", "Estimated AR coefficients"])
+    ax.set_xlabel("Coefficient")
 
 
 
@@ -385,7 +392,7 @@ improved the response estimate.
  .. code-block:: none
 
 
-    Text(0.5, 36.72222222222221, 'Coefficient')
+    Text(0.5, 18.167, 'Coefficient')
 
 
 
@@ -396,7 +403,7 @@ but how does this affect the accuracy of the response estimate?
 
 .. GENERATED FROM PYTHON SOURCE LINES 207-210
 
-.. code-block:: default
+.. code-block:: Python
 
 
     print_results(glm_est, amp)
@@ -436,7 +443,7 @@ model of the noise can improve the accuracy of the response estimate.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.447 seconds)
+   **Total running time of the script:** (0 minutes 7.041 seconds)
 
 **Estimated memory usage:**  11 MB
 
@@ -447,21 +454,20 @@ model of the noise can improve the accuracy of the response estimate.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=dev/notebooks/auto_examples/general/plot_10_hrf_simulation.ipynb
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_10_hrf_simulation.ipynb
         :alt: Launch binder
         :width: 150 px
-
-    .. container:: sphx-glr-download sphx-glr-download-python
-
-      :download:`Download Python source code: plot_10_hrf_simulation.py <plot_10_hrf_simulation.py>`
 
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
       :download:`Download Jupyter notebook: plot_10_hrf_simulation.ipynb <plot_10_hrf_simulation.ipynb>`
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download Python source code: plot_10_hrf_simulation.py <plot_10_hrf_simulation.py>`
 
 
 .. only:: html

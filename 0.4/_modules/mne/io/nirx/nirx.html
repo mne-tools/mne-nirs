@@ -1,0 +1,909 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mne.io.nirx.nirx &#8212; MNE-NIRS 0.4.0 documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/js/copybutton.js"></script>
+    <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
+    <script>
+                    window.ga = window.ga || function () {
+                        (ga.q = ga.q || []).push(arguments) };
+                    ga.l = +new Date;
+                    ga('create', 'UA-188272121-1', 'auto');
+                    ga('set', 'anonymizeIp', true);
+                    ga('send', 'pageview');
+                </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/mne/io/nirx/nirx';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.4.0';
+        </script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="canonical" href="https://mne.tools/mne-nirs/stable/index.html" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fas fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">MNE-NIRS 0.4.0 documentation</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../../auto_examples/index.html">
+                        Examples
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../../api.html">
+                        API
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../../changelog.html">
+                        Changelog
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
+  <i class="fas fa-search"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
+        0.4.0  <!-- this text may get changed later by javascript -->
+        <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+</div>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mne-tools/mne-nirs" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
+  <i class="fas fa-search"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fas fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../../auto_examples/index.html">
+                        Examples
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../../api.html">
+                        API
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../../changelog.html">
+                        Changelog
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
+        0.4.0  <!-- this text may get changed later by javascript -->
+        <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+</div>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mne-tools/mne-nirs" title="GitHub" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <h1>Source code for mne.io.nirx.nirx</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Authors: Robert Luke &lt;mail@robertluke.net&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># License: BSD-3-Clause</span>
+
+<span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span><span class="p">,</span> <span class="n">RawConfigParser</span>
+<span class="kn">import</span> <span class="nn">glob</span> <span class="k">as</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">re</span> <span class="k">as</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">op</span>
+<span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">._localized_abbr</span> <span class="kn">import</span> <span class="n">_localized_abbr</span>
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">BaseRaw</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">_mult_cal_one</span>
+<span class="kn">from</span> <span class="nn">..constants</span> <span class="kn">import</span> <span class="n">FIFF</span>
+<span class="kn">from</span> <span class="nn">..meas_info</span> <span class="kn">import</span> <span class="n">create_info</span><span class="p">,</span> <span class="n">_format_dig_points</span>
+<span class="kn">from</span> <span class="nn">...annotations</span> <span class="kn">import</span> <span class="n">Annotations</span>
+<span class="kn">from</span> <span class="nn">..._freesurfer</span> <span class="kn">import</span> <span class="n">get_mni_fiducials</span>
+<span class="kn">from</span> <span class="nn">...transforms</span> <span class="kn">import</span> <span class="n">apply_trans</span><span class="p">,</span> <span class="n">_get_trans</span>
+<span class="kn">from</span> <span class="nn">...utils</span> <span class="kn">import</span> <span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">fill_doc</span><span class="p">,</span> <span class="n">warn</span><span class="p">,</span> <span class="n">_check_fname</span><span class="p">,</span>
+                      <span class="n">_validate_type</span><span class="p">,</span> <span class="n">_check_option</span><span class="p">,</span> <span class="n">_mask_to_onsets_offsets</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="read_raw_nirx"><a class="viewcode-back" href="../../../../generated/mne.io.read_raw_nirx.html#mne.io.read_raw_nirx">[docs]</a><span class="nd">@fill_doc</span>
+<span class="k">def</span> <span class="nf">read_raw_nirx</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">saturated</span><span class="o">=</span><span class="s1">&#39;annotate&#39;</span><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Reader for a NIRX fNIRS recording.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname : str</span>
+<span class="sd">        Path to the NIRX data folder or header file.</span>
+<span class="sd">    %(saturated)s</span>
+<span class="sd">    %(preload)s</span>
+<span class="sd">    %(verbose)s</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    raw : instance of RawNIRX</span>
+<span class="sd">        A Raw object containing NIRX data.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    mne.io.Raw : Documentation of attribute and methods.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    %(nirx_notes)s</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">RawNIRX</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">saturated</span><span class="p">,</span> <span class="n">preload</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_open</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin-1&#39;</span><span class="p">)</span>
+
+
+<span class="nd">@fill_doc</span>
+<span class="k">class</span> <span class="nc">RawNIRX</span><span class="p">(</span><span class="n">BaseRaw</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raw object from a NIRX fNIRS file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname : str</span>
+<span class="sd">        Path to the NIRX data folder or header file.</span>
+<span class="sd">    %(saturated)s</span>
+<span class="sd">    %(preload)s</span>
+<span class="sd">    %(verbose)s</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    mne.io.Raw : Documentation of attribute and methods.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    %(nirx_notes)s</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@verbose</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">saturated</span><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">scipy.io</span> <span class="kn">import</span> <span class="n">loadmat</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Loading </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="n">_validate_type</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;path-like&#39;</span><span class="p">,</span> <span class="s1">&#39;fname&#39;</span><span class="p">)</span>
+        <span class="n">_validate_type</span><span class="p">(</span><span class="n">saturated</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;saturated&#39;</span><span class="p">)</span>
+        <span class="n">_check_option</span><span class="p">(</span><span class="s1">&#39;saturated&#39;</span><span class="p">,</span> <span class="n">saturated</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;annotate&#39;</span><span class="p">,</span> <span class="s1">&#39;nan&#39;</span><span class="p">,</span> <span class="s1">&#39;ignore&#39;</span><span class="p">))</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.hdr&#39;</span><span class="p">):</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">fname</span><span class="p">))</span>
+
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">_check_fname</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;fname&#39;</span><span class="p">,</span> <span class="n">need_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">json_config</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/*</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;config.json&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">json_config</span><span class="p">):</span>
+            <span class="n">is_aurora</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">is_aurora</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">is_aurora</span><span class="p">:</span>
+            <span class="c1"># NIRSport2 devices using Aurora software</span>
+            <span class="n">keys</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;hdr&#39;</span><span class="p">,</span> <span class="s1">&#39;config.json&#39;</span><span class="p">,</span> <span class="s1">&#39;description.json&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;wl1&#39;</span><span class="p">,</span> <span class="s1">&#39;wl2&#39;</span><span class="p">,</span> <span class="s1">&#39;probeInfo.mat&#39;</span><span class="p">,</span> <span class="s1">&#39;tri&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># NIRScout devices and NIRSport1 devices</span>
+            <span class="n">keys</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;hdr&#39;</span><span class="p">,</span> <span class="s1">&#39;inf&#39;</span><span class="p">,</span> <span class="s1">&#39;set&#39;</span><span class="p">,</span> <span class="s1">&#39;tpl&#39;</span><span class="p">,</span> <span class="s1">&#39;wl1&#39;</span><span class="p">,</span> <span class="s1">&#39;wl2&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;config.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;probeInfo.mat&#39;</span><span class="p">)</span>
+            <span class="n">n_dat</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/*</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;dat&#39;</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="n">n_dat</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;A single dat file was expected in the specified path, &quot;</span>
+                     <span class="sa">f</span><span class="s2">&quot;but got </span><span class="si">{</span><span class="n">n_dat</span><span class="si">}</span><span class="s2">. This may indicate that the file &quot;</span>
+                     <span class="s2">&quot;structure has been modified since the measurement &quot;</span>
+                     <span class="s2">&quot;was saved.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check if required files exist and store names for later use</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">nan_mask</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/*</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+            <span class="n">fidx</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;wl1&#39;</span><span class="p">,</span> <span class="s1">&#39;wl2&#39;</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s1">&#39;Need one </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1"> file, got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">noidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">([</span><span class="s1">&#39;nosatflags_&#39;</span> <span class="ow">in</span> <span class="n">op</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                                  <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">]])[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">noidx</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s1">&#39;Need one nosatflags and one standard </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1"> file, &#39;</span>
+                        <span class="sa">f</span><span class="s1">&#39;got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="c1"># Here two files have been found, one that is called</span>
+                <span class="c1"># no sat flags. The nosatflag file has no NaNs in it.</span>
+                <span class="n">noidx</span> <span class="o">=</span> <span class="n">noidx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">saturated</span> <span class="o">==</span> <span class="s1">&#39;ignore&#39;</span><span class="p">:</span>
+                    <span class="c1"># Ignore NaN and return values</span>
+                    <span class="n">fidx</span> <span class="o">=</span> <span class="n">noidx</span>
+                <span class="k">elif</span> <span class="n">saturated</span> <span class="o">==</span> <span class="s1">&#39;nan&#39;</span><span class="p">:</span>
+                    <span class="c1"># Return NaN</span>
+                    <span class="n">fidx</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">noidx</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">assert</span> <span class="n">saturated</span> <span class="o">==</span> <span class="s1">&#39;annotate&#39;</span>  <span class="c1"># guaranteed above</span>
+                    <span class="n">fidx</span> <span class="o">=</span> <span class="n">noidx</span>
+                    <span class="n">nan_mask</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">0</span> <span class="k">if</span> <span class="n">noidx</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">fidx</span><span class="p">]</span>
+
+        <span class="c1"># Read number of rows/samples of wavelength data</span>
+        <span class="k">with</span> <span class="n">_open</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="s1">&#39;wl1&#39;</span><span class="p">])</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+            <span class="n">last_sample</span> <span class="o">=</span> <span class="n">fid</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="c1"># Read header file</span>
+        <span class="c1"># The header file isn&#39;t compliant with the configparser. So all the</span>
+        <span class="c1"># text between comments must be removed before passing to parser</span>
+        <span class="k">with</span> <span class="n">_open</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="s1">&#39;hdr&#39;</span><span class="p">])</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">hdr_str_all</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">hdr_str</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;#.*?#&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">hdr_str_all</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_aurora</span><span class="p">:</span>
+            <span class="n">hdr_str</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;(</span><span class="se">\\</span><span class="s1">[DataStructure].*)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                             <span class="n">hdr_str</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+        <span class="n">hdr</span> <span class="o">=</span> <span class="n">RawConfigParser</span><span class="p">()</span>
+        <span class="n">hdr</span><span class="o">.</span><span class="n">read_string</span><span class="p">(</span><span class="n">hdr_str</span><span class="p">)</span>
+
+        <span class="c1"># Check that the file format version is supported</span>
+        <span class="k">if</span> <span class="n">is_aurora</span><span class="p">:</span>
+            <span class="c1"># We may need to ease this requirement back</span>
+            <span class="k">if</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;GeneralInfo&#39;</span><span class="p">][</span><span class="s1">&#39;Version&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;2021.4.0-34-ge9fdbbc8&#39;</span><span class="p">,</span>
+                                                     <span class="s1">&#39;2021.9.0-5-g3eb32851&#39;</span><span class="p">,</span>
+                                                     <span class="s1">&#39;2021.9.0-6-g14ef4a71&#39;</span><span class="p">]:</span>
+                <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;MNE has not been tested with Aurora version &quot;</span>
+                     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;GeneralInfo&#39;</span><span class="p">][</span><span class="s1">&#39;Version&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;GeneralInfo&#39;</span><span class="p">][</span><span class="s1">&#39;NIRStar&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;&quot;15.0&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;15.2&quot;&#39;</span><span class="p">,</span>
+                                                     <span class="s1">&#39;&quot;15.3&quot;&#39;</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;MNE does not support this NIRStar version&#39;</span>
+                                   <span class="s1">&#39; (</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;GeneralInfo&#39;</span><span class="p">][</span><span class="s1">&#39;NIRStar&#39;</span><span class="p">],))</span>
+            <span class="k">if</span> <span class="s2">&quot;NIRScout&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;GeneralInfo&#39;</span><span class="p">][</span><span class="s1">&#39;Device&#39;</span><span class="p">]</span> \
+                    <span class="ow">and</span> <span class="s2">&quot;NIRSport&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;GeneralInfo&#39;</span><span class="p">][</span><span class="s1">&#39;Device&#39;</span><span class="p">]:</span>
+                <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Only import of data from NIRScout devices have been &quot;</span>
+                     <span class="s2">&quot;thoroughly tested. You are using a </span><span class="si">%s</span><span class="s2"> device. &quot;</span> <span class="o">%</span>
+                     <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;GeneralInfo&#39;</span><span class="p">][</span><span class="s1">&#39;Device&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Parse required header fields</span>
+
+        <span class="c1"># Extract measurement date and time</span>
+        <span class="k">if</span> <span class="n">is_aurora</span><span class="p">:</span>
+            <span class="n">datetime_str</span> <span class="o">=</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;GeneralInfo&#39;</span><span class="p">][</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">datetime_str</span> <span class="o">=</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;GeneralInfo&#39;</span><span class="p">][</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">+</span> \
+                <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;GeneralInfo&#39;</span><span class="p">][</span><span class="s1">&#39;Time&#39;</span><span class="p">]</span>
+
+        <span class="n">meas_date</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Several formats have been observed so we try each in turn</span>
+        <span class="k">for</span> <span class="n">loc</span><span class="p">,</span> <span class="n">translations</span> <span class="ow">in</span> <span class="n">_localized_abbr</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">do_break</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="c1"># So far we are lucky in that all the formats below, if they</span>
+            <span class="c1"># include %a (weekday abbr), always come first. Thus we can use</span>
+            <span class="c1"># a .split(), replace, and rejoin.</span>
+            <span class="n">loc_datetime_str</span> <span class="o">=</span> <span class="n">datetime_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">translations</span><span class="p">[</span><span class="s1">&#39;weekday&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">loc_datetime_str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">loc_datetime_str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">loc_datetime_str</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">translations</span><span class="p">[</span><span class="s1">&#39;month&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">loc_datetime_str</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> \
+                        <span class="n">loc_datetime_str</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+            <span class="n">loc_datetime_str</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">loc_datetime_str</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Trying </span><span class="si">{</span><span class="n">loc</span><span class="si">}</span><span class="s1"> datetime: </span><span class="si">{</span><span class="n">loc_datetime_str</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">dt_code</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;&quot;</span><span class="si">%a</span><span class="s1">, %b </span><span class="si">%d</span><span class="s1">, %Y&quot;&quot;%H:%M:%S.</span><span class="si">%f</span><span class="s1">&quot;&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;&quot;</span><span class="si">%a</span><span class="s1"> </span><span class="si">%d</span><span class="s1"> %b %Y&quot;&quot;%H:%M:%S.</span><span class="si">%f</span><span class="s1">&quot;&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;&quot;</span><span class="si">%a</span><span class="s1">, </span><span class="si">%d</span><span class="s1"> %b %Y&quot;&quot;%H:%M:%S.</span><span class="si">%f</span><span class="s1">&quot;&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S.</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">meas_date</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">loc_datetime_str</span><span class="p">,</span> <span class="n">dt_code</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">meas_date</span> <span class="o">=</span> <span class="n">meas_date</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">dt</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+                    <span class="n">do_break</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s1">&#39;Measurement date language </span><span class="si">{</span><span class="n">loc</span><span class="si">}</span><span class="s1"> detected: </span><span class="si">{</span><span class="n">dt_code</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">do_break</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">meas_date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Extraction of measurement date from NIRX file failed. &quot;</span>
+                 <span class="s2">&quot;This can be caused by files saved in certain locales &quot;</span>
+                 <span class="sa">f</span><span class="s2">&quot;(currently only </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">_localized_abbr</span><span class="p">)</span><span class="si">}</span><span class="s2"> supported). &quot;</span>
+                 <span class="s2">&quot;Please report this as a github issue. &quot;</span>
+                 <span class="s2">&quot;The date is being set to January 1st, 2000, &quot;</span>
+                 <span class="sa">f</span><span class="s2">&quot;instead of </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">datetime_str</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="n">meas_date</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                                    <span class="n">tzinfo</span><span class="o">=</span><span class="n">dt</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+
+        <span class="c1"># Extract frequencies of light used by machine</span>
+        <span class="k">if</span> <span class="n">is_aurora</span><span class="p">:</span>
+            <span class="n">fnirs_wavelengths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">760</span><span class="p">,</span> <span class="mi">850</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fnirs_wavelengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span>
+                                 <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\d+)&#39;</span><span class="p">,</span>
+                                            <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;ImagingParameters&#39;</span><span class="p">][</span>
+                                                <span class="s1">&#39;Wavelengths&#39;</span><span class="p">])]</span>
+
+        <span class="c1"># Extract source-detectors</span>
+        <span class="k">if</span> <span class="n">is_aurora</span><span class="p">:</span>
+            <span class="n">sources</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\d+)-\d+&#39;</span><span class="p">,</span> <span class="n">hdr_str_all</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">detectors</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d+-(\d+)&#39;</span><span class="p">,</span> <span class="n">hdr_str_all</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">]</span>
+            <span class="n">detectors</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detectors</span><span class="p">]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sources</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span>
+                                  <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\d+)-\d+:\d+&#39;</span><span class="p">,</span>
+                                             <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;DataStructure&#39;</span><span class="p">]</span>
+                                             <span class="p">[</span><span class="s1">&#39;S-D-Key&#39;</span><span class="p">])],</span> <span class="nb">int</span><span class="p">)</span>
+            <span class="n">detectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span>
+                                    <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d+-(\d+):\d+&#39;</span><span class="p">,</span>
+                                               <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;DataStructure&#39;</span><span class="p">]</span>
+                                               <span class="p">[</span><span class="s1">&#39;S-D-Key&#39;</span><span class="p">])],</span> <span class="nb">int</span><span class="p">)</span>
+
+        <span class="c1"># Extract sampling rate</span>
+        <span class="k">if</span> <span class="n">is_aurora</span><span class="p">:</span>
+            <span class="n">samplingrate</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;GeneralInfo&#39;</span><span class="p">][</span><span class="s1">&#39;Sampling rate&#39;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">samplingrate</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;ImagingParameters&#39;</span><span class="p">][</span><span class="s1">&#39;SamplingRate&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Read participant information file</span>
+        <span class="k">if</span> <span class="n">is_aurora</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="s1">&#39;description.json&#39;</span><span class="p">])</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">inf</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">inf</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">(</span><span class="n">allow_no_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">inf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="s1">&#39;inf&#39;</span><span class="p">])</span>
+            <span class="n">inf</span> <span class="o">=</span> <span class="n">inf</span><span class="o">.</span><span class="n">_sections</span><span class="p">[</span><span class="s1">&#39;Subject Demographics&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Store subject information from inf file in mne format</span>
+        <span class="c1"># Note: NIRX also records &quot;Study Type&quot;, &quot;Experiment History&quot;,</span>
+        <span class="c1">#       &quot;Additional Notes&quot;, &quot;Contact Information&quot; and this information</span>
+        <span class="c1">#       is currently discarded</span>
+        <span class="c1"># NIRStar does not record an id, or handedness by default</span>
+        <span class="c1"># The name field is used to populate the his_id variable.</span>
+        <span class="n">subject_info</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">is_aurora</span><span class="p">:</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="n">inf</span><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="n">inf</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;his_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="n">names</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;middle_name&#39;</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="n">names</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inf</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="c1"># Recode values</span>
+        <span class="k">if</span> <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;Male&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">}:</span>
+            <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_SUBJ_SEX_MALE</span>
+        <span class="k">elif</span> <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;Female&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">}:</span>
+            <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_SUBJ_SEX_FEMALE</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_SUBJ_SEX_UNKNOWN</span>
+        <span class="k">if</span> <span class="n">inf</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">subject_info</span><span class="p">[</span><span class="s1">&#39;birthday&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">meas_date</span><span class="o">.</span><span class="n">year</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">inf</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]),</span>
+                                        <span class="n">meas_date</span><span class="o">.</span><span class="n">month</span><span class="p">,</span>
+                                        <span class="n">meas_date</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
+
+        <span class="c1"># Read information about probe/montage/optodes</span>
+        <span class="c1"># A word on terminology used here:</span>
+        <span class="c1">#   Sources produce light</span>
+        <span class="c1">#   Detectors measure light</span>
+        <span class="c1">#   Sources and detectors are both called optodes</span>
+        <span class="c1">#   Each source - detector pair produces a channel</span>
+        <span class="c1">#   Channels are defined as the midpoint between source and detector</span>
+        <span class="n">mat_data</span> <span class="o">=</span> <span class="n">loadmat</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="s1">&#39;probeInfo.mat&#39;</span><span class="p">])</span>
+        <span class="n">probes</span> <span class="o">=</span> <span class="n">mat_data</span><span class="p">[</span><span class="s1">&#39;probeInfo&#39;</span><span class="p">][</span><span class="s1">&#39;probes&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">requested_channels</span> <span class="o">=</span> <span class="n">probes</span><span class="p">[</span><span class="s1">&#39;index_c&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">src_locs</span> <span class="o">=</span> <span class="n">probes</span><span class="p">[</span><span class="s1">&#39;coords_s3&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mf">100.</span>
+        <span class="n">det_locs</span> <span class="o">=</span> <span class="n">probes</span><span class="p">[</span><span class="s1">&#39;coords_d3&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mf">100.</span>
+        <span class="n">ch_locs</span> <span class="o">=</span> <span class="n">probes</span><span class="p">[</span><span class="s1">&#39;coords_c3&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mf">100.</span>
+
+        <span class="c1"># These are all in MNI coordinates, so let&#39;s transform them to</span>
+        <span class="c1"># the Neuromag head coordinate frame</span>
+        <span class="n">src_locs</span><span class="p">,</span> <span class="n">det_locs</span><span class="p">,</span> <span class="n">ch_locs</span><span class="p">,</span> <span class="n">mri_head_t</span> <span class="o">=</span> <span class="n">_convert_fnirs_to_head</span><span class="p">(</span>
+            <span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <span class="s1">&#39;mri&#39;</span><span class="p">,</span> <span class="s1">&#39;head&#39;</span><span class="p">,</span> <span class="n">src_locs</span><span class="p">,</span> <span class="n">det_locs</span><span class="p">,</span> <span class="n">ch_locs</span><span class="p">)</span>
+
+        <span class="c1"># Set up digitization</span>
+        <span class="n">dig</span> <span class="o">=</span> <span class="n">get_mni_fiducials</span><span class="p">(</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">fid</span> <span class="ow">in</span> <span class="n">dig</span><span class="p">:</span>
+            <span class="n">fid</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">apply_trans</span><span class="p">(</span><span class="n">mri_head_t</span><span class="p">,</span> <span class="n">fid</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">])</span>
+            <span class="n">fid</span><span class="p">[</span><span class="s1">&#39;coord_frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_COORD_HEAD</span>
+        <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">ch_loc</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ch_locs</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">dig</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="n">kind</span><span class="o">=</span><span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_POINT_EEG</span><span class="p">,</span>  <span class="c1"># misnomer but probably okay</span>
+                <span class="n">r</span><span class="o">=</span><span class="n">ch_loc</span><span class="p">,</span>
+                <span class="n">ident</span><span class="o">=</span><span class="n">ii</span><span class="p">,</span>
+                <span class="n">coord_frame</span><span class="o">=</span><span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_COORD_HEAD</span><span class="p">,</span>
+            <span class="p">))</span>
+        <span class="n">dig</span> <span class="o">=</span> <span class="n">_format_dig_points</span><span class="p">(</span><span class="n">dig</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">mri_head_t</span>
+
+        <span class="c1"># Determine requested channel indices</span>
+        <span class="c1"># The wl1 and wl2 files include all possible source - detector pairs.</span>
+        <span class="c1"># But most of these are not relevant. We want to extract only the</span>
+        <span class="c1"># subset requested in the probe file</span>
+        <span class="n">req_ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([],</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">req_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">requested_channels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">sd_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">sources</span> <span class="o">==</span> <span class="n">requested_channels</span><span class="p">[</span><span class="n">req_idx</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span>
+                              <span class="p">(</span><span class="n">detectors</span> <span class="o">==</span> <span class="n">requested_channels</span><span class="p">[</span><span class="n">req_idx</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">req_ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">req_ind</span><span class="p">,</span> <span class="n">sd_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">req_ind</span> <span class="o">=</span> <span class="n">req_ind</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="n">snames</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;S</span><span class="si">{</span><span class="n">sources</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">req_ind</span><span class="p">]</span>
+        <span class="n">dnames</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;_D</span><span class="si">{</span><span class="n">detectors</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">req_ind</span><span class="p">]</span>
+        <span class="n">sdnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">snames</span><span class="p">,</span> <span class="n">dnames</span><span class="p">)]</span>
+        <span class="n">sd1</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">fnirs_wavelengths</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sdnames</span><span class="p">]</span>
+        <span class="n">sd2</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">fnirs_wavelengths</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sdnames</span><span class="p">]</span>
+        <span class="n">chnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span> <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sd1</span><span class="p">,</span> <span class="n">sd2</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">pair</span><span class="p">]</span>
+
+        <span class="c1"># Create mne structure</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">create_info</span><span class="p">(</span><span class="n">chnames</span><span class="p">,</span>
+                           <span class="n">samplingrate</span><span class="p">,</span>
+                           <span class="n">ch_types</span><span class="o">=</span><span class="s1">&#39;fnirs_cw_amplitude&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">info</span><span class="o">.</span><span class="n">_unlock</span><span class="p">():</span>
+            <span class="n">info</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">subject_info</span><span class="o">=</span><span class="n">subject_info</span><span class="p">,</span> <span class="n">dig</span><span class="o">=</span><span class="n">dig</span><span class="p">)</span>
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;meas_date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">meas_date</span>
+
+        <span class="c1"># Store channel, source, and detector locations</span>
+        <span class="c1"># The channel location is stored in the first 3 entries of loc.</span>
+        <span class="c1"># The source location is stored in the second 3 entries of loc.</span>
+        <span class="c1"># The detector location is stored in the third 3 entries of loc.</span>
+        <span class="c1"># NIRx NIRSite uses MNI coordinates.</span>
+        <span class="c1"># Also encode the light frequency in the structure.</span>
+        <span class="k">for</span> <span class="n">ch_idx2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">requested_channels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="c1"># Find source and store location</span>
+            <span class="n">src</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">requested_channels</span><span class="p">[</span><span class="n">ch_idx2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="c1"># Find detector and store location</span>
+            <span class="n">det</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">requested_channels</span><span class="p">[</span><span class="n">ch_idx2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="c1"># Store channel location as midpoint between source and detector.</span>
+            <span class="n">midpoint</span> <span class="o">=</span> <span class="p">(</span><span class="n">src_locs</span><span class="p">[</span><span class="n">src</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">det_locs</span><span class="p">[</span><span class="n">det</span><span class="p">,</span> <span class="p">:])</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+                <span class="n">ch_idx3</span> <span class="o">=</span> <span class="n">ch_idx2</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">ii</span>
+                <span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">ch_idx3</span><span class="p">][</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">src_locs</span><span class="p">[</span><span class="n">src</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">ch_idx3</span><span class="p">][</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">6</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="n">det_locs</span><span class="p">[</span><span class="n">det</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">ch_idx3</span><span class="p">][</span><span class="s1">&#39;loc&#39;</span><span class="p">][:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">midpoint</span>
+                <span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">ch_idx3</span><span class="p">][</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="n">fnirs_wavelengths</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+                <span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">ch_idx3</span><span class="p">][</span><span class="s1">&#39;coord_frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_COORD_HEAD</span>
+
+        <span class="c1"># Extract the start/stop numbers for samples in the CSV. In theory the</span>
+        <span class="c1"># sample bounds should just be 10 * the number of channels, but some</span>
+        <span class="c1"># files have mixed \n and \n\r endings (!) so we can&#39;t rely on it, and</span>
+        <span class="c1"># instead make a single pass over the entire file at the beginning so</span>
+        <span class="c1"># that we know how to seek and read later.</span>
+        <span class="n">bounds</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;wl1&#39;</span><span class="p">,</span> <span class="s1">&#39;wl2&#39;</span><span class="p">):</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">bounds</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">offset</span><span class="p">]</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fid</span><span class="p">:</span>
+                    <span class="n">offset</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                    <span class="n">bounds</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+                <span class="k">assert</span> <span class="n">offset</span> <span class="o">==</span> <span class="n">fid</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+
+        <span class="c1"># Extras required for reading data</span>
+        <span class="n">raw_extras</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;sd_index&#39;</span><span class="p">:</span> <span class="n">req_ind</span><span class="p">,</span>
+            <span class="s1">&#39;files&#39;</span><span class="p">:</span> <span class="n">files</span><span class="p">,</span>
+            <span class="s1">&#39;bounds&#39;</span><span class="p">:</span> <span class="n">bounds</span><span class="p">,</span>
+            <span class="s1">&#39;nan_mask&#39;</span><span class="p">:</span> <span class="n">nan_mask</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="c1"># Get our saturated mask</span>
+        <span class="n">annot_mask</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">ki</span><span class="p">,</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">((</span><span class="s1">&#39;wl1&#39;</span><span class="p">,</span> <span class="s1">&#39;wl2&#39;</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">nan_mask</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">_read_csv_rows_cols</span><span class="p">(</span>
+                <span class="n">nan_mask</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">last_sample</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">req_ind</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="kc">None</span><span class="p">})</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">saturated</span> <span class="o">==</span> <span class="s1">&#39;nan&#39;</span><span class="p">:</span>
+                <span class="n">nan_mask</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">mask</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">saturated</span> <span class="o">==</span> <span class="s1">&#39;annotate&#39;</span>
+                <span class="k">if</span> <span class="n">annot_mask</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">annot_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+                        <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;ch_names&#39;</span><span class="p">])</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">last_sample</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">bool</span><span class="p">)</span>
+                <span class="n">annot_mask</span> <span class="o">|=</span> <span class="n">mask</span>
+                <span class="n">nan_mask</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># shouldn&#39;t need again</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">RawNIRX</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">info</span><span class="p">,</span> <span class="n">preload</span><span class="p">,</span> <span class="n">filenames</span><span class="o">=</span><span class="p">[</span><span class="n">fname</span><span class="p">],</span> <span class="n">last_samps</span><span class="o">=</span><span class="p">[</span><span class="n">last_sample</span><span class="p">],</span>
+            <span class="n">raw_extras</span><span class="o">=</span><span class="p">[</span><span class="n">raw_extras</span><span class="p">],</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+
+        <span class="c1"># make onset/duration/description</span>
+        <span class="n">onset</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">ch_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(),</span> <span class="nb">list</span><span class="p">(),</span> <span class="nb">list</span><span class="p">(),</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">annot_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ci</span><span class="p">,</span> <span class="n">mask</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">annot_mask</span><span class="p">):</span>
+                <span class="n">on</span><span class="p">,</span> <span class="n">dur</span> <span class="o">=</span> <span class="n">_mask_to_onsets_offsets</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+                <span class="n">on</span> <span class="o">=</span> <span class="n">on</span> <span class="o">/</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;sfreq&#39;</span><span class="p">]</span>
+                <span class="n">dur</span> <span class="o">=</span> <span class="n">dur</span> <span class="o">/</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;sfreq&#39;</span><span class="p">]</span>
+                <span class="n">dur</span> <span class="o">-=</span> <span class="n">on</span>
+                <span class="n">onset</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">on</span><span class="p">)</span>
+                <span class="n">duration</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">dur</span><span class="p">)</span>
+                <span class="n">description</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;BAD_SATURATED&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">on</span><span class="p">))</span>
+                <span class="n">ch_names</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">ch_names</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ci</span><span class="p">:</span><span class="mi">2</span> <span class="o">*</span> <span class="n">ci</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">on</span><span class="p">))</span>
+
+        <span class="c1"># Read triggers from event file</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_aurora</span><span class="p">:</span>
+            <span class="n">files</span><span class="p">[</span><span class="s1">&#39;tri&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="s1">&#39;hdr&#39;</span><span class="p">][:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;evt&#39;</span>
+        <span class="k">if</span> <span class="n">op</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="s1">&#39;tri&#39;</span><span class="p">]):</span>
+            <span class="k">with</span> <span class="n">_open</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="s1">&#39;tri&#39;</span><span class="p">])</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\d+)&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fid</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">is_aurora</span><span class="p">:</span>
+                <span class="n">tf_idx</span><span class="p">,</span> <span class="n">desc_idx</span> <span class="o">=</span> <span class="n">_determine_tri_idxs</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">t_</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">is_aurora</span><span class="p">:</span>
+                    <span class="n">trigger_frame</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">t_</span><span class="p">[</span><span class="n">tf_idx</span><span class="p">])</span>
+                    <span class="n">desc</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">t_</span><span class="p">[</span><span class="n">desc_idx</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">binary_value</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">t_</span><span class="p">[</span><span class="mi">1</span><span class="p">:])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">desc</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">binary_value</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+                    <span class="n">trigger_frame</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">t_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">onset</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trigger_frame</span> <span class="o">/</span> <span class="n">samplingrate</span><span class="p">)</span>
+                <span class="n">duration</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span>  <span class="c1"># No duration info stored in files</span>
+                <span class="n">description</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+                <span class="n">ch_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">())</span>
+        <span class="n">annot</span> <span class="o">=</span> <span class="n">Annotations</span><span class="p">(</span><span class="n">onset</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">ch_names</span><span class="o">=</span><span class="n">ch_names</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_annotations</span><span class="p">(</span><span class="n">annot</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_read_segment_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">fi</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">cals</span><span class="p">,</span> <span class="n">mult</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read a segment of data from a file.</span>
+
+<span class="sd">        The NIRX machine records raw data as two different wavelengths.</span>
+<span class="sd">        The returned data interleaves the wavelengths.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sd_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_extras</span><span class="p">[</span><span class="n">fi</span><span class="p">][</span><span class="s1">&#39;sd_index&#39;</span><span class="p">]</span>
+
+        <span class="n">wls</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;wl1&#39;</span><span class="p">,</span> <span class="s1">&#39;wl2&#39;</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">_read_csv_rows_cols</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_raw_extras</span><span class="p">[</span><span class="n">fi</span><span class="p">][</span><span class="s1">&#39;files&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">],</span>
+                <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">sd_index</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_raw_extras</span><span class="p">[</span><span class="n">fi</span><span class="p">][</span><span class="s1">&#39;bounds&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">nan_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_extras</span><span class="p">[</span><span class="n">fi</span><span class="p">][</span><span class="s1">&#39;nan_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">nan_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">d</span><span class="p">[</span><span class="n">nan_mask</span><span class="p">[:,</span> <span class="n">start</span><span class="p">:</span><span class="n">stop</span><span class="p">]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">wls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+        <span class="c1"># TODO: Make this more efficient by only indexing above what we need.</span>
+        <span class="c1"># For now let&#39;s just construct the full data matrix and index.</span>
+        <span class="c1"># Interleave wavelength 1 and 2 to match channel names:</span>
+        <span class="n">this_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">wls</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">stop</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
+        <span class="n">this_data</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">wls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">this_data</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">wls</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">_mult_cal_one</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">this_data</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">cals</span><span class="p">,</span> <span class="n">mult</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+
+<span class="k">def</span> <span class="nf">_read_csv_rows_cols</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span>
+                        <span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="n">start</span><span class="p">])</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="n">stop</span><span class="p">]</span> <span class="o">-</span> <span class="n">bounds</span><span class="p">[</span><span class="n">start</span><span class="p">])</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">fid</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;latin-1&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">replace</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">replace</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">)</span>
+    <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">stop</span> <span class="o">-</span> <span class="n">start</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="n">cols</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="k">def</span> <span class="nf">_convert_fnirs_to_head</span><span class="p">(</span><span class="n">trans</span><span class="p">,</span> <span class="n">fro</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">src_locs</span><span class="p">,</span> <span class="n">det_locs</span><span class="p">,</span> <span class="n">ch_locs</span><span class="p">):</span>
+    <span class="n">mri_head_t</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_get_trans</span><span class="p">(</span><span class="n">trans</span><span class="p">,</span> <span class="n">fro</span><span class="p">,</span> <span class="n">to</span><span class="p">)</span>
+    <span class="n">src_locs</span> <span class="o">=</span> <span class="n">apply_trans</span><span class="p">(</span><span class="n">mri_head_t</span><span class="p">,</span> <span class="n">src_locs</span><span class="p">)</span>
+    <span class="n">det_locs</span> <span class="o">=</span> <span class="n">apply_trans</span><span class="p">(</span><span class="n">mri_head_t</span><span class="p">,</span> <span class="n">det_locs</span><span class="p">)</span>
+    <span class="n">ch_locs</span> <span class="o">=</span> <span class="n">apply_trans</span><span class="p">(</span><span class="n">mri_head_t</span><span class="p">,</span> <span class="n">ch_locs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">src_locs</span><span class="p">,</span> <span class="n">det_locs</span><span class="p">,</span> <span class="n">ch_locs</span><span class="p">,</span> <span class="n">mri_head_t</span>
+
+
+<span class="k">def</span> <span class="nf">_determine_tri_idxs</span><span class="p">(</span><span class="n">trigger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Determine tri file indexes for frame and description.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trigger</span><span class="p">)</span> <span class="o">==</span> <span class="mi">12</span><span class="p">:</span>
+        <span class="c1"># Aurora version 2021.9.6 or greater</span>
+        <span class="n">trigger_frame_idx</span> <span class="o">=</span> <span class="mi">7</span>
+        <span class="n">desc_idx</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">trigger</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="c1"># Aurora version 2021.9.5 or earlier</span>
+        <span class="n">trigger_frame_idx</span> <span class="o">=</span> <span class="mi">7</span>
+        <span class="n">desc_idx</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Unable to read trigger file.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">trigger_frame_idx</span><span class="p">,</span> <span class="n">desc_idx</span>
+</pre></div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
+    
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2012–2022, MNE Developers. Last updated &lt;time datetime=&#34;2022-10-06T00:07:22.643633+00:00&#34; class=&#34;localized&#34;&gt;2022-10-06 00:07 UTC&lt;/time&gt;
+&lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.<br>
+
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

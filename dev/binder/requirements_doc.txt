@@ -1,8 +1,8 @@
 # requirements for building docs
 sphinx<6
-https://github.com/numpy/numpydoc/archive/main.zip
-https://github.com/pydata/pydata-sphinx-theme/archive/cef3e724e15852fc2a84bee256c457c9497834b8.zip
-https://github.com/sphinx-gallery/sphinx-gallery/archive/master.zip
+git+https://github.com/numpy/numpydoc.git@main
+pydata_sphinx_theme==0.13.1
+git+https://github.com/sphinx-gallery/sphinx-gallery@master
 sphinxcontrib-bibtex>=2.3
 memory_profiler
 seaborn

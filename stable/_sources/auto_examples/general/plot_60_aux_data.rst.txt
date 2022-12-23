@@ -10,7 +10,7 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_auto_examples_general_plot_60_aux_data.py>`
+        :ref:`Go to the end <sphx_glr_download_auto_examples_general_plot_60_aux_data.py>`
         to download the full example code or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
@@ -92,6 +92,13 @@ the previous GLM example that contains auxiliary data.
 
 
 
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /home/circleci/project/mne_nirs/datasets/snirf_with_aux/snirf_with_aux.py:62: RuntimeWarning: Setting non-standard config type: "MNE_DATASETS_SNIRFAUX_PATH"
+      dpath = fetch_dataset(dataset_params, path=path, force_update=force_update,
 
 
 .. raw:: html
@@ -463,7 +470,7 @@ but this is beyond the scope of this tutorial.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  6.682 seconds)
+   **Total running time of the script:** ( 0 minutes  8.795 seconds)
 
 **Estimated memory usage:**  9 MB
 

@@ -1,0 +1,581 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Computation times &#8212; MNE-NIRS 0.6.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/copybutton.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-188272121-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-188272121-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'sg_execution_times';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.6.0';
+        </script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="canonical" href="https://mne.tools/mne-nirs/stable/index.html" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/mne_nirs_logo_small.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/mne_nirs_logo_small.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="auto_examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="api.html">
+                        API
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="changelog.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      0.6.0  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mne-tools/mne-nirs" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="auto_examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="api.html">
+                        API
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="changelog.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      0.6.0  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mne-tools/mne-nirs" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Computation times</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="computation-times">
+<span id="sphx-glr-sg-execution-times"></span><h1>Computation times<a class="headerlink" href="#computation-times" title="Permalink to this heading">#</a></h1>
+<p><strong>07:31.506</strong> total execution time for 23 files <strong>from all galleries</strong>:</p>
+<div class="docutils container">
+<style scoped>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+</style>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script type="text/javascript" class="init">
+$(document).ready( function () {
+    $('table.sg-datatable').DataTable({order: [[1, 'desc']]});
+} );
+</script><table class="table table-striped sg-datatable">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Example</p></th>
+<th class="head"><p>Time</p></th>
+<th class="head"><p>Mem (MB)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/general/plot_01_data_io.html#sphx-glr-auto-examples-general-plot-01-data-io-py"><span class="std std-ref">Importing Data From fNIRS Devices</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_01_data_io.py</span></code>)</p></td>
+<td><p>02:13.153</p></td>
+<td><p>470.2</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="auto_examples/general/plot_70_visualise_brain.html#sphx-glr-auto-examples-general-plot-70-visualise-brain-py"><span class="std std-ref">Utilising Anatomical Information</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_70_visualise_brain.py</span></code>)</p></td>
+<td><p>00:33.742</p></td>
+<td><p>34.1</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/general/plot_12_group_glm.html#sphx-glr-auto-examples-general-plot-12-group-glm-py"><span class="std std-ref">Group Level GLM Analysis</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_12_group_glm.py</span></code>)</p></td>
+<td><p>00:30.511</p></td>
+<td><p>475.8</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="auto_examples/general/plot_30_frequency.html#sphx-glr-auto-examples-general-plot-30-frequency-py"><span class="std std-ref">Frequency and Filter Commentary</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_30_frequency.py</span></code>)</p></td>
+<td><p>00:29.589</p></td>
+<td><p>9.1</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/general/plot_06_gowerlabs.html#sphx-glr-auto-examples-general-plot-06-gowerlabs-py"><span class="std std-ref">Read Gowerlabs LUMO data</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_06_gowerlabs.py</span></code>)</p></td>
+<td><p>00:29.580</p></td>
+<td><p>162.2</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="auto_examples/general/plot_22_quality.html#sphx-glr-auto-examples-general-plot-22-quality-py"><span class="std std-ref">Signal Quality Evaluation</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_22_quality.py</span></code>)</p></td>
+<td><p>00:27.146</p></td>
+<td><p>10.5</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/general/plot_13_fir_glm.html#sphx-glr-auto-examples-general-plot-13-fir-glm-py"><span class="std std-ref">GLM FIR Analysis</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_13_fir_glm.py</span></code>)</p></td>
+<td><p>00:25.077</p></td>
+<td><p>10.6</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="auto_examples/general/plot_15_waveform.html#sphx-glr-auto-examples-general-plot-15-waveform-py"><span class="std std-ref">Waveform Averaging Analysis</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_15_waveform.py</span></code>)</p></td>
+<td><p>00:23.822</p></td>
+<td><p>23.3</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/general/plot_11_hrf_measured.html#sphx-glr-auto-examples-general-plot-11-hrf-measured-py"><span class="std std-ref">GLM Analysis (Measured)</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_11_hrf_measured.py</span></code>)</p></td>
+<td><p>00:22.563</p></td>
+<td><p>244.1</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="auto_examples/general/plot_14_glm_components.html#sphx-glr-auto-examples-general-plot-14-glm-components-py"><span class="std std-ref">GLM and Design Matrix Parameters</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_14_glm_components.py</span></code>)</p></td>
+<td><p>00:21.033</p></td>
+<td><p>9.0</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/general/plot_16_waveform_group.html#sphx-glr-auto-examples-general-plot-16-waveform-group-py"><span class="std std-ref">Group Level Waveform Analysis</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_16_waveform_group.py</span></code>)</p></td>
+<td><p>00:10.915</p></td>
+<td><p>9.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="auto_examples/general/plot_99_bad.html#sphx-glr-auto-examples-general-plot-99-bad-py"><span class="std std-ref">Importance of Controls and Parameter Selection</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_99_bad.py</span></code>)</p></td>
+<td><p>00:09.060</p></td>
+<td><p>9.6</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/general/plot_60_aux_data.html#sphx-glr-auto-examples-general-plot-60-aux-data-py"><span class="std std-ref">Utilising Auxiliary Data</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_60_aux_data.py</span></code>)</p></td>
+<td><p>00:09.036</p></td>
+<td><p>9.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="auto_examples/general/plot_80_save_read_glm.html#sphx-glr-auto-examples-general-plot-80-save-read-glm-py"><span class="std std-ref">Save and load GLM results</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_80_save_read_glm.py</span></code>)</p></td>
+<td><p>00:07.942</p></td>
+<td><p>16.0</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/general/plot_19_snirf.html#sphx-glr-auto-examples-general-plot-19-snirf-py"><span class="std std-ref">SNIRF Support in MNE</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_19_snirf.py</span></code>)</p></td>
+<td><p>00:07.592</p></td>
+<td><p>9.6</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="auto_examples/general/plot_10_hrf_simulation.html#sphx-glr-auto-examples-general-plot-10-hrf-simulation-py"><span class="std std-ref">GLM Analysis (Simulated)</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_10_hrf_simulation.py</span></code>)</p></td>
+<td><p>00:07.041</p></td>
+<td><p>10.8</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/general/plot_50_decoding.html#sphx-glr-auto-examples-general-plot-50-decoding-py"><span class="std std-ref">Decoding Analysis</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_50_decoding.py</span></code>)</p></td>
+<td><p>00:05.102</p></td>
+<td><p>9.5</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="auto_examples/general/plot_20_enhance.html#sphx-glr-auto-examples-general-plot-20-enhance-py"><span class="std std-ref">Signal Enhancement Techniques</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_20_enhance.py</span></code>)</p></td>
+<td><p>00:04.970</p></td>
+<td><p>9.0</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/general/plot_21_artifacts.html#sphx-glr-auto-examples-general-plot-21-artifacts-py"><span class="std std-ref">Artifact Correction Techniques</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_21_artifacts.py</span></code>)</p></td>
+<td><p>00:04.704</p></td>
+<td><p>9.7</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="auto_examples/general/plot_40_mayer.html#sphx-glr-auto-examples-general-plot-40-mayer-py"><span class="std std-ref">Mayer Wave Parametrisation</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_40_mayer.py</span></code>)</p></td>
+<td><p>00:04.297</p></td>
+<td><p>8.9</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/migration/plot_01_homer.html#sphx-glr-auto-examples-migration-plot-01-homer-py"><span class="std std-ref">Migrating from Homer to MNE</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/migration/plot_01_homer.py</span></code>)</p></td>
+<td><p>00:02.646</p></td>
+<td><p>8.9</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="auto_examples/general/plot_05_datasets.html#sphx-glr-auto-examples-general-plot-05-datasets-py"><span class="std std-ref">Example Datasets</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/general/plot_05_datasets.py</span></code>)</p></td>
+<td><p>00:01.985</p></td>
+<td><p>11.3</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/migration/plot_02_nirstoolbox.html#sphx-glr-auto-examples-migration-plot-02-nirstoolbox-py"><span class="std std-ref">Migrating from nirs-toolbox to MNE</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/migration/plot_02_nirstoolbox.py</span></code>)</p></td>
+<td><p>00:00.000</p></td>
+<td><p>8.9</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner"></div>
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2012–2023, MNE Developers. Last updated &lt;time datetime=&#34;2023-11-21T03:21:06.396486+00:00&#34; class=&#34;localized&#34;&gt;2023-11-21 03:21 UTC&lt;/time&gt;
+&lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>

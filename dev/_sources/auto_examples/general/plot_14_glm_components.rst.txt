@@ -67,7 +67,7 @@ MNE-NIRS will wrap all required Nilearn functions so you don't need to access th
 
 .. GENERATED FROM PYTHON SOURCE LINES 50-75
 
-.. code-block:: default
+.. code-block:: Python
 
     # sphinx_gallery_thumbnail_number = 1
 
@@ -135,7 +135,7 @@ Note that they differ in their peak timing and undershoot.
 
 .. GENERATED FROM PYTHON SOURCE LINES 105-120
 
-.. code-block:: default
+.. code-block:: Python
 
 
     time_length = 30
@@ -166,7 +166,7 @@ Note that they differ in their peak timing and undershoot.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f99c87a74c0>
+    <matplotlib.legend.Legend object at 0x7ff280720130>
 
 
 
@@ -189,7 +189,7 @@ how this varies for several duration values with the Glover HRF.
 
 .. GENERATED FROM PYTHON SOURCE LINES 135-170
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Convenient functions so we dont need to repeat code below
@@ -247,7 +247,7 @@ For a 3 second duration:
 
 .. GENERATED FROM PYTHON SOURCE LINES 176-181
 
-.. code-block:: default
+.. code-block:: Python
 
 
     duration = 3
@@ -272,7 +272,7 @@ Or for a 5 second duration:
 
 .. GENERATED FROM PYTHON SOURCE LINES 184-189
 
-.. code-block:: default
+.. code-block:: Python
 
 
     duration = 5
@@ -297,7 +297,7 @@ Or for a 15 second duration:
 
 .. GENERATED FROM PYTHON SOURCE LINES 192-197
 
-.. code-block:: default
+.. code-block:: Python
 
 
     duration = 15
@@ -323,7 +323,7 @@ resulting regressor varies as a function of this parameter.
 
 .. GENERATED FROM PYTHON SOURCE LINES 201-216
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(7, 7))
@@ -354,7 +354,7 @@ resulting regressor varies as a function of this parameter.
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f99df3e4940>
+    <matplotlib.colorbar.Colorbar object at 0x7ff1676e2860>
 
 
 
@@ -385,7 +385,7 @@ and give names to the annotations.
 
 .. GENERATED FROM PYTHON SOURCE LINES 239-251
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
@@ -428,7 +428,7 @@ with color representing amplitude.
 
 .. GENERATED FROM PYTHON SOURCE LINES 262-275
 
-.. code-block:: default
+.. code-block:: Python
 
 
     design_matrix = make_first_level_design_matrix(raw_intensity,
@@ -462,7 +462,7 @@ the resulting regressor for each annotation is elongated.
 
 .. GENERATED FROM PYTHON SOURCE LINES 279-292
 
-.. code-block:: default
+.. code-block:: Python
 
 
     design_matrix = make_first_level_design_matrix(raw_intensity,
@@ -497,7 +497,7 @@ This is not an issue, the design matrix can handle overlapping responses.
 
 .. GENERATED FROM PYTHON SOURCE LINES 297-310
 
-.. code-block:: default
+.. code-block:: Python
 
 
     design_matrix = make_first_level_design_matrix(raw_intensity,
@@ -563,7 +563,7 @@ higher frequency components will be regressed from the signal.
 
 .. GENERATED FROM PYTHON SOURCE LINES 345-354
 
-.. code-block:: default
+.. code-block:: Python
 
 
     design_matrix = make_first_level_design_matrix(raw_intensity,
@@ -600,7 +600,7 @@ We observe that the function has included 6 drift regressors in the design matri
 
 .. GENERATED FROM PYTHON SOURCE LINES 364-373
 
-.. code-block:: default
+.. code-block:: Python
 
 
     design_matrix = make_first_level_design_matrix(raw_intensity,
@@ -631,7 +631,7 @@ this should add more regressors.
 
 .. GENERATED FROM PYTHON SOURCE LINES 378-387
 
-.. code-block:: default
+.. code-block:: Python
 
 
     design_matrix = make_first_level_design_matrix(raw_intensity,
@@ -677,7 +677,7 @@ to remove annotations we aren't interested in (in this experiment the trigger
 
 .. GENERATED FROM PYTHON SOURCE LINES 406-414
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw_original = mne.io.read_raw_nirx(fnirs_raw_dir)
@@ -713,7 +713,7 @@ a sanity check on your own calculations.
 
 .. GENERATED FROM PYTHON SOURCE LINES 423-427
 
-.. code-block:: default
+.. code-block:: Python
 
 
     print(drift_high_pass(raw_original))
@@ -740,7 +740,7 @@ This would be achieved by renaming the triggers.
 
 .. GENERATED FROM PYTHON SOURCE LINES 432-438
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw_original.annotations.rename({'2.0': 'Tapping', '3.0': 'Tapping'})
@@ -765,7 +765,7 @@ This would be achieved by renaming the triggers.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  14.523 seconds)
+   **Total running time of the script:** (0 minutes 21.033 seconds)
 
 **Estimated memory usage:**  9 MB
 
@@ -776,21 +776,20 @@ This would be achieved by renaming the triggers.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=dev/notebooks/auto_examples/general/plot_14_glm_components.ipynb
+        :target: https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_14_glm_components.ipynb
         :alt: Launch binder
         :width: 150 px
-
-    .. container:: sphx-glr-download sphx-glr-download-python
-
-      :download:`Download Python source code: plot_14_glm_components.py <plot_14_glm_components.py>`
 
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
       :download:`Download Jupyter notebook: plot_14_glm_components.ipynb <plot_14_glm_components.ipynb>`
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download Python source code: plot_14_glm_components.py <plot_14_glm_components.py>`
 
 
 .. only:: html

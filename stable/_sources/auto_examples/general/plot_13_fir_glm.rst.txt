@@ -10,7 +10,7 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_auto_examples_general_plot_13_fir_glm.py>`
+        :ref:`Go to the end <sphx_glr_download_auto_examples_general_plot_13_fir_glm.py>`
         to download the full example code or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
@@ -587,7 +587,7 @@ per chromophore (HbR not shown in first two facets).
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f10ac57adf0>
+    <matplotlib.legend.Legend object at 0x7ff0bc069fd0>
 
 
 
@@ -618,13 +618,13 @@ Plot the response with confidence intervals
     axes.plot(index_values, np.sum(dm_cond_scaled_hbo, axis=1), 'r')
     axes.plot(index_values, np.sum(dm_cond_scaled_hbr, axis=1), 'b')
     axes.fill_between(index_values,
-                         np.sum(dm_cond_scaled_hbo_l95, axis=1),
-                         np.sum(dm_cond_scaled_hbo_u95, axis=1),
-                         facecolor='red', alpha=0.25)
+                      np.asarray(np.sum(dm_cond_scaled_hbo_l95, axis=1)),
+                      np.asarray(np.sum(dm_cond_scaled_hbo_u95, axis=1)),
+                      facecolor='red', alpha=0.25)
     axes.fill_between(index_values,
-                         np.sum(dm_cond_scaled_hbr_l95, axis=1),
-                         np.sum(dm_cond_scaled_hbr_u95, axis=1),
-                         facecolor='blue', alpha=0.25)
+                      np.asarray(np.sum(dm_cond_scaled_hbr_l95, axis=1)),
+                      np.asarray(np.sum(dm_cond_scaled_hbr_u95, axis=1)),
+                      facecolor='blue', alpha=0.25)
 
     # Format the plot
     axes.set_xlim(-5, 30)
@@ -654,7 +654,7 @@ Plot the response with confidence intervals
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  16.960 seconds)
+   **Total running time of the script:** ( 0 minutes  17.414 seconds)
 
 **Estimated memory usage:**  10 MB
 
