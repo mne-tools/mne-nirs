@@ -17,7 +17,7 @@ To install a specific version of the library you would run ``pip install mne-nir
 v0.6.dev0
 ---------
 
-* Fix bug in SNIRF writter that caused incorrect duration to be written to file. By `Robert Luke`_.
+* Fix bug in SNIRF writer that caused incorrect duration to be written to file. By `Robert Luke`_.
 
 
 v0.5.0
