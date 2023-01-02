@@ -33,6 +33,7 @@ pytest.importorskip('mne', '1.0')  # these tests are broken on 0.24!
 requires_mne_1_4 = pytest.mark.skipif(not check_version('mne', '1.4'),
                                       reason='Needs MNE-Python 1.4')
 
+
 @requires_h5py
 @requires_testing_data
 @pytest.mark.parametrize('fname', (
