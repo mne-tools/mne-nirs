@@ -166,8 +166,8 @@ def test_aux_read():
 @requires_h5py
 @requires_testing_data
 @pytest.mark.parametrize('fname', (
-        fname_nirx_15_2,
-        fname_nirx_15_2_short,
+    fname_nirx_15_2,
+    fname_nirx_15_2_short,
 ))
 def test_snirf_stim_roundtrip(fname, tmpdir):
     """Ensure snirf annotations are written."""
@@ -188,11 +188,11 @@ def test_snirf_stim_roundtrip(fname, tmpdir):
 @requires_h5py
 @requires_testing_data
 @pytest.mark.parametrize('fname', (
-        fname_nirx_15_2,
-        fname_nirx_15_2_short,
+    fname_nirx_15_2,
+    fname_nirx_15_2_short,
 ))
 @pytest.mark.parametrize('newduration', (
-        1, 2, 3
+    1, 2, 3
 ))
 def test_snirf_duration(fname, newduration, tmpdir):
     """Ensure snirf annotations are written."""
