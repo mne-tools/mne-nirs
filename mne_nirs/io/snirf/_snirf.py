@@ -237,8 +237,9 @@ def _add_stim_info(raw, nirs):
         trgs = np.where(raw.annotations.description == desc)[0]
         stims = np.zeros((len(trgs), 3))
         for idx_t, trg in enumerate(trgs):
-            stims[idx_t, :] = [raw.annotations.onset[trg], 5.0,
-                               raw.annotations.duration[trg]]
+            stims[idx_t, :] = [raw.annotations.onset[trg],
+                               raw.annotations.duration[trg],
+                               idx]
         stim_group.create_dataset('data', data=stims)
         stim_group.create_dataset('name', data=_str_encode(desc))
 
