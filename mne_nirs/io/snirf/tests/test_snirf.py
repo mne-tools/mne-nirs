@@ -195,7 +195,7 @@ def test_snirf_stim_roundtrip(fname, tmpdir):
     1, 2, 3
 ))
 def test_snirf_duration(fname, newduration, tmpdir):
-    """Ensure snirf annotations are written."""
+    """Ensure snirf annotations are written to file."""
     raw_orig = read_raw_nirx(fname, preload=True)
     assert raw_orig.annotations.duration[0] == 1
     raw_mod = raw_orig.copy()
