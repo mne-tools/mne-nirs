@@ -16,6 +16,7 @@ from mne.io import read_raw_snirf, read_raw_nirx
 from mne_nirs.io.snirf import write_raw_snirf, SPEC_FORMAT_VERSION, \
     read_snirf_aux_data
 import mne_nirs.datasets.snirf_with_aux as aux
+from mne.utils import check_version
 
 
 fname_nirx_15_0 = op.join(data_path(download=False),
@@ -29,6 +30,8 @@ fname_snirf_aux = aux.data_path()
 
 pytest.importorskip('mne', '1.0')  # these tests are broken on 0.24!
 
+requires_mne_1_4 = pytest.mark.skipif(not check_version('mne', '1.4'),
+                                      reason='Needs MNE-Python 1.4')
 
 @requires_h5py
 @requires_testing_data
@@ -185,6 +188,7 @@ def test_snirf_stim_roundtrip(fname, tmpdir):
                        raw.annotations.description)
 
 
+@requires_mne_1_4
 @requires_h5py
 @requires_testing_data
 @pytest.mark.parametrize('fname', (
