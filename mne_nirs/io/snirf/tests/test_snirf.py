@@ -5,7 +5,7 @@
 import os.path as op
 import datetime
 import h5py
-from numpy.testing import assert_allclose
+from numpy.testing import assert_allclose, assert_array_equal
 import pytest
 import pandas as pd
 from snirf import validateSnirf
@@ -16,6 +16,7 @@ from mne.io import read_raw_snirf, read_raw_nirx
 from mne_nirs.io.snirf import write_raw_snirf, SPEC_FORMAT_VERSION, \
     read_snirf_aux_data
 import mne_nirs.datasets.snirf_with_aux as aux
+from mne.utils import check_version
 
 
 fname_nirx_15_0 = op.join(data_path(download=False),
@@ -28,6 +29,9 @@ fname_nirx_15_2_short = op.join(data_path(download=False),
 fname_snirf_aux = aux.data_path()
 
 pytest.importorskip('mne', '1.0')  # these tests are broken on 0.24!
+
+requires_mne_1_4 = pytest.mark.skipif(not check_version('mne', '1.4'),
+                                      reason='Needs MNE-Python 1.4')
 
 
 @requires_h5py
@@ -161,3 +165,48 @@ def test_aux_read():
     assert type(a) is pd.DataFrame
     assert 'accelerometer_2_z' in a
     assert len(a['gyroscope_1_z']) == len(raw.times)
+
+
+@requires_h5py
+@requires_testing_data
+@pytest.mark.parametrize('fname', (
+    fname_nirx_15_2,
+    fname_nirx_15_2_short,
+))
+def test_snirf_stim_roundtrip(fname, tmpdir):
+    """Ensure snirf annotations are written."""
+    raw_orig = read_raw_nirx(fname, preload=True)
+    assert raw_orig.annotations.duration[0] == 1
+    raw_mod = raw_orig.copy()
+    test_file = tmpdir.join('test_raw_no_mod.snirf')
+    write_raw_snirf(raw_mod, test_file)
+    raw = read_raw_snirf(test_file)
+    assert_array_equal(raw_orig.annotations.onset,
+                       raw.annotations.onset)
+    assert_array_equal(raw_orig.annotations.duration,
+                       raw.annotations.duration)
+    assert_array_equal(raw_orig.annotations.description,
+                       raw.annotations.description)
+
+
+@requires_mne_1_4
+@requires_h5py
+@requires_testing_data
+@pytest.mark.parametrize('fname', (
+    fname_nirx_15_2,
+    fname_nirx_15_2_short,
+))
+@pytest.mark.parametrize('newduration', (
+    1, 2, 3
+))
+def test_snirf_duration(fname, newduration, tmpdir):
+    """Ensure snirf annotations are written to file."""
+    raw_orig = read_raw_nirx(fname, preload=True)
+    assert raw_orig.annotations.duration[0] == 1
+    raw_mod = raw_orig.copy()
+    raw_mod.annotations.set_durations(newduration)
+    test_file = tmpdir.join('test_raw_duration.snirf')
+    write_raw_snirf(raw_mod, test_file)
+    raw = read_raw_snirf(test_file)
+    assert raw.annotations.duration[0] == newduration
+    assert raw.annotations.duration[-1] == newduration
