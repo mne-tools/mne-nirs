@@ -10,10 +10,6 @@ import numpy as np
 from mne.io.pick import _picks_to_idx
 from mne.transforms import apply_trans, _get_trans
 from mne.channels import make_standard_montage
-from mne.io.constants import FIFF
-
-
-from ..fold._fold import _generate_montage_locations
 
 
 # The currently-implemented spec can be found here:
