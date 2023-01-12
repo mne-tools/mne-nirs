@@ -28,7 +28,7 @@ def write_raw_snirf(raw, fname, atlasviewer=False):
         Path to the SNIRF data file.
     atlasviewer : bool
         Should additional landmarks be exported to
-        facilitate compatability with AtlasViewer.
+        facilitate compatibility with AtlasViewer.
     """
 
     picks = _picks_to_idx(raw.info, 'fnirs_cw_amplitude', exclude=[])
@@ -169,7 +169,7 @@ def _add_probe_info(raw, nirs, atlasviewer):
         The root hdf5 nirs group to which the probe info should be added.
     atlasviewer : bool
         Should additional landmarks be exported to
-        facilitate compatability with AtlasViewer.
+        facilitate compatibility with AtlasViewer.
     """
     sources = _get_unique_source_list(raw)
     detectors = _get_unique_detector_list(raw)
@@ -229,7 +229,7 @@ def _store_probe_landmarks(raw, probe, atlasviewer):
         The hdf5 probe group to which the landmark info should be added.
     atlasviewer : bool
         Should additional landmarks be exported to
-        facilitate compatability with AtlasViewer.
+        facilitate compatibility with AtlasViewer.
     """
     diglocs = np.empty((len(raw.info['dig']), 3))
     digname = list()
