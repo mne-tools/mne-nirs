@@ -8,6 +8,12 @@ import h5py as h5py
 import re
 import numpy as np
 from mne.io.pick import _picks_to_idx
+from mne.transforms import apply_trans, _get_trans
+from mne.channels import make_standard_montage
+from mne.io.constants import FIFF
+
+
+from ..fold._fold import _generate_montage_locations
 
 
 # The currently-implemented spec can be found here:
@@ -15,7 +21,7 @@ from mne.io.pick import _picks_to_idx
 SPEC_FORMAT_VERSION = '1.0'
 
 
-def write_raw_snirf(raw, fname):
+def write_raw_snirf(raw, fname, atlasviewer):
     """Write continuous wave data to disk in SNIRF format.
 
     Parameters
@@ -24,6 +30,9 @@ def write_raw_snirf(raw, fname):
         Data to write to file. Must contain only `fnirs_cw_amplitude` type.
     fname : str
         Path to the SNIRF data file.
+    atlasviewer : bool
+        Should additional landmarks be exported to
+        facilitate compatability with AtlasViewer.
     """
 
     picks = _picks_to_idx(raw.info, 'fnirs_cw_amplitude', exclude=[])
@@ -36,7 +45,7 @@ def write_raw_snirf(raw, fname):
 
         _add_metadata_tags(raw, nirs)
         _add_single_data_block(raw, nirs)
-        _add_probe_info(raw, nirs)
+        _add_probe_info(raw, nirs, atlasviewer=atlasviewer)
         _add_stim_info(raw, nirs)
 
 
@@ -153,7 +162,7 @@ def _add_measurement_lists(raw, data_block):
         ch_group.create_dataset('dataTypeIndex', data=1, dtype='int32')
 
 
-def _add_probe_info(raw, nirs):
+def _add_probe_info(raw, nirs, atlasviewer=False):
     """Adds details of the probe to the nirs group.
 
     Parameters
@@ -162,6 +171,9 @@ def _add_probe_info(raw, nirs):
         Data to add to the snirf file.
     nirs : hpy5.Group
         The root hdf5 nirs group to which the probe info should be added.
+    atlasviewer : bool
+        Should additional landmarks be exported to
+        facilitate compatability with AtlasViewer.
     """
     sources = _get_unique_source_list(raw)
     detectors = _get_unique_detector_list(raw)
@@ -192,11 +204,26 @@ def _add_probe_info(raw, nirs):
 
     # Store probe landmarks
     if raw.info['dig'] is not None:
-        _store_probe_landmarks(raw, probe)
+        _store_probe_landmarks(raw, probe, atlasviewer)
 
 
-def _store_probe_landmarks(raw, probe):
+def _store_probe_landmarks(raw, probe, atlasviewer):
     """Adds the probe landmarks to the probe group.
+
+    The SNIRF specification provides flexibility around
+    what is stored in this field. Some software expect specific
+    landmarks which are not part of the SNIRF specification.
+    We endeavour to provide as much information as possible,
+    without causing conflicts with the specification,
+    in order to achieve compliance with other software packages.
+
+    Atlas Viewer expects a list of 10-20 locations to be provided
+    in the landmark fields.
+
+    We also store the values in `raw.info['dig']` as these
+    may represent positions that have been digitised by the
+    researcher and should be retained. These are prepended
+    by the string "HP" to represent a head point.
 
     Parameters
     ----------
@@ -204,6 +231,9 @@ def _store_probe_landmarks(raw, probe):
         Data to add to the snirf file.
     probe : hpy5.Group
         The hdf5 probe group to which the landmark info should be added.
+    atlasviewer : bool
+        Should additional landmarks be exported to
+        facilitate compatability with AtlasViewer.
     """
     diglocs = np.empty((len(raw.info['dig']), 3))
     digname = list()
@@ -213,8 +243,24 @@ def _store_probe_landmarks(raw, probe):
         if ident is not None:
             digname.append(ident[1])
         else:
-            digname.append(str(dig.get('ident')))
+            digname.append(f"HP_{str(dig.get('ident'))}")
         diglocs[idx, :] = dig.get('r')
+
+    if atlasviewer:
+        # First, get the template positions in mni fsaverage space
+        montage = make_standard_montage(
+            'standard_1020', head_size=0.09700884729534559)
+        ch_names = montage.ch_names
+        montage_locs = np.array(list(montage._get_ch_pos().values()))
+
+        # montage_locs = np.array([d['r'] for d in montage.dig])
+        head_mri_t, _ = _get_trans('fsaverage', 'mri', 'head')
+        locations_head = apply_trans(head_mri_t, montage_locs)
+
+        for template_idx in range(len(ch_names)):
+            digname.append(ch_names[template_idx])
+            diglocs = np.vstack((diglocs, locations_head[template_idx, :]))
+
     digname = [_str_encode(d) for d in digname]
     probe.create_dataset('landmarkPos3D', data=diglocs)
     probe.create_dataset('landmarkLabels', data=digname)

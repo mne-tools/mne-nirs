@@ -8,7 +8,7 @@ import h5py
 from numpy.testing import assert_allclose, assert_array_equal
 import pytest
 import pandas as pd
-from snirf import validateSnirf
+from pysnirf2 import validateSnirf, Snirf
 
 from mne.datasets.testing import data_path, requires_testing_data
 from mne.utils import requires_h5py, object_diff
@@ -95,6 +95,30 @@ def test_snirf_nobday(fname, tmpdir):
     write_raw_snirf(raw_orig, test_file)
     raw = read_raw_snirf(test_file)
     assert_allclose(raw.get_data(), raw_orig.get_data())
+
+
+@requires_h5py
+@requires_testing_data
+@pytest.mark.parametrize('fname', (
+    fname_nirx_15_2,
+))
+def test_snirf_extra_atlasviewer(fname, tmpdir):
+    """Ensure writing atlasviewer landmarks."""
+    raw_orig = read_raw_nirx(fname, preload=True)
+    test_file = tmpdir.join('test_raw.snirf')
+
+    write_raw_snirf(raw_orig, test_file, atlasviewer=False)
+    raw = read_raw_snirf(test_file)
+    assert len([i['ident'] for i in raw.info['dig']]) == 35
+
+    write_raw_snirf(raw_orig, test_file, atlasviewer=True)
+    raw = read_raw_snirf(test_file)
+    assert len([i['ident'] for i in raw.info['dig']]) == 129
+    snirf = Snirf(str(test_file), "r")
+    assert len(snirf.nirs[0].probe.landmarkLabels) == 129
+    assert "Fpz" in snirf.nirs[0].probe.landmarkLabels
+    assert "P7" in snirf.nirs[0].probe.landmarkLabels
+    assert "HP_20" in snirf.nirs[0].probe.landmarkLabels
 
 
 def _verify_snirf_required_fields(test_file):
