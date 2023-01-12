@@ -17,7 +17,7 @@ from mne.channels import make_standard_montage
 SPEC_FORMAT_VERSION = '1.0'
 
 
-def write_raw_snirf(raw, fname, atlasviewer):
+def write_raw_snirf(raw, fname, atlasviewer=False):
     """Write continuous wave data to disk in SNIRF format.
 
     Parameters
@@ -158,7 +158,7 @@ def _add_measurement_lists(raw, data_block):
         ch_group.create_dataset('dataTypeIndex', data=1, dtype='int32')
 
 
-def _add_probe_info(raw, nirs, atlasviewer=False):
+def _add_probe_info(raw, nirs, atlasviewer):
     """Adds details of the probe to the nirs group.
 
     Parameters
