@@ -8,7 +8,7 @@ import h5py
 from numpy.testing import assert_allclose, assert_array_equal
 import pytest
 import pandas as pd
-from pysnirf2 import validateSnirf, Snirf
+from snirf import validateSnirf, Snirf
 
 from mne.datasets.testing import data_path, requires_testing_data
 from mne.utils import requires_h5py, object_diff
