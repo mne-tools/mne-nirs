@@ -253,9 +253,8 @@ def _store_probe_landmarks(raw, probe, atlasviewer):
         head_mri_t, _ = _get_trans('fsaverage', 'mri', 'head')
         locations_head = apply_trans(head_mri_t, montage_locs)
 
-        for template_idx in range(len(ch_names)):
-            digname.append(ch_names[template_idx])
-            diglocs = np.vstack((diglocs, locations_head[template_idx, :]))
+        digname.extend(ch_names)
+        diglocs = np.concatenate((diglocs, locations_head))
 
     digname = [_str_encode(d) for d in digname]
     probe.create_dataset('landmarkPos3D', data=diglocs)
