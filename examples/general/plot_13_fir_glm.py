@@ -35,7 +35,7 @@ This GLM analysis is a wrapper over the excellent
 
 .. note::
 
-   The sample rate used in this example is set to 0.5 Hz. This is done to
+   The sample rate used in this example is set to 0.5 Hz. This is to
    ensure that the code can run on the continuous integration servers. You may
    wish to increase the sample rate by adjusting `resample` below for your
    own analysis.
