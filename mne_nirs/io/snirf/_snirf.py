@@ -17,7 +17,7 @@ from mne.channels import make_standard_montage
 SPEC_FORMAT_VERSION = '1.0'
 
 
-def write_raw_snirf(raw, fname, atlasviewer=False):
+def write_raw_snirf(raw, fname, add_montage=False):
     """Write continuous wave data to disk in SNIRF format.
 
     Parameters
@@ -26,8 +26,8 @@ def write_raw_snirf(raw, fname, atlasviewer=False):
         Data to write to file. Must contain only `fnirs_cw_amplitude` type.
     fname : str
         Path to the SNIRF data file.
-    atlasviewer : bool
-        Should additional landmarks be exported to
+    add_montage : bool
+        Should the montage be added as landmarks to
         facilitate compatibility with AtlasViewer.
     """
 
@@ -41,7 +41,7 @@ def write_raw_snirf(raw, fname, atlasviewer=False):
 
         _add_metadata_tags(raw, nirs)
         _add_single_data_block(raw, nirs)
-        _add_probe_info(raw, nirs, atlasviewer=atlasviewer)
+        _add_probe_info(raw, nirs, add_montage=add_montage)
         _add_stim_info(raw, nirs)
 
 
@@ -158,7 +158,7 @@ def _add_measurement_lists(raw, data_block):
         ch_group.create_dataset('dataTypeIndex', data=1, dtype='int32')
 
 
-def _add_probe_info(raw, nirs, atlasviewer):
+def _add_probe_info(raw, nirs, add_montage):
     """Adds details of the probe to the nirs group.
 
     Parameters
@@ -167,8 +167,8 @@ def _add_probe_info(raw, nirs, atlasviewer):
         Data to add to the snirf file.
     nirs : hpy5.Group
         The root hdf5 nirs group to which the probe info should be added.
-    atlasviewer : bool
-        Should additional landmarks be exported to
+    add_montage : bool
+        Should the montage be added as landmarks to
         facilitate compatibility with AtlasViewer.
     """
     sources = _get_unique_source_list(raw)
@@ -200,10 +200,10 @@ def _add_probe_info(raw, nirs, atlasviewer):
 
     # Store probe landmarks
     if raw.info['dig'] is not None:
-        _store_probe_landmarks(raw, probe, atlasviewer)
+        _store_probe_landmarks(raw, probe, add_montage)
 
 
-def _store_probe_landmarks(raw, probe, atlasviewer):
+def _store_probe_landmarks(raw, probe, add_montage):
     """Adds the probe landmarks to the probe group.
 
     The SNIRF specification provides flexibility around
@@ -227,8 +227,8 @@ def _store_probe_landmarks(raw, probe, atlasviewer):
         Data to add to the snirf file.
     probe : hpy5.Group
         The hdf5 probe group to which the landmark info should be added.
-    atlasviewer : bool
-        Should additional landmarks be exported to
+    add_montage : bool
+        Should the montage be added as landmarks to
         facilitate compatibility with AtlasViewer.
     """
     diglocs = np.empty((len(raw.info['dig']), 3))
@@ -242,7 +242,7 @@ def _store_probe_landmarks(raw, probe, atlasviewer):
             digname.append(f"HP_{str(dig.get('ident'))}")
         diglocs[idx, :] = dig.get('r')
 
-    if atlasviewer:
+    if add_montage:
         # First, get the template positions in mni fsaverage space
         montage = make_standard_montage(
             'standard_1020', head_size=0.09700884729534559)

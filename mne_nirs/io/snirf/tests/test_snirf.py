@@ -107,11 +107,11 @@ def test_snirf_extra_atlasviewer(fname, tmpdir):
     raw_orig = read_raw_nirx(fname, preload=True)
     test_file = tmpdir.join('test_raw.snirf')
 
-    write_raw_snirf(raw_orig, test_file, atlasviewer=False)
+    write_raw_snirf(raw_orig, test_file, add_montage=False)
     raw = read_raw_snirf(test_file)
     assert len([i['ident'] for i in raw.info['dig']]) == 35
 
-    write_raw_snirf(raw_orig, test_file, atlasviewer=True)
+    write_raw_snirf(raw_orig, test_file, add_montage=True)
     raw = read_raw_snirf(test_file)
     assert len([i['ident'] for i in raw.info['dig']]) == 129
     snirf = Snirf(str(test_file), "r")
