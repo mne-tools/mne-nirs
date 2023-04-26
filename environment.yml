@@ -44,4 +44,4 @@ dependencies:
 - mne-qt-browser
 - pymatreader
 - pip:
-  - https://github.com/mne-tools/mne-python/archive/main.zip
+  - git+https://github.com/mne-tools/mne-python.git@main
