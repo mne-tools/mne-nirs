@@ -359,7 +359,7 @@ class RegressionResults(_BaseGLM):
         Returns
         -------
         fig : figure
-            Figure of each design matrix componenent for hbo (top row)
+            Figure of each design matrix component for hbo (top row)
             and hbr (bottom row).
         """
         return _plot_glm_topo(self.info, self._data, self.design,
@@ -611,7 +611,7 @@ class ContrastResults(_BaseGLM):
         Returns
         -------
         fig : figure
-            Figure of each design matrix componenent for hbo (top row)
+            Figure of each design matrix component for hbo (top row)
             and hbr (bottom row).
         """
         return _plot_glm_contrast_topo(self.info, self._data,
