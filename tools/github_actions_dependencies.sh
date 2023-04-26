@@ -29,7 +29,7 @@ else
 	pip install $STD_ARGS --pre --only-binary ":all:" vtk-9.1.20220406.dev0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
 	python -c "import vtk"
 	echo "PyVista"
-	pip install --progress-bar off git+https://github.com/pyvista/pyvista.git@main
+	pip install --progress-bar off pyvista==0.37.0
 	echo "pyvistaqt"
 	pip install --progress-bar off git+https://github.com/pyvista/pyvistaqt.git@main
 	echo "imageio-ffmpeg, xlrd, mffpy"
