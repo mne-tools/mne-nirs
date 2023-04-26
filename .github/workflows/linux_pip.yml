@@ -27,6 +27,7 @@ jobs:
       OPENBLAS_NUM_THREADS: '1'
       PYTHONUNBUFFERED: '1'
       PYTHON_VERSION: '3.10'
+      QT_DEBUG_PLUGINS: '1'
     strategy:
       fail-fast: false
       matrix:
