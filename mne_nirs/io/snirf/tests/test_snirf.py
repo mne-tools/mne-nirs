@@ -124,8 +124,8 @@ def test_snirf_extra_atlasviewer(fname, tmpdir):
 def _verify_snirf_required_fields(test_file):
     """Tests that all required fields are present.
 
-    Uses Draft 3 of version 1.0 of the spec:
-    https://github.com/fNIRS/snirf/blob/52de9a6724ddd0c9dcd36d8d11007895fed74205/snirf_specification.md
+    Uses version 1.1 of the spec:
+    https://raw.githubusercontent.com/fNIRS/snirf/v1.1/snirf_specification.md
     """
     required_metadata_fields = [
         'SubjectID', 'MeasurementDate', 'MeasurementTime',
