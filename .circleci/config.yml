@@ -65,7 +65,7 @@ jobs:
               echo "export OPENBLAS_NUM_THREADS=4" >> $BASH_ENV
               echo "export XDG_RUNTIME_DIR=/tmp/runtime-circleci" >> $BASH_ENV
               echo "export MNE_FULL_DATE=true" >> $BASH_ENV
-              echo "export MNE_3D_OPTION=false" >> $BASH_ENV
+              echo "export MNE_3D_OPTION=true" >> $BASH_ENV
               echo "export PATH=~/.local/bin/:$PATH" >> $BASH_ENV
               echo "source ~/python_env/bin/activate" >> $BASH_ENV
               mkdir -p ~/.local/bin
