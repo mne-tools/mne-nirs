@@ -28,8 +28,8 @@ def examples_path():
 
 def run_script_and_check(test_file_path):
     with open(test_file_path) as fid, warnings.catch_warnings():
-        # Ignore deprecation warning caused by setting app.setAttribute(Qt.AA_UseHighDpiPixmaps)
-        # in mne-python
+        # Ignore deprecation warning caused by
+        # app.setAttribute(Qt.AA_UseHighDpiPixmaps) in mne-python
         warnings.filterwarnings("ignore", category=DeprecationWarning)
         return exec(fid.read(), locals(), locals())
 

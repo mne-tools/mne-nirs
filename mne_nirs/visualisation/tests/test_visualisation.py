@@ -34,8 +34,8 @@ def test_plot_nirs_source_detector_pyvista(requires_pyvista):
     raw = mne.io.read_raw_nirx(raw_path)
 
     with warnings.catch_warnings():
-        # Ignore deprecation warning caused by setting app.setAttribute(Qt.AA_UseHighDpiPixmaps)
-        # in mne-python
+        # Ignore deprecation warning caused by
+        # app.setAttribute(Qt.AA_UseHighDpiPixmaps) in mne-python
         warnings.filterwarnings("ignore", category=DeprecationWarning)
         mne_nirs.visualisation.plot_nirs_source_detector(
             np.random.randn(len(raw.ch_names)),
@@ -143,8 +143,8 @@ def test_run_plot_GLM_projection(requires_pyvista):
     df = df.query("Condition in 'A'")
 
     with warnings.catch_warnings():
-        # Ignore deprecation warning caused by setting app.setAttribute(Qt.AA_UseHighDpiPixmaps)
-        # in mne-python
+        # Ignore deprecation warning caused by
+        # app.setAttribute(Qt.AA_UseHighDpiPixmaps) in mne-python
         warnings.filterwarnings("ignore", category=DeprecationWarning)
         brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
                                             df, clim='auto', view='dorsal',
@@ -178,8 +178,8 @@ def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020, ch_names):
     # We use "sample" here even though it's wrong so that we can have a head
     # surface
     with catch_logging() as log, warnings.catch_warnings():
-        # Ignore deprecation warning caused by setting app.setAttribute(Qt.AA_UseHighDpiPixmaps)
-        # in mne-python
+        # Ignore deprecation warning caused by
+        # app.setAttribute(Qt.AA_UseHighDpiPixmaps) in mne-python
         warnings.filterwarnings("ignore", category=DeprecationWarning)
         mne_nirs.viz.plot_3d_montage(
             raw.info, view_map, subject='sample', surface='white',
@@ -198,10 +198,10 @@ def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020, ch_names):
 def test_glm_surface_projection(requires_pyvista):
     res = _get_glm_result(tmax=2974, tmin=0)
     with warnings.catch_warnings():
-        # Ignore deprecation warning caused by setting app.setAttribute(Qt.AA_UseHighDpiPixmaps)
-        # in mne-python
+        # Ignore deprecation warning caused by
+        # app.setAttribute(Qt.AA_UseHighDpiPixmaps) in mne-python
         warnings.filterwarnings("ignore", category=DeprecationWarning)
-        res.surface_projection(condition="e3p0", view="dorsal", surface="white",
-                            subjects_dir=subjects_dir)
+        res.surface_projection(condition="e3p0", view="dorsal",
+                               surface="white", subjects_dir=subjects_dir)
     with pytest.raises(KeyError, match='not found in conditions'):
         res.surface_projection(condition='foo')
