@@ -13,8 +13,8 @@ from mne.channels import make_standard_montage
 
 
 # The currently-implemented spec can be found here:
-# https://github.com/fNIRS/snirf/blob/52de9a6724ddd0c9dcd36d8d11007895fed74205/snirf_specification.md
-SPEC_FORMAT_VERSION = '1.0'
+# https://raw.githubusercontent.com/fNIRS/snirf/v1.1/snirf_specification.md
+SPEC_FORMAT_VERSION = '1.1'
 
 
 def write_raw_snirf(raw, fname, add_montage=False):
