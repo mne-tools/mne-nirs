@@ -29,9 +29,9 @@ else
 	pip install $STD_ARGS --pre --only-binary ":all:" vtk-9.1.20220406.dev0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
 	python -c "import vtk"
 	echo "PyVista"
-	pip install --progress-bar off https://github.com/pyvista/pyvista/zipball/main
+	pip install --progress-bar off git+https://github.com/pyvista/pyvista
 	echo "pyvistaqt"
-	pip install --progress-bar off https://github.com/pyvista/pyvistaqt/zipball/main
+	pip install --progress-bar off git+https://github.com/pyvista/pyvistaqt
 	echo "imageio-ffmpeg, xlrd, mffpy"
 	pip install --progress-bar off --pre imageio-ffmpeg xlrd mffpy
 	if [ "$OSTYPE" == "darwin"* ]; then
@@ -47,7 +47,7 @@ else
 	MNE_BRANCH="maint/1.2"
 fi
 echo "MNE"
-pip install $STD_ARGS $EXTRA_ARGS https://github.com/mne-tools/mne-python/zipball/${MNE_BRANCH}
+pip install $STD_ARGS $EXTRA_ARGS git+https://github.com/mne-tools/mne-python.git@${MNE_BRANCH}
 
 if [ -z "$CONDA_ENV" ]; then
 	echo "requirements.txt"

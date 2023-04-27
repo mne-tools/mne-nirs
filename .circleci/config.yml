@@ -11,9 +11,7 @@ _xvfb: &xvfb
 jobs:
     build_docs:
       docker:
-        # Use 18.04 rather than 20.04 because MESA 20.0.8 on 18.04 has working
-        # transparency but 21.0.3 on 20.04 does not!
-        - image: cimg/base:stable-18.04
+        - image: cimg/base:current-22.04
       steps:
         - restore_cache:
             keys:
@@ -60,13 +58,17 @@ jobs:
                 libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 \
                 libxcb-render-util0 libxcb-shape0 libxcb-xfixes0 libxcb-xinerama0 \
                 graphviz optipng \
-                python3.8-venv python3-venv \
+                python3.10-venv python3-venv \
                 xvfb libxft2 ffmpeg
-              python3.8 -m venv ~/python_env
+              python3.10 -m venv ~/python_env
               echo "set -e" >> $BASH_ENV
               echo "export OPENBLAS_NUM_THREADS=4" >> $BASH_ENV
               echo "export XDG_RUNTIME_DIR=/tmp/runtime-circleci" >> $BASH_ENV
               echo "export MNE_FULL_DATE=true" >> $BASH_ENV
+              echo "export MNE_3D_BACKEND=pyvistaqt" >> $BASH_ENV
+              echo "export MNE_3D_OPTION_MULTI_SAMPLES=1" >> $BASH_ENV
+              echo "export MNE_BROWSER_BACKEND=qt" >> $BASH_ENV
+              echo "export MNE_BROWSER_PRECOMPUTE=false" >> $BASH_ENV
               echo "export PATH=~/.local/bin/:$PATH" >> $BASH_ENV
               echo "source ~/python_env/bin/activate" >> $BASH_ENV
               mkdir -p ~/.local/bin
@@ -100,7 +102,7 @@ jobs:
         - save_cache:
             key: user-install-bin-cache-0
             paths:
-              - ~/.local/lib/python3.8/site-packages
+              - ~/.local/lib/python3.10/site-packages
               - ~/.local/bin
 
         - run:
