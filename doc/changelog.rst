@@ -19,6 +19,7 @@ v0.6.dev0
 
 * Fix bug in SNIRF writer that caused incorrect duration to be written to file. By `Robert Luke`_.
 * Add option to export montage location in SNIRF using the landmarkLabels field. By `Robert Luke`_.
+* Fix continuous integration issues and update test infrastructure. By `Robert Luke`_.
 
 
 v0.5.0
@@ -192,3 +193,4 @@ Enhancements
 .. _Alex Rockhill: https://github.com/alexrockhill
 .. _Samuel Powell: https://github.com/samuelpowell
 .. _Johann Benerradi: https://github.com/HanBnrd
+.. _Florin Pop: https://github.com/florin-pop
