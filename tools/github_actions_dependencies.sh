@@ -12,10 +12,8 @@ else
 	echo "Date utils"
 	# https://pip.pypa.io/en/latest/user_guide/#possible-ways-to-reduce-backtracking-occurring
 	pip install $STD_ARGS --pre --only-binary ":all:" python-dateutil pytz joblib threadpoolctl six
-        echo "PyQt6"
-	# XXX: the wheels for PyQt6-sip 13.4 are not available yet from https://www.riverbankcomputing.com/pypi/simple
-	# pip install $STD_ARGS --pre --only-binary ":all:" --no-deps --extra-index-url https://www.riverbankcomputing.com/pypi/simple PyQt6 PyQt6-sip PyQt6-Qt6
-	pip install $STD_ARGS --only-binary ":all:" PyQt6 PyQt6-sip PyQt6-Qt6
+    echo "pyside6"
+	pip install $STD_ARGS --pre --only-binary ":all:" pyside6
 	echo "NumPy/SciPy/pandas etc."
 	# TODO: Currently missing dipy for 3.10 https://github.com/dipy/dipy/issues/2489
 	pip install $STD_ARGS --pre --only-binary ":all:" --no-deps  --default-timeout=60 -i "https://pypi.anaconda.org/scipy-wheels-nightly/simple" numpy scipy pandas scikit-learn statsmodels dipy
