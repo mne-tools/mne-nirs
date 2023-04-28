@@ -8,6 +8,7 @@ import pytest
 import numpy as np
 import mne
 import mne_nirs
+import warnings
 
 from mne.datasets import testing
 from mne.utils import catch_logging, check_version
@@ -32,25 +33,29 @@ requires_mne_1 = pytest.mark.skipif(not check_version('mne', '1.0'),
 def test_plot_nirs_source_detector_pyvista(requires_pyvista):
     raw = mne.io.read_raw_nirx(raw_path)
 
-    mne_nirs.visualisation.plot_nirs_source_detector(
-        np.random.randn(len(raw.ch_names)),
-        raw.info, show_axes=True,
-        subject='fsaverage',
-        trans='fsaverage',
-        surfaces=['white'],
-        fnirs=False,
-        subjects_dir=subjects_dir,
-        verbose=True)
+    with warnings.catch_warnings():
+        # Ignore deprecation warning caused by
+        # app.setAttribute(Qt.AA_UseHighDpiPixmaps) in mne-python
+        warnings.filterwarnings("ignore", category=DeprecationWarning)
+        mne_nirs.visualisation.plot_nirs_source_detector(
+            np.random.randn(len(raw.ch_names)),
+            raw.info, show_axes=True,
+            subject='fsaverage',
+            trans='fsaverage',
+            surfaces=['white'],
+            fnirs=False,
+            subjects_dir=subjects_dir,
+            verbose=True)
 
-    mne_nirs.visualisation.plot_nirs_source_detector(
-        np.abs(np.random.randn(len(raw.ch_names))) + 5,
-        raw.info, show_axes=True,
-        subject='fsaverage',
-        trans='fsaverage',
-        surfaces=['white'],
-        fnirs=False,
-        subjects_dir=subjects_dir,
-        verbose=True)
+        mne_nirs.visualisation.plot_nirs_source_detector(
+            np.abs(np.random.randn(len(raw.ch_names))) + 5,
+            raw.info, show_axes=True,
+            subject='fsaverage',
+            trans='fsaverage',
+            surfaces=['white'],
+            fnirs=False,
+            subjects_dir=subjects_dir,
+            verbose=True)
 
 
 def test_run_plot_GLM_topo():
@@ -137,12 +142,16 @@ def test_run_plot_GLM_projection(requires_pyvista):
     df = df.query("Chroma in 'hbo'")
     df = df.query("Condition in 'A'")
 
-    brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
-                                        df, clim='auto', view='dorsal',
-                                        colorbar=True, size=(800, 700),
-                                        value="theta", surface='white',
-                                        subjects_dir=subjects_dir)
-    assert type(brain) == mne.viz._brain.Brain
+    with warnings.catch_warnings():
+        # Ignore deprecation warning caused by
+        # app.setAttribute(Qt.AA_UseHighDpiPixmaps) in mne-python
+        warnings.filterwarnings("ignore", category=DeprecationWarning)
+        brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
+                                            df, clim='auto', view='dorsal',
+                                            colorbar=True, size=(800, 700),
+                                            value="theta", surface='white',
+                                            subjects_dir=subjects_dir)
+        assert type(brain) == mne.viz._brain.Brain
 
 
 @requires_mne_1
@@ -168,7 +177,10 @@ def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020, ch_names):
                 'caudal': np.arange(n_labels // 2, n_labels + 1)}
     # We use "sample" here even though it's wrong so that we can have a head
     # surface
-    with catch_logging() as log:
+    with catch_logging() as log, warnings.catch_warnings():
+        # Ignore deprecation warning caused by
+        # app.setAttribute(Qt.AA_UseHighDpiPixmaps) in mne-python
+        warnings.filterwarnings("ignore", category=DeprecationWarning)
         mne_nirs.viz.plot_3d_montage(
             raw.info, view_map, subject='sample', surface='white',
             subjects_dir=subjects_dir, ch_names=ch_names, verbose=True)
@@ -184,9 +196,12 @@ def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020, ch_names):
 @pytest.mark.skipif(not check_version('mne', '1.0'),
                     reason='Needs MNE-Python 1.0')
 def test_glm_surface_projection(requires_pyvista):
-
     res = _get_glm_result(tmax=2974, tmin=0)
-    res.surface_projection(condition="e3p0", view="dorsal", surface="white",
-                           subjects_dir=subjects_dir)
+    with warnings.catch_warnings():
+        # Ignore deprecation warning caused by
+        # app.setAttribute(Qt.AA_UseHighDpiPixmaps) in mne-python
+        warnings.filterwarnings("ignore", category=DeprecationWarning)
+        res.surface_projection(condition="e3p0", view="dorsal",
+                               surface="white", subjects_dir=subjects_dir)
     with pytest.raises(KeyError, match='not found in conditions'):
         res.surface_projection(condition='foo')

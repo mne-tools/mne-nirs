@@ -21,7 +21,7 @@ v0.6.dev0
 * Add option to export montage location in SNIRF using the landmarkLabels field. By `Robert Luke`_.
 * Fix continuous integration issues and update test infrastructure. By `Florin Pop`_.
 * SNIRF writer uses v1.1 of the spec by default. By `Florin Pop`_.
-
+* Migrate from PyQt5/PyQt6 to PySide6. By `Florin Pop`_.
 
 v0.5.0
 ------
