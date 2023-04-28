@@ -42,7 +42,7 @@ requires_mne_1_4 = pytest.mark.skipif(not check_version('mne', '1.4'),
     fname_nirx_15_2,
     fname_nirx_15_0
 ))
-def test_snirf_write(fname, tmpdir):
+def test_snirf_write_raw(fname, tmpdir):
     """Test reading NIRX files."""
     raw_orig = read_raw_nirx(fname, preload=True)
     test_file = tmpdir.join('test_raw.snirf')
@@ -81,6 +81,28 @@ def test_snirf_write(fname, tmpdir):
 
     _verify_snirf_required_fields(test_file)
     _verify_snirf_version_str(test_file)
+
+
+@requires_h5py
+@requires_testing_data
+@pytest.mark.parametrize('fname', (
+    fname_nirx_15_2_short,
+    fname_nirx_15_2,
+    fname_nirx_15_0
+))
+def test_snirf_write_optical_density(fname, tmpdir):
+    """Test writing optical density SNIRF files."""
+    raw_nirx = read_raw_nirx(fname, preload=True)
+    od_orig = optical_density(raw_nirx)
+    test_file = tmpdir.join('test_od.snirf')
+    write_raw_snirf(od_orig, test_file)
+    od = read_raw_snirf(test_file)
+    assert 'fnirs_od' in od
+    
+    result = validateSnirf(str(test_file))
+    if result.is_valid():
+        result.display()
+    assert result.is_valid()
 
 
 @requires_h5py
