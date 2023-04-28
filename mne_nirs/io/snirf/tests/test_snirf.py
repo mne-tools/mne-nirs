@@ -98,7 +98,7 @@ def test_snirf_write_optical_density(fname, tmpdir):
     write_raw_snirf(od_orig, test_file)
     od = read_raw_snirf(test_file)
     assert 'fnirs_od' in od
-    
+
     result = validateSnirf(str(test_file))
     if result.is_valid():
         result.display()
