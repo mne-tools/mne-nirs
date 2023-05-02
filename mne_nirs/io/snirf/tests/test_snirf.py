@@ -280,3 +280,4 @@ def test_optical_density_roundtrip(fname, tmpdir):
                        od.annotations.duration)
     assert_array_equal(od_orig.annotations.description,
                        od.annotations.description)
+    assert_array_equal(od_orig.get_data(), od.get_data())

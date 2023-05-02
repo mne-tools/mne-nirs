@@ -32,19 +32,12 @@ def write_raw_snirf(raw, fname, add_montage=False):
         facilitate compatibility with AtlasViewer.
     """
 
-    if 'fnirs_cw_amplitude' in raw:
-        picks = _picks_to_idx(raw.info, 'fnirs_cw_amplitude', exclude=[])
-        assert len(picks) == len(raw.ch_names), \
-            'Data must be fnirs_cw_amplitude'
-        assert 'fnirs_od' not in raw, \
-            'Data must be either raw or processed'
-    elif 'fnirs_od' in raw:
-        picks = _picks_to_idx(raw.info, 'fnirs_od', exclude=[])
-        assert len(picks) == len(raw.ch_names), 'Data must be fnirs_od'
-        assert 'fnirs_cw_amplitude' not in raw, \
-            'Data must be either raw or processed'
-    else:
-        raise ValueError('Data must be fnirs_cw_amplitude or fnirs_od')
+    supported_types = ['fnirs_cw_amplitude', 'fnirs_od']
+    picks = _picks_to_idx(raw.info, supported_types, exclude=[])
+    assert len(picks) == len(raw.ch_names),\
+        'Data must only be of type fnirs_cw_amplitude or fnirs_od'
+    assert len(np.unique(raw.info.get_channel_types())) == 1,\
+        'All channels must be of the same type'
 
     with h5py.File(fname, 'w') as f:
         nirs = f.create_group('/nirs')
@@ -165,7 +158,11 @@ def _add_measurement_lists(raw, data_block):
         ch_group.create_dataset('wavelengthIndex', data=wavelength_idx,
                                 dtype='int32')
 
-        # 1 = Continuous Wave, 99999 = Processed
+        # The data type coding is described at
+        # https://github.com/fNIRS/snirf/blob/master/snirf_specification.md#appendix
+        # The currently implemented data types are:
+        # 1 = Continuous Wave
+        # 99999 = Processed
         data_type = 1 if 'fnirs_cw_amplitude' in raw else 99999
 
         ch_group.create_dataset('dataType', data=data_type, dtype='int32')
