@@ -12,6 +12,7 @@ from matplotlib.pyplot import Axes
 
 import mne
 from mne.datasets import testing
+from mne.fixes import _compare_version
 import nilearn
 
 from mne_nirs.statistics import RegressionResults, read_glm
@@ -111,8 +112,14 @@ def test_results_glm_properties():
     assert len(res.copy().pick(picks="S1_D1 hbr")) == 1
     assert len(res.copy().pick(picks=["S1_D1 hbr"])) == 1
     assert len(res.copy().pick(picks=["S1_D1 hbr", "S1_D1 hbo"])) == 2
-    with pytest.raises(RuntimeWarning, match='could not be picked'):
+
+    if _compare_version(mne.__version__, '>=', '1.4'):
+        ctx = pytest.raises(ValueError, match='could not be picked')
+    else:
+        ctx = pytest.warns(RuntimeWarning, match='could not be picked')
+    with ctx:
         assert len(res.copy().pick(picks=["S1_D1 hbr", "S1_D1 XXX"])) == 1
+
     assert len(res.copy().pick(picks="fnirs")) == n_channels
     assert len(res.copy().pick(picks="hbo")) == n_channels / 2
     assert len(res.copy().pick(picks="hbr")) == n_channels / 2
