@@ -13,6 +13,7 @@ from snirf import validateSnirf, Snirf
 from mne.datasets.testing import data_path, requires_testing_data
 from mne.utils import requires_h5py, object_diff
 from mne.io import read_raw_snirf, read_raw_nirx
+from mne.preprocessing.nirs import optical_density
 from mne_nirs.io.snirf import write_raw_snirf, SPEC_FORMAT_VERSION, \
     read_snirf_aux_data
 import mne_nirs.datasets.snirf_with_aux as aux
@@ -41,7 +42,7 @@ requires_mne_1_4 = pytest.mark.skipif(not check_version('mne', '1.4'),
     fname_nirx_15_2,
     fname_nirx_15_0
 ))
-def test_snirf_write(fname, tmpdir):
+def test_snirf_write_raw(fname, tmpdir):
     """Test reading NIRX files."""
     raw_orig = read_raw_nirx(fname, preload=True)
     test_file = tmpdir.join('test_raw.snirf')
@@ -80,6 +81,28 @@ def test_snirf_write(fname, tmpdir):
 
     _verify_snirf_required_fields(test_file)
     _verify_snirf_version_str(test_file)
+
+
+@requires_h5py
+@requires_testing_data
+@pytest.mark.parametrize('fname', (
+    fname_nirx_15_2_short,
+    fname_nirx_15_2,
+    fname_nirx_15_0
+))
+def test_snirf_write_optical_density(fname, tmpdir):
+    """Test writing optical density SNIRF files."""
+    raw_nirx = read_raw_nirx(fname, preload=True)
+    od_orig = optical_density(raw_nirx)
+    test_file = tmpdir.join('test_od.snirf')
+    write_raw_snirf(od_orig, test_file)
+    od = read_raw_snirf(test_file)
+    assert 'fnirs_od' in od
+
+    result = validateSnirf(str(test_file))
+    if result.is_valid():
+        result.display()
+    assert result.is_valid()
 
 
 @requires_h5py
@@ -234,3 +257,27 @@ def test_snirf_duration(fname, newduration, tmpdir):
     raw = read_raw_snirf(test_file)
     assert raw.annotations.duration[0] == newduration
     assert raw.annotations.duration[-1] == newduration
+
+
+@requires_h5py
+@requires_testing_data
+@pytest.mark.parametrize('fname', (
+    fname_nirx_15_2,
+    fname_nirx_15_2_short,
+))
+def test_optical_density_roundtrip(fname, tmpdir):
+    """Ensure snirf annotations are written."""
+    raw_nirx = read_raw_nirx(fname, preload=True)
+    od_orig = optical_density(raw_nirx)
+    assert od_orig.annotations.duration[0] == 1
+    test_file = tmpdir.join('test_raw_no_mod.snirf')
+    write_raw_snirf(od_orig, test_file)
+    od = read_raw_snirf(test_file)
+    assert 'fnirs_od' in od
+    assert_array_equal(od_orig.annotations.onset,
+                       od.annotations.onset)
+    assert_array_equal(od_orig.annotations.duration,
+                       od.annotations.duration)
+    assert_array_equal(od_orig.annotations.description,
+                       od.annotations.description)
+    assert_array_equal(od_orig.get_data(), od.get_data())

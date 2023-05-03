@@ -23,7 +23,8 @@ def write_raw_snirf(raw, fname, add_montage=False):
     Parameters
     ----------
     raw : instance of Raw
-        Data to write to file. Must contain only `fnirs_cw_amplitude` type.
+        Data to write to file. Can be either continuous wave
+        (`fnirs_cw_amplitude`) or processed (`fnirs_od`).
     fname : str
         Path to the SNIRF data file.
     add_montage : bool
@@ -31,8 +32,12 @@ def write_raw_snirf(raw, fname, add_montage=False):
         facilitate compatibility with AtlasViewer.
     """
 
-    picks = _picks_to_idx(raw.info, 'fnirs_cw_amplitude', exclude=[])
-    assert len(picks) == len(raw.ch_names), 'Data must be fnirs_cw_amplitude'
+    supported_types = ['fnirs_cw_amplitude', 'fnirs_od']
+    picks = _picks_to_idx(raw.info, supported_types, exclude=[])
+    assert len(picks) == len(raw.ch_names),\
+        'Data must only be of type fnirs_cw_amplitude or fnirs_od'
+    assert len(np.unique(raw.info.get_channel_types())) == 1,\
+        'All channels must be of the same type'
 
     with h5py.File(fname, 'w') as f:
         nirs = f.create_group('/nirs')
@@ -153,9 +158,17 @@ def _add_measurement_lists(raw, data_block):
         ch_group.create_dataset('wavelengthIndex', data=wavelength_idx,
                                 dtype='int32')
 
-        # Set dataType and dataTypeIndex for CW Amplitude measurements
-        ch_group.create_dataset('dataType', data=1, dtype='int32')
+        # The data type coding is described at
+        # https://github.com/fNIRS/snirf/blob/master/snirf_specification.md#appendix
+        # The currently implemented data types are:
+        # 1 = Continuous Wave
+        # 99999 = Processed
+        data_type = 1 if 'fnirs_cw_amplitude' in raw else 99999
+
+        ch_group.create_dataset('dataType', data=data_type, dtype='int32')
         ch_group.create_dataset('dataTypeIndex', data=1, dtype='int32')
+        if 'fnirs_od' in raw:
+            ch_group.create_dataset('dataTypeLabel', data="dOD")
 
 
 def _add_probe_info(raw, nirs, add_montage):
