@@ -113,7 +113,7 @@ def test_results_glm_properties():
     assert len(res.copy().pick(picks=["S1_D1 hbr"])) == 1
     assert len(res.copy().pick(picks=["S1_D1 hbr", "S1_D1 hbo"])) == 2
 
-    if _compare_version(mne.__version__, '<', '1.4'):
+    if _compare_version(mne.__version__, '<', '1.4.0.dev140'):
         ctx = pytest.warns(RuntimeWarning, match='could not be picked')
     else:
         ctx = pytest.raises(ValueError, match='could not be picked')
