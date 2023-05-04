@@ -62,6 +62,8 @@ def test_snirf_write_raw(fname, tmpdir):
 
     # Check data is the same
     assert_allclose(raw.get_data(), raw_orig.get_data())
+    assert_array_equal(raw.info.get_channel_types(),
+                       raw_orig.info.get_channel_types())
 
     assert abs(raw_orig.info['meas_date'] - raw.info['meas_date']) < \
            datetime.timedelta(seconds=1)
@@ -281,3 +283,5 @@ def test_optical_density_roundtrip(fname, tmpdir):
     assert_array_equal(od_orig.annotations.description,
                        od.annotations.description)
     assert_array_equal(od_orig.get_data(), od.get_data())
+    assert_array_equal(od_orig.info.get_channel_types(),
+                       od.info.get_channel_types())
