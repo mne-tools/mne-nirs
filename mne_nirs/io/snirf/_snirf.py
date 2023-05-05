@@ -40,7 +40,7 @@ def write_raw_snirf(raw, fname, add_montage=False):
         assert len(np.unique(raw.info.get_channel_types())) == 1,\
             'All channels must be of the same type'
     elif ('hbo' in raw) or ('hbr' in raw):
-        assert len(np.unique(raw.info.get_channel_types())) == 2,\
+        assert len(np.unique(raw.info.get_channel_types())) <= 2,\
             'Channels must be of type hbo and hbr'
 
     with h5py.File(fname, 'w') as f:
