@@ -128,7 +128,6 @@ def test_snirf_write_haemoglobin(fname, tmpdir):
     assert result.is_valid()
 
 
-
 @requires_h5py
 @requires_testing_data
 @pytest.mark.parametrize('fname', (
