@@ -32,12 +32,16 @@ def write_raw_snirf(raw, fname, add_montage=False):
         facilitate compatibility with AtlasViewer.
     """
 
-    supported_types = ['fnirs_cw_amplitude', 'fnirs_od']
+    supported_types = ['fnirs_cw_amplitude', 'fnirs_od', 'hbo', 'hbr']
     picks = _picks_to_idx(raw.info, supported_types, exclude=[])
     assert len(picks) == len(raw.ch_names),\
-        'Data must only be of type fnirs_cw_amplitude or fnirs_od'
-    assert len(np.unique(raw.info.get_channel_types())) == 1,\
-        'All channels must be of the same type'
+        'Data must only be of type fnirs_cw_amplitude,  fnirs_od, hbo or hbr'
+    if ('fnirs_cw_amplitude' in raw) or ('fnirs_od' in raw):
+        assert len(np.unique(raw.info.get_channel_types())) == 1,\
+            'All channels must be of the same type'
+    elif ('hbo' in raw) or ('hbr' in raw):
+        assert len(np.unique(raw.info.get_channel_types())) == 2,\
+            'Channels must be of type hbo and hbr'
 
     with h5py.File(fname, 'w') as f:
         nirs = f.create_group('/nirs')
@@ -145,13 +149,16 @@ def _add_measurement_lists(raw, data_block):
     detectors = _get_unique_detector_list(raw)
     wavelengths = _get_unique_wavelength_list(raw)
 
+    raw_types = raw.info.get_channel_types()
+    raw_wavelengths = [c["loc"][9] for c in raw.info["chs"]]
+
     for idx, ch_name in enumerate(raw.ch_names, start=1):
         ml_id = f'measurementList{idx}'
         ch_group = data_block.require_group(ml_id)
 
         source_idx = sources.index(_extract_source(ch_name)) + 1
         detector_idx = detectors.index(_extract_detector(ch_name)) + 1
-        wavelength_idx = wavelengths.index(_extract_wavelength(ch_name)) + 1
+        wavelength_idx = wavelengths.index(raw_wavelengths[idx - 1]) + 1
         ch_group.create_dataset('sourceIndex', data=source_idx, dtype='int32')
         ch_group.create_dataset('detectorIndex', data=detector_idx,
                                 dtype='int32')
@@ -163,12 +170,21 @@ def _add_measurement_lists(raw, data_block):
         # The currently implemented data types are:
         # 1 = Continuous Wave
         # 99999 = Processed
-        data_type = 1 if 'fnirs_cw_amplitude' in raw else 99999
+        data_type = 1 if raw_types[idx-1] == 'fnirs_cw_amplitude' else 99999
 
         ch_group.create_dataset('dataType', data=data_type, dtype='int32')
         ch_group.create_dataset('dataTypeIndex', data=1, dtype='int32')
-        if 'fnirs_od' in raw:
+        if raw_types[idx-1] == 'fnirs_od':
             ch_group.create_dataset('dataTypeLabel', data="dOD")
+        elif raw_types[idx-1] == 'fnirs_cw_amplitude':
+            # The SNIRF specification does not specify a label for this type
+            continue
+        elif raw_types[idx-1] == 'hbo':
+            ch_group.create_dataset('dataTypeLabel', data="HbO")
+        elif raw_types[idx-1] == 'hbr':
+            ch_group.create_dataset('dataTypeLabel', data="HbR")
+        else:
+            raise ValueError(f'Unknown channel type {raw_types[idx-1]}')
 
 
 def _add_probe_info(raw, nirs, add_montage):
@@ -330,7 +346,7 @@ def _get_unique_wavelength_list(raw):
     raw : instance of Raw
         Data object containing the list of channels.
     """
-    ch_wavelengths = [_extract_wavelength(ch_name) for ch_name in raw.ch_names]
+    ch_wavelengths = [c["loc"][9] for c in raw.info["chs"]]
     return list(sorted(set(ch_wavelengths)))
 
 
@@ -338,14 +354,19 @@ def _match_channel_pattern(channel_name):
     """Returns a regex match against the expected channel name format.
 
     The returned match object contains three named groups: source, detector,
-    and wavelength. If no match is found, a ValueError is raised.
+    and wavelength/type. If no match is found, a ValueError is raised.
+
+    For example, if the name is "S1_D2 hbo" the source is 1,
+    the detector is 2, and the type is hbo.
+    If the name is "S1_D2 850" the source is 1,
+    the detector is 2, and the wavelength is 850.
 
     Parameters
     ----------
     channel_name : str
         The name of the channel.
     """
-    rgx = r'^S(?P<source>\d+)_D(?P<detector>\d+) (?P<wavelength>\d+)$'
+    rgx = r'^S(?P<source>\d+)_D(?P<detector>\d+) (?P<wavelength_type>[\w]+)$'
     match = re.fullmatch(rgx, channel_name)
     if match is None:
         msg = f'channel name does not match expected pattern: {channel_name}'
@@ -377,16 +398,3 @@ def _extract_detector(channel_name):
         The name of the channel.
     """
     return int(_match_channel_pattern(channel_name).group('detector'))
-
-
-def _extract_wavelength(channel_name):
-    """Extracts and returns the wavelength from the channel name.
-
-    The wavelength is returned as a float value.
-
-    Parameters
-    ----------
-    channel_name : str
-        The name of the channel.
-    """
-    return float(_match_channel_pattern(channel_name).group('wavelength'))

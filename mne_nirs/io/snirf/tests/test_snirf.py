@@ -13,7 +13,7 @@ from snirf import validateSnirf, Snirf
 from mne.datasets.testing import data_path, requires_testing_data
 from mne.utils import requires_h5py, object_diff
 from mne.io import read_raw_snirf, read_raw_nirx
-from mne.preprocessing.nirs import optical_density
+from mne.preprocessing.nirs import optical_density, beer_lambert_law
 from mne_nirs.io.snirf import write_raw_snirf, SPEC_FORMAT_VERSION, \
     read_snirf_aux_data
 import mne_nirs.datasets.snirf_with_aux as aux
@@ -105,6 +105,28 @@ def test_snirf_write_optical_density(fname, tmpdir):
     if result.is_valid():
         result.display()
     assert result.is_valid()
+
+
+@requires_h5py
+@requires_testing_data
+@pytest.mark.parametrize('fname', (
+    fname_nirx_15_2,
+    fname_nirx_15_2_short,
+))
+def test_snirf_write_haemoglobin(fname, tmpdir):
+    """Test haemoglobin writing and reading."""
+    raw_nirx = read_raw_nirx(fname, preload=True)
+    od_orig = optical_density(raw_nirx)
+    hb_orig = beer_lambert_law(od_orig)
+    assert hb_orig.annotations.duration[0] == 1
+    test_file = tmpdir.join('test_raw_hb_no_mod.snirf')
+    write_raw_snirf(hb_orig, test_file)
+
+    result = validateSnirf(str(test_file))
+    if result.is_valid():
+        result.display()
+    assert result.is_valid()
+
 
 
 @requires_h5py
@@ -268,7 +290,7 @@ def test_snirf_duration(fname, newduration, tmpdir):
     fname_nirx_15_2_short,
 ))
 def test_optical_density_roundtrip(fname, tmpdir):
-    """Ensure snirf annotations are written."""
+    """Test optical density writing and reading."""
     raw_nirx = read_raw_nirx(fname, preload=True)
     od_orig = optical_density(raw_nirx)
     assert od_orig.annotations.duration[0] == 1
@@ -285,3 +307,31 @@ def test_optical_density_roundtrip(fname, tmpdir):
     assert_array_equal(od_orig.get_data(), od.get_data())
     assert_array_equal(od_orig.info.get_channel_types(),
                        od.info.get_channel_types())
+
+
+@requires_h5py
+@requires_testing_data
+@pytest.mark.parametrize('fname', (
+    fname_nirx_15_2,
+    fname_nirx_15_2_short,
+))
+def test_haemoglobin_roundtrip(fname, tmpdir):
+    """Test haemoglobin writing and reading."""
+    raw_nirx = read_raw_nirx(fname, preload=True)
+    od_orig = optical_density(raw_nirx)
+    hb_orig = beer_lambert_law(od_orig)
+    assert hb_orig.annotations.duration[0] == 1
+    test_file = tmpdir.join('test_raw_hb_no_mod.snirf')
+    write_raw_snirf(hb_orig, test_file)
+    hb = read_raw_snirf(test_file)
+    assert 'hbo' in hb
+    assert 'hbr' in hb
+    assert_array_equal(hb_orig.annotations.onset,
+                       hb.annotations.onset)
+    assert_array_equal(hb_orig.annotations.duration,
+                       hb.annotations.duration)
+    assert_array_equal(hb_orig.annotations.description,
+                       hb.annotations.description)
+    assert_array_equal(hb_orig.get_data(), hb.get_data())
+    assert_array_equal(hb_orig.info.get_channel_types(),
+                       hb.info.get_channel_types())
