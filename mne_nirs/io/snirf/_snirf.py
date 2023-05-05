@@ -170,18 +170,18 @@ def _add_measurement_lists(raw, data_block):
         # The currently implemented data types are:
         # 1 = Continuous Wave
         # 99999 = Processed
-        data_type = 1 if raw_types[idx-1] == 'fnirs_cw_amplitude' else 99999
+        data_type = 1 if raw_types[idx - 1] == 'fnirs_cw_amplitude' else 99999
 
         ch_group.create_dataset('dataType', data=data_type, dtype='int32')
         ch_group.create_dataset('dataTypeIndex', data=1, dtype='int32')
-        if raw_types[idx-1] == 'fnirs_od':
+        if raw_types[idx - 1] == 'fnirs_od':
             ch_group.create_dataset('dataTypeLabel', data="dOD")
-        elif raw_types[idx-1] == 'fnirs_cw_amplitude':
+        elif raw_types[idx - 1] == 'fnirs_cw_amplitude':
             # The SNIRF specification does not specify a label for this type
             continue
-        elif raw_types[idx-1] == 'hbo':
+        elif raw_types[idx - 1] == 'hbo':
             ch_group.create_dataset('dataTypeLabel', data="HbO")
-        elif raw_types[idx-1] == 'hbr':
+        elif raw_types[idx - 1] == 'hbr':
             ch_group.create_dataset('dataTypeLabel', data="HbR")
         else:
             raise ValueError(f'Unknown channel type {raw_types[idx-1]}')
