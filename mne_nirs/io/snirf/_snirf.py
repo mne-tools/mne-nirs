@@ -18,13 +18,21 @@ SPEC_FORMAT_VERSION = '1.1'
 
 
 def write_raw_snirf(raw, fname, add_montage=False):
-    """Write continuous wave data to disk in SNIRF format.
+    f"""Write continuous wave data to disk in SNIRF format.
+
+    Writes the data from a raw object to a SNIRF file using
+    SNIRF specification version {SPEC_FORMAT_VERSION}.
+    The data can be either raw continuous wave amplitude,
+    optical density or haemoglobin data.
+    The data is written to the SNIRF file as a single data block
+    and should pass the validation provided by the official
+    snirf validator.
 
     Parameters
     ----------
     raw : instance of Raw
         Data to write to file. Can be either continuous wave
-        (`fnirs_cw_amplitude`) or processed (`fnirs_od`).
+        (`fnirs_cw_amplitude`) or processed (`fnirs_od`, 'hbo', 'hbr').
     fname : str
         Path to the SNIRF data file.
     add_montage : bool
@@ -183,8 +191,6 @@ def _add_measurement_lists(raw, data_block):
             ch_group.create_dataset('dataTypeLabel', data="HbO")
         elif raw_types[idx - 1] == 'hbr':
             ch_group.create_dataset('dataTypeLabel', data="HbR")
-        else:
-            raise ValueError(f'Unknown channel type {raw_types[idx-1]}')
 
 
 def _add_probe_info(raw, nirs, add_montage):

@@ -127,6 +127,26 @@ def test_snirf_write_haemoglobin(fname, tmpdir):
         result.display()
     assert result.is_valid()
 
+    # HBO
+
+    test_file = tmpdir.join('test_raw_hbo_no_mod.snirf')
+    write_raw_snirf(hb_orig.copy().pick("hbo"), test_file)
+
+    result = validateSnirf(str(test_file))
+    if result.is_valid():
+        result.display()
+    assert result.is_valid()
+
+    # HBR
+
+    test_file = tmpdir.join('test_raw_hbr_no_mod.snirf')
+    write_raw_snirf(hb_orig.copy().pick("hbr"), test_file)
+
+    result = validateSnirf(str(test_file))
+    if result.is_valid():
+        result.display()
+    assert result.is_valid()
+
 
 @requires_h5py
 @requires_testing_data
@@ -333,4 +353,28 @@ def test_haemoglobin_roundtrip(fname, tmpdir):
                        hb.annotations.description)
     assert_array_equal(hb_orig.get_data(), hb.get_data())
     assert_array_equal(hb_orig.info.get_channel_types(),
+                       hb.info.get_channel_types())
+
+    # HBO
+
+    hbo = hb_orig.copy().pick("hbo")
+    test_file = tmpdir.join('test_raw_hbo_no_mod.snirf')
+    write_raw_snirf(hbo, test_file)
+    hb = read_raw_snirf(test_file)
+    assert 'hbo' in hb
+    assert 'hbr' not in hb
+    assert_array_equal(hbo.get_data(), hb.get_data())
+    assert_array_equal(hbo.info.get_channel_types(),
+                       hb.info.get_channel_types())
+
+    # HBR
+
+    hbr = hb_orig.copy().pick("hbr")
+    test_file = tmpdir.join('test_raw_hbr_no_mod.snirf')
+    write_raw_snirf(hbr, test_file)
+    hb = read_raw_snirf(test_file)
+    assert 'hbr' in hb
+    assert 'hbo' not in hb
+    assert_array_equal(hbr.get_data(), hb.get_data())
+    assert_array_equal(hbr.info.get_channel_types(),
                        hb.info.get_channel_types())
