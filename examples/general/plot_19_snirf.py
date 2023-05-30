@@ -13,8 +13,11 @@ SNIRF Support in MNE
 
 SNIRF is a file format for storing functional near-infrared spectroscopy (fNIRS)
 data. The specification is maintained by the society for functional near infrared
-spectroscopy. In this tutorial we demonstrate how to convert your MNE data to
-the SNIRF  and also how to read SNIRF files. We also demonstrate how to validate
+spectroscopy.
+
+MNE Python and MNE-NIRS can be used to read and write SNIRF files respectively.
+In this tutorial we demonstrate how to convert your MNE data to
+SNIRF and write it to disk and also how to read SNIRF files. We also demonstrate how to validate
 that a SNIRF file conforms to the SNIRF specification.
 
 You can read the SNIRF protocol at the official site https://github.com/fNIRS/snirf.
@@ -35,6 +38,7 @@ import mne
 import snirf
 
 from mne.io import read_raw_nirx, read_raw_snirf
+from mne.preprocessing.nirs import optical_density, beer_lambert_law
 from mne_nirs.io import write_raw_snirf
 from numpy.testing import assert_allclose
 
@@ -92,5 +96,33 @@ snirf_intensity.plot(n_channels=30, duration=300, show_scrollbars=False)
 # by MNE-NIRS are compliant with the specification.
 
 result = snirf.validateSnirf('test_raw.snirf')
+assert result.is_valid()
+result.display()
+
+
+# %%
+# Optical Density
+# -------------------
+#
+# MNE-NIRS cal also be used to write optical density data to SNIRF files.
+
+raw_od = optical_density(raw_intensity)
+write_raw_snirf(raw_od, 'test_raw_od.snirf')
+
+result = snirf.validateSnirf('test_raw_od.snirf')
+assert result.is_valid()
+result.display()
+
+
+# %%
+# Haemoglobin
+# -------------------
+#
+# And it can write valid haemoglobin data to SNIRF files.
+
+raw_hb = beer_lambert_law(raw_od)
+write_raw_snirf(raw_hb, 'test_raw_hb.snirf')
+
+result = snirf.validateSnirf('test_raw_hb.snirf')
 assert result.is_valid()
 result.display()
