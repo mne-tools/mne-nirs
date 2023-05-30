@@ -111,7 +111,7 @@ def statsmodels_to_results(model, order=None):
         for i in range(model.k_re):
             for j in range(i + 1):
                 sdf[jj, 0] = np.asarray(model.cov_re)[i, j]
-                sdf[jj, 1] = np.sqrt(model.scale) * model.bse[model.k_fe + jj]
+                sdf[jj, 1] = np.sqrt(model.scale) * model.bse.iloc[model.k_fe + jj]
                 jj += 1
 
         # Variance components
