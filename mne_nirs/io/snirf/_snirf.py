@@ -27,7 +27,7 @@ def write_raw_snirf(raw, fname, add_montage=False):
     The data is written to the SNIRF file as a single data block
     and should pass the validation provided by the official
     snirf validator.
-    
+
     Notes
     -----
     The MNE SNIRF reader requires that the data file contains either
