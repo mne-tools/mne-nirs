@@ -27,6 +27,14 @@ def write_raw_snirf(raw, fname, add_montage=False):
     The data is written to the SNIRF file as a single data block
     and should pass the validation provided by the official
     snirf validator.
+    
+    Notes
+    -----
+    The MNE SNIRF reader requires that the data file contains either
+    two wavelengths or both hbo and hbr data. This function can export
+    data with just one wavelength or just hbo or hbr data.
+    However, until modifications are made to the SNIRF reader, the
+    exported data will not be readable by the MNE SNIRF reader.
 
     Parameters
     ----------
