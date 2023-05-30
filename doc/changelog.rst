@@ -22,7 +22,8 @@ v0.6.dev0
 * Fix continuous integration issues and update test infrastructure. By `Florin Pop`_.
 * SNIRF writer uses v1.1 of the spec by default. By `Florin Pop`_.
 * Migrate from PyQt5/PyQt6 to PySide6. By `Florin Pop`_.
-* Write optical density data in SNIRF format. By `Florin Pop`_.
+* Add ability to write optical density data in SNIRF format. By `Florin Pop`_.
+* Add ability to write haemoglobin data in SNIRF format. By `Robert Luke`_.
 
 v0.5.0
 ------
