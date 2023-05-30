@@ -18,18 +18,16 @@ SPEC_FORMAT_VERSION = '1.1'
 
 
 def write_raw_snirf(raw, fname, add_montage=False):
-    f"""Write continuous wave data to disk in SNIRF format.
+    """Write continuous wave data to disk in SNIRF format.
 
     Writes the data from a raw object to a SNIRF file using
-    SNIRF specification version {SPEC_FORMAT_VERSION}.
+    SNIRF specification version 1.1.
     The data can be either raw continuous wave amplitude,
     optical density or haemoglobin data.
     The data is written to the SNIRF file as a single data block
     and should pass the validation provided by the official
     snirf validator.
 
-    Notes
-    -----
     The MNE SNIRF reader requires that the data file contains either
     two wavelengths or both hbo and hbr data. This function can export
     data with just one wavelength or just hbo or hbr data.
