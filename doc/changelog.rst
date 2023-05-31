@@ -63,7 +63,7 @@ General
 
 Enhancements
 
-* Update SNIRF exporter to meet v1.0 validator requirements :meth:`mne_nirs.io.snirf.write_raw_snirf`. By `Robert Luke`_.
+* Update SNIRF exporter to meet v1.0 validator requirements :meth:`mne_nirs.io.write_raw_snirf`. By `Robert Luke`_.
 * Add ability to provide custom channel weighting in :meth:`mne_nirs.statistics.RegressionResults.to_dataframe_region_of_interest` computation. By `Robert Luke`_.
 * Add function to plot montages on 3D brain with source, detector, and channel naming :func:`mne_nirs.visualisation.plot_3d_montage`. By `Eric Larson`_.
 
@@ -155,7 +155,7 @@ Documentation
 
 Bugs
 
-* Fix inconsistencies between files written via :meth:`mne_nirs.io.snirf.write_raw_snirf` and the `current version <https://github.com/fNIRS/snirf/blob/52de9a6724ddd0c9dcd36d8d11007895fed74205/snirf_specification.md>`_ of the official SNIRF spec. By `Darin Erat Sleiter`_.
+* Fix inconsistencies between files written via :meth:`mne_nirs.io.write_raw_snirf` and the `current version <https://github.com/fNIRS/snirf/blob/52de9a6724ddd0c9dcd36d8d11007895fed74205/snirf_specification.md>`_ of the official SNIRF spec. By `Darin Erat Sleiter`_.
 
 
 Infrastructure
