@@ -49,18 +49,6 @@ MNE-Python
 MNE-NIRS
 ^^^^^^^^
 
-.. currentmodule:: mne_nirs.io.snirf
-
-.. automodule:: mne_nirs.io.snirf
-   :no-members:
-   :no-inherited-members:
-
-.. autosummary::
-   :toctree: generated/
-
-   write_raw_snirf
-   read_snirf_aux_data
-
 .. currentmodule:: mne_nirs.io
 
 .. automodule:: mne_nirs.io
@@ -70,6 +58,9 @@ MNE-NIRS
 .. autosummary::
    :toctree: generated/
 
+
+   write_raw_snirf
+   read_snirf_aux_data
    fold_landmark_specificity
    fold_channel_specificity
 
