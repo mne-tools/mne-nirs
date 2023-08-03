@@ -122,8 +122,8 @@ def create_boxcar(raw, event_id=None, stim_dur=1):
     s : array
         Returns an array for each annotation label.
     """
-    from scipy import signal
-    bc = signal.boxcar(round(raw.info['sfreq'] * stim_dur))
+    from scipy.signal import windows
+    bc = windows.boxcar(round(raw.info['sfreq'] * stim_dur))
     events, ids = mne.events_from_annotations(raw, event_id=event_id)
     s = np.zeros((len(raw.times), len(ids)))
     for idx, id in enumerate(ids):
