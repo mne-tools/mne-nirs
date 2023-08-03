@@ -17,8 +17,6 @@ from mne.preprocessing.nirs import optical_density, beer_lambert_law
 from mne_nirs.io.snirf import write_raw_snirf, SPEC_FORMAT_VERSION, \
     read_snirf_aux_data
 import mne_nirs.datasets.snirf_with_aux as aux
-from mne.utils import check_version
-
 
 fname_nirx_15_0 = op.join(data_path(download=False),
                           'NIRx', 'nirscout', 'nirx_15_0_recording')

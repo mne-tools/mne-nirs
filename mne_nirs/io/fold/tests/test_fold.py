@@ -16,7 +16,6 @@ from mne.channels import make_standard_montage
 from mne.channels.montage import transform_to_head
 from mne.datasets.testing import data_path, requires_testing_data
 from mne.io import read_raw_nirx, read_fiducials
-from mne.utils import check_version
 
 from mne_nirs.io.fold._fold import _generate_montage_locations,\
     _find_closest_standard_location, _read_fold_xls
