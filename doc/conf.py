@@ -137,7 +137,7 @@ switcher_version_match = 'dev' if release.endswith('dev0') else version
 html_theme_options = {
     'icon_links': [
         dict(name='GitHub',
-             url='https://github.com/mne-tools/mne-python',
+             url='https://github.com/mne-tools/mne-nirs',
              icon='fa-brands fa-square-github'),
     ],
     "show_toc_level": 1,
