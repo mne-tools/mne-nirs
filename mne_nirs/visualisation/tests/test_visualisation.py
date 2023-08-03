@@ -176,7 +176,6 @@ def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020, ch_names):
         mne_nirs.viz.plot_3d_montage(
             raw.info, view_map, subject='sample', surface='white',
             subjects_dir=subjects_dir, ch_names=ch_names, verbose=True)
-    assert len(pyvista.plotting._ALL_PLOTTERS) == 0
     log = log.getvalue().lower()
     if to_1020:
         assert 'automatically mapped' in log

@@ -44,6 +44,7 @@ def pytest_configure(config):
     ignore:_SixMetaPathImporter.find_spec\(\) not found.*:ImportWarning
     # seaborn
     ignore:The register_cmap function.*:
+    ignore:The get_cmap function.*:
     """  # noqa: E501
     for warning_line in warning_lines.split('\n'):
         warning_line = warning_line.strip()
@@ -109,7 +110,12 @@ def requires_pyvista(options_3d):
     pyvista = pytest.importorskip('pyvista')
     pytest.importorskip('pyvistaqt')
     pyvista.close_all()
-    assert len(pyvista.plotting._ALL_PLOTTERS) == 0
+    try:
+        from pyvista.plotting.plotter import _ALL_PLOTTERS
+    except Exception:  # PV < 0.40
+        from pyvista.plotting.plotting import _ALL_PLOTTERS
+    assert len(_ALL_PLOTTERS) == 0
     mne.viz.set_3d_backend('pyvista')
     yield pyvista
     pyvista.close_all()
+    assert len(_ALL_PLOTTERS) == 0
