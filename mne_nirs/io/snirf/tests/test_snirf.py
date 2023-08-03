@@ -11,7 +11,7 @@ import pandas as pd
 from snirf import validateSnirf, Snirf
 
 from mne.datasets.testing import data_path, requires_testing_data
-from mne.utils import requires_h5py, object_diff
+from mne.utils import object_diff
 from mne.io import read_raw_snirf, read_raw_nirx
 from mne.preprocessing.nirs import optical_density, beer_lambert_law
 from mne_nirs.io.snirf import write_raw_snirf, SPEC_FORMAT_VERSION, \
@@ -29,13 +29,9 @@ fname_nirx_15_2_short = op.join(data_path(download=False),
                                 'nirx_15_2_recording_w_short')
 fname_snirf_aux = aux.data_path()
 
-pytest.importorskip('mne', '1.0')  # these tests are broken on 0.24!
-
-requires_mne_1_4 = pytest.mark.skipif(not check_version('mne', '1.4'),
-                                      reason='Needs MNE-Python 1.4')
+pytest.importorskip('h5py')
 
 
-@requires_h5py
 @requires_testing_data
 @pytest.mark.parametrize('fname', (
     fname_nirx_15_2_short,
@@ -85,7 +81,6 @@ def test_snirf_write_raw(fname, tmpdir):
     _verify_snirf_version_str(test_file)
 
 
-@requires_h5py
 @requires_testing_data
 @pytest.mark.parametrize('fname', (
     fname_nirx_15_2_short,
@@ -107,7 +102,6 @@ def test_snirf_write_optical_density(fname, tmpdir):
     assert result.is_valid()
 
 
-@requires_h5py
 @requires_testing_data
 @pytest.mark.parametrize('fname', (
     fname_nirx_15_2,
@@ -148,7 +142,6 @@ def test_snirf_write_haemoglobin(fname, tmpdir):
     assert result.is_valid()
 
 
-@requires_h5py
 @requires_testing_data
 @pytest.mark.parametrize('fname', (
     fname_nirx_15_2,
@@ -163,7 +156,6 @@ def test_snirf_nobday(fname, tmpdir):
     assert_allclose(raw.get_data(), raw_orig.get_data())
 
 
-@requires_h5py
 @requires_testing_data
 @pytest.mark.parametrize('fname', (
     fname_nirx_15_2,
@@ -257,7 +249,6 @@ def test_aux_read():
     assert len(a['gyroscope_1_z']) == len(raw.times)
 
 
-@requires_h5py
 @requires_testing_data
 @pytest.mark.parametrize('fname', (
     fname_nirx_15_2,
@@ -279,8 +270,6 @@ def test_snirf_stim_roundtrip(fname, tmpdir):
                        raw.annotations.description)
 
 
-@requires_mne_1_4
-@requires_h5py
 @requires_testing_data
 @pytest.mark.parametrize('fname', (
     fname_nirx_15_2,
@@ -291,6 +280,7 @@ def test_snirf_stim_roundtrip(fname, tmpdir):
 ))
 def test_snirf_duration(fname, newduration, tmpdir):
     """Ensure snirf annotations are written to file."""
+    pytest.importorskip('mne', '1.4')
     raw_orig = read_raw_nirx(fname, preload=True)
     assert raw_orig.annotations.duration[0] == 1
     raw_mod = raw_orig.copy()
@@ -302,7 +292,6 @@ def test_snirf_duration(fname, newduration, tmpdir):
     assert raw.annotations.duration[-1] == newduration
 
 
-@requires_h5py
 @requires_testing_data
 @pytest.mark.parametrize('fname', (
     fname_nirx_15_2,
@@ -328,7 +317,6 @@ def test_optical_density_roundtrip(fname, tmpdir):
                        od.info.get_channel_types())
 
 
-@requires_h5py
 @requires_testing_data
 @pytest.mark.parametrize('fname', (
     fname_nirx_15_2,
