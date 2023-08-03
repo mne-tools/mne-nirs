@@ -122,7 +122,7 @@ def create_boxcar(raw, event_id=None, stim_dur=1):
     s : array
         Returns an array for each annotation label.
     """
-    bc = np.ones(round(raw.info['sfreq'] * stim_dur))
+    bc = np.ones(int(round(raw.info['sfreq'] * stim_dur)))
     events, ids = mne.events_from_annotations(raw, event_id=event_id)
     s = np.zeros((len(raw.times), len(ids)))
     for idx, id in enumerate(ids):
