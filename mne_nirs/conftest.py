@@ -45,6 +45,8 @@ def pytest_configure(config):
     # seaborn
     ignore:The register_cmap function.*:
     ignore:The get_cmap function.*:
+    # old MNE
+    ignore:The `pyvista.plotting.plotting` module.*:
     """  # noqa: E501
     for warning_line in warning_lines.split('\n'):
         warning_line = warning_line.strip()
