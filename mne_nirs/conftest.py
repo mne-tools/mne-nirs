@@ -42,9 +42,12 @@ def pytest_configure(config):
     ignore:.*is not yet supported for.*in qdarkstyle.*:RuntimeWarning
     always::ResourceWarning
     ignore:_SixMetaPathImporter.find_spec\(\) not found.*:ImportWarning
+    # Should probably fix these at some point...
+    ignore:unclosed file.*:ResourceWarning
     # seaborn
     ignore:The register_cmap function.*:
     ignore:The get_cmap function.*:
+    ignore:The figure layout has changed.*:UserWarning
     # old MNE
     ignore:The `pyvista.plotting.plotting` module.*:
     """  # noqa: E501
