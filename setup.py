@@ -23,7 +23,7 @@ DOWNLOAD_URL = 'https://github.com/mne-tools/mne-nirs'
 VERSION = __version__
 INSTALL_REQUIRES = ['numpy>=1.11.3',
                     'scipy>=0.17.1',
-                    'mne>=0.24.0',
+                    'mne>=1.0',
                     'h5io>=0.1.7',
                     'nilearn>=0.9',
                     'seaborn'],

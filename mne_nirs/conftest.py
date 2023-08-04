@@ -42,6 +42,14 @@ def pytest_configure(config):
     ignore:.*is not yet supported for.*in qdarkstyle.*:RuntimeWarning
     always::ResourceWarning
     ignore:_SixMetaPathImporter.find_spec\(\) not found.*:ImportWarning
+    # Should probably fix these at some point...
+    ignore:unclosed file.*:ResourceWarning
+    # seaborn
+    ignore:The register_cmap function.*:
+    ignore:The get_cmap function.*:
+    ignore:The figure layout has changed.*:UserWarning
+    # old MNE
+    ignore:The `pyvista.plotting.plotting` module.*:
     """  # noqa: E501
     for warning_line in warning_lines.split('\n'):
         warning_line = warning_line.strip()
@@ -106,6 +114,13 @@ def options_3d():
 def requires_pyvista(options_3d):
     pyvista = pytest.importorskip('pyvista')
     pytest.importorskip('pyvistaqt')
-    mne.viz.set_3d_backend('pyvista')
-    yield
     pyvista.close_all()
+    try:
+        from pyvista.plotting.plotter import _ALL_PLOTTERS
+    except Exception:  # PV < 0.40
+        from pyvista.plotting.plotting import _ALL_PLOTTERS
+    assert len(_ALL_PLOTTERS) == 0
+    mne.viz.set_3d_backend('pyvista')
+    yield pyvista
+    pyvista.close_all()
+    assert len(_ALL_PLOTTERS) == 0

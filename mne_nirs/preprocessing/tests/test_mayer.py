@@ -5,17 +5,13 @@
 import os
 import mne
 import pytest
-from functools import partial
 import numpy as np
 
-from mne.utils._testing import requires_module
 from mne_nirs.preprocessing import quantify_mayer_fooof
 
+pytest.importorskip('fooof')
 
-requires_fooof = partial(requires_module, name='fooof')
 
-
-@requires_fooof
 def test_mayer():
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
     fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')

@@ -167,7 +167,7 @@ for sub in subjects:
     save_path = save_path.update(subject=sub)
 
     # Read the data
-    results = read_glm(save_path)
+    results = read_glm(save_path.fpath)
 
     # Extract results from data as dataframe
     individual_results = results.to_dataframe()

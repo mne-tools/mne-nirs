@@ -26,9 +26,6 @@ testing_path = testing.data_path(download=False)
 raw_path = str(testing_path) + '/NIRx/nirscout/nirx_15_2_recording_w_short'
 subjects_dir = str(testing_path) + '/subjects'
 
-requires_mne_1 = pytest.mark.skipif(not check_version('mne', '1.0'),
-                                    reason='Needs MNE-Python 1.0')
-
 
 def test_plot_nirs_source_detector_pyvista(requires_pyvista):
     raw = mne.io.read_raw_nirx(raw_path)
@@ -127,7 +124,6 @@ def test_fig_from_axes():
 
 
 # surface arg
-@requires_mne_1
 def test_run_plot_GLM_projection(requires_pyvista):
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
@@ -154,16 +150,12 @@ def test_run_plot_GLM_projection(requires_pyvista):
         assert type(brain) == mne.viz._brain.Brain
 
 
-@requires_mne_1
 @pytest.mark.parametrize('fname_raw, to_1020, ch_names', [
     (raw_path, False, None),
     (raw_path, True, 'numbered'),
     (raw_path, True, defaultdict(lambda: '')),
 ])
 def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020, ch_names):
-    import pyvista
-    pyvista.close_all()
-    assert len(pyvista.plotting._ALL_PLOTTERS) == 0
     raw = mne.io.read_raw_nirx(fname_raw)
     if to_1020:
         need = set(sum(
@@ -184,7 +176,6 @@ def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020, ch_names):
         mne_nirs.viz.plot_3d_montage(
             raw.info, view_map, subject='sample', surface='white',
             subjects_dir=subjects_dir, ch_names=ch_names, verbose=True)
-    assert len(pyvista.plotting._ALL_PLOTTERS) == 0
     log = log.getvalue().lower()
     if to_1020:
         assert 'automatically mapped' in log
