@@ -16,7 +16,6 @@ from mne.channels import make_standard_montage
 from mne.channels.montage import transform_to_head
 from mne.datasets.testing import data_path, requires_testing_data
 from mne.io import read_raw_nirx, read_fiducials
-from mne.utils import check_version
 
 from mne_nirs.io.fold._fold import _generate_montage_locations,\
     _find_closest_standard_location, _read_fold_xls
@@ -30,11 +29,9 @@ foldfile = thisfile / "data" / "example.xls"
 fname_nirx_15_3_short = Path(data_path(download=False)) / \
     'NIRx' / 'nirscout' / 'nirx_15_3_recording'
 
-requires_xlrd = pytest.mark.skipif(
-    not check_version('xlrd', '1.0'), reason='Requires xlrd >= 1.0')
+pytest.importorskip('xlrd', '1.0')
 
 
-@requires_xlrd
 @pytest.mark.parametrize('fold_files', (str, None, list))
 def test_channel_specificity(monkeypatch, tmp_path, fold_files):
     raw = read_raw_nirx(fname_nirx_15_3_short, preload=True)
@@ -97,7 +94,6 @@ def test_channel_specificity(monkeypatch, tmp_path, fold_files):
     assert (res_1['Specificity'] == res_2['Specificity']).all()
 
 
-@requires_xlrd
 def test_landmark_specificity():
     raw = read_raw_nirx(fname_nirx_15_3_short, preload=True)
     with pytest.warns(RuntimeWarning, match='No fOLD table entry'):
@@ -108,7 +104,6 @@ def test_landmark_specificity():
     assert np.min(res) >= 0
 
 
-@requires_xlrd
 def test_fold_workflow():
     # Read raw data
     raw = read_raw_nirx(fname_nirx_15_3_short, preload=True)
@@ -136,7 +131,6 @@ def test_fold_workflow():
     assert specificity.values == 12.34
 
 
-@requires_xlrd
 def test_fold_reader():
     tbl = _read_fold_xls(foldfile, atlas="Juelich")
     assert isinstance(tbl, pd.DataFrame)
