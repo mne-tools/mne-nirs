@@ -2,6 +2,8 @@
 #
 # License: BSD (3-clause)
 
+from io import StringIO
+
 import pandas as pd
 import numpy as np
 
@@ -14,7 +16,7 @@ def summary_to_dataframe(summary):
     '''
     results = summary.tables[1]
     if type(results) is not pd.core.frame.DataFrame:
-        results = summary.tables[1].as_html()
+        results = StringIO(summary.tables[1].as_html())
         results = pd.read_html(results, header=0, index_col=0)[0]
     return results
 

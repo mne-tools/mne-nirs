@@ -110,7 +110,7 @@ def _tidy_RegressionResults(data, glm_est, design_matrix):
         mse_estimates[idx, :] = glm_est[name].MSE[0]
         for cond_idx, cond in enumerate(design_matrix.columns):
             t_estimates[idx, cond_idx] = glm_est[name].t(
-                column=cond_idx)
+                column=cond_idx).item()
             p_estimates[idx, cond_idx] = 2 * stats.t.cdf(
                 -1.0 * np.abs(t_estimates[idx, cond_idx]),
                 df=df_estimates[idx, cond_idx])
