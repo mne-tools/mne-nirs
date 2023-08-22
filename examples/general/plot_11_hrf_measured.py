@@ -229,7 +229,7 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 
 fig, ax = plt.subplots(constrained_layout=True)
 s = mne_nirs.experimental_design.create_boxcar(raw_intensity, stim_dur=5.0)
-a;x.plot(raw_intensity.times, s[:, 1])
+ax.plot(raw_intensity.times, s[:, 1])
 ax.plot(design_matrix['Tapping_Left'])
 ax.set_xlim(180, 300)
 ax.legend(["Stimulus", "Expected Response"])
