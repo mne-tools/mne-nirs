@@ -52,7 +52,7 @@ def pytest_configure(config):
     ignore:`product` is deprecated as of NumPy.*:DeprecationWarning
     # seaborn
     ignore:is_categorical_dtype is deprecated.*:FutureWarning
-    ignore:use_inf_as_na is deprecated.*:FutureWarning
+    ignore:use_inf_as_na option is deprecated.*:FutureWarning
     # TODO: in an example (should fix eventually)
     ignore:The behavior of DataFrame concatenation.*:FutureWarning
     """  # noqa: E501
