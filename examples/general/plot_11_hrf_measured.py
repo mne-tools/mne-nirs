@@ -232,7 +232,7 @@ s = mne_nirs.experimental_design.create_boxcar(raw_intensity, stim_dur=5.0)
 ax.plot(raw_intensity.times, s[:, 1])
 ax.plot(design_matrix['Tapping_Left'])
 ax.legend(["Stimulus", "Expected Response"])
-ax.set(xlim=(180, 300), xlabel("Time (s)", ylabel="Amplitude")
+ax.set(xlim=(180, 300), xlabel="Time (s)", ylabel="Amplitude")
 
 
 # %%
