@@ -171,12 +171,18 @@ def _tidy_long_to_wide(d, expand_output=True):
 
     if expand_output:
         try:
-            d["Source"] = [re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(1)
-                           for ch in d["ch_name"]]
-            d["Detector"] = [re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(2)
-                             for ch in d["ch_name"]]
-            d["Chroma"] = [re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(3)
-                           for ch in d["ch_name"]]
+            d["Source"] = [
+                int(re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(1))
+                for ch in d["ch_name"]
+            ]
+            d["Detector"] = [
+                int(re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(2))
+                for ch in d["ch_name"]
+            ]
+            d["Chroma"] = [
+                re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(3)
+                for ch in d["ch_name"]
+            ]
         except AttributeError:
             warn("Non standard source detector names used")
         d["Significant"] = d["p_value"] < 0.05
