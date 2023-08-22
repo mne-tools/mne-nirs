@@ -143,10 +143,10 @@ mne.viz.plot_events(events, event_id=event_dict, sfreq=raw_haemo.info['sfreq'])
 # line is raised for the duration of the stimulus/condition.
 
 s = mne_nirs.experimental_design.create_boxcar(raw_haemo)
-fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(15, 6))
-plt.plot(raw_haemo.times, s, axes=axes)
-plt.legend(["Control", "Left", "Right"], loc="upper right")
-plt.xlabel("Time (s)");
+fig, ax = plt.subplots(figsize=(15, 6), constrained_layout=True)
+ax.plot(raw_haemo.times, s)
+ax.legend(["Control", "Left", "Right"], loc="upper right")
+ax.set_xlabel("Time (s)");
 
 
 # %%
@@ -203,7 +203,7 @@ design_matrix["ShortHbR"] = np.mean(short_chs.copy().pick(
 # The next columns illustrate the drift and constant components.
 # The last columns illustrate the short channel signals.
 
-fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
+fig, ax1 = plt.subplots(figsize=(10, 6), constrained_layout=True)
 fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
@@ -227,13 +227,12 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 # name. Note however, that this is just for visualisation and does not affect
 # the results below.
 
+fig, ax = plt.subplots(constrained_layout=True)
 s = mne_nirs.experimental_design.create_boxcar(raw_intensity, stim_dur=5.0)
-plt.plot(raw_intensity.times, s[:, 1])
-plt.plot(design_matrix['Tapping_Left'])
-plt.xlim(180, 300)
-plt.legend(["Stimulus", "Expected Response"])
-plt.xlabel("Time (s)")
-plt.ylabel("Amplitude")
+ax.plot(raw_intensity.times, s[:, 1])
+ax.plot(design_matrix['Tapping_Left'])
+ax.legend(["Stimulus", "Expected Response"])
+ax.set(xlim=(180, 300), xlabel="Time (s)", ylabel="Amplitude")
 
 
 # %%

@@ -298,6 +298,9 @@ def test_create_results_glm_contrast():
     df = res.to_dataframe()
     assert df.shape == (n_channels, 10)
 
+    src = np.asarray(df["Source"])
+    assert src.dtype.kind == "i"
+
 
 def test_results_glm_io():
 

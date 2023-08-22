@@ -7,7 +7,6 @@
 import os
 import pytest
 import sys
-import warnings
 
 from mne.utils import check_version
 
@@ -24,14 +23,6 @@ def examples_path():
         path = "../examples/general/"
 
     return path
-
-
-def run_script_and_check(test_file_path):
-    with open(test_file_path) as fid, warnings.catch_warnings():
-        # Ignore deprecation warning caused by
-        # app.setAttribute(Qt.AA_UseHighDpiPixmaps) in mne-python
-        warnings.filterwarnings("ignore", category=DeprecationWarning)
-        return exec(fid.read(), locals(), locals())
 
 
 requires_mne_1p2 = pytest.mark.skipif(
@@ -53,6 +44,8 @@ requires_mne_bids_nirs = pytest.mark.skipif(
 
 
 @pytest.mark.filterwarnings('ignore:No bad channels to interpolate.*:')
+@pytest.mark.filterwarnings('ignore:divide by zero encountered.*:')
+@pytest.mark.filterwarnings('ignore:invalid value encountered.*:')
 @pytest.mark.skipif(
     sys.platform.startswith('win'), reason='Unstable on Windows')
 @pytest.mark.examples
@@ -76,4 +69,6 @@ requires_mne_bids_nirs = pytest.mark.skipif(
     "plot_99_bad.py"]))
 def test_examples(fname, requires_pyvista):
     test_file_path = examples_path() + fname
-    run_script_and_check(test_file_path)
+    with open(test_file_path) as fid:
+        code = fid.read()
+    exec(code, locals(), locals())

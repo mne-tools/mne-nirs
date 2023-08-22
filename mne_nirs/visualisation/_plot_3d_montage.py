@@ -7,10 +7,9 @@ import inspect
 
 import numpy as np
 
-from mne import pick_info, pick_types
+from mne import pick_info, pick_types, Info
 from mne.channels import make_standard_montage
 from mne.channels.montage import transform_to_head
-from mne.io import Info
 from mne.transforms import _get_trans, apply_trans
 from mne.utils import _validate_type, _check_option, verbose, logger
 from mne.viz import Brain

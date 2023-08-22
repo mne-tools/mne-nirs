@@ -110,7 +110,7 @@ def _tidy_RegressionResults(data, glm_est, design_matrix):
         mse_estimates[idx, :] = glm_est[name].MSE[0]
         for cond_idx, cond in enumerate(design_matrix.columns):
             t_estimates[idx, cond_idx] = glm_est[name].t(
-                column=cond_idx)
+                column=cond_idx).item()
             p_estimates[idx, cond_idx] = 2 * stats.t.cdf(
                 -1.0 * np.abs(t_estimates[idx, cond_idx]),
                 df=df_estimates[idx, cond_idx])
@@ -171,12 +171,18 @@ def _tidy_long_to_wide(d, expand_output=True):
 
     if expand_output:
         try:
-            d["Source"] = [re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(1)
-                           for ch in d["ch_name"]]
-            d["Detector"] = [re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(2)
-                             for ch in d["ch_name"]]
-            d["Chroma"] = [re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(3)
-                           for ch in d["ch_name"]]
+            d["Source"] = [
+                int(re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(1))
+                for ch in d["ch_name"]
+            ]
+            d["Detector"] = [
+                int(re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(2))
+                for ch in d["ch_name"]
+            ]
+            d["Chroma"] = [
+                re.search(r'S(\d+)_D(\d+) (\w+)', ch).group(3)
+                for ch in d["ch_name"]
+            ]
         except AttributeError:
             warn("Non standard source detector names used")
         d["Significant"] = d["p_value"] < 0.05

@@ -31,11 +31,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: conda-incubator/setup-miniconda@v2
+      - uses: mamba-org/setup-micromamba@v1
         with:
-          activate-environment: 'mne-nirs'
-          python-version: ${{ env.PYTHON_VERSION }}
           environment-file: ${{ env.CONDA_ENV }}
+          environment-name: 'mne-nirs'
+          create-args: >-
+            python=${{ env.PYTHON_VERSION }}
         name: 'Setup conda'
       - shell: bash -el {0}
         run: |
