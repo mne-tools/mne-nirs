@@ -60,7 +60,7 @@ raw.plot(duration=300, show_scrollbars=False)
 design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
                                                drift_order=1,
                                                drift_model='polynomial')
-fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
+fig, ax1 = plt.subplots(figsize=(10, 6), constrained_layout=True)
 fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
@@ -98,7 +98,7 @@ print_results(glm_est, amp)
 # and plot the noisy data and the GLM fitted model.
 # We print the response estimate and see that is close, but not exactly correct,
 # we observe the mean square error is similar to the added noise.
-# Note that the clean data plot is so similar to the GLM estimate that it is hard to see unless zoomed in. 
+# Note that the clean data plot is so similar to the GLM estimate that it is hard to see unless zoomed in.
 
 # First take a copy of noise free data for comparison
 raw_noise_free = raw.copy()
@@ -106,12 +106,13 @@ raw_noise_free = raw.copy()
 raw._data += np.random.normal(0, np.sqrt(1e-11), raw._data.shape)
 glm_est = run_glm(raw, design_matrix)
 
-plt.plot(raw.times, raw_noise_free.get_data().T * 1e6)
-plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
-plt.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
-plt.xlabel("Time (s)")
-plt.ylabel("Haemoglobin (uM)")
-plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
+fig, ax = plt.subplots(constrained_layout=True)
+ax.plot(raw.times, raw_noise_free.get_data().T * 1e6)
+ax.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
+ax.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
+ax.set_xlabel("Time (s)")
+ax.set_ylabel("Haemoglobin (uM)")
+ax.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 
 print_results(glm_est, amp)
 
@@ -138,12 +139,13 @@ design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
                                                drift_model='polynomial')
 glm_est = run_glm(raw, design_matrix)
 
-plt.plot(raw.times, raw_noise_free.get_data().T * 1e6)
-plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
-plt.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
-plt.xlabel("Time (s)")
-plt.ylabel("Haemoglobin (uM)")
-plt.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
+fig, ax = plt.subplots(constrained_layout=True)
+ax.plot(raw.times, raw_noise_free.get_data().T * 1e6)
+ax.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
+ax.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
+ax.set_xlabel("Time (s)")
+ax.set_ylabel("Haemoglobin (uM)")
+ax.legend(["Clean Data", "Noisy Data", "GLM Estimate"])
 
 print_results(glm_est, amp)
 
@@ -171,11 +173,12 @@ design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
                                                drift_model='polynomial')
 glm_est = run_glm(raw, design_matrix)
 
-plt.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
-plt.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
-plt.xlabel("Time (s)")
-plt.ylabel("Haemoglobin (uM)")
-plt.legend(["Noisy Data", "GLM Estimate"])
+fig, ax = plt.subplots(constrained_layout=True)
+ax.plot(raw.times, raw.get_data().T * 1e6, alpha=0.3)
+ax.plot(raw.times, glm_est.theta()[0][0] * design_matrix["A"].values * 1e6)
+ax.set_xlabel("Time (s)")
+ax.set_ylabel("Haemoglobin (uM)")
+ax.legend(["Noisy Data", "GLM Estimate"])
 
 print_results(glm_est, amp)
 
@@ -193,12 +196,12 @@ print_results(glm_est, amp)
 
 glm_est = run_glm(raw, design_matrix, noise_model='ar5')
 
-fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(15, 6))
-plt.plot([-0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.02428681],
-         axes=axes)  # actual values from model above
-plt.plot(glm_est.model()[0].rho * -1.0,  axes=axes)  # estimates
-plt.legend(["Simulation AR coefficients", "Estimated AR coefficients"])
-plt.xlabel("Coefficient")
+fig, ax = plt.subplots(figsize=(15, 6), constrained_layout=True)
+# actual values from model above
+ax.plot([-0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.02428681])
+ax.plot(glm_est.model()[0].rho * -1.0)  # estimates
+ax.legend(["Simulation AR coefficients", "Estimated AR coefficients"])
+ax.set_xlabel("Coefficient")
 
 
 # %%

@@ -10,10 +10,10 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
 
-from mne import Info
+from mne import Info, pick_info
 from mne.utils import warn
 from mne.channels.layout import _merge_ch_data
-from mne.io.pick import _picks_to_idx, _get_channel_types, pick_info
+from mne.io.pick import _picks_to_idx
 from mne.viz import plot_topomap
 
 
@@ -38,7 +38,7 @@ def _plot_glm_topo(inst, glm_estimates, design_matrix, *,
     for idx, name in enumerate(glm_estimates.keys()):
         estimates[idx, :] = glm_estimates[name].theta.T
 
-    types = np.unique(_get_channel_types(info))
+    types = np.unique(info.get_channel_types())
 
     if requested_conditions is None:
         requested_conditions = design_matrix.columns
@@ -100,7 +100,7 @@ def _plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None):
     info = deepcopy(inst if isinstance(inst, Info) else inst.info)
 
     # Extract types. One subplot is created per type (hbo/hbr)
-    types = np.unique(_get_channel_types(info))
+    types = np.unique(info.get_channel_types())
 
     # Extract values to plot and rescale to uM
     estimates = contrast.effect[0]

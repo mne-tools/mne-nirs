@@ -26,14 +26,6 @@ def examples_path():
     return path
 
 
-def run_script_and_check(test_file_path):
-    with open(test_file_path) as fid, warnings.catch_warnings():
-        # Ignore deprecation warning caused by
-        # app.setAttribute(Qt.AA_UseHighDpiPixmaps) in mne-python
-        warnings.filterwarnings("ignore", category=DeprecationWarning)
-        return exec(fid.read(), locals(), locals())
-
-
 requires_mne_1p2 = pytest.mark.skipif(
     not check_version('mne', '1.2'), reason='Needs MNE-Python 1.2')
 # https://github.com/mne-tools/mne-bids/pull/406
@@ -77,4 +69,6 @@ requires_mne_bids_nirs = pytest.mark.skipif(
     "plot_99_bad.py"]))
 def test_examples(fname, requires_pyvista):
     test_file_path = examples_path() + fname
-    run_script_and_check(test_file_path)
+    with open(test_file_path) as fid:
+        code = fid.read()
+    exec(code, locals(), locals())
