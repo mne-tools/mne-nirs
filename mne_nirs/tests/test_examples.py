@@ -7,7 +7,6 @@
 import os
 import pytest
 import sys
-import warnings
 
 from mne.utils import check_version
 

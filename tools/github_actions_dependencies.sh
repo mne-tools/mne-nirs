@@ -7,24 +7,15 @@ if [ ! -z "$CONDA_ENV" ]; then
 else
 	# Changes here should also go in the interactive_test CircleCI job
 	python -m pip install $STD_ARGS pip setuptools wheel
-	echo "Numpy"
-	pip uninstall -yq numpy
-	echo "Date utils"
-	# https://pip.pypa.io/en/latest/user_guide/#possible-ways-to-reduce-backtracking-occurring
-	pip install $STD_ARGS --pre --only-binary ":all:" python-dateutil pytz joblib threadpoolctl six
-    echo "pyside6"
-	pip install $STD_ARGS --pre --only-binary ":all:" pyside6
 	echo "NumPy/SciPy/pandas etc."
-	# TODO: Currently missing dipy for 3.10 https://github.com/dipy/dipy/issues/2489
-	pip install $STD_ARGS --pre --only-binary ":all:" --no-deps  --default-timeout=60 -i "https://pypi.anaconda.org/scipy-wheels-nightly/simple" numpy scipy pandas scikit-learn statsmodels dipy
-	echo "H5py, pillow, matplotlib"
-	pip install $STD_ARGS --pre --only-binary ":all:" --no-deps -f "https://7933911d6844c6c53a7d-47bd50c35cd79bd838daf386af554a83.ssl.cf2.rackcdn.com" h5py pillow matplotlib
-	echo "Numba, nilearn"
-	pip install $STD_ARGS --pre --only-binary ":all:" numba llvmlite nilearn
+	pip install $STD_ARGS --pre --only-binary ":all:" --default-timeout=60 --extra-index-url "https://pypi.anaconda.org/scientific-python-nightly-wheels/simple" numpy scipy scikit-learn pandas matplotlib pillow statsmodels
+	pip install $STD_ARGS --pre --only-binary ":all:" --no-deps  --default-timeout=60 -i "https://pypi.anaconda.org/scipy-wheels-nightly/simple" dipy
+	echo "H5py"
+	pip install $STD_ARGS --pre --only-binary ":all:" --no-deps -f "https://7933911d6844c6c53a7d-47bd50c35cd79bd838daf386af554a83.ssl.cf2.rackcdn.com" h5py
+	echo "nilearn"
+	pip install $STD_ARGS --pre --only-binary ":all:" nilearn
 	echo "VTK"
-	# Have to use our own version until VTK releases a 3.10 build
-	wget -q https://osf.io/ajder/download -O vtk-9.1.20220406.dev0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
-	pip install $STD_ARGS --pre --only-binary ":all:" vtk-9.1.20220406.dev0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+	pip install $STD_ARGS --pre --only-binary ":all:" vtk
 	python -c "import vtk"
 	echo "PyVista"
 	pip install --progress-bar off git+https://github.com/pyvista/pyvista
