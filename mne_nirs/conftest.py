@@ -58,7 +58,7 @@ def pytest_configure(config):
     # TODO: in an example (should fix eventually)
     ignore:The behavior of DataFrame concatenation.*:FutureWarning
     # mne-bids needs a release
-    ignore:mne\.io\.pick.pick_types is deprecated.*FutureWarning
+    ignore:.*mne\.io\.pick.* is deprecated.*FutureWarning
     """  # noqa: E501
     for warning_line in warning_lines.split('\n'):
         warning_line = warning_line.strip()
