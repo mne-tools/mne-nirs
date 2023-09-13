@@ -165,7 +165,6 @@ for sub in range(1, 6):  # Loop from first to fifth subject
     df_individual, raw, dm = analysis(bids_path, ID)
 
     df = pd.concat([df, df_individual])
-raise RuntimeError
 
 # %%
 # Tidy the dataframe
