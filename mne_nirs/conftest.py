@@ -59,6 +59,8 @@ def pytest_configure(config):
     ignore:The behavior of DataFrame concatenation.*:FutureWarning
     # mne-bids needs a release
     ignore:.*mne\.io\.pick.* is deprecated.*FutureWarning
+    # MESA
+    ignore:Mesa version 10\.2\.4 is too old.*:RuntimeWarning
     """  # noqa: E501
     for warning_line in warning_lines.split('\n'):
         warning_line = warning_line.strip()
