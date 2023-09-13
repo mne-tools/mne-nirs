@@ -69,9 +69,6 @@ Finally a mixed effects model is run on the group level dat.
 # Differences between toolboxes
 # ---------------------------------------------
 #
-# MNE does not higher order autoregressive noise models
-# in the GLM analysis. See https://github.com/mne-tools/mne-nirs/issues/233
-#
 # MNE does not have iterative reweighting of the noise estimate
 # in the GLM analysis.
 

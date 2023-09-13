@@ -166,7 +166,6 @@ for sub in range(1, 6):  # Loop from first to fifth subject
 
     df = pd.concat([df, df_individual])
 
-
 # %%
 # Tidy the dataframe
 # ---------------------------------------------------------------------
@@ -183,6 +182,7 @@ df["isDelay"] = ["delay" in n for n in df["Condition"]]
 df = df.query("isDelay in [True]")
 df = df.query("isTapping in [True]")
 # Make a new column that stores the condition name for tidier model below
+df.loc[:, "TidyCond"] = ""
 df.loc[df["isTapping"] == True, "TidyCond"] = "Tapping"
 # Finally, extract the FIR delay in to its own column in data frame
 df.loc[:, "delay"] = [n.split('_')[-1] for n in df.Condition]
