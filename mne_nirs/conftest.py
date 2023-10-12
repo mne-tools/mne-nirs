@@ -53,7 +53,6 @@ def pytest_configure(config):
     # seaborn
     ignore:is_categorical_dtype is deprecated.*:FutureWarning
     ignore:use_inf_as_na option is deprecated.*:FutureWarning
-    ignore:The `ci` parameter is deprecated.*:FutureWarning
     # nilearn
     ignore:The provided callable <function sum.*:FutureWarning
     # TODO: in an example (should fix eventually)
