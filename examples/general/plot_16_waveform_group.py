@@ -349,7 +349,7 @@ df.head()
 # For this reason, fNIRS is most appropriate for detecting changes within a
 # single ROI between conditions.
 
-sns.catplot(x="Condition", y="Value", hue="ID", data=df.query("Chroma == 'hbo'"), ci=None, palette="muted", height=4, s=10)
+sns.catplot(x="Condition", y="Value", hue="ID", data=df.query("Chroma == 'hbo'"), errorbar=None, palette="muted", height=4, s=10)
 
 
 # %%
