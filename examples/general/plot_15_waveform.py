@@ -330,7 +330,6 @@ for column, condition in enumerate(
         ['Tapping Left', 'Tapping Right', 'Left-Right']):
     for row, chroma in enumerate(['HbO', 'HbR']):
         axes[row, column].set_title('{}: {}'.format(chroma, condition))
-fig.tight_layout()
 
 # %%
 # Lastly, we can also look at the individual waveforms to see what is
