@@ -46,7 +46,6 @@ requires_mne_bids_nirs = pytest.mark.skipif(
 @pytest.mark.filterwarnings('ignore:No bad channels to interpolate.*:')
 @pytest.mark.filterwarnings('ignore:divide by zero encountered.*:')
 @pytest.mark.filterwarnings('ignore:invalid value encountered.*:')
-@pytest.mark.filterwarnings("ignore:.*\n\nThe `ci` parameter is deprecated.*:")
 @pytest.mark.skipif(
     sys.platform.startswith('win'), reason='Unstable on Windows')
 @pytest.mark.examples
