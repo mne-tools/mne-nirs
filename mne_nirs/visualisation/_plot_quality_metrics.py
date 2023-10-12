@@ -48,7 +48,7 @@ def plot_timechannel_quality_metric(raw, scores, times, threshold=0.1,
     vsize = 0.2 * n_chans
 
     # First, plot the "raw" scores.
-    fig, ax = plt.subplots(1, 2, figsize=(20, vsize))
+    fig, ax = plt.subplots(1, 2, figsize=(20, vsize), layout='constrained')
     fig.suptitle(title, fontsize=16, fontweight='bold')
     sns.heatmap(data=data_to_plot, cmap='Reds_r', vmin=0, vmax=1,
                 cbar_kws=dict(label='Score'), ax=ax[0])
@@ -69,9 +69,6 @@ def plot_timechannel_quality_metric(raw, scores, times, threshold=0.1,
         for x in range(1, len(times))]
     ax[1].set_title('Scores < Limit', fontweight='bold')
     markbad(raw, ax[1])
-
-    # The figure title should not overlap with the subplots.
-    fig.tight_layout(rect=[0, 0.03, 1, 0.95])
 
     return fig
 

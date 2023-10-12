@@ -162,12 +162,10 @@ raw_haemo.plot(n_channels=len(raw_haemo.ch_names),
 
 fig = raw_haemo.plot_psd(average=True)
 fig.suptitle('Before filtering', weight='bold', size='x-large')
-fig.subplots_adjust(top=0.88)
 raw_haemo = raw_haemo.filter(0.05, 0.7, h_trans_bandwidth=0.2,
                              l_trans_bandwidth=0.02)
 fig = raw_haemo.plot_psd(average=True)
 fig.suptitle('After filtering', weight='bold', size='x-large')
-fig.subplots_adjust(top=0.88)
 
 # %%
 # Extract epochs
@@ -183,7 +181,6 @@ fig.subplots_adjust(top=0.88)
 events, event_dict = mne.events_from_annotations(raw_haemo)
 fig = mne.viz.plot_events(events, event_id=event_dict,
                           sfreq=raw_haemo.info['sfreq'])
-fig.subplots_adjust(right=0.7)  # make room for the legend
 
 
 # %%
@@ -330,7 +327,6 @@ for column, condition in enumerate(
         ['Tapping Left', 'Tapping Right', 'Left-Right']):
     for row, chroma in enumerate(['HbO', 'HbR']):
         axes[row, column].set_title('{}: {}'.format(chroma, condition))
-fig.tight_layout()
 
 # %%
 # Lastly, we can also look at the individual waveforms to see what is
