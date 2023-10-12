@@ -47,7 +47,7 @@ MNE-NIRS and MNE-Python provide a wide variety of tools to use when processing f
 * Visualisation tools for all stages of processing from raw data to processed waveforms, GLM result visualisation, including both sensor and cortical surface projections.
 * Data cleaning functions including popular short channel techniques and negative correlation enhancement.
 * Group level analysis using `(robust) linear mixed effects models <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_12_group_glm.html>`_ and `waveform averaging <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_16_waveform_group.html>`_.
-* And much more! Check out the documentation `examples <https://mne.tools/mne-nirs/stable/auto_examples/index.html>`_ and the API `for more details <https://mne.tools/mne-nirs/stable/api.html>`_.
+* And much more! Check out the documentation `examples <https://mne.tools/mne-nirs/stable/auto_examples/index.html>`__ and the API `for more details <https://mne.tools/mne-nirs/stable/api.html>`_.
 
 .. features-end
 

@@ -122,12 +122,10 @@ raw_haemo._data[::2, :]= np.random.randn(20, 23239) / 1.0e6 * 3
 
 fig = raw_haemo.plot_psd(average=True)
 fig.suptitle('Before filtering', weight='bold', size='x-large')
-fig.subplots_adjust(top=0.88)
 raw_haemo = raw_haemo.filter(0.05, 0.1, h_trans_bandwidth=0.2,
                              l_trans_bandwidth=0.02)
 fig = raw_haemo.plot_psd(average=True)
 fig.suptitle('After filtering', weight='bold', size='x-large')
-fig.subplots_adjust(top=0.88)
 
 
 # %%
@@ -156,7 +154,6 @@ events, _ = mne.events_from_annotations(raw_haemo, event_id={'1.0': 1,
 event_dict = {'Control': 1, 'Tapping/Left': 2, 'Tapping/Right': 3}
 fig = mne.viz.plot_events(events, event_id=event_dict,
                           sfreq=raw_haemo.info['sfreq'])
-fig.subplots_adjust(right=0.7)  # make room for the legend
 
 
 # %%
