@@ -197,3 +197,4 @@ Enhancements
 .. _Samuel Powell: https://github.com/samuelpowell
 .. _Johann Benerradi: https://github.com/HanBnrd
 .. _Florin Pop: https://github.com/florin-pop
+.. _Nicolas Busato: https://github.com/Busato
