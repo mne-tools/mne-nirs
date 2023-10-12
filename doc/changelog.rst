@@ -17,6 +17,7 @@ To install a specific version of the library you would run ``pip install mne-nir
 v0.6.dev0
 ---------
 
+* Changed ci param to errorbar in sns-catplot functions. By `Nicolas Busato`_.
 * Fix bug in SNIRF writer that caused incorrect duration to be written to file. By `Robert Luke`_.
 * Add option to export montage location in SNIRF using the landmarkLabels field. By `Robert Luke`_.
 * Fix continuous integration issues and update test infrastructure. By `Florin Pop`_.
