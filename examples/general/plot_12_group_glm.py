@@ -278,7 +278,7 @@ for sub in subjects:  # Loop from first to fifth subject
 grp_results = df_roi.query("Condition in ['Control', 'Tapping_Left', 'Tapping_Right']")
 grp_results = grp_results.query("Chroma in ['hbo']")
 
-sns.catplot(x="Condition", y="theta", col="ID", hue="ROI", data=grp_results, col_wrap=5, ci=None, palette="muted", height=4, s=10)
+sns.catplot(x="Condition", y="theta", col="ID", hue="ROI", data=grp_results, col_wrap=5, errorbar=None, palette="muted", height=4, s=10)
 
 
 # %%
@@ -372,7 +372,7 @@ roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
 
 df = statsmodels_to_results(roi_model)
 
-sns.catplot(x="Condition", y="Coef.", hue="ROI", data=df.query("Chroma == 'hbo'"), ci=None, palette="muted", height=4, s=10)
+sns.catplot(x="Condition", y="Coef.", hue="ROI", data=df.query("Chroma == 'hbo'"), errorbar=None, palette="muted", height=4, s=10)
 
 
 # %%
