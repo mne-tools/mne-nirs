@@ -1,0 +1,666 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mne.io.boxy.boxy &#8212; MNE-NIRS 0.5.0 documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/js/copybutton.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-188272121-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-188272121-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/mne/io/boxy/boxy';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.5.0';
+        </script>
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="canonical" href="https://mne.tools/mne-nirs/stable/index.html" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../../_static/mne_nirs_logo_small.svg" class="logo__image only-light" alt="Logo image">
+    <img src="../../../../_static/mne_nirs_logo_small.svg" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                  <a class="nav-link" href="../../../../auto_examples/index.html">
+                    Examples
+                  </a>
+                </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../../../../api.html">
+                    API
+                  </a>
+                </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../../../../changelog.html">
+                    Changelog
+                  </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
+        0.5.0  <!-- this text may get changed later by javascript -->
+        <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+</div>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mne-tools/mne-python" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                  <a class="nav-link" href="../../../../auto_examples/index.html">
+                    Examples
+                  </a>
+                </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../../../../api.html">
+                    API
+                  </a>
+                </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link" href="../../../../changelog.html">
+                    Changelog
+                  </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
+        0.5.0  <!-- this text may get changed later by javascript -->
+        <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+</div>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mne-tools/mne-python" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <h1>Source code for mne.io.boxy.boxy</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Authors: Kyle Mathewson, Jonathan Kuziek &lt;kuziek@ualberta.ca&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># License: BSD-3-Clause</span>
+
+<span class="kn">import</span> <span class="nn">re</span> <span class="k">as</span> <span class="nn">re</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">BaseRaw</span>
+<span class="kn">from</span> <span class="nn">..meas_info</span> <span class="kn">import</span> <span class="n">create_info</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">_mult_cal_one</span>
+<span class="kn">from</span> <span class="nn">...utils</span> <span class="kn">import</span> <span class="n">logger</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">fill_doc</span><span class="p">,</span> <span class="n">_check_fname</span>
+<span class="kn">from</span> <span class="nn">...annotations</span> <span class="kn">import</span> <span class="n">Annotations</span>
+
+
+<div class="viewcode-block" id="read_raw_boxy"><a class="viewcode-back" href="../../../../generated/mne.io.read_raw_boxy.html#mne.io.read_raw_boxy">[docs]</a><span class="nd">@fill_doc</span>
+<span class="k">def</span> <span class="nf">read_raw_boxy</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Reader for an optical imaging recording.</span>
+
+<span class="sd">    This function has been tested using the ISS Imagent I and II systems</span>
+<span class="sd">    and versions 0.40/0.84 of the BOXY recording software.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname : str</span>
+<span class="sd">        Path to the BOXY data file.</span>
+<span class="sd">    %(preload)s</span>
+<span class="sd">    %(verbose)s</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    raw : instance of RawBOXY</span>
+<span class="sd">        A Raw object containing BOXY data.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    mne.io.Raw : Documentation of attribute and methods.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">RawBOXY</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">preload</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span></div>
+
+
+<span class="nd">@fill_doc</span>
+<span class="k">class</span> <span class="nc">RawBOXY</span><span class="p">(</span><span class="n">BaseRaw</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Raw object from a BOXY optical imaging file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname : str</span>
+<span class="sd">        Path to the BOXY data file.</span>
+<span class="sd">    %(preload)s</span>
+<span class="sd">    %(verbose)s</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    mne.io.Raw : Documentation of attribute and methods.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@verbose</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Loading </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">fname</span><span class="p">)</span>
+
+        <span class="c1"># Read header file and grab some info.</span>
+        <span class="n">start_line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="n">col_names</span> <span class="o">=</span> <span class="n">mrk_col</span> <span class="o">=</span> <span class="n">filetype</span> <span class="o">=</span> <span class="n">mrk_data</span> <span class="o">=</span> <span class="n">end_line</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">raw_extras</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">raw_extras</span><span class="p">[</span><span class="s1">&#39;offsets&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>  <span class="c1"># keep track of our offsets</span>
+        <span class="n">sfreq</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">_check_fname</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;fname&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+            <span class="n">line_num</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">i_line</span> <span class="o">=</span> <span class="n">fid</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+            <span class="k">while</span> <span class="n">i_line</span><span class="p">:</span>
+                <span class="c1"># most of our lines will be data lines, so check that first</span>
+                <span class="k">if</span> <span class="n">line_num</span> <span class="o">&gt;=</span> <span class="n">start_line</span><span class="p">:</span>
+                    <span class="k">assert</span> <span class="n">col_names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                    <span class="k">assert</span> <span class="n">filetype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                    <span class="k">if</span> <span class="s1">&#39;#DATA ENDS&#39;</span> <span class="ow">in</span> <span class="n">i_line</span><span class="p">:</span>
+                        <span class="c1"># Data ends just before this.</span>
+                        <span class="n">end_line</span> <span class="o">=</span> <span class="n">line_num</span>
+                        <span class="k">break</span>
+                    <span class="k">if</span> <span class="n">mrk_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;non-parsed&#39;</span><span class="p">:</span>
+                            <span class="c1"># Non-parsed files have different lines lengths.</span>
+                            <span class="n">crnt_line</span> <span class="o">=</span> <span class="n">i_line</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                            <span class="n">temp_data</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span>
+                                <span class="sa">r</span><span class="s1">&#39;[-+]?\d*\.?\d+&#39;</span><span class="p">,</span> <span class="n">crnt_line</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">temp_data</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">col_names</span><span class="p">):</span>
+                                <span class="n">mrk_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span>
+                                    <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[-+]?\d*\.?\d+&#39;</span><span class="p">,</span> <span class="n">crnt_line</span><span class="p">)</span>
+                                    <span class="p">[</span><span class="n">mrk_col</span><span class="p">]))</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">crnt_line</span> <span class="o">=</span> <span class="n">i_line</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                            <span class="n">mrk_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span>
+                                <span class="sa">r</span><span class="s1">&#39;[-+]?\d*\.?\d+&#39;</span><span class="p">,</span> <span class="n">crnt_line</span><span class="p">)[</span><span class="n">mrk_col</span><span class="p">]))</span>
+                    <span class="n">raw_extras</span><span class="p">[</span><span class="s1">&#39;offsets&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fid</span><span class="o">.</span><span class="n">tell</span><span class="p">())</span>
+                <span class="c1"># now proceed with more standard header parsing</span>
+                <span class="k">elif</span> <span class="s1">&#39;BOXY.EXE:&#39;</span> <span class="ow">in</span> <span class="n">i_line</span><span class="p">:</span>
+                    <span class="n">boxy_ver</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d*\.\d+&#39;</span><span class="p">,</span>
+                                          <span class="n">i_line</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="c1"># Check that the BOXY version is supported</span>
+                    <span class="k">if</span> <span class="n">boxy_ver</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;0.40&#39;</span><span class="p">,</span> <span class="s1">&#39;0.84&#39;</span><span class="p">]:</span>
+                        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;MNE has not been tested with BOXY &#39;</span>
+                                           <span class="s1">&#39;version (</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">boxy_ver</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="s1">&#39;Detector Channels&#39;</span> <span class="ow">in</span> <span class="n">i_line</span><span class="p">:</span>
+                    <span class="n">raw_extras</span><span class="p">[</span><span class="s1">&#39;detect_num&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i_line</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="s1">&#39;External MUX Channels&#39;</span> <span class="ow">in</span> <span class="n">i_line</span><span class="p">:</span>
+                    <span class="n">raw_extras</span><span class="p">[</span><span class="s1">&#39;source_num&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i_line</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="s1">&#39;Update Rate (Hz)&#39;</span> <span class="ow">in</span> <span class="n">i_line</span> <span class="ow">or</span> \
+                        <span class="s1">&#39;Updata Rate (Hz)&#39;</span> <span class="ow">in</span> <span class="n">i_line</span><span class="p">:</span>
+                    <span class="c1"># Version 0.40 of the BOXY recording software</span>
+                    <span class="c1"># (and possibly other versions lower than 0.84) contains a</span>
+                    <span class="c1"># typo in the raw data file where &#39;Update Rate&#39; is spelled</span>
+                    <span class="c1"># &quot;Updata Rate. This will account for this typo.</span>
+                    <span class="n">sfreq</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">i_line</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="s1">&#39;#DATA BEGINS&#39;</span> <span class="ow">in</span> <span class="n">i_line</span><span class="p">:</span>
+                    <span class="c1"># Data should start a couple lines later.</span>
+                    <span class="n">start_line</span> <span class="o">=</span> <span class="n">line_num</span> <span class="o">+</span> <span class="mi">3</span>
+                <span class="k">elif</span> <span class="n">line_num</span> <span class="o">==</span> <span class="n">start_line</span> <span class="o">-</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="c1"># Grab names for each column of data.</span>
+                    <span class="n">raw_extras</span><span class="p">[</span><span class="s1">&#39;col_names&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">col_names</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span>
+                        <span class="sa">r</span><span class="s1">&#39;\w+\-\w+|\w+\-\d+|\w+&#39;</span><span class="p">,</span> <span class="n">i_line</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="s1">&#39;exmux&#39;</span> <span class="ow">in</span> <span class="n">col_names</span><span class="p">:</span>
+                        <span class="c1"># Change filetype based on data organisation.</span>
+                        <span class="n">filetype</span> <span class="o">=</span> <span class="s1">&#39;non-parsed&#39;</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">filetype</span> <span class="o">=</span> <span class="s1">&#39;parsed&#39;</span>
+                    <span class="k">if</span> <span class="s1">&#39;digaux&#39;</span> <span class="ow">in</span> <span class="n">col_names</span><span class="p">:</span>
+                        <span class="n">mrk_col</span> <span class="o">=</span> <span class="n">col_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;digaux&#39;</span><span class="p">)</span>
+                        <span class="n">mrk_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+                    <span class="c1"># raw_extras[&#39;offsets&#39;].append(fid.tell())</span>
+                <span class="k">elif</span> <span class="n">line_num</span> <span class="o">==</span> <span class="n">start_line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">raw_extras</span><span class="p">[</span><span class="s1">&#39;offsets&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fid</span><span class="o">.</span><span class="n">tell</span><span class="p">())</span>
+                <span class="n">line_num</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">i_line</span> <span class="o">=</span> <span class="n">fid</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">sfreq</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="n">raw_extras</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="n">filetype</span><span class="o">=</span><span class="n">filetype</span><span class="p">,</span> <span class="n">start_line</span><span class="o">=</span><span class="n">start_line</span><span class="p">,</span> <span class="n">end_line</span><span class="o">=</span><span class="n">end_line</span><span class="p">)</span>
+
+        <span class="c1"># Label each channel in our data, for each data type (DC, AC, Ph).</span>
+        <span class="c1"># Data is organised by channels x timepoint, where the first</span>
+        <span class="c1"># &#39;source_num&#39; rows correspond to the first detector, the next</span>
+        <span class="c1"># &#39;source_num&#39; rows correspond to the second detector, and so on.</span>
+        <span class="n">ch_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">ch_types</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">cals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">det_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">raw_extras</span><span class="p">[</span><span class="s1">&#39;detect_num&#39;</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">src_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">raw_extras</span><span class="p">[</span><span class="s1">&#39;source_num&#39;</span><span class="p">]):</span>
+                <span class="k">for</span> <span class="n">i_type</span><span class="p">,</span> <span class="n">ch_type</span> <span class="ow">in</span> <span class="p">[</span>
+                        <span class="p">(</span><span class="s1">&#39;DC&#39;</span><span class="p">,</span> <span class="s1">&#39;fnirs_cw_amplitude&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="s1">&#39;AC&#39;</span><span class="p">,</span> <span class="s1">&#39;fnirs_fd_ac_amplitude&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="s1">&#39;Ph&#39;</span><span class="p">,</span> <span class="s1">&#39;fnirs_fd_phase&#39;</span><span class="p">)]:</span>
+                    <span class="n">ch_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s1">&#39;S</span><span class="si">{</span><span class="n">src_num</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s1">_D</span><span class="si">{</span><span class="n">det_num</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">i_type</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="n">ch_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ch_type</span><span class="p">)</span>
+                    <span class="n">cals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">180.</span> <span class="k">if</span> <span class="n">i_type</span> <span class="o">==</span> <span class="s1">&#39;Ph&#39;</span> <span class="k">else</span> <span class="mf">1.</span><span class="p">)</span>
+
+        <span class="c1"># Create info structure.</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">create_info</span><span class="p">(</span><span class="n">ch_names</span><span class="p">,</span> <span class="n">sfreq</span><span class="p">,</span> <span class="n">ch_types</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ch</span><span class="p">,</span> <span class="n">cal</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">],</span> <span class="n">cals</span><span class="p">):</span>
+            <span class="n">ch</span><span class="p">[</span><span class="s1">&#39;cal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cal</span>
+
+        <span class="c1"># Determine how long our data is.</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">end_line</span> <span class="o">-</span> <span class="n">start_line</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw_extras</span><span class="p">[</span><span class="s1">&#39;offsets&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="n">delta</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;non-parsed&#39;</span><span class="p">:</span>
+            <span class="n">delta</span> <span class="o">//=</span> <span class="p">(</span><span class="n">raw_extras</span><span class="p">[</span><span class="s1">&#39;source_num&#39;</span><span class="p">])</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RawBOXY</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">info</span><span class="p">,</span> <span class="n">preload</span><span class="p">,</span> <span class="n">filenames</span><span class="o">=</span><span class="p">[</span><span class="n">fname</span><span class="p">],</span> <span class="n">first_samps</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">last_samps</span><span class="o">=</span><span class="p">[</span><span class="n">delta</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">raw_extras</span><span class="o">=</span><span class="p">[</span><span class="n">raw_extras</span><span class="p">],</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+
+        <span class="c1"># Now let&#39;s grab our markers, if they are present.</span>
+        <span class="k">if</span> <span class="n">mrk_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">mrk_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrk_data</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+            <span class="c1"># We only want the first instance of each trigger.</span>
+            <span class="n">prev_mrk</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">mrk_idx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="n">tmp_dur</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">i_num</span><span class="p">,</span> <span class="n">i_mrk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mrk_data</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i_mrk</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i_mrk</span> <span class="o">!=</span> <span class="n">prev_mrk</span><span class="p">:</span>
+                    <span class="n">mrk_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i_num</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i_mrk</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i_mrk</span> <span class="o">==</span> <span class="n">prev_mrk</span><span class="p">:</span>
+                    <span class="n">tmp_dur</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">i_mrk</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i_mrk</span> <span class="o">!=</span> <span class="n">prev_mrk</span><span class="p">:</span>
+                    <span class="n">duration</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">tmp_dur</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">sfreq</span><span class="p">)</span>
+                    <span class="n">tmp_dur</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">prev_mrk</span> <span class="o">=</span> <span class="n">i_mrk</span>
+            <span class="n">onset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mrk_idx</span><span class="p">)</span> <span class="o">/</span> <span class="n">sfreq</span>
+            <span class="n">description</span> <span class="o">=</span> <span class="n">mrk_data</span><span class="p">[</span><span class="n">mrk_idx</span><span class="p">]</span>
+            <span class="n">annot</span> <span class="o">=</span> <span class="n">Annotations</span><span class="p">(</span><span class="n">onset</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_annotations</span><span class="p">(</span><span class="n">annot</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_read_segment_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">fi</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">cals</span><span class="p">,</span> <span class="n">mult</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read a segment of data from a file.</span>
+
+<span class="sd">        Boxy file organises data in two ways, parsed or un-parsed.</span>
+<span class="sd">        Regardless of type, output has (n_montages x n_sources x n_detectors</span>
+<span class="sd">        + n_marker_channels) rows, and (n_timepoints x n_blocks) columns.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">source_num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_extras</span><span class="p">[</span><span class="n">fi</span><span class="p">][</span><span class="s1">&#39;source_num&#39;</span><span class="p">]</span>
+        <span class="n">detect_num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_extras</span><span class="p">[</span><span class="n">fi</span><span class="p">][</span><span class="s1">&#39;detect_num&#39;</span><span class="p">]</span>
+        <span class="n">start_line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_extras</span><span class="p">[</span><span class="n">fi</span><span class="p">][</span><span class="s1">&#39;start_line&#39;</span><span class="p">]</span>
+        <span class="n">end_line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_extras</span><span class="p">[</span><span class="n">fi</span><span class="p">][</span><span class="s1">&#39;end_line&#39;</span><span class="p">]</span>
+        <span class="n">filetype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_extras</span><span class="p">[</span><span class="n">fi</span><span class="p">][</span><span class="s1">&#39;filetype&#39;</span><span class="p">]</span>
+        <span class="n">col_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_extras</span><span class="p">[</span><span class="n">fi</span><span class="p">][</span><span class="s1">&#39;col_names&#39;</span><span class="p">]</span>
+        <span class="n">offsets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_extras</span><span class="p">[</span><span class="n">fi</span><span class="p">][</span><span class="s1">&#39;offsets&#39;</span><span class="p">]</span>
+        <span class="n">boxy_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filenames</span><span class="p">[</span><span class="n">fi</span><span class="p">]</span>
+
+        <span class="c1"># Non-parsed multiplexes sources, so we need source_num times as many</span>
+        <span class="c1"># lines in that case</span>
+        <span class="k">if</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;parsed&#39;</span><span class="p">:</span>
+            <span class="n">start_read</span> <span class="o">=</span> <span class="n">start_line</span> <span class="o">+</span> <span class="n">start</span>
+            <span class="n">stop_read</span> <span class="o">=</span> <span class="n">start_read</span> <span class="o">+</span> <span class="p">(</span><span class="n">stop</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;non-parsed&#39;</span>
+            <span class="n">start_read</span> <span class="o">=</span> <span class="n">start_line</span> <span class="o">+</span> <span class="n">start</span> <span class="o">*</span> <span class="n">source_num</span>
+            <span class="n">stop_read</span> <span class="o">=</span> <span class="n">start_read</span> <span class="o">+</span> <span class="p">(</span><span class="n">stop</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">*</span> <span class="n">source_num</span>
+        <span class="k">assert</span> <span class="n">start_read</span> <span class="o">&gt;=</span> <span class="n">start_line</span>
+        <span class="k">assert</span> <span class="n">stop_read</span> <span class="o">&lt;=</span> <span class="n">end_line</span>
+
+        <span class="c1"># Possible detector names.</span>
+        <span class="n">detectors</span> <span class="o">=</span> <span class="s1">&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;</span><span class="p">[:</span><span class="n">detect_num</span><span class="p">]</span>
+
+        <span class="c1"># Loop through our data.</span>
+        <span class="n">one</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">col_names</span><span class="p">),</span> <span class="n">stop_read</span> <span class="o">-</span> <span class="n">start_read</span><span class="p">))</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">boxy_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+            <span class="c1"># Just a more efficient version of this:</span>
+            <span class="c1"># ii = 0</span>
+            <span class="c1"># for line_num, i_line in enumerate(fid):</span>
+            <span class="c1">#     if line_num &gt;= start_read:</span>
+            <span class="c1">#         if line_num &gt;= stop_read:</span>
+            <span class="c1">#             break</span>
+            <span class="c1">#         # Grab actual data.</span>
+            <span class="c1">#         i_data = i_line.strip().split()</span>
+            <span class="c1">#         one[:len(i_data), ii] = i_data</span>
+            <span class="c1">#         ii += 1</span>
+            <span class="n">fid</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">offsets</span><span class="p">[</span><span class="n">start_read</span> <span class="o">-</span> <span class="n">start_line</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">oo</span> <span class="ow">in</span> <span class="n">one</span><span class="o">.</span><span class="n">T</span><span class="p">:</span>
+                <span class="n">i_data</span> <span class="o">=</span> <span class="n">fid</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="n">oo</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">i_data</span><span class="p">)]</span> <span class="o">=</span> <span class="n">i_data</span>
+
+        <span class="c1"># in theory we could index in the loop above, but it&#39;s painfully slow,</span>
+        <span class="c1"># so let&#39;s just take a hopefully minor memory hit</span>
+        <span class="k">if</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;non-parsed&#39;</span><span class="p">:</span>
+            <span class="n">ch_idxs</span> <span class="o">=</span> <span class="p">[</span><span class="n">col_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">det</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">i_type</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                       <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">detectors</span>
+                       <span class="k">for</span> <span class="n">i_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;DC&#39;</span><span class="p">,</span> <span class="s1">&#39;AC&#39;</span><span class="p">,</span> <span class="s1">&#39;Ph&#39;</span><span class="p">]]</span>
+            <span class="n">one</span> <span class="o">=</span> <span class="n">one</span><span class="p">[</span><span class="n">ch_idxs</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>  <span class="c1"># each &quot;time point&quot; multiplexes srcs</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">detectors</span><span class="p">),</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">source_num</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span>  <span class="c1"># reorganize into (det, source, DC/AC/Ph, t) order</span>
+                <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>  <span class="c1"># reshape the way we store it (det x source x DAP, t)</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">detectors</span><span class="p">)</span> <span class="o">*</span> <span class="n">source_num</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s1">&#39;parsed&#39;</span>
+            <span class="n">ch_idxs</span> <span class="o">=</span> <span class="p">[</span><span class="n">col_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">det</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">i_type</span><span class="si">}{</span><span class="n">si</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                       <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">detectors</span>
+                       <span class="k">for</span> <span class="n">si</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">source_num</span><span class="p">)</span>
+                       <span class="k">for</span> <span class="n">i_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;DC&#39;</span><span class="p">,</span> <span class="s1">&#39;AC&#39;</span><span class="p">,</span> <span class="s1">&#39;Ph&#39;</span><span class="p">]]</span>
+            <span class="n">one</span> <span class="o">=</span> <span class="n">one</span><span class="p">[</span><span class="n">ch_idxs</span><span class="p">]</span>
+
+        <span class="c1"># Place our data into the data object in place.</span>
+        <span class="n">_mult_cal_one</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">one</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">cals</span><span class="p">,</span> <span class="n">mult</span><span class="p">)</span>
+</pre></div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
+    
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2012–2022, MNE Developers. Last updated &lt;time datetime=&#34;2022-12-23T15:28:16.604739+00:00&#34; class=&#34;localized&#34;&gt;2022-12-23 15:28 UTC&lt;/time&gt;
+&lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.<br>
+
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>
