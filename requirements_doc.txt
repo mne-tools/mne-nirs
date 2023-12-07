@@ -1,8 +1,8 @@
 # requirements for building docs
-sphinx<6
-git+https://github.com/numpy/numpydoc.git@main
-pydata_sphinx_theme==0.13.1
-git+https://github.com/sphinx-gallery/sphinx-gallery@master
+sphinx
+numpydoc
+pydata_sphinx_theme==0.13.3
+sphinx-gallery
 sphinxcontrib-bibtex>=2.3
 memory_profiler
 seaborn
@@ -16,7 +16,6 @@ h5py
 mne-bids
 memory_profiler
 Ipython
-sphinx-fontawesome
 seaborn
 fooof
 snirf

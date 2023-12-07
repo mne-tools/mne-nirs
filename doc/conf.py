@@ -44,7 +44,7 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode',
-    'sphinx_fontawesome',
+    'sphinx_copybutton',
     'sphinx_gallery.gen_gallery',
     'numpydoc',
     'sphinxcontrib.bibtex',
@@ -298,9 +298,3 @@ sphinx_gallery_conf = {
     },
     'plot_gallery': 'True',  # Avoid annoying str/bool default warning
 }
-
-
-def setup(app):
-    # a copy button to copy snippet of code from the documentation
-    app.add_js_file('js/copybutton.js')
-    app.add_css_file('font-awesome.css')
