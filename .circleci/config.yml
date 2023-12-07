@@ -100,7 +100,7 @@ jobs:
 
         - run:
             name: Check Qt
-            command: LD_DEBUG=libs python -c "from PySide6.QtWidgets import QApplication, QWidget; app = QApplication([])"
+            command: LD_DEBUG=libs python -c "from PyQt6.QtWidgets import QApplication, QWidget; app = QApplication([])"
 
         # Look at what we have and fail early if there is some library conflict
         # (remove irrelevant lines compared to MNE-Python)
@@ -223,4 +223,4 @@ workflows:
             branches:
               only:
                 - main
-                - maint/0.5
+                - maint/0.6

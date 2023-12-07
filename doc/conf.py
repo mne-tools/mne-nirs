@@ -16,21 +16,50 @@ from datetime import datetime, timezone
 import sys
 import os
 import warnings
+import sphinx.util.logging
 from sphinx_gallery.sorting import FileNameSortKey
 
 sys.path.append("../")
 import mne
 from mne.fixes import _compare_version
-from mne_nirs import __version__  # noqa: E402
+import mne_nirs
 from mne.tests.test_docstring_parameters import error_ignores
 
+sphinx_logger = sphinx.util.logging.getLogger("mne")
+
+# -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 # sys.path.insert(0, os.path.abspath('.'))
 
-# -- General configuration ------------------------------------------------
+
+# -- Project information -----------------------------------------------------
+
+project = "MNE-NIRS"
+td = datetime.now(tz=timezone.utc)
+
+# We need to triage which date type we use so that incremental builds work
+# (Sphinx looks at variable changes and rewrites all files if some change)
+copyright = (
+    f'2012–{td.year}, MNE Developers. Last updated <time datetime="{td.isoformat()}" class="localized">{td.strftime("%Y-%m-%d %H:%M %Z")}</time>\n'  # noqa: E501
+    '<script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script>'  # noqa: E501
+)
+if os.getenv("MNE_FULL_DATE", "false").lower() != "true":
+    copyright = f"2012–{td.year}, {project} Developers. Last updated locally."
+
+# The version info for the project you're documenting, acts as replacement for
+# |version| and |release|, also used in various other places throughout the
+# built documents.
+#
+# The full version, including alpha/beta/rc tags.
+release = mne_nirs.__version__
+sphinx_logger.info(f"Building documentation for {project} {release} ({mne_nirs.__file__})")
+# The short X.Y version.
+version = ".".join(release.split(".")[:2])
+
+# -- General configuration ---------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
 # needs_sphinx = '1.0'
@@ -44,53 +73,38 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode',
-    'sphinx_fontawesome',
+    'sphinx_copybutton',
     'sphinx_gallery.gen_gallery',
     'numpydoc',
     'sphinxcontrib.bibtex',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # generate autosummary even if no references.
 autosummary_generate = True
 autodoc_default_options = {'inherited-members': None}
 
 # The suffix of source filenames.
-source_suffix = '.rst'
+source_suffix = ".rst"
 
-# Generate the plots for the gallery
-plot_gallery = 'True'
+# The main toctree document.
+master_doc = "index"
 
-# The master toctree document.
-master_doc = 'index'
+# List of documents that shouldn't be included in the build.
+unused_docs = []
 
-# General information about the project.
-project = u'MNE-NIRS'
-td = datetime.now(tz=timezone.utc)
-
-# We need to triage which date type we use so that incremental builds work
-# (Sphinx looks at variable changes and rewrites all files if some change)
-copyright = (
-    f'2012–{td.year}, MNE Developers. Last updated <time datetime="{td.isoformat()}" class="localized">{td.strftime("%Y-%m-%d %H:%M %Z")}</time>\n'  # noqa: E501
-    '<script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script>')  # noqa: E501
-if os.getenv('MNE_FULL_DATE', 'false').lower() != 'true':
-    copyright = f'2012–{td.year}, MNE Developers. Last updated locally.'
-
-# The version info for the project you're documenting, acts as replacement for
-# |version| and |release|, also used in various other places throughout the
-# built documents.
-#
-# The short X.Y version.
-version = __version__
-# The full version, including alpha/beta/rc tags.
-release = __version__
+# List of directories, relative to source directory, that shouldn't be searched
+# for source files.
+exclude_trees = ["_build"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = ['_build', '_templates']
 
+# A list of ignored prefixes for module index sorting.
+modindex_common_prefix = ["mne_nirs."]
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
@@ -134,20 +148,33 @@ html_theme = 'pydata_sphinx_theme'
 # documentation.
 # html_theme_options = {}
 switcher_version_match = 'dev' if release.endswith('dev0') else version
+html_context = {
+    "default_mode": "auto",
+    # next 3 are for the "edit this page" button
+    "github_user": "mne-tools",
+    "github_repo": "mne-nirs",
+    "github_version": "main",
+    "doc_path": "doc",
+}
 html_theme_options = {
-    'icon_links': [
-        dict(name='GitHub',
-             url='https://github.com/mne-tools/mne-nirs',
-             icon='fa-brands fa-square-github'),
+    "icon_links": [
+        dict(
+            name="GitHub",
+            url="https://github.com/mne-tools/mne-nirs",
+            icon="fa-brands fa-square-github",
+        ),
     ],
+    "icon_links_label": "External Links",  # for screen reader
+    "use_edit_page_button": True,
+    "navigation_with_keys": False,
     "show_toc_level": 1,
-    'navbar_end': ['theme-switcher', 'version-switcher', 'navbar-icon-links'],
-    'footer_start': ['copyright'],
-    'footer_end': [],
-    'analytics': dict(google_analytics_id='UA-188272121-1'),
-    'switcher': {
-        'json_url': 'https://mne.tools/mne-nirs/dev/_static/versions.json',
-        'version_match': switcher_version_match,
+    "article_header_start": [],  # disable breadcrumbs
+    "navbar_end": ["theme-switcher", "version-switcher", "navbar-icon-links"],
+    "footer_start": ["copyright"],
+    "analytics": dict(google_analytics_id="UA-188272121-1"),
+    "switcher": {
+        "json_url": 'https://mne.tools/mne-nirs/dev/_static/versions.json',
+        "version_match": switcher_version_match,
     },
     'pygment_light_style': 'default',
     'pygment_dark_style': 'github-dark',
@@ -173,9 +200,6 @@ html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 html_show_sphinx = False
-
-# If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
-html_show_copyright = True
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'mnenirsdoc'
@@ -281,7 +305,7 @@ sphinx_gallery_conf = {
     'reference_url': {
         'mne_nirs': None},
     'download_all_examples': False,
-    'show_memory': True,
+    'show_memory': sys.platform.startswith("linux"),
     'within_subsection_order': FileNameSortKey,
     'junit': os.path.join('..', 'test-results', 'sphinx-gallery', 'junit.xml'),
     'binder': {
@@ -298,9 +322,3 @@ sphinx_gallery_conf = {
     },
     'plot_gallery': 'True',  # Avoid annoying str/bool default warning
 }
-
-
-def setup(app):
-    # a copy button to copy snippet of code from the documentation
-    app.add_js_file('js/copybutton.js')
-    app.add_css_file('font-awesome.css')
