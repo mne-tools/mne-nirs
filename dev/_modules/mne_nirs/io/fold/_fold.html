@@ -1,52 +1,55 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-theme="auto">
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne_nirs.io.fold._fold &#8212; MNE-NIRS 0.6.0 documentation</title>
+    <title>mne_nirs.io.fold._fold &#8212; MNE-NIRS 0.7.0.dev31+gcb6e3422 documentation</title>
   
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "auto";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../../../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/font-awesome.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-    <script src="../../../../_static/jquery.js"></script>
-    <script src="../../../../_static/underscore.js"></script>
-    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../../../_static/doctools.js"></script>
-    <script src="../../../../_static/sphinx_highlight.js"></script>
-    <script src="../../../../_static/js/copybutton.js"></script>
+    <script src="../../../../_static/documentation_options.js?v=01aa3996"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-188272121-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-188272121-1');
+            </script>
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
@@ -56,9 +59,9 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/mne_nirs/io/fold/_fold';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.6.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.7';
         </script>
-    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+    <link rel="icon" href="../../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="canonical" href="https://mne.tools/mne-nirs/stable/index.html" />
@@ -69,7 +72,7 @@
   </head>
   
   
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="auto">
 
   
   
@@ -207,7 +210,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6.0  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -218,7 +221,7 @@ document.write(`
 </script></div>
       
         <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
-    aria-label="Icon Links">
+    aria-label="External Links">
         <li class="nav-item">
           
           
@@ -320,7 +323,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6.0  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -331,7 +334,7 @@ document.write(`
 </script></div>
         
           <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
-    aria-label="Icon Links">
+    aria-label="External Links">
         <li class="nav-item">
           
           
@@ -365,36 +368,7 @@ document.write(`
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item">
-
-
-
-<nav aria-label="Breadcrumbs">
-  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
-    
-    <li class="breadcrumb-item breadcrumb-home">
-      <a href="../../../../index.html" class="nav-link" aria-label="Home">
-        <i class="fa-solid fa-home"></i>
-      </a>
-    </li>
-    
-    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
-    
-    <li class="breadcrumb-item active" aria-current="page">mne_nirs.io.fold._fold</li>
-  </ul>
-</nav>
-</div>
-      
-    </div>
-  
-  
-</div>
-</div>
+              <div class="bd-header-article"></div>
               
               
               
@@ -409,14 +383,13 @@ document.write(`
 
 <span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">op</span>
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
 <span class="kn">import</span> <span class="nn">mne</span>
-<span class="kn">from</span> <span class="nn">mne.transforms</span> <span class="kn">import</span> <span class="n">apply_trans</span><span class="p">,</span> <span class="n">_get_trans</span>
-<span class="kn">from</span> <span class="nn">mne.utils</span> <span class="kn">import</span> <span class="n">_validate_type</span><span class="p">,</span> <span class="n">_check_fname</span><span class="p">,</span> <span class="n">warn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">mne.io</span> <span class="kn">import</span> <span class="n">BaseRaw</span>
 <span class="kn">from</span> <span class="nn">mne.io.constants</span> <span class="kn">import</span> <span class="n">FIFF</span>
+<span class="kn">from</span> <span class="nn">mne.transforms</span> <span class="kn">import</span> <span class="n">_get_trans</span><span class="p">,</span> <span class="n">apply_trans</span>
+<span class="kn">from</span> <span class="nn">mne.utils</span> <span class="kn">import</span> <span class="n">_check_fname</span><span class="p">,</span> <span class="n">_validate_type</span><span class="p">,</span> <span class="n">warn</span>
 
 
 <span class="k">def</span> <span class="nf">_read_fold_xls</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">atlas</span><span class="o">=</span><span class="s2">&quot;Juelich&quot;</span><span class="p">):</span>
@@ -433,14 +406,9 @@ document.write(`
 <span class="sd">    atlas : str</span>
 <span class="sd">        Requested atlas.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">page_reference</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AAL2&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-                      <span class="s2">&quot;AICHA&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-                      <span class="s2">&quot;Brodmann&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
-                      <span class="s2">&quot;Juelich&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
-                      <span class="s2">&quot;Loni&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
+    <span class="n">page_reference</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AAL2&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;AICHA&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;Brodmann&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;Juelich&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> <span class="s2">&quot;Loni&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
 
-    <span class="n">tbl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span>
-                        <span class="n">sheet_name</span><span class="o">=</span><span class="n">page_reference</span><span class="p">[</span><span class="n">atlas</span><span class="p">])</span>
+    <span class="n">tbl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="n">page_reference</span><span class="p">[</span><span class="n">atlas</span><span class="p">])</span>
 
     <span class="c1"># Remove the spacing between rows</span>
     <span class="n">empty_rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;Specificity&quot;</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
@@ -451,8 +419,7 @@ document.write(`
         <span class="k">for</span> <span class="n">col_idx</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tbl</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tbl</span><span class="p">[</span><span class="n">col</span><span class="p">][</span><span class="n">row_idx</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">tbl</span><span class="p">[</span><span class="n">col</span><span class="p">][</span><span class="n">row_idx</span><span class="p">]):</span>
-                    <span class="n">tbl</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">row_idx</span><span class="p">,</span> <span class="n">col_idx</span><span class="p">]</span> <span class="o">=</span> \
-                        <span class="n">tbl</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">row_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col_idx</span><span class="p">]</span>
+                    <span class="n">tbl</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">row_idx</span><span class="p">,</span> <span class="n">col_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">tbl</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">row_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col_idx</span><span class="p">]</span>
 
     <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;Specificity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;Specificity&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span>
     <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;brainSens&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;brainSens&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span>
@@ -467,20 +434,20 @@ document.write(`
     <span class="c1"># standard_1020 and standard_1005 are in MNI (fsaverage) space already,</span>
     <span class="c1"># but we need to undo the scaling that head_scale will do</span>
     <span class="n">montage</span> <span class="o">=</span> <span class="n">mne</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">make_standard_montage</span><span class="p">(</span>
-        <span class="s1">&#39;standard_1005&#39;</span><span class="p">,</span> <span class="n">head_size</span><span class="o">=</span><span class="mf">0.09700884729534559</span><span class="p">)</span>
+        <span class="s2">&quot;standard_1005&quot;</span><span class="p">,</span> <span class="n">head_size</span><span class="o">=</span><span class="mf">0.09700884729534559</span>
+    <span class="p">)</span>
     <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">montage</span><span class="o">.</span><span class="n">dig</span><span class="p">:</span>
-        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;coord_frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_MNE_COORD_MNI_TAL</span>
+        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;coord_frame&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_MNE_COORD_MNI_TAL</span>
     <span class="n">montage</span><span class="o">.</span><span class="n">dig</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">montage</span><span class="o">.</span><span class="n">dig</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
     <span class="n">montage</span><span class="o">.</span><span class="n">add_mni_fiducials</span><span class="p">()</span>  <span class="c1"># now in fsaverage space</span>
-    <span class="n">coords</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
-        <span class="n">montage</span><span class="o">.</span><span class="n">get_positions</span><span class="p">()[</span><span class="s1">&#39;ch_pos&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">montage</span><span class="o">.</span><span class="n">get_positions</span><span class="p">()[</span><span class="s2">&quot;ch_pos&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
     <span class="n">coords</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">index</span>
     <span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;z&quot;</span><span class="p">})</span>
 
     <span class="k">return</span> <span class="n">coords</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_find_closest_standard_location</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_find_closest_standard_location</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return closest montage label to coordinates.</span>
 
 <span class="sd">    Parameters</span>
@@ -494,22 +461,26 @@ document.write(`
 <span class="sd">        Use None for no transformation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">cdist</span>
+
     <span class="n">p0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
     <span class="n">p0</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="n">head_mri_t</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_get_trans</span><span class="p">(</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <span class="s1">&#39;head&#39;</span><span class="p">,</span> <span class="s1">&#39;mri&#39;</span><span class="p">)</span>
+    <span class="n">head_mri_t</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_get_trans</span><span class="p">(</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="s2">&quot;mri&quot;</span><span class="p">)</span>
     <span class="n">p0</span> <span class="o">=</span> <span class="n">apply_trans</span><span class="p">(</span><span class="n">head_mri_t</span><span class="p">,</span> <span class="n">p0</span><span class="p">)</span>
-    <span class="n">dists</span> <span class="o">=</span> <span class="n">cdist</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">reference</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]],</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">dists</span> <span class="o">=</span> <span class="n">cdist</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">reference</span><span class="p">[[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">]],</span> <span class="nb">float</span><span class="p">))</span>
 
-    <span class="k">if</span> <span class="n">out</span> <span class="o">==</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">out</span> <span class="o">==</span> <span class="s2">&quot;label&quot;</span><span class="p">:</span>
         <span class="n">min_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">dists</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">reference</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">][</span><span class="n">min_idx</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">out</span> <span class="o">==</span> <span class="s1">&#39;dists&#39;</span>
+        <span class="k">assert</span> <span class="n">out</span> <span class="o">==</span> <span class="s2">&quot;dists&quot;</span>
         <span class="k">return</span> <span class="n">dists</span>
 
 
-<div class="viewcode-block" id="fold_landmark_specificity"><a class="viewcode-back" href="../../../../generated/mne_nirs.io.fold_landmark_specificity.html#mne_nirs.io.fold_landmark_specificity">[docs]</a><span class="k">def</span> <span class="nf">fold_landmark_specificity</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">landmark</span><span class="p">,</span> <span class="n">fold_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                              <span class="n">atlas</span><span class="o">=</span><span class="s2">&quot;Juelich&quot;</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="fold_landmark_specificity">
+<a class="viewcode-back" href="../../../../generated/mne_nirs.io.fold_landmark_specificity.html#mne_nirs.io.fold_landmark_specificity">[docs]</a>
+<span class="k">def</span> <span class="nf">fold_landmark_specificity</span><span class="p">(</span>
+    <span class="n">raw</span><span class="p">,</span> <span class="n">landmark</span><span class="p">,</span> <span class="n">fold_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atlas</span><span class="o">=</span><span class="s2">&quot;Juelich&quot;</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the specificity of each channel to a specified brain landmark.</span>
 
 <span class="sd">    Parameters</span>
@@ -555,8 +526,8 @@ document.write(`
 <span class="sd">    ----------</span>
 <span class="sd">    .. footbibliography::</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">_validate_type</span><span class="p">(</span><span class="n">landmark</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;landmark&#39;</span><span class="p">)</span>
-    <span class="n">_validate_type</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">BaseRaw</span><span class="p">,</span> <span class="s1">&#39;raw&#39;</span><span class="p">)</span>
+    <span class="n">_validate_type</span><span class="p">(</span><span class="n">landmark</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;landmark&quot;</span><span class="p">)</span>
+    <span class="n">_validate_type</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">BaseRaw</span><span class="p">,</span> <span class="s2">&quot;raw&quot;</span><span class="p">)</span>
 
     <span class="n">reference_locations</span> <span class="o">=</span> <span class="n">_generate_montage_locations</span><span class="p">()</span>
 
@@ -564,9 +535,9 @@ document.write(`
 
     <span class="n">specificity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">cidx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)):</span>
-
         <span class="n">tbl</span> <span class="o">=</span> <span class="n">_source_detector_fold_table</span><span class="p">(</span>
-            <span class="n">raw</span><span class="p">,</span> <span class="n">cidx</span><span class="p">,</span> <span class="n">reference_locations</span><span class="p">,</span> <span class="n">fold_tbl</span><span class="p">,</span> <span class="n">interpolate</span><span class="p">)</span>
+            <span class="n">raw</span><span class="p">,</span> <span class="n">cidx</span><span class="p">,</span> <span class="n">reference_locations</span><span class="p">,</span> <span class="n">fold_tbl</span><span class="p">,</span> <span class="n">interpolate</span>
+        <span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tbl</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;ContainsLmk&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">landmark</span> <span class="ow">in</span> <span class="n">la</span> <span class="k">for</span> <span class="n">la</span> <span class="ow">in</span> <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;Landmark&quot;</span><span class="p">]]</span>
@@ -583,8 +554,10 @@ document.write(`
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">specificity</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="fold_channel_specificity"><a class="viewcode-back" href="../../../../generated/mne_nirs.io.fold_channel_specificity.html#mne_nirs.io.fold_channel_specificity">[docs]</a><span class="k">def</span> <span class="nf">fold_channel_specificity</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">fold_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atlas</span><span class="o">=</span><span class="s2">&quot;Juelich&quot;</span><span class="p">,</span>
-                             <span class="n">interpolate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="fold_channel_specificity">
+<a class="viewcode-back" href="../../../../generated/mne_nirs.io.fold_channel_specificity.html#mne_nirs.io.fold_channel_specificity">[docs]</a>
+<span class="k">def</span> <span class="nf">fold_channel_specificity</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">fold_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atlas</span><span class="o">=</span><span class="s2">&quot;Juelich&quot;</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the landmarks and specificity a channel is sensitive to.</span>
 
 <span class="sd">    Parameters</span>
@@ -655,7 +628,7 @@ document.write(`
 <span class="sd">    ----------</span>
 <span class="sd">    .. footbibliography::</span>
 <span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">_validate_type</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">BaseRaw</span><span class="p">,</span> <span class="s1">&#39;raw&#39;</span><span class="p">)</span>
+    <span class="n">_validate_type</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">BaseRaw</span><span class="p">,</span> <span class="s2">&quot;raw&quot;</span><span class="p">)</span>
 
     <span class="n">reference_locations</span> <span class="o">=</span> <span class="n">_generate_montage_locations</span><span class="p">()</span>
 
@@ -663,44 +636,51 @@ document.write(`
 
     <span class="n">chan_spec</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">cidx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)):</span>
-
         <span class="n">tbl</span> <span class="o">=</span> <span class="n">_source_detector_fold_table</span><span class="p">(</span>
-            <span class="n">raw</span><span class="p">,</span> <span class="n">cidx</span><span class="p">,</span> <span class="n">reference_locations</span><span class="p">,</span> <span class="n">fold_tbl</span><span class="p">,</span> <span class="n">interpolate</span><span class="p">)</span>
+            <span class="n">raw</span><span class="p">,</span> <span class="n">cidx</span><span class="p">,</span> <span class="n">reference_locations</span><span class="p">,</span> <span class="n">fold_tbl</span><span class="p">,</span> <span class="n">interpolate</span>
+        <span class="p">)</span>
         <span class="n">chan_spec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tbl</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">chan_spec</span></div>
 
 
+
 <span class="k">def</span> <span class="nf">_check_load_fold</span><span class="p">(</span><span class="n">fold_files</span><span class="p">,</span> <span class="n">atlas</span><span class="p">):</span>
-    <span class="n">_validate_type</span><span class="p">(</span><span class="n">fold_files</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="s1">&#39;path-like&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="s1">&#39;fold_files&#39;</span><span class="p">)</span>
+    <span class="n">_validate_type</span><span class="p">(</span><span class="n">fold_files</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="s2">&quot;path-like&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="s2">&quot;fold_files&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">fold_files</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">fold_files</span> <span class="o">=</span> <span class="n">mne</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="s1">&#39;MNE_NIRS_FOLD_PATH&#39;</span><span class="p">)</span>
+        <span class="n">fold_files</span> <span class="o">=</span> <span class="n">mne</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="s2">&quot;MNE_NIRS_FOLD_PATH&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">fold_files</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s1">&#39;MNE_NIRS_FOLD_PATH not set, either set it using &#39;</span>
-                <span class="s1">&#39;mne.set_config or pass fold_files as str or list&#39;</span><span class="p">)</span>
+                <span class="s2">&quot;MNE_NIRS_FOLD_PATH not set, either set it using &quot;</span>
+                <span class="s2">&quot;mne.set_config or pass fold_files as str or list&quot;</span>
+            <span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fold_files</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>  <span class="c1"># path-like</span>
         <span class="n">fold_files</span> <span class="o">=</span> <span class="n">_check_fname</span><span class="p">(</span>
-            <span class="n">fold_files</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="s1">&#39;read&#39;</span><span class="p">,</span> <span class="n">must_exist</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;fold_files&#39;</span><span class="p">,</span>
-            <span class="n">need_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">fold_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">op</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fold_files</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;10-</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">.xls&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]</span>
+            <span class="n">fold_files</span><span class="p">,</span>
+            <span class="n">overwrite</span><span class="o">=</span><span class="s2">&quot;read&quot;</span><span class="p">,</span>
+            <span class="n">must_exist</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fold_files&quot;</span><span class="p">,</span>
+            <span class="n">need_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">fold_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">op</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fold_files</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;10-</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">.xls&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]</span>
 
     <span class="n">fold_tbl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">fi</span><span class="p">,</span> <span class="n">fname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fold_files</span><span class="p">):</span>
-        <span class="n">fname</span> <span class="o">=</span> <span class="n">_check_fname</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="s1">&#39;read&#39;</span><span class="p">,</span> <span class="n">must_exist</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                             <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;fold_files[</span><span class="si">{</span><span class="n">fi</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">)</span>
-        <span class="n">fold_tbl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">fold_tbl</span><span class="p">,</span> <span class="n">_read_fold_xls</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">atlas</span><span class="o">=</span><span class="n">atlas</span><span class="p">)],</span>
-                             <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">_check_fname</span><span class="p">(</span>
+            <span class="n">fname</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="s2">&quot;read&quot;</span><span class="p">,</span> <span class="n">must_exist</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;fold_files[</span><span class="si">{</span><span class="n">fi</span><span class="si">}</span><span class="s2">]&quot;</span>
+        <span class="p">)</span>
+        <span class="n">fold_tbl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">fold_tbl</span><span class="p">,</span> <span class="n">_read_fold_xls</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">atlas</span><span class="o">=</span><span class="n">atlas</span><span class="p">)],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
     <span class="k">return</span> <span class="n">fold_tbl</span>
 
 
 <span class="k">def</span> <span class="nf">_source_detector_fold_table</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">cidx</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">fold_tbl</span><span class="p">,</span> <span class="n">interpolate</span><span class="p">):</span>
-    <span class="n">src</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">cidx</span><span class="p">][</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
-    <span class="n">det</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">cidx</span><span class="p">][</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">6</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span>
+    <span class="n">src</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;chs&quot;</span><span class="p">][</span><span class="n">cidx</span><span class="p">][</span><span class="s2">&quot;loc&quot;</span><span class="p">][</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+    <span class="n">det</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;chs&quot;</span><span class="p">][</span><span class="n">cidx</span><span class="p">][</span><span class="s2">&quot;loc&quot;</span><span class="p">][</span><span class="mi">6</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span>
 
-    <span class="n">ref_lab</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">reference</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">])</span>
-    <span class="n">dists</span> <span class="o">=</span> <span class="n">_find_closest_standard_location</span><span class="p">(</span>
-        <span class="p">[</span><span class="n">src</span><span class="p">,</span> <span class="n">det</span><span class="p">],</span> <span class="n">reference</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="s1">&#39;dists&#39;</span><span class="p">)</span>
+    <span class="n">ref_lab</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">reference</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">])</span>
+    <span class="n">dists</span> <span class="o">=</span> <span class="n">_find_closest_standard_location</span><span class="p">([</span><span class="n">src</span><span class="p">,</span> <span class="n">det</span><span class="p">],</span> <span class="n">reference</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="s2">&quot;dists&quot;</span><span class="p">)</span>
     <span class="n">src_min</span><span class="p">,</span> <span class="n">det_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">src_name</span><span class="p">,</span> <span class="n">det_name</span> <span class="o">=</span> <span class="n">ref_lab</span><span class="p">[</span><span class="n">src_min</span><span class="p">],</span> <span class="n">ref_lab</span><span class="p">[</span><span class="n">det_min</span><span class="p">]</span>
 
@@ -712,24 +692,22 @@ document.write(`
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tbl</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">interpolate</span><span class="p">:</span>
         <span class="c1"># Try something hopefully not too terrible: pick the one with the</span>
         <span class="c1"># smallest net distance</span>
-        <span class="n">good</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">fold_tbl</span><span class="p">[</span><span class="s1">&#39;Source&#39;</span><span class="p">],</span> <span class="n">reference</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">])</span> <span class="o">&amp;</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">fold_tbl</span><span class="p">[</span><span class="s1">&#39;Detector&#39;</span><span class="p">],</span> <span class="n">reference</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]))</span>
+        <span class="n">good</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">fold_tbl</span><span class="p">[</span><span class="s2">&quot;Source&quot;</span><span class="p">],</span> <span class="n">reference</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">])</span> <span class="o">&amp;</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
+            <span class="n">fold_tbl</span><span class="p">[</span><span class="s2">&quot;Detector&quot;</span><span class="p">],</span> <span class="n">reference</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
         <span class="k">assert</span> <span class="n">good</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
         <span class="n">tbl</span> <span class="o">=</span> <span class="n">fold_tbl</span><span class="p">[</span><span class="n">good</span><span class="p">]</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">tbl</span><span class="p">)</span>
-        <span class="n">src_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">ref_lab</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="k">for</span> <span class="n">src</span> <span class="ow">in</span> <span class="n">tbl</span><span class="p">[</span><span class="s1">&#39;Source&#39;</span><span class="p">]]</span>
-        <span class="n">det_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">ref_lab</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">det</span><span class="p">)</span> <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">tbl</span><span class="p">[</span><span class="s1">&#39;Detector&#39;</span><span class="p">]]</span>
+        <span class="n">src_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">ref_lab</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="k">for</span> <span class="n">src</span> <span class="ow">in</span> <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;Source&quot;</span><span class="p">]]</span>
+        <span class="n">det_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">ref_lab</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">det</span><span class="p">)</span> <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;Detector&quot;</span><span class="p">]]</span>
         <span class="c1"># Original</span>
-        <span class="n">tot_dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">dists</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">src_idx</span><span class="p">],</span> <span class="n">dists</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">det_idx</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">tot_dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">([</span><span class="n">dists</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">src_idx</span><span class="p">],</span> <span class="n">dists</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">det_idx</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">tot_dist</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tbl</span><span class="p">),)</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">tot_dist</span><span class="p">)</span>
         <span class="n">dist_1</span> <span class="o">=</span> <span class="n">tot_dist</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
         <span class="n">src_1</span><span class="p">,</span> <span class="n">det_1</span> <span class="o">=</span> <span class="n">ref_lab</span><span class="p">[</span><span class="n">src_idx</span><span class="p">[</span><span class="n">idx</span><span class="p">]],</span> <span class="n">ref_lab</span><span class="p">[</span><span class="n">det_idx</span><span class="p">[</span><span class="n">idx</span><span class="p">]]</span>
         <span class="c1"># And the reverse</span>
-        <span class="n">tot_dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">dists</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">det_idx</span><span class="p">],</span> <span class="n">dists</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">src_idx</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
-        <span class="p">)</span>
+        <span class="n">tot_dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">([</span><span class="n">dists</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">det_idx</span><span class="p">],</span> <span class="n">dists</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">src_idx</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">tot_dist</span><span class="p">)</span>
         <span class="n">dist_2</span> <span class="o">=</span> <span class="n">tot_dist</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
         <span class="n">src_2</span><span class="p">,</span> <span class="n">det_2</span> <span class="o">=</span> <span class="n">ref_lab</span><span class="p">[</span><span class="n">det_idx</span><span class="p">[</span><span class="n">idx</span><span class="p">]],</span> <span class="n">ref_lab</span><span class="p">[</span><span class="n">src_idx</span><span class="p">[</span><span class="n">idx</span><span class="p">]]</span>
@@ -737,28 +715,31 @@ document.write(`
             <span class="n">new_dist</span><span class="p">,</span> <span class="n">src_use</span><span class="p">,</span> <span class="n">det_use</span> <span class="o">=</span> <span class="n">dist_1</span><span class="p">,</span> <span class="n">src_1</span><span class="p">,</span> <span class="n">det_1</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">new_dist</span><span class="p">,</span> <span class="n">src_use</span><span class="p">,</span> <span class="n">det_use</span> <span class="o">=</span> <span class="n">dist_2</span><span class="p">,</span> <span class="n">det_2</span><span class="p">,</span> <span class="n">src_2</span>
-        <span class="n">warn</span><span class="p">(</span><span class="s1">&#39;No fOLD table entry for best matching source/detector pair &#39;</span>
-             <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">src_name</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">det_name</span><span class="si">}</span><span class="s1"> (RMS distance to the channel positions &#39;</span>
-             <span class="sa">f</span><span class="s1">&#39;was </span><span class="si">{</span><span class="mi">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dist</span><span class="si">:</span><span class="s1">0.1f</span><span class="si">}</span><span class="s1"> mm) for channel index </span><span class="si">{</span><span class="n">cidx</span><span class="si">}</span><span class="s1">, &#39;</span>
-             <span class="s1">&#39;using next smallest available &#39;</span>
-             <span class="sa">f</span><span class="s1">&#39;src/det pairing </span><span class="si">{</span><span class="n">src_use</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">det_use</span><span class="si">}</span><span class="s1"> (RMS distance &#39;</span>
-             <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="mi">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">new_dist</span><span class="si">:</span><span class="s1">0.1f</span><span class="si">}</span><span class="s1"> mm). Consider setting your channel &#39;</span>
-             <span class="s1">&#39;positions to standard 10-05 locations using raw.set_montage &#39;</span>
-             <span class="s1">&#39;if your pair does show up in the tables.&#39;</span><span class="p">,</span>
-             <span class="n">module</span><span class="o">=</span><span class="s1">&#39;mne_nirs&#39;</span><span class="p">,</span> <span class="n">ignore_namespaces</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;mne&#39;</span><span class="p">,</span> <span class="s1">&#39;mne_nirs&#39;</span><span class="p">))</span>
+        <span class="n">warn</span><span class="p">(</span>
+            <span class="s2">&quot;No fOLD table entry for best matching source/detector pair &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">src_name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">det_name</span><span class="si">}</span><span class="s2"> (RMS distance to the channel positions &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;was </span><span class="si">{</span><span class="mi">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dist</span><span class="si">:</span><span class="s2">0.1f</span><span class="si">}</span><span class="s2"> mm) for channel index </span><span class="si">{</span><span class="n">cidx</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="s2">&quot;using next smallest available &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;src/det pairing </span><span class="si">{</span><span class="n">src_use</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">det_use</span><span class="si">}</span><span class="s2"> (RMS distance &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="mi">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">new_dist</span><span class="si">:</span><span class="s2">0.1f</span><span class="si">}</span><span class="s2"> mm). Consider setting your channel &quot;</span>
+            <span class="s2">&quot;positions to standard 10-05 locations using raw.set_montage &quot;</span>
+            <span class="s2">&quot;if your pair does show up in the tables.&quot;</span><span class="p">,</span>
+            <span class="n">module</span><span class="o">=</span><span class="s2">&quot;mne_nirs&quot;</span><span class="p">,</span>
+            <span class="n">ignore_namespaces</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;mne&quot;</span><span class="p">,</span> <span class="s2">&quot;mne_nirs&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
         <span class="n">tbl</span> <span class="o">=</span> <span class="n">fold_tbl</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Source == @src_use and Detector == @det_use&quot;</span><span class="p">)</span>
         <span class="n">tbl</span> <span class="o">=</span> <span class="n">tbl</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">tbl</span><span class="p">[</span><span class="s1">&#39;BestSource&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">src_name</span>
-        <span class="n">tbl</span><span class="p">[</span><span class="s1">&#39;BestDetector&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">det_name</span>
-        <span class="n">tbl</span><span class="p">[</span><span class="s1">&#39;BestMatchDistance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span>
-        <span class="n">tbl</span><span class="p">[</span><span class="s1">&#39;MatchDistance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_dist</span>
+        <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;BestSource&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">src_name</span>
+        <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;BestDetector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">det_name</span>
+        <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;BestMatchDistance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span>
+        <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;MatchDistance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_dist</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">tbl</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">tbl</span> <span class="o">=</span> <span class="n">tbl</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">tbl</span><span class="p">[</span><span class="s1">&#39;BestSource&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">src_name</span>
-        <span class="n">tbl</span><span class="p">[</span><span class="s1">&#39;BestDetector&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">det_name</span>
-        <span class="n">tbl</span><span class="p">[</span><span class="s1">&#39;BestMatchDistance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span>
-        <span class="n">tbl</span><span class="p">[</span><span class="s1">&#39;MatchDistance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span>
+        <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;BestSource&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">src_name</span>
+        <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;BestDetector&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">det_name</span>
+        <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;BestMatchDistance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span>
+        <span class="n">tbl</span><span class="p">[</span><span class="s2">&quot;MatchDistance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span>
 
     <span class="n">tbl</span> <span class="o">=</span> <span class="n">tbl</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># don&#39;t get warnings about setting values later</span>
     <span class="k">return</span> <span class="n">tbl</span>
@@ -769,9 +750,15 @@ document.write(`
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -781,36 +768,37 @@ document.write(`
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner"></div>
+            
           </footer>
         
       </main>
     </div>
   </div>
   
-    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
     
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
+    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
   
     <div class="footer-items__start">
       
-        <div class="footer-item">
-  <p class="copyright">
-    
-      © Copyright 2012–2023, MNE Developers. Last updated &lt;time datetime=&#34;2023-11-21T03:21:06.396486+00:00&#34; class=&#34;localized&#34;&gt;2023-11-21 03:21 UTC&lt;/time&gt;
-&lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.
-      <br/>
-    
-  </p>
-</div>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-07-22T23:09:06.461771+00:00" class="localized">2024-07-22 23:09 UTC</time>
+<script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
   
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
   
 </div>
 

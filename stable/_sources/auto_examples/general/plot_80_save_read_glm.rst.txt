@@ -46,17 +46,22 @@ information about triggers, condition names, etc.
 
 .. note::
 
-   The BIDS specification for NIRS data is still under development. See:
-   `fNIRS BIDS proposal <https://github.com/bids-standard/bids-specification/pull/802>`_.
-   As such, to run this tutorial you must use the MNE-BIDS 0.10 or later.
+   This tutorial uses data stored using
+   `the BIDS format <https://bids-specification.readthedocs.io/en/stable/04-modality-specific-files/11-near-infrared-spectroscopy.html>`_
+   :footcite:p:`luke2023bids`.
+
+   MNE-Python allows you to process fNIRS data that is not in BIDS format.
+   Simply modify the ``read_raw_`` function to match your data type.
+   See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
+   to use your data with MNE-Python.
 
 .. contents:: Page contents
    :local:
    :depth: 2
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-59
+.. GENERATED FROM PYTHON SOURCE LINES 43-64
 
-.. code-block:: default
+.. code-block:: Python
 
     # Authors: Robert Luke <mail@robertluke.net>
     #
@@ -86,7 +91,7 @@ information about triggers, condition names, etc.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-69
+.. GENERATED FROM PYTHON SOURCE LINES 65-74
 
 Set up directories
 ------------------
@@ -98,9 +103,9 @@ as described above.
 
 We first define the root directory of our dataset.
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-74
+.. GENERATED FROM PYTHON SOURCE LINES 74-79
 
-.. code-block:: default
+.. code-block:: Python
 
 
     root = fnirs_motor_group.data_path()
@@ -120,14 +125,14 @@ We first define the root directory of our dataset.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-77
+.. GENERATED FROM PYTHON SOURCE LINES 80-82
 
 And as we are using MNE-BIDS we can create a BIDSPath.
 This helps to handle all the path wrangling.
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-82
+.. GENERATED FROM PYTHON SOURCE LINES 82-87
 
-.. code-block:: default
+.. code-block:: Python
 
 
     dataset = BIDSPath(root=root, task="tapping")
@@ -147,13 +152,13 @@ This helps to handle all the path wrangling.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-84
+.. GENERATED FROM PYTHON SOURCE LINES 88-89
 
 For example we can automatically query the subjects, tasks, and sessions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-89
+.. GENERATED FROM PYTHON SOURCE LINES 89-94
 
-.. code-block:: default
+.. code-block:: Python
 
 
     subjects = get_entity_vals(root, 'subject')
@@ -173,13 +178,13 @@ For example we can automatically query the subjects, tasks, and sessions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 90-91
+.. GENERATED FROM PYTHON SOURCE LINES 95-96
 
 But for this example we will only process the first two subjects
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-94
+.. GENERATED FROM PYTHON SOURCE LINES 96-99
 
-.. code-block:: default
+.. code-block:: Python
 
     subjects = subjects[:2]
 
@@ -191,7 +196,7 @@ But for this example we will only process the first two subjects
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 95-102
+.. GENERATED FROM PYTHON SOURCE LINES 100-107
 
 Define individual analysis
 --------------------------
@@ -201,9 +206,9 @@ This is a GLM analysis as described in the
 :ref:`individual GLM tutorial <tut-fnirs-hrf>`,
 so this example will skim over the individual level details.
 
-.. GENERATED FROM PYTHON SOURCE LINES 102-117
+.. GENERATED FROM PYTHON SOURCE LINES 107-122
 
-.. code-block:: default
+.. code-block:: Python
 
 
 
@@ -227,7 +232,7 @@ so this example will skim over the individual level details.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 118-123
+.. GENERATED FROM PYTHON SOURCE LINES 123-128
 
 Run analysis and save to disk
 -----------------------------
@@ -235,9 +240,9 @@ Run analysis and save to disk
 Next we loop through the five measurements and run the individual analysis
 on each. We will then save the GLM results to disk as ``.h5`` files.
 
-.. GENERATED FROM PYTHON SOURCE LINES 123-150
+.. GENERATED FROM PYTHON SOURCE LINES 128-155
 
-.. code-block:: default
+.. code-block:: Python
 
 
 
@@ -273,16 +278,16 @@ on each. We will then save the GLM results to disk as ``.h5`` files.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 151-155
+.. GENERATED FROM PYTHON SOURCE LINES 156-160
 
 Reload results and extract summary statistics
 ---------------------------------------------
 
 Next we loop through the five measurements and reload all the results.
 
-.. GENERATED FROM PYTHON SOURCE LINES 155-177
+.. GENERATED FROM PYTHON SOURCE LINES 160-182
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Create a dataframe to store results
@@ -294,7 +299,7 @@ Next we loop through the five measurements and reload all the results.
         save_path = save_path.update(subject=sub)
 
         # Read the data
-        results = read_glm(save_path)
+        results = read_glm(save_path.fpath)
 
         # Extract results from data as dataframe
         individual_results = results.to_dataframe()
@@ -313,7 +318,7 @@ Next we loop through the five measurements and reload all the results.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 178-183
+.. GENERATED FROM PYTHON SOURCE LINES 183-188
 
 View the resulting dataframe
 ----------------------------
@@ -321,9 +326,9 @@ View the resulting dataframe
 Finally we can view the resulting dataframe which contains data from all
 subjects.
 
-.. GENERATED FROM PYTHON SOURCE LINES 183-185
+.. GENERATED FROM PYTHON SOURCE LINES 188-190
 
-.. code-block:: default
+.. code-block:: Python
 
 
     df
@@ -387,7 +392,7 @@ subjects.
         </tr>
         <tr>
           <th>1</th>
-          <td>TappingLeft</td>
+          <td>Tapping/Left</td>
           <td>59.0</td>
           <td>1.872860e-10</td>
           <td>1.013405e-08</td>
@@ -403,7 +408,7 @@ subjects.
         </tr>
         <tr>
           <th>2</th>
-          <td>TappingRight</td>
+          <td>Tapping/Right</td>
           <td>59.0</td>
           <td>1.872860e-10</td>
           <td>7.118233e-14</td>
@@ -556,9 +561,9 @@ subjects.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  7.867 seconds)
+   **Total running time of the script:** (0 minutes 12.364 seconds)
 
-**Estimated memory usage:**  15 MB
+**Estimated memory usage:**  16 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_80_save_read_glm.py:
@@ -567,7 +572,6 @@ subjects.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
@@ -575,13 +579,13 @@ subjects.
         :alt: Launch binder
         :width: 150 px
 
-    .. container:: sphx-glr-download sphx-glr-download-python
-
-      :download:`Download Python source code: plot_80_save_read_glm.py <plot_80_save_read_glm.py>`
-
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
       :download:`Download Jupyter notebook: plot_80_save_read_glm.ipynb <plot_80_save_read_glm.ipynb>`
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download Python source code: plot_80_save_read_glm.py <plot_80_save_read_glm.py>`
 
 
 .. only:: html

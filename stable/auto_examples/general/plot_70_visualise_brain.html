@@ -1,49 +1,56 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+
+<html lang="en" data-theme="auto">
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Utilising Anatomical Information &#8212; MNE-NIRS 0.5.0 documentation</title>
-  <script>
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    <title>Utilising Anatomical Information &#8212; MNE-NIRS 0.6.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "auto";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link rel="stylesheet"
-    href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/font-awesome.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/js/copybutton.js"></script>
+    <script src="../../_static/documentation_options.js?v=8fa8b3e9"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-188272121-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-188272121-1');
+            </script>
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
@@ -53,141 +60,171 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/general/plot_70_visualise_brain';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.5.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.6';
         </script>
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Save and load GLM results" href="plot_80_save_read_glm.html" />
     <link rel="prev" title="Utilising Auxiliary Data" href="plot_60_aux_data.html" />
     <link rel="canonical" href="https://mne.tools/mne-nirs/stable/index.html" />
     
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="docsearch:language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
 
   </head>
   
   
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="auto">
 
   
-  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
   <label class="overlay overlay-primary" for="__primary"></label>
-
   
-  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
   <label class="overlay overlay-secondary" for="__secondary"></label>
-
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container">
-      
-<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-    </div>
+</form></div>
   </div>
-
   
-  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
   <label class="sidebar-toggle primary-toggle" for="__primary">
-      <span class="fa-solid fa-bars"></span>
+    <span class="fa-solid fa-bars"></span>
   </label>
-  <div id="navbar-start">
-    
-    
   
-
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
 
 <a class="navbar-brand logo" href="../../index.html">
-
   
   
   
   
+    
+    
+      
+    
+    
+    <img src="../../_static/mne_nirs_logo_small.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/mne_nirs_logo_small.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
   
-  
-
-  
-    <img src="../../_static/mne_nirs_logo_small.svg" class="logo__image only-light" alt="Logo image">
-    <img src="../../_static/mne_nirs_logo_small.svg" class="logo__image only-dark" alt="Logo image">
-  
-  
-</a>
+</a></div>
     
   </div>
-
+  
   
   <div class="col-lg-9 navbar-header-items">
-    <div id="navbar-center" class="mr-auto">
+    
+    <div class="me-auto navbar-header-items__center">
       
-      <div class="navbar-center-item">
-        <nav class="navbar-nav">
-    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
-        Site Navigation
-    </p>
-    <ul id="navbar-main-elements" class="navbar-nav">
-        
-                <li class="nav-item current active">
-                  <a class="nav-link" href="../index.html">
-                    Examples
-                  </a>
-                </li>
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        Examples
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                  <a class="nav-link" href="../../api.html">
-                    API
-                  </a>
-                </li>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api.html">
+                        API
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                  <a class="nav-link" href="../../changelog.html">
-                    Changelog
-                  </a>
-                </li>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../changelog.html">
+                        Changelog
+                      </a>
+                    </li>
                 
-    </ul>
-</nav>
-      </div>
+  </ul>
+</nav></div>
       
     </div>
-
-    <div id="navbar-end">
-      <div class="navbar-end-item navbar-end__search-button-container">
-        
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
-  <i class="fa-solid fa-magnifying-glass"></i>
-</button>
-      </div>
+    
+    
+    <div class="navbar-header-items__end">
       
-      <div class="navbar-end-item">
-        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
-    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
-    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
-    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
-</span>
-      </div>
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
       
-      <div class="navbar-end-item">
-        <div class="version-switcher__container dropdown">
-    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
-        0.5.0  <!-- this text may get changed later by javascript -->
-        <span class="caret"></span>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      0.6  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
     <!-- dropdown will be populated by javascript on page load -->
     </div>
-</div>
-      </div>
+  </div>
+`);
+</script></div>
       
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="External Links">
         <li class="nav-item">
           
           
@@ -196,104 +233,115 @@
           
           
           
-          <a href="https://github.com/mne-tools/mne-python" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+          
+          <a href="https://github.com/mne-tools/mne-nirs" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
-      </ul>
-      </div>
+</ul></div>
       
     </div>
+    
   </div>
-
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
 
   
-  <div class="search-button-container--mobile">
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
-  <i class="fa-solid fa-magnifying-glass"></i>
-</button>
-  </div>
-
-  
-  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
       <span class="fa-solid fa-outdent"></span>
-  </label>
+    </label>
   
-
 </div>
-  </nav>
-  
 
+    </nav>
+  
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
       <div class="bd-sidebar-primary bd-sidebar">
         
+
   
   <div class="sidebar-header-items sidebar-primary__section">
     
     
       <div class="sidebar-header-items__center">
-      
-      <div class="navbar-center-item">
-        <nav class="navbar-nav">
-    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
-        Site Navigation
-    </p>
-    <ul id="navbar-main-elements" class="navbar-nav">
         
-                <li class="nav-item current active">
-                  <a class="nav-link" href="../index.html">
-                    Examples
-                  </a>
-                </li>
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        Examples
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                  <a class="nav-link" href="../../api.html">
-                    API
-                  </a>
-                </li>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api.html">
+                        API
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                  <a class="nav-link" href="../../changelog.html">
-                    Changelog
-                  </a>
-                </li>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../changelog.html">
+                        Changelog
+                      </a>
+                    </li>
                 
-    </ul>
-</nav>
-      </div>
-      
+  </ul>
+</nav></div>
+        
       </div>
     
-
     
     
-    <div class="sidebar-header-items__end">
-      
-      <div class="navbar-end-item">
-        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
-    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
-    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
-    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
-</span>
-      </div>
-      
-      <div class="navbar-end-item">
-        <div class="version-switcher__container dropdown">
-    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
-        0.5.0  <!-- this text may get changed later by javascript -->
-        <span class="caret"></span>
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      0.6  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
     <!-- dropdown will be populated by javascript on page load -->
     </div>
-</div>
-      </div>
-      
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+  </div>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="External Links">
         <li class="nav-item">
           
           
@@ -302,24 +350,21 @@
           
           
           
-          <a href="https://github.com/mne-tools/mne-python" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+          
+          <a href="https://github.com/mne-tools/mne-nirs" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
-      </ul>
+</ul></div>
+        
       </div>
-      
-    </div>
     
   </div>
-
   
-  <div class="sidebar-start-items sidebar-primary__section">
-    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
-  <p class="bd-links__title" role="heading" aria-level="1">
-    Section Navigation
-  </p>
-  <div class="bd-toc-item navbar-nav">
-    <ul class="current nav bd-sidenav">
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Analysis examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="plot_01_data_io.html">Importing Data From fNIRS Devices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_05_datasets.html">Example Datasets</a></li>
@@ -354,40 +399,40 @@
 </ul>
 </li>
 </ul>
-
-  </div>
-</nav>
+</div>
+</nav></div>
     </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
   
+  <div id="rtd-footer-container"></div>
 
-  
-  <div class="sidebar-end-items sidebar-primary__section">
-    <div class="sidebar-end-items__item">
-    </div>
-  </div>
 
       </div>
-      <main class="bd-main">
+      
+      <main id="main-content" class="bd-main">
         
         
-        <div class="bd-content">
-          <div class="bd-article-container">
-            
-            <div class="bd-header-article">
-                
-            </div>
-            
-            
-            <article class="bd-article" role="main">
+          <div class="bd-content">
+            <div class="bd-article-container">
               
+              <div class="bd-header-article"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
 <p><a class="reference internal" href="#sphx-glr-download-auto-examples-general-plot-70-visualise-brain-py"><span class="std std-ref">Go to the end</span></a>
 to download the full example code or to run this example in your browser via Binder</p>
 </div>
 <section class="sphx-glr-example-title" id="utilising-anatomical-information">
-<span id="tut-fnirs-vis-brain"></span><span id="sphx-glr-auto-examples-general-plot-70-visualise-brain-py"></span><h1>Utilising Anatomical Information<a class="headerlink" href="#utilising-anatomical-information" title="Permalink to this heading">#</a></h1>
+<span id="tut-fnirs-vis-brain"></span><span id="sphx-glr-auto-examples-general-plot-70-visualise-brain-py"></span><h1>Utilising Anatomical Information<a class="headerlink" href="#utilising-anatomical-information" title="Link to this heading">#</a></h1>
 <p>This example demonstrates how you can utilise anatomical and sensor position
 information in your analysis pipeline. This information can be used to
 verify measurement/analysis and also improve analysis accuracy
@@ -415,7 +460,7 @@ and overlay the sensor locations and regions of interest.</p>
 <li><p><a class="reference internal" href="#bibliography" id="id14">Bibliography</a></p></li>
 </ul>
 </nav>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># sphinx_gallery_thumbnail_number = 5</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># sphinx_gallery_thumbnail_number = 5</span>
 
 <span class="c1"># Authors: Robert Luke &lt;mail@robertluke.net&gt;</span>
 <span class="c1">#</span>
@@ -441,16 +486,16 @@ and overlay the sensor locations and regions of interest.</p>
 </pre></div>
 </div>
 <section id="download-example-data">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Download example data</a><a class="headerlink" href="#download-example-data" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Download example data</a><a class="headerlink" href="#download-example-data" title="Link to this heading">#</a></h2>
 <p>First, the data required data for this tutorial is downloaded.</p>
 <section id="download-example-fnirs-data">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Download example fNIRS data</a><a class="headerlink" href="#download-example-fnirs-data" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Download example fNIRS data</a><a class="headerlink" href="#download-example-fnirs-data" title="Link to this heading">#</a></h3>
 <p>Download the <code class="docutils literal notranslate"><span class="pre">audio_or_visual_speech</span></code> dataset and load the first measurement.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">root</span></a> <span class="o">=</span> <a href="../../generated/mne_nirs.datasets.audio_or_visual_speech.data_path.html#mne_nirs.datasets.audio_or_visual_speech.data_path" title="mne_nirs.datasets.audio_or_visual_speech.data_path" class="sphx-glr-backref-module-mne_nirs-datasets-audio_or_visual_speech sphx-glr-backref-type-py-function"><span class="n">mne_nirs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">audio_or_visual_speech</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">root</span></a> <span class="o">=</span> <a href="../../generated/mne_nirs.datasets.audio_or_visual_speech.data_path.html#mne_nirs.datasets.audio_or_visual_speech.data_path" title="mne_nirs.datasets.audio_or_visual_speech.data_path" class="sphx-glr-backref-module-mne_nirs-datasets-audio_or_visual_speech sphx-glr-backref-type-py-function"><span class="n">mne_nirs</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">audio_or_visual_speech</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">()</span>
 <a href="https://mne.tools/mne-bids/stable/generated/mne_bids.BIDSPath.html#mne_bids.BIDSPath" title="mne_bids.BIDSPath" class="sphx-glr-backref-module-mne_bids sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a> <span class="o">=</span> <a href="https://mne.tools/mne-bids/stable/generated/mne_bids.BIDSPath.html#mne_bids.BIDSPath" title="mne_bids.BIDSPath" class="sphx-glr-backref-module-mne_bids sphx-glr-backref-type-py-class"><span class="n">BIDSPath</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">root</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">root</span></a><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;nirs&quot;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s2">&quot;.snirf&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;04&quot;</span><span class="p">,</span>
                    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;AudioVisualBroadVsRestricted&quot;</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s2">&quot;nirs&quot;</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="s2">&quot;01&quot;</span><span class="p">)</span>
 <span class="n">raw</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="mne.io.read_raw_snirf" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_raw_snirf</span></a><span class="p">(</span><a href="https://mne.tools/mne-bids/stable/generated/mne_bids.BIDSPath.html#mne_bids.BIDSPath.fpath" title="mne_bids.BIDSPath.fpath" class="sphx-glr-backref-module-mne_bids sphx-glr-backref-type-py-property"><span class="n">dataset</span><span class="o">.</span><span class="n">fpath</span></a><span class="p">)</span>
-<a href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw.annotations" title="mne.io.BaseRaw.annotations" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-property"><span class="n">raw</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">rename</span></a><span class="p">({</span><span class="s1">&#39;1.0&#39;</span><span class="p">:</span> <span class="s1">&#39;Audio&#39;</span><span class="p">,</span>
+<span class="n">raw</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s1">&#39;1.0&#39;</span><span class="p">:</span> <span class="s1">&#39;Audio&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;2.0&#39;</span><span class="p">:</span> <span class="s1">&#39;Video&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;3.0&#39;</span><span class="p">:</span> <span class="s1">&#39;Control&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;15.0&#39;</span><span class="p">:</span> <span class="s1">&#39;Ends&#39;</span><span class="p">})</span>
@@ -461,9 +506,9 @@ and overlay the sensor locations and regions of interest.</p>
 </div>
 </section>
 <section id="download-annotation-information">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Download annotation information</a><a class="headerlink" href="#download-annotation-information" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Download annotation information</a><a class="headerlink" href="#download-annotation-information" title="Link to this heading">#</a></h3>
 <p>Download the HCP-MMP parcellation.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download anatomical locations</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download anatomical locations</span>
 <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.datasets.sample.data_path.html#mne.datasets.sample.data_path" title="mne.datasets.sample.data_path" class="sphx-glr-backref-module-mne-datasets-sample sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">())</span> <span class="o">+</span> <span class="s1">&#39;/subjects&#39;</span>
 <a href="https://mne.tools/stable/generated/mne.datasets.fetch_hcp_mmp_parcellation.html#mne.datasets.fetch_hcp_mmp_parcellation" title="mne.datasets.fetch_hcp_mmp_parcellation" class="sphx-glr-backref-module-mne-datasets sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fetch_hcp_mmp_parcellation</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">accept</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.read_labels_from_annot.html#mne.read_labels_from_annot" title="mne.read_labels_from_annot" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">read_labels_from_annot</span></a><span class="p">(</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <span class="s1">&#39;HCPMMP1&#39;</span><span class="p">,</span> <span class="s1">&#39;lh&#39;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">)</span>
@@ -473,7 +518,7 @@ and overlay the sensor locations and regions of interest.</p>
 </section>
 </section>
 <section id="verify-placement-of-sensors">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Verify placement of sensors</a><a class="headerlink" href="#verify-placement-of-sensors" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Verify placement of sensors</a><a class="headerlink" href="#verify-placement-of-sensors" title="Link to this heading">#</a></h2>
 <p>The first thing we can do is plot the location of the optodes and channels
 over an average brain surface to verify the data, specifically the 3D coordinates,
 have been loaded correctly. The sources are represented as red dots,
@@ -481,39 +526,39 @@ the detectors are represented as black dots, the whit lines represent source-det
 pairs, and the orange dots represent channel locations.
 In this example we can see channels over the left inferior frontal gyrus,
 auditory cortex, planum temporale, and occipital lobe.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s1">&#39;0.5&#39;</span><span class="p">)</span>
-<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;channels&#39;</span><span class="p">,</span> <span class="s1">&#39;pairs&#39;</span><span class="p">,</span> <span class="s1">&#39;sources&#39;</span><span class="p">,</span> <span class="s1">&#39;detectors&#39;</span><span class="p">])</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s1">&#39;0.5&#39;</span><span class="p">)</span>
+<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;channels&#39;</span><span class="p">,</span> <span class="s1">&#39;pairs&#39;</span><span class="p">,</span> <span class="s1">&#39;sources&#39;</span><span class="p">,</span> <span class="s1">&#39;detectors&#39;</span><span class="p">])</span>
 <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.show_view" title="mne.viz.Brain.show_view" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">show_view</span></a><span class="p">(</span><span class="n">azimuth</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">450</span><span class="p">)</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_70_visualise_brain_001.png" srcset="../../_images/sphx_glr_plot_70_visualise_brain_001.png" alt="plot 70 visualise brain" class = "sphx-glr-single-img"/></section>
 <section id="plot-sensor-channel-numbers">
-<span id="tut-fnirs-vis-brain-plot-3d-montage"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Plot sensor channel numbers</a><a class="headerlink" href="#plot-sensor-channel-numbers" title="Permalink to this heading">#</a></h2>
+<span id="tut-fnirs-vis-brain-plot-3d-montage"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Plot sensor channel numbers</a><a class="headerlink" href="#plot-sensor-channel-numbers" title="Link to this heading">#</a></h2>
 <p>Often for publications and sanity checking, it’s convenient to create an
 image showing the channel numbers along with the (typically) 10-20 location
 in the correct locations in a 3D view. The function
 <a class="reference internal" href="../../generated/mne_nirs.visualisation.plot_3d_montage.html#mne_nirs.visualisation.plot_3d_montage" title="mne_nirs.visualisation.plot_3d_montage"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne_nirs.visualisation.plot_3d_montage()</span></code></a> gives us this once we
 specify which views to use to show each channel pair:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">view_map</span></a> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">view_map</span></a> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;left-lat&#39;</span><span class="p">:</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.r_.html#numpy.r_" title="numpy.r_" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-data"><span class="n">np</span><span class="o">.</span><span class="n">r_</span></a><span class="p">[</span><a href="https://numpy.org/devdocs/reference/generated/numpy.arange.html#numpy.arange" title="numpy.arange" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">arange</span></a><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">27</span><span class="p">),</span> <span class="mi">28</span><span class="p">],</span>
     <span class="s1">&#39;caudal&#39;</span><span class="p">:</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.r_.html#numpy.r_" title="numpy.r_" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-data"><span class="n">np</span><span class="o">.</span><span class="n">r_</span></a><span class="p">[</span><span class="mi">27</span><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.arange.html#numpy.arange" title="numpy.arange" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">arange</span></a><span class="p">(</span><span class="mi">43</span><span class="p">,</span> <span class="mi">53</span><span class="p">)],</span>
     <span class="s1">&#39;right-lat&#39;</span><span class="p">:</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.r_.html#numpy.r_" title="numpy.r_" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-data"><span class="n">np</span><span class="o">.</span><span class="n">r_</span></a><span class="p">[</span><a href="https://numpy.org/devdocs/reference/generated/numpy.arange.html#numpy.arange" title="numpy.arange" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">arange</span></a><span class="p">(</span><span class="mi">29</span><span class="p">,</span> <span class="mi">43</span><span class="p">),</span> <span class="mi">44</span><span class="p">],</span>
 <span class="p">}</span>
 
 <a href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig_montage</span></a> <span class="o">=</span> <a href="../../generated/mne_nirs.visualisation.plot_3d_montage.html#mne_nirs.visualisation.plot_3d_montage" title="mne_nirs.visualisation.plot_3d_montage" class="sphx-glr-backref-module-mne_nirs-visualisation sphx-glr-backref-type-py-function"><span class="n">mne_nirs</span><span class="o">.</span><span class="n">visualisation</span><span class="o">.</span><span class="n">plot_3d_montage</span></a><span class="p">(</span>
-    <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">view_map</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">view_map</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">)</span>
+    <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">view_map</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">view_map</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">)</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_70_visualise_brain_002.png" srcset="../../_images/sphx_glr_plot_70_visualise_brain_002.png" alt="plot 70 visualise brain" class = "sphx-glr-single-img"/></section>
 <section id="plot-sensor-channels-and-anatomical-region-of-interest">
-<h2><a class="toc-backref" href="#id9" role="doc-backlink">Plot sensor channels and anatomical region of interest</a><a class="headerlink" href="#plot-sensor-channels-and-anatomical-region-of-interest" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Plot sensor channels and anatomical region of interest</a><a class="headerlink" href="#plot-sensor-channels-and-anatomical-region-of-interest" title="Link to this heading">#</a></h2>
 <p>Once the data has been loaded we can highlight anatomical regions of interest
 to ensure that the sensors are appropriately placed to measure from
 the relevant brain structures.
 In this example we highlight the primary auditory cortex in blue,
 and we can see that a number of channels are placed over this structure.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s1">&#39;0.5&#39;</span><span class="p">)</span>
-<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;channels&#39;</span><span class="p">,</span> <span class="s1">&#39;pairs&#39;</span><span class="p">,</span> <span class="s1">&#39;sources&#39;</span><span class="p">,</span> <span class="s1">&#39;detectors&#39;</span><span class="p">])</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s1">&#39;0.5&#39;</span><span class="p">)</span>
+<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;channels&#39;</span><span class="p">,</span> <span class="s1">&#39;pairs&#39;</span><span class="p">,</span> <span class="s1">&#39;sources&#39;</span><span class="p">,</span> <span class="s1">&#39;detectors&#39;</span><span class="p">])</span>
 
 <a href="https://mne.tools/stable/generated/mne.Label.html#mne.Label" title="mne.Label" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aud_label</span></a> <span class="o">=</span> <span class="p">[</span><span class="n">label</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a> <span class="k">if</span> <span class="n">label</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;L_A1_ROI-lh&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_label" title="mne.viz.Brain.add_label" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_label</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Label.html#mne.Label" title="mne.Label" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aud_label</span></a><span class="p">,</span> <span class="n">borders</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
@@ -522,7 +567,7 @@ and we can see that a number of channels are placed over this structure.</p>
 </div>
 <img src="../../_images/sphx_glr_plot_70_visualise_brain_003.png" srcset="../../_images/sphx_glr_plot_70_visualise_brain_003.png" alt="plot 70 visualise brain" class = "sphx-glr-single-img"/></section>
 <section id="plot-channels-sensitive-to-anatomical-region-of-interest">
-<h2><a class="toc-backref" href="#id10" role="doc-backlink">Plot channels sensitive to anatomical region of interest</a><a class="headerlink" href="#plot-channels-sensitive-to-anatomical-region-of-interest" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Plot channels sensitive to anatomical region of interest</a><a class="headerlink" href="#plot-channels-sensitive-to-anatomical-region-of-interest" title="Link to this heading">#</a></h2>
 <aside class="sidebar">
 <p class="sidebar-title">fOLD Toolbox</p>
 <p>You should use the fOLD toolbox to pick your optode locations
@@ -538,14 +583,14 @@ In this example we highlight the left inferior frontal gyrus (IFG) and
 use data from the fOLD toolbox <a class="footnote-reference brackets" href="#footcite-morais2018fnirs" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.
 To see more details about how to use the fOLD data see
 <a class="reference internal" href="plot_12_group_glm.html#tut-fnirs-group-relating"><span class="std std-ref">this tutorial</span></a>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Return specificity of each channel to the Left IFG</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Return specificity of each channel to the Left IFG</span>
 <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">specificity</span></a> <span class="o">=</span> <a href="../../generated/mne_nirs.io.fold_landmark_specificity.html#mne_nirs.io.fold_landmark_specificity" title="mne_nirs.io.fold_landmark_specificity" class="sphx-glr-backref-module-mne_nirs-io sphx-glr-backref-type-py-function"><span class="n">fold_landmark_specificity</span></a><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="s1">&#39;L IFG (p. Triangularis)&#39;</span><span class="p">)</span>
 
 <span class="c1"># Retain only channels with specificity to left IFG of greater than 50%</span>
-<span class="n">raw_IFG</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw.copy" title="mne.io.BaseRaw.copy" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">raw</span><span class="o">.</span><span class="n">copy</span></a><span class="p">()</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><a href="https://numpy.org/devdocs/reference/generated/numpy.where.html#numpy.where" title="numpy.where" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">where</span></a><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">specificity</span></a> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">raw_IFG</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><a href="https://numpy.org/devdocs/reference/generated/numpy.where.html#numpy.where" title="numpy.where" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">where</span></a><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">specificity</span></a> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
 
 <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s1">&#39;0.5&#39;</span><span class="p">)</span>
-<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw_IFG</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;channels&#39;</span><span class="p">,</span> <span class="s1">&#39;pairs&#39;</span><span class="p">])</span>
+<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw_IFG</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;channels&#39;</span><span class="p">,</span> <span class="s1">&#39;pairs&#39;</span><span class="p">])</span>
 
 <a href="https://mne.tools/stable/generated/mne.Label.html#mne.Label" title="mne.Label" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ifg_label</span></a> <span class="o">=</span> <span class="p">[</span><span class="n">label</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels_combined</span></a> <span class="k">if</span> <span class="n">label</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Inferior Frontal Cortex-lh&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_label" title="mne.viz.Brain.add_label" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_label</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Label.html#mne.Label" title="mne.Label" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ifg_label</span></a><span class="p">,</span> <span class="n">borders</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
@@ -560,14 +605,14 @@ the region of interest.</p>
 <p>Note: this function currently doesn’t support the new MNE brain API, so does
 not allow the same behaviour as above (adding sensors, highlighting ROIs etc).
 It should be updated in the near future.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../generated/mne_nirs.visualisation.plot_nirs_source_detector.html#mne_nirs.visualisation.plot_nirs_source_detector" title="mne_nirs.visualisation.plot_nirs_source_detector" class="sphx-glr-backref-module-mne_nirs-visualisation sphx-glr-backref-type-py-function"><span class="n">plot_nirs_source_detector</span></a><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">specificity</span></a><span class="p">,</span> <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">surfaces</span><span class="o">=</span><span class="s1">&#39;brain&#39;</span><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../generated/mne_nirs.visualisation.plot_nirs_source_detector.html#mne_nirs.visualisation.plot_nirs_source_detector" title="mne_nirs.visualisation.plot_nirs_source_detector" class="sphx-glr-backref-module-mne_nirs-visualisation sphx-glr-backref-type-py-function"><span class="n">plot_nirs_source_detector</span></a><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">specificity</span></a><span class="p">,</span> <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">surfaces</span><span class="o">=</span><span class="s1">&#39;brain&#39;</span><span class="p">,</span>
                                 <span class="n">subject</span><span class="o">=</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.viz.set_3d_view.html#mne.viz.set_3d_view" title="mne.viz.set_3d_view" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">set_3d_view</span></a><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">azimuth</span><span class="o">=</span><span class="mi">140</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_70_visualise_brain_005.png" srcset="../../_images/sphx_glr_plot_70_visualise_brain_005.png" alt="plot 70 visualise brain" class = "sphx-glr-single-img"/></section>
 <section id="anatomically-informed-weighting-in-region-of-interest-analysis">
-<h2><a class="toc-backref" href="#id11" role="doc-backlink">Anatomically informed weighting in region of interest analysis</a><a class="headerlink" href="#anatomically-informed-weighting-in-region-of-interest-analysis" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Anatomically informed weighting in region of interest analysis</a><a class="headerlink" href="#anatomically-informed-weighting-in-region-of-interest-analysis" title="Link to this heading">#</a></h2>
 <p>As observed above, some channels have greater specificity to the desired
 brain region than other channels.
 Thus, when doing a region of interest analysis you may wish to give extra
@@ -577,14 +622,14 @@ interest function call.
 The details of the GLM analysis will not be described here, instead view the
 <a class="reference internal" href="plot_11_hrf_measured.html#tut-fnirs-hrf"><span class="std std-ref">fNIRS GLM tutorial</span></a>. Instead, comments are provided
 for the weighted region of interest function call.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Basic pipeline, simplified for example</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Basic pipeline, simplified for example</span>
 <span class="n">raw_od</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.optical_density.html#mne.preprocessing.nirs.optical_density" title="mne.preprocessing.nirs.optical_density" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">optical_density</span></a><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
 <span class="n">raw_haemo</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.beer_lambert_law.html#mne.preprocessing.nirs.beer_lambert_law" title="mne.preprocessing.nirs.beer_lambert_law" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">beer_lambert_law</span></a><span class="p">(</span><span class="n">raw_od</span><span class="p">)</span>
-<a href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw.resample" title="mne.io.BaseRaw.resample" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">raw_haemo</span><span class="o">.</span><span class="n">resample</span></a><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="s2">&quot;hbo&quot;</span><span class="p">)</span>  <span class="c1"># Speed increase for web server</span>
+<span class="n">raw_haemo</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="s2">&quot;hbo&quot;</span><span class="p">)</span>  <span class="c1"># Speed increase for web server</span>
 <span class="n">sht_chans</span> <span class="o">=</span> <a href="../../generated/mne_nirs.channels.get_short_channels.html#mne_nirs.channels.get_short_channels" title="mne_nirs.channels.get_short_channels" class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function"><span class="n">get_short_channels</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">)</span>
 <span class="n">raw_haemo</span> <span class="o">=</span> <a href="../../generated/mne_nirs.channels.get_long_channels.html#mne_nirs.channels.get_long_channels" title="mne_nirs.channels.get_long_channels" class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function"><span class="n">get_long_channels</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">)</span>
 <span class="n">design_matrix</span> <span class="o">=</span> <a href="../../generated/mne_nirs.experimental_design.make_first_level_design_matrix.html#mne_nirs.experimental_design.make_first_level_design_matrix" title="mne_nirs.experimental_design.make_first_level_design_matrix" class="sphx-glr-backref-module-mne_nirs-experimental_design sphx-glr-backref-type-py-function"><span class="n">make_first_level_design_matrix</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">,</span> <span class="n">stim_dur</span><span class="o">=</span><span class="mf">13.0</span><span class="p">)</span>
-<span class="n">design_matrix</span><span class="p">[</span><span class="s2">&quot;ShortHbO&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.mean.html#numpy.mean" title="numpy.mean" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">mean</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw.copy" title="mne.io.BaseRaw.copy" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">sht_chans</span><span class="o">.</span><span class="n">copy</span></a><span class="p">()</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s2">&quot;hbo&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get_data</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">design_matrix</span><span class="p">[</span><span class="s2">&quot;ShortHbO&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.mean.html#numpy.mean" title="numpy.mean" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">mean</span></a><span class="p">(</span><span class="n">sht_chans</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s2">&quot;hbo&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get_data</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <a href="../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults" title="mne_nirs.statistics.RegressionResults" class="sphx-glr-backref-module-mne_nirs-statistics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">glm_est</span></a> <span class="o">=</span> <a href="../../generated/mne_nirs.statistics.run_glm.html#mne_nirs.statistics.run_glm" title="mne_nirs.statistics.run_glm" class="sphx-glr-backref-module-mne_nirs-statistics sphx-glr-backref-type-py-function"><span class="n">run_glm</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">)</span>
 
 <span class="c1"># First we create a dictionary for each region of interest.</span>
@@ -706,12 +751,12 @@ technique to load any custom weighting, including weights exported from
 other software.</p>
 </section>
 <section id="preprocess-fnirs-data">
-<h2><a class="toc-backref" href="#id12" role="doc-backlink">Preprocess fNIRS data</a><a class="headerlink" href="#preprocess-fnirs-data" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Preprocess fNIRS data</a><a class="headerlink" href="#preprocess-fnirs-data" title="Link to this heading">#</a></h2>
 <p>We can also use the 3D information to project the results on to the cortical surface.
 First, we process the fNIRS data. This is a duplication of the GLM tutorial
 analysis. The details will not be described here, instead view the
 <a class="reference internal" href="plot_11_hrf_measured.html#tut-fnirs-hrf"><span class="std std-ref">fNIRS GLM tutorial</span></a>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">individual_analysis</span><span class="p">(</span><a href="https://mne.tools/mne-bids/stable/generated/mne_bids.BIDSPath.html#mne_bids.BIDSPath" title="mne_bids.BIDSPath" class="sphx-glr-backref-module-mne_bids sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bids_path</span></a><span class="p">,</span> <span class="n">ID</span><span class="p">):</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">individual_analysis</span><span class="p">(</span><a href="https://mne.tools/mne-bids/stable/generated/mne_bids.BIDSPath.html#mne_bids.BIDSPath" title="mne_bids.BIDSPath" class="sphx-glr-backref-module-mne_bids sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bids_path</span></a><span class="p">,</span> <span class="n">ID</span><span class="p">):</span>
 
     <span class="n">raw_intensity</span> <span class="o">=</span> <a href="https://mne.tools/mne-bids/stable/generated/mne_bids.read_raw_bids.html#mne_bids.read_raw_bids" title="mne_bids.read_raw_bids" class="sphx-glr-backref-module-mne_bids sphx-glr-backref-type-py-function"><span class="n">read_raw_bids</span></a><span class="p">(</span><a href="https://mne.tools/mne-bids/stable/generated/mne_bids.BIDSPath.html#mne_bids.BIDSPath" title="mne_bids.BIDSPath" class="sphx-glr-backref-module-mne_bids sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bids_path</span></a><span class="o">=</span><a href="https://mne.tools/mne-bids/stable/generated/mne_bids.BIDSPath.html#mne_bids.BIDSPath" title="mne_bids.BIDSPath" class="sphx-glr-backref-module-mne_bids sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bids_path</span></a><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">raw_intensity</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">raw_intensity</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">description</span> <span class="o">==</span> <span class="s1">&#39;15.0&#39;</span><span class="p">)</span>
@@ -722,7 +767,7 @@ analysis. The details will not be described here, instead view the
     <span class="c1"># Convert signal to haemoglobin and resample</span>
     <span class="n">raw_od</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.optical_density.html#mne.preprocessing.nirs.optical_density" title="mne.preprocessing.nirs.optical_density" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">optical_density</span></a><span class="p">(</span><span class="n">raw_intensity</span><span class="p">)</span>
     <span class="n">raw_haemo</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.beer_lambert_law.html#mne.preprocessing.nirs.beer_lambert_law" title="mne.preprocessing.nirs.beer_lambert_law" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">beer_lambert_law</span></a><span class="p">(</span><span class="n">raw_od</span><span class="p">,</span> <span class="n">ppf</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-    <a href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw.resample" title="mne.io.BaseRaw.resample" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">raw_haemo</span><span class="o">.</span><span class="n">resample</span></a><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+    <span class="n">raw_haemo</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
 
     <span class="c1"># Cut out just the short channels for creating a GLM repressor</span>
     <span class="n">sht_chans</span> <span class="o">=</span> <a href="../../generated/mne_nirs.channels.get_short_channels.html#mne_nirs.channels.get_short_channels" title="mne_nirs.channels.get_short_channels" class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function"><span class="n">get_short_channels</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">)</span>
@@ -732,8 +777,8 @@ analysis. The details will not be described here, instead view the
     <span class="n">design_matrix</span> <span class="o">=</span> <a href="../../generated/mne_nirs.experimental_design.make_first_level_design_matrix.html#mne_nirs.experimental_design.make_first_level_design_matrix" title="mne_nirs.experimental_design.make_first_level_design_matrix" class="sphx-glr-backref-module-mne_nirs-experimental_design sphx-glr-backref-type-py-function"><span class="n">make_first_level_design_matrix</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">,</span> <span class="n">stim_dur</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
 
     <span class="c1"># Append short channels mean to design matrix</span>
-    <span class="n">design_matrix</span><span class="p">[</span><span class="s2">&quot;ShortHbO&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.mean.html#numpy.mean" title="numpy.mean" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">mean</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw.copy" title="mne.io.BaseRaw.copy" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">sht_chans</span><span class="o">.</span><span class="n">copy</span></a><span class="p">()</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s2">&quot;hbo&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get_data</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">design_matrix</span><span class="p">[</span><span class="s2">&quot;ShortHbR&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.mean.html#numpy.mean" title="numpy.mean" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">mean</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw.copy" title="mne.io.BaseRaw.copy" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">sht_chans</span><span class="o">.</span><span class="n">copy</span></a><span class="p">()</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s2">&quot;hbr&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get_data</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">design_matrix</span><span class="p">[</span><span class="s2">&quot;ShortHbO&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.mean.html#numpy.mean" title="numpy.mean" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">mean</span></a><span class="p">(</span><span class="n">sht_chans</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s2">&quot;hbo&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get_data</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">design_matrix</span><span class="p">[</span><span class="s2">&quot;ShortHbR&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.mean.html#numpy.mean" title="numpy.mean" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">mean</span></a><span class="p">(</span><span class="n">sht_chans</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s2">&quot;hbr&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get_data</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="c1"># Run GLM</span>
     <a href="../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults" title="mne_nirs.statistics.RegressionResults" class="sphx-glr-backref-module-mne_nirs-statistics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">glm_est</span></a> <span class="o">=</span> <a href="../../generated/mne_nirs.statistics.run_glm.html#mne_nirs.statistics.run_glm" title="mne_nirs.statistics.run_glm" class="sphx-glr-backref-module-mne_nirs-statistics sphx-glr-backref-type-py-function"><span class="n">run_glm</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">)</span>
@@ -773,19 +818,19 @@ analysis. The details will not be described here, instead view the
 <span class="n">ch_summary</span> <span class="o">=</span> <span class="n">ch_summary</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Chroma in [&#39;hbo&#39;]&quot;</span><span class="p">)</span>
 <span class="n">ch_model</span> <span class="o">=</span> <a href="https://www.statsmodels.org/stable/generated/statsmodels.formula.api.mixedlm.html#statsmodels.formula.api.mixedlm" title="statsmodels.formula.api.mixedlm" class="sphx-glr-backref-module-statsmodels-formula-api sphx-glr-backref-type-py-function"><span class="n">smf</span><span class="o">.</span><span class="n">mixedlm</span></a><span class="p">(</span><span class="s2">&quot;theta ~ -1 + ch_name&quot;</span><span class="p">,</span> <span class="n">ch_summary</span><span class="p">,</span>
                        <span class="n">groups</span><span class="o">=</span><span class="n">ch_summary</span><span class="p">[</span><span class="s2">&quot;ID&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;nm&#39;</span><span class="p">)</span>
-<span class="n">model_df</span> <span class="o">=</span> <a href="../../generated/mne_nirs.statistics.statsmodels_to_results.html#mne_nirs.statistics.statsmodels_to_results" title="mne_nirs.statistics.statsmodels_to_results" class="sphx-glr-backref-module-mne_nirs-statistics sphx-glr-backref-type-py-function"><span class="n">statsmodels_to_results</span></a><span class="p">(</span><span class="n">ch_model</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><a href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw.copy" title="mne.io.BaseRaw.copy" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">raw_haemo</span><span class="o">.</span><span class="n">copy</span></a><span class="p">()</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="s2">&quot;hbo&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span>
+<span class="n">model_df</span> <span class="o">=</span> <a href="../../generated/mne_nirs.statistics.statsmodels_to_results.html#mne_nirs.statistics.statsmodels_to_results" title="mne_nirs.statistics.statsmodels_to_results" class="sphx-glr-backref-module-mne_nirs-statistics sphx-glr-backref-type-py-function"><span class="n">statsmodels_to_results</span></a><span class="p">(</span><span class="n">ch_model</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">raw_haemo</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="s2">&quot;hbo&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="plot-surface-projection-of-glm-results">
-<h2><a class="toc-backref" href="#id13" role="doc-backlink">Plot surface projection of GLM results</a><a class="headerlink" href="#plot-surface-projection-of-glm-results" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">Plot surface projection of GLM results</a><a class="headerlink" href="#plot-surface-projection-of-glm-results" title="Link to this heading">#</a></h2>
 <p>Finally, we can project the GLM results from each channel to the nearest cortical surface
 and overlay the sensor positions and two different regions of interest.
 In this example we also highlight the premotor cortex and auditory association cortex
 in green and blue respectively.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the projection and sensor locations</span>
-<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="../../generated/mne_nirs.visualisation.plot_glm_surface_projection.html#mne_nirs.visualisation.plot_glm_surface_projection" title="mne_nirs.visualisation.plot_glm_surface_projection" class="sphx-glr-backref-module-mne_nirs-visualisation sphx-glr-backref-type-py-function"><span class="n">plot_glm_surface_projection</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw.copy" title="mne.io.BaseRaw.copy" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">raw_haemo</span><span class="o">.</span><span class="n">copy</span></a><span class="p">()</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="s2">&quot;hbo&quot;</span><span class="p">),</span> <span class="n">model_df</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw_haemo</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;channels&#39;</span><span class="p">,</span> <span class="s1">&#39;pairs&#39;</span><span class="p">,</span> <span class="s1">&#39;sources&#39;</span><span class="p">,</span> <span class="s1">&#39;detectors&#39;</span><span class="p">])</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the projection and sensor locations</span>
+<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="../../generated/mne_nirs.visualisation.plot_glm_surface_projection.html#mne_nirs.visualisation.plot_glm_surface_projection" title="mne_nirs.visualisation.plot_glm_surface_projection" class="sphx-glr-backref-module-mne_nirs-visualisation sphx-glr-backref-type-py-function"><span class="n">plot_glm_surface_projection</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="s2">&quot;hbo&quot;</span><span class="p">),</span> <span class="n">model_df</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw_haemo</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;channels&#39;</span><span class="p">,</span> <span class="s1">&#39;pairs&#39;</span><span class="p">,</span> <span class="s1">&#39;sources&#39;</span><span class="p">,</span> <span class="s1">&#39;detectors&#39;</span><span class="p">])</span>
 
 <span class="c1"># mark the premotor cortex in green</span>
 <a href="https://mne.tools/stable/generated/mne.Label.html#mne.Label" title="mne.Label" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aud_label</span></a> <span class="o">=</span> <span class="p">[</span><span class="n">label</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels_combined</span></a> <span class="k">if</span> <span class="n">label</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Premotor Cortex-lh&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
@@ -800,29 +845,30 @@ in green and blue respectively.</p>
 </div>
 <img src="../../_images/sphx_glr_plot_70_visualise_brain_006.png" srcset="../../_images/sphx_glr_plot_70_visualise_brain_006.png" alt="plot 70 visualise brain" class = "sphx-glr-single-img"/></section>
 <section id="bibliography">
-<h2><a class="toc-backref" href="#id14" role="doc-backlink">Bibliography</a><a class="headerlink" href="#bibliography" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">Bibliography</a><a class="headerlink" href="#bibliography" title="Link to this heading">#</a></h2>
 <div class="docutils container" id="id3">
-<aside class="footnote brackets" id="footcite-novi2020integration" role="note">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-novi2020integration" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>Sergio Luiz Novi, Edwin Johan Forero, Jose Angel Ivan Rubianes Silva, Nicolas Gabriel SR de Souza, Giovani Grisotti Martins, Andres Quiroga, Shin-Ting Wu, and Rickson C Mesquita. Integration of spatial information increases reproducibility in functional near-infrared spectroscopy. <em>Frontiers in neuroscience</em>, 2020. <a class="reference external" href="https://doi.org/10.3389/fnins.2020.00746">doi:10.3389/fnins.2020.00746</a>.</p>
 </aside>
-<aside class="footnote brackets" id="footcite-morais2018fnirs" role="note">
+<aside class="footnote brackets" id="footcite-morais2018fnirs" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
 <p>Guilherme Augusto Zimeo Morais, Joana Bisol Balardin, and João Ricardo Sato. Fnirs optodes’ location decider (fold): a toolbox for probe arrangement guided by brain regions-of-interest. <em>Scientific reports</em>, 8(1):1–11, 2018.</p>
 </aside>
 </aside>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  53.357 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 7.523 seconds)</p>
 <p><strong>Estimated memory usage:</strong>  26 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-70-visualise-brain-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_70_visualise_brain.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
 </div>
-<div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/370b9a7d86cb5685cc0abd3c9f82f4d6/plot_70_visualise_brain.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_70_visualise_brain.py</span></code></a></p>
-</div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/0413476908df27c3eadc8701a83246fd/plot_70_visualise_brain.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_70_visualise_brain.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/370b9a7d86cb5685cc0abd3c9f82f4d6/plot_70_visualise_brain.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_70_visualise_brain.py</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -830,153 +876,122 @@ in green and blue respectively.</p>
 </section>
 
 
-            </article>
-            
-            
-            
-            <footer class="bd-footer-article">
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-  <a class='left-prev' id="prev-link" href="plot_60_aux_data.html" title="previous page">
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="plot_60_aux_data.html"
+       title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
-          <p class="prev-next-subtitle">previous</p>
-          <p class="prev-next-title">Utilising Auxiliary Data</p>
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Utilising Auxiliary Data</p>
       </div>
-  </a>
-  <a class='right-next' id="next-link" href="plot_80_save_read_glm.html" title="next page">
-  <div class="prev-next-info">
-      <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">Save and load GLM results</p>
-  </div>
-  <i class="fa-solid fa-angle-right"></i>
-  </a>
+    </a>
+    <a class="right-next"
+       href="plot_80_save_read_glm.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Save and load GLM results</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
 </div>
-            </footer>
-            
-          </div>
-          
-          
-          
-            <div class="bd-sidebar-secondary bd-toc">
+
+                </footer>
               
-<div class="toc-item">
-  
-<div class="tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-</div>
-<nav id="bd-toc-nav" class="page-toc">
-    <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#download-example-data">
-   Download example data
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#download-example-fnirs-data">
-     Download example fNIRS data
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#download-annotation-information">
-     Download annotation information
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#verify-placement-of-sensors">
-   Verify placement of sensors
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#plot-sensor-channel-numbers">
-   Plot sensor channel numbers
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#plot-sensor-channels-and-anatomical-region-of-interest">
-   Plot sensor channels and anatomical region of interest
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#plot-channels-sensitive-to-anatomical-region-of-interest">
-   Plot channels sensitive to anatomical region of interest
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#anatomically-informed-weighting-in-region-of-interest-analysis">
-   Anatomically informed weighting in region of interest analysis
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#preprocess-fnirs-data">
-   Preprocess fNIRS data
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#plot-surface-projection-of-glm-results">
-   Plot surface projection of GLM results
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#bibliography">
-   Bibliography
-  </a>
- </li>
-</ul>
-
-</nav>
-</div>
-
-<div class="toc-item">
-  
-<div id="searchbox"></div>
-</div>
-
-<div class="toc-item">
-  
-</div>
-
-<div class="toc-item">
-  
-</div>
-
             </div>
-          
-          
-        </div>
-        <footer class="bd-footer-content">
-          <div class="bd-footer-content__inner">
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#download-example-data">Download example data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#download-example-fnirs-data">Download example fNIRS data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#download-annotation-information">Download annotation information</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verify-placement-of-sensors">Verify placement of sensors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-sensor-channel-numbers">Plot sensor channel numbers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-sensor-channels-and-anatomical-region-of-interest">Plot sensor channels and anatomical region of interest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-channels-sensitive-to-anatomical-region-of-interest">Plot channels sensitive to anatomical region of interest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anatomically-informed-weighting-in-region-of-interest-analysis">Anatomically informed weighting in region of interest analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocess-fnirs-data">Preprocess fNIRS data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-surface-projection-of-glm-results">Plot surface projection of GLM results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliography">Bibliography</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/mne-tools/mne-nirs/edit/main/doc/auto_examples/general/plot_70_visualise_brain.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
             
           </div>
-        </footer>
+          <footer class="bd-footer-content">
+            
+          </footer>
         
       </main>
     </div>
   </div>
-
   
-    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
-    
     
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
-  <footer class="bd-footer"><div class="bd-footer__inner container">
+    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
   
-  <div class="footer-item">
-    
-<p class="copyright">
-
-    &copy; Copyright 2012–2022, MNE Developers. Last updated &lt;time datetime=&#34;2022-12-23T15:28:16.604739+00:00&#34; class=&#34;localized&#34;&gt;2022-12-23 15:28 UTC&lt;/time&gt;
-&lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.<br>
-
-</p>
-
-  </div>
+    <div class="footer-items__start">
+      
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2023, MNE Developers. Last updated <time datetime="2023-12-07T23:54:19.732358+00:00" class="localized">2023-12-07 23:54 UTC</time>
+<script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
   
 </div>
+
   </footer>
   </body>
 </html>

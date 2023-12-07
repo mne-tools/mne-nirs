@@ -53,12 +53,13 @@ in the relevant literature sidebar.
 # License: BSD (3-clause)
 
 import os
+from itertools import compress
+
+import matplotlib.pyplot as plt
 import mne
 import numpy as np
-from itertools import compress
-import matplotlib.pyplot as plt
-
 from mne.preprocessing.nirs import optical_density
+
 from mne_nirs.preprocessing import peak_power, scalp_coupling_index_windowed
 from mne_nirs.visualisation import plot_timechannel_quality_metric
 
@@ -72,7 +73,7 @@ from mne_nirs.visualisation import plot_timechannel_quality_metric
 # We then convert the data to optical density and plot the raw signal.
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-fnirs_cw_amplitude_dir = os.path.join(fnirs_data_folder, 'Participant-1')
+fnirs_cw_amplitude_dir = os.path.join(fnirs_data_folder, "Participant-1")
 raw_intensity = mne.io.read_raw_nirx(fnirs_cw_amplitude_dir, verbose=True)
 raw_intensity.load_data().resample(4.0, npad="auto")
 raw_od = optical_density(raw_intensity)
@@ -104,7 +105,7 @@ raw_od.plot(n_channels=55, duration=4000, show_scrollbars=False, clipping=None)
 sci = mne.preprocessing.nirs.scalp_coupling_index(raw_od)
 fig, ax = plt.subplots()
 ax.hist(sci)
-ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
+ax.set(xlabel="Scalp Coupling Index", ylabel="Count", xlim=[0, 1])
 
 # %%
 # We observe that most of the channels have a good SCI of 1, but a few channels
@@ -115,8 +116,8 @@ ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
 # We then print a list of the bad channels and observe their are 10 channels
 # (five source-detector pairs) that are marked as bad.
 
-raw_od.info['bads'] = list(compress(raw_od.ch_names, sci < 0.7))
-print(raw_od.info['bads'])
+raw_od.info["bads"] = list(compress(raw_od.ch_names, sci < 0.7))
+print(raw_od.info["bads"])
 
 # %%
 # We can plot the time course of the signal again and note that the bad
@@ -143,7 +144,7 @@ raw_od.plot_sensors()
 sci = mne.preprocessing.nirs.scalp_coupling_index(raw_od.copy().crop(10))
 fig, ax = plt.subplots()
 ax.hist(sci)
-ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
+ax.set(xlabel="Scalp Coupling Index", ylabel="Count", xlim=[0, 1])
 
 # %%
 # SCI evaluated over moving window
@@ -164,9 +165,13 @@ ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
 # define a window length that is appropriate for the experiment.
 
 _, scores, times = scalp_coupling_index_windowed(raw_od, time_window=60)
-plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.7,
-                                title="Scalp Coupling Index "
-                                      "Quality Evaluation")
+plot_timechannel_quality_metric(
+    raw_od,
+    scores,
+    times,
+    threshold=0.7,
+    title="Scalp Coupling Index " "Quality Evaluation",
+)
 
 # %%
 # **********
@@ -180,8 +185,9 @@ plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.7,
 # of the recording.
 
 raw_od, scores, times = peak_power(raw_od, time_window=10)
-plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.1,
-                                title="Peak Power Quality Evaluation")
+plot_timechannel_quality_metric(
+    raw_od, scores, times, threshold=0.1, title="Peak Power Quality Evaluation"
+)
 
 
 # %%
@@ -205,9 +211,13 @@ raw_od._data[34, 8000:8080] = np.linspace(0, 0.5, 80) + raw_od._data[34, 8000]
 # Next we plot just these channels to demonstrate that indeed an artifact
 # has been added.
 
-raw_od.copy().pick(picks=[12, 13, 34, 35]).\
-    plot(n_channels=55, duration=40000, show_scrollbars=False,
-         clipping=None, scalings={'fnirs_od': 0.2})
+raw_od.copy().pick(picks=[12, 13, 34, 35]).plot(
+    n_channels=55,
+    duration=40000,
+    show_scrollbars=False,
+    clipping=None,
+    scalings={"fnirs_od": 0.2},
+)
 
 
 # %%
@@ -246,9 +256,13 @@ plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.1)
 # channels would be generated for S5-D13 (as the artifact was only present
 # on S2-D4).
 
-raw_od.copy().pick(picks=[12, 13, 34, 35]).\
-    plot(n_channels=55, duration=40000, show_scrollbars=False,
-         clipping=None, scalings={'fnirs_od': 0.2})
+raw_od.copy().pick(picks=[12, 13, 34, 35]).plot(
+    n_channels=55,
+    duration=40000,
+    show_scrollbars=False,
+    clipping=None,
+    scalings={"fnirs_od": 0.2},
+)
 
 # %%
 # These channel and time specific annotations are used by downstream

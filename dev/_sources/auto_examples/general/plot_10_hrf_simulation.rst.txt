@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_general_plot_10_hrf_simulation.py>`
-        to download the full example code or to run this example in your browser via Binder
+        to download the full example code. or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
 
@@ -29,11 +29,7 @@ experiment and analyse
 the simulated signal. We investigate the effect additive noise and
 measurement length has on response amplitude estimates.
 
-.. contents:: Page contents
-   :local:
-   :depth: 2
-
-.. GENERATED FROM PYTHON SOURCE LINES 18-34
+.. GENERATED FROM PYTHON SOURCE LINES 13-31
 
 .. code-block:: Python
 
@@ -43,13 +39,15 @@ measurement length has on response amplitude estimates.
     #
     # License: BSD (3-clause)
 
-    import mne
-    import mne_nirs
     import matplotlib.pylab as plt
+    import mne
     import numpy as np
+    from nilearn.plotting import plot_design_matrix
+
+    import mne_nirs
     from mne_nirs.experimental_design import make_first_level_design_matrix
     from mne_nirs.statistics import run_glm
-    from nilearn.plotting import plot_design_matrix
+
     np.random.seed(1)
 
 
@@ -60,7 +58,7 @@ measurement length has on response amplitude estimates.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 35-43
+.. GENERATED FROM PYTHON SOURCE LINES 32-40
 
 Simulate noise free NIRS data
 -----------------------------
@@ -71,16 +69,17 @@ selected between 15 and 45 seconds.
 The amplitude of the simulated signal is 4 uMol and the sample rate is 3 Hz.
 The simulated signal is plotted below.
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-52
+.. GENERATED FROM PYTHON SOURCE LINES 40-50
 
 .. code-block:: Python
 
 
-    sfreq = 3.
-    amp = 4.
+    sfreq = 3.0
+    amp = 4.0
 
     raw = mne_nirs.simulation.simulate_nirs_raw(
-        sfreq=sfreq, sig_dur=60 * 5, amplitude=amp, isi_min=15., isi_max=45.)
+        sfreq=sfreq, sig_dur=60 * 5, amplitude=amp, isi_min=15.0, isi_max=45.0
+    )
     raw.plot(duration=300, show_scrollbars=False)
 
 
@@ -98,11 +97,11 @@ The simulated signal is plotted below.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff2a8a17840>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa0b7398e50>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 53-59
+.. GENERATED FROM PYTHON SOURCE LINES 51-57
 
 Create design matrix
 ------------------------------------
@@ -111,14 +110,14 @@ Next we create a design matrix based on the annotation times in the simulated
 data. We use the nilearn plotting function to visualise the design matrix.
 For more details on this procedure see :ref:`tut-fnirs-hrf`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-67
+.. GENERATED FROM PYTHON SOURCE LINES 57-65
 
 .. code-block:: Python
 
 
-    design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
-                                                   drift_order=1,
-                                                   drift_model='polynomial')
+    design_matrix = make_first_level_design_matrix(
+        raw, stim_dur=5.0, drift_order=1, drift_model="polynomial"
+    )
     fig, ax1 = plt.subplots(figsize=(10, 6), constrained_layout=True)
     fig = plot_design_matrix(design_matrix, ax=ax1)
 
@@ -132,17 +131,10 @@ For more details on this procedure see :ref:`tut-fnirs-hrf`.
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/circleci/python_env/lib/python3.10/site-packages/nilearn/plotting/matrix_plotting.py:463: UserWarning: The figure layout has changed to tight
-      plt.tight_layout()
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 68-77
+.. GENERATED FROM PYTHON SOURCE LINES 66-75
 
 Estimate response on clean data
 -------------------------------
@@ -154,7 +146,7 @@ We see that the estimate of the first component is 4e-6 (4 uM),
 which was the amplitude we used in the simulation.
 We also see that the mean square error of the model fit is close to zero.
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-91
+.. GENERATED FROM PYTHON SOURCE LINES 75-94
 
 .. code-block:: Python
 
@@ -163,13 +155,18 @@ We also see that the mean square error of the model fit is close to zero.
 
 
     def print_results(glm_est, truth):
-        """Function to print the results of GLM estimate"""
-        print("Estimate:", glm_est.theta()[0][0],
-              "  MSE:", glm_est.MSE()[0],
-              "  Error (uM):", 1e6*(glm_est.theta()[0][0] - truth * 1e-6))
+        """Print the results of GLM estimate."""
+        print(
+            "Estimate:",
+            glm_est.theta()[0][0],
+            "  MSE:",
+            glm_est.MSE()[0],
+            "  Error (uM):",
+            1e6 * (glm_est.theta()[0][0] - truth * 1e-6),
+        )
+
 
     print_results(glm_est, amp)
-
 
 
 
@@ -185,7 +182,7 @@ We also see that the mean square error of the model fit is close to zero.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-102
+.. GENERATED FROM PYTHON SOURCE LINES 95-106
 
 Simulate noisy NIRS data (white)
 --------------------------------
@@ -196,9 +193,10 @@ We run the GLM analysis exactly as in the previous section
 and plot the noisy data and the GLM fitted model.
 We print the response estimate and see that is close, but not exactly correct,
 we observe the mean square error is similar to the added noise.
-Note that the clean data plot is so similar to the GLM estimate that it is hard to see unless zoomed in.
+Note that the clean data plot is so similar to the GLM estimate that it is hard to
+see unless zoomed in.
 
-.. GENERATED FROM PYTHON SOURCE LINES 102-119
+.. GENERATED FROM PYTHON SOURCE LINES 106-123
 
 .. code-block:: Python
 
@@ -237,7 +235,7 @@ Note that the clean data plot is so similar to the GLM estimate that it is hard 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 120-128
+.. GENERATED FROM PYTHON SOURCE LINES 124-132
 
 Simulate noisy NIRS data (colored)
 ----------------------------------
@@ -248,21 +246,23 @@ The estimate is reported below, and even though the signal was difficult to
 observe in the raw data, the GLM analysis has extracted an accurate estimate.
 However, the error is greater for the colored than white noise.
 
-.. GENERATED FROM PYTHON SOURCE LINES 128-151
+.. GENERATED FROM PYTHON SOURCE LINES 132-157
 
 .. code-block:: Python
 
 
     raw = raw_noise_free.copy()
-    cov = mne.Covariance(np.ones(1) * 1e-11, raw.ch_names,
-                         raw.info['bads'], raw.info['projs'], nfree=0)
-    raw = mne.simulation.add_noise(raw, cov,
-                                   iir_filter=[1., -0.58853134, -0.29575669,
-                                               -0.52246482, 0.38735476,
-                                               0.02428681])
-    design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
-                                                   drift_order=1,
-                                                   drift_model='polynomial')
+    cov = mne.Covariance(
+        np.ones(1) * 1e-11, raw.ch_names, raw.info["bads"], raw.info["projs"], nfree=0
+    )
+    raw = mne.simulation.add_noise(
+        raw,
+        cov,
+        iir_filter=[1.0, -0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.02428681],
+    )
+    design_matrix = make_first_level_design_matrix(
+        raw, stim_dur=5.0, drift_order=1, drift_model="polynomial"
+    )
     glm_est = run_glm(raw, design_matrix)
 
     fig, ax = plt.subplots(constrained_layout=True)
@@ -294,7 +294,7 @@ However, the error is greater for the colored than white noise.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 152-159
+.. GENERATED FROM PYTHON SOURCE LINES 158-165
 
 How does increasing the measurement length affect estimation accuracy?
 ----------------------------------------------------------------------
@@ -304,23 +304,26 @@ data. Here we simulated increasing the recording time to 30 minutes.
 We run the same analysis and observe that the error is reduced from
 approximately 0.6 uM for 5 minutes of data to 0.25 uM for 30 minutes of data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 159-183
+.. GENERATED FROM PYTHON SOURCE LINES 165-192
 
 .. code-block:: Python
 
 
     raw = mne_nirs.simulation.simulate_nirs_raw(
-        sfreq=sfreq, sig_dur=60 * 30, amplitude=amp, isi_min=15., isi_max=45.)
-    cov = mne.Covariance(np.ones(1) * 1e-11, raw.ch_names,
-                         raw.info['bads'], raw.info['projs'], nfree=0)
-    raw = mne.simulation.add_noise(raw, cov,
-                                   iir_filter=[1., -0.58853134, -0.29575669,
-                                               -0.52246482, 0.38735476,
-                                               0.02428681])
+        sfreq=sfreq, sig_dur=60 * 30, amplitude=amp, isi_min=15.0, isi_max=45.0
+    )
+    cov = mne.Covariance(
+        np.ones(1) * 1e-11, raw.ch_names, raw.info["bads"], raw.info["projs"], nfree=0
+    )
+    raw = mne.simulation.add_noise(
+        raw,
+        cov,
+        iir_filter=[1.0, -0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.02428681],
+    )
 
-    design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
-                                                   drift_order=1,
-                                                   drift_model='polynomial')
+    design_matrix = make_first_level_design_matrix(
+        raw, stim_dur=5.0, drift_order=1, drift_model="polynomial"
+    )
     glm_est = run_glm(raw, design_matrix)
 
     fig, ax = plt.subplots(constrained_layout=True)
@@ -351,7 +354,7 @@ approximately 0.6 uM for 5 minutes of data to 0.25 uM for 30 minutes of data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 184-193
+.. GENERATED FROM PYTHON SOURCE LINES 193-202
 
 Using autoregressive models in the GLM to account for noise structure
 ---------------------------------------------------------------------
@@ -363,12 +366,12 @@ is a simulation, we can verify if the correct estimate of the noise
 properties was extracted from the data and if this
 improved the response estimate.
 
-.. GENERATED FROM PYTHON SOURCE LINES 193-204
+.. GENERATED FROM PYTHON SOURCE LINES 202-213
 
 .. code-block:: Python
 
 
-    glm_est = run_glm(raw, design_matrix, noise_model='ar5')
+    glm_est = run_glm(raw, design_matrix, noise_model="ar5")
 
     fig, ax = plt.subplots(figsize=(15, 6), constrained_layout=True)
     # actual values from model above
@@ -396,12 +399,12 @@ improved the response estimate.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 205-207
+.. GENERATED FROM PYTHON SOURCE LINES 214-216
 
 We can see that the estimates from the GLM AR model are quite accurate,
 but how does this affect the accuracy of the response estimate?
 
-.. GENERATED FROM PYTHON SOURCE LINES 207-210
+.. GENERATED FROM PYTHON SOURCE LINES 216-219
 
 .. code-block:: Python
 
@@ -421,12 +424,12 @@ but how does this affect the accuracy of the response estimate?
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 211-213
+.. GENERATED FROM PYTHON SOURCE LINES 220-222
 
 The response estimate using the AR(5) model is more accurate than the
 AR(1) model (error of 0.25 vs 2.8 uM).
 
-.. GENERATED FROM PYTHON SOURCE LINES 215-226
+.. GENERATED FROM PYTHON SOURCE LINES 224-235
 
 Conclusion?
 -----------
@@ -443,9 +446,9 @@ model of the noise can improve the accuracy of the response estimate.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 7.041 seconds)
+   **Total running time of the script:** (0 minutes 7.495 seconds)
 
-**Estimated memory usage:**  11 MB
+**Estimated memory usage:**  434 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_10_hrf_simulation.py:
@@ -468,6 +471,10 @@ model of the noise can improve the accuracy of the response estimate.
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_10_hrf_simulation.py <plot_10_hrf_simulation.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_10_hrf_simulation.zip <plot_10_hrf_simulation.zip>`
 
 
 .. only:: html

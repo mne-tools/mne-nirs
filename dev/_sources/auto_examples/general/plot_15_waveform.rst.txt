@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_general_plot_15_waveform.py>`
-        to download the full example code or to run this example in your browser via Binder
+        to download the full example code. or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
 
@@ -52,21 +52,20 @@ Here we will work with the :ref:`fNIRS motor data <mne:fnirs-motor-dataset>`.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 26-41
+.. GENERATED FROM PYTHON SOURCE LINES 26-40
 
 .. code-block:: Python
 
 
     import os.path as op
-    import numpy as np
-    import matplotlib.pyplot as plt
     from itertools import compress
 
+    import matplotlib.pyplot as plt
     import mne
-
+    import numpy as np
 
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-    fnirs_cw_amplitude_dir = op.join(fnirs_data_folder, 'Participant-1')
+    fnirs_cw_amplitude_dir = op.join(fnirs_data_folder, "Participant-1")
     raw_intensity = mne.io.read_raw_nirx(fnirs_cw_amplitude_dir, verbose=True)
     raw_intensity.load_data()
 
@@ -86,99 +85,346 @@ Here we will work with the :ref:`fNIRS motor data <mne:fnirs-motor-dataset>`.
 .. raw:: html
 
     <div class="output_subarea output_html rendered_html output_result">
-    <details open>
-        <summary><strong>General</strong></summary>
-        <table class="table table-hover table-striped table-sm table-responsive small">
-            <tr>
-                <th>Measurement date</th>
+    <script type="text/javascript">
+        const toggleVisibility = (className) => {
+
+      const elements = document.querySelectorAll(`.${className}`)
+
+      elements.forEach(element => {
+        if (element.classList.contains('repr-section-header')) {
+          // Don't collapse the section header row.
+           return
+        }
+        if (element.classList.contains('repr-element-collapsed')) {
+          // Force a reflow to ensure the display change takes effect before removing the class
+          element.classList.remove('repr-element-collapsed')
+          element.offsetHeight // This forces the browser to recalculate layout
+          element.classList.remove('repr-element-faded')
+        } else {
+          // Start transition to hide the element
+          element.classList.add('repr-element-faded')
+          element.addEventListener('transitionend', handler = (e) => {
+            if (e.propertyName === 'opacity' && getComputedStyle(element).opacity === '0.2') {
+              element.classList.add('repr-element-collapsed')
+              element.removeEventListener('transitionend', handler)
+            }
+          });
+        }
+      });
+
+      // Take care of button (adjust caret)
+      const button = document.querySelectorAll(`.repr-section-header.${className} > th.repr-section-toggle-col > button`)[0]
+      button.classList.toggle('collapsed')
+
+      // Take care of the tooltip of the section header row
+      const sectionHeaderRow = document.querySelectorAll(`tr.repr-section-header.${className}`)[0]
+      sectionHeaderRow.classList.toggle('collapsed')
+      sectionHeaderRow.title = sectionHeaderRow.title === 'Hide section' ? 'Show section' : 'Hide section'
+    }
+    </script>
+
+    <style type="text/css">
+        table.repr.table.table-hover.table-striped.table-sm.table-responsive.small {
+      /* Don't make rows wider than they need to be. */
+      display: inline;
+    }
+
+    table > tbody > tr.repr-element > td {
+      /* Apply a tighter layout to the table cells. */
+      padding-top: 0.1rem;
+      padding-bottom: 0.1rem;
+      padding-right: 1rem;
+    }
+
+    table > tbody > tr > td.repr-section-toggle-col {
+      /* Remove background and border of the first cell in every row
+         (this row is only used for the collapse / uncollapse caret)
+
+         TODO: Need to find a good solution for VS Code that works in both
+               light and dark mode. */
+      border-color: transparent;
+      --bs-table-accent-bg: transparent;
+    }
+
+    tr.repr-section-header {
+      /* Remove stripes from section header rows */
+      background-color: transparent;
+      border-color: transparent;
+      --bs-table-striped-bg: transparent;
+      cursor: pointer;
+    }
+
+    tr.repr-section-header > th {
+      text-align: left !important;
+      vertical-align: middle;
+    }
+
+    .repr-element, tr.repr-element > td {
+      opacity: 1;
+      text-align: left !important;
+    }
+
+    .repr-element-faded {
+      transition: 0.3s ease;
+      opacity: 0.2;
+    }
+
+    .repr-element-collapsed {
+      display: none;
+    }
+
+    /* Collapse / uncollapse button and the caret it contains. */
+    .repr-section-toggle-col button {
+      cursor: pointer;
+      width: 1rem;
+      background-color: transparent;
+      border-color: transparent;
+    }
+
+    span.collapse-uncollapse-caret {
+      width: 1rem;
+      height: 1rem;
+      display: block;
+      background-repeat: no-repeat;
+      background-position: left;
+      background-size: contain;
+    }
+
+    /* The collapse / uncollapse carets were copied from the free Font Awesome collection and adjusted. */
+
+    /* Default to black carets for light mode */
+    .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+      background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+    }
+
+    .repr-section-toggle-col
+      > button:not(.collapsed)
+      > span.collapse-uncollapse-caret {
+      background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+    }
+
+    /* Use white carets for dark mode */
+    @media (prefers-color-scheme: dark) {
+      .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+        background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+      }
+
+      .repr-section-toggle-col
+        > button:not(.collapsed)
+        > span.collapse-uncollapse-caret {
+        background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+      }
+    }
+
+    .channel-names-btn {
+      padding: 0;
+      border: none;
+      background: none;
+      text-decoration: underline;
+      text-decoration-style: dashed;
+      cursor: pointer;
+      color: #0d6efd;
+    }
+
+    .channel-names-btn:hover {
+      color: #0a58ca;
+    }
+    </style>
+
+
+
+    <table class="repr table table-hover table-striped table-sm table-responsive small">
+    
+
+
+
+
+
+
+
+    <tr class="repr-section-header general-6bd5b07d-0dc0-4a83-97f7-a76c9ec26861"  title="Hide section" 
+        onclick="toggleVisibility('general-6bd5b07d-0dc0-4a83-97f7-a76c9ec26861')">
+        <th class="repr-section-toggle-col">
+            <button>
             
-                <td>November 02, 2019  13:16:16 GMT</td>
+                <span class="collapse-uncollapse-caret"></span>
+            </button>
+        </th>
+        <th colspan="2">
+            <strong>General</strong>
+        </th>
+    </tr>
+
+    <tr class="repr-element general-6bd5b07d-0dc0-4a83-97f7-a76c9ec26861 ">
+        <td class="repr-section-toggle-col"></td>
+        <td>Filename(s)</td>
+        <td>
+        
+            Participant-1
+        
+        
+        </td>
+    </tr>
+
+    <tr class="repr-element general-6bd5b07d-0dc0-4a83-97f7-a76c9ec26861 ">
+        <td class="repr-section-toggle-col"></td>
+        <td>MNE object type</td>
+        <td>RawNIRX</td>
+    </tr>
+    <tr class="repr-element general-6bd5b07d-0dc0-4a83-97f7-a76c9ec26861 ">
+        <td class="repr-section-toggle-col"></td>
+        <td>Measurement date</td>
+    
+        <td>2019-11-02 at 13:16:16 UTC</td>
+    
+    </tr>
+    <tr class="repr-element general-6bd5b07d-0dc0-4a83-97f7-a76c9ec26861 ">
+        <td class="repr-section-toggle-col"></td>
+        <td>Participant</td>
+    
+    
+        <td>P1</td>
+    
+    
+    </tr>
+    <tr class="repr-element general-6bd5b07d-0dc0-4a83-97f7-a76c9ec26861 ">
+        <td class="repr-section-toggle-col"></td>
+        <td>Experimenter</td>
+    
+        <td>Unknown</td>
+    
+    </tr>
+    
+
+
+
+
+
+
+
+    <tr class="repr-section-header acquisition-2b81765e-b4bd-4d05-99ef-bfa4837ef1ec" 
+        title="Hide section"  onclick="toggleVisibility('acquisition-2b81765e-b4bd-4d05-99ef-bfa4837ef1ec')">
+        <th class="repr-section-toggle-col">
+            <button>
             
-            </tr>
-            <tr>
-                <th>Experimenter</th>
+                <span class="collapse-uncollapse-caret"></span>
+            </button>
+        </th>
+        <th colspan="2">
+            <strong>Acquisition</strong>
+        </th>
+    </tr>
+
+    <tr class="repr-element acquisition-2b81765e-b4bd-4d05-99ef-bfa4837ef1ec ">
+        <td class="repr-section-toggle-col"></td>
+        <td>Duration</td>
+        <td>00:49:35 (HH:MM:SS)</td>
+    </tr>
+
+
+
+
+
+
+
+
+    <tr class="repr-element acquisition-2b81765e-b4bd-4d05-99ef-bfa4837ef1ec ">
+        <td class="repr-section-toggle-col"></td>
+        <td>Sampling frequency</td>
+        <td>7.81 Hz</td>
+    </tr>
+
+
+    <tr class="repr-element acquisition-2b81765e-b4bd-4d05-99ef-bfa4837ef1ec ">
+        <td class="repr-section-toggle-col"></td>
+        <td>Time points</td>
+        <td>23,239</td>
+    </tr>
+
+
+    
+
+
+
+
+
+
+
+    <tr class="repr-section-header channels-77508b2f-3b32-4c38-a1b2-701a3077d60e"  title="Hide section" 
+        onclick="toggleVisibility('channels-77508b2f-3b32-4c38-a1b2-701a3077d60e')">
+        <th class="repr-section-toggle-col">
+            <button>
             
-                <td>Unknown</td>
+                <span class="collapse-uncollapse-caret"></span>
+            </button>
+        </th>
+        <th colspan="2">
+            <strong>Channels</strong>
+        </th>
+    </tr>
+
+
+    <tr class="repr-element channels-77508b2f-3b32-4c38-a1b2-701a3077d60e ">
+        <td class="repr-section-toggle-col"></td>
+        <td>fNIRS (CW amplitude)</td>
+        <td>
+            <button class="channel-names-btn" onclick="alert('Good fNIRS (CW amplitude):\n\nS1_D1&nbsp;760, S1_D1&nbsp;850, S1_D2&nbsp;760, S1_D2&nbsp;850, S1_D3&nbsp;760, S1_D3&nbsp;850, S1_D9&nbsp;760, S1_D9&nbsp;850, S2_D1&nbsp;760, S2_D1&nbsp;850, S2_D3&nbsp;760, S2_D3&nbsp;850, S2_D4&nbsp;760, S2_D4&nbsp;850, S2_D10&nbsp;760, S2_D10&nbsp;850, S3_D2&nbsp;760, S3_D2&nbsp;850, S3_D3&nbsp;760, S3_D3&nbsp;850, S3_D11&nbsp;760, S3_D11&nbsp;850, S4_D3&nbsp;760, S4_D3&nbsp;850, S4_D4&nbsp;760, S4_D4&nbsp;850, S4_D12&nbsp;760, S4_D12&nbsp;850, S5_D5&nbsp;760, S5_D5&nbsp;850, S5_D6&nbsp;760, S5_D6&nbsp;850, S5_D7&nbsp;760, S5_D7&nbsp;850, S5_D13&nbsp;760, S5_D13&nbsp;850, S6_D5&nbsp;760, S6_D5&nbsp;850, S6_D7&nbsp;760, S6_D7&nbsp;850, S6_D8&nbsp;760, S6_D8&nbsp;850, S6_D14&nbsp;760, S6_D14&nbsp;850, S7_D6&nbsp;760, S7_D6&nbsp;850, S7_D7&nbsp;760, S7_D7&nbsp;850, S7_D15&nbsp;760, S7_D15&nbsp;850, S8_D7&nbsp;760, S8_D7&nbsp;850, S8_D8&nbsp;760, S8_D8&nbsp;850, S8_D16&nbsp;760, S8_D16&nbsp;850')" title="(Click to open in popup)&#13;&#13;S1_D1&nbsp;760, S1_D1&nbsp;850, S1_D2&nbsp;760, S1_D2&nbsp;850, S1_D3&nbsp;760, S1_D3&nbsp;850, S1_D9&nbsp;760, S1_D9&nbsp;850, S2_D1&nbsp;760, S2_D1&nbsp;850, S2_D3&nbsp;760, S2_D3&nbsp;850, S2_D4&nbsp;760, S2_D4&nbsp;850, S2_D10&nbsp;760, S2_D10&nbsp;850, S3_D2&nbsp;760, S3_D2&nbsp;850, S3_D3&nbsp;760, S3_D3&nbsp;850, S3_D11&nbsp;760, S3_D11&nbsp;850, S4_D3&nbsp;760, S4_D3&nbsp;850, S4_D4&nbsp;760, S4_D4&nbsp;850, S4_D12&nbsp;760, S4_D12&nbsp;850, S5_D5&nbsp;760, S5_D5&nbsp;850, S5_D6&nbsp;760, S5_D6&nbsp;850, S5_D7&nbsp;760, S5_D7&nbsp;850, S5_D13&nbsp;760, S5_D13&nbsp;850, S6_D5&nbsp;760, S6_D5&nbsp;850, S6_D7&nbsp;760, S6_D7&nbsp;850, S6_D8&nbsp;760, S6_D8&nbsp;850, S6_D14&nbsp;760, S6_D14&nbsp;850, S7_D6&nbsp;760, S7_D6&nbsp;850, S7_D7&nbsp;760, S7_D7&nbsp;850, S7_D15&nbsp;760, S7_D15&nbsp;850, S8_D7&nbsp;760, S8_D7&nbsp;850, S8_D8&nbsp;760, S8_D8&nbsp;850, S8_D16&nbsp;760, S8_D16&nbsp;850">
+                56
+            </button>
+
+        
+        </td>
+    </tr>
+
+
+    <tr class="repr-element channels-77508b2f-3b32-4c38-a1b2-701a3077d60e ">
+        <td class="repr-section-toggle-col"></td>
+        <td>Head & sensor digitization</td>
+    
+        <td>31 points</td>
+    
+    </tr>
+    
+
+
+
+
+
+
+
+    <tr class="repr-section-header filters-07a3a737-a0d1-4975-8201-24c1da98e128"  title="Hide section" 
+        onclick="toggleVisibility('filters-07a3a737-a0d1-4975-8201-24c1da98e128')">
+        <th class="repr-section-toggle-col">
+            <button>
             
-            </tr>
-            <tr>
-                <th>Participant</th>
-            
-            
-                <td>P1</td>
-            
-            
-            </tr>
-        </table>
-        </details>
-        <details open>
-            <summary><strong>Channels</strong></summary>
-            <table class="table table-hover table-striped table-sm table-responsive small">
-                <tr>
-                    <th>Digitized points</th>
-                
-                    <td>31 points</td>
-                
-                </tr>
-                <tr>
-                    <th>Good channels</th>
-                    <td>56 fNIRS (CW amplitude)</td>
-                </tr>
-                <tr>
-                    <th>Bad channels</th>
-                    <td>None</td>
-                </tr>
-                <tr>
-                    <th>EOG channels</th>
-                    <td>Not available</td>
-                </tr>
-                <tr>
-                    <th>ECG channels</th>
-                    <td>Not available</td>
-                </tr>
-            </table>
-            </details>
-            <details open>
-                <summary><strong>Data</strong></summary>
-                <table class="table table-hover table-striped table-sm table-responsive small">
-                
-                    <tr>
-                        <th>Sampling frequency</th>
-                        <td>7.81 Hz</td>
-                    </tr>
-                
-                
-                    <tr>
-                        <th>Highpass</th>
-                        <td>0.00 Hz</td>
-                    </tr>
-                
-                
-                    <tr>
-                        <th>Lowpass</th>
-                        <td>3.91 Hz</td>
-                    </tr>
-                
-                
-                
-                    <tr>
-                        <th>Filenames</th>
-                        <td>Participant-1</td>
-                    </tr>
-                
-                
-                    <tr>
-                        <th>Duration</th>
-                        <td>00:49:35 (HH:MM:SS)</td>
-                    </tr>
-                
-                </table>
-                </details>
+                <span class="collapse-uncollapse-caret"></span>
+            </button>
+        </th>
+        <th colspan="2">
+            <strong>Filters</strong>
+        </th>
+    </tr>
+
+    <tr class="repr-element filters-07a3a737-a0d1-4975-8201-24c1da98e128 ">
+        <td class="repr-section-toggle-col"></td>
+        <td>Highpass</td>
+        <td>0.00 Hz</td>
+    </tr>
+
+
+    <tr class="repr-element filters-07a3a737-a0d1-4975-8201-24c1da98e128 ">
+        <td class="repr-section-toggle-col"></td>
+        <td>Lowpass</td>
+        <td>3.91 Hz</td>
+    </tr>
+
+
+    </table>
     </div>
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-50
+.. GENERATED FROM PYTHON SOURCE LINES 41-49
 
 Providing more meaningful annotation information
 ------------------------------------------------
@@ -189,16 +435,16 @@ each stimulus, which was 5 seconds for all conditions in this experiment.
 Third, we remove the trigger code 15, which signaled the start and end
 of the experiment and is not relevant to our analysis.
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-59
+.. GENERATED FROM PYTHON SOURCE LINES 49-58
 
 .. code-block:: Python
 
 
     raw_intensity.annotations.set_durations(5)
-    raw_intensity.annotations.rename({'1.0': 'Control',
-                                      '2.0': 'Tapping/Left',
-                                      '3.0': 'Tapping/Right'})
-    unwanted = np.nonzero(raw_intensity.annotations.description == '15.0')
+    raw_intensity.annotations.rename(
+        {"1.0": "Control", "2.0": "Tapping/Left", "3.0": "Tapping/Right"}
+    )
+    unwanted = np.nonzero(raw_intensity.annotations.description == "15.0")
     raw_intensity.annotations.delete(unwanted)
 
 
@@ -209,7 +455,7 @@ of the experiment and is not relevant to our analysis.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-68
+.. GENERATED FROM PYTHON SOURCE LINES 59-67
 
 Viewing location of sensors over brain surface
 ----------------------------------------------
@@ -220,18 +466,21 @@ between the optodes, channels (the mid point of source-detector pairs) are
 optionally shown as orange dots. Source are optionally shown as red dots and
 detectors as black.
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-78
+.. GENERATED FROM PYTHON SOURCE LINES 67-80
 
 .. code-block:: Python
 
 
-    subjects_dir = op.join(mne.datasets.sample.data_path(), 'subjects')
+    subjects_dir = op.join(mne.datasets.sample.data_path(), "subjects")
 
     brain = mne.viz.Brain(
-        'fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5')
+        "fsaverage", subjects_dir=subjects_dir, background="w", cortex="0.5"
+    )
     brain.add_sensors(
-        raw_intensity.info, trans='fsaverage',
-        fnirs=['channels', 'pairs', 'sources', 'detectors'])
+        raw_intensity.info,
+        trans="fsaverage",
+        fnirs=["channels", "pairs", "sources", "detectors"],
+    )
     brain.show_view(azimuth=20, elevation=60, distance=400)
 
 
@@ -252,7 +501,7 @@ detectors as black.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 79-86
+.. GENERATED FROM PYTHON SOURCE LINES 81-88
 
 Selecting channels appropriate for detecting neural responses
 -------------------------------------------------------------
@@ -262,17 +511,19 @@ detect a neural response (less than 1 cm distance between optodes).
 These short channels can be seen in the figure above.
 To achieve this we pick all the channels that are not considered to be short.
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-95
+.. GENERATED FROM PYTHON SOURCE LINES 88-99
 
 .. code-block:: Python
 
 
     picks = mne.pick_types(raw_intensity.info, meg=False, fnirs=True)
     dists = mne.preprocessing.nirs.source_detector_distances(
-        raw_intensity.info, picks=picks)
+        raw_intensity.info, picks=picks
+    )
     raw_intensity.pick(picks[dists > 0.01])
-    raw_intensity.plot(n_channels=len(raw_intensity.ch_names),
-                       duration=500, show_scrollbars=False)
+    raw_intensity.plot(
+        n_channels=len(raw_intensity.ch_names), duration=500, show_scrollbars=False
+    )
 
 
 
@@ -289,25 +540,24 @@ To achieve this we pick all the channels that are not considered to be short.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff2a8870080>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa0b712f5b0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 96-100
+.. GENERATED FROM PYTHON SOURCE LINES 100-104
 
 Converting from raw intensity to optical density
 ------------------------------------------------
 
 The raw intensity values are then converted to optical density.
 
-.. GENERATED FROM PYTHON SOURCE LINES 100-106
+.. GENERATED FROM PYTHON SOURCE LINES 104-109
 
 .. code-block:: Python
 
 
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
-    raw_od.plot(n_channels=len(raw_od.ch_names),
-                duration=500, show_scrollbars=False)
+    raw_od.plot(n_channels=len(raw_od.ch_names), duration=500, show_scrollbars=False)
 
 
 
@@ -324,11 +574,11 @@ The raw intensity values are then converted to optical density.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff2a87d2a80>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa0a86d8a60>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 107-118
+.. GENERATED FROM PYTHON SOURCE LINES 110-121
 
 Evaluating the quality of the data
 ----------------------------------
@@ -342,7 +592,7 @@ In this example the data is clean and the coupling is good for all
 channels, so we will not mark any channels as bad based on the scalp
 coupling index.
 
-.. GENERATED FROM PYTHON SOURCE LINES 118-125
+.. GENERATED FROM PYTHON SOURCE LINES 121-128
 
 .. code-block:: Python
 
@@ -350,7 +600,7 @@ coupling index.
     sci = mne.preprocessing.nirs.scalp_coupling_index(raw_od)
     fig, ax = plt.subplots()
     ax.hist(sci)
-    ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
+    ax.set(xlabel="Scalp Coupling Index", ylabel="Count", xlim=[0, 1])
 
 
 
@@ -371,17 +621,17 @@ coupling index.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 126-128
+.. GENERATED FROM PYTHON SOURCE LINES 129-131
 
 In this example we will mark all channels with a SCI less than 0.5 as bad
 (this dataset is quite clean, so no channels are marked as bad).
 
-.. GENERATED FROM PYTHON SOURCE LINES 128-132
+.. GENERATED FROM PYTHON SOURCE LINES 131-135
 
 .. code-block:: Python
 
 
-    raw_od.info['bads'] = list(compress(raw_od.ch_names, sci < 0.5))
+    raw_od.info["bads"] = list(compress(raw_od.ch_names, sci < 0.5))
 
 
 
@@ -391,7 +641,7 @@ In this example we will mark all channels with a SCI less than 0.5 as bad
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 133-139
+.. GENERATED FROM PYTHON SOURCE LINES 136-142
 
 At this stage it is appropriate to inspect your data
 (for instructions on how to use the interactive data visualisation tool
@@ -400,7 +650,7 @@ to ensure that channels with poor scalp coupling have been removed.
 If your data contains lots of artifacts you may decide to apply
 artifact reduction techniques as described in :ref:`ex-fnirs-artifacts`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 142-147
+.. GENERATED FROM PYTHON SOURCE LINES 145-150
 
 Converting from optical density to haemoglobin
 ----------------------------------------------
@@ -408,14 +658,13 @@ Converting from optical density to haemoglobin
 Next we convert the optical density data to haemoglobin concentration using
 the modified Beer-Lambert law.
 
-.. GENERATED FROM PYTHON SOURCE LINES 147-153
+.. GENERATED FROM PYTHON SOURCE LINES 150-155
 
 .. code-block:: Python
 
 
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
-    raw_haemo.plot(n_channels=len(raw_haemo.ch_names),
-                   duration=500, show_scrollbars=False)
+    raw_haemo.plot(n_channels=len(raw_haemo.ch_names), duration=500, show_scrollbars=False)
 
 
 
@@ -432,11 +681,11 @@ the modified Beer-Lambert law.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff274f2cf00>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f9f96d98f70>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 154-162
+.. GENERATED FROM PYTHON SOURCE LINES 156-164
 
 Removing heart rate from signal
 -------------------------------
@@ -447,17 +696,16 @@ the person's heart beat and is unwanted. So we use a low pass filter to
 remove this. A high pass filter is also included to remove slow drifts
 in the data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 162-170
+.. GENERATED FROM PYTHON SOURCE LINES 164-171
 
 .. code-block:: Python
 
 
-    fig = raw_haemo.plot_psd(average=True)
-    fig.suptitle('Before filtering', weight='bold', size='x-large')
-    raw_haemo = raw_haemo.filter(0.05, 0.7, h_trans_bandwidth=0.2,
-                                 l_trans_bandwidth=0.02)
-    fig = raw_haemo.plot_psd(average=True)
-    fig.suptitle('After filtering', weight='bold', size='x-large')
+    fig = raw_haemo.compute_psd().plot(average=True, amplitude=False)
+    fig.suptitle("Before filtering", weight="bold", size="x-large")
+    raw_haemo = raw_haemo.filter(0.05, 0.7, h_trans_bandwidth=0.2, l_trans_bandwidth=0.02)
+    fig = raw_haemo.compute_psd().plot(average=True, amplitude=False)
+    fig.suptitle("After filtering", weight="bold", size="x-large")
 
 
 
@@ -484,8 +732,8 @@ in the data.
 
  .. code-block:: none
 
-    NOTE: plot_psd() is a legacy function. New code should use .compute_psd().plot().
     Effective window size : 262.144 (s)
+    Plotting power spectral density (dB=True).
     Filtering raw data in 1 contiguous segment
     Setting up band-pass filter from 0.05 - 0.7 Hz
 
@@ -501,14 +749,14 @@ in the data.
     - Filter length: 1291 samples (165.248 s)
 
     [Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.0s
-    NOTE: plot_psd() is a legacy function. New code should use .compute_psd().plot().
     Effective window size : 262.144 (s)
+    Plotting power spectral density (dB=True).
 
     Text(0.5, 0.993055, 'After filtering')
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 171-180
+.. GENERATED FROM PYTHON SOURCE LINES 172-181
 
 Extract epochs
 --------------
@@ -520,14 +768,13 @@ related to each of the experimental conditions.
 First we extract the events of interest and visualise them to ensure they are
 correct.
 
-.. GENERATED FROM PYTHON SOURCE LINES 180-186
+.. GENERATED FROM PYTHON SOURCE LINES 181-186
 
 .. code-block:: Python
 
 
     events, event_dict = mne.events_from_annotations(raw_haemo)
-    fig = mne.viz.plot_events(events, event_id=event_dict,
-                              sfreq=raw_haemo.info['sfreq'])
+    fig = mne.viz.plot_events(events, event_id=event_dict, sfreq=raw_haemo.info["sfreq"])
 
 
 
@@ -554,7 +801,7 @@ Next we define the range of our epochs, the rejection criteria,
 baseline correction, and extract the epochs. We visualise the log of which
 epochs were dropped.
 
-.. GENERATED FROM PYTHON SOURCE LINES 190-202
+.. GENERATED FROM PYTHON SOURCE LINES 190-211
 
 .. code-block:: Python
 
@@ -562,11 +809,20 @@ epochs were dropped.
     reject_criteria = dict(hbo=80e-6)
     tmin, tmax = -5, 15
 
-    epochs = mne.Epochs(raw_haemo, events, event_id=event_dict,
-                        tmin=tmin, tmax=tmax,
-                        reject=reject_criteria, reject_by_annotation=True,
-                        proj=True, baseline=(None, 0), preload=True,
-                        detrend=None, verbose=True)
+    epochs = mne.Epochs(
+        raw_haemo,
+        events,
+        event_id=event_dict,
+        tmin=tmin,
+        tmax=tmax,
+        reject=reject_criteria,
+        reject_by_annotation=True,
+        proj=True,
+        baseline=(None, 0),
+        preload=True,
+        detrend=None,
+        verbose=True,
+    )
     epochs.plot_drop_log()
 
 
@@ -601,7 +857,7 @@ epochs were dropped.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 203-211
+.. GENERATED FROM PYTHON SOURCE LINES 212-220
 
 View consistency of responses across trials
 -------------------------------------------
@@ -612,14 +868,17 @@ observe the expected peak in HbO at around 6 seconds consistently across
 trials, and the consistent dip in HbR that is slightly delayed relative to
 the HbO peak.
 
-.. GENERATED FROM PYTHON SOURCE LINES 211-217
+.. GENERATED FROM PYTHON SOURCE LINES 220-229
 
 .. code-block:: Python
 
 
-    epochs['Tapping'].plot_image(combine='mean', vmin=-30, vmax=30,
-                                 ts_args=dict(ylim=dict(hbo=[-15, 15],
-                                                        hbr=[-15, 15])))
+    epochs["Tapping"].plot_image(
+        combine="mean",
+        vmin=-30,
+        vmax=30,
+        ts_args=dict(ylim=dict(hbo=[-15, 15], hbr=[-15, 15])),
+    )
 
 
 
@@ -631,14 +890,14 @@ the HbO peak.
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_010.png
-         :alt: Oxyhemoglobin (mean), µM
+         :alt: Deoxyhemoglobin (mean), µM
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_010.png
          :class: sphx-glr-multi-img
 
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_011.png
-         :alt: Deoxyhemoglobin (mean), µM
+         :alt: Oxyhemoglobin (mean), µM
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_011.png
          :class: sphx-glr-multi-img
 
@@ -662,19 +921,22 @@ the HbO peak.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 218-220
+.. GENERATED FROM PYTHON SOURCE LINES 230-232
 
 We can also view the epoched data for the control condition and observe
 that it does not show the expected morphology.
 
-.. GENERATED FROM PYTHON SOURCE LINES 220-226
+.. GENERATED FROM PYTHON SOURCE LINES 232-241
 
 .. code-block:: Python
 
 
-    epochs['Control'].plot_image(combine='mean', vmin=-30, vmax=30,
-                                 ts_args=dict(ylim=dict(hbo=[-15, 15],
-                                                        hbr=[-15, 15])))
+    epochs["Control"].plot_image(
+        combine="mean",
+        vmin=-30,
+        vmax=30,
+        ts_args=dict(ylim=dict(hbo=[-15, 15], hbr=[-15, 15])),
+    )
 
 
 
@@ -686,14 +948,14 @@ that it does not show the expected morphology.
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_012.png
-         :alt: Oxyhemoglobin (mean), µM
+         :alt: Deoxyhemoglobin (mean), µM
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_012.png
          :class: sphx-glr-multi-img
 
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_013.png
-         :alt: Deoxyhemoglobin (mean), µM
+         :alt: Oxyhemoglobin (mean), µM
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_013.png
          :class: sphx-glr-multi-img
 
@@ -717,7 +979,7 @@ that it does not show the expected morphology.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 227-233
+.. GENERATED FROM PYTHON SOURCE LINES 242-248
 
 View consistency of responses across channels
 ---------------------------------------------
@@ -726,18 +988,18 @@ Similarly we can view how consistent the response is across the optode
 pairs that we selected. All the channels in this data are located over the
 motor cortex, and all channels show a similar pattern in the data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 233-243
+.. GENERATED FROM PYTHON SOURCE LINES 248-258
 
 .. code-block:: Python
 
 
     fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(15, 6))
     clims = dict(hbo=[-20, 20], hbr=[-20, 20])
-    epochs['Control'].average().plot_image(axes=axes[:, 0], clim=clims)
-    epochs['Tapping'].average().plot_image(axes=axes[:, 1], clim=clims)
-    for column, condition in enumerate(['Control', 'Tapping']):
+    epochs["Control"].average().plot_image(axes=axes[:, 0], clim=clims)
+    epochs["Tapping"].average().plot_image(axes=axes[:, 1], clim=clims)
+    for column, condition in enumerate(["Control", "Tapping"]):
         for ax in axes[:, column]:
-            ax.set_title('{}: {}'.format(condition, ax.get_title()))
+            ax.set_title(f"{condition}: {ax.get_title()}")
 
 
 
@@ -752,7 +1014,7 @@ motor cortex, and all channels show a similar pattern in the data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 244-250
+.. GENERATED FROM PYTHON SOURCE LINES 259-265
 
 Plot standard fNIRS response image
 ----------------------------------
@@ -761,25 +1023,28 @@ Next we generate the most common visualisation of fNIRS data: plotting
 both the HbO and HbR on the same figure to illustrate the relation between
 the two signals.
 
-.. GENERATED FROM PYTHON SOURCE LINES 250-267
+.. GENERATED FROM PYTHON SOURCE LINES 265-285
 
 .. code-block:: Python
 
 
-    evoked_dict = {'Tapping/HbO': epochs['Tapping'].average(picks='hbo'),
-                   'Tapping/HbR': epochs['Tapping'].average(picks='hbr'),
-                   'Control/HbO': epochs['Control'].average(picks='hbo'),
-                   'Control/HbR': epochs['Control'].average(picks='hbr')}
+    evoked_dict = {
+        "Tapping/HbO": epochs["Tapping"].average(picks="hbo"),
+        "Tapping/HbR": epochs["Tapping"].average(picks="hbr"),
+        "Control/HbO": epochs["Control"].average(picks="hbo"),
+        "Control/HbR": epochs["Control"].average(picks="hbr"),
+    }
 
     # Rename channels until the encoding of frequency in ch_name is fixed
     for condition in evoked_dict:
         evoked_dict[condition].rename_channels(lambda x: x[:-4])
 
-    color_dict = dict(HbO='#AA3377', HbR='b')
-    styles_dict = dict(Control=dict(linestyle='dashed'))
+    color_dict = dict(HbO="#AA3377", HbR="b")
+    styles_dict = dict(Control=dict(linestyle="dashed"))
 
-    mne.viz.plot_compare_evokeds(evoked_dict, combine="mean", ci=0.95,
-                                 colors=color_dict, styles=styles_dict)
+    mne.viz.plot_compare_evokeds(
+        evoked_dict, combine="mean", ci=0.95, colors=color_dict, styles=styles_dict
+    )
 
 
 
@@ -804,22 +1069,23 @@ the two signals.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 268-272
+.. GENERATED FROM PYTHON SOURCE LINES 286-290
 
 View topographic representation of activity
 -------------------------------------------
 
 Next we view how the topographic activity changes throughout the response.
 
-.. GENERATED FROM PYTHON SOURCE LINES 272-279
+.. GENERATED FROM PYTHON SOURCE LINES 290-298
 
 .. code-block:: Python
 
 
     times = np.arange(-3.5, 13.2, 3.0)
-    topomap_args = dict(extrapolate='local')
-    epochs['Tapping'].average(picks='hbo').plot_joint(
-        times=times, topomap_args=topomap_args)
+    topomap_args = dict(extrapolate="local")
+    epochs["Tapping"].average(picks="hbo").plot_joint(
+        times=times, topomap_args=topomap_args
+    )
 
 
 
@@ -841,7 +1107,7 @@ Next we view how the topographic activity changes throughout the response.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 280-285
+.. GENERATED FROM PYTHON SOURCE LINES 299-304
 
 Compare tapping of left and right hands
 ---------------------------------------
@@ -849,16 +1115,14 @@ Compare tapping of left and right hands
 Finally we generate topo maps for the left and right conditions to view
 the location of activity. First we visualise the HbO activity.
 
-.. GENERATED FROM PYTHON SOURCE LINES 285-292
+.. GENERATED FROM PYTHON SOURCE LINES 304-309
 
 .. code-block:: Python
 
 
     times = np.arange(4.0, 11.0, 1.0)
-    epochs['Tapping/Left'].average(picks='hbo').plot_topomap(
-        times=times, **topomap_args)
-    epochs['Tapping/Right'].average(picks='hbo').plot_topomap(
-        times=times, **topomap_args)
+    epochs["Tapping/Left"].average(picks="hbo").plot_topomap(times=times, **topomap_args)
+    epochs["Tapping/Right"].average(picks="hbo").plot_topomap(times=times, **topomap_args)
 
 
 
@@ -890,19 +1154,17 @@ the location of activity. First we visualise the HbO activity.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 293-294
+.. GENERATED FROM PYTHON SOURCE LINES 310-311
 
 And we also view the HbR activity for the two conditions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 294-300
+.. GENERATED FROM PYTHON SOURCE LINES 311-315
 
 .. code-block:: Python
 
 
-    epochs['Tapping/Left'].average(picks='hbr').plot_topomap(
-        times=times, **topomap_args)
-    epochs['Tapping/Right'].average(picks='hbr').plot_topomap(
-        times=times, **topomap_args)
+    epochs["Tapping/Left"].average(picks="hbr").plot_topomap(times=times, **topomap_args)
+    epochs["Tapping/Right"].average(picks="hbr").plot_topomap(times=times, **topomap_args)
 
 
 
@@ -934,42 +1196,48 @@ And we also view the HbR activity for the two conditions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 301-302
+.. GENERATED FROM PYTHON SOURCE LINES 316-317
 
 And we can plot the comparison at a single time point for two conditions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 302-331
+.. GENERATED FROM PYTHON SOURCE LINES 317-352
 
 .. code-block:: Python
 
 
-    fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(9, 5),
-                             gridspec_kw=dict(width_ratios=[1, 1, 1, 0.1]))
+    fig, axes = plt.subplots(
+        nrows=2, ncols=4, figsize=(9, 5), gridspec_kw=dict(width_ratios=[1, 1, 1, 0.1])
+    )
     vlim, ts = (-8, 8), 9.0
 
-    evoked_left = epochs['Tapping/Left'].average()
-    evoked_right = epochs['Tapping/Right'].average()
+    evoked_left = epochs["Tapping/Left"].average()
+    evoked_right = epochs["Tapping/Right"].average()
 
-    evoked_left.plot_topomap(ch_type='hbo', times=ts, axes=axes[0, 0],
-                             vlim=vlim, colorbar=False, **topomap_args)
-    evoked_left.plot_topomap(ch_type='hbr', times=ts, axes=axes[1, 0],
-                             vlim=vlim, colorbar=False, **topomap_args)
-    evoked_right.plot_topomap(ch_type='hbo', times=ts, axes=axes[0, 1],
-                              vlim=vlim, colorbar=False, **topomap_args)
-    evoked_right.plot_topomap(ch_type='hbr', times=ts, axes=axes[1, 1],
-                              vlim=vlim, colorbar=False, **topomap_args)
+    evoked_left.plot_topomap(
+        ch_type="hbo", times=ts, axes=axes[0, 0], vlim=vlim, colorbar=False, **topomap_args
+    )
+    evoked_left.plot_topomap(
+        ch_type="hbr", times=ts, axes=axes[1, 0], vlim=vlim, colorbar=False, **topomap_args
+    )
+    evoked_right.plot_topomap(
+        ch_type="hbo", times=ts, axes=axes[0, 1], vlim=vlim, colorbar=False, **topomap_args
+    )
+    evoked_right.plot_topomap(
+        ch_type="hbr", times=ts, axes=axes[1, 1], vlim=vlim, colorbar=False, **topomap_args
+    )
 
     evoked_diff = mne.combine_evoked([evoked_left, evoked_right], weights=[1, -1])
 
-    evoked_diff.plot_topomap(ch_type='hbo', times=ts, axes=axes[0, 2:],
-                             vlim=vlim, colorbar=True, **topomap_args)
-    evoked_diff.plot_topomap(ch_type='hbr', times=ts, axes=axes[1, 2:],
-                             vlim=vlim, colorbar=True, **topomap_args)
+    evoked_diff.plot_topomap(
+        ch_type="hbo", times=ts, axes=axes[0, 2:], vlim=vlim, colorbar=True, **topomap_args
+    )
+    evoked_diff.plot_topomap(
+        ch_type="hbr", times=ts, axes=axes[1, 2:], vlim=vlim, colorbar=True, **topomap_args
+    )
 
-    for column, condition in enumerate(
-            ['Tapping Left', 'Tapping Right', 'Left-Right']):
-        for row, chroma in enumerate(['HbO', 'HbR']):
-            axes[row, column].set_title('{}: {}'.format(chroma, condition))
+    for column, condition in enumerate(["Tapping Left", "Tapping Right", "Left-Right"]):
+        for row, chroma in enumerate(["HbO", "HbR"]):
+            axes[row, column].set_title(f"{chroma}: {condition}")
 
 
 
@@ -983,26 +1251,28 @@ And we can plot the comparison at a single time point for two conditions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 332-334
+.. GENERATED FROM PYTHON SOURCE LINES 353-355
 
 Lastly, we can also look at the individual waveforms to see what is
 driving the topographic plot above.
 
-.. GENERATED FROM PYTHON SOURCE LINES 334-345
+.. GENERATED FROM PYTHON SOURCE LINES 355-368
 
 .. code-block:: Python
 
 
     fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(6, 4))
-    mne.viz.plot_evoked_topo(epochs['Left'].average(picks='hbo'), color='b',
-                             axes=axes, legend=False)
-    mne.viz.plot_evoked_topo(epochs['Right'].average(picks='hbo'), color='r',
-                             axes=axes, legend=False)
+    mne.viz.plot_evoked_topo(
+        epochs["Left"].average(picks="hbo"), color="b", axes=axes, legend=False
+    )
+    mne.viz.plot_evoked_topo(
+        epochs["Right"].average(picks="hbo"), color="r", axes=axes, legend=False
+    )
 
     # Tidy the legend:
-    leg_lines = [line for line in axes.lines if line.get_c() == 'b'][:1]
-    leg_lines.append([line for line in axes.lines if line.get_c() == 'r'][0])
-    fig.legend(leg_lines, ['Left', 'Right'], loc='lower right')
+    leg_lines = [line for line in axes.lines if line.get_c() == "b"][:1]
+    leg_lines.append([line for line in axes.lines if line.get_c() == "r"][0])
+    fig.legend(leg_lines, ["Left", "Right"], loc="lower right")
 
 
 
@@ -1017,16 +1287,16 @@ driving the topographic plot above.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7ff2a88b2d40>
+    <matplotlib.legend.Legend object at 0x7fa09c107a30>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 23.822 seconds)
+   **Total running time of the script:** (0 minutes 28.836 seconds)
 
-**Estimated memory usage:**  23 MB
+**Estimated memory usage:**  447 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_15_waveform.py:
@@ -1049,6 +1319,10 @@ driving the topographic plot above.
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_15_waveform.py <plot_15_waveform.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_15_waveform.zip <plot_15_waveform.zip>`
 
 
 .. only:: html

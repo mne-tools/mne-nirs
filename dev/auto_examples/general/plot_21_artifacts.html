@@ -1,53 +1,56 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-theme="auto">
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Artifact Correction Techniques &#8212; MNE-NIRS 0.6.0 documentation</title>
+    <title>Artifact Correction Techniques &#8212; MNE-NIRS 0.7.0.dev31+gcb6e3422 documentation</title>
   
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "auto";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/font-awesome.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/js/copybutton.js"></script>
+    <script src="../../_static/documentation_options.js?v=01aa3996"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-188272121-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-188272121-1');
+            </script>
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
@@ -57,9 +60,9 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/general/plot_21_artifacts';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.6.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.7';
         </script>
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Signal Quality Evaluation" href="plot_22_quality.html" />
@@ -72,7 +75,7 @@
   </head>
   
   
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="auto">
 
   
   
@@ -210,7 +213,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6.0  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -221,7 +224,7 @@ document.write(`
 </script></div>
       
         <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
-    aria-label="Icon Links">
+    aria-label="External Links">
         <li class="nav-item">
           
           
@@ -327,7 +330,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6.0  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -338,7 +341,7 @@ document.write(`
 </script></div>
         
           <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
-    aria-label="Icon Links">
+    aria-label="External Links">
         <li class="nav-item">
           
           
@@ -415,39 +418,7 @@ document.write(`
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item">
-
-
-
-<nav aria-label="Breadcrumbs">
-  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
-    
-    <li class="breadcrumb-item breadcrumb-home">
-      <a href="../../index.html" class="nav-link" aria-label="Home">
-        <i class="fa-solid fa-home"></i>
-      </a>
-    </li>
-    
-    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Examples</a></li>
-    
-    
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Analysis examples</a></li>
-    
-    <li class="breadcrumb-item active" aria-current="page">Artifact Correction Techniques</li>
-  </ul>
-</nav>
-</div>
-      
-    </div>
-  
-  
-</div>
-</div>
+              <div class="bd-header-article"></div>
               
               
               
@@ -458,10 +429,10 @@ document.write(`
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
 <p><a class="reference internal" href="#sphx-glr-download-auto-examples-general-plot-21-artifacts-py"><span class="std std-ref">Go to the end</span></a>
-to download the full example code or to run this example in your browser via Binder</p>
+to download the full example code. or to run this example in your browser via Binder</p>
 </div>
 <section class="sphx-glr-example-title" id="artifact-correction-techniques">
-<span id="ex-fnirs-artifacts"></span><span id="sphx-glr-auto-examples-general-plot-21-artifacts-py"></span><h1>Artifact Correction Techniques<a class="headerlink" href="#artifact-correction-techniques" title="Permalink to this heading">#</a></h1>
+<span id="ex-fnirs-artifacts"></span><span id="sphx-glr-auto-examples-general-plot-21-artifacts-py"></span><h1>Artifact Correction Techniques<a class="headerlink" href="#artifact-correction-techniques" title="Link to this heading">#</a></h1>
 <p>Here we artificially introduce several artifacts in a
 functional near-infrared spectroscopy (fNIRS) measurement and observe
 how artifact correction techniques attempt to correct the data.</p>
@@ -470,32 +441,35 @@ how artifact correction techniques attempt to correct the data.</p>
 <span class="c1"># License: BSD (3-clause)</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">mne</span>
 
-<span class="kn">from</span> <span class="nn">mne.preprocessing.nirs</span> <span class="kn">import</span> <span class="p">(</span><a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.optical_density.html#mne.preprocessing.nirs.optical_density" title="mne.preprocessing.nirs.optical_density" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">optical_density</span></a><span class="p">,</span>
-                                    <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.temporal_derivative_distribution_repair.html#mne.preprocessing.nirs.temporal_derivative_distribution_repair" title="mne.preprocessing.nirs.temporal_derivative_distribution_repair" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">temporal_derivative_distribution_repair</span></a><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">mne</span>
+<span class="kn">from</span> <span class="nn">mne.preprocessing.nirs</span> <span class="kn">import</span> <span class="p">(</span>
+    <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.optical_density.html#mne.preprocessing.nirs.optical_density" title="mne.preprocessing.nirs.optical_density" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">optical_density</span></a><span class="p">,</span>
+    <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.temporal_derivative_distribution_repair.html#mne.preprocessing.nirs.temporal_derivative_distribution_repair" title="mne.preprocessing.nirs.temporal_derivative_distribution_repair" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">temporal_derivative_distribution_repair</span></a><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <section id="import-data">
-<h2>Import data<a class="headerlink" href="#import-data" title="Permalink to this heading">#</a></h2>
-<p>Here we will work with the <a class="reference external" href="https://mne.tools/stable/overview/datasets_index.html#fnirs-motor-dataset" title="(in MNE v1.5)"><span class="xref std std-ref">fNIRS motor data</span></a>.
+<h2>Import data<a class="headerlink" href="#import-data" title="Link to this heading">#</a></h2>
+<p>Here we will work with the <a class="reference external" href="https://mne.tools/stable/documentation/datasets.html#fnirs-motor-dataset" title="(in MNE v1.7)"><span class="xref std std-ref">fNIRS motor data</span></a>.
 We resample the data to make indexing exact times more convenient.
 We then convert the data to optical density to perform corrections on
 and plot these signals.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_data_folder</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.datasets.fnirs_motor.data_path.html#mne.datasets.fnirs_motor.data_path" title="mne.datasets.fnirs_motor.data_path" class="sphx-glr-backref-module-mne-datasets-fnirs_motor sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fnirs_motor</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">()</span>
-<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_cw_amplitude_dir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_data_folder</span></a><span class="p">,</span> <span class="s1">&#39;Participant-1&#39;</span><span class="p">)</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_cw_amplitude_dir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_data_folder</span></a><span class="p">,</span> <span class="s2">&quot;Participant-1&quot;</span><span class="p">)</span>
 <span class="n">raw_intensity</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.read_raw_nirx.html#mne.io.read_raw_nirx" title="mne.io.read_raw_nirx" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_raw_nirx</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_cw_amplitude_dir</span></a><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">raw_intensity</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">npad</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
 <span class="n">raw_od</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.optical_density.html#mne.preprocessing.nirs.optical_density" title="mne.preprocessing.nirs.optical_density" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">optical_density</span></a><span class="p">(</span><span class="n">raw_intensity</span><span class="p">)</span>
-<a href="https://mne.tools/stable/generated/mne.Annotations.html#mne.Annotations" title="mne.Annotations" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">new_annotations</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.Annotations.html#mne.Annotations" title="mne.Annotations" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">Annotations</span></a><span class="p">([</span><span class="mi">31</span><span class="p">,</span> <span class="mi">187</span><span class="p">,</span> <span class="mi">317</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
-                                  <span class="p">[</span><span class="s2">&quot;Movement&quot;</span><span class="p">,</span> <span class="s2">&quot;Movement&quot;</span><span class="p">,</span> <span class="s2">&quot;Movement&quot;</span><span class="p">])</span>
+<a href="https://mne.tools/stable/generated/mne.Annotations.html#mne.Annotations" title="mne.Annotations" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">new_annotations</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.Annotations.html#mne.Annotations" title="mne.Annotations" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">Annotations</span></a><span class="p">(</span>
+    <span class="p">[</span><span class="mi">31</span><span class="p">,</span> <span class="mi">187</span><span class="p">,</span> <span class="mi">317</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;Movement&quot;</span><span class="p">,</span> <span class="s2">&quot;Movement&quot;</span><span class="p">,</span> <span class="s2">&quot;Movement&quot;</span><span class="p">]</span>
+<span class="p">)</span>
 <span class="n">raw_od</span><span class="o">.</span><span class="n">set_annotations</span><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Annotations.html#mne.Annotations" title="mne.Annotations" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">new_annotations</span></a><span class="p">)</span>
 <span class="n">raw_od</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_channels</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">show_scrollbars</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_21_artifacts_001.png" srcset="../../_images/sphx_glr_plot_21_artifacts_001.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
 
-&lt;mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff274b50b80&gt;
+&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa0a8983f40&gt;
 </pre></div>
 </div>
 <p>We can see some small artifacts in the above data from movement around 40,
@@ -503,7 +477,7 @@ and plot these signals.</p>
 add some additional artifacts below.</p>
 </section>
 <section id="add-artificial-artifacts-to-data">
-<h2>Add artificial artifacts to data<a class="headerlink" href="#add-artificial-artifacts-to-data" title="Permalink to this heading">#</a></h2>
+<h2>Add artificial artifacts to data<a class="headerlink" href="#add-artificial-artifacts-to-data" title="Link to this heading">#</a></h2>
 <p>Two common types of artifacts in NIRS data are spikes and baseline shifts.
 Spikes often occur when a person moves and the optode moves relative to the
 scalp and then returns to its original position.
@@ -514,28 +488,28 @@ seconds to the data.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">corrupted_data</span></a> <span class="o">=</span> <span class="n">raw_od</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
 <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">corrupted_data</span></a><span class="p">[:,</span> <span class="mi">298</span><span class="p">:</span><span class="mi">302</span><span class="p">]</span> <span class="o">=</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">corrupted_data</span></a><span class="p">[:,</span> <span class="mi">298</span><span class="p">:</span><span class="mi">302</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.06</span>
 <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">corrupted_data</span></a><span class="p">[:,</span> <span class="mi">450</span><span class="p">:</span><span class="mi">750</span><span class="p">]</span> <span class="o">=</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">corrupted_data</span></a><span class="p">[:,</span> <span class="mi">450</span><span class="p">:</span><span class="mi">750</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.03</span>
-<a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray" title="mne.io.RawArray" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">corrupted_od</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray" title="mne.io.RawArray" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">RawArray</span></a><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">corrupted_data</span></a><span class="p">,</span> <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw_od</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span>
-                               <span class="n">first_samp</span><span class="o">=</span><span class="n">raw_od</span><span class="o">.</span><span class="n">first_samp</span><span class="p">)</span>
-<a href="https://mne.tools/stable/generated/mne.Annotations.html#mne.Annotations.append" title="mne.Annotations.append" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-method"><span class="n">new_annotations</span><span class="o">.</span><span class="n">append</span></a><span class="p">([</span><span class="mi">95</span><span class="p">,</span> <span class="mi">145</span><span class="p">,</span> <span class="mi">245</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
-                       <span class="p">[</span><span class="s2">&quot;Spike&quot;</span><span class="p">,</span> <span class="s2">&quot;Baseline&quot;</span><span class="p">,</span> <span class="s2">&quot;Baseline&quot;</span><span class="p">])</span>
+<a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray" title="mne.io.RawArray" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">corrupted_od</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray" title="mne.io.RawArray" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">RawArray</span></a><span class="p">(</span>
+    <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">corrupted_data</span></a><span class="p">,</span> <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw_od</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">first_samp</span><span class="o">=</span><span class="n">raw_od</span><span class="o">.</span><span class="n">first_samp</span>
+<span class="p">)</span>
+<a href="https://mne.tools/stable/generated/mne.Annotations.html#mne.Annotations.append" title="mne.Annotations.append" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-method"><span class="n">new_annotations</span><span class="o">.</span><span class="n">append</span></a><span class="p">([</span><span class="mi">95</span><span class="p">,</span> <span class="mi">145</span><span class="p">,</span> <span class="mi">245</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;Spike&quot;</span><span class="p">,</span> <span class="s2">&quot;Baseline&quot;</span><span class="p">,</span> <span class="s2">&quot;Baseline&quot;</span><span class="p">])</span>
 <a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray.set_annotations" title="mne.io.RawArray.set_annotations" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">corrupted_od</span><span class="o">.</span><span class="n">set_annotations</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Annotations.html#mne.Annotations" title="mne.Annotations" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">new_annotations</span></a><span class="p">)</span>
 
 <a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray.plot" title="mne.io.RawArray.plot" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">corrupted_od</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><span class="n">n_channels</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">show_scrollbars</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_21_artifacts_002.png" srcset="../../_images/sphx_glr_plot_21_artifacts_002.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff1676c6580&gt;
+<img src="../../_images/sphx_glr_plot_21_artifacts_002.png" srcset="../../_images/sphx_glr_plot_21_artifacts_002.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa0a8982200&gt;
 </pre></div>
 </div>
 </section>
 <section id="apply-temporal-derivative-distribution-repair">
-<h2>Apply temporal derivative distribution repair<a class="headerlink" href="#apply-temporal-derivative-distribution-repair" title="Permalink to this heading">#</a></h2>
+<h2>Apply temporal derivative distribution repair<a class="headerlink" href="#apply-temporal-derivative-distribution-repair" title="Link to this heading">#</a></h2>
 <p>This approach corrects baseline shift and spike artifacts without the need
 for any user-supplied parameters FishburnEtAl2019.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray" title="mne.io.RawArray" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">corrected_tddr</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.temporal_derivative_distribution_repair.html#mne.preprocessing.nirs.temporal_derivative_distribution_repair" title="mne.preprocessing.nirs.temporal_derivative_distribution_repair" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">temporal_derivative_distribution_repair</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray" title="mne.io.RawArray" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">corrupted_od</span></a><span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray.plot" title="mne.io.RawArray.plot" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">corrected_tddr</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><span class="n">n_channels</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">show_scrollbars</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_21_artifacts_003.png" srcset="../../_images/sphx_glr_plot_21_artifacts_003.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff280576480&gt;
+<img src="../../_images/sphx_glr_plot_21_artifacts_003.png" srcset="../../_images/sphx_glr_plot_21_artifacts_003.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa0a879ec20&gt;
 </pre></div>
 </div>
 <p>We can see in the data above that the introduced spikes and shifts are
@@ -543,22 +517,26 @@ largely removed, but some residual smaller artifact remains.
 The same can be said for the artifacts in the original data.</p>
 </section>
 <section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
 <p>Frank A Fishburn, Ruth S Ludlum, Chandan J Vaidya, and Andrei V Medvedev.
 Temporal derivative distribution repair (tddr): a motion correction method
 for fNIRS. NeuroImage,
 184:171–179, 2019. doi:10.1016/j.neuroimage.2018.09.025.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.704 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  10 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 8.178 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  433 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-21-artifacts-py">
 <div class="binder-badge docutils container">
-<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_21_artifacts.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_21_artifacts.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
+</a>
 </div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/1d569dfb1fb8965e8877f43c4476e3cb/plot_21_artifacts.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_21_artifacts.ipynb</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/b6e73703b091881206e40cba16aa3fee/plot_21_artifacts.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_21_artifacts.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/699aee75f5a1647af5ac0ffa44339c6c/plot_21_artifacts.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">plot_21_artifacts.zip</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -571,7 +549,10 @@ for fNIRS. NeuroImage,
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="plot_20_enhance.html"
@@ -591,7 +572,10 @@ for fNIRS. NeuroImage,
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -613,41 +597,57 @@ for fNIRS. NeuroImage,
 </ul>
   </nav></div>
 
+  <div class="sidebar-secondary-item">
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/mne-tools/mne-nirs/edit/main/doc/auto_examples/general/plot_21_artifacts.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
 </div></div>
               
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner"></div>
+            
           </footer>
         
       </main>
     </div>
   </div>
   
-    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
     
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
+    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
   
     <div class="footer-items__start">
       
-        <div class="footer-item">
-  <p class="copyright">
-    
-      © Copyright 2012–2023, MNE Developers. Last updated &lt;time datetime=&#34;2023-11-21T03:21:06.396486+00:00&#34; class=&#34;localized&#34;&gt;2023-11-21 03:21 UTC&lt;/time&gt;
-&lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.
-      <br/>
-    
-  </p>
-</div>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-07-22T23:09:06.461771+00:00" class="localized">2024-07-22 23:09 UTC</time>
+<script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
   
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
   
 </div>
 

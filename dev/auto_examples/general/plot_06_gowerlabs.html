@@ -1,53 +1,56 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-theme="auto">
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Read Gowerlabs LUMO data &#8212; MNE-NIRS 0.6.0 documentation</title>
+    <title>Read Gowerlabs LUMO data &#8212; MNE-NIRS 0.7.0.dev31+gcb6e3422 documentation</title>
   
   
   
   <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "auto";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/font-awesome.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/js/copybutton.js"></script>
+    <script src="../../_static/documentation_options.js?v=01aa3996"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-188272121-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-188272121-1');
+            </script>
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
@@ -57,9 +60,9 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/general/plot_06_gowerlabs';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.6.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.7';
         </script>
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="GLM Analysis (Simulated)" href="plot_10_hrf_simulation.html" />
@@ -72,7 +75,7 @@
   </head>
   
   
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="auto">
 
   
   
@@ -210,7 +213,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6.0  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -221,7 +224,7 @@ document.write(`
 </script></div>
       
         <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
-    aria-label="Icon Links">
+    aria-label="External Links">
         <li class="nav-item">
           
           
@@ -327,7 +330,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6.0  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -338,7 +341,7 @@ document.write(`
 </script></div>
         
           <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
-    aria-label="Icon Links">
+    aria-label="External Links">
         <li class="nav-item">
           
           
@@ -415,39 +418,7 @@ document.write(`
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item">
-
-
-
-<nav aria-label="Breadcrumbs">
-  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
-    
-    <li class="breadcrumb-item breadcrumb-home">
-      <a href="../../index.html" class="nav-link" aria-label="Home">
-        <i class="fa-solid fa-home"></i>
-      </a>
-    </li>
-    
-    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Examples</a></li>
-    
-    
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Analysis examples</a></li>
-    
-    <li class="breadcrumb-item active" aria-current="page">Read Gowerlabs LUMO data</li>
-  </ul>
-</nav>
-</div>
-      
-    </div>
-  
-  
-</div>
-</div>
+              <div class="bd-header-article"></div>
               
               
               
@@ -458,10 +429,10 @@ document.write(`
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
 <p><a class="reference internal" href="#sphx-glr-download-auto-examples-general-plot-06-gowerlabs-py"><span class="std std-ref">Go to the end</span></a>
-to download the full example code or to run this example in your browser via Binder</p>
+to download the full example code. or to run this example in your browser via Binder</p>
 </div>
 <section class="sphx-glr-example-title" id="read-gowerlabs-lumo-data">
-<span id="tut-gowerlabs-data"></span><span id="sphx-glr-auto-examples-general-plot-06-gowerlabs-py"></span><h1>Read Gowerlabs LUMO data<a class="headerlink" href="#read-gowerlabs-lumo-data" title="Permalink to this heading">#</a></h1>
+<span id="tut-gowerlabs-data"></span><span id="sphx-glr-auto-examples-general-plot-06-gowerlabs-py"></span><h1>Read Gowerlabs LUMO data<a class="headerlink" href="#read-gowerlabs-lumo-data" title="Link to this heading">#</a></h1>
 <p><a class="reference external" href="https://www.gowerlabs.co.uk/lumo">LUMO</a> is a modular, wearable,
 high-density diffuse optical tomography (HD-DOT) system produced by
 <a class="reference external" href="https://www.gowerlabs.co.uk">Gowerlabs</a>. This tutorial demonstrates
@@ -483,14 +454,14 @@ to ensure you have all the required packages installed we recommend using the
 <span class="c1"># License: BSD (3-clause)</span>
 
 <span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">op</span>
+
 <span class="kn">import</span> <span class="nn">mne</span>
 <span class="kn">from</span> <span class="nn">mne.datasets.testing</span> <span class="kn">import</span> <span class="n">data_path</span>
-
 <span class="kn">from</span> <span class="nn">mne.viz</span> <span class="kn">import</span> <a href="https://mne.tools/stable/generated/mne.viz.set_3d_view.html#mne.viz.set_3d_view" title="mne.viz.set_3d_view" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">set_3d_view</span></a>
 </pre></div>
 </div>
 <section id="import-gowerlabs-example-file">
-<h2>Import Gowerlabs Example File<a class="headerlink" href="#import-gowerlabs-example-file" title="Permalink to this heading">#</a></h2>
+<h2>Import Gowerlabs Example File<a class="headerlink" href="#import-gowerlabs-example-file" title="Link to this heading">#</a></h2>
 <p>First, we must instruct the software where the file we wish to import
 resides. In this example we will use a small test file that is
 included in the MNE testing data set. To load your own data, replace
@@ -504,7 +475,7 @@ tiles, and thus channels.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mne_nirs.io</span>
 
 <a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">testing_path</span></a> <span class="o">=</span> <span class="n">data_path</span><span class="p">(</span><span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">op</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">testing_path</span></a><span class="p">,</span> <span class="s1">&#39;SNIRF&#39;</span><span class="p">,</span> <span class="s1">&#39;GowerLabs&#39;</span><span class="p">,</span> <span class="s1">&#39;lumomat-1-1-0.snirf&#39;</span><span class="p">)</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">op</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">testing_path</span></a><span class="p">,</span> <span class="s2">&quot;SNIRF&quot;</span><span class="p">,</span> <span class="s2">&quot;GowerLabs&quot;</span><span class="p">,</span> <span class="s2">&quot;lumomat-1-1-0.snirf&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>We can view the path to the data by calling the variable <cite>fname</cite>.</p>
@@ -514,12 +485,12 @@ tiles, and thus channels.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;/home/circleci/mne_data/MNE-testing-data/SNIRF/GowerLabs/lumomat-1-1-0.snirf&#39;
 </pre></div>
 </div>
-<p>To load the file we call the function <a class="reference external" href="https://mne.tools/stable/generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="(in MNE v1.5)"><code class="docutils literal notranslate"><span class="pre">mne.io.read_raw_snirf()</span></code></a>.</p>
+<p>To load the file we call the function <a class="reference external" href="https://mne.tools/stable/generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="(in MNE v1.7)"><code class="docutils literal notranslate"><span class="pre">mne.io.read_raw_snirf()</span></code></a>.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="mne.io.read_raw_snirf" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_raw_snirf</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Loading /home/circleci/mne_data/MNE-testing-data/SNIRF/GowerLabs/lumomat-1-1-0.snirf
-/home/circleci/project/examples/general/plot_06_gowerlabs.py:65: RuntimeWarning: Extraction of measurement date from SNIRF file failed. The date is being set to January 1st, 2000, instead of unknownunknown
+/home/circleci/project/examples/general/plot_06_gowerlabs.py:63: RuntimeWarning: Extraction of measurement date from SNIRF file failed. The date is being set to January 1st, 2000, instead of unknownunknown
   raw = mne.io.read_raw_snirf(fname, preload=True)
 Reading 0 ... 273  =      0.000 ...    27.300 secs...
 </pre></div>
@@ -529,103 +500,352 @@ Reading 0 ... 273  =      0.000 ...    27.300 secs...
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
-<details open>
-    <summary><strong>General</strong></summary>
-    <table class="table table-hover table-striped table-sm table-responsive small">
-        <tr>
-            <th>Measurement date</th>
+<script type="text/javascript">
+    const toggleVisibility = (className) => {
 
-            <td>January 01, 2000  00:00:00 GMT</td>
+  const elements = document.querySelectorAll(`.${className}`)
 
-        </tr>
-        <tr>
-            <th>Experimenter</th>
+  elements.forEach(element => {
+    if (element.classList.contains('repr-section-header')) {
+      // Don't collapse the section header row.
+       return
+    }
+    if (element.classList.contains('repr-element-collapsed')) {
+      // Force a reflow to ensure the display change takes effect before removing the class
+      element.classList.remove('repr-element-collapsed')
+      element.offsetHeight // This forces the browser to recalculate layout
+      element.classList.remove('repr-element-faded')
+    } else {
+      // Start transition to hide the element
+      element.classList.add('repr-element-faded')
+      element.addEventListener('transitionend', handler = (e) => {
+        if (e.propertyName === 'opacity' && getComputedStyle(element).opacity === '0.2') {
+          element.classList.add('repr-element-collapsed')
+          element.removeEventListener('transitionend', handler)
+        }
+      });
+    }
+  });
 
-            <td>Unknown</td>
+  // Take care of button (adjust caret)
+  const button = document.querySelectorAll(`.repr-section-header.${className} > th.repr-section-toggle-col > button`)[0]
+  button.classList.toggle('collapsed')
 
-        </tr>
-        <tr>
-            <th>Participant</th>
+  // Take care of the tooltip of the section header row
+  const sectionHeaderRow = document.querySelectorAll(`tr.repr-section-header.${className}`)[0]
+  sectionHeaderRow.classList.toggle('collapsed')
+  sectionHeaderRow.title = sectionHeaderRow.title === 'Hide section' ? 'Show section' : 'Hide section'
+}
+</script>
+
+<style type="text/css">
+    table.repr.table.table-hover.table-striped.table-sm.table-responsive.small {
+  /* Don't make rows wider than they need to be. */
+  display: inline;
+}
+
+table > tbody > tr.repr-element > td {
+  /* Apply a tighter layout to the table cells. */
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  padding-right: 1rem;
+}
+
+table > tbody > tr > td.repr-section-toggle-col {
+  /* Remove background and border of the first cell in every row
+     (this row is only used for the collapse / uncollapse caret)
+
+     TODO: Need to find a good solution for VS Code that works in both
+           light and dark mode. */
+  border-color: transparent;
+  --bs-table-accent-bg: transparent;
+}
+
+tr.repr-section-header {
+  /* Remove stripes from section header rows */
+  background-color: transparent;
+  border-color: transparent;
+  --bs-table-striped-bg: transparent;
+  cursor: pointer;
+}
+
+tr.repr-section-header > th {
+  text-align: left !important;
+  vertical-align: middle;
+}
+
+.repr-element, tr.repr-element > td {
+  opacity: 1;
+  text-align: left !important;
+}
+
+.repr-element-faded {
+  transition: 0.3s ease;
+  opacity: 0.2;
+}
+
+.repr-element-collapsed {
+  display: none;
+}
+
+/* Collapse / uncollapse button and the caret it contains. */
+.repr-section-toggle-col button {
+  cursor: pointer;
+  width: 1rem;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+span.collapse-uncollapse-caret {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+}
+
+/* The collapse / uncollapse carets were copied from the free Font Awesome collection and adjusted. */
+
+/* Default to black carets for light mode */
+.repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+}
+
+.repr-section-toggle-col
+  > button:not(.collapsed)
+  > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+}
+
+/* Use white carets for dark mode */
+@media (prefers-color-scheme: dark) {
+  .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+  }
+
+  .repr-section-toggle-col
+    > button:not(.collapsed)
+    > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+  }
+}
+
+.channel-names-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  cursor: pointer;
+  color: #0d6efd;
+}
+
+.channel-names-btn:hover {
+  color: #0a58ca;
+}
+</style>
 
 
 
-        </tr>
-    </table>
-    </details>
-    <details open>
-        <summary><strong>Channels</strong></summary>
-        <table class="table table-hover table-striped table-sm table-responsive small">
-            <tr>
-                <th>Digitized points</th>
-
-                <td>5 points</td>
-
-            </tr>
-            <tr>
-                <th>Good channels</th>
-                <td>216 fNIRS (CW amplitude)</td>
-            </tr>
-            <tr>
-                <th>Bad channels</th>
-                <td>None</td>
-            </tr>
-            <tr>
-                <th>EOG channels</th>
-                <td>Not available</td>
-            </tr>
-            <tr>
-                <th>ECG channels</th>
-                <td>Not available</td>
-            </tr>
-        </table>
-        </details>
-        <details open>
-            <summary><strong>Data</strong></summary>
-            <table class="table table-hover table-striped table-sm table-responsive small">
-
-                <tr>
-                    <th>Sampling frequency</th>
-                    <td>10.00 Hz</td>
-                </tr>
-
-
-                <tr>
-                    <th>Highpass</th>
-                    <td>0.00 Hz</td>
-                </tr>
-
-
-                <tr>
-                    <th>Lowpass</th>
-                    <td>5.00 Hz</td>
-                </tr>
+<table class="repr table table-hover table-striped table-sm table-responsive small">
 
 
 
-                <tr>
-                    <th>Filenames</th>
-                    <td>lumomat-1-1-0.snirf</td>
-                </tr>
 
 
-                <tr>
-                    <th>Duration</th>
-                    <td>00:00:28 (HH:MM:SS)</td>
-                </tr>
 
-            </table>
-            </details>
+
+
+<tr class="repr-section-header general-618a872f-eda3-4e73-b52a-28e3f6b8e5cc"  title="Hide section"
+    onclick="toggleVisibility('general-618a872f-eda3-4e73-b52a-28e3f6b8e5cc')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>General</strong>
+    </th>
+</tr>
+
+<tr class="repr-element general-618a872f-eda3-4e73-b52a-28e3f6b8e5cc ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Filename(s)</td>
+    <td>
+
+        lumomat-1-1-0.snirf
+
+
+    </td>
+</tr>
+
+<tr class="repr-element general-618a872f-eda3-4e73-b52a-28e3f6b8e5cc ">
+    <td class="repr-section-toggle-col"></td>
+    <td>MNE object type</td>
+    <td>RawSNIRF</td>
+</tr>
+<tr class="repr-element general-618a872f-eda3-4e73-b52a-28e3f6b8e5cc ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Measurement date</td>
+
+    <td>2000-01-01 at 00:00:00 UTC</td>
+
+</tr>
+<tr class="repr-element general-618a872f-eda3-4e73-b52a-28e3f6b8e5cc ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Participant</td>
+
+
+    <td>Subject Unknown</td>
+
+
+</tr>
+<tr class="repr-element general-618a872f-eda3-4e73-b52a-28e3f6b8e5cc ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Experimenter</td>
+
+    <td>Unknown</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header acquisition-d3ca5209-acb9-4b5e-bc4c-f5449670e245"
+    title="Hide section"  onclick="toggleVisibility('acquisition-d3ca5209-acb9-4b5e-bc4c-f5449670e245')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Acquisition</strong>
+    </th>
+</tr>
+
+<tr class="repr-element acquisition-d3ca5209-acb9-4b5e-bc4c-f5449670e245 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Duration</td>
+    <td>00:00:28 (HH:MM:SS)</td>
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-element acquisition-d3ca5209-acb9-4b5e-bc4c-f5449670e245 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Sampling frequency</td>
+    <td>10.00 Hz</td>
+</tr>
+
+
+<tr class="repr-element acquisition-d3ca5209-acb9-4b5e-bc4c-f5449670e245 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Time points</td>
+    <td>274</td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+<tr class="repr-section-header channels-e9bbf187-ceb0-4227-94c1-d9d903672b95"  title="Hide section"
+    onclick="toggleVisibility('channels-e9bbf187-ceb0-4227-94c1-d9d903672b95')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Channels</strong>
+    </th>
+</tr>
+
+
+<tr class="repr-element channels-e9bbf187-ceb0-4227-94c1-d9d903672b95 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>fNIRS (CW amplitude)</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good fNIRS (CW amplitude):\n\nS1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850')" title="(Click to open in popup)&#13;&#13;S1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850">
+            216
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-e9bbf187-ceb0-4227-94c1-d9d903672b95 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Head & sensor digitization</td>
+
+    <td>5 points</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header filters-d72fe0c7-b916-4de8-a21f-c14f5d0e5f77"  title="Hide section"
+    onclick="toggleVisibility('filters-d72fe0c7-b916-4de8-a21f-c14f5d0e5f77')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Filters</strong>
+    </th>
+</tr>
+
+<tr class="repr-element filters-d72fe0c7-b916-4de8-a21f-c14f5d0e5f77 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Highpass</td>
+    <td>0.00 Hz</td>
+</tr>
+
+
+<tr class="repr-element filters-d72fe0c7-b916-4de8-a21f-c14f5d0e5f77 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Lowpass</td>
+    <td>5.00 Hz</td>
+</tr>
+
+
+</table>
 </div>
 <br />
 <br /></section>
 <section id="visualise-data">
-<h2>Visualise Data<a class="headerlink" href="#visualise-data" title="Permalink to this heading">#</a></h2>
+<h2>Visualise Data<a class="headerlink" href="#visualise-data" title="Link to this heading">#</a></h2>
 <p>Next, we visually inspect the data to get an overview of the data quality
 and signal annotations.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_06_gowerlabs_001.png" srcset="../../_images/sphx_glr_plot_06_gowerlabs_001.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff2d8c72200&gt;
+<img src="../../_images/sphx_glr_plot_06_gowerlabs_001.png" srcset="../../_images/sphx_glr_plot_06_gowerlabs_001.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f9f96ce37f0&gt;
 </pre></div>
 </div>
 <p>We observe valid data in each channel, and note that the file includes a
@@ -736,11 +956,11 @@ the annotations to a dataframe.</p>
 <br />
 <br /></section>
 <section id="view-optode-positions-in-3d-space">
-<h2>View Optode Positions in 3D Space<a class="headerlink" href="#view-optode-positions-in-3d-space" title="Permalink to this heading">#</a></h2>
+<h2>View Optode Positions in 3D Space<a class="headerlink" href="#view-optode-positions-in-3d-space" title="Link to this heading">#</a></h2>
 <p>The position of optodes in 3D space is recorded and stored in the SNIRF file.
 These positions are stored in head coordinate frame,
 for a detailed overview of coordinate frames and how they are handled in MNE
-see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/20_source_alignment.html#tut-source-alignment" title="(in MNE v1.5)"><span>Source alignment and coordinate frames</span></a>.</p>
+see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/20_source_alignment.html#tut-source-alignment" title="(in MNE v1.7)"><span>Source alignment and coordinate frames</span></a>.</p>
 <p>Within the SNIRF file, the position of each optode is stored,
 along with scalp landmarks (“fiducials”).
 These positions are in an arbitrary space, and must be aligned to a scan of
@@ -752,11 +972,17 @@ a collection of 40 MRI scans of real brains called
 <p>First, lets just look at the sensors in arbitrary space.
 Below we see that there are three LUMO tiles, each with three sources
 and four detectors.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">op</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.datasets.sample.data_path.html#mne.datasets.sample.data_path" title="mne.datasets.sample.data_path" class="sphx-glr-backref-module-mne-datasets-sample sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">(),</span> <span class="s1">&#39;subjects&#39;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">op</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.datasets.sample.data_path.html#mne.datasets.sample.data_path" title="mne.datasets.sample.data_path" class="sphx-glr-backref-module-mne-datasets-sample sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">(),</span> <span class="s2">&quot;subjects&quot;</span><span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.datasets.fetch_fsaverage.html#mne.datasets.fetch_fsaverage" title="mne.datasets.fetch_fsaverage" class="sphx-glr-backref-module-mne-datasets sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fetch_fsaverage</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">)</span>
 
-<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s1">&#39;low_contrast&#39;</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
-<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sources&quot;</span><span class="p">,</span> <span class="s2">&quot;detectors&quot;</span><span class="p">])</span>
+<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span>
+    <span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">cortex</span><span class="o">=</span><span class="s2">&quot;low_contrast&quot;</span><span class="p">,</span>
+    <span class="n">background</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sources&quot;</span><span class="p">,</span> <span class="s2">&quot;detectors&quot;</span><span class="p">])</span>
 <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.show_view" title="mne.viz.Brain.show_view" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">show_view</span></a><span class="p">(</span><span class="n">azimuth</span><span class="o">=</span><span class="mi">130</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">700</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -767,7 +993,7 @@ Channel types:: fnirs_cw_amplitude: 216
 </div>
 </section>
 <section id="coregister-optodes-to-template-head">
-<h2>Coregister Optodes to Template Head<a class="headerlink" href="#coregister-optodes-to-template-head" title="Permalink to this heading">#</a></h2>
+<h2>Coregister Optodes to Template Head<a class="headerlink" href="#coregister-optodes-to-template-head" title="Link to this heading">#</a></h2>
 <p>The optode locations displayed above are floating in free space
 and need to be aligned to our chosen head.
 First, lets just look at the <cite>fsaverage</cite> head that we will use.</p>
@@ -775,25 +1001,31 @@ First, lets just look at the <cite>fsaverage</cite> head that we will use.</p>
 <p class="admonition-title">Note</p>
 <p>In this tutorial we use an automated code based approach
 to coregistration. You can also use the MNE-Python
-coregistration GUI <a class="reference external" href="https://mne.tools/stable/generated/mne.gui.coregistration.html#mne.gui.coregistration" title="(in MNE v1.5)"><code class="docutils literal notranslate"><span class="pre">mne.gui.coregistration()</span></code></a>.</p>
+coregistration GUI <a class="reference external" href="https://mne.tools/stable/generated/mne.gui.coregistration.html#mne.gui.coregistration" title="(in MNE v1.7)"><code class="docutils literal notranslate"><span class="pre">mne.gui.coregistration()</span></code></a>.</p>
 </div>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span>
-                   <span class="n">surfaces</span><span class="o">=</span><span class="s2">&quot;brain&quot;</span><span class="p">,</span> <span class="n">dig</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">eeg</span><span class="o">=</span><span class="p">[],</span>
-                   <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sources&#39;</span><span class="p">,</span> <span class="s1">&#39;detectors&#39;</span><span class="p">],</span> <span class="n">show_axes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                   <span class="n">coord_frame</span><span class="o">=</span><span class="s1">&#39;head&#39;</span><span class="p">,</span> <span class="n">mri_fiducials</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span>
+    <span class="n">surfaces</span><span class="o">=</span><span class="s2">&quot;brain&quot;</span><span class="p">,</span>
+    <span class="n">dig</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">eeg</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sources&quot;</span><span class="p">,</span> <span class="s2">&quot;detectors&quot;</span><span class="p">],</span>
+    <span class="n">show_axes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">coord_frame</span><span class="o">=</span><span class="s2">&quot;head&quot;</span><span class="p">,</span>
+    <span class="n">mri_fiducials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">fig</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.plot_alignment.html#mne.viz.plot_alignment" title="mne.viz.plot_alignment" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_alignment</span></a><span class="p">(</span><span class="n">trans</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="o">**</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a><span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.viz.set_3d_view.html#mne.viz.set_3d_view" title="mne.viz.set_3d_view" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">set_3d_view</span></a><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">azimuth</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_06_gowerlabs_003.png" srcset="../../_images/sphx_glr_plot_06_gowerlabs_003.png" alt="plot 06 gowerlabs" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/circleci/project/examples/general/plot_06_gowerlabs.py:150: RuntimeWarning: Digitization points not found. Cannot plot digitization.
+<img src="../../_images/sphx_glr_plot_06_gowerlabs_003.png" srcset="../../_images/sphx_glr_plot_06_gowerlabs_003.png" alt="plot 06 gowerlabs" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/circleci/project/examples/general/plot_06_gowerlabs.py:160: RuntimeWarning: Digitization points not found. Cannot plot digitization.
   fig = mne.viz.plot_alignment(trans=&quot;fsaverage&quot;, subject=&quot;fsaverage&quot;, **plot_kwargs)
 </pre></div>
 </div>
 <p>This is what a head model will look like. If you have an MRI from
 the participant you can use freesurfer to generate the required files.
 For further details on generating freesurfer reconstructions see
-<a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/10_background_freesurfer.html#tut-freesurfer-reconstruction" title="(in MNE v1.5)"><span>FreeSurfer MRI reconstruction</span></a>.</p>
+<a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/10_background_freesurfer.html#tut-freesurfer-reconstruction" title="(in MNE v1.7)"><span>FreeSurfer MRI reconstruction</span></a>.</p>
 <p>In the figure above you can see the brain in grey. You can also
 see the MRI fiducial positions marked with diamonds.
 The nasion fiducial is marked in green, the left and right
@@ -801,8 +1033,10 @@ preauricular points (LPA and RPA) in red and blue respectively.</p>
 <p>Next, we simultaneously plot the <cite>fsaverage</cite> head, and the
 data we wish to align to this head. This process is called
 coregistration and is described in several MNE-Python tutorials
-including <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/25_automated_coreg.html#tut-auto-coreg" title="(in MNE v1.5)"><span>Using an automated approach to coregistration</span></a>.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.plot_alignment.html#mne.viz.plot_alignment" title="mne.viz.plot_alignment" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_alignment</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="o">**</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a><span class="p">)</span>
+including <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/25_automated_coreg.html#tut-auto-coreg" title="(in MNE v1.7)"><span>Using an automated approach to coregistration</span></a>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.plot_alignment.html#mne.viz.plot_alignment" title="mne.viz.plot_alignment" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_alignment</span></a><span class="p">(</span>
+    <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="o">**</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a>
+<span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.viz.set_3d_view.html#mne.viz.set_3d_view" title="mne.viz.set_3d_view" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">set_3d_view</span></a><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">azimuth</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -815,10 +1049,14 @@ The participant digitised fiducials are a large distance from MRI fiducials
 on the head. To coregister the optodes to the head we will perform
 a rotation and translation of the optode frame to minimise the
 distance between the fiducials.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration" title="mne.coreg.Coregistration" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">coreg</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration" title="mne.coreg.Coregistration" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">coreg</span><span class="o">.</span><span class="n">Coregistration</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">fiducials</span><span class="o">=</span><span class="s2">&quot;estimated&quot;</span><span class="p">)</span>
-<a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration.fit_fiducials" title="mne.coreg.Coregistration.fit_fiducials" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-method"><span class="n">coreg</span><span class="o">.</span><span class="n">fit_fiducials</span></a><span class="p">(</span><span class="n">lpa_weight</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">nasion_weight</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">rpa_weight</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration" title="mne.coreg.Coregistration" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">coreg</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration" title="mne.coreg.Coregistration" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">coreg</span><span class="o">.</span><span class="n">Coregistration</span></a><span class="p">(</span>
+    <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">fiducials</span><span class="o">=</span><span class="s2">&quot;estimated&quot;</span>
+<span class="p">)</span>
+<a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration.fit_fiducials" title="mne.coreg.Coregistration.fit_fiducials" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-method"><span class="n">coreg</span><span class="o">.</span><span class="n">fit_fiducials</span></a><span class="p">(</span><span class="n">lpa_weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">nasion_weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">rpa_weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 
-<span class="n">fig</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.plot_alignment.html#mne.viz.plot_alignment" title="mne.viz.plot_alignment" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_alignment</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration.trans" title="mne.coreg.Coregistration.trans" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-property"><span class="n">coreg</span><span class="o">.</span><span class="n">trans</span></a><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="o">**</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.plot_alignment.html#mne.viz.plot_alignment" title="mne.viz.plot_alignment" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_alignment</span></a><span class="p">(</span>
+    <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration.trans" title="mne.coreg.Coregistration.trans" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-property"><span class="n">coreg</span><span class="o">.</span><span class="n">trans</span></a><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="o">**</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a>
+<span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.viz.set_3d_view.html#mne.viz.set_3d_view" title="mne.viz.set_3d_view" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">set_3d_view</span></a><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">azimuth</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -835,10 +1073,12 @@ Channel types:: fnirs_cw_amplitude: 216
 the optodes are well aligned to the brain, and the distance between diamonds (MRI)
 and circles (subject) fiducials is minimised. There is still some distance
 between the fiducial pairs, this is because we used a generic head rather than
-an individualised MRI scan. You can also <a class="reference external" href="https://mne.tools/stable/generated/mne.scale_mri.html#mne.scale_mri" title="(in MNE v1.5)"><code class="docutils literal notranslate"><span class="pre">mne.scale_mri()</span></code></a> to scale
+an individualised MRI scan. You can also <a class="reference external" href="https://mne.tools/stable/generated/mne.scale_mri.html#mne.scale_mri" title="(in MNE v1.7)"><code class="docutils literal notranslate"><span class="pre">mne.scale_mri()</span></code></a> to scale
 the generic MRI head.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s1">&#39;0.5&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration.trans" title="mne.coreg.Coregistration.trans" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-property"><span class="n">coreg</span><span class="o">.</span><span class="n">trans</span></a><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sources&#39;</span><span class="p">,</span> <span class="s1">&#39;detectors&#39;</span><span class="p">])</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span>
+    <span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s2">&quot;0.5&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span>
+<span class="p">)</span>
+<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration.trans" title="mne.coreg.Coregistration.trans" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-property"><span class="n">coreg</span><span class="o">.</span><span class="n">trans</span></a><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sources&quot;</span><span class="p">,</span> <span class="s2">&quot;detectors&quot;</span><span class="p">])</span>
 <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.show_view" title="mne.viz.Brain.show_view" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">show_view</span></a><span class="p">(</span><span class="n">azimuth</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -847,7 +1087,7 @@ the generic MRI head.</p>
 </div>
 </section>
 <section id="apply-transformation-to-raw-object">
-<h2>Apply Transformation to Raw Object<a class="headerlink" href="#apply-transformation-to-raw-object" title="Permalink to this heading">#</a></h2>
+<h2>Apply Transformation to Raw Object<a class="headerlink" href="#apply-transformation-to-raw-object" title="Link to this heading">#</a></h2>
 <p>You may wish to apply the coregistration transformation to the raw
 object. This can be useful if you want to save the file back to disk
 and not coregister again when rereading the file. Or for simpler
@@ -858,92 +1098,341 @@ interface using the <cite>fsaverage</cite> head.</p>
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
-<details open>
-    <summary><strong>General</strong></summary>
-    <table class="table table-hover table-striped table-sm table-responsive small">
-        <tr>
-            <th>Measurement date</th>
+<script type="text/javascript">
+    const toggleVisibility = (className) => {
 
-            <td>January 01, 2000  00:00:00 GMT</td>
+  const elements = document.querySelectorAll(`.${className}`)
 
-        </tr>
-        <tr>
-            <th>Experimenter</th>
+  elements.forEach(element => {
+    if (element.classList.contains('repr-section-header')) {
+      // Don't collapse the section header row.
+       return
+    }
+    if (element.classList.contains('repr-element-collapsed')) {
+      // Force a reflow to ensure the display change takes effect before removing the class
+      element.classList.remove('repr-element-collapsed')
+      element.offsetHeight // This forces the browser to recalculate layout
+      element.classList.remove('repr-element-faded')
+    } else {
+      // Start transition to hide the element
+      element.classList.add('repr-element-faded')
+      element.addEventListener('transitionend', handler = (e) => {
+        if (e.propertyName === 'opacity' && getComputedStyle(element).opacity === '0.2') {
+          element.classList.add('repr-element-collapsed')
+          element.removeEventListener('transitionend', handler)
+        }
+      });
+    }
+  });
 
-            <td>Unknown</td>
+  // Take care of button (adjust caret)
+  const button = document.querySelectorAll(`.repr-section-header.${className} > th.repr-section-toggle-col > button`)[0]
+  button.classList.toggle('collapsed')
 
-        </tr>
-        <tr>
-            <th>Participant</th>
+  // Take care of the tooltip of the section header row
+  const sectionHeaderRow = document.querySelectorAll(`tr.repr-section-header.${className}`)[0]
+  sectionHeaderRow.classList.toggle('collapsed')
+  sectionHeaderRow.title = sectionHeaderRow.title === 'Hide section' ? 'Show section' : 'Hide section'
+}
+</script>
+
+<style type="text/css">
+    table.repr.table.table-hover.table-striped.table-sm.table-responsive.small {
+  /* Don't make rows wider than they need to be. */
+  display: inline;
+}
+
+table > tbody > tr.repr-element > td {
+  /* Apply a tighter layout to the table cells. */
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  padding-right: 1rem;
+}
+
+table > tbody > tr > td.repr-section-toggle-col {
+  /* Remove background and border of the first cell in every row
+     (this row is only used for the collapse / uncollapse caret)
+
+     TODO: Need to find a good solution for VS Code that works in both
+           light and dark mode. */
+  border-color: transparent;
+  --bs-table-accent-bg: transparent;
+}
+
+tr.repr-section-header {
+  /* Remove stripes from section header rows */
+  background-color: transparent;
+  border-color: transparent;
+  --bs-table-striped-bg: transparent;
+  cursor: pointer;
+}
+
+tr.repr-section-header > th {
+  text-align: left !important;
+  vertical-align: middle;
+}
+
+.repr-element, tr.repr-element > td {
+  opacity: 1;
+  text-align: left !important;
+}
+
+.repr-element-faded {
+  transition: 0.3s ease;
+  opacity: 0.2;
+}
+
+.repr-element-collapsed {
+  display: none;
+}
+
+/* Collapse / uncollapse button and the caret it contains. */
+.repr-section-toggle-col button {
+  cursor: pointer;
+  width: 1rem;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+span.collapse-uncollapse-caret {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+}
+
+/* The collapse / uncollapse carets were copied from the free Font Awesome collection and adjusted. */
+
+/* Default to black carets for light mode */
+.repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+}
+
+.repr-section-toggle-col
+  > button:not(.collapsed)
+  > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+}
+
+/* Use white carets for dark mode */
+@media (prefers-color-scheme: dark) {
+  .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+  }
+
+  .repr-section-toggle-col
+    > button:not(.collapsed)
+    > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+  }
+}
+
+.channel-names-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  cursor: pointer;
+  color: #0d6efd;
+}
+
+.channel-names-btn:hover {
+  color: #0a58ca;
+}
+</style>
 
 
 
-        </tr>
-    </table>
-    </details>
-    <details open>
-        <summary><strong>Channels</strong></summary>
-        <table class="table table-hover table-striped table-sm table-responsive small">
-            <tr>
-                <th>Digitized points</th>
-
-                <td>24 points</td>
-
-            </tr>
-            <tr>
-                <th>Good channels</th>
-                <td>216 fNIRS (CW amplitude)</td>
-            </tr>
-            <tr>
-                <th>Bad channels</th>
-                <td>None</td>
-            </tr>
-            <tr>
-                <th>EOG channels</th>
-                <td>Not available</td>
-            </tr>
-            <tr>
-                <th>ECG channels</th>
-                <td>Not available</td>
-            </tr>
-        </table>
-        </details>
-        <details open>
-            <summary><strong>Data</strong></summary>
-            <table class="table table-hover table-striped table-sm table-responsive small">
-
-                <tr>
-                    <th>Sampling frequency</th>
-                    <td>10.00 Hz</td>
-                </tr>
-
-
-                <tr>
-                    <th>Highpass</th>
-                    <td>0.00 Hz</td>
-                </tr>
-
-
-                <tr>
-                    <th>Lowpass</th>
-                    <td>5.00 Hz</td>
-                </tr>
+<table class="repr table table-hover table-striped table-sm table-responsive small">
 
 
 
-                <tr>
-                    <th>Filenames</th>
-                    <td>lumomat-1-1-0.snirf</td>
-                </tr>
 
 
-                <tr>
-                    <th>Duration</th>
-                    <td>00:00:28 (HH:MM:SS)</td>
-                </tr>
 
-            </table>
-            </details>
+
+
+<tr class="repr-section-header general-0dbb6ea8-bd32-4423-816f-8c87aa4a1269"  title="Hide section"
+    onclick="toggleVisibility('general-0dbb6ea8-bd32-4423-816f-8c87aa4a1269')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>General</strong>
+    </th>
+</tr>
+
+<tr class="repr-element general-0dbb6ea8-bd32-4423-816f-8c87aa4a1269 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Filename(s)</td>
+    <td>
+
+        lumomat-1-1-0.snirf
+
+
+    </td>
+</tr>
+
+<tr class="repr-element general-0dbb6ea8-bd32-4423-816f-8c87aa4a1269 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>MNE object type</td>
+    <td>RawSNIRF</td>
+</tr>
+<tr class="repr-element general-0dbb6ea8-bd32-4423-816f-8c87aa4a1269 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Measurement date</td>
+
+    <td>2000-01-01 at 00:00:00 UTC</td>
+
+</tr>
+<tr class="repr-element general-0dbb6ea8-bd32-4423-816f-8c87aa4a1269 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Participant</td>
+
+
+    <td>Subject Unknown</td>
+
+
+</tr>
+<tr class="repr-element general-0dbb6ea8-bd32-4423-816f-8c87aa4a1269 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Experimenter</td>
+
+    <td>Unknown</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header acquisition-e2c84242-ca5e-4627-ab54-f4f5b99fd4fd"
+    title="Hide section"  onclick="toggleVisibility('acquisition-e2c84242-ca5e-4627-ab54-f4f5b99fd4fd')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Acquisition</strong>
+    </th>
+</tr>
+
+<tr class="repr-element acquisition-e2c84242-ca5e-4627-ab54-f4f5b99fd4fd ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Duration</td>
+    <td>00:00:28 (HH:MM:SS)</td>
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-element acquisition-e2c84242-ca5e-4627-ab54-f4f5b99fd4fd ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Sampling frequency</td>
+    <td>10.00 Hz</td>
+</tr>
+
+
+<tr class="repr-element acquisition-e2c84242-ca5e-4627-ab54-f4f5b99fd4fd ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Time points</td>
+    <td>274</td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+<tr class="repr-section-header channels-7a314c90-d801-469f-8b05-2f526010c4c3"  title="Hide section"
+    onclick="toggleVisibility('channels-7a314c90-d801-469f-8b05-2f526010c4c3')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Channels</strong>
+    </th>
+</tr>
+
+
+<tr class="repr-element channels-7a314c90-d801-469f-8b05-2f526010c4c3 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>fNIRS (CW amplitude)</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good fNIRS (CW amplitude):\n\nS1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850')" title="(Click to open in popup)&#13;&#13;S1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850">
+            216
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-7a314c90-d801-469f-8b05-2f526010c4c3 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Head & sensor digitization</td>
+
+    <td>24 points</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header filters-45777488-4331-40f8-8602-f0f6d1136909"  title="Hide section"
+    onclick="toggleVisibility('filters-45777488-4331-40f8-8602-f0f6d1136909')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Filters</strong>
+    </th>
+</tr>
+
+<tr class="repr-element filters-45777488-4331-40f8-8602-f0f6d1136909 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Highpass</td>
+    <td>0.00 Hz</td>
+</tr>
+
+
+<tr class="repr-element filters-45777488-4331-40f8-8602-f0f6d1136909 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Lowpass</td>
+    <td>5.00 Hz</td>
+</tr>
+
+
+</table>
 </div>
 <br />
 <br /><p>You can then save the coregistered object.</p>
@@ -955,8 +1444,10 @@ already been coregistered to fsaverage.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">raw_w_coreg</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="mne.io.read_raw_snirf" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_raw_snirf</span></a><span class="p">(</span><span class="s2">&quot;raw_coregistered_to_fsaverage.snirf&quot;</span><span class="p">)</span>
 
 <span class="c1"># Now you can simply use `trans = &quot;fsaverage&quot;`.</span>
-<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span><span class="s1">&#39;fsaverage&#39;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s1">&#39;0.5&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne.Info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw_w_coreg</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sources&#39;</span><span class="p">,</span> <span class="s1">&#39;detectors&#39;</span><span class="p">])</span>
+<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span>
+    <span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s2">&quot;0.5&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span>
+<span class="p">)</span>
+<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw_w_coreg</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sources&quot;</span><span class="p">,</span> <span class="s2">&quot;detectors&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_06_gowerlabs_007.png" srcset="../../_images/sphx_glr_plot_06_gowerlabs_007.png" alt="plot 06 gowerlabs" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Loading /home/circleci/project/examples/general/raw_coregistered_to_fsaverage.snirf
@@ -965,24 +1456,28 @@ Channel types:: fnirs_cw_amplitude: 216
 </div>
 </section>
 <section id="next-steps">
-<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">#</a></h2>
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
 <p>From here you can use your favorite analysis technique such as
 <a class="reference internal" href="plot_15_waveform.html#tut-fnirs-processing"><span class="std std-ref">Waveform Averaging Analysis</span></a> or <a class="reference internal" href="plot_11_hrf_measured.html#tut-fnirs-hrf"><span class="std std-ref">GLM Analysis (Measured)</span></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>HD-DOT specific tutorials are currently under development.</p>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 29.580 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  162 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 27.656 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  641 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-06-gowerlabs-py">
 <div class="binder-badge docutils container">
-<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_06_gowerlabs.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_06_gowerlabs.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
+</a>
 </div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/22fae854908139dd690cb8d17bf0e04e/plot_06_gowerlabs.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_06_gowerlabs.ipynb</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/a479c8053b405f97a4394d0b78fd95e9/plot_06_gowerlabs.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_06_gowerlabs.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/452a2873581287c7eae2df98481cc6fe/plot_06_gowerlabs.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">plot_06_gowerlabs.zip</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -995,7 +1490,10 @@ Channel types:: fnirs_cw_amplitude: 216
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="plot_05_datasets.html"
@@ -1015,7 +1513,10 @@ Channel types:: fnirs_cw_amplitude: 216
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -1039,41 +1540,57 @@ Channel types:: fnirs_cw_amplitude: 216
 </ul>
   </nav></div>
 
+  <div class="sidebar-secondary-item">
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/mne-tools/mne-nirs/edit/main/doc/auto_examples/general/plot_06_gowerlabs.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
 </div></div>
               
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner"></div>
+            
           </footer>
         
       </main>
     </div>
   </div>
   
-    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
     
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
+    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
   
     <div class="footer-items__start">
       
-        <div class="footer-item">
-  <p class="copyright">
-    
-      © Copyright 2012–2023, MNE Developers. Last updated &lt;time datetime=&#34;2023-11-21T03:21:06.396486+00:00&#34; class=&#34;localized&#34;&gt;2023-11-21 03:21 UTC&lt;/time&gt;
-&lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.
-      <br/>
-    
-  </p>
-</div>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-07-22T23:09:06.461771+00:00" class="localized">2024-07-22 23:09 UTC</time>
+<script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
   
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
   
 </div>
 

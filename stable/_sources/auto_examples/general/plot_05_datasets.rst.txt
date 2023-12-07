@@ -38,7 +38,7 @@ dataset.
 
 .. GENERATED FROM PYTHON SOURCE LINES 21-32
 
-.. code-block:: default
+.. code-block:: Python
 
     # sphinx_gallery_thumbnail_number = 1
 
@@ -75,7 +75,7 @@ motor task.
 
 .. GENERATED FROM PYTHON SOURCE LINES 45-50
 
-.. code-block:: default
+.. code-block:: Python
 
 
     datapath = mne_nirs.datasets.fnirs_motor_group.data_path()
@@ -188,7 +188,7 @@ The final condition was a control, no audio was presented to the listeners.
 
 .. GENERATED FROM PYTHON SOURCE LINES 62-67
 
-.. code-block:: default
+.. code-block:: Python
 
 
     datapath = mne_nirs.datasets.block_speech_noise.data_path()
@@ -386,7 +386,7 @@ presented randomly throughout the experiment.
 
 .. GENERATED FROM PYTHON SOURCE LINES 79-84
 
-.. code-block:: default
+.. code-block:: Python
 
 
     datapath = mne_nirs.datasets.audio_or_visual_speech.data_path()
@@ -515,7 +515,7 @@ Bibliography
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  1.450 seconds)
+   **Total running time of the script:** (0 minutes 2.361 seconds)
 
 **Estimated memory usage:**  10 MB
 
@@ -526,7 +526,6 @@ Bibliography
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
@@ -534,13 +533,13 @@ Bibliography
         :alt: Launch binder
         :width: 150 px
 
-    .. container:: sphx-glr-download sphx-glr-download-python
-
-      :download:`Download Python source code: plot_05_datasets.py <plot_05_datasets.py>`
-
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
       :download:`Download Jupyter notebook: plot_05_datasets.ipynb <plot_05_datasets.ipynb>`
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download Python source code: plot_05_datasets.py <plot_05_datasets.py>`
 
 
 .. only:: html

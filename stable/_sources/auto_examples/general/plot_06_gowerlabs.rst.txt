@@ -44,7 +44,7 @@ to ensure you have all the required packages installed we recommend using the
 
 .. GENERATED FROM PYTHON SOURCE LINES 27-40
 
-.. code-block:: default
+.. code-block:: Python
 
     # sphinx_gallery_thumbnail_number = 6
 
@@ -81,7 +81,7 @@ running `fname = /path/to/data.snirf`.
 
 .. GENERATED FROM PYTHON SOURCE LINES 51-56
 
-.. code-block:: default
+.. code-block:: Python
 
     import mne_nirs.io
 
@@ -101,7 +101,7 @@ We can view the path to the data by calling the variable `fname`.
 
 .. GENERATED FROM PYTHON SOURCE LINES 58-62
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fname
@@ -126,7 +126,7 @@ To load the file we call the function :func:`mne:mne.io.read_raw_snirf`.
 
 .. GENERATED FROM PYTHON SOURCE LINES 64-67
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw = mne.io.read_raw_snirf(fname, preload=True)
@@ -153,7 +153,7 @@ And we can look at the file metadata by calling the variable `raw`.
 
 .. GENERATED FROM PYTHON SOURCE LINES 69-72
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw
@@ -166,75 +166,92 @@ And we can look at the file metadata by calling the variable `raw`.
 .. raw:: html
 
     <div class="output_subarea output_html rendered_html output_result">
-    <table class="table table-hover table-striped table-sm table-responsive small">
-        <tr>
-            <th>Measurement date</th>
-        
-            <td>January 01, 2000  00:00:00 GMT</td>
-        
-        </tr>
-        <tr>
-            <th>Experimenter</th>
-        
-            <td>Unknown</td>
-        
-        </tr>
-            <th>Participant</th>
-        
+    <details open>
+        <summary><strong>General</strong></summary>
+        <table class="table table-hover table-striped table-sm table-responsive small">
+            <tr>
+                <th>Measurement date</th>
             
-        
-        </tr>
-        <tr>
-            <th>Digitized points</th>
-        
-            <td>5 points</td>
-        
-        </tr>
-        <tr>
-            <th>Good channels</th>
-            <td>216 fNIRS (CW amplitude)</td>
-        </tr>
-        <tr>
-            <th>Bad channels</th>
-            <td>None</td>
-        </tr>
-        <tr>
-            <th>EOG channels</th>
-            <td>Not available</td>
-        </tr>
-        <tr>
-            <th>ECG channels</th>
-            <td>Not available</td>
-    
-        <tr>
-            <th>Sampling frequency</th>
-            <td>10.00 Hz</td>
-        </tr>
-    
-    
-        <tr>
-            <th>Highpass</th>
-            <td>0.00 Hz</td>
-        </tr>
-    
-    
-        <tr>
-            <th>Lowpass</th>
-            <td>5.00 Hz</td>
-        </tr>
-    
-    
-    
-        <tr>
-            <th>Filenames</th>
-            <td>lumomat-1-1-0.snirf</td>
-        </tr>
-    
-        <tr>
-            <th>Duration</th>
-            <td>00:00:28 (HH:MM:SS)</td>
-        </tr>
-    </table>
+                <td>January 01, 2000  00:00:00 GMT</td>
+            
+            </tr>
+            <tr>
+                <th>Experimenter</th>
+            
+                <td>Unknown</td>
+            
+            </tr>
+            <tr>
+                <th>Participant</th>
+            
+            
+            
+            </tr>
+        </table>
+        </details>
+        <details open>
+            <summary><strong>Channels</strong></summary>
+            <table class="table table-hover table-striped table-sm table-responsive small">
+                <tr>
+                    <th>Digitized points</th>
+                
+                    <td>5 points</td>
+                
+                </tr>
+                <tr>
+                    <th>Good channels</th>
+                    <td>216 fNIRS (CW amplitude)</td>
+                </tr>
+                <tr>
+                    <th>Bad channels</th>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <th>EOG channels</th>
+                    <td>Not available</td>
+                </tr>
+                <tr>
+                    <th>ECG channels</th>
+                    <td>Not available</td>
+                </tr>
+            </table>
+            </details>
+            <details open>
+                <summary><strong>Data</strong></summary>
+                <table class="table table-hover table-striped table-sm table-responsive small">
+                
+                    <tr>
+                        <th>Sampling frequency</th>
+                        <td>10.00 Hz</td>
+                    </tr>
+                
+                
+                    <tr>
+                        <th>Highpass</th>
+                        <td>0.00 Hz</td>
+                    </tr>
+                
+                
+                    <tr>
+                        <th>Lowpass</th>
+                        <td>5.00 Hz</td>
+                    </tr>
+                
+                
+                
+                    <tr>
+                        <th>Filenames</th>
+                        <td>lumomat-1-1-0.snirf</td>
+                    </tr>
+                
+                
+                    <tr>
+                        <th>Duration</th>
+                        <td>00:00:28 (HH:MM:SS)</td>
+                    </tr>
+                
+                </table>
+                </details>
     </div>
     <br />
     <br />
@@ -248,7 +265,7 @@ and signal annotations.
 
 .. GENERATED FROM PYTHON SOURCE LINES 77-80
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw.plot(duration=60)
@@ -267,7 +284,7 @@ and signal annotations.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7ff1e9090310>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fb6298b4280>
 
 
 
@@ -282,7 +299,7 @@ annotations to ensure they match what we expect from our experiment.
 
 .. GENERATED FROM PYTHON SOURCE LINES 88-92
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw.annotations
@@ -313,7 +330,7 @@ the annotations to a dataframe.
 
 .. GENERATED FROM PYTHON SOURCE LINES 100-104
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw.annotations.to_data_frame()
@@ -354,55 +371,55 @@ the annotations to a dataframe.
         <tr>
           <th>0</th>
           <td>2000-01-01 00:00:04.617</td>
-          <td>1.0</td>
+          <td>0.0</td>
           <td>A</td>
         </tr>
         <tr>
           <th>1</th>
           <td>2000-01-01 00:00:06.067</td>
-          <td>1.0</td>
+          <td>0.0</td>
           <td>A</td>
         </tr>
         <tr>
           <th>2</th>
           <td>2000-01-01 00:00:07.317</td>
-          <td>1.0</td>
+          <td>0.0</td>
           <td>A</td>
         </tr>
         <tr>
           <th>3</th>
           <td>2000-01-01 00:00:11.901</td>
-          <td>1.0</td>
+          <td>0.0</td>
           <td>Cat</td>
         </tr>
         <tr>
           <th>4</th>
           <td>2000-01-01 00:00:15.518</td>
-          <td>1.0</td>
+          <td>0.0</td>
           <td>Dog</td>
         </tr>
         <tr>
           <th>5</th>
           <td>2000-01-01 00:00:17.318</td>
-          <td>1.0</td>
+          <td>0.0</td>
           <td>Dog</td>
         </tr>
         <tr>
           <th>6</th>
           <td>2000-01-01 00:00:21.868</td>
-          <td>1.0</td>
+          <td>0.0</td>
           <td>A</td>
         </tr>
         <tr>
           <th>7</th>
           <td>2000-01-01 00:00:23.418</td>
-          <td>1.0</td>
+          <td>0.0</td>
           <td>A</td>
         </tr>
         <tr>
           <th>8</th>
           <td>2000-01-01 00:00:24.802</td>
-          <td>1.0</td>
+          <td>0.0</td>
           <td>A</td>
         </tr>
       </tbody>
@@ -437,7 +454,7 @@ and four detectors.
 
 .. GENERATED FROM PYTHON SOURCE LINES 125-134
 
-.. code-block:: default
+.. code-block:: Python
 
 
     subjects_dir = op.join(mne.datasets.sample.data_path(), 'subjects')
@@ -482,7 +499,7 @@ First, lets just look at the `fsaverage` head that we will use.
 
 .. GENERATED FROM PYTHON SOURCE LINES 144-154
 
-.. code-block:: default
+.. code-block:: Python
 
 
     plot_kwargs = dict(subjects_dir=subjects_dir,
@@ -533,7 +550,7 @@ including :ref:`mne:tut-auto-coreg`.
 
 .. GENERATED FROM PYTHON SOURCE LINES 170-174
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fig = mne.viz.plot_alignment(raw.info, trans="fsaverage", subject="fsaverage", **plot_kwargs)
@@ -568,7 +585,7 @@ distance between the fiducials.
 
 .. GENERATED FROM PYTHON SOURCE LINES 181-189
 
-.. code-block:: default
+.. code-block:: Python
 
 
     coreg = mne.coreg.Coregistration(raw.info, "fsaverage", subjects_dir, fiducials="estimated")
@@ -613,7 +630,7 @@ the generic MRI head.
 
 .. GENERATED FROM PYTHON SOURCE LINES 196-202
 
-.. code-block:: default
+.. code-block:: Python
 
 
     brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5', alpha=0.3)
@@ -650,7 +667,7 @@ interface using the `fsaverage` head.
 
 .. GENERATED FROM PYTHON SOURCE LINES 209-214
 
-.. code-block:: default
+.. code-block:: Python
 
 
     mtg = raw.get_montage()
@@ -665,75 +682,92 @@ interface using the `fsaverage` head.
 .. raw:: html
 
     <div class="output_subarea output_html rendered_html output_result">
-    <table class="table table-hover table-striped table-sm table-responsive small">
-        <tr>
-            <th>Measurement date</th>
-        
-            <td>January 01, 2000  00:00:00 GMT</td>
-        
-        </tr>
-        <tr>
-            <th>Experimenter</th>
-        
-            <td>Unknown</td>
-        
-        </tr>
-            <th>Participant</th>
-        
+    <details open>
+        <summary><strong>General</strong></summary>
+        <table class="table table-hover table-striped table-sm table-responsive small">
+            <tr>
+                <th>Measurement date</th>
             
-        
-        </tr>
-        <tr>
-            <th>Digitized points</th>
-        
-            <td>24 points</td>
-        
-        </tr>
-        <tr>
-            <th>Good channels</th>
-            <td>216 fNIRS (CW amplitude)</td>
-        </tr>
-        <tr>
-            <th>Bad channels</th>
-            <td>None</td>
-        </tr>
-        <tr>
-            <th>EOG channels</th>
-            <td>Not available</td>
-        </tr>
-        <tr>
-            <th>ECG channels</th>
-            <td>Not available</td>
-    
-        <tr>
-            <th>Sampling frequency</th>
-            <td>10.00 Hz</td>
-        </tr>
-    
-    
-        <tr>
-            <th>Highpass</th>
-            <td>0.00 Hz</td>
-        </tr>
-    
-    
-        <tr>
-            <th>Lowpass</th>
-            <td>5.00 Hz</td>
-        </tr>
-    
-    
-    
-        <tr>
-            <th>Filenames</th>
-            <td>lumomat-1-1-0.snirf</td>
-        </tr>
-    
-        <tr>
-            <th>Duration</th>
-            <td>00:00:28 (HH:MM:SS)</td>
-        </tr>
-    </table>
+                <td>January 01, 2000  00:00:00 GMT</td>
+            
+            </tr>
+            <tr>
+                <th>Experimenter</th>
+            
+                <td>Unknown</td>
+            
+            </tr>
+            <tr>
+                <th>Participant</th>
+            
+            
+            
+            </tr>
+        </table>
+        </details>
+        <details open>
+            <summary><strong>Channels</strong></summary>
+            <table class="table table-hover table-striped table-sm table-responsive small">
+                <tr>
+                    <th>Digitized points</th>
+                
+                    <td>24 points</td>
+                
+                </tr>
+                <tr>
+                    <th>Good channels</th>
+                    <td>216 fNIRS (CW amplitude)</td>
+                </tr>
+                <tr>
+                    <th>Bad channels</th>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <th>EOG channels</th>
+                    <td>Not available</td>
+                </tr>
+                <tr>
+                    <th>ECG channels</th>
+                    <td>Not available</td>
+                </tr>
+            </table>
+            </details>
+            <details open>
+                <summary><strong>Data</strong></summary>
+                <table class="table table-hover table-striped table-sm table-responsive small">
+                
+                    <tr>
+                        <th>Sampling frequency</th>
+                        <td>10.00 Hz</td>
+                    </tr>
+                
+                
+                    <tr>
+                        <th>Highpass</th>
+                        <td>0.00 Hz</td>
+                    </tr>
+                
+                
+                    <tr>
+                        <th>Lowpass</th>
+                        <td>5.00 Hz</td>
+                    </tr>
+                
+                
+                
+                    <tr>
+                        <th>Filenames</th>
+                        <td>lumomat-1-1-0.snirf</td>
+                    </tr>
+                
+                
+                    <tr>
+                        <th>Duration</th>
+                        <td>00:00:28 (HH:MM:SS)</td>
+                    </tr>
+                
+                </table>
+                </details>
     </div>
     <br />
     <br />
@@ -744,7 +778,7 @@ You can then save the coregistered object.
 
 .. GENERATED FROM PYTHON SOURCE LINES 216-219
 
-.. code-block:: default
+.. code-block:: Python
 
 
     mne_nirs.io.write_raw_snirf(raw, "raw_coregistered_to_fsaverage.snirf")
@@ -763,7 +797,7 @@ already been coregistered to fsaverage.
 
 .. GENERATED FROM PYTHON SOURCE LINES 222-230
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw_w_coreg = mne.io.read_raw_snirf("raw_coregistered_to_fsaverage.snirf")
@@ -804,9 +838,9 @@ From here you can use your favorite analysis technique such as
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  42.007 seconds)
+   **Total running time of the script:** (0 minutes 39.882 seconds)
 
-**Estimated memory usage:**  197 MB
+**Estimated memory usage:**  168 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_06_gowerlabs.py:
@@ -815,7 +849,6 @@ From here you can use your favorite analysis technique such as
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
@@ -823,13 +856,13 @@ From here you can use your favorite analysis technique such as
         :alt: Launch binder
         :width: 150 px
 
-    .. container:: sphx-glr-download sphx-glr-download-python
-
-      :download:`Download Python source code: plot_06_gowerlabs.py <plot_06_gowerlabs.py>`
-
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
       :download:`Download Jupyter notebook: plot_06_gowerlabs.ipynb <plot_06_gowerlabs.ipynb>`
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download Python source code: plot_06_gowerlabs.py <plot_06_gowerlabs.py>`
 
 
 .. only:: html

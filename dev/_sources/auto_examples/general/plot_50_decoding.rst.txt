@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_general_plot_50_decoding.py>`
-        to download the full example code or to run this example in your browser via Binder
+        to download the full example code. or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
 
@@ -50,12 +50,7 @@ Luke et. al. (2021)
    See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
    to use your data with MNE-Python.
 
-
-.. contents:: Page contents
-   :local:
-   :depth: 2
-
-.. GENERATED FROM PYTHON SOURCE LINES 39-68
+.. GENERATED FROM PYTHON SOURCE LINES 34-60
 
 .. code-block:: Python
 
@@ -64,28 +59,27 @@ Luke et. al. (2021)
     #          Alexandre Gramfort <alexandre.gramfort@inria.fr>
     # License: BSD (3-clause)
 
-
     # Import common libraries
-    import os
     import contextlib
+    import os
+
     import numpy as np
+    from mne import Epochs, events_from_annotations
+    from mne.decoding import Scaler, Vectorizer, cross_val_multiscore
+
+    # Import MNE-Python processing
+    from mne.preprocessing.nirs import beer_lambert_law, optical_density
+
+    # Import MNE-BIDS processing
+    from mne_bids import BIDSPath, get_entity_vals, read_raw_bids
+    from sklearn.linear_model import LogisticRegression
 
     # Import sklearn processing
     from sklearn.pipeline import make_pipeline
-    from sklearn.linear_model import LogisticRegression
-
-    # Import MNE-Python processing
-    from mne.preprocessing.nirs import optical_density, beer_lambert_law
-    from mne import Epochs, events_from_annotations
-    from mne.decoding import (Scaler,
-                              cross_val_multiscore,
-                              Vectorizer)
 
     # Import MNE-NIRS processing
     from mne_nirs.datasets.fnirs_motor_group import data_path
 
-    # Import MNE-BIDS processing
-    from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
 
 
 
@@ -93,9 +87,7 @@ Luke et. al. (2021)
 
 
 
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 69-83
+.. GENERATED FROM PYTHON SOURCE LINES 61-75
 
 Set up directories
 ------------------
@@ -112,15 +104,16 @@ without manually specifying the trigger names etc.
 We first define where the root directory of our dataset is.
 In this example we use the example dataset ``audio_or_visual_speech``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-90
+.. GENERATED FROM PYTHON SOURCE LINES 75-83
 
 .. code-block:: Python
 
 
     root = data_path()
-    dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf",
-                       task="tapping", datatype="nirs")
-    subjects = get_entity_vals(root, 'subject')
+    dataset = BIDSPath(
+        root=root, suffix="nirs", extension=".snirf", task="tapping", datatype="nirs"
+    )
+    subjects = get_entity_vals(root, "subject")
 
 
 
@@ -130,7 +123,7 @@ In this example we use the example dataset ``audio_or_visual_speech``.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-100
+.. GENERATED FROM PYTHON SOURCE LINES 84-93
 
 Define individual analysis
 --------------------------
@@ -142,28 +135,38 @@ of this tutorial is to demonstrate the decoding pipeline.
 In this example only the epochs for the two conditions we wish to decode
 between are retained.
 
-.. GENERATED FROM PYTHON SOURCE LINES 100-123
+.. GENERATED FROM PYTHON SOURCE LINES 93-126
 
 .. code-block:: Python
 
 
 
     def epoch_preprocessing(bids_path):
-
         with open(os.devnull, "w") as f, contextlib.redirect_stdout(f):
             raw_intensity = read_raw_bids(bids_path=bids_path).load_data()
 
         raw_od = optical_density(raw_intensity)
         raw_od.resample(1.5)
         raw_haemo = beer_lambert_law(raw_od, ppf=6)
-        raw_haemo = raw_haemo.filter(None, 0.6, h_trans_bandwidth=0.05,
-                                     l_trans_bandwidth=0.01, verbose=False)
+        raw_haemo = raw_haemo.filter(
+            None, 0.6, h_trans_bandwidth=0.05, l_trans_bandwidth=0.01, verbose=False
+        )
 
         events, event_dict = events_from_annotations(raw_haemo, verbose=False)
-        epochs = Epochs(raw_haemo, events, event_id=event_dict, tmin=-5, tmax=30,
-                        reject=dict(hbo=100e-6), reject_by_annotation=True,
-                        proj=True, baseline=(None, 0), detrend=1,
-                        preload=True, verbose=False)
+        epochs = Epochs(
+            raw_haemo,
+            events,
+            event_id=event_dict,
+            tmin=-5,
+            tmax=30,
+            reject=dict(hbo=100e-6),
+            reject_by_annotation=True,
+            proj=True,
+            baseline=(None, 0),
+            detrend=1,
+            preload=True,
+            verbose=False,
+        )
 
         epochs = epochs[["Tapping/Right", "Tapping/Left"]]
         return raw_haemo, epochs
@@ -176,7 +179,7 @@ between are retained.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 124-136
+.. GENERATED FROM PYTHON SOURCE LINES 127-139
 
 Run analysis on all participants
 --------------------------------
@@ -191,17 +194,15 @@ comply with the scikit-learn data structure, and a logistic regression
 classifier was applied using the liblinear solver.
 This approach classifies the data within, rather than across, subjects.
 
-.. GENERATED FROM PYTHON SOURCE LINES 136-164
+.. GENERATED FROM PYTHON SOURCE LINES 139-168
 
 .. code-block:: Python
 
 
 
-    for chroma in ['hbo', 'hbr']:
-
+    for chroma in ["hbo", "hbr"]:
         st_scores = []
         for sub in subjects:
-
             bids_path = dataset.update(subject=sub)
             raw_haemo, epochs = epoch_preprocessing(bids_path)
 
@@ -210,17 +211,20 @@ This approach classifies the data within, rather than across, subjects.
             X = epochs.get_data()
             y = epochs.events[:, 2]
 
-            clf = make_pipeline(Scaler(epochs.info),
-                                Vectorizer(),
-                                LogisticRegression(solver='liblinear'))
+            clf = make_pipeline(
+                Scaler(epochs.info), Vectorizer(), LogisticRegression(solver="liblinear")
+            )
 
-            scores = 100 * cross_val_multiscore(clf, X, y,
-                                                cv=5, n_jobs=1, scoring='roc_auc')
+            scores = 100 * cross_val_multiscore(
+                clf, X, y, cv=5, n_jobs=1, scoring="roc_auc"
+            )
 
             st_scores.append(np.mean(scores, axis=0))
 
-        print(f"Average spatio-temporal ROC-AUC performance ({chroma}) = "
-              f"{np.round(np.mean(st_scores))} % ({np.round(np.std(st_scores))})")
+        print(
+            f"Average spatio-temporal ROC-AUC performance ({chroma}) = "
+            f"{np.round(np.mean(st_scores))} % ({np.round(np.std(st_scores))})"
+        )
 
 
 
@@ -237,7 +241,7 @@ This approach classifies the data within, rather than across, subjects.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 165-173
+.. GENERATED FROM PYTHON SOURCE LINES 169-177
 
 Conclusion
 ----------
@@ -248,7 +252,7 @@ than the HbR signal. For further discussion about the efficacy of fNIRS
 signals in decoding experimental condition see Luke et. al. (2021)
 :footcite:`Luke2021.11.19.469225`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 176-180
+.. GENERATED FROM PYTHON SOURCE LINES 180-184
 
 Bibliography
 -----------------------------------------------
@@ -258,9 +262,9 @@ Bibliography
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.102 seconds)
+   **Total running time of the script:** (0 minutes 6.124 seconds)
 
-**Estimated memory usage:**  9 MB
+**Estimated memory usage:**  432 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_50_decoding.py:
@@ -283,6 +287,10 @@ Bibliography
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_50_decoding.py <plot_50_decoding.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_50_decoding.zip <plot_50_decoding.zip>`
 
 
 .. only:: html

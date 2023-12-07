@@ -14,6 +14,18 @@ Patch version changes indicate backward compatible bug fixes.
 
 To install a specific version of the library you would run ``pip install mne-nirs==0.3.0``, where ``0.3.0`` is the version you wish to install.
 
+v0.6.0
+------
+
+* Changed ci param to errorbar in sns-catplot functions. By `Nicolas Busato`_.
+* Fix bug in SNIRF writer that caused incorrect duration to be written to file. By `Robert Luke`_.
+* Add option to export montage location in SNIRF using the landmarkLabels field. By `Robert Luke`_.
+* Fix continuous integration issues and update test infrastructure. By `Florin Pop`_.
+* SNIRF writer uses v1.1 of the spec by default. By `Florin Pop`_.
+* Migrate from PyQt5/PyQt6 to PySide6. By `Florin Pop`_.
+* Add ability to write optical density data in SNIRF format. By `Florin Pop`_.
+* Add ability to write haemoglobin data in SNIRF format. By `Robert Luke`_.
+
 v0.5.0
 ------
 
@@ -52,7 +64,7 @@ General
 
 Enhancements
 
-* Update SNIRF exporter to meet v1.0 validator requirements :meth:`mne_nirs.io.snirf.write_raw_snirf`. By `Robert Luke`_.
+* Update SNIRF exporter to meet v1.0 validator requirements :meth:`mne_nirs.io.write_raw_snirf`. By `Robert Luke`_.
 * Add ability to provide custom channel weighting in :meth:`mne_nirs.statistics.RegressionResults.to_dataframe_region_of_interest` computation. By `Robert Luke`_.
 * Add function to plot montages on 3D brain with source, detector, and channel naming :func:`mne_nirs.visualisation.plot_3d_montage`. By `Eric Larson`_.
 
@@ -144,7 +156,7 @@ Documentation
 
 Bugs
 
-* Fix inconsistencies between files written via :meth:`mne_nirs.io.snirf.write_raw_snirf` and the `current version <https://github.com/fNIRS/snirf/blob/52de9a6724ddd0c9dcd36d8d11007895fed74205/snirf_specification.md>`_ of the official SNIRF spec. By `Darin Erat Sleiter`_.
+* Fix inconsistencies between files written via :meth:`mne_nirs.io.write_raw_snirf` and the `current version <https://github.com/fNIRS/snirf/blob/52de9a6724ddd0c9dcd36d8d11007895fed74205/snirf_specification.md>`_ of the official SNIRF spec. By `Darin Erat Sleiter`_.
 
 
 Infrastructure
@@ -185,3 +197,5 @@ Enhancements
 .. _Alex Rockhill: https://github.com/alexrockhill
 .. _Samuel Powell: https://github.com/samuelpowell
 .. _Johann Benerradi: https://github.com/HanBnrd
+.. _Florin Pop: https://github.com/florin-pop
+.. _Nicolas Busato: https://github.com/Busato

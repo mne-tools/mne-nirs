@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_general_plot_22_quality.py>`
-        to download the full example code or to run this example in your browser via Binder
+        to download the full example code. or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
 
@@ -64,7 +64,7 @@ the presence of a heart beat signal, which indicates that the sensors
 were in contact with the scalp. For further details see the papers listed
 in the relevant literature sidebar.
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-65
+.. GENERATED FROM PYTHON SOURCE LINES 49-66
 
 .. code-block:: Python
 
@@ -75,12 +75,13 @@ in the relevant literature sidebar.
     # License: BSD (3-clause)
 
     import os
+    from itertools import compress
+
+    import matplotlib.pyplot as plt
     import mne
     import numpy as np
-    from itertools import compress
-    import matplotlib.pyplot as plt
-
     from mne.preprocessing.nirs import optical_density
+
     from mne_nirs.preprocessing import peak_power, scalp_coupling_index_windowed
     from mne_nirs.visualisation import plot_timechannel_quality_metric
 
@@ -91,7 +92,7 @@ in the relevant literature sidebar.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-73
+.. GENERATED FROM PYTHON SOURCE LINES 67-74
 
 ***********
 Import data
@@ -101,13 +102,13 @@ Here we will work with the :ref:`fNIRS motor data <fnirs-motor-dataset>`.
 We resample the data to make indexing exact times more convenient.
 We then convert the data to optical density and plot the raw signal.
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-81
+.. GENERATED FROM PYTHON SOURCE LINES 74-82
 
 .. code-block:: Python
 
 
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-    fnirs_cw_amplitude_dir = os.path.join(fnirs_data_folder, 'Participant-1')
+    fnirs_cw_amplitude_dir = os.path.join(fnirs_data_folder, "Participant-1")
     raw_intensity = mne.io.read_raw_nirx(fnirs_cw_amplitude_dir, verbose=True)
     raw_intensity.load_data().resample(4.0, npad="auto")
     raw_od = optical_density(raw_intensity)
@@ -128,17 +129,17 @@ We then convert the data to optical density and plot the raw signal.
 
     Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff280ba49c0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa0a890fac0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-85
+.. GENERATED FROM PYTHON SOURCE LINES 83-86
 
 From the above plot we observe that the data is relatively clean.
 Later we will add some artificial bad sections to demonstrate the quality
 evaluation metrics.
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-103
+.. GENERATED FROM PYTHON SOURCE LINES 89-104
 
 ********************
 Scalp Coupling Index
@@ -156,7 +157,7 @@ SCI evaluated over entire signal
 Here we calculate the SCI for each channel over
 the entire signal and view the distribution of values.
 
-.. GENERATED FROM PYTHON SOURCE LINES 103-109
+.. GENERATED FROM PYTHON SOURCE LINES 104-110
 
 .. code-block:: Python
 
@@ -164,7 +165,7 @@ the entire signal and view the distribution of values.
     sci = mne.preprocessing.nirs.scalp_coupling_index(raw_od)
     fig, ax = plt.subplots()
     ax.hist(sci)
-    ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
+    ax.set(xlabel="Scalp Coupling Index", ylabel="Count", xlim=[0, 1])
 
 
 
@@ -184,7 +185,7 @@ the entire signal and view the distribution of values.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 110-117
+.. GENERATED FROM PYTHON SOURCE LINES 111-118
 
 We observe that most of the channels have a good SCI of 1, but a few channels
 have a poorer score. We can list the channels with an SCI below a threshold.
@@ -194,13 +195,13 @@ For this example we set the threshold for a bad channel to be SCI < 0.8.
 We then print a list of the bad channels and observe their are 10 channels
 (five source-detector pairs) that are marked as bad.
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-121
+.. GENERATED FROM PYTHON SOURCE LINES 118-122
 
 .. code-block:: Python
 
 
-    raw_od.info['bads'] = list(compress(raw_od.ch_names, sci < 0.7))
-    print(raw_od.info['bads'])
+    raw_od.info["bads"] = list(compress(raw_od.ch_names, sci < 0.7))
+    print(raw_od.info["bads"])
 
 
 
@@ -215,12 +216,12 @@ We then print a list of the bad channels and observe their are 10 channels
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 122-124
+.. GENERATED FROM PYTHON SOURCE LINES 123-125
 
 We can plot the time course of the signal again and note that the bad
 channels are now displayed in grey to indicate they are bad.
 
-.. GENERATED FROM PYTHON SOURCE LINES 124-127
+.. GENERATED FROM PYTHON SOURCE LINES 125-128
 
 .. code-block:: Python
 
@@ -241,16 +242,16 @@ channels are now displayed in grey to indicate they are bad.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff2808dc9c0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa0a89a05e0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 128-130
+.. GENERATED FROM PYTHON SOURCE LINES 129-131
 
 Similarly, we can view the montage diagram and view where on the head
 the bad channels were positioned.
 
-.. GENERATED FROM PYTHON SOURCE LINES 130-133
+.. GENERATED FROM PYTHON SOURCE LINES 131-134
 
 .. code-block:: Python
 
@@ -275,7 +276,7 @@ the bad channels were positioned.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 134-142
+.. GENERATED FROM PYTHON SOURCE LINES 135-143
 
 SCI evaluated over initial segment of signal
 ============================================
@@ -286,7 +287,7 @@ evaluate the data quality of the first 10 seconds of the signal.
 Note that the difference to evaluation of the entire signal was quite subtle,
 but this may vary depending on your experimental design and setup.
 
-.. GENERATED FROM PYTHON SOURCE LINES 142-148
+.. GENERATED FROM PYTHON SOURCE LINES 143-149
 
 .. code-block:: Python
 
@@ -294,7 +295,7 @@ but this may vary depending on your experimental design and setup.
     sci = mne.preprocessing.nirs.scalp_coupling_index(raw_od.copy().crop(10))
     fig, ax = plt.subplots()
     ax.hist(sci)
-    ax.set(xlabel='Scalp Coupling Index', ylabel='Count', xlim=[0, 1])
+    ax.set(xlabel="Scalp Coupling Index", ylabel="Count", xlim=[0, 1])
 
 
 
@@ -314,7 +315,7 @@ but this may vary depending on your experimental design and setup.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 149-165
+.. GENERATED FROM PYTHON SOURCE LINES 150-166
 
 SCI evaluated over moving window
 ================================
@@ -333,15 +334,19 @@ other causes.
 In this example we set the time window to be 60 seconds, but the user may
 define a window length that is appropriate for the experiment.
 
-.. GENERATED FROM PYTHON SOURCE LINES 165-171
+.. GENERATED FROM PYTHON SOURCE LINES 166-176
 
 .. code-block:: Python
 
 
     _, scores, times = scalp_coupling_index_windowed(raw_od, time_window=60)
-    plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.7,
-                                    title="Scalp Coupling Index "
-                                          "Quality Evaluation")
+    plot_timechannel_quality_metric(
+        raw_od,
+        scores,
+        times,
+        threshold=0.7,
+        title="Scalp Coupling Index " "Quality Evaluation",
+    )
 
 
 
@@ -361,7 +366,7 @@ define a window length that is appropriate for the experiment.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 172-181
+.. GENERATED FROM PYTHON SOURCE LINES 177-186
 
 **********
 Peak Power
@@ -373,14 +378,15 @@ over a 10 second window. This allows the user to view instances where
 a subset of channels may be contaminated by artifacts for a short duration
 of the recording.
 
-.. GENERATED FROM PYTHON SOURCE LINES 181-187
+.. GENERATED FROM PYTHON SOURCE LINES 186-193
 
 .. code-block:: Python
 
 
     raw_od, scores, times = peak_power(raw_od, time_window=10)
-    plot_timechannel_quality_metric(raw_od, scores, times, threshold=0.1,
-                                    title="Peak Power Quality Evaluation")
+    plot_timechannel_quality_metric(
+        raw_od, scores, times, threshold=0.1, title="Peak Power Quality Evaluation"
+    )
 
 
 
@@ -401,7 +407,7 @@ of the recording.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 188-197
+.. GENERATED FROM PYTHON SOURCE LINES 194-203
 
 ****************
 Introduced Noise
@@ -413,7 +419,7 @@ We add a step like signal at two time instances to mimic an artifact.
 We add one artifact to channel S2-D4 at 1000 seconds
 and one artifact to channel S5-D13 at 2000 seconds.
 
-.. GENERATED FROM PYTHON SOURCE LINES 197-204
+.. GENERATED FROM PYTHON SOURCE LINES 203-210
 
 .. code-block:: Python
 
@@ -431,19 +437,23 @@ and one artifact to channel S5-D13 at 2000 seconds.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 205-207
+.. GENERATED FROM PYTHON SOURCE LINES 211-213
 
 Next we plot just these channels to demonstrate that indeed an artifact
 has been added.
 
-.. GENERATED FROM PYTHON SOURCE LINES 207-213
+.. GENERATED FROM PYTHON SOURCE LINES 213-223
 
 .. code-block:: Python
 
 
-    raw_od.copy().pick(picks=[12, 13, 34, 35]).\
-        plot(n_channels=55, duration=40000, show_scrollbars=False,
-             clipping=None, scalings={'fnirs_od': 0.2})
+    raw_od.copy().pick(picks=[12, 13, 34, 35]).plot(
+        n_channels=55,
+        duration=40000,
+        show_scrollbars=False,
+        clipping=None,
+        scalings={"fnirs_od": 0.2},
+    )
 
 
 
@@ -460,11 +470,11 @@ has been added.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff274fd8fc0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa0a890dab0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 214-226
+.. GENERATED FROM PYTHON SOURCE LINES 224-236
 
 *****************
 Peak Power Metric
@@ -479,7 +489,7 @@ The left facet illustrates the raw quality scores.
 The right facet illustrates the channel and time segments that do not meet
 the threshold criteria and are marked as bad.
 
-.. GENERATED FROM PYTHON SOURCE LINES 226-231
+.. GENERATED FROM PYTHON SOURCE LINES 236-241
 
 .. code-block:: Python
 
@@ -506,7 +516,7 @@ the threshold criteria and are marked as bad.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 232-248
+.. GENERATED FROM PYTHON SOURCE LINES 242-258
 
 ***********
 Annotations
@@ -525,14 +535,18 @@ epochs for time 1000 s, no epochs would be generated for channel S2-D4, but
 channels would be generated for S5-D13 (as the artifact was only present
 on S2-D4).
 
-.. GENERATED FROM PYTHON SOURCE LINES 248-253
+.. GENERATED FROM PYTHON SOURCE LINES 258-267
 
 .. code-block:: Python
 
 
-    raw_od.copy().pick(picks=[12, 13, 34, 35]).\
-        plot(n_channels=55, duration=40000, show_scrollbars=False,
-             clipping=None, scalings={'fnirs_od': 0.2})
+    raw_od.copy().pick(picks=[12, 13, 34, 35]).plot(
+        n_channels=55,
+        duration=40000,
+        show_scrollbars=False,
+        clipping=None,
+        scalings={"fnirs_od": 0.2},
+    )
 
 
 
@@ -548,11 +562,11 @@ on S2-D4).
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff280bf4980>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa0a890c160>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 254-261
+.. GENERATED FROM PYTHON SOURCE LINES 268-275
 
 These channel and time specific annotations are used by downstream
 processing. For example, when extracting epochs if a specific channel
@@ -562,7 +576,7 @@ Finally, we display the entire time signal after both channel and time
 specific quality evaluation. Note that bad channels are now greyed out
 and bad time segments are marked in red.
 
-.. GENERATED FROM PYTHON SOURCE LINES 261-264
+.. GENERATED FROM PYTHON SOURCE LINES 275-278
 
 .. code-block:: Python
 
@@ -583,11 +597,11 @@ and bad time segments are marked in red.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff2a89cb140>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa0b72420e0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 265-275
+.. GENERATED FROM PYTHON SOURCE LINES 279-289
 
 **********
 Conclusion
@@ -603,9 +617,9 @@ are treated in downstream analysis.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 27.146 seconds)
+   **Total running time of the script:** (0 minutes 34.300 seconds)
 
-**Estimated memory usage:**  10 MB
+**Estimated memory usage:**  433 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_22_quality.py:
@@ -628,6 +642,10 @@ are treated in downstream analysis.
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_22_quality.py <plot_22_quality.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_22_quality.zip <plot_22_quality.zip>`
 
 
 .. only:: html

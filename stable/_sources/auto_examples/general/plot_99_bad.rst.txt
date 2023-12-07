@@ -59,7 +59,7 @@ appear as if a fNIRS response is observed.
 
 .. GENERATED FROM PYTHON SOURCE LINES 42-62
 
-.. code-block:: default
+.. code-block:: Python
 
     # sphinx_gallery_thumbnail_number = 7
 
@@ -95,77 +95,94 @@ appear as if a fNIRS response is observed.
 .. raw:: html
 
     <div class="output_subarea output_html rendered_html output_result">
-    <table class="table table-hover table-striped table-sm table-responsive small">
-        <tr>
-            <th>Measurement date</th>
-        
-            <td>November 02, 2019  13:16:16 GMT</td>
-        
-        </tr>
-        <tr>
-            <th>Experimenter</th>
-        
-            <td>Unknown</td>
-        
-        </tr>
-            <th>Participant</th>
-        
+    <details open>
+        <summary><strong>General</strong></summary>
+        <table class="table table-hover table-striped table-sm table-responsive small">
+            <tr>
+                <th>Measurement date</th>
+            
+                <td>November 02, 2019  13:16:16 GMT</td>
+            
+            </tr>
+            <tr>
+                <th>Experimenter</th>
+            
+                <td>Unknown</td>
+            
+            </tr>
+            <tr>
+                <th>Participant</th>
+            
             
                 <td>P1</td>
             
-        
-        </tr>
-        <tr>
-            <th>Digitized points</th>
-        
-            <td>31 points</td>
-        
-        </tr>
-        <tr>
-            <th>Good channels</th>
-            <td>56 fNIRS (CW amplitude)</td>
-        </tr>
-        <tr>
-            <th>Bad channels</th>
-            <td>None</td>
-        </tr>
-        <tr>
-            <th>EOG channels</th>
-            <td>Not available</td>
-        </tr>
-        <tr>
-            <th>ECG channels</th>
-            <td>Not available</td>
-    
-        <tr>
-            <th>Sampling frequency</th>
-            <td>7.81 Hz</td>
-        </tr>
-    
-    
-        <tr>
-            <th>Highpass</th>
-            <td>0.00 Hz</td>
-        </tr>
-    
-    
-        <tr>
-            <th>Lowpass</th>
-            <td>3.91 Hz</td>
-        </tr>
-    
-    
-    
-        <tr>
-            <th>Filenames</th>
-            <td>Participant-1</td>
-        </tr>
-    
-        <tr>
-            <th>Duration</th>
-            <td>00:49:35 (HH:MM:SS)</td>
-        </tr>
-    </table>
+            
+            </tr>
+        </table>
+        </details>
+        <details open>
+            <summary><strong>Channels</strong></summary>
+            <table class="table table-hover table-striped table-sm table-responsive small">
+                <tr>
+                    <th>Digitized points</th>
+                
+                    <td>31 points</td>
+                
+                </tr>
+                <tr>
+                    <th>Good channels</th>
+                    <td>56 fNIRS (CW amplitude)</td>
+                </tr>
+                <tr>
+                    <th>Bad channels</th>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <th>EOG channels</th>
+                    <td>Not available</td>
+                </tr>
+                <tr>
+                    <th>ECG channels</th>
+                    <td>Not available</td>
+                </tr>
+            </table>
+            </details>
+            <details open>
+                <summary><strong>Data</strong></summary>
+                <table class="table table-hover table-striped table-sm table-responsive small">
+                
+                    <tr>
+                        <th>Sampling frequency</th>
+                        <td>7.81 Hz</td>
+                    </tr>
+                
+                
+                    <tr>
+                        <th>Highpass</th>
+                        <td>0.00 Hz</td>
+                    </tr>
+                
+                
+                    <tr>
+                        <th>Lowpass</th>
+                        <td>3.91 Hz</td>
+                    </tr>
+                
+                
+                
+                    <tr>
+                        <th>Filenames</th>
+                        <td>Participant-1</td>
+                    </tr>
+                
+                
+                    <tr>
+                        <th>Duration</th>
+                        <td>00:49:35 (HH:MM:SS)</td>
+                    </tr>
+                
+                </table>
+                </details>
     </div>
     <br />
     <br />
@@ -182,7 +199,7 @@ To achieve this we pick all the channels that are not considered to be short.
 
 .. GENERATED FROM PYTHON SOURCE LINES 70-79
 
-.. code-block:: default
+.. code-block:: Python
 
 
     picks = mne.pick_types(raw_intensity.info, meg=False, fnirs=True)
@@ -207,7 +224,7 @@ To achieve this we pick all the channels that are not considered to be short.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7ff180173670>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fb629749b40>
 
 
 
@@ -220,7 +237,7 @@ The raw intensity values are then converted to optical density.
 
 .. GENERATED FROM PYTHON SOURCE LINES 84-90
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
@@ -242,7 +259,7 @@ The raw intensity values are then converted to optical density.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7ff1b465f4c0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fb629608430>
 
 
 
@@ -256,7 +273,7 @@ the modified Beer-Lambert law.
 
 .. GENERATED FROM PYTHON SOURCE LINES 96-103
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
@@ -279,7 +296,7 @@ the modified Beer-Lambert law.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7ff1a06db430>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fb792905510>
 
 
 
@@ -293,7 +310,7 @@ We make the HbR white noise 3 time smaller than HbO as is commonly observed.
 
 .. GENERATED FROM PYTHON SOURCE LINES 109-115
 
-.. code-block:: default
+.. code-block:: Python
 
 
 
@@ -317,19 +334,17 @@ This analysis is BAD and is provided just as a demonstration.
 Do not do this!!
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 122-133
+.. GENERATED FROM PYTHON SOURCE LINES 122-131
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fig = raw_haemo.plot_psd(average=True)
     fig.suptitle('Before filtering', weight='bold', size='x-large')
-    fig.subplots_adjust(top=0.88)
     raw_haemo = raw_haemo.filter(0.05, 0.1, h_trans_bandwidth=0.2,
                                  l_trans_bandwidth=0.02)
     fig = raw_haemo.plot_psd(average=True)
     fig.suptitle('After filtering', weight='bold', size='x-large')
-    fig.subplots_adjust(top=0.88)
 
 
 
@@ -353,19 +368,25 @@ Do not do this!!
          :class: sphx-glr-multi-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+
+    Text(0.5, 0.993055, 'After filtering')
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 134-138
+.. GENERATED FROM PYTHON SOURCE LINES 132-136
 
 Apply Cui negative correlation method
 -------------------------------------
 
 Here we apply the Cui signal enhancement technique.
 
-.. GENERATED FROM PYTHON SOURCE LINES 138-142
+.. GENERATED FROM PYTHON SOURCE LINES 136-140
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw_haemo = mne_nirs.signal_enhancement.enhance_negative_correlation(raw_haemo)
@@ -378,7 +399,7 @@ Here we apply the Cui signal enhancement technique.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 143-152
+.. GENERATED FROM PYTHON SOURCE LINES 141-150
 
 Extract epochs
 --------------
@@ -390,9 +411,9 @@ related to each of the experimental conditions.
 First we extract the events of interest and visualise them to ensure they are
 correct.
 
-.. GENERATED FROM PYTHON SOURCE LINES 152-162
+.. GENERATED FROM PYTHON SOURCE LINES 150-159
 
-.. code-block:: default
+.. code-block:: Python
 
 
     events, _ = mne.events_from_annotations(raw_haemo, event_id={'1.0': 1,
@@ -401,7 +422,6 @@ correct.
     event_dict = {'Control': 1, 'Tapping/Left': 2, 'Tapping/Right': 3}
     fig = mne.viz.plot_events(events, event_id=event_dict,
                               sfreq=raw_haemo.info['sfreq'])
-    fig.subplots_adjust(right=0.7)  # make room for the legend
 
 
 
@@ -416,15 +436,15 @@ correct.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 163-166
+.. GENERATED FROM PYTHON SOURCE LINES 160-163
 
 Next we define the range of our epochs, the rejection criteria,
 baseline correction, and extract the epochs. We visualise the log of which
 epochs were dropped.
 
-.. GENERATED FROM PYTHON SOURCE LINES 166-177
+.. GENERATED FROM PYTHON SOURCE LINES 163-174
 
-.. code-block:: default
+.. code-block:: Python
 
 
     reject_criteria = dict(hbo=10e-6)
@@ -447,7 +467,7 @@ epochs were dropped.
 
     Not setting metadata
     90 matching events found
-    Setting baseline interval to [-1.536, 0.0] sec
+    Setting baseline interval to [-1.536, 0.0] s
     Applying baseline correction (mode: mean)
     0 projection items activated
     Using data from preloaded Raw for 90 events and 95 original time points ...
@@ -456,7 +476,7 @@ epochs were dropped.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 178-184
+.. GENERATED FROM PYTHON SOURCE LINES 175-181
 
 Plot standard fNIRS response image
 ----------------------------------
@@ -465,9 +485,9 @@ Next we generate the most common visualisation of fNIRS data: plotting
 both the HbO and HbR on the same figure to illustrate the relation between
 the two signals.
 
-.. GENERATED FROM PYTHON SOURCE LINES 184-198
+.. GENERATED FROM PYTHON SOURCE LINES 181-195
 
-.. code-block:: default
+.. code-block:: Python
 
 
     evoked_dict = {'Tapping/HbO': epochs['Tapping'].average(picks='hbo'),
@@ -501,7 +521,7 @@ the two signals.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 199-232
+.. GENERATED FROM PYTHON SOURCE LINES 196-229
 
 Summary
 --------------
@@ -540,9 +560,9 @@ approach, and the benefits of the GLM style of analysis
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  11.505 seconds)
+   **Total running time of the script:** (0 minutes 14.718 seconds)
 
-**Estimated memory usage:**  40 MB
+**Estimated memory usage:**  10 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_99_bad.py:
@@ -551,7 +571,6 @@ approach, and the benefits of the GLM style of analysis
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
@@ -559,13 +578,13 @@ approach, and the benefits of the GLM style of analysis
         :alt: Launch binder
         :width: 150 px
 
-    .. container:: sphx-glr-download sphx-glr-download-python
-
-      :download:`Download Python source code: plot_99_bad.py <plot_99_bad.py>`
-
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
       :download:`Download Jupyter notebook: plot_99_bad.ipynb <plot_99_bad.ipynb>`
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download Python source code: plot_99_bad.py <plot_99_bad.py>`
 
 
 .. only:: html

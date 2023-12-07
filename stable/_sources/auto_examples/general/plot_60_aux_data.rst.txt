@@ -41,7 +41,7 @@ this can be incorporated in to your analysis.
 
 .. GENERATED FROM PYTHON SOURCE LINES 24-45
 
-.. code-block:: default
+.. code-block:: Python
 
     # sphinx_gallery_thumbnail_number = 2
 
@@ -81,7 +81,7 @@ the previous GLM example that contains auxiliary data.
 
 .. GENERATED FROM PYTHON SOURCE LINES 51-57
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fnirs_snirf_file = data_path()
@@ -93,86 +93,96 @@ the previous GLM example that contains auxiliary data.
 
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/circleci/project/mne_nirs/datasets/snirf_with_aux/snirf_with_aux.py:62: RuntimeWarning: Setting non-standard config type: "MNE_DATASETS_SNIRFAUX_PATH"
-      dpath = fetch_dataset(dataset_params, path=path, force_update=force_update,
-
 
 .. raw:: html
 
     <div class="output_subarea output_html rendered_html output_result">
-    <table class="table table-hover table-striped table-sm table-responsive small">
-        <tr>
-            <th>Measurement date</th>
-        
-            <td>August 05, 2022  13:10:58 GMT</td>
-        
-        </tr>
-        <tr>
-            <th>Experimenter</th>
-        
-            <td>Unknown</td>
-        
-        </tr>
-            <th>Participant</th>
-        
+    <details open>
+        <summary><strong>General</strong></summary>
+        <table class="table table-hover table-striped table-sm table-responsive small">
+            <tr>
+                <th>Measurement date</th>
             
-        
-        </tr>
-        <tr>
-            <th>Digitized points</th>
-        
-            <td>300 points</td>
-        
-        </tr>
-        <tr>
-            <th>Good channels</th>
-            <td>56 fNIRS (CW amplitude)</td>
-        </tr>
-        <tr>
-            <th>Bad channels</th>
-            <td>None</td>
-        </tr>
-        <tr>
-            <th>EOG channels</th>
-            <td>Not available</td>
-        </tr>
-        <tr>
-            <th>ECG channels</th>
-            <td>Not available</td>
-    
-        <tr>
-            <th>Sampling frequency</th>
-            <td>0.70 Hz</td>
-        </tr>
-    
-    
-        <tr>
-            <th>Highpass</th>
-            <td>0.00 Hz</td>
-        </tr>
-    
-    
-        <tr>
-            <th>Lowpass</th>
-            <td>0.35 Hz</td>
-        </tr>
-    
-    
-    
-        <tr>
-            <th>Filenames</th>
-            <td>2022-08-05_002.snirf</td>
-        </tr>
-    
-        <tr>
-            <th>Duration</th>
-            <td>00:33:53 (HH:MM:SS)</td>
-        </tr>
-    </table>
+                <td>August 05, 2022  13:10:58 GMT</td>
+            
+            </tr>
+            <tr>
+                <th>Experimenter</th>
+            
+                <td>Unknown</td>
+            
+            </tr>
+            <tr>
+                <th>Participant</th>
+            
+            
+            
+            </tr>
+        </table>
+        </details>
+        <details open>
+            <summary><strong>Channels</strong></summary>
+            <table class="table table-hover table-striped table-sm table-responsive small">
+                <tr>
+                    <th>Digitized points</th>
+                
+                    <td>300 points</td>
+                
+                </tr>
+                <tr>
+                    <th>Good channels</th>
+                    <td>56 fNIRS (CW amplitude)</td>
+                </tr>
+                <tr>
+                    <th>Bad channels</th>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <th>EOG channels</th>
+                    <td>Not available</td>
+                </tr>
+                <tr>
+                    <th>ECG channels</th>
+                    <td>Not available</td>
+                </tr>
+            </table>
+            </details>
+            <details open>
+                <summary><strong>Data</strong></summary>
+                <table class="table table-hover table-striped table-sm table-responsive small">
+                
+                    <tr>
+                        <th>Sampling frequency</th>
+                        <td>0.70 Hz</td>
+                    </tr>
+                
+                
+                    <tr>
+                        <th>Highpass</th>
+                        <td>0.00 Hz</td>
+                    </tr>
+                
+                
+                    <tr>
+                        <th>Lowpass</th>
+                        <td>0.35 Hz</td>
+                    </tr>
+                
+                
+                
+                    <tr>
+                        <th>Filenames</th>
+                        <td>2022-08-05_002.snirf</td>
+                    </tr>
+                
+                
+                    <tr>
+                        <th>Duration</th>
+                        <td>00:33:53 (HH:MM:SS)</td>
+                    </tr>
+                
+                </table>
+                </details>
     </div>
     <br />
     <br />
@@ -188,7 +198,7 @@ experimental conditions.
 
 .. GENERATED FROM PYTHON SOURCE LINES 64-72
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw_intensity.annotations.rename({'1': 'Control',
@@ -207,7 +217,7 @@ experimental conditions.
  .. code-block:: none
 
 
-    <Annotations | 62 segments: Control (20), Control5 (2), Tapping_Left (20), ...>
+    <Annotations | 60 segments: Control (20), Tapping_Left (20), Tapping_Right ...>
 
 
 
@@ -219,7 +229,7 @@ Next we convert the raw data to haemoglobin concentration.
 
 .. GENERATED FROM PYTHON SOURCE LINES 76-81
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
@@ -241,7 +251,7 @@ long channels which have both neural and systemic contributions.
 
 .. GENERATED FROM PYTHON SOURCE LINES 86-91
 
-.. code-block:: default
+.. code-block:: Python
 
 
     short_chs = get_short_channels(raw_haemo)
@@ -272,7 +282,7 @@ contribute to the measured signal.
 
 .. GENERATED FROM PYTHON SOURCE LINES 104-112
 
-.. code-block:: default
+.. code-block:: Python
 
 
     design_matrix = make_first_level_design_matrix(raw_haemo,
@@ -299,7 +309,7 @@ uncontaminated by systemic effects.
 
 .. GENERATED FROM PYTHON SOURCE LINES 119-127
 
-.. code-block:: default
+.. code-block:: Python
 
 
     design_matrix["ShortHbO"] = np.mean(short_chs.copy().pick(
@@ -324,7 +334,7 @@ not yet contain any auxiliary data.
 
 .. GENERATED FROM PYTHON SOURCE LINES 132-138
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
@@ -359,7 +369,7 @@ fNIRS data.
 
 .. GENERATED FROM PYTHON SOURCE LINES 149-153
 
-.. code-block:: default
+.. code-block:: Python
 
 
     aux_df = read_snirf_aux_data(fnirs_snirf_file, raw_haemo)
@@ -379,7 +389,7 @@ individual fields.
 
 .. GENERATED FROM PYTHON SOURCE LINES 157-163
 
-.. code-block:: default
+.. code-block:: Python
 
 
     plt.plot(raw_haemo.times, aux_df['HR'])
@@ -415,7 +425,7 @@ so that these can be included as regressors in a GLM analysis.
 
 .. GENERATED FROM PYTHON SOURCE LINES 169-174
 
-.. code-block:: default
+.. code-block:: Python
 
 
 
@@ -436,7 +446,7 @@ the data is included.
 
 .. GENERATED FROM PYTHON SOURCE LINES 178-182
 
-.. code-block:: default
+.. code-block:: Python
 
     fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
     fig = plot_design_matrix(design_matrix, ax=ax1)
@@ -470,7 +480,7 @@ but this is beyond the scope of this tutorial.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  8.795 seconds)
+   **Total running time of the script:** (0 minutes 10.480 seconds)
 
 **Estimated memory usage:**  9 MB
 
@@ -481,7 +491,6 @@ but this is beyond the scope of this tutorial.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
@@ -489,13 +498,13 @@ but this is beyond the scope of this tutorial.
         :alt: Launch binder
         :width: 150 px
 
-    .. container:: sphx-glr-download sphx-glr-download-python
-
-      :download:`Download Python source code: plot_60_aux_data.py <plot_60_aux_data.py>`
-
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
       :download:`Download Jupyter notebook: plot_60_aux_data.ipynb <plot_60_aux_data.ipynb>`
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download Python source code: plot_60_aux_data.py <plot_60_aux_data.py>`
 
 
 .. only:: html

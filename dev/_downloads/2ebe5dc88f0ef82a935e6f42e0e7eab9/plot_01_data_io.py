@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 r"""
 .. _tut-importing-fnirs-data:
 
@@ -166,9 +165,10 @@ have to adapt this depending on the system from which your CSV originated.
 # %%
 
 import os.path as op
+
+import mne
 import numpy as np
 import pandas as pd
-import mne
 
 # sphinx_gallery_thumbnail_number = 2
 
@@ -184,7 +184,7 @@ pd.DataFrame(np.random.normal(size=(16, 100))).to_csv("fnirs.csv")
 # %%
 # Next, we will load the example CSV file.
 
-data = pd.read_csv('fnirs.csv')
+data = pd.read_csv("fnirs.csv")
 
 
 # %%
@@ -196,15 +196,43 @@ data = pd.read_csv('fnirs.csv')
 #              detector numbers and type is either ``hbo``, ``hbr`` or the
 #              wavelength.
 
-ch_names = ['S1_D1 hbo', 'S1_D1 hbr', 'S2_D1 hbo', 'S2_D1 hbr',
-            'S3_D1 hbo', 'S3_D1 hbr', 'S4_D1 hbo', 'S4_D1 hbr',
-            'S5_D2 hbo', 'S5_D2 hbr', 'S6_D2 hbo', 'S6_D2 hbr',
-            'S7_D2 hbo', 'S7_D2 hbr', 'S8_D2 hbo', 'S8_D2 hbr']
-ch_types = ['hbo', 'hbr', 'hbo', 'hbr',
-            'hbo', 'hbr', 'hbo', 'hbr',
-            'hbo', 'hbr', 'hbo', 'hbr',
-            'hbo', 'hbr', 'hbo', 'hbr']
-sfreq = 10.  # in Hz
+ch_names = [
+    "S1_D1 hbo",
+    "S1_D1 hbr",
+    "S2_D1 hbo",
+    "S2_D1 hbr",
+    "S3_D1 hbo",
+    "S3_D1 hbr",
+    "S4_D1 hbo",
+    "S4_D1 hbr",
+    "S5_D2 hbo",
+    "S5_D2 hbr",
+    "S6_D2 hbo",
+    "S6_D2 hbr",
+    "S7_D2 hbo",
+    "S7_D2 hbr",
+    "S8_D2 hbo",
+    "S8_D2 hbr",
+]
+ch_types = [
+    "hbo",
+    "hbr",
+    "hbo",
+    "hbr",
+    "hbo",
+    "hbr",
+    "hbo",
+    "hbr",
+    "hbo",
+    "hbr",
+    "hbo",
+    "hbr",
+    "hbo",
+    "hbr",
+    "hbo",
+    "hbr",
+]
+sfreq = 10.0  # in Hz
 
 
 # %%
@@ -244,7 +272,7 @@ raw = mne.io.RawArray(data, info, verbose=True)
 #           fNIRS with :func:`mne.channels.read_custom_montage` by setting
 #           ``coord_frame`` to ``'mri'``.
 
-montage = mne.channels.make_standard_montage('artinis-octamon')
+montage = mne.channels.make_standard_montage("artinis-octamon")
 raw.set_montage(montage)
 
 # View the position of optodes in 2D to confirm the positions are correct.
@@ -257,11 +285,12 @@ raw.plot_sensors()
 # The ficiduals are marked in blue, green and red.
 # See :ref:`tut-source-alignment` for more details.
 
-subjects_dir = op.join(mne.datasets.sample.data_path(), 'subjects')
+subjects_dir = op.join(mne.datasets.sample.data_path(), "subjects")
 mne.datasets.fetch_fsaverage(subjects_dir=subjects_dir)
 
-brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir,
-                      alpha=0.5, cortex='low_contrast')
+brain = mne.viz.Brain(
+    "fsaverage", subjects_dir=subjects_dir, alpha=0.5, cortex="low_contrast"
+)
 brain.add_head()
-brain.add_sensors(raw.info, trans='fsaverage')
+brain.add_sensors(raw.info, trans="fsaverage")
 brain.show_view(azimuth=90, elevation=90, distance=500)

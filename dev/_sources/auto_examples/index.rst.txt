@@ -24,6 +24,9 @@ upload data, visualise output, all without downloading any code to your computer
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 
@@ -39,10 +42,11 @@ Analysis examples
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="fNIRS devices consist of two kinds of optodes: light sources (AKA &quot;emitters&quot; or &quot;transmitters&quot;)...">
+    <div class="sphx-glr-thumbcontainer" tooltip="fNIRS devices consist of two kinds of optodes: light sources (AKA &quot;emitters&quot; or &quot;transmitters&quot;) and light detectors (AKA &quot;receivers&quot;). Channels are defined as source-detector pairs, and channel locations are defined as the midpoint between source and detector.">
 
 .. only:: html
 
@@ -59,7 +63,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="To get you up and running with MNE-NIRS and fNIRS data analysis we provide some example dataset...">
+    <div class="sphx-glr-thumbcontainer" tooltip="To get you up and running with MNE-NIRS and fNIRS data analysis we provide some example datasets. Each dataset is published and if you use the data at any stage of your experiment (including piloting and exploration) then please cite the authors of the data.">
 
 .. only:: html
 
@@ -76,7 +80,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="LUMO is a modular, wearable,  high-density diffuse optical tomography (HD-DOT) system produced ...">
+    <div class="sphx-glr-thumbcontainer" tooltip="LUMO is a modular, wearable, high-density diffuse optical tomography (HD-DOT) system produced by Gowerlabs. This tutorial demonstrates how to load data from LUMO, and how to utilise 3D digitisation information collected with the HD-DOT measurement.">
 
 .. only:: html
 
@@ -93,7 +97,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="In this example we simulate a block design functional near-infrared spectroscopy (fNIRS) experi...">
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we simulate a block design functional near-infrared spectroscopy (fNIRS) experiment and analyse the simulated signal. We investigate the effect additive noise and measurement length has on response amplitude estimates.">
 
 .. only:: html
 
@@ -110,7 +114,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="In this example we analyse data from a real multichannel functional near-infrared spectroscopy ...">
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we analyse data from a real multichannel functional near-infrared spectroscopy (fNIRS) experiment (see tut-fnirs-hrf-sim for a simplified simulated analysis). The experiment consists of three conditions:">
 
 .. only:: html
 
@@ -127,7 +131,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This is an example of a group level GLM based functional near-infrared spectroscopy (fNIRS) ana...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This is an example of a group level GLM based functional near-infrared spectroscopy (fNIRS) analysis in MNE-NIRS.">
 
 .. only:: html
 
@@ -144,7 +148,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="In this example we analyse data from a real multi-channel functional near-infrared spectroscopy...">
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we analyse data from a real multi-channel functional near-infrared spectroscopy (fNIRS) experiment (see tut-fnirs-hrf-sim for a simplified simulated analysis). The experiment consists of three conditions: 1) tapping with the left hand, 2) tapping with the right hand, and 3) a control condition where the participant does nothing.">
 
 .. only:: html
 
@@ -161,7 +165,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This tutorial describes the various design choices available when analysing fNIRS data with a G...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This tutorial describes the various design choices available when analysing fNIRS data with a GLM approach.">
 
 .. only:: html
 
@@ -178,7 +182,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This tutorial covers how to convert functional near-infrared spectroscopy (fNIRS) data from raw...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This tutorial covers how to convert functional near-infrared spectroscopy (fNIRS) data from raw measurements to relative oxyhaemoglobin (HbO) and deoxyhaemoglobin (HbR) concentration, view the average waveform, and topographic representation of the response.">
 
 .. only:: html
 
@@ -195,7 +199,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This is an example of a group-level waveform-based functional near-infrared spectroscopy (fNIRS...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This is an example of a group-level waveform-based functional near-infrared spectroscopy (fNIRS) analysis in MNE-NIRS.">
 
 .. only:: html
 
@@ -212,7 +216,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="   MNE does not support reading .nirs files. If you have .nirs files that    you would like to ...">
+    <div class="sphx-glr-thumbcontainer" tooltip="   MNE does not support reading .nirs files. If you have .nirs files that    you would like to process in MNE, you should first convert them to SNIRF.    To convert .nirs files to SNIRF you can use the Homer3 Nirs2Snirf    function. See https://github.com/fNIRS/snirf_homer3">
 
 .. only:: html
 
@@ -229,7 +233,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="In this document we investigate the effect of different signal enhancement techniques on functi...">
+    <div class="sphx-glr-thumbcontainer" tooltip="In this document we investigate the effect of different signal enhancement techniques on functional near-infrared spectroscopy (fNIRS) data.">
 
 .. only:: html
 
@@ -246,7 +250,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Here we artificially introduce several artifacts in a functional near-infrared spectroscopy (fN...">
+    <div class="sphx-glr-thumbcontainer" tooltip="Here we artificially introduce several artifacts in a functional near-infrared spectroscopy (fNIRS) measurement and observe how artifact correction techniques attempt to correct the data.">
 
 .. only:: html
 
@@ -280,7 +284,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="In this example we discuss frequency and filters in the context of functional near-infrared spe...">
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we discuss frequency and filters in the context of functional near-infrared spectroscopy (fNIRS) analysis. We examine the interplay between the expected brain response based on experimental design and our model of how the brain reacts to stimuli, the actual data measured during an experiment, and the filtering that is applied to the data.">
 
 .. only:: html
 
@@ -297,7 +301,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="   This tutorial is only possible due to the excellent and generous work of    the FOOOF author...">
+    <div class="sphx-glr-thumbcontainer" tooltip="   This tutorial is only possible due to the excellent and generous work of    the FOOOF authors. Please visit their site https://fooof-tools.github.io/fooof.    Also be sure to cite their various papers:">
 
 .. only:: html
 
@@ -314,7 +318,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This is an example of a decoding analysis performed on functional near-infrared spectroscopy (f...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This is an example of a decoding analysis performed on functional near-infrared spectroscopy (fNIRS) data using MNE-Python, scikit-learn, and MNE-NIRS.">
 
 .. only:: html
 
@@ -331,7 +335,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="In this example we demonstrate how to load auxiliary data from a SNIRF file and include it in t...">
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we demonstrate how to load auxiliary data from a SNIRF file and include it in the design matrix for incorporating with your GLM analysis.">
 
 .. only:: html
 
@@ -348,7 +352,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how you can utilise anatomical and sensor position information in you...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how you can utilise anatomical and sensor position information in your analysis pipeline. This information can be used to verify measurement/analysis and also improve analysis accuracy novi2020integration.">
 
 .. only:: html
 
@@ -365,7 +369,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This is an example of how to save and load functional near-infrared spectroscopy (fNIRS) GLM re...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This is an example of how to save and load functional near-infrared spectroscopy (fNIRS) GLM results from analysis in MNE-NIRS. As computation can be expensive and time consuming it can be useful to store computed results to disk, so that you can query the results later. For example, to remake a figure or answer a new scientific question.">
 
 .. only:: html
 
@@ -382,7 +386,7 @@ Analysis examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="   Huppert TJ. Commentary on the statistical properties of noise and its    implication on gene...">
+    <div class="sphx-glr-thumbcontainer" tooltip="   Huppert TJ. Commentary on the statistical properties of noise and its    implication on general linear models in functional near-infrared    spectroscopy. Neurophotonics. 2016;3(1)">
 
 .. only:: html
 
@@ -396,6 +400,8 @@ Analysis examples
       <div class="sphx-glr-thumbnail-title">Importance of Controls and Parameter Selection</div>
     </div>
 
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 
@@ -411,10 +417,11 @@ Migrating from other software packages
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This tutorial will demonstrate how to do convert a basic Homer script to MNE and highlight diff...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This tutorial will demonstrate how to do convert a basic Homer script to MNE and highlight differences and common issues you may encounter.">
 
 .. only:: html
 
@@ -431,7 +438,7 @@ Migrating from other software packages
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This tutorial will demonstrate how to do convert a nirs-toolbox script to MNE and highlight dif...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This tutorial will demonstrate how to do convert a nirs-toolbox script to MNE and highlight differences and common issues you may encounter.">
 
 .. only:: html
 
@@ -445,6 +452,8 @@ Migrating from other software packages
       <div class="sphx-glr-thumbnail-title">Migrating from nirs-toolbox to MNE</div>
     </div>
 
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

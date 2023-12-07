@@ -63,12 +63,11 @@ information about triggers, condition names, etc.
 
 .. note::
 
-   This tutorial uses data in the BIDS format.
-   The BIDS specification for NIRS data is still under development. See:
-   `fNIRS BIDS proposal <https://github.com/bids-standard/bids-specification/pull/802>`_.
-   As such, to run this tutorial you must use the MNE-BIDS 0.10 or later.
+   This tutorial uses data stored using
+   `the BIDS format <https://bids-specification.readthedocs.io/en/stable/04-modality-specific-files/11-near-infrared-spectroscopy.html>`_
+   :footcite:p:`luke2023bids`.
 
-   MNE-Python allows you to process fNIRS data that is not in BIDS format too.
+   MNE-Python allows you to process fNIRS data that is not in BIDS format.
    Simply modify the ``read_raw_`` function to match your data type.
    See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
    to use your data with MNE-Python.
@@ -89,9 +88,9 @@ information about triggers, condition names, etc.
    :local:
    :depth: 2
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-112
+.. GENERATED FROM PYTHON SOURCE LINES 72-111
 
-.. code-block:: default
+.. code-block:: Python
 
     # sphinx_gallery_thumbnail_number = 2
 
@@ -139,7 +138,7 @@ information about triggers, condition names, etc.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 113-127
+.. GENERATED FROM PYTHON SOURCE LINES 112-126
 
 Define individual analysis
 --------------------------
@@ -156,9 +155,9 @@ This is the same waveform analysis as described in the
 and :ref:`artifact correction tutorial <ex-fnirs-artifacts>`.
 As such, this example will skim over the individual-level details.
 
-.. GENERATED FROM PYTHON SOURCE LINES 127-164
+.. GENERATED FROM PYTHON SOURCE LINES 126-163
 
-.. code-block:: default
+.. code-block:: Python
 
 
     def individual_analysis(bids_path):
@@ -204,7 +203,7 @@ As such, this example will skim over the individual-level details.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 165-174
+.. GENERATED FROM PYTHON SOURCE LINES 164-173
 
 Run analysis on all data
 ------------------------
@@ -216,9 +215,9 @@ then averaged to obtain an evoked response from each participant.
 The individual-evoked data is stored in a
 dictionary (`all_evokeds`) for each condition.
 
-.. GENERATED FROM PYTHON SOURCE LINES 174-192
+.. GENERATED FROM PYTHON SOURCE LINES 173-191
 
-.. code-block:: default
+.. code-block:: Python
 
 
     all_evokeds = defaultdict(list)
@@ -246,15 +245,15 @@ dictionary (`all_evokeds`) for each condition.
 
  .. code-block:: none
 
-    /home/circleci/project/examples/general/plot_16_waveform_group.py:138: RuntimeWarning: No bad channels to interpolate. Doing nothing...
+    /home/circleci/project/examples/general/plot_16_waveform_group.py:137: RuntimeWarning: No bad channels to interpolate. Doing nothing...
       raw_od.interpolate_bads()
-    /home/circleci/project/examples/general/plot_16_waveform_group.py:138: RuntimeWarning: No bad channels to interpolate. Doing nothing...
+    /home/circleci/project/examples/general/plot_16_waveform_group.py:137: RuntimeWarning: No bad channels to interpolate. Doing nothing...
       raw_od.interpolate_bads()
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 193-198
+.. GENERATED FROM PYTHON SOURCE LINES 192-197
 
 The end result is a dictionary that is indexed per condition,
 with each item in the dictionary being a list of evoked responses.
@@ -262,9 +261,9 @@ See below that for each condition we have obtained a MNE evoked type
 that is generated from the average of all 30 trials and epoched from -5 to
 20 seconds.
 
-.. GENERATED FROM PYTHON SOURCE LINES 198-201
+.. GENERATED FROM PYTHON SOURCE LINES 197-200
 
-.. code-block:: default
+.. code-block:: Python
 
 
     pprint(all_evokeds)
@@ -278,31 +277,31 @@ that is generated from the average of all 30 trials and epoched from -5 to
  .. code-block:: none
 
     defaultdict(<class 'list'>,
-                {'15.0': [<Evoked | '15.0' (average, N=1), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                          <Evoked | '15.0' (average, N=2), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                          <Evoked | '15.0' (average, N=1), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                          <Evoked | '15.0' (average, N=2), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                          <Evoked | '15.0' (average, N=1), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>],
-                 'Control': [<Evoked | 'Control' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                             <Evoked | 'Control' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                             <Evoked | 'Control' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                             <Evoked | 'Control' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                             <Evoked | 'Control' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>],
-                 'Tapping/Left': [<Evoked | 'Tapping/Left' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>],
-                 'Tapping/Right': [<Evoked | 'Tapping/Right' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>,
-                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 sec, baseline -5 – 0 sec, 40 ch, ~63 kB>]})
+                {'15.0': [<Evoked | '15.0' (average, N=1), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                          <Evoked | '15.0' (average, N=2), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                          <Evoked | '15.0' (average, N=1), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                          <Evoked | '15.0' (average, N=2), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                          <Evoked | '15.0' (average, N=1), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>],
+                 'Control': [<Evoked | 'Control' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                             <Evoked | 'Control' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                             <Evoked | 'Control' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                             <Evoked | 'Control' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                             <Evoked | 'Control' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>],
+                 'Tapping/Left': [<Evoked | 'Tapping/Left' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>],
+                 'Tapping/Right': [<Evoked | 'Tapping/Right' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>,
+                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~63 kB>]})
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 202-208
+.. GENERATED FROM PYTHON SOURCE LINES 201-207
 
 View average waveform
 ---------------------
@@ -311,9 +310,9 @@ Next, a grand average epoch waveform is generated for each condition.
 This is generated using all of the standard (long) fNIRS channels,
 as illustrated by the head inset in the top right corner of the figure.
 
-.. GENERATED FROM PYTHON SOURCE LINES 208-222
+.. GENERATED FROM PYTHON SOURCE LINES 207-221
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Specify the figure size and limits per chromophore
@@ -343,18 +342,18 @@ as illustrated by the head inset in the top right corner of the figure.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7ff22af590a0>
+    <matplotlib.legend.Legend object at 0x7fb737730730>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 223-227
+.. GENERATED FROM PYTHON SOURCE LINES 222-226
 
 From this figure we observe that the response to the tapping condition
 with the right hand appears larger than when no tapping occurred in the
 control condition (similar for when tapping occurred with the left hand).
 We test if this is the case in the analysis below.
 
-.. GENERATED FROM PYTHON SOURCE LINES 230-253
+.. GENERATED FROM PYTHON SOURCE LINES 229-252
 
 Generate regions of interest
 --------------------------------
@@ -380,9 +379,9 @@ In this example, two ROIs are generated. One for the left motor cortex
 and one for the right motor cortex. These are called `Left_Hemisphere` and
 `Right_Hemisphere` and are stored in the `rois` dictionary.
 
-.. GENERATED FROM PYTHON SOURCE LINES 253-264
+.. GENERATED FROM PYTHON SOURCE LINES 252-263
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Specify channel pairs for each ROI
@@ -409,7 +408,7 @@ and one for the right motor cortex. These are called `Left_Hemisphere` and
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 265-271
+.. GENERATED FROM PYTHON SOURCE LINES 264-270
 
 Create average waveform per ROI
 -------------------------------
@@ -418,9 +417,9 @@ Next, an average waveform is generated per condition per region of interest.
 This allows the researcher to view the responses elicited in different
 regions of the brain for each condition.
 
-.. GENERATED FROM PYTHON SOURCE LINES 271-294
+.. GENERATED FROM PYTHON SOURCE LINES 270-293
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Specify the figure size and limits per chromophore.
@@ -459,17 +458,17 @@ regions of the brain for each condition.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7ff22a396a00>
+    <matplotlib.legend.Legend object at 0x7fb757a56a40>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 295-298
+.. GENERATED FROM PYTHON SOURCE LINES 294-297
 
 From this figure we observe that the response to tapping appears
 largest in the brain region that is contralateral to the hand
 that is tapping. We test if this is the case in the analysis below.
 
-.. GENERATED FROM PYTHON SOURCE LINES 301-312
+.. GENERATED FROM PYTHON SOURCE LINES 300-311
 
 Extract evoked amplitude
 ------------------------
@@ -483,9 +482,9 @@ chromophore. The data is then stored in a dataframe, which is saved
 to a csv file for easy analysis in any statistical analysis software.
 We also demonstrate two example analyses on these values below.
 
-.. GENERATED FROM PYTHON SOURCE LINES 312-339
+.. GENERATED FROM PYTHON SOURCE LINES 311-338
 
-.. code-block:: default
+.. code-block:: Python
 
 
     df = pd.DataFrame(columns=['ID', 'ROI', 'Chroma', 'Condition', 'Value'])
@@ -595,7 +594,7 @@ We also demonstrate two example analyses on these values below.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 340-352
+.. GENERATED FROM PYTHON SOURCE LINES 339-351
 
 View individual results
 -----------------------
@@ -610,12 +609,12 @@ skull thickness, both of which vary across the head and across participants.
 For this reason, fNIRS is most appropriate for detecting changes within a
 single ROI between conditions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 352-356
+.. GENERATED FROM PYTHON SOURCE LINES 351-355
 
-.. code-block:: default
+.. code-block:: Python
 
 
-    sns.catplot(x="Condition", y="Value", hue="ID", data=df.query("Chroma == 'hbo'"), ci=None, palette="muted", height=4, s=10)
+    sns.catplot(x="Condition", y="Value", hue="ID", data=df.query("Chroma == 'hbo'"), errorbar=None, palette="muted", height=4, s=10)
 
 
 
@@ -632,11 +631,11 @@ single ROI between conditions.
  .. code-block:: none
 
 
-    <seaborn.axisgrid.FacetGrid object at 0x7ff1a011c940>
+    <seaborn.axisgrid.FacetGrid object at 0x7fb7373952a0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 357-365
+.. GENERATED FROM PYTHON SOURCE LINES 356-364
 
 Research question 1: Comparison of conditions
 ---------------------------------------------------------------------------------------------------
@@ -647,9 +646,9 @@ than the response when not tapping (control)?
 For this token example we subset the dataframe and then apply the mixed
 effect model.
 
-.. GENERATED FROM PYTHON SOURCE LINES 365-374
+.. GENERATED FROM PYTHON SOURCE LINES 364-373
 
-.. code-block:: default
+.. code-block:: Python
 
 
     input_data = df.query("Condition in ['Control', 'Tapping/Right']")
@@ -701,18 +700,19 @@ effect model.
     <tr>
       <th>Group Var</th>                  <td>1.582</td>   <td>2.066</td>    <td></td>      <td></td>       <td></td>       <td></td>   
     </tr>
-    </table>
+    </table><br/>
+
     </div>
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 375-378
+.. GENERATED FROM PYTHON SOURCE LINES 374-377
 
 The model indicates that for the oxyhaemoglobin (HbO) data in the left
 ROI, that the tapping condition with the right hand evokes
 a 9.0 μMol larger response than the control condition.
 
-.. GENERATED FROM PYTHON SOURCE LINES 381-391
+.. GENERATED FROM PYTHON SOURCE LINES 380-390
 
 Research question 2: Are responses larger on the contralateral side to tapping?
 -------------------------------------------------------------------------------
@@ -725,9 +725,9 @@ First, the ROI data in the dataframe is encoded as ipsi- and contralateral
 to the tapping hand. Then the data is subset to just examine the two tapping
 conditions and the model is applied.
 
-.. GENERATED FROM PYTHON SOURCE LINES 391-412
+.. GENERATED FROM PYTHON SOURCE LINES 390-411
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Encode the ROIs as ipsi- or contralateral to the hand that is tapping.
@@ -791,12 +791,13 @@ conditions and the model is applied.
     <tr>
       <th>Group Var</th>                  <td>8.065</td>   <td>3.107</td>     <td></td>      <td></td>       <td></td>       <td></td>   
     </tr>
-    </table>
+    </table><br/>
+
     </div>
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 413-416
+.. GENERATED FROM PYTHON SOURCE LINES 412-415
 
 The model indicates that for the oxyhaemoglobin (HbO) data, the ipsilateral
 responses are 4.2 μMol smaller than those on the contralateral side to the
@@ -805,7 +806,7 @@ hand that is tapping.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  10.969 seconds)
+   **Total running time of the script:** (0 minutes 10.377 seconds)
 
 **Estimated memory usage:**  9 MB
 
@@ -816,7 +817,6 @@ hand that is tapping.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
@@ -824,13 +824,13 @@ hand that is tapping.
         :alt: Launch binder
         :width: 150 px
 
-    .. container:: sphx-glr-download sphx-glr-download-python
-
-      :download:`Download Python source code: plot_16_waveform_group.py <plot_16_waveform_group.py>`
-
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
       :download:`Download Jupyter notebook: plot_16_waveform_group.ipynb <plot_16_waveform_group.ipynb>`
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download Python source code: plot_16_waveform_group.py <plot_16_waveform_group.py>`
 
 
 .. only:: html

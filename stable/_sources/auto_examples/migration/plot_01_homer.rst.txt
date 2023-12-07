@@ -69,7 +69,7 @@ First the necessary libraries and functions are imported.
 
 .. GENERATED FROM PYTHON SOURCE LINES 51-64
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Authors: Robert Luke <mail@robertluke.net>
@@ -101,7 +101,7 @@ to the correct directory.
 
 .. GENERATED FROM PYTHON SOURCE LINES 70-79
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # First we obtain the path to the data
@@ -129,7 +129,7 @@ apply motion correction using the TDDR method.
 
 .. GENERATED FROM PYTHON SOURCE LINES 85-90
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw_od = optical_density(raw_intensity)
@@ -156,7 +156,7 @@ To exactly match the results from Homer we can manually set the ppf value to
 
 .. GENERATED FROM PYTHON SOURCE LINES 99-103
 
-.. code-block:: default
+.. code-block:: Python
 
 
     raw_h = beer_lambert_law(corrected_tddr, ppf=6.)
@@ -184,7 +184,7 @@ https://github.com/mne-tools/mne-nirs/issues
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  2.650 seconds)
+   **Total running time of the script:** (0 minutes 3.311 seconds)
 
 **Estimated memory usage:**  9 MB
 
@@ -195,7 +195,6 @@ https://github.com/mne-tools/mne-nirs/issues
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
@@ -203,13 +202,13 @@ https://github.com/mne-tools/mne-nirs/issues
         :alt: Launch binder
         :width: 150 px
 
-    .. container:: sphx-glr-download sphx-glr-download-python
-
-      :download:`Download Python source code: plot_01_homer.py <plot_01_homer.py>`
-
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
       :download:`Download Jupyter notebook: plot_01_homer.ipynb <plot_01_homer.ipynb>`
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download Python source code: plot_01_homer.py <plot_01_homer.py>`
 
 
 .. only:: html

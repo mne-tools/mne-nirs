@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_general_plot_80_save_read_glm.py>`
-        to download the full example code or to run this example in your browser via Binder
+        to download the full example code. or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
 
@@ -55,11 +55,7 @@ information about triggers, condition names, etc.
    See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
    to use your data with MNE-Python.
 
-.. contents:: Page contents
-   :local:
-   :depth: 2
-
-.. GENERATED FROM PYTHON SOURCE LINES 43-64
+.. GENERATED FROM PYTHON SOURCE LINES 39-60
 
 .. code-block:: Python
 
@@ -69,19 +65,20 @@ information about triggers, condition names, etc.
 
     # Import common libraries
     from os.path import join
+
     import pandas as pd
 
     # Import MNE functions
-    from mne.preprocessing.nirs import optical_density, beer_lambert_law
-
-    # Import MNE-NIRS functions
-    from mne_nirs.statistics import run_glm
-    from mne_nirs.experimental_design import make_first_level_design_matrix
-    from mne_nirs.statistics import read_glm
-    from mne_nirs.datasets import fnirs_motor_group
+    from mne.preprocessing.nirs import beer_lambert_law, optical_density
 
     # Import MNE-BIDS processing
-    from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
+    from mne_bids import BIDSPath, get_entity_vals, read_raw_bids
+
+    from mne_nirs.datasets import fnirs_motor_group
+    from mne_nirs.experimental_design import make_first_level_design_matrix
+
+    # Import MNE-NIRS functions
+    from mne_nirs.statistics import read_glm, run_glm
 
 
 
@@ -90,8 +87,7 @@ information about triggers, condition names, etc.
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 65-74
+.. GENERATED FROM PYTHON SOURCE LINES 61-70
 
 Set up directories
 ------------------
@@ -103,7 +99,7 @@ as described above.
 
 We first define the root directory of our dataset.
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-79
+.. GENERATED FROM PYTHON SOURCE LINES 70-75
 
 .. code-block:: Python
 
@@ -125,12 +121,12 @@ We first define the root directory of our dataset.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-82
+.. GENERATED FROM PYTHON SOURCE LINES 76-78
 
 And as we are using MNE-BIDS we can create a BIDSPath.
 This helps to handle all the path wrangling.
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-87
+.. GENERATED FROM PYTHON SOURCE LINES 78-83
 
 .. code-block:: Python
 
@@ -152,16 +148,16 @@ This helps to handle all the path wrangling.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-89
+.. GENERATED FROM PYTHON SOURCE LINES 84-85
 
 For example we can automatically query the subjects, tasks, and sessions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 89-94
+.. GENERATED FROM PYTHON SOURCE LINES 85-90
 
 .. code-block:: Python
 
 
-    subjects = get_entity_vals(root, 'subject')
+    subjects = get_entity_vals(root, "subject")
     print(subjects)
 
 
@@ -178,11 +174,11 @@ For example we can automatically query the subjects, tasks, and sessions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 95-96
+.. GENERATED FROM PYTHON SOURCE LINES 91-92
 
 But for this example we will only process the first two subjects
 
-.. GENERATED FROM PYTHON SOURCE LINES 96-99
+.. GENERATED FROM PYTHON SOURCE LINES 92-95
 
 .. code-block:: Python
 
@@ -196,7 +192,7 @@ But for this example we will only process the first two subjects
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 100-107
+.. GENERATED FROM PYTHON SOURCE LINES 96-103
 
 Define individual analysis
 --------------------------
@@ -206,17 +202,16 @@ This is a GLM analysis as described in the
 :ref:`individual GLM tutorial <tut-fnirs-hrf>`,
 so this example will skim over the individual level details.
 
-.. GENERATED FROM PYTHON SOURCE LINES 107-122
+.. GENERATED FROM PYTHON SOURCE LINES 103-117
 
 .. code-block:: Python
 
 
 
     def individual_analysis(bids_path):
-
         raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
-        # Delete annotation labeled 15, as these just signify the start and end of experiment.
-        raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
+        # Delete annotation labeled 15, as these just signify the experiment start and end.
+        raw_intensity.annotations.delete(raw_intensity.annotations.description == "15.0")
         raw_intensity.pick(picks=range(20)).crop(200).resample(0.3)  # Reduce load
         raw_haemo = beer_lambert_law(optical_density(raw_intensity), ppf=0.1)
         design_matrix = make_first_level_design_matrix(raw_haemo)
@@ -232,7 +227,7 @@ so this example will skim over the individual level details.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 123-128
+.. GENERATED FROM PYTHON SOURCE LINES 118-123
 
 Run analysis and save to disk
 -----------------------------
@@ -240,19 +235,17 @@ Run analysis and save to disk
 Next we loop through the five measurements and run the individual analysis
 on each. We will then save the GLM results to disk as ``.h5`` files.
 
-.. GENERATED FROM PYTHON SOURCE LINES 128-155
+.. GENERATED FROM PYTHON SOURCE LINES 123-152
 
 .. code-block:: Python
 
 
 
     for sub in subjects:
-
         # Create path to file based on experiment info
-        data_path = dataset.update(subject=sub,
-                                   datatype="nirs",
-                                   suffix="nirs",
-                                   extension=".snirf")
+        data_path = dataset.update(
+            subject=sub, datatype="nirs", suffix="nirs", extension=".snirf"
+        )
 
         # Analyse data and glm results
         glm = individual_analysis(data_path)
@@ -263,7 +256,11 @@ on each. We will then save the GLM results to disk as ``.h5`` files.
 
         save_path = dataset.copy().update(
             root=join(root, "derivatives"),
-            datatype="nirs", suffix="glm", extension=".h5",check=False)
+            datatype="nirs",
+            suffix="glm",
+            extension=".h5",
+            check=False,
+        )
         # Ensure the folder exists, and make it if not.
         save_path.fpath.parent.mkdir(exist_ok=True, parents=True)
 
@@ -278,14 +275,14 @@ on each. We will then save the GLM results to disk as ``.h5`` files.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 156-160
+.. GENERATED FROM PYTHON SOURCE LINES 153-157
 
 Reload results and extract summary statistics
 ---------------------------------------------
 
 Next we loop through the five measurements and reload all the results.
 
-.. GENERATED FROM PYTHON SOURCE LINES 160-182
+.. GENERATED FROM PYTHON SOURCE LINES 157-178
 
 .. code-block:: Python
 
@@ -294,7 +291,6 @@ Next we loop through the five measurements and reload all the results.
     df = pd.DataFrame()
 
     for sub in subjects:
-
         # Point to the correct subject
         save_path = save_path.update(subject=sub)
 
@@ -318,7 +314,7 @@ Next we loop through the five measurements and reload all the results.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 183-188
+.. GENERATED FROM PYTHON SOURCE LINES 179-184
 
 View the resulting dataframe
 ----------------------------
@@ -326,7 +322,7 @@ View the resulting dataframe
 Finally we can view the resulting dataframe which contains data from all
 subjects.
 
-.. GENERATED FROM PYTHON SOURCE LINES 188-190
+.. GENERATED FROM PYTHON SOURCE LINES 184-186
 
 .. code-block:: Python
 
@@ -561,9 +557,9 @@ subjects.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 7.942 seconds)
+   **Total running time of the script:** (0 minutes 8.553 seconds)
 
-**Estimated memory usage:**  16 MB
+**Estimated memory usage:**  439 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_80_save_read_glm.py:
@@ -586,6 +582,10 @@ subjects.
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_80_save_read_glm.py <plot_80_save_read_glm.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_80_save_read_glm.zip <plot_80_save_read_glm.zip>`
 
 
 .. only:: html

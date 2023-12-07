@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_general_plot_21_artifacts.py>`
-        to download the full example code or to run this example in your browser via Binder
+        to download the full example code. or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
 
@@ -28,7 +28,7 @@ Here we artificially introduce several artifacts in a
 functional near-infrared spectroscopy (fNIRS) measurement and observe
 how artifact correction techniques attempt to correct the data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 13-23
+.. GENERATED FROM PYTHON SOURCE LINES 13-25
 
 .. code-block:: Python
 
@@ -37,19 +37,21 @@ how artifact correction techniques attempt to correct the data.
     # License: BSD (3-clause)
 
     import os
+
     import mne
-
-    from mne.preprocessing.nirs import (optical_density,
-                                        temporal_derivative_distribution_repair)
-
-
-
+    from mne.preprocessing.nirs import (
+        optical_density,
+        temporal_derivative_distribution_repair,
+    )
 
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 24-31
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 26-33
 
 Import data
 -----------
@@ -59,18 +61,19 @@ We resample the data to make indexing exact times more convenient.
 We then convert the data to optical density to perform corrections on
 and plot these signals.
 
-.. GENERATED FROM PYTHON SOURCE LINES 31-42
+.. GENERATED FROM PYTHON SOURCE LINES 33-45
 
 .. code-block:: Python
 
 
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-    fnirs_cw_amplitude_dir = os.path.join(fnirs_data_folder, 'Participant-1')
+    fnirs_cw_amplitude_dir = os.path.join(fnirs_data_folder, "Participant-1")
     raw_intensity = mne.io.read_raw_nirx(fnirs_cw_amplitude_dir, verbose=True)
     raw_intensity.load_data().resample(3, npad="auto")
     raw_od = optical_density(raw_intensity)
-    new_annotations = mne.Annotations([31, 187, 317], [8, 8, 8],
-                                      ["Movement", "Movement", "Movement"])
+    new_annotations = mne.Annotations(
+        [31, 187, 317], [8, 8, 8], ["Movement", "Movement", "Movement"]
+    )
     raw_od.set_annotations(new_annotations)
     raw_od.plot(n_channels=15, duration=400, show_scrollbars=False)
 
@@ -89,17 +92,17 @@ and plot these signals.
 
     Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff274b50b80>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa0a8983f40>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-46
+.. GENERATED FROM PYTHON SOURCE LINES 46-49
 
 We can see some small artifacts in the above data from movement around 40,
 190 and 240 seconds. However, this data is relatively clean so we will
 add some additional artifacts below.
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-59
+.. GENERATED FROM PYTHON SOURCE LINES 52-62
 
 Add artificial artifacts to data
 --------------------------------
@@ -112,7 +115,7 @@ return to its original position.
 We add a spike type artifact at 100 seconds and a baseline shift at 200
 seconds to the data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-72
+.. GENERATED FROM PYTHON SOURCE LINES 62-75
 
 .. code-block:: Python
 
@@ -120,10 +123,10 @@ seconds to the data.
     corrupted_data = raw_od.get_data()
     corrupted_data[:, 298:302] = corrupted_data[:, 298:302] - 0.06
     corrupted_data[:, 450:750] = corrupted_data[:, 450:750] + 0.03
-    corrupted_od = mne.io.RawArray(corrupted_data, raw_od.info,
-                                   first_samp=raw_od.first_samp)
-    new_annotations.append([95, 145, 245], [10, 10, 10],
-                           ["Spike", "Baseline", "Baseline"])
+    corrupted_od = mne.io.RawArray(
+        corrupted_data, raw_od.info, first_samp=raw_od.first_samp
+    )
+    new_annotations.append([95, 145, 245], [10, 10, 10], ["Spike", "Baseline", "Baseline"])
     corrupted_od.set_annotations(new_annotations)
 
     corrupted_od.plot(n_channels=15, duration=400, show_scrollbars=False)
@@ -143,11 +146,11 @@ seconds to the data.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff1676c6580>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa0a8982200>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-78
+.. GENERATED FROM PYTHON SOURCE LINES 76-81
 
 Apply temporal derivative distribution repair
 ---------------------------------------------
@@ -155,7 +158,7 @@ Apply temporal derivative distribution repair
 This approach corrects baseline shift and spike artifacts without the need
 for any user-supplied parameters FishburnEtAl2019.
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-83
+.. GENERATED FROM PYTHON SOURCE LINES 81-86
 
 .. code-block:: Python
 
@@ -178,17 +181,17 @@ for any user-supplied parameters FishburnEtAl2019.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser(0x0) at 0x7ff280576480>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa0a879ec20>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-87
+.. GENERATED FROM PYTHON SOURCE LINES 87-90
 
 We can see in the data above that the introduced spikes and shifts are
 largely removed, but some residual smaller artifact remains.
 The same can be said for the artifacts in the original data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 90-96
+.. GENERATED FROM PYTHON SOURCE LINES 93-100
 
 References
 ----------
@@ -201,9 +204,9 @@ for fNIRS. NeuroImage,
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.704 seconds)
+   **Total running time of the script:** (0 minutes 8.178 seconds)
 
-**Estimated memory usage:**  10 MB
+**Estimated memory usage:**  433 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_21_artifacts.py:
@@ -226,6 +229,10 @@ for fNIRS. NeuroImage,
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_21_artifacts.py <plot_21_artifacts.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_21_artifacts.zip <plot_21_artifacts.zip>`
 
 
 .. only:: html

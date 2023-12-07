@@ -54,19 +54,18 @@ This GLM analysis is a wrapper over the excellent
 
 .. note::
 
-   The sample rate used in this example is set to 0.5 Hz. This is done to
+   The sample rate used in this example is set to 0.5 Hz. This is to
    ensure that the code can run on the continuous integration servers. You may
    wish to increase the sample rate by adjusting `resample` below for your
    own analysis.
 
 .. note::
 
-   This tutorial uses data in the BIDS format.
-   The BIDS specification for NIRS data is still under development. See:
-   `fNIRS BIDS proposal <https://github.com/bids-standard/bids-specification/pull/802>`_.
-   As such, to run this tutorial you must use the MNE-BIDS 0.10 or later.
+   This tutorial uses data stored using
+   `the BIDS format <https://bids-specification.readthedocs.io/en/stable/04-modality-specific-files/11-near-infrared-spectroscopy.html>`_
+   :footcite:p:`luke2023bids`.
 
-   MNE-Python allows you to process fNIRS data that is not in BIDS format too.
+   MNE-Python allows you to process fNIRS data that is not in BIDS format.
    Simply modify the ``read_raw_`` function to match your data type.
    See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
    to use your data with MNE-Python.
@@ -75,9 +74,9 @@ This GLM analysis is a wrapper over the excellent
    :local:
    :depth: 2
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-91
+.. GENERATED FROM PYTHON SOURCE LINES 59-90
 
-.. code-block:: default
+.. code-block:: Python
 
     # sphinx_gallery_thumbnail_number = 1
 
@@ -117,7 +116,7 @@ This GLM analysis is a wrapper over the excellent
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-101
+.. GENERATED FROM PYTHON SOURCE LINES 91-100
 
 Define FIR analysis
 ---------------------------------------------------------------------
@@ -129,9 +128,9 @@ This results in values being estimated for 10 `delay` steps.
 Due to the chosen sample rate of 0.5 Hz, these delays
 correspond to 0, 2, 4... seconds from the onset of the stimulus.
 
-.. GENERATED FROM PYTHON SOURCE LINES 101-148
+.. GENERATED FROM PYTHON SOURCE LINES 100-147
 
-.. code-block:: default
+.. code-block:: Python
 
 
     def analysis(fname, ID):
@@ -187,7 +186,7 @@ correspond to 0, 2, 4... seconds from the onset of the stimulus.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 149-155
+.. GENERATED FROM PYTHON SOURCE LINES 148-154
 
 Run analysis
 ---------------------------------------------------------------------
@@ -196,9 +195,9 @@ The analysis is run on each individual subject measurement.
 The individual results are then appended to a dataframe for
 group-level analysis below.
 
-.. GENERATED FROM PYTHON SOURCE LINES 155-171
+.. GENERATED FROM PYTHON SOURCE LINES 154-169
 
-.. code-block:: default
+.. code-block:: Python
 
 
     df = pd.DataFrame()
@@ -219,7 +218,6 @@ group-level analysis below.
 
 
 
-
 .. rst-class:: sphx-glr-script-out
 
  .. code-block:: none
@@ -233,7 +231,7 @@ group-level analysis below.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 172-178
+.. GENERATED FROM PYTHON SOURCE LINES 170-176
 
 Tidy the dataframe
 ---------------------------------------------------------------------
@@ -242,9 +240,9 @@ For simplicity we only examine the data from the right hand
 tapping condition. The code below retains only the relevant information
 from the dataframe and design matrix for the following statistical analysis.
 
-.. GENERATED FROM PYTHON SOURCE LINES 178-198
+.. GENERATED FROM PYTHON SOURCE LINES 176-197
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Keep only tapping and FIR delay information in the dataframe
@@ -255,6 +253,7 @@ from the dataframe and design matrix for the following statistical analysis.
     df = df.query("isDelay in [True]")
     df = df.query("isTapping in [True]")
     # Make a new column that stores the condition name for tidier model below
+    df.loc[:, "TidyCond"] = ""
     df.loc[df["isTapping"] == True, "TidyCond"] = "Tapping"
     # Finally, extract the FIR delay in to its own column in data frame
     df.loc[:, "delay"] = [n.split('_')[-1] for n in df.Condition]
@@ -273,7 +272,7 @@ from the dataframe and design matrix for the following statistical analysis.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 199-205
+.. GENERATED FROM PYTHON SOURCE LINES 198-204
 
 Run group-level model
 ---------------------------------------------------------------------
@@ -282,9 +281,9 @@ A linear mixed effects (LME) model is used to determine the effect
 of FIR delay for each chromophore on the evoked response with participant
 (ID) as a random variable.
 
-.. GENERATED FROM PYTHON SOURCE LINES 205-213
+.. GENERATED FROM PYTHON SOURCE LINES 204-212
 
-.. code-block:: default
+.. code-block:: Python
 
 
     lme = smf.mixedlm('theta ~ -1 + delay:TidyCond:Chroma', df,
@@ -301,7 +300,7 @@ of FIR delay for each chromophore on the evoked response with participant
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 214-221
+.. GENERATED FROM PYTHON SOURCE LINES 213-220
 
 Summarise group-level findings
 ---------------------------------------------------------------------
@@ -311,9 +310,9 @@ more convenient analysis below.
 A subset of the results is displayed, illustrating the estimated coefficients
 for oxyhaemoglobin (HbO) for the right hand tapping condition.
 
-.. GENERATED FROM PYTHON SOURCE LINES 221-230
+.. GENERATED FROM PYTHON SOURCE LINES 220-229
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Create a dataframe from LME model for plotting below
@@ -500,14 +499,14 @@ for oxyhaemoglobin (HbO) for the right hand tapping condition.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 231-235
+.. GENERATED FROM PYTHON SOURCE LINES 230-234
 
 Note in the output above that there are 10 FIR delays.
 A coefficient estimate has been calculated for each delay.
 These coefficients must be multiplied by the FIR function to obtain the
 morphology of the fNIRS response.
 
-.. GENERATED FROM PYTHON SOURCE LINES 237-252
+.. GENERATED FROM PYTHON SOURCE LINES 236-251
 
 Plot the response from a single condition
 ---------------------------------------------------------------------
@@ -525,9 +524,9 @@ The third facet illustrates the overall estimated response for each
 chromophore and is calculated by summing all the individual FIR components
 per chromophore (HbR not shown in first two facets).
 
-.. GENERATED FROM PYTHON SOURCE LINES 252-296
+.. GENERATED FROM PYTHON SOURCE LINES 251-295
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(20, 10))
@@ -587,19 +586,19 @@ per chromophore (HbR not shown in first two facets).
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7ff0bc069fd0>
+    <matplotlib.legend.Legend object at 0x7fb7371e99c0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 297-300
+.. GENERATED FROM PYTHON SOURCE LINES 296-299
 
 Plot the response with confidence intervals
 ---------------------------------------------------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 300-332
+.. GENERATED FROM PYTHON SOURCE LINES 299-331
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # We can also extract the 95% confidence intervals of the estimates too
@@ -654,7 +653,7 @@ Plot the response with confidence intervals
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  17.414 seconds)
+   **Total running time of the script:** (0 minutes 21.908 seconds)
 
 **Estimated memory usage:**  10 MB
 
@@ -665,7 +664,6 @@ Plot the response with confidence intervals
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
@@ -673,13 +671,13 @@ Plot the response with confidence intervals
         :alt: Launch binder
         :width: 150 px
 
-    .. container:: sphx-glr-download sphx-glr-download-python
-
-      :download:`Download Python source code: plot_13_fir_glm.py <plot_13_fir_glm.py>`
-
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
       :download:`Download Jupyter notebook: plot_13_fir_glm.ipynb <plot_13_fir_glm.ipynb>`
+
+    .. container:: sphx-glr-download sphx-glr-download-python
+
+      :download:`Download Python source code: plot_13_fir_glm.py <plot_13_fir_glm.py>`
 
 
 .. only:: html

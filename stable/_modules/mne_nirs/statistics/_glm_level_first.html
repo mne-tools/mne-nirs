@@ -1,48 +1,55 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+
+<html lang="en" data-theme="auto">
+
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne_nirs.statistics._glm_level_first &#8212; MNE-NIRS 0.5.0 documentation</title>
-  <script>
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    <title>mne_nirs.statistics._glm_level_first &#8212; MNE-NIRS 0.6.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "auto";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+  <link href="../../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link rel="stylesheet"
-    href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/font-awesome.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/sphinx_highlight.js"></script>
-    <script src="../../../_static/js/copybutton.js"></script>
+    <script src="../../../_static/documentation_options.js?v=8fa8b3e9"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-188272121-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-188272121-1');
+            </script>
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
@@ -52,139 +59,169 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/mne_nirs/statistics/_glm_level_first';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.5.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.6';
         </script>
-    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="canonical" href="https://mne.tools/mne-nirs/stable/index.html" />
     
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="docsearch:language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
 
   </head>
   
   
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="auto">
 
   
-  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
   <label class="overlay overlay-primary" for="__primary"></label>
-
   
-  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
   <label class="overlay overlay-secondary" for="__secondary"></label>
-
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container">
-      
-<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-    </div>
+</form></div>
   </div>
-
   
-  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
   <label class="sidebar-toggle primary-toggle" for="__primary">
-      <span class="fa-solid fa-bars"></span>
+    <span class="fa-solid fa-bars"></span>
   </label>
-  <div id="navbar-start">
-    
-    
   
-
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
 
 <a class="navbar-brand logo" href="../../../index.html">
-
   
   
   
   
+    
+    
+      
+    
+    
+    <img src="../../../_static/mne_nirs_logo_small.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../../_static/mne_nirs_logo_small.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
   
-  
-
-  
-    <img src="../../../_static/mne_nirs_logo_small.svg" class="logo__image only-light" alt="Logo image">
-    <img src="../../../_static/mne_nirs_logo_small.svg" class="logo__image only-dark" alt="Logo image">
-  
-  
-</a>
+</a></div>
     
   </div>
-
+  
   
   <div class="col-lg-9 navbar-header-items">
-    <div id="navbar-center" class="mr-auto">
+    
+    <div class="me-auto navbar-header-items__center">
       
-      <div class="navbar-center-item">
-        <nav class="navbar-nav">
-    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
-        Site Navigation
-    </p>
-    <ul id="navbar-main-elements" class="navbar-nav">
-        
-                <li class="nav-item">
-                  <a class="nav-link" href="../../../auto_examples/index.html">
-                    Examples
-                  </a>
-                </li>
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../auto_examples/index.html">
+                        Examples
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                  <a class="nav-link" href="../../../api.html">
-                    API
-                  </a>
-                </li>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../api.html">
+                        API
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                  <a class="nav-link" href="../../../changelog.html">
-                    Changelog
-                  </a>
-                </li>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../changelog.html">
+                        Changelog
+                      </a>
+                    </li>
                 
-    </ul>
-</nav>
-      </div>
+  </ul>
+</nav></div>
       
     </div>
-
-    <div id="navbar-end">
-      <div class="navbar-end-item navbar-end__search-button-container">
-        
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
-  <i class="fa-solid fa-magnifying-glass"></i>
-</button>
-      </div>
+    
+    
+    <div class="navbar-header-items__end">
       
-      <div class="navbar-end-item">
-        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
-    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
-    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
-    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
-</span>
-      </div>
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
       
-      <div class="navbar-end-item">
-        <div class="version-switcher__container dropdown">
-    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
-        0.5.0  <!-- this text may get changed later by javascript -->
-        <span class="caret"></span>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      0.6  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
     <!-- dropdown will be populated by javascript on page load -->
     </div>
-</div>
-      </div>
+  </div>
+`);
+</script></div>
       
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="External Links">
         <li class="nav-item">
           
           
@@ -193,104 +230,111 @@
           
           
           
-          <a href="https://github.com/mne-tools/mne-python" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+          
+          <a href="https://github.com/mne-tools/mne-nirs" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
-      </ul>
-      </div>
+</ul></div>
       
     </div>
+    
   </div>
-
-
   
-  <div class="search-button-container--mobile">
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
-  <i class="fa-solid fa-magnifying-glass"></i>
-</button>
-  </div>
-
   
-  <label class="sidebar-toggle secondary-toggle" for="__secondary">
-      <span class="fa-solid fa-outdent"></span>
-  </label>
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
   
 
+  
 </div>
-  </nav>
-  
 
+    </nav>
+  
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
       <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
         
+
   
   <div class="sidebar-header-items sidebar-primary__section">
     
     
       <div class="sidebar-header-items__center">
-      
-      <div class="navbar-center-item">
-        <nav class="navbar-nav">
-    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
-        Site Navigation
-    </p>
-    <ul id="navbar-main-elements" class="navbar-nav">
         
-                <li class="nav-item">
-                  <a class="nav-link" href="../../../auto_examples/index.html">
-                    Examples
-                  </a>
-                </li>
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../auto_examples/index.html">
+                        Examples
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                  <a class="nav-link" href="../../../api.html">
-                    API
-                  </a>
-                </li>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../api.html">
+                        API
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                  <a class="nav-link" href="../../../changelog.html">
-                    Changelog
-                  </a>
-                </li>
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../changelog.html">
+                        Changelog
+                      </a>
+                    </li>
                 
-    </ul>
-</nav>
-      </div>
-      
+  </ul>
+</nav></div>
+        
       </div>
     
-
     
     
-    <div class="sidebar-header-items__end">
-      
-      <div class="navbar-end-item">
-        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
-    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
-    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
-    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
-</span>
-      </div>
-      
-      <div class="navbar-end-item">
-        <div class="version-switcher__container dropdown">
-    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
-        0.5.0  <!-- this text may get changed later by javascript -->
-        <span class="caret"></span>
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      0.6  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
     <!-- dropdown will be populated by javascript on page load -->
     </div>
-</div>
-      </div>
-      
-      <div class="navbar-end-item">
-        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+  </div>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="External Links">
         <li class="nav-item">
           
           
@@ -299,38 +343,39 @@
           
           
           
-          <a href="https://github.com/mne-tools/mne-python" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+          
+          <a href="https://github.com/mne-tools/mne-nirs" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
-      </ul>
+</ul></div>
+        
       </div>
-      
-    </div>
     
   </div>
-
   
-
   
-  <div class="sidebar-end-items sidebar-primary__section">
-    <div class="sidebar-end-items__item">
-    </div>
+  <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
+  
+  <div id="rtd-footer-container"></div>
+
 
       </div>
-      <main class="bd-main">
+      
+      <main id="main-content" class="bd-main">
         
         
-        <div class="bd-content">
-          <div class="bd-article-container">
-            
-            <div class="bd-header-article">
-                
-            </div>
-            
-            
-            <article class="bd-article" role="main">
+          <div class="bd-content">
+            <div class="bd-article-container">
               
+              <div class="bd-header-article"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <h1>Source code for mne_nirs.statistics._glm_level_first</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Authors: Robert Luke &lt;mail@robertluke.net&gt;</span>
 <span class="c1">#</span>
@@ -350,14 +395,14 @@
     <span class="kn">import</span> <span class="nn">nilearn.glm</span>
     <span class="kn">from</span> <span class="nn">nilearn.glm.first_level</span> <span class="kn">import</span> <span class="n">run_glm</span> <span class="k">as</span> <span class="n">nilearn_glm</span>
 
-<span class="k">try</span><span class="p">:</span>  <span class="c1"># remove once MNE 1.0 is required</span>
-    <span class="kn">from</span> <span class="nn">mne.io.meas_info</span> <span class="kn">import</span> <span class="n">ContainsMixin</span>
+<span class="k">try</span><span class="p">:</span>  <span class="c1"># remove once MNE 1.6 is required</span>
+    <span class="kn">from</span> <span class="nn">mne._fiff.meas_info</span> <span class="kn">import</span> <span class="n">ContainsMixin</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">mne.channels.channels</span> <span class="kn">import</span> <span class="n">ContainsMixin</span>
+    <span class="kn">from</span> <span class="nn">mne.io.meas_info</span> <span class="kn">import</span> <span class="n">ContainsMixin</span>
 <span class="kn">from</span> <span class="nn">mne.utils</span> <span class="kn">import</span> <span class="n">fill_doc</span><span class="p">,</span> <span class="n">warn</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">check_fname</span><span class="p">,</span> <span class="n">_validate_type</span>
-<span class="kn">from</span> <span class="nn">mne.io.pick</span> <span class="kn">import</span> <span class="n">_picks_to_idx</span><span class="p">,</span> <span class="n">pick_info</span>
+<span class="kn">from</span> <span class="nn">mne.io.pick</span> <span class="kn">import</span> <span class="n">_picks_to_idx</span>
 <span class="kn">from</span> <span class="nn">mne.io.constants</span> <span class="kn">import</span> <span class="n">FIFF</span>
-<span class="kn">from</span> <span class="nn">mne</span> <span class="kn">import</span> <span class="n">Info</span>
+<span class="kn">from</span> <span class="nn">mne</span> <span class="kn">import</span> <span class="n">Info</span><span class="p">,</span> <span class="n">pick_info</span>
 
 <span class="kn">from</span> <span class="nn">..visualisation._plot_GLM_topo</span> <span class="kn">import</span> <span class="n">_plot_glm_topo</span><span class="p">,</span>\
     <span class="n">_plot_glm_contrast_topo</span>
@@ -367,11 +412,11 @@
 
 <span class="nd">@fill_doc</span>
 <span class="k">class</span> <span class="nc">_BaseGLM</span><span class="p">(</span><span class="n">ContainsMixin</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Base GLM results class.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base GLM results class.&quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ch_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return the channel names.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the channel names.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -390,7 +435,7 @@
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># noqa: D105</span>
-        <span class="sd">&quot;&quot;&quot;Return the state of the GLM results as a dictionary.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the state of the GLM results as a dictionary.</span>
 
 <span class="sd">        See _state_to_glm for inverse operation.</span>
 
@@ -420,7 +465,7 @@
         <span class="k">return</span> <span class="n">state</span>
 
     <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return a copy of the GLM results.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a copy of the GLM results.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -431,7 +476,7 @@
 
     <span class="nd">@fill_doc</span>
     <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Save GLM results to disk.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save GLM results to disk.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -450,7 +495,7 @@
                    <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;mnepython&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return a tidy dataframe representing the GLM results.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a tidy dataframe representing the GLM results.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -469,7 +514,7 @@
 
     <span class="k">def</span> <span class="nf">scatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conditions</span><span class="o">=</span><span class="p">[],</span> <span class="n">exclude_no_interest</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">no_interest</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Scatter plot of the GLM results.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Scatter plot of the GLM results.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -531,9 +576,11 @@
         <span class="k">return</span> <span class="n">axes</span>
 
 
-<div class="viewcode-block" id="RegressionResults"><a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults">[docs]</a><span class="nd">@fill_doc</span>
+<div class="viewcode-block" id="RegressionResults">
+<a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults">[docs]</a>
+<span class="nd">@fill_doc</span>
 <span class="k">class</span> <span class="nc">RegressionResults</span><span class="p">(</span><span class="n">_BaseGLM</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class containing GLM regression results.</span>
 
 <span class="sd">    Parameters</span>
@@ -586,9 +633,11 @@
                              <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">())])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">same_ch</span> <span class="ow">and</span> <span class="n">same_design</span> <span class="ow">and</span> <span class="n">same_keys</span> <span class="ow">and</span> <span class="n">same_theta</span><span class="p">)</span>
 
-<div class="viewcode-block" id="RegressionResults.pick"><a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.pick">[docs]</a>    <span class="nd">@fill_doc</span>
+<div class="viewcode-block" id="RegressionResults.pick">
+<a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.pick">[docs]</a>
+    <span class="nd">@fill_doc</span>
     <span class="k">def</span> <span class="nf">pick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">picks</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">()):</span>
-        <span class="sd">&quot;&quot;&quot;Pick a subset of channels.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Pick a subset of channels.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -608,8 +657,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">}</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="RegressionResults.theta"><a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.theta">[docs]</a>    <span class="k">def</span> <span class="nf">theta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return the GLM theta results.</span>
+
+<div class="viewcode-block" id="RegressionResults.theta">
+<a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.theta">[docs]</a>
+    <span class="k">def</span> <span class="nf">theta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the GLM theta results.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -618,8 +670,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">theta</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="RegressionResults.MSE"><a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.MSE">[docs]</a>    <span class="k">def</span> <span class="nf">MSE</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return the GLM MSE.</span>
+
+<div class="viewcode-block" id="RegressionResults.MSE">
+<a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.MSE">[docs]</a>
+    <span class="k">def</span> <span class="nf">MSE</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the GLM MSE.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -628,8 +683,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">MSE</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="RegressionResults.model"><a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.model">[docs]</a>    <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return the GLM model.</span>
+
+<div class="viewcode-block" id="RegressionResults.model">
+<a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.model">[docs]</a>
+    <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the GLM model.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -638,8 +696,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">model</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="RegressionResults.compute_contrast"><a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.compute_contrast">[docs]</a>    <span class="k">def</span> <span class="nf">compute_contrast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contrast</span><span class="p">,</span> <span class="n">contrast_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RegressionResults.compute_contrast">
+<a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.compute_contrast">[docs]</a>
+    <span class="k">def</span> <span class="nf">compute_contrast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contrast</span><span class="p">,</span> <span class="n">contrast_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute contrasts on regression results.</span>
 
 <span class="sd">        This is a wrapper function for nilearn.stats.contrasts.</span>
@@ -662,10 +723,13 @@
                                  <span class="n">contrast_type</span><span class="o">=</span><span class="n">contrast_type</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ContrastResults</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="n">cont</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">design</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RegressionResults.plot_topo"><a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.plot_topo">[docs]</a>    <span class="k">def</span> <span class="nf">plot_topo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">vlim</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+
+<div class="viewcode-block" id="RegressionResults.plot_topo">
+<a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.plot_topo">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot_topo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">vlim</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
                   <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>
                   <span class="n">sphere</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Plot 2D topography of GLM data.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot 2D topography of GLM data.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -693,7 +757,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        fig : figure</span>
-<span class="sd">            Figure of each design matrix componenent for hbo (top row)</span>
+<span class="sd">            Figure of each design matrix component for hbo (top row)</span>
 <span class="sd">            and hbr (bottom row).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">_plot_glm_topo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">design</span><span class="p">,</span>
@@ -702,9 +766,12 @@
                               <span class="n">colorbar</span><span class="o">=</span><span class="n">colorbar</span><span class="p">,</span>
                               <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span> <span class="n">sphere</span><span class="o">=</span><span class="n">sphere</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RegressionResults.to_dataframe_region_of_interest"><a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.to_dataframe_region_of_interest">[docs]</a>    <span class="k">def</span> <span class="nf">to_dataframe_region_of_interest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_by</span><span class="p">,</span> <span class="n">condition</span><span class="p">,</span>
+
+<div class="viewcode-block" id="RegressionResults.to_dataframe_region_of_interest">
+<a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.to_dataframe_region_of_interest">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_dataframe_region_of_interest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_by</span><span class="p">,</span> <span class="n">condition</span><span class="p">,</span>
                                         <span class="n">weighted</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">demographic_info</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Region of interest results as a dataframe.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Region of interest results as a dataframe.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -786,14 +853,17 @@
 
         <span class="k">return</span> <span class="n">tidy</span></div>
 
-<div class="viewcode-block" id="RegressionResults.surface_projection"><a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.surface_projection">[docs]</a>    <span class="nd">@verbose</span>
+
+<div class="viewcode-block" id="RegressionResults.surface_projection">
+<a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.surface_projection">[docs]</a>
+    <span class="nd">@verbose</span>
     <span class="k">def</span> <span class="nf">surface_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chroma</span><span class="o">=</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                            <span class="n">background</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">figure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clim</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
                            <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span>
                            <span class="n">surface</span><span class="o">=</span><span class="s1">&#39;pial&#39;</span><span class="p">,</span> <span class="n">hemi</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
                            <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>
                            <span class="n">subjects_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Project GLM results on to the surface of the brain.</span>
 
 <span class="sd">        Note: This function provides a convenient wrapper around low level</span>
@@ -883,12 +953,16 @@
                                            <span class="n">distance</span><span class="o">=</span><span class="n">distance</span><span class="p">,</span>
                                            <span class="n">subjects_dir</span><span class="o">=</span><span class="n">subjects_dir</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="n">src</span><span class="p">,</span>
                                            <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
-                                           <span class="p">)</span></div></div>
+                                           <span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="ContrastResults"><a class="viewcode-back" href="../../../generated/mne_nirs.statistics.ContrastResults.html#mne_nirs.statistics.ContrastResults">[docs]</a><span class="nd">@fill_doc</span>
+
+<div class="viewcode-block" id="ContrastResults">
+<a class="viewcode-back" href="../../../generated/mne_nirs.statistics.ContrastResults.html#mne_nirs.statistics.ContrastResults">[docs]</a>
+<span class="nd">@fill_doc</span>
 <span class="k">class</span> <span class="nc">ContrastResults</span><span class="p">(</span><span class="n">_BaseGLM</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class containing GLM contrast results.</span>
 
 <span class="sd">    Parameters</span>
@@ -931,8 +1005,10 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
 
-<div class="viewcode-block" id="ContrastResults.plot_topo"><a class="viewcode-back" href="../../../generated/mne_nirs.statistics.ContrastResults.html#mne_nirs.statistics.ContrastResults.plot_topo">[docs]</a>    <span class="k">def</span> <span class="nf">plot_topo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">sphere</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ContrastResults.plot_topo">
+<a class="viewcode-back" href="../../../generated/mne_nirs.statistics.ContrastResults.html#mne_nirs.statistics.ContrastResults.plot_topo">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot_topo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">sphere</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot topomap GLM contrast data.</span>
 
 <span class="sd">        Parameters</span>
@@ -945,16 +1021,18 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        fig : figure</span>
-<span class="sd">            Figure of each design matrix componenent for hbo (top row)</span>
+<span class="sd">            Figure of each design matrix component for hbo (top row)</span>
 <span class="sd">            and hbr (bottom row).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">_plot_glm_contrast_topo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span>
-                                       <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span> <span class="n">sphere</span><span class="o">=</span><span class="n">sphere</span><span class="p">)</span></div></div>
+                                       <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span> <span class="n">sphere</span><span class="o">=</span><span class="n">sphere</span><span class="p">)</span></div>
+</div>
+
 
 
 <span class="k">def</span> <span class="nf">run_GLM</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">,</span> <span class="n">noise_model</span><span class="o">=</span><span class="s1">&#39;ar1&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
             <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Run GLM on data using supplied design matrix.</span>
 
 <span class="sd">    This is a wrapper function for nilearn.stats.first_level_model.run_glm.</span>
@@ -997,9 +1075,11 @@
     <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">data</span>
 
 
-<div class="viewcode-block" id="run_glm"><a class="viewcode-back" href="../../../generated/mne_nirs.statistics.run_glm.html#mne_nirs.statistics.run_glm">[docs]</a><span class="k">def</span> <span class="nf">run_glm</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">,</span> <span class="n">noise_model</span><span class="o">=</span><span class="s1">&#39;ar1&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<div class="viewcode-block" id="run_glm">
+<a class="viewcode-back" href="../../../generated/mne_nirs.statistics.run_glm.html#mne_nirs.statistics.run_glm">[docs]</a>
+<span class="k">def</span> <span class="nf">run_glm</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">,</span> <span class="n">noise_model</span><span class="o">=</span><span class="s1">&#39;ar1&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
             <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    GLM fit for an MNE structure containing fNIRS data.</span>
 
 <span class="sd">    This is a wrapper function for nilearn.stats.first_level_model.run_glm.</span>
@@ -1041,7 +1121,7 @@
     <span class="n">ch_names</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span>
 
     <span class="k">if</span> <span class="n">noise_model</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
-        <span class="n">noise_model</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;ar</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;sfreq&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">noise_model</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;ar</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;sfreq&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">4</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="k">if</span> <span class="n">bins</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">bins</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span>
@@ -1057,14 +1137,17 @@
     <span class="k">return</span> <span class="n">RegressionResults</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">)</span></div>
 
 
+
 <span class="k">def</span> <span class="nf">_compute_contrast</span><span class="p">(</span><span class="n">glm_est</span><span class="p">,</span> <span class="n">contrast</span><span class="p">,</span> <span class="n">contrast_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">nilearn.glm.contrasts</span> <span class="kn">import</span> <span class="n">compute_contrast</span> <span class="k">as</span> <span class="n">_cc</span>
     <span class="k">return</span> <span class="n">_cc</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">glm_est</span><span class="o">.</span><span class="n">keys</span><span class="p">())),</span> <span class="n">glm_est</span><span class="p">,</span> <span class="n">contrast</span><span class="p">,</span>
                <span class="n">contrast_type</span><span class="o">=</span><span class="n">contrast_type</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="read_glm"><a class="viewcode-back" href="../../../generated/mne_nirs.statistics.read_glm.html#mne_nirs.statistics.read_glm">[docs]</a><span class="k">def</span> <span class="nf">read_glm</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="read_glm">
+<a class="viewcode-back" href="../../../generated/mne_nirs.statistics.read_glm.html#mne_nirs.statistics.read_glm">[docs]</a>
+<span class="k">def</span> <span class="nf">read_glm</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read GLM results from disk.</span>
 
 <span class="sd">    Parameters</span>
@@ -1083,8 +1166,9 @@
     <span class="k">return</span> <span class="n">_state_to_glm</span><span class="p">(</span><span class="n">glm</span><span class="p">)</span></div>
 
 
+
 <span class="k">def</span> <span class="nf">_state_to_glm</span><span class="p">(</span><span class="n">glm</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert state of GLM stored as dictionary to a MNE-NIRS GLM type.</span>
 
 <span class="sd">    Parameters</span>
@@ -1154,70 +1238,63 @@
         <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;Unable to read data&#39;</span><span class="p">)</span>
 </pre></div>
 
-            </article>
-            
-            
-            
-            <footer class="bd-footer-article">
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-</div>
-            </footer>
-            
-          </div>
-          
-          
-          
-            <div class="bd-sidebar-secondary bd-toc">
+                </article>
               
-<div class="toc-item">
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
   
-<div id="searchbox"></div>
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
 </div>
 
-<div class="toc-item">
-  
-</div>
-
-<div class="toc-item">
-  
-</div>
-
+                </footer>
+              
             </div>
-          
-          
-        </div>
-        <footer class="bd-footer-content">
-          <div class="bd-footer-content__inner">
+            
+            
+              
             
           </div>
-        </footer>
+          <footer class="bd-footer-content">
+            
+          </footer>
         
       </main>
     </div>
   </div>
-
   
-    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
-    
     
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+  <script src="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
-  <footer class="bd-footer"><div class="bd-footer__inner container">
+    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
   
-  <div class="footer-item">
-    
-<p class="copyright">
-
-    &copy; Copyright 2012–2022, MNE Developers. Last updated &lt;time datetime=&#34;2022-12-23T15:28:16.604739+00:00&#34; class=&#34;localized&#34;&gt;2022-12-23 15:28 UTC&lt;/time&gt;
-&lt;script type=&#34;text/javascript&#34;&gt;$(function () { $(&#34;time.localized&#34;).each(function () { var el = $(this); el.text(new Date(el.attr(&#34;datetime&#34;)).toLocaleString([], {dateStyle: &#34;medium&#34;, timeStyle: &#34;long&#34;})); }); } )&lt;/script&gt;.<br>
-
-</p>
-
-  </div>
+    <div class="footer-items__start">
+      
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2023, MNE Developers. Last updated <time datetime="2023-12-07T23:54:19.732358+00:00" class="localized">2023-12-07 23:54 UTC</time>
+<script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
   
 </div>
+
   </footer>
   </body>
 </html>
