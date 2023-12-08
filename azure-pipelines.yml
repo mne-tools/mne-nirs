@@ -51,9 +51,6 @@ stages:
         Windows:
           imageName: 'windows-latest'
           OS: windows
-        macOS:
-          imageName: 'macOS-latest'
-          OS: macos
         Linux:
           imageName: 'ubuntu-latest'
           OS: linux
