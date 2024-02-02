@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Author: Robert Luke <mail@robertluke.net>
 #
 # License: BSD (3-clause)
@@ -6,21 +5,23 @@
 from pathlib import Path
 from shutil import copyfile
 
+import mne
 import numpy as np
-from numpy.testing import assert_allclose
 import pandas as pd
 import pytest
-
-import mne
 from mne.channels import make_standard_montage
 from mne.channels.montage import transform_to_head
 from mne.datasets.testing import data_path, requires_testing_data
-from mne.io import read_raw_nirx, read_fiducials
+from mne.io import read_fiducials, read_raw_nirx
+from numpy.testing import assert_allclose
 
-from mne_nirs.io.fold._fold import _generate_montage_locations,\
-    _find_closest_standard_location, _read_fold_xls
 from mne_nirs.io import fold_landmark_specificity
 from mne_nirs.io.fold import fold_channel_specificity
+from mne_nirs.io.fold._fold import (
+    _find_closest_standard_location,
+    _generate_montage_locations,
+    _read_fold_xls,
+)
 
 thisfile = Path(__file__).parent.resolve()
 foldfile = thisfile / "data" / "example.xls"

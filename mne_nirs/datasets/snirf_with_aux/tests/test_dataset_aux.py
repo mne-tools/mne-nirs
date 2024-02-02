@@ -2,6 +2,7 @@
 # License: BSD (3-clause)
 
 import os.path as op
+
 import mne_nirs
 
 

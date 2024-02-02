@@ -6,12 +6,11 @@ import contextlib
 import inspect
 
 import numpy as np
-
-from mne import pick_info, pick_types, Info
+from mne import Info, pick_info, pick_types
 from mne.channels import make_standard_montage
 from mne.channels.montage import transform_to_head
 from mne.transforms import _get_trans, apply_trans
-from mne.utils import _validate_type, _check_option, verbose, logger
+from mne.utils import _check_option, _validate_type, logger, verbose
 from mne.viz import Brain
 
 

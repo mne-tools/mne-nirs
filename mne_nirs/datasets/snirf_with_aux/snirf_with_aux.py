@@ -4,12 +4,12 @@
 # This downloads SNIRF data that includes auxiliary channels.
 
 import os
-import pooch
 from functools import partial
 
-from mne.utils import verbose
-from mne.datasets.utils import has_dataset
+import pooch
 from mne.datasets import fetch_dataset
+from mne.datasets.utils import has_dataset
+from mne.utils import verbose
 
 from ...fixes import _mne_path
 
@@ -49,7 +49,6 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
     path : str
         Path to dataset directory.
     """
-
     dataset_params = dict(
         archive_name='2022-08-05_002.snirf.zip',
         hash='md5:35ce75d1715c8cca801894a7120b5691',

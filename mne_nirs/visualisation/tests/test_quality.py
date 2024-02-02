@@ -1,6 +1,7 @@
 import os
-import pytest
+
 import mne
+import pytest
 
 from mne_nirs.preprocessing import peak_power
 from mne_nirs.visualisation import plot_timechannel_quality_metric

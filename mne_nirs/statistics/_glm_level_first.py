@@ -2,15 +2,15 @@
 #
 # License: BSD (3-clause)
 
+import warnings
 from copy import deepcopy
 from inspect import getfullargspec
 from pathlib import PosixPath
-import warnings
 
-import pandas as pd
 import numpy as np
-from numpy import array_equal, where
+import pandas as pd
 from h5io import read_hdf5, write_hdf5
+from numpy import array_equal, where
 
 with warnings.catch_warnings(record=True):
     warnings.simplefilter('ignore')
@@ -21,15 +21,14 @@ try:  # remove once MNE 1.6 is required
     from mne._fiff.meas_info import ContainsMixin
 except ImportError:
     from mne.io.meas_info import ContainsMixin
-from mne.utils import fill_doc, warn, verbose, check_fname, _validate_type
-from mne.io.pick import _picks_to_idx
-from mne.io.constants import FIFF
 from mne import Info, pick_info
+from mne.io.constants import FIFF
+from mne.io.pick import _picks_to_idx
+from mne.utils import _validate_type, check_fname, fill_doc, verbose, warn
 
-from ..visualisation._plot_GLM_topo import _plot_glm_topo,\
-    _plot_glm_contrast_topo
-from ..visualisation import plot_glm_surface_projection
 from ..statistics._roi import _glm_region_of_interest
+from ..visualisation import plot_glm_surface_projection
+from ..visualisation._plot_GLM_topo import _plot_glm_contrast_topo, _plot_glm_topo
 
 
 @fill_doc
@@ -111,7 +110,7 @@ class _BaseGLM(ContainsMixin):
         if isinstance(fname, PosixPath):
             fname = str(fname)
         if not fname.endswith('glm.h5'):
-            raise IOError('The filename must end with glm.h5, '
+            raise OSError('The filename must end with glm.h5, '
                           f'instead received {fname}')
         write_hdf5(fname, self._get_state(),
                    overwrite=overwrite, title='mnepython')
@@ -525,7 +524,6 @@ class RegressionResults(_BaseGLM):
         figure : instance of mne.viz.Brain | matplotlib.figure.Figure
             An instance of :class:`mne.viz.Brain` or matplotlib figure.
         """
-
         df = self.to_dataframe(order=self.ch_names)
         if condition is None:
             warn("You must provide a condition to plot", ValueError)
@@ -649,6 +647,7 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=0,
         'all CPUs'.
     verbose : int, optional
         The verbosity level. Default is 0.
+
     Returns
     -------
     glm_estimates : dict
@@ -772,7 +771,6 @@ def _state_to_glm(glm):
         RegressionResults or ContrastResults class
         which stores the GLM results.
     """
-
     if glm['classname'] == "<class 'mne_nirs.statistics._glm_level_first" \
                            ".RegressionResults'>":
 
@@ -792,7 +790,7 @@ def _state_to_glm(glm):
                     glm['data'][channel]['model']['design'],
                 )
             else:
-                raise IOError("Unknown model type "
+                raise OSError("Unknown model type "
                               f"{glm['data'][channel]['modelname']}")
 
             for key in glm['data'][channel]['model']:
@@ -825,4 +823,4 @@ def _state_to_glm(glm):
         return ContrastResults(Info(glm['info']), data, glm['design'])
 
     else:
-        raise IOError('Unable to read data')
+        raise OSError('Unable to read data')

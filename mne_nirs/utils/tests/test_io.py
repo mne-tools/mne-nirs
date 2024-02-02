@@ -4,15 +4,16 @@
 
 
 import os
-import pytest
-import mne
-import mne_nirs
-import numpy as np
 
+import mne
+import numpy as np
+import pytest
+
+import mne_nirs
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.utils._io import glm_to_tidy, _tidy_long_to_wide
-from mne_nirs.statistics._glm_level_first import _compute_contrast
 from mne_nirs.statistics import run_glm
+from mne_nirs.statistics._glm_level_first import _compute_contrast
+from mne_nirs.utils._io import _tidy_long_to_wide, glm_to_tidy
 
 
 @pytest.mark.filterwarnings('ignore:.*more comprehensive.*:')

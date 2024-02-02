@@ -3,9 +3,10 @@
 # License: BSD (3-clause)
 
 import os
+
 import mne
-import pytest
 import numpy as np
+import pytest
 
 from mne_nirs.preprocessing import quantify_mayer_fooof
 

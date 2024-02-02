@@ -4,9 +4,8 @@
 
 
 import numpy as np
-
-from mne.viz import plot_alignment
 from mne import verbose
+from mne.viz import plot_alignment
 
 
 @verbose

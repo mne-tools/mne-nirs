@@ -2,19 +2,18 @@
 #
 # License: BSD (3-clause)
 
-from copy import deepcopy
 import inspect
+from copy import deepcopy
 
-import numpy as np
-import matplotlib.pyplot as plt
 import matplotlib as mpl
-from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
-
+import matplotlib.pyplot as plt
+import numpy as np
 from mne import Info, pick_info
-from mne.utils import warn
 from mne.channels.layout import _merge_ch_data
 from mne.io.pick import _picks_to_idx
+from mne.utils import warn
 from mne.viz import plot_topomap
+from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
 
 
 def _plot_glm_topo(inst, glm_estimates, design_matrix, *,

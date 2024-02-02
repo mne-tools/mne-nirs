@@ -46,20 +46,20 @@ information about triggers, condition names, etc.
 
 # Import common libraries
 from os.path import join
+
 import pandas as pd
 
 # Import MNE functions
-from mne.preprocessing.nirs import optical_density, beer_lambert_law
-
-# Import MNE-NIRS functions
-from mne_nirs.statistics import run_glm
-from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import read_glm
-from mne_nirs.datasets import fnirs_motor_group
+from mne.preprocessing.nirs import beer_lambert_law, optical_density
 
 # Import MNE-BIDS processing
-from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
+from mne_bids import BIDSPath, get_entity_vals, read_raw_bids
 
+from mne_nirs.datasets import fnirs_motor_group
+from mne_nirs.experimental_design import make_first_level_design_matrix
+
+# Import MNE-NIRS functions
+from mne_nirs.statistics import read_glm, run_glm
 
 # %%
 # Set up directories

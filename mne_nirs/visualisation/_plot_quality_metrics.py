@@ -2,10 +2,10 @@
 #
 # License: BSD (3-clause)
 
-import seaborn as sns
-import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
 
 
 def plot_timechannel_quality_metric(raw, scores, times, threshold=0.1,
@@ -33,7 +33,6 @@ def plot_timechannel_quality_metric(raw, scores, times, threshold=0.1,
     fig : figure
         Matplotlib figure displaying raw scores and thresholded scores.
     """
-
     ch_names = raw.ch_names
     cols = [np.round(t[0]) for t in times]
 

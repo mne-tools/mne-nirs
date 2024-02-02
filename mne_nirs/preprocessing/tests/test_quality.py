@@ -3,6 +3,7 @@
 # License: BSD (3-clause)
 
 import os
+
 import mne
 
 from mne_nirs.preprocessing import peak_power, scalp_coupling_index_windowed

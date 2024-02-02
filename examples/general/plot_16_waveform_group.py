@@ -76,33 +76,36 @@ information about triggers, condition names, etc.
 # License: BSD (3-clause)
 
 # Import common libraries
-import pandas as pd
-from itertools import compress
 from collections import defaultdict
 from copy import deepcopy
+from itertools import compress
 from pprint import pprint
+
+# Import Plotting Library
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+
+# Import StatsModels
+import statsmodels.formula.api as smf
+from mne import Epochs, events_from_annotations, set_log_level
+from mne.preprocessing.nirs import (
+    beer_lambert_law,
+    optical_density,
+    scalp_coupling_index,
+    temporal_derivative_distribution_repair,
+)
 
 # Import MNE processing
 from mne.viz import plot_compare_evokeds
-from mne import Epochs, events_from_annotations, set_log_level
-
-# Import MNE-NIRS processing
-from mne_nirs.channels import get_long_channels
-from mne_nirs.channels import picks_pair_to_idx
-from mne_nirs.datasets import fnirs_motor_group
-from mne.preprocessing.nirs import beer_lambert_law, optical_density,\
-    temporal_derivative_distribution_repair, scalp_coupling_index
-from mne_nirs.signal_enhancement import enhance_negative_correlation
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids
 
-# Import StatsModels
-import statsmodels.formula.api as smf
-
-# Import Plotting Library
-import matplotlib.pyplot as plt
-import seaborn as sns
+# Import MNE-NIRS processing
+from mne_nirs.channels import get_long_channels, picks_pair_to_idx
+from mne_nirs.datasets import fnirs_motor_group
+from mne_nirs.signal_enhancement import enhance_negative_correlation
 
 # Set general parameters
 set_log_level("WARNING")  # Don't show info, as it is repetitive for many subjects
@@ -215,7 +218,7 @@ for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
                              picks=pick, axes=axes[idx], show=False,
                              colors=[color], legend=False, ylim=lims, ci=0.95,
                              show_sensors=idx == 2)
-        axes[idx].set_title('{}'.format(evoked))
+        axes[idx].set_title(f'{evoked}')
 axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 
 # %%
