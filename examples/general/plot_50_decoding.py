@@ -30,11 +30,6 @@ Luke et. al. (2021)
    Simply modify the ``read_raw_`` function to match your data type.
    See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
    to use your data with MNE-Python.
-
-
-.. contents:: Page contents
-   :local:
-   :depth: 2
 """
 
 # Authors: Robert Luke <mail@robertluke.net>
@@ -43,27 +38,25 @@ Luke et. al. (2021)
 
 
 # Import common libraries
-import os
 import contextlib
+import os
+
 import numpy as np
+from mne import Epochs, events_from_annotations
+from mne.decoding import Scaler, Vectorizer, cross_val_multiscore
+
+# Import MNE-Python processing
+from mne.preprocessing.nirs import beer_lambert_law, optical_density
+
+# Import MNE-BIDS processing
+from mne_bids import BIDSPath, get_entity_vals, read_raw_bids
+from sklearn.linear_model import LogisticRegression
 
 # Import sklearn processing
 from sklearn.pipeline import make_pipeline
-from sklearn.linear_model import LogisticRegression
-
-# Import MNE-Python processing
-from mne.preprocessing.nirs import optical_density, beer_lambert_law
-from mne import Epochs, events_from_annotations
-from mne.decoding import (Scaler,
-                          cross_val_multiscore,
-                          Vectorizer)
 
 # Import MNE-NIRS processing
 from mne_nirs.datasets.fnirs_motor_group import data_path
-
-# Import MNE-BIDS processing
-from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
-
 
 # %%
 # Set up directories
@@ -82,9 +75,10 @@ from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
 # In this example we use the example dataset ``audio_or_visual_speech``.
 
 root = data_path()
-dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf",
-                   task="tapping", datatype="nirs")
-subjects = get_entity_vals(root, 'subject')
+dataset = BIDSPath(
+    root=root, suffix="nirs", extension=".snirf", task="tapping", datatype="nirs"
+)
+subjects = get_entity_vals(root, "subject")
 
 
 # %%
@@ -100,21 +94,31 @@ subjects = get_entity_vals(root, 'subject')
 
 
 def epoch_preprocessing(bids_path):
-
     with open(os.devnull, "w") as f, contextlib.redirect_stdout(f):
         raw_intensity = read_raw_bids(bids_path=bids_path).load_data()
 
     raw_od = optical_density(raw_intensity)
     raw_od.resample(1.5)
     raw_haemo = beer_lambert_law(raw_od, ppf=6)
-    raw_haemo = raw_haemo.filter(None, 0.6, h_trans_bandwidth=0.05,
-                                 l_trans_bandwidth=0.01, verbose=False)
+    raw_haemo = raw_haemo.filter(
+        None, 0.6, h_trans_bandwidth=0.05, l_trans_bandwidth=0.01, verbose=False
+    )
 
     events, event_dict = events_from_annotations(raw_haemo, verbose=False)
-    epochs = Epochs(raw_haemo, events, event_id=event_dict, tmin=-5, tmax=30,
-                    reject=dict(hbo=100e-6), reject_by_annotation=True,
-                    proj=True, baseline=(None, 0), detrend=1,
-                    preload=True, verbose=False)
+    epochs = Epochs(
+        raw_haemo,
+        events,
+        event_id=event_dict,
+        tmin=-5,
+        tmax=30,
+        reject=dict(hbo=100e-6),
+        reject_by_annotation=True,
+        proj=True,
+        baseline=(None, 0),
+        detrend=1,
+        preload=True,
+        verbose=False,
+    )
 
     epochs = epochs[["Tapping/Right", "Tapping/Left"]]
     return raw_haemo, epochs
@@ -135,11 +139,9 @@ def epoch_preprocessing(bids_path):
 # This approach classifies the data within, rather than across, subjects.
 
 
-for chroma in ['hbo', 'hbr']:
-
+for chroma in ["hbo", "hbr"]:
     st_scores = []
     for sub in subjects:
-
         bids_path = dataset.update(subject=sub)
         raw_haemo, epochs = epoch_preprocessing(bids_path)
 
@@ -148,17 +150,20 @@ for chroma in ['hbo', 'hbr']:
         X = epochs.get_data()
         y = epochs.events[:, 2]
 
-        clf = make_pipeline(Scaler(epochs.info),
-                            Vectorizer(),
-                            LogisticRegression(solver='liblinear'))
+        clf = make_pipeline(
+            Scaler(epochs.info), Vectorizer(), LogisticRegression(solver="liblinear")
+        )
 
-        scores = 100 * cross_val_multiscore(clf, X, y,
-                                            cv=5, n_jobs=1, scoring='roc_auc')
+        scores = 100 * cross_val_multiscore(
+            clf, X, y, cv=5, n_jobs=1, scoring="roc_auc"
+        )
 
         st_scores.append(np.mean(scores, axis=0))
 
-    print(f"Average spatio-temporal ROC-AUC performance ({chroma}) = "
-          f"{np.round(np.mean(st_scores))} % ({np.round(np.std(st_scores))})")
+    print(
+        f"Average spatio-temporal ROC-AUC performance ({chroma}) = "
+        f"{np.round(np.mean(st_scores))} % ({np.round(np.std(st_scores))})"
+    )
 
 
 # %%

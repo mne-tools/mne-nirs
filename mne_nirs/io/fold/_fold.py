@@ -4,14 +4,13 @@
 
 import os.path as op
 
-import pandas as pd
-import numpy as np
-
 import mne
-from mne.transforms import apply_trans, _get_trans
-from mne.utils import _validate_type, _check_fname, warn
+import numpy as np
+import pandas as pd
 from mne.io import BaseRaw
 from mne.io.constants import FIFF
+from mne.transforms import _get_trans, apply_trans
+from mne.utils import _check_fname, _validate_type, warn
 
 
 def _read_fold_xls(fname, atlas="Juelich"):
@@ -28,14 +27,9 @@ def _read_fold_xls(fname, atlas="Juelich"):
     atlas : str
         Requested atlas.
     """
-    page_reference = {"AAL2": 2,
-                      "AICHA": 5,
-                      "Brodmann": 8,
-                      "Juelich": 11,
-                      "Loni": 14}
+    page_reference = {"AAL2": 2, "AICHA": 5, "Brodmann": 8, "Juelich": 11, "Loni": 14}
 
-    tbl = pd.read_excel(fname,
-                        sheet_name=page_reference[atlas])
+    tbl = pd.read_excel(fname, sheet_name=page_reference[atlas])
 
     # Remove the spacing between rows
     empty_rows = np.where(np.isnan(tbl["Specificity"]))[0]
@@ -46,8 +40,7 @@ def _read_fold_xls(fname, atlas="Juelich"):
         for col_idx, col in enumerate(tbl.columns):
             if not isinstance(tbl[col][row_idx], str):
                 if np.isnan(tbl[col][row_idx]):
-                    tbl.iloc[row_idx, col_idx] = \
-                        tbl.iloc[row_idx - 1, col_idx]
+                    tbl.iloc[row_idx, col_idx] = tbl.iloc[row_idx - 1, col_idx]
 
     tbl["Specificity"] = tbl["Specificity"] * 100
     tbl["brainSens"] = tbl["brainSens"] * 100
@@ -62,20 +55,20 @@ def _generate_montage_locations():
     # standard_1020 and standard_1005 are in MNI (fsaverage) space already,
     # but we need to undo the scaling that head_scale will do
     montage = mne.channels.make_standard_montage(
-        'standard_1005', head_size=0.09700884729534559)
+        "standard_1005", head_size=0.09700884729534559
+    )
     for d in montage.dig:
-        d['coord_frame'] = FIFF.FIFFV_MNE_COORD_MNI_TAL
+        d["coord_frame"] = FIFF.FIFFV_MNE_COORD_MNI_TAL
     montage.dig[:] = montage.dig[3:]
     montage.add_mni_fiducials()  # now in fsaverage space
-    coords = pd.DataFrame.from_dict(
-        montage.get_positions()['ch_pos']).T
+    coords = pd.DataFrame.from_dict(montage.get_positions()["ch_pos"]).T
     coords["label"] = coords.index
     coords = coords.rename(columns={0: "x", 1: "y", 2: "z"})
 
     return coords.reset_index(drop=True)
 
 
-def _find_closest_standard_location(position, reference, *, out='label'):
+def _find_closest_standard_location(position, reference, *, out="label"):
     """Return closest montage label to coordinates.
 
     Parameters
@@ -89,22 +82,24 @@ def _find_closest_standard_location(position, reference, *, out='label'):
         Use None for no transformation.
     """
     from scipy.spatial.distance import cdist
+
     p0 = np.array(position)
     p0.shape = (-1, 3)
-    head_mri_t, _ = _get_trans('fsaverage', 'head', 'mri')
+    head_mri_t, _ = _get_trans("fsaverage", "head", "mri")
     p0 = apply_trans(head_mri_t, p0)
-    dists = cdist(p0, np.asarray(reference[['x', 'y', 'z']], float))
+    dists = cdist(p0, np.asarray(reference[["x", "y", "z"]], float))
 
-    if out == 'label':
+    if out == "label":
         min_idx = np.argmin(dists)
         return reference["label"][min_idx]
     else:
-        assert out == 'dists'
+        assert out == "dists"
         return dists
 
 
-def fold_landmark_specificity(raw, landmark, fold_files=None,
-                              atlas="Juelich", interpolate=False):
+def fold_landmark_specificity(
+    raw, landmark, fold_files=None, atlas="Juelich", interpolate=False
+):
     """Return the specificity of each channel to a specified brain landmark.
 
     Parameters
@@ -150,8 +145,8 @@ def fold_landmark_specificity(raw, landmark, fold_files=None,
     ----------
     .. footbibliography::
     """
-    _validate_type(landmark, str, 'landmark')
-    _validate_type(raw, BaseRaw, 'raw')
+    _validate_type(landmark, str, "landmark")
+    _validate_type(raw, BaseRaw, "raw")
 
     reference_locations = _generate_montage_locations()
 
@@ -159,9 +154,9 @@ def fold_landmark_specificity(raw, landmark, fold_files=None,
 
     specificity = np.zeros(len(raw.ch_names))
     for cidx in range(len(raw.ch_names)):
-
         tbl = _source_detector_fold_table(
-            raw, cidx, reference_locations, fold_tbl, interpolate)
+            raw, cidx, reference_locations, fold_tbl, interpolate
+        )
 
         if len(tbl) > 0:
             tbl["ContainsLmk"] = [landmark in la for la in tbl["Landmark"]]
@@ -178,8 +173,7 @@ def fold_landmark_specificity(raw, landmark, fold_files=None,
     return np.array(specificity)
 
 
-def fold_channel_specificity(raw, fold_files=None, atlas="Juelich",
-                             interpolate=False):
+def fold_channel_specificity(raw, fold_files=None, atlas="Juelich", interpolate=False):
     """Return the landmarks and specificity a channel is sensitive to.
 
     Parameters
@@ -250,7 +244,7 @@ def fold_channel_specificity(raw, fold_files=None, atlas="Juelich",
     ----------
     .. footbibliography::
     """  # noqa: E501
-    _validate_type(raw, BaseRaw, 'raw')
+    _validate_type(raw, BaseRaw, "raw")
 
     reference_locations = _generate_montage_locations()
 
@@ -258,44 +252,50 @@ def fold_channel_specificity(raw, fold_files=None, atlas="Juelich",
 
     chan_spec = list()
     for cidx in range(len(raw.ch_names)):
-
         tbl = _source_detector_fold_table(
-            raw, cidx, reference_locations, fold_tbl, interpolate)
+            raw, cidx, reference_locations, fold_tbl, interpolate
+        )
         chan_spec.append(tbl.reset_index(drop=True))
 
     return chan_spec
 
 
 def _check_load_fold(fold_files, atlas):
-    _validate_type(fold_files, (list, 'path-like', None), 'fold_files')
+    _validate_type(fold_files, (list, "path-like", None), "fold_files")
     if fold_files is None:
-        fold_files = mne.get_config('MNE_NIRS_FOLD_PATH')
+        fold_files = mne.get_config("MNE_NIRS_FOLD_PATH")
         if fold_files is None:
             raise ValueError(
-                'MNE_NIRS_FOLD_PATH not set, either set it using '
-                'mne.set_config or pass fold_files as str or list')
+                "MNE_NIRS_FOLD_PATH not set, either set it using "
+                "mne.set_config or pass fold_files as str or list"
+            )
     if not isinstance(fold_files, list):  # path-like
         fold_files = _check_fname(
-            fold_files, overwrite='read', must_exist=True, name='fold_files',
-            need_dir=True)
-        fold_files = [op.join(fold_files, f'10-{x}.xls') for x in (5, 10)]
+            fold_files,
+            overwrite="read",
+            must_exist=True,
+            name="fold_files",
+            need_dir=True,
+        )
+        fold_files = [op.join(fold_files, f"10-{x}.xls") for x in (5, 10)]
 
     fold_tbl = pd.DataFrame()
     for fi, fname in enumerate(fold_files):
-        fname = _check_fname(fname, overwrite='read', must_exist=True,
-                             name=f'fold_files[{fi}]')
-        fold_tbl = pd.concat([fold_tbl, _read_fold_xls(fname, atlas=atlas)],
-                             ignore_index=True)
+        fname = _check_fname(
+            fname, overwrite="read", must_exist=True, name=f"fold_files[{fi}]"
+        )
+        fold_tbl = pd.concat(
+            [fold_tbl, _read_fold_xls(fname, atlas=atlas)], ignore_index=True
+        )
     return fold_tbl
 
 
 def _source_detector_fold_table(raw, cidx, reference, fold_tbl, interpolate):
-    src = raw.info['chs'][cidx]['loc'][3:6]
-    det = raw.info['chs'][cidx]['loc'][6:9]
+    src = raw.info["chs"][cidx]["loc"][3:6]
+    det = raw.info["chs"][cidx]["loc"][6:9]
 
-    ref_lab = list(reference['label'])
-    dists = _find_closest_standard_location(
-        [src, det], reference, out='dists')
+    ref_lab = list(reference["label"])
+    dists = _find_closest_standard_location([src, det], reference, out="dists")
     src_min, det_min = np.argmin(dists, axis=1)
     src_name, det_name = ref_lab[src_min], ref_lab[det_min]
 
@@ -307,24 +307,22 @@ def _source_detector_fold_table(raw, cidx, reference, fold_tbl, interpolate):
     if len(tbl) == 0 and interpolate:
         # Try something hopefully not too terrible: pick the one with the
         # smallest net distance
-        good = (np.in1d(fold_tbl['Source'], reference['label']) &
-                np.in1d(fold_tbl['Detector'], reference['label']))
+        good = np.in1d(fold_tbl["Source"], reference["label"]) & np.in1d(
+            fold_tbl["Detector"], reference["label"]
+        )
         assert good.any()
         tbl = fold_tbl[good]
         assert len(tbl)
-        src_idx = [ref_lab.index(src) for src in tbl['Source']]
-        det_idx = [ref_lab.index(det) for det in tbl['Detector']]
+        src_idx = [ref_lab.index(src) for src in tbl["Source"]]
+        det_idx = [ref_lab.index(det) for det in tbl["Detector"]]
         # Original
-        tot_dist = np.linalg.norm(
-            [dists[0, src_idx], dists[1, det_idx]], axis=0)
+        tot_dist = np.linalg.norm([dists[0, src_idx], dists[1, det_idx]], axis=0)
         assert tot_dist.shape == (len(tbl),)
         idx = np.argmin(tot_dist)
         dist_1 = tot_dist[idx]
         src_1, det_1 = ref_lab[src_idx[idx]], ref_lab[det_idx[idx]]
         # And the reverse
-        tot_dist = np.linalg.norm(
-            [dists[0, det_idx], dists[1, src_idx]], axis=0
-        )
+        tot_dist = np.linalg.norm([dists[0, det_idx], dists[1, src_idx]], axis=0)
         idx = np.argmin(tot_dist)
         dist_2 = tot_dist[idx]
         src_2, det_2 = ref_lab[det_idx[idx]], ref_lab[src_idx[idx]]
@@ -332,28 +330,31 @@ def _source_detector_fold_table(raw, cidx, reference, fold_tbl, interpolate):
             new_dist, src_use, det_use = dist_1, src_1, det_1
         else:
             new_dist, src_use, det_use = dist_2, det_2, src_2
-        warn('No fOLD table entry for best matching source/detector pair '
-             f'{src_name}/{det_name} (RMS distance to the channel positions '
-             f'was {1000 * dist:0.1f} mm) for channel index {cidx}, '
-             'using next smallest available '
-             f'src/det pairing {src_use}/{det_use} (RMS distance '
-             f'{1000 * new_dist:0.1f} mm). Consider setting your channel '
-             'positions to standard 10-05 locations using raw.set_montage '
-             'if your pair does show up in the tables.',
-             module='mne_nirs', ignore_namespaces=('mne', 'mne_nirs'))
+        warn(
+            "No fOLD table entry for best matching source/detector pair "
+            f"{src_name}/{det_name} (RMS distance to the channel positions "
+            f"was {1000 * dist:0.1f} mm) for channel index {cidx}, "
+            "using next smallest available "
+            f"src/det pairing {src_use}/{det_use} (RMS distance "
+            f"{1000 * new_dist:0.1f} mm). Consider setting your channel "
+            "positions to standard 10-05 locations using raw.set_montage "
+            "if your pair does show up in the tables.",
+            module="mne_nirs",
+            ignore_namespaces=("mne", "mne_nirs"),
+        )
         tbl = fold_tbl.query("Source == @src_use and Detector == @det_use")
         tbl = tbl.copy()
-        tbl['BestSource'] = src_name
-        tbl['BestDetector'] = det_name
-        tbl['BestMatchDistance'] = dist
-        tbl['MatchDistance'] = new_dist
+        tbl["BestSource"] = src_name
+        tbl["BestDetector"] = det_name
+        tbl["BestMatchDistance"] = dist
+        tbl["MatchDistance"] = new_dist
         assert len(tbl)
     else:
         tbl = tbl.copy()
-        tbl['BestSource'] = src_name
-        tbl['BestDetector'] = det_name
-        tbl['BestMatchDistance'] = dist
-        tbl['MatchDistance'] = dist
+        tbl["BestSource"] = src_name
+        tbl["BestDetector"] = det_name
+        tbl["BestMatchDistance"] = dist
+        tbl["MatchDistance"] = dist
 
     tbl = tbl.copy()  # don't get warnings about setting values later
     return tbl

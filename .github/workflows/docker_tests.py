@@ -16,8 +16,7 @@ renderer.close()
 print("Validating image")
 want = np.ones(size)
 dists = np.sqrt(
-    np.linspace(-1, 1, size[0])[:, np.newaxis] ** 2
-    + np.linspace(-1, 1, size[1]) ** 2
+    np.linspace(-1, 1, size[0])[:, np.newaxis] ** 2 + np.linspace(-1, 1, size[1]) ** 2
 )
 want = (dists > 0.5).astype(float)
 corr = np.corrcoef(want.ravel(), data.ravel())[0, 1]

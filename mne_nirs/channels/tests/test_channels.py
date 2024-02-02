@@ -4,15 +4,23 @@
 
 
 import os
-from numpy.testing import assert_array_equal
+
 import mne
-from mne_nirs.channels import list_sources, list_detectors,\
-    drop_sources, drop_detectors, pick_sources, pick_detectors
+from numpy.testing import assert_array_equal
+
+from mne_nirs.channels import (
+    drop_detectors,
+    drop_sources,
+    list_detectors,
+    list_sources,
+    pick_detectors,
+    pick_sources,
+)
 
 
 def _get_raw():
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-    fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
+    fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
     raw = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
     return raw
 
@@ -33,8 +41,7 @@ def test_list_sources():
     sources = list_sources(raw.copy().pick(["S7_D15 850", "S7_D15 760"]))
     assert sources == [7]
 
-    sources = list_sources(raw.copy().pick(["S7_D15 850",
-                                            "S3_D2 850", "S7_D15 760"]))
+    sources = list_sources(raw.copy().pick(["S7_D15 850", "S3_D2 850", "S7_D15 760"]))
     assert_array_equal(sources, [3, 7])
 
 
@@ -51,12 +58,12 @@ def test_list_detectors():
     detectors = list_detectors(raw.copy().pick("S7_D15 850"))
     assert detectors == [15]
 
-    detectors = list_detectors(raw.copy().pick(["S7_D15 850",
-                                                "S7_D15 760"]))
+    detectors = list_detectors(raw.copy().pick(["S7_D15 850", "S7_D15 760"]))
     assert detectors == [15]
 
-    detectors = list_detectors(raw.copy().pick(["S7_D15 850",
-                                                "S3_D2 850", "S7_D15 760"]))
+    detectors = list_detectors(
+        raw.copy().pick(["S7_D15 850", "S3_D2 850", "S7_D15 760"])
+    )
     assert_array_equal(detectors, [2, 15])
 
 

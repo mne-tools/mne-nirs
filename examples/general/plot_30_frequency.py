@@ -12,11 +12,6 @@ We examine the interplay between the expected brain response based
 on experimental design and our model of how the brain reacts to stimuli,
 the actual data measured during an experiment, and the filtering
 that is applied to the data.
-
-.. contents:: Page contents
-   :local:
-   :depth: 2
-
 """
 
 # Authors: Robert Luke <mail@robertluke.net>

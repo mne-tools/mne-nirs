@@ -2,18 +2,18 @@
 #
 # License: BSD (3-clause)
 
+import warnings
 from copy import deepcopy
 from inspect import getfullargspec
 from pathlib import PosixPath
-import warnings
 
-import pandas as pd
 import numpy as np
-from numpy import array_equal, where
+import pandas as pd
 from h5io import read_hdf5, write_hdf5
+from numpy import array_equal, where
 
 with warnings.catch_warnings(record=True):
-    warnings.simplefilter('ignore')
+    warnings.simplefilter("ignore")
     import nilearn.glm
     from nilearn.glm.first_level import run_glm as nilearn_glm
 
@@ -21,15 +21,14 @@ try:  # remove once MNE 1.6 is required
     from mne._fiff.meas_info import ContainsMixin
 except ImportError:
     from mne.io.meas_info import ContainsMixin
-from mne.utils import fill_doc, warn, verbose, check_fname, _validate_type
-from mne.io.pick import _picks_to_idx
-from mne.io.constants import FIFF
 from mne import Info, pick_info
+from mne.io.constants import FIFF
+from mne.io.pick import _picks_to_idx
+from mne.utils import _validate_type, check_fname, fill_doc, verbose, warn
 
-from ..visualisation._plot_GLM_topo import _plot_glm_topo,\
-    _plot_glm_contrast_topo
-from ..visualisation import plot_glm_surface_projection
 from ..statistics._roi import _glm_region_of_interest
+from ..visualisation import plot_glm_surface_projection
+from ..visualisation._plot_GLM_topo import _plot_glm_contrast_topo, _plot_glm_topo
 
 
 @fill_doc
@@ -45,13 +44,13 @@ class _BaseGLM(ContainsMixin):
         names : array
             The channel names.
         """
-        return self.info['ch_names']
+        return self.info["ch_names"]
 
     def __str__(self):
-        return (f"GLM Results for {len(self.ch_names)} channels")
+        return f"GLM Results for {len(self.ch_names)} channels"
 
     def __repr__(self):
-        return (f"GLM Results for {len(self.ch_names)} channels")
+        return f"GLM Results for {len(self.ch_names)} channels"
 
     def __len__(self):
         return len(self.info.ch_names)
@@ -66,24 +65,29 @@ class _BaseGLM(ContainsMixin):
         state : dict
             State of the object.
         """
-        state = deepcopy(dict(
-            data=self._data,
-            design=self.design,
-            info=self.info,
-            preload=self.preload,
-            classname=str(self.__class__)
-        ))
-        if isinstance(state['data'], dict):
-            for channel in state['data']:
-                state['data'][channel] = state['data'][channel].__dict__
-                if isinstance(state['data'][channel]['model'],
-                              nilearn.glm.regression.OLSModel):
-                    state['data'][channel]['modelname'] = \
-                        str(state['data'][channel]['model'].__class__)
-                    state['data'][channel]['model'] = \
-                        state['data'][channel]['model'].__dict__
-        if isinstance(state['data'], nilearn.glm.contrasts.Contrast):
-            state['data'] = state['data'].__dict__
+        state = deepcopy(
+            dict(
+                data=self._data,
+                design=self.design,
+                info=self.info,
+                preload=self.preload,
+                classname=str(self.__class__),
+            )
+        )
+        if isinstance(state["data"], dict):
+            for channel in state["data"]:
+                state["data"][channel] = state["data"][channel].__dict__
+                if isinstance(
+                    state["data"][channel]["model"], nilearn.glm.regression.OLSModel
+                ):
+                    state["data"][channel]["modelname"] = str(
+                        state["data"][channel]["model"].__class__
+                    )
+                    state["data"][channel]["model"] = state["data"][channel][
+                        "model"
+                    ].__dict__
+        if isinstance(state["data"], nilearn.glm.contrasts.Contrast):
+            state["data"] = state["data"].__dict__
         return state
 
     def copy(self):
@@ -107,14 +111,14 @@ class _BaseGLM(ContainsMixin):
             Should end in ``'glm.h5'``.
         %(overwrite)s
         """
-        _validate_type(fname, 'path-like', 'fname')
+        _validate_type(fname, "path-like", "fname")
         if isinstance(fname, PosixPath):
             fname = str(fname)
-        if not fname.endswith('glm.h5'):
-            raise IOError('The filename must end with glm.h5, '
-                          f'instead received {fname}')
-        write_hdf5(fname, self._get_state(),
-                   overwrite=overwrite, title='mnepython')
+        if not fname.endswith("glm.h5"):
+            raise OSError(
+                "The filename must end with glm.h5, " f"instead received {fname}"
+            )
+        write_hdf5(fname, self._get_state(), overwrite=overwrite, title="mnepython")
 
     def to_dataframe(self, order=None):
         """Return a tidy dataframe representing the GLM results.
@@ -130,12 +134,14 @@ class _BaseGLM(ContainsMixin):
             Dataframe containing GLM results.
         """
         from ..utils import glm_to_tidy
+
         if order is None:
             order = self.ch_names
         return glm_to_tidy(self.info, self._data, self.design, order=order)
 
-    def scatter(self, conditions=[], exclude_no_interest=True, axes=None,
-                no_interest=None):
+    def scatter(
+        self, conditions=(), exclude_no_interest=True, axes=None, no_interest=None
+    ):
         """Scatter plot of the GLM results.
 
         Parameters
@@ -160,6 +166,7 @@ class _BaseGLM(ContainsMixin):
         if no_interest is None:
             no_interest = ["drift", "constant", "short", "Short"]
         import matplotlib.pyplot as plt
+
         df = self.to_dataframe()
 
         x_column = "Condition"
@@ -169,12 +176,12 @@ class _BaseGLM(ContainsMixin):
             y_column = "effect"
             if len(conditions) == 0:
                 conditions = ["t", "f"]
-            df = df.query('ContrastType in @conditions')
+            df = df.query("ContrastType in @conditions")
 
         else:
             if len(conditions) == 0:
                 conditions = self.design.columns
-            df = df.query('Condition in @conditions')
+            df = df.query("Condition in @conditions")
 
         if exclude_no_interest:
             for no_i in no_interest:
@@ -193,7 +200,7 @@ class _BaseGLM(ContainsMixin):
         axes.legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
         axes.hlines([0.0], 0, len(np.unique(df[x_column])) - 1)
         if len(np.unique(df[x_column])) > 8:
-            plt.xticks(rotation=45, ha='right')
+            plt.xticks(rotation=45, ha="right")
 
         return axes
 
@@ -224,7 +231,7 @@ class RegressionResults(_BaseGLM):
 
     @data.setter
     def data(self, data):
-        if type(data) is not dict:
+        if not isinstance(data, dict):
             raise TypeError("Data must be a dictionary type")
         if not array_equal(list(data.keys()), self.info.ch_names):
             raise TypeError("Dictionary keys must match ch_names")
@@ -233,8 +240,7 @@ class RegressionResults(_BaseGLM):
                 raise TypeError("Data names and channel names do not match")
         for d in data:
             if type(data[d]) is not nilearn.glm.regression.RegressionResults:
-                raise TypeError("Dictionary items must be"
-                                " nilearn RegressionResults")
+                raise TypeError("Dictionary items must be" " nilearn RegressionResults")
 
         self._data = data
 
@@ -248,9 +254,9 @@ class RegressionResults(_BaseGLM):
         same_keys = self.data.keys() == res.data.keys()
         same_design = (self.design == res.design).all().all()
         same_ch = self.info.ch_names == res.info.ch_names
-        same_theta = np.sum([(res.theta()[idx] == val).all()
-                             for idx, val in
-                             enumerate(self.theta())]) == len(self.ch_names)
+        same_theta = np.sum(
+            [(res.theta()[idx] == val).all() for idx, val in enumerate(self.theta())]
+        ) == len(self.ch_names)
         return int(same_ch and same_design and same_keys and same_theta)
 
     @fill_doc
@@ -269,8 +275,7 @@ class RegressionResults(_BaseGLM):
         inst : instance of ResultsGLM
             The modified instance.
         """
-        picks = _picks_to_idx(self.info, picks, 'all', exclude,
-                              allow_empty=False)
+        picks = _picks_to_idx(self.info, picks, "all", exclude, allow_empty=False)
         pick_info(self.info, picks, copy=False)
         self._data = {key: self._data[key] for key in self.info.ch_names}
         return self
@@ -325,13 +330,21 @@ class RegressionResults(_BaseGLM):
             Yields the statistics of the contrast
             (effects, variance, p-values).
         """
-        cont = _compute_contrast(self._data, contrast,
-                                 contrast_type=contrast_type)
+        cont = _compute_contrast(self._data, contrast, contrast_type=contrast_type)
         return ContrastResults(self.info, cont, self.design)
 
-    def plot_topo(self, conditions=None, axes=None, *, vlim=(None, None),
-                  vmin=None, vmax=None, colorbar=True, figsize=(12, 7),
-                  sphere=None):
+    def plot_topo(
+        self,
+        conditions=None,
+        axes=None,
+        *,
+        vlim=(None, None),
+        vmin=None,
+        vmax=None,
+        colorbar=True,
+        figsize=(12, 7),
+        sphere=None,
+    ):
         """Plot 2D topography of GLM data.
 
         Parameters
@@ -363,14 +376,23 @@ class RegressionResults(_BaseGLM):
             Figure of each design matrix component for hbo (top row)
             and hbr (bottom row).
         """
-        return _plot_glm_topo(self.info, self._data, self.design,
-                              requested_conditions=conditions,
-                              axes=axes, vlim=vlim, vmin=vmin, vmax=vmax,
-                              colorbar=colorbar,
-                              figsize=figsize, sphere=sphere)
+        return _plot_glm_topo(
+            self.info,
+            self._data,
+            self.design,
+            requested_conditions=conditions,
+            axes=axes,
+            vlim=vlim,
+            vmin=vmin,
+            vmax=vmax,
+            colorbar=colorbar,
+            figsize=figsize,
+            sphere=sphere,
+        )
 
-    def to_dataframe_region_of_interest(self, group_by, condition,
-                                        weighted=True, demographic_info=False):
+    def to_dataframe_region_of_interest(
+        self, group_by, condition, weighted=True, demographic_info=False
+    ):
         """Region of interest results as a dataframe.
 
         Parameters
@@ -408,12 +430,12 @@ class RegressionResults(_BaseGLM):
 
         if isinstance(weighted, dict):
             if weighted.keys() != group_by.keys():
-                raise KeyError("Keys of group_by and weighted "
-                               "must be the same")
+                raise KeyError("Keys of group_by and weighted " "must be the same")
             for key in weighted.keys():
                 if len(weighted[key]) != len(group_by[key]):
-                    raise ValueError("The length of the keys for group_by "
-                                     "and weighted must match")
+                    raise ValueError(
+                        "The length of the keys for group_by " "and weighted must match"
+                    )
                 if (np.array(weighted[key]) < 0).any():
                     raise ValueError("Weights must be positive values")
 
@@ -421,11 +443,14 @@ class RegressionResults(_BaseGLM):
         for cond in condition:
             cond_idx = where([c == cond for c in self.design.columns])[0]
             if not len(cond_idx):
-                raise KeyError(f'condition {repr(cond)} not found in '
-                               f'self.design.columns: {self.design.columns}')
+                raise KeyError(
+                    f"condition {repr(cond)} not found in "
+                    f"self.design.columns: {self.design.columns}"
+                )
 
-            roi = _glm_region_of_interest(self._data, group_by,
-                                          cond_idx, cond, weighted)
+            roi = _glm_region_of_interest(
+                self._data, group_by, cond_idx, cond, weighted
+            )
             tidy = pd.concat([tidy, roi])
 
         if weighted is True:
@@ -436,30 +461,41 @@ class RegressionResults(_BaseGLM):
             tidy["Weighted"] = "Custom"
 
         if demographic_info:
-            if 'age' in self.info['subject_info'].keys():
-                tidy['Age'] = float(self.info["subject_info"]['age'])
-            if 'sex' in self.info['subject_info'].keys():
-                if self.info["subject_info"]['sex'] == \
-                        FIFF.FIFFV_SUBJ_SEX_MALE:
+            if "age" in self.info["subject_info"].keys():
+                tidy["Age"] = float(self.info["subject_info"]["age"])
+            if "sex" in self.info["subject_info"].keys():
+                if self.info["subject_info"]["sex"] == FIFF.FIFFV_SUBJ_SEX_MALE:
                     sex = "male"
-                elif self.info["subject_info"]['sex'] == \
-                        FIFF.FIFFV_SUBJ_SEX_FEMALE:
+                elif self.info["subject_info"]["sex"] == FIFF.FIFFV_SUBJ_SEX_FEMALE:
                     sex = "female"
                 else:
                     sex = "unknown"
-                tidy['Sex'] = sex
-            if 'Hand' in self.info['subject_info'].keys():
-                tidy['Hand'] = self.info["subject_info"]['hand']
+                tidy["Sex"] = sex
+            if "Hand" in self.info["subject_info"].keys():
+                tidy["Hand"] = self.info["subject_info"]["hand"]
 
         return tidy
 
     @verbose
-    def surface_projection(self, chroma="hbo", condition=None,
-                           background='w', figure=None, clim='auto',
-                           mode='weighted', colormap='RdBu_r',
-                           surface='pial', hemi='both', size=800,
-                           view=None, colorbar=True, distance=0.03,
-                           subjects_dir=None, src=None, verbose=False):
+    def surface_projection(
+        self,
+        chroma="hbo",
+        condition=None,
+        background="w",
+        figure=None,
+        clim="auto",
+        mode="weighted",
+        colormap="RdBu_r",
+        surface="pial",
+        hemi="both",
+        size=800,
+        view=None,
+        colorbar=True,
+        distance=0.03,
+        subjects_dir=None,
+        src=None,
+        verbose=False,
+    ):
         """
         Project GLM results on to the surface of the brain.
 
@@ -525,7 +561,6 @@ class RegressionResults(_BaseGLM):
         figure : instance of mne.viz.Brain | matplotlib.figure.Figure
             An instance of :class:`mne.viz.Brain` or matplotlib figure.
         """
-
         df = self.to_dataframe(order=self.ch_names)
         if condition is None:
             warn("You must provide a condition to plot", ValueError)
@@ -533,24 +568,34 @@ class RegressionResults(_BaseGLM):
         if len(df_use) == 0:
             raise KeyError(
                 f'condition={repr(condition)} not found in conditions: '
-                f'{sorted(set(df["Condition"]))}')
+                f'{sorted(set(df["Condition"]))}'
+            )
         df = df_use
         df = df.query("Chroma in @chroma").copy()
         df["theta"] = df["theta"] * 1e6
 
         info = self.copy().pick(chroma).info
 
-        return plot_glm_surface_projection(info, df, value="theta",
-                                           picks=chroma, background=background,
-                                           figure=figure, clim=clim,
-                                           mode=mode, colormap=colormap,
-                                           surface=surface, hemi=hemi,
-                                           size=size,
-                                           view=view, colorbar=colorbar,
-                                           distance=distance,
-                                           subjects_dir=subjects_dir, src=src,
-                                           verbose=verbose
-                                           )
+        return plot_glm_surface_projection(
+            info,
+            df,
+            value="theta",
+            picks=chroma,
+            background=background,
+            figure=figure,
+            clim=clim,
+            mode=mode,
+            colormap=colormap,
+            surface=surface,
+            hemi=hemi,
+            size=size,
+            view=view,
+            colorbar=colorbar,
+            distance=distance,
+            subjects_dir=subjects_dir,
+            src=src,
+            verbose=verbose,
+        )
 
 
 @fill_doc
@@ -593,8 +638,9 @@ class ContrastResults(_BaseGLM):
         if not isinstance(data, nilearn.glm.contrasts.Contrast):
             raise TypeError("Data must be a nilearn glm contrast type")
         if data.effect.size != len(self.info.ch_names):
-            raise TypeError("Data results must be the same length "
-                            "as the number of channels")
+            raise TypeError(
+                "Data results must be the same length " "as the number of channels"
+            )
 
         self._data = data
 
@@ -615,12 +661,12 @@ class ContrastResults(_BaseGLM):
             Figure of each design matrix component for hbo (top row)
             and hbr (bottom row).
         """
-        return _plot_glm_contrast_topo(self.info, self._data,
-                                       figsize=figsize, sphere=sphere)
+        return _plot_glm_contrast_topo(
+            self.info, self._data, figsize=figsize, sphere=sphere
+        )
 
 
-def run_GLM(raw, design_matrix, noise_model='ar1', bins=0,
-            n_jobs=1, verbose=0):
+def run_GLM(raw, design_matrix, noise_model="ar1", bins=0, n_jobs=1, verbose=0):
     """
     Run GLM on data using supplied design matrix.
 
@@ -649,23 +695,31 @@ def run_GLM(raw, design_matrix, noise_model='ar1', bins=0,
         'all CPUs'.
     verbose : int, optional
         The verbosity level. Default is 0.
+
     Returns
     -------
     glm_estimates : dict
         Keys correspond to the different labels values values are
         RegressionResults instances corresponding to the voxels.
     """
-    warn('"run_GLM" has been deprecated in favor of the more '
-         'comprehensive run_glm function, and will be removed in v1.0.0. '
-         'See the changelog for further details.',
-         DeprecationWarning)
-    res = run_glm(raw, design_matrix, noise_model=noise_model, bins=bins,
-                  n_jobs=n_jobs, verbose=verbose)
+    warn(
+        '"run_GLM" has been deprecated in favor of the more '
+        "comprehensive run_glm function, and will be removed in v1.0.0. "
+        "See the changelog for further details.",
+        DeprecationWarning,
+    )
+    res = run_glm(
+        raw,
+        design_matrix,
+        noise_model=noise_model,
+        bins=bins,
+        n_jobs=n_jobs,
+        verbose=verbose,
+    )
     return res.data
 
 
-def run_glm(raw, design_matrix, noise_model='ar1', bins=0,
-            n_jobs=1, verbose=0):
+def run_glm(raw, design_matrix, noise_model="ar1", bins=0, n_jobs=1, verbose=0):
     """
     GLM fit for an MNE structure containing fNIRS data.
 
@@ -704,10 +758,10 @@ def run_glm(raw, design_matrix, noise_model='ar1', bins=0,
     glm_estimates : RegressionResults
         RegressionResults class which stores the GLM results.
     """
-    picks = _picks_to_idx(raw.info, 'fnirs', exclude=[], allow_empty=True)
+    picks = _picks_to_idx(raw.info, "fnirs", exclude=[], allow_empty=True)
     ch_names = raw.ch_names
 
-    if noise_model == 'auto':
+    if noise_model == "auto":
         noise_model = f"ar{int(np.round(raw.info['sfreq'] * 4))}"
 
     if bins == 0:
@@ -715,10 +769,14 @@ def run_glm(raw, design_matrix, noise_model='ar1', bins=0,
 
     results = dict()
     for pick in picks:
-        labels, glm_estimates = nilearn_glm(raw.get_data(pick).T,
-                                            design_matrix.values,
-                                            noise_model=noise_model, bins=bins,
-                                            n_jobs=n_jobs, verbose=verbose)
+        labels, glm_estimates = nilearn_glm(
+            raw.get_data(pick).T,
+            design_matrix.values,
+            noise_model=noise_model,
+            bins=bins,
+            n_jobs=n_jobs,
+            verbose=verbose,
+        )
         results[ch_names[pick]] = glm_estimates[labels[0]]
 
     return RegressionResults(raw.info, results, design_matrix)
@@ -752,8 +810,8 @@ def read_glm(fname):
         RegressionResults or ContrastResults class
         which stores the GLM results.
     """
-    check_fname(fname, 'path-like', 'glm.h5')
-    glm = read_hdf5(fname, title='mnepython')
+    check_fname(fname, "path-like", "glm.h5")
+    glm = read_hdf5(fname, title="mnepython")
     return _state_to_glm(glm)
 
 
@@ -772,57 +830,64 @@ def _state_to_glm(glm):
         RegressionResults or ContrastResults class
         which stores the GLM results.
     """
-
-    if glm['classname'] == "<class 'mne_nirs.statistics._glm_level_first" \
-                           ".RegressionResults'>":
-
-        for channel in glm['data']:
-
+    if (
+        glm["classname"] == "<class 'mne_nirs.statistics._glm_level_first"
+        ".RegressionResults'>"
+    ):
+        for channel in glm["data"]:
             # Recreate model type
-            if glm['data'][channel]['modelname'] == \
-                    "<class 'nilearn.glm.regression.ARModel'>":
+            if (
+                glm["data"][channel]["modelname"]
+                == "<class 'nilearn.glm.regression.ARModel'>"
+            ):
                 model = nilearn.glm.regression.ARModel(
-                    glm['data'][channel]['model']['design'],
-                    glm['data'][channel]['model']['rho'],
+                    glm["data"][channel]["model"]["design"],
+                    glm["data"][channel]["model"]["rho"],
                 )
 
-            elif glm['data'][channel]['modelname'] == \
-                    "<class 'nilearn.glm.regression.OLSModel'>":
+            elif (
+                glm["data"][channel]["modelname"]
+                == "<class 'nilearn.glm.regression.OLSModel'>"
+            ):
                 model = nilearn.glm.regression.OLSModel(
-                    glm['data'][channel]['model']['design'],
+                    glm["data"][channel]["model"]["design"],
                 )
             else:
-                raise IOError("Unknown model type "
-                              f"{glm['data'][channel]['modelname']}")
+                raise OSError(
+                    "Unknown model type " f"{glm['data'][channel]['modelname']}"
+                )
 
-            for key in glm['data'][channel]['model']:
-                model.__setattr__(key, glm['data'][channel]['model'][key])
-            glm['data'][channel]['model'] = model
+            for key in glm["data"][channel]["model"]:
+                model.__setattr__(key, glm["data"][channel]["model"][key])
+            glm["data"][channel]["model"] = model
 
             # Then recreate result type
             res = nilearn.glm.regression.RegressionResults(
-                glm['data'][channel]['theta'],
-                glm['data'][channel]['Y'],
-                glm['data'][channel]['model'],
-                glm['data'][channel]['whitened_Y'],
-                glm['data'][channel]['whitened_residuals'],
-                cov=glm['data'][channel]['cov']
+                glm["data"][channel]["theta"],
+                glm["data"][channel]["Y"],
+                glm["data"][channel]["model"],
+                glm["data"][channel]["whitened_Y"],
+                glm["data"][channel]["whitened_residuals"],
+                cov=glm["data"][channel]["cov"],
             )
-            for key in glm['data'][channel]:
-                res.__setattr__(key, glm['data'][channel][key])
-            glm['data'][channel] = res
+            for key in glm["data"][channel]:
+                res.__setattr__(key, glm["data"][channel][key])
+            glm["data"][channel] = res
 
         # Ensure order of dictionary matches info
-        data = {k: glm['data'][k] for k in glm['info']['ch_names']}
-        return RegressionResults(Info(glm['info']), data, glm['design'])
+        data = {k: glm["data"][k] for k in glm["info"]["ch_names"]}
+        return RegressionResults(Info(glm["info"]), data, glm["design"])
 
-    elif glm['classname'] == "<class 'mne_nirs.statistics._glm_level_first" \
-                             ".ContrastResults'>":
-        data = nilearn.glm.contrasts.Contrast(glm['data']['effect'],
-                                              glm['data']['variance'])
-        for key in glm['data']:
-            data.__setattr__(key, glm['data'][key])
-        return ContrastResults(Info(glm['info']), data, glm['design'])
+    elif (
+        glm["classname"] == "<class 'mne_nirs.statistics._glm_level_first"
+        ".ContrastResults'>"
+    ):
+        data = nilearn.glm.contrasts.Contrast(
+            glm["data"]["effect"], glm["data"]["variance"]
+        )
+        for key in glm["data"]:
+            data.__setattr__(key, glm["data"][key])
+        return ContrastResults(Info(glm["info"]), data, glm["design"])
 
     else:
-        raise IOError('Unable to read data')
+        raise OSError("Unable to read data")
