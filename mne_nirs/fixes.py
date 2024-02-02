@@ -4,6 +4,7 @@
 # Compat shims for different dependency versions.
 
 from pathlib import Path
+
 import mne
 from mne.utils import check_version
 

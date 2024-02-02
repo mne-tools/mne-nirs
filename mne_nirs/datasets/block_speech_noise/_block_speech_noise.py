@@ -5,12 +5,12 @@
 
 import os
 import shutil
-import pooch
 from functools import partial
 
-from mne.utils import verbose
-from mne.datasets.utils import has_dataset
+import pooch
 from mne.datasets import fetch_dataset
+from mne.datasets.utils import has_dataset
+from mne.utils import verbose
 
 from ...fixes import _mne_path
 
@@ -54,7 +54,6 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
     ----------
     .. footbibliography::
     """
-
     dataset_params = dict(
         archive_name='2021-fNIRS-Analysis-Methods-Passive-Auditory.zip',
         hash='md5:569c0fbafa575e344e90698c808dfdd3',

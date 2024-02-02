@@ -1,9 +1,10 @@
-import pandas as pd
-from scipy import stats
-import numpy as np
 import re
-from mne.utils import warn
+
 import nilearn
+import numpy as np
+import pandas as pd
+from mne.utils import warn
+from scipy import stats
 
 
 def glm_to_tidy(info, statistic, design_matrix, wide=True, order=None):
@@ -34,7 +35,6 @@ def glm_to_tidy(info, statistic, design_matrix, wide=True, order=None):
     df : Tidy data frame,
         Data from statistic object in tidy data form.
     """
-
     if isinstance(statistic, dict) and \
             isinstance(statistic[list(statistic.keys())[0]],
                        nilearn.glm.regression.RegressionResults):
@@ -140,8 +140,8 @@ def _tidy_RegressionResults(data, glm_est, design_matrix):
             se_estimates[idx, cond_idx] = np.sqrt(np.diag(
                 glm_est[name].vcov()))[cond_idx]
 
-    list_vals = [0] * ((len(data.ch_names) *
-                        len(design_matrix.columns) * 6))
+    list_vals = [0] * (len(data.ch_names) *
+                        len(design_matrix.columns) * 6)
     idx = 0
     for ch_idx, ch in enumerate(data.ch_names):
         for cond_idx, cond in enumerate(design_matrix.columns):

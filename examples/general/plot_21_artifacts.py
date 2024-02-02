@@ -15,10 +15,12 @@ how artifact correction techniques attempt to correct the data.
 # License: BSD (3-clause)
 
 import os
-import mne
 
-from mne.preprocessing.nirs import (optical_density,
-                                    temporal_derivative_distribution_repair)
+import mne
+from mne.preprocessing.nirs import (
+    optical_density,
+    temporal_derivative_distribution_repair,
+)
 
 # %%
 # Import data

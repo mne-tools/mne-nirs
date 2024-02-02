@@ -5,9 +5,9 @@
 # This script runs each of the example scripts. It acts as a system test.
 
 import os
-import pytest
 import sys
 
+import pytest
 from mne.utils import check_version
 
 

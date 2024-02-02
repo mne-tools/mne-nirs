@@ -56,21 +56,24 @@ MNE-NIRS will wrap all required Nilearn functions so you don't need to access th
 
 # Import common libraries
 import os
-import numpy as np
-import mne
 
-# Import MNE-NIRS processing
-from mne_nirs.experimental_design import make_first_level_design_matrix, \
-    longest_inter_annotation_interval, drift_high_pass
+import matplotlib as mpl
+
+# Import Plotting Library
+import matplotlib.pyplot as plt
+import mne
+import numpy as np
 
 # Import Nilearn
 from nilearn.glm import first_level
 from nilearn.plotting import plot_design_matrix
 
-# Import Plotting Library
-import matplotlib.pyplot as plt
-import matplotlib as mpl
-
+# Import MNE-NIRS processing
+from mne_nirs.experimental_design import (
+    drift_high_pass,
+    longest_inter_annotation_interval,
+    make_first_level_design_matrix,
+)
 
 # %%
 # Haemodynamic Response Function

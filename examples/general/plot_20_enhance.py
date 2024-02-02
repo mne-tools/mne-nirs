@@ -23,11 +23,10 @@ data.
 import os
 
 import matplotlib.pyplot as plt
-
 import mne
+
 import mne_nirs
 from mne_nirs.channels import picks_pair_to_idx
-
 
 # %%
 # Import and preprocess data
@@ -162,7 +161,7 @@ mne.viz.plot_compare_evokeds(evoked_dict_corr, combine="mean", ci=0.95,
 for column, condition in enumerate(['Original Data',
                                     'With Enhanced Anticorrelation',
                                     'With Short Regression']):
-    axes[column].set_title('{}'.format(condition))
+    axes[column].set_title(f'{condition}')
 
 
 # %%
@@ -250,5 +249,5 @@ for row, condition in enumerate(['Original',
                                  'Anticorrelation',
                                  'Short Regression']):
     for column, hemi in enumerate(['Left', 'Right']):
-        axes[row, column].set_title('{}: {}'.format(condition, hemi))
+        axes[row, column].set_title(f'{condition}: {hemi}')
 

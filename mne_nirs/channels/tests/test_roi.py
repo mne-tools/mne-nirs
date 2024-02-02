@@ -3,8 +3,10 @@
 # License: BSD (3-clause)
 
 import os
+
 import mne
 import pytest
+
 from mne_nirs.channels import picks_pair_to_idx
 
 

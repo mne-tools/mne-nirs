@@ -4,8 +4,8 @@
 
 from io import StringIO
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 
 def summary_to_dataframe(summary):
@@ -23,7 +23,6 @@ def summary_to_dataframe(summary):
 
 def expand_summary_dataframe(summary):
     '''Expand dataframe index column in to individual columns'''
-
     # Determine new columns
     new_cols = summary.index[0].split(':')
     col_names = []
@@ -87,8 +86,8 @@ def statsmodels_to_results(model, order=None):
     df : Pandas dataframe.
         Data frame with the results from the stats model.
     """
-    from statsmodels.regression.mixed_linear_model import MixedLMResultsWrapper
     from scipy.stats.distributions import norm
+    from statsmodels.regression.mixed_linear_model import MixedLMResultsWrapper
     df = summary_to_dataframe(model.summary())
     # deal with numerical precision loss in at least some of the values
     for col, attr in _REPLACEMENTS:

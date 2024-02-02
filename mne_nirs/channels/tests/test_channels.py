@@ -4,10 +4,18 @@
 
 
 import os
-from numpy.testing import assert_array_equal
+
 import mne
-from mne_nirs.channels import list_sources, list_detectors,\
-    drop_sources, drop_detectors, pick_sources, pick_detectors
+from numpy.testing import assert_array_equal
+
+from mne_nirs.channels import (
+    drop_detectors,
+    drop_sources,
+    list_detectors,
+    list_sources,
+    pick_detectors,
+    pick_sources,
+)
 
 
 def _get_raw():
