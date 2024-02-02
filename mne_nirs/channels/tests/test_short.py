@@ -4,17 +4,18 @@
 
 
 import os
+
 import mne
 import numpy as np
 import pytest
-
 from mne.preprocessing.nirs import source_detector_distances
+
 from mne_nirs.channels import get_long_channels, get_short_channels
 
 
 def test_short_extraction():
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-    fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
+    fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
     raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
 
     short_chans = get_short_channels(raw_intensity)
@@ -39,15 +40,16 @@ def test_short_extraction():
 
     # Check that we dont run on other types, eg eeg.
     raw_intensity.pick(picks=range(2))
-    raw_intensity.set_channel_types({'S1_D1 760': 'eeg', 'S1_D1 850': 'eeg'},
-                                    verbose='error')
-    with pytest.raises(RuntimeError, match='NIRS signals only'):
+    raw_intensity.set_channel_types(
+        {"S1_D1 760": "eeg", "S1_D1 850": "eeg"}, verbose="error"
+    )
+    with pytest.raises(RuntimeError, match="NIRS signals only"):
         _ = get_short_channels(raw_intensity)
 
 
 def test_long_extraction():
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-    fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
+    fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
     raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
 
     long_chans = get_long_channels(raw_intensity)
@@ -72,7 +74,8 @@ def test_long_extraction():
 
     # Check that we dont run on other types, eg eeg.
     raw_intensity.pick(picks=range(2))
-    raw_intensity.set_channel_types({'S1_D1 760': 'eeg', 'S1_D1 850': 'eeg'},
-                                    verbose='error')
-    with pytest.raises(RuntimeError, match='NIRS signals only'):
+    raw_intensity.set_channel_types(
+        {"S1_D1 760": "eeg", "S1_D1 850": "eeg"}, verbose="error"
+    )
+    with pytest.raises(RuntimeError, match="NIRS signals only"):
         _ = get_long_channels(raw_intensity)

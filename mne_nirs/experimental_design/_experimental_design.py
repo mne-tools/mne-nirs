@@ -2,17 +2,23 @@
 #
 # License: BSD (3-clause)
 
-import numpy as np
 import mne
+import numpy as np
 
 
-def make_first_level_design_matrix(raw, stim_dur=1.,
-                                   hrf_model='glover',
-                                   drift_model='cosine',
-                                   high_pass=0.01, drift_order=1,
-                                   fir_delays=[0], add_regs=None,
-                                   add_reg_names=None, min_onset=-24,
-                                   oversampling=50):
+def make_first_level_design_matrix(
+    raw,
+    stim_dur=1.0,
+    hrf_model="glover",
+    drift_model="cosine",
+    high_pass=0.01,
+    drift_order=1,
+    fir_delays=(0,),
+    add_regs=None,
+    add_reg_names=None,
+    min_onset=-24,
+    oversampling=50,
+):
     """
     Generate a design matrix based on annotations and model HRF.
 
@@ -86,20 +92,23 @@ def make_first_level_design_matrix(raw, stim_dur=1.,
     conditions = raw.annotations.description
     onsets = raw.annotations.onset - raw.first_time
     duration = stim_dur * np.ones(len(conditions))
-    events = DataFrame({'trial_type': conditions,
-                        'onset': onsets,
-                        'duration': duration})
+    events = DataFrame(
+        {"trial_type": conditions, "onset": onsets, "duration": duration}
+    )
 
-    dm = make_first_level_design_matrix(frame_times, events,
-                                        drift_model=drift_model,
-                                        drift_order=drift_order,
-                                        hrf_model=hrf_model,
-                                        min_onset=min_onset,
-                                        high_pass=high_pass,
-                                        add_regs=add_regs,
-                                        oversampling=oversampling,
-                                        add_reg_names=add_reg_names,
-                                        fir_delays=fir_delays)
+    dm = make_first_level_design_matrix(
+        frame_times,
+        events,
+        drift_model=drift_model,
+        drift_order=drift_order,
+        hrf_model=hrf_model,
+        min_onset=min_onset,
+        high_pass=high_pass,
+        add_regs=add_regs,
+        oversampling=oversampling,
+        add_reg_names=add_reg_names,
+        fir_delays=fir_delays,
+    )
 
     return dm
 
@@ -122,15 +131,15 @@ def create_boxcar(raw, event_id=None, stim_dur=1):
     s : array
         Returns an array for each annotation label.
     """
-    bc = np.ones(int(round(raw.info['sfreq'] * stim_dur)))
+    bc = np.ones(int(round(raw.info["sfreq"] * stim_dur)))
     events, ids = mne.events_from_annotations(raw, event_id=event_id)
     s = np.zeros((len(raw.times), len(ids)))
-    for idx, id in enumerate(ids):
+    for idx, _ in enumerate(ids):
         id_idx = [e[2] == idx + 1 for e in events]
         id_evt = events[id_idx]
         event_samples = [e[0] for e in id_evt]
-        s[event_samples, idx] = 1.
-        s[:, idx] = np.convolve(s[:, idx], bc)[:len(raw.times)]
+        s[event_samples, idx] = 1.0
+        s[:, idx] = np.convolve(s[:, idx], bc)[: len(raw.times)]
     return s
 
 

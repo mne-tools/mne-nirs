@@ -3,21 +3,24 @@
 # License: BSD (3-clause)
 
 import numpy as np
-
 from mne import pick_types
-from mne.io import BaseRaw
-from mne.utils import _validate_type, verbose
-from mne.preprocessing.nirs import (_channel_frequencies,
-                                    _check_channels_ordered)
 from mne.filter import filter_data
+from mne.io import BaseRaw
+from mne.preprocessing.nirs import _channel_frequencies, _check_channels_ordered
+from mne.utils import _validate_type, verbose
 
 
 @verbose
-def scalp_coupling_index_windowed(raw, time_window=10, threshold=0.1,
-                                  l_freq=0.7, h_freq=1.5,
-                                  l_trans_bandwidth=0.3,
-                                  h_trans_bandwidth=0.3,
-                                  verbose=False):
+def scalp_coupling_index_windowed(
+    raw,
+    time_window=10,
+    threshold=0.1,
+    l_freq=0.7,
+    h_freq=1.5,
+    l_trans_bandwidth=0.3,
+    h_trans_bandwidth=0.3,
+    verbose=False,
+):
     """
     Compute scalp coupling index for each channel and time window.
 
@@ -60,30 +63,35 @@ def scalp_coupling_index_windowed(raw, time_window=10, threshold=0.1,
            quality assessment of fNIRS scans." Optics and the Brain.
            Optical Society of America, 2020.
     """
-
     raw = raw.copy().load_data()
-    _validate_type(raw, BaseRaw, 'raw')
+    _validate_type(raw, BaseRaw, "raw")
 
-    if not len(pick_types(raw.info, fnirs='fnirs_od')):
-        raise RuntimeError('Scalp coupling index '
-                           'should be run on optical density data.')
+    if not len(pick_types(raw.info, fnirs="fnirs_od")):
+        raise RuntimeError(
+            "Scalp coupling index " "should be run on optical density data."
+        )
 
     freqs = np.unique(_channel_frequencies(raw.info))
     picks = _check_channels_ordered(raw.info, freqs)
 
-    filtered_data = filter_data(raw._data, raw.info['sfreq'], l_freq, h_freq,
-                                picks=picks, verbose=verbose,
-                                l_trans_bandwidth=l_trans_bandwidth,
-                                h_trans_bandwidth=h_trans_bandwidth)
+    filtered_data = filter_data(
+        raw._data,
+        raw.info["sfreq"],
+        l_freq,
+        h_freq,
+        picks=picks,
+        verbose=verbose,
+        l_trans_bandwidth=l_trans_bandwidth,
+        h_trans_bandwidth=h_trans_bandwidth,
+    )
 
-    window_samples = int(np.ceil(time_window * raw.info['sfreq']))
+    window_samples = int(np.ceil(time_window * raw.info["sfreq"]))
     n_windows = int(np.floor(len(raw) / window_samples))
 
     scores = np.zeros((len(picks), n_windows))
     times = []
 
     for window in range(n_windows):
-
         start_sample = int(window * window_samples)
         end_sample = start_sample + window_samples
         end_sample = np.min([end_sample, len(raw) - 1])
@@ -93,7 +101,6 @@ def scalp_coupling_index_windowed(raw, time_window=10, threshold=0.1,
         times.append((t_start, t_stop))
 
         for ii in picks[::2]:
-
             c1 = filtered_data[ii][start_sample:end_sample]
             c2 = filtered_data[ii + 1][start_sample:end_sample]
             c = np.corrcoef(c1, c2)[0][1]
@@ -101,7 +108,11 @@ def scalp_coupling_index_windowed(raw, time_window=10, threshold=0.1,
             scores[ii + 1, window] = c
 
             if (threshold is not None) & (c < threshold):
-                raw.annotations.append(t_start, time_window, 'BAD_SCI',
-                                       ch_names=[raw.ch_names[ii:ii + 2]])
+                raw.annotations.append(
+                    t_start,
+                    time_window,
+                    "BAD_SCI",
+                    ch_names=[raw.ch_names[ii : ii + 2]],
+                )
 
     return raw, scores, times

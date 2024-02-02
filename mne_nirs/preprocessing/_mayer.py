@@ -4,17 +4,24 @@
 
 import numpy as np
 import pandas as pd
-
 from mne import pick_types
 from mne.io import BaseRaw
-from mne.utils import _validate_type, _require_version
+from mne.utils import _require_version, _validate_type
 
 
-def quantify_mayer_fooof(raw, num_oscillations=1, centre_frequency=0.01,
-                         extra_df_fields={},
-                         fmin=0.001, fmax=1, tmin=0, tmax=None,
-                         n_fft=400, n_overlap=200,
-                         peak_width_limits=(0.5, 12.0)):
+def quantify_mayer_fooof(
+    raw,
+    num_oscillations=1,
+    centre_frequency=0.01,
+    extra_df_fields=None,
+    fmin=0.001,
+    fmax=1,
+    tmin=0,
+    tmax=None,
+    n_fft=400,
+    n_overlap=200,
+    peak_width_limits=(0.5, 12.0),
+):
     """
     Quantify Mayer wave properties using FOOOF analysis.
 
@@ -69,29 +76,35 @@ def quantify_mayer_fooof(raw, num_oscillations=1, centre_frequency=0.01,
     ----------
     .. footbibliography::
     """
-    _require_version('fooof', 'run the FOOOF algorithm.')
-    _validate_type(raw, BaseRaw, 'raw')
+    _require_version("fooof", "run the FOOOF algorithm.")
+    _validate_type(raw, BaseRaw, "raw")
 
-    hbo_picks = pick_types(raw.info, fnirs='hbo')
-    hbr_picks = pick_types(raw.info, fnirs='hbr')
+    extra_df_fields = {} if extra_df_fields is None else extra_df_fields
+    hbo_picks = pick_types(raw.info, fnirs="hbo")
+    hbr_picks = pick_types(raw.info, fnirs="hbr")
 
     if (not len(hbo_picks)) & (not len(hbr_picks)):
         # It may be perfectly valid to compute this on optical density
         # or raw data, I just haven't tried this. Let me know if this works
         # for you and we can ease this restriction.
-        raise RuntimeError('Mayer wave estimation should be run on '
-                           'haemoglobin concentration data.')
+        raise RuntimeError(
+            "Mayer wave estimation should be run on " "haemoglobin concentration data."
+        )
 
     df = pd.DataFrame()
 
     for picks, chroma in zip([hbo_picks, hbr_picks], ["hbo", "hbr"]):
         if len(picks):
-
-            fm_hbo = _run_fooof(raw.copy().pick(picks),
-                                fmin=fmin, fmax=fmax,
-                                tmin=tmin, tmax=tmax,
-                                n_overlap=n_overlap, n_fft=n_fft,
-                                peak_width_limits=peak_width_limits)
+            fm_hbo = _run_fooof(
+                raw.copy().pick(picks),
+                fmin=fmin,
+                fmax=fmax,
+                tmin=tmin,
+                tmax=tmax,
+                n_overlap=n_overlap,
+                n_fft=n_fft,
+                peak_width_limits=peak_width_limits,
+            )
 
             cf, pw, bw = _process_fooof_output(fm_hbo, centre_frequency)
 
@@ -102,23 +115,27 @@ def quantify_mayer_fooof(raw, num_oscillations=1, centre_frequency=0.01,
             data["Chromaphore"] = chroma
             data = {**data, **extra_df_fields}
 
-            df = pd.concat([df, pd.DataFrame(data, index=[0])],
-                           ignore_index=True)
+            df = pd.concat([df, pd.DataFrame(data, index=[0])], ignore_index=True)
 
     return df
 
 
-def _run_fooof(raw,
-               fmin=0.001, fmax=1,
-               tmin=0, tmax=None,
-               n_overlap=200, n_fft=400,
-               peak_width_limits=(0.5, 12.0)):
+def _run_fooof(
+    raw,
+    fmin=0.001,
+    fmax=1,
+    tmin=0,
+    tmax=None,
+    n_overlap=200,
+    n_fft=400,
+    peak_width_limits=(0.5, 12.0),
+):
     """Prepare data for FOOOF including welch and scaling, then apply."""
     from fooof import FOOOF
 
     psd = raw.compute_psd(
-        fmin=fmin, fmax=fmax, tmin=tmin, tmax=tmax,
-        n_overlap=n_overlap, n_fft=n_fft)
+        fmin=fmin, fmax=fmax, tmin=tmin, tmax=tmax, n_overlap=n_overlap, n_fft=n_fft
+    )
     spectra, freqs = psd.get_data(return_freqs=True)
 
     # FOOOF doesn't like low frequencies, so multiple by 10.

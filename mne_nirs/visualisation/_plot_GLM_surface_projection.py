@@ -3,22 +3,35 @@
 # License: BSD (3-clause)
 
 import os
-import numpy as np
 from copy import deepcopy
 
-from mne import stc_near_sensors, EvokedArray, read_source_spaces, Info
+import numpy as np
+from mne import EvokedArray, Info, read_source_spaces, stc_near_sensors
 from mne.io.constants import FIFF
-from mne.utils import verbose, get_subjects_dir
+from mne.utils import get_subjects_dir, verbose
 
 
 @verbose
-def plot_glm_surface_projection(inst, statsmodel_df, picks="hbo",
-                                value="Coef.",
-                                background='w', figure=None, clim='auto',
-                                mode='weighted', colormap='RdBu_r',
-                                surface='pial', hemi='both', size=800,
-                                view=None, colorbar=True, distance=0.03,
-                                subjects_dir=None, src=None, verbose=False):
+def plot_glm_surface_projection(
+    inst,
+    statsmodel_df,
+    picks="hbo",
+    value="Coef.",
+    background="w",
+    figure=None,
+    clim="auto",
+    mode="weighted",
+    colormap="RdBu_r",
+    surface="pial",
+    hemi="both",
+    size=800,
+    view=None,
+    colorbar=True,
+    distance=0.03,
+    subjects_dir=None,
+    src=None,
+    verbose=False,
+):
     """
     Project GLM results on to the surface of the brain.
 
@@ -86,34 +99,57 @@ def plot_glm_surface_projection(inst, statsmodel_df, picks="hbo",
         An instance of :class:`mne.viz.Brain` or matplotlib figure.
     """
     info = deepcopy(inst if isinstance(inst, Info) else inst.info)
-    if not (info.ch_names == list(statsmodel_df['ch_name'].values)):
-        raise RuntimeError('MNE data structure does not match dataframe '
-                           f'results.\nMNE = {info.ch_names}.\n'
-                           f'GLM = {list(statsmodel_df["ch_name"].values)}')
+    if not (info.ch_names == list(statsmodel_df["ch_name"].values)):
+        raise RuntimeError(
+            'MNE data structure does not match dataframe '
+            f'results.\nMNE = {info.ch_names}.\n'
+            f'GLM = {list(statsmodel_df["ch_name"].values)}'
+        )
 
-    ea = EvokedArray(np.tile(statsmodel_df[value].values.T, (1, 1)).T,
-                     info.copy())
+    ea = EvokedArray(np.tile(statsmodel_df[value].values.T, (1, 1)).T, info.copy())
 
-    return _plot_3d_evoked_array(inst, ea, picks=picks,
-                                 value=value,
-                                 background=background, figure=figure,
-                                 clim=clim,
-                                 mode=mode, colormap=colormap,
-                                 surface=surface, hemi=hemi, size=size,
-                                 view=view, colorbar=colorbar,
-                                 distance=distance,
-                                 subjects_dir=subjects_dir, src=src,
-                                 verbose=verbose)
+    return _plot_3d_evoked_array(
+        inst,
+        ea,
+        picks=picks,
+        value=value,
+        background=background,
+        figure=figure,
+        clim=clim,
+        mode=mode,
+        colormap=colormap,
+        surface=surface,
+        hemi=hemi,
+        size=size,
+        view=view,
+        colorbar=colorbar,
+        distance=distance,
+        subjects_dir=subjects_dir,
+        src=src,
+        verbose=verbose,
+    )
 
 
-def _plot_3d_evoked_array(inst, ea, picks="hbo",
-                          value="Coef.",
-                          background='w', figure=None, clim='auto',
-                          mode='weighted', colormap='RdBu_r',
-                          surface='pial', hemi='both', size=800,
-                          view=None, colorbar=True, distance=0.03,
-                          subjects_dir=None, src=None, verbose=False):
-
+def _plot_3d_evoked_array(
+    inst,
+    ea,
+    picks="hbo",
+    value="Coef.",
+    background="w",
+    figure=None,
+    clim="auto",
+    mode="weighted",
+    colormap="RdBu_r",
+    surface="pial",
+    hemi="both",
+    size=800,
+    view=None,
+    colorbar=True,
+    distance=0.03,
+    subjects_dir=None,
+    src=None,
+    verbose=False,
+):
     # TODO: mimic behaviour of other MNE-NIRS glm plotting options
     if picks is not None:
         ea = ea.pick(picks=picks)
@@ -121,28 +157,46 @@ def _plot_3d_evoked_array(inst, ea, picks="hbo",
     if subjects_dir is None:
         subjects_dir = get_subjects_dir(raise_error=True)
     if src is None:
-        fname_src_fs = os.path.join(subjects_dir, 'fsaverage', 'bem',
-                                    'fsaverage-ico-5-src.fif')
+        fname_src_fs = os.path.join(
+            subjects_dir, "fsaverage", "bem", "fsaverage-ico-5-src.fif"
+        )
         src = read_source_spaces(fname_src_fs)
 
-    picks = np.arange(len(ea.info['ch_names']))
+    picks = np.arange(len(ea.info["ch_names"]))
 
     # Set coord frame
     for idx in range(len(ea.ch_names)):
-        ea.info['chs'][idx]['coord_frame'] = FIFF.FIFFV_COORD_HEAD
+        ea.info["chs"][idx]["coord_frame"] = FIFF.FIFFV_COORD_HEAD
 
     # Generate source estimate
     kwargs = dict(
-        evoked=ea, subject='fsaverage', trans='fsaverage',
-        distance=distance, mode=mode, surface=surface,
-        subjects_dir=subjects_dir, src=src, project=True)
+        evoked=ea,
+        subject="fsaverage",
+        trans="fsaverage",
+        distance=distance,
+        mode=mode,
+        surface=surface,
+        subjects_dir=subjects_dir,
+        src=src,
+        project=True,
+    )
     stc = stc_near_sensors(picks=picks, **kwargs, verbose=verbose)
 
     # Produce brain plot
-    brain = stc.plot(src=src, subjects_dir=subjects_dir, hemi=hemi,
-                     surface=surface, initial_time=0, clim=clim, size=size,
-                     colormap=colormap, figure=figure, background=background,
-                     colorbar=colorbar, verbose=verbose)
+    brain = stc.plot(
+        src=src,
+        subjects_dir=subjects_dir,
+        hemi=hemi,
+        surface=surface,
+        initial_time=0,
+        clim=clim,
+        size=size,
+        colormap=colormap,
+        figure=figure,
+        background=background,
+        colorbar=colorbar,
+        verbose=verbose,
+    )
     if view is not None:
         brain.show_view(view)
 
