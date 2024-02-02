@@ -7,7 +7,7 @@ import numpy as np
 from mne.utils import warn
 
 
-def picks_pair_to_idx(raw, sd_pairs, on_missing="error"):
+def picks_pair_to_idx(raw, sd_pairs, on_missing='error'):
     """
     Return a list of picks for specified source detector pairs.
 
@@ -38,6 +38,7 @@ def picks_pair_to_idx(raw, sd_pairs, on_missing="error"):
     picks : list of integers
         List of picks corresponding to requested source detector pairs.
     """
+
     ch_names = raw.ch_names
     picks = list()
 
@@ -45,14 +46,12 @@ def picks_pair_to_idx(raw, sd_pairs, on_missing="error"):
         pair_name = "S" + str(pair[0]) + "_D" + str(pair[1]) + " "
         pair_picks = np.where([pair_name in ch for ch in ch_names])[0]
         if len(pair_picks) == 0:
-            msg = "No matching channels found for source %s " "detector %s" % (
-                pair[0],
-                pair[1],
-            )
-            if on_missing == "error":
+            msg = ('No matching channels found for source %s '
+                   'detector %s' % (pair[0], pair[1]))
+            if on_missing == 'error':
                 print(pair_picks)
                 raise ValueError(msg)
-            elif on_missing == "warning":
+            elif on_missing == 'warning':
                 warn(msg)
             else:
                 # on_missing == 'ignore':

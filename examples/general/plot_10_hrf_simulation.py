@@ -9,6 +9,11 @@ functional near-infrared spectroscopy (fNIRS)
 experiment and analyse
 the simulated signal. We investigate the effect additive noise and
 measurement length has on response amplitude estimates.
+
+.. contents:: Page contents
+   :local:
+   :depth: 2
+
 """
 # sphinx_gallery_thumbnail_number = 3
 
@@ -16,15 +21,13 @@ measurement length has on response amplitude estimates.
 #
 # License: BSD (3-clause)
 
-import matplotlib.pylab as plt
 import mne
-import numpy as np
-from nilearn.plotting import plot_design_matrix
-
 import mne_nirs
+import matplotlib.pylab as plt
+import numpy as np
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_glm
-
+from nilearn.plotting import plot_design_matrix
 np.random.seed(1)
 
 
@@ -38,12 +41,11 @@ np.random.seed(1)
 # The amplitude of the simulated signal is 4 uMol and the sample rate is 3 Hz.
 # The simulated signal is plotted below.
 
-sfreq = 3.0
-amp = 4.0
+sfreq = 3.
+amp = 4.
 
 raw = mne_nirs.simulation.simulate_nirs_raw(
-    sfreq=sfreq, sig_dur=60 * 5, amplitude=amp, isi_min=15.0, isi_max=45.0
-)
+    sfreq=sfreq, sig_dur=60 * 5, amplitude=amp, isi_min=15., isi_max=45.)
 raw.plot(duration=300, show_scrollbars=False)
 
 
@@ -55,9 +57,9 @@ raw.plot(duration=300, show_scrollbars=False)
 # data. We use the nilearn plotting function to visualise the design matrix.
 # For more details on this procedure see :ref:`tut-fnirs-hrf`.
 
-design_matrix = make_first_level_design_matrix(
-    raw, stim_dur=5.0, drift_order=1, drift_model="polynomial"
-)
+design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
+                                               drift_order=1,
+                                               drift_model='polynomial')
 fig, ax1 = plt.subplots(figsize=(10, 6), constrained_layout=True)
 fig = plot_design_matrix(design_matrix, ax=ax1)
 
@@ -77,18 +79,13 @@ glm_est = run_glm(raw, design_matrix)
 
 
 def print_results(glm_est, truth):
-    """Print the results of GLM estimate."""
-    print(
-        "Estimate:",
-        glm_est.theta()[0][0],
-        "  MSE:",
-        glm_est.MSE()[0],
-        "  Error (uM):",
-        1e6 * (glm_est.theta()[0][0] - truth * 1e-6),
-    )
-
+    """Function to print the results of GLM estimate"""
+    print("Estimate:", glm_est.theta()[0][0],
+          "  MSE:", glm_est.MSE()[0],
+          "  Error (uM):", 1e6*(glm_est.theta()[0][0] - truth * 1e-6))
 
 print_results(glm_est, amp)
+
 
 
 # %%
@@ -101,8 +98,7 @@ print_results(glm_est, amp)
 # and plot the noisy data and the GLM fitted model.
 # We print the response estimate and see that is close, but not exactly correct,
 # we observe the mean square error is similar to the added noise.
-# Note that the clean data plot is so similar to the GLM estimate that it is hard to
-# see unless zoomed in.
+# Note that the clean data plot is so similar to the GLM estimate that it is hard to see unless zoomed in.
 
 # First take a copy of noise free data for comparison
 raw_noise_free = raw.copy()
@@ -131,17 +127,15 @@ print_results(glm_est, amp)
 # However, the error is greater for the colored than white noise.
 
 raw = raw_noise_free.copy()
-cov = mne.Covariance(
-    np.ones(1) * 1e-11, raw.ch_names, raw.info["bads"], raw.info["projs"], nfree=0
-)
-raw = mne.simulation.add_noise(
-    raw,
-    cov,
-    iir_filter=[1.0, -0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.02428681],
-)
-design_matrix = make_first_level_design_matrix(
-    raw, stim_dur=5.0, drift_order=1, drift_model="polynomial"
-)
+cov = mne.Covariance(np.ones(1) * 1e-11, raw.ch_names,
+                     raw.info['bads'], raw.info['projs'], nfree=0)
+raw = mne.simulation.add_noise(raw, cov,
+                               iir_filter=[1., -0.58853134, -0.29575669,
+                                           -0.52246482, 0.38735476,
+                                           0.02428681])
+design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
+                                               drift_order=1,
+                                               drift_model='polynomial')
 glm_est = run_glm(raw, design_matrix)
 
 fig, ax = plt.subplots(constrained_layout=True)
@@ -164,20 +158,17 @@ print_results(glm_est, amp)
 # approximately 0.6 uM for 5 minutes of data to 0.25 uM for 30 minutes of data.
 
 raw = mne_nirs.simulation.simulate_nirs_raw(
-    sfreq=sfreq, sig_dur=60 * 30, amplitude=amp, isi_min=15.0, isi_max=45.0
-)
-cov = mne.Covariance(
-    np.ones(1) * 1e-11, raw.ch_names, raw.info["bads"], raw.info["projs"], nfree=0
-)
-raw = mne.simulation.add_noise(
-    raw,
-    cov,
-    iir_filter=[1.0, -0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.02428681],
-)
+    sfreq=sfreq, sig_dur=60 * 30, amplitude=amp, isi_min=15., isi_max=45.)
+cov = mne.Covariance(np.ones(1) * 1e-11, raw.ch_names,
+                     raw.info['bads'], raw.info['projs'], nfree=0)
+raw = mne.simulation.add_noise(raw, cov,
+                               iir_filter=[1., -0.58853134, -0.29575669,
+                                           -0.52246482, 0.38735476,
+                                           0.02428681])
 
-design_matrix = make_first_level_design_matrix(
-    raw, stim_dur=5.0, drift_order=1, drift_model="polynomial"
-)
+design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0,
+                                               drift_order=1,
+                                               drift_model='polynomial')
 glm_est = run_glm(raw, design_matrix)
 
 fig, ax = plt.subplots(constrained_layout=True)
@@ -200,7 +191,7 @@ print_results(glm_est, amp)
 # properties was extracted from the data and if this
 # improved the response estimate.
 
-glm_est = run_glm(raw, design_matrix, noise_model="ar5")
+glm_est = run_glm(raw, design_matrix, noise_model='ar5')
 
 fig, ax = plt.subplots(figsize=(15, 6), constrained_layout=True)
 # actual values from model above

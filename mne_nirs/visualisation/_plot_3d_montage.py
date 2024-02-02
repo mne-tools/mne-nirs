@@ -6,27 +6,20 @@ import contextlib
 import inspect
 
 import numpy as np
-from mne import Info, pick_info, pick_types
+
+from mne import pick_info, pick_types, Info
 from mne.channels import make_standard_montage
 from mne.channels.montage import transform_to_head
 from mne.transforms import _get_trans, apply_trans
-from mne.utils import _check_option, _validate_type, logger, verbose
+from mne.utils import _validate_type, _check_option, verbose, logger
 from mne.viz import Brain
 
 
 @verbose
-def plot_3d_montage(
-    info,
-    view_map,
-    *,
-    src_det_names="auto",
-    ch_names="numbered",
-    subject="fsaverage",
-    trans="fsaverage",
-    surface="pial",
-    subjects_dir=None,
-    verbose=None,
-):
+def plot_3d_montage(info, view_map, *, src_det_names='auto',
+                    ch_names='numbered', subject='fsaverage',
+                    trans='fsaverage', surface='pial',
+                    subjects_dir=None, verbose=None):
     """
     Plot a 3D sensor montage.
 
@@ -96,33 +89,32 @@ def plot_3d_montage(
     """  # noqa: E501
     import matplotlib.pyplot as plt
     from scipy.spatial.distance import cdist
-
-    _validate_type(info, Info, "info")
-    _validate_type(view_map, dict, "views")
-    _validate_type(src_det_names, (None, dict, str), "src_det_names")
-    _validate_type(ch_names, (dict, str, None), "ch_names")
+    _validate_type(info, Info, 'info')
+    _validate_type(view_map, dict, 'views')
+    _validate_type(src_det_names, (None, dict, str), 'src_det_names')
+    _validate_type(ch_names, (dict, str, None), 'ch_names')
     info = pick_info(info, pick_types(info, fnirs=True, exclude=())[::2])
     if isinstance(ch_names, str):
-        _check_option("ch_names", ch_names, ("numbered",), extra="when str")
+        _check_option('ch_names', ch_names, ('numbered',), extra='when str')
         ch_names = {
-            name.split()[0]: str(ni) for ni, name in enumerate(info["ch_names"], 1)
-        }
-    info["bads"] = []
+            name.split()[0]: str(ni)
+            for ni, name in enumerate(info['ch_names'], 1)}
+    info['bads'] = []
     if isinstance(src_det_names, str):
-        _check_option("src_det_names", src_det_names, ("auto",), extra="when str")
+        _check_option('src_det_names', src_det_names, ('auto',),
+                      extra='when str')
         # Decide if we can map to 10-20 locations
         names, pos = zip(
-            *transform_to_head(make_standard_montage("standard_1020"))
-            .get_positions()["ch_pos"]
-            .items()
-        )
+            *transform_to_head(make_standard_montage('standard_1020'))
+            .get_positions()['ch_pos'].items())
         pos = np.array(pos, float)
         locs = dict()
         bad = False
-        for ch in info["chs"]:
-            name = ch["ch_name"]
-            s_name, d_name = name.split()[0].split("_")
-            for name, loc in [(s_name, ch["loc"][3:6]), (d_name, ch["loc"][6:9])]:
+        for ch in info['chs']:
+            name = ch['ch_name']
+            s_name, d_name = name.split()[0].split('_')
+            for name, loc in [(s_name, ch['loc'][3:6]),
+                              (d_name, ch['loc'][6:9])]:
                 if name in locs:
                     continue
                 # see if it's close enough
@@ -137,83 +129,57 @@ def plot_3d_montage(
                 break
         if bad:
             src_det_names = None
-            logger.info(
-                "Could not automatically map source/detector names to "
-                "10-20 locations."
-            )
+            logger.info('Could not automatically map source/detector names to '
+                        '10-20 locations.')
         else:
             src_det_names = locs
-            logger.info(
-                "Source-detector names automatically mapped to 10-20 " "locations"
-            )
+            logger.info('Source-detector names automatically mapped to 10-20 '
+                        'locations')
 
-    head_mri_t = _get_trans(trans, "head", "mri")[0]
+    head_mri_t = _get_trans(trans, 'head', 'mri')[0]
     del trans
     views = list()
     for key, num in view_map.items():
-        _validate_type(key, str, f"view_map key {repr(key)}")
-        _validate_type(num, np.ndarray, f"view_map[{repr(key)}]")
-        if "-" in key:
-            hemi, v = key.split("-", maxsplit=1)
-            hemi = dict(left="lh", right="rh")[hemi]
+        _validate_type(key, str, f'view_map key {repr(key)}')
+        _validate_type(num, np.ndarray, f'view_map[{repr(key)}]')
+        if '-' in key:
+            hemi, v = key.split('-', maxsplit=1)
+            hemi = dict(left='lh', right='rh')[hemi]
             views.append((hemi, v, num))
         else:
-            views.append(("lh", key, num))
+            views.append(('lh', key, num))
     del view_map
     size = (400 * len(views), 400)
     brain = Brain(
-        subject,
-        "both",
-        surface,
-        views=["lat"] * len(views),
-        size=size,
-        background="w",
-        units="m",
-        view_layout="horizontal",
-        subjects_dir=subjects_dir,
-    )
+        subject, 'both', surface, views=['lat'] * len(views),
+        size=size, background='w', units='m',
+        view_layout='horizontal', subjects_dir=subjects_dir)
     with _safe_brain_close(brain):
         brain.add_head(dense=False, alpha=0.1)
         brain.add_sensors(
-            info, trans=head_mri_t, fnirs=["channels", "pairs", "sources", "detectors"]
-        )
+            info, trans=head_mri_t,
+            fnirs=['channels', 'pairs', 'sources', 'detectors'])
         add_text_kwargs = dict()
-        if "render" in inspect.signature(brain.plotter.add_text).parameters:
-            add_text_kwargs["render"] = False
+        if 'render' in inspect.signature(brain.plotter.add_text).parameters:
+            add_text_kwargs['render'] = False
         for col, view in enumerate(views):
             plotted = set()
             brain.show_view(
-                view[1],
-                hemi=view[0],
-                focalpoint=(0, -0.02, 0.02),
-                distance=0.4,
-                row=0,
-                col=col,
-            )
+                view[1], hemi=view[0], focalpoint=(0, -0.02, 0.02),
+                distance=0.4, row=0, col=col)
             brain.plotter.subplot(0, col)
             vp = brain.plotter.renderer
             for ci in view[2]:  # figure out what we need to plot
-                this_ch = info["chs"][ci - 1]
-                ch_name = this_ch["ch_name"].split()[0]
-                s_name, d_name = ch_name.split("_")
+                this_ch = info['chs'][ci - 1]
+                ch_name = this_ch['ch_name'].split()[0]
+                s_name, d_name = ch_name.split('_')
                 needed = [
-                    (ch_names, "ch_names", ch_name, this_ch["loc"][:3], 12, "Centered"),
-                    (
-                        src_det_names,
-                        "src_det_names",
-                        s_name,
-                        this_ch["loc"][3:6],
-                        8,
-                        "Bottom",
-                    ),
-                    (
-                        src_det_names,
-                        "src_det_names",
-                        d_name,
-                        this_ch["loc"][6:9],
-                        8,
-                        "Bottom",
-                    ),
+                    (ch_names, 'ch_names', ch_name,
+                     this_ch['loc'][:3], 12, 'Centered'),
+                    (src_det_names, 'src_det_names', s_name,
+                     this_ch['loc'][3:6], 8, 'Bottom'),
+                    (src_det_names, 'src_det_names', d_name,
+                     this_ch['loc'][6:9], 8, 'Bottom'),
                 ]
                 for lookup, lname, name, ch_pos, font_size, va in needed:
                     if name in plotted:
@@ -222,22 +188,17 @@ def plot_3d_montage(
                     orig_name = name
                     if lookup is not None:
                         name = lookup[name]
-                    _validate_type(name, str, f"{lname}[{repr(orig_name)}]")
+                    _validate_type(name, str, f'{lname}[{repr(orig_name)}]')
                     ch_pos = apply_trans(head_mri_t, ch_pos)
-                    vp.SetWorldPoint(np.r_[ch_pos, 1.0])
+                    vp.SetWorldPoint(np.r_[ch_pos, 1.])
                     vp.WorldToDisplay()
-                    ch_pos = np.array(vp.GetDisplayPoint()[:2]) - np.array(
-                        vp.GetOrigin()
-                    )
+                    ch_pos = (np.array(vp.GetDisplayPoint()[:2]) -
+                              np.array(vp.GetOrigin()))
                     actor = brain.plotter.add_text(
-                        name,
-                        ch_pos,
-                        font_size=font_size,
-                        color=(0.0, 0.0, 0.0),
-                        **add_text_kwargs,
-                    )
+                        name, ch_pos, font_size=font_size, color=(0., 0., 0.),
+                        **add_text_kwargs)
                     prop = actor.GetTextProperty()
-                    getattr(prop, f"SetVerticalJustificationTo{va}")()
+                    getattr(prop, f'SetVerticalJustificationTo{va}')()
                     prop.SetJustificationToCentered()
                     actor.SetTextProperty(prop)
                     prop.SetBold(True)

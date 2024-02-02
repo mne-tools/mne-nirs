@@ -16,11 +16,16 @@ data. The specification is maintained by the society for functional near infrare
 spectroscopy.
 
 MNE Python and MNE-NIRS can be used to read and write SNIRF files respectively.
-In this tutorial we demonstrate how to convert your MNE data to SNIRF and write it to
-disk and also how to read SNIRF files. We also demonstrate how to validate
+In this tutorial we demonstrate how to convert your MNE data to
+SNIRF and write it to disk and also how to read SNIRF files. We also demonstrate how to validate
 that a SNIRF file conforms to the SNIRF specification.
 
 You can read the SNIRF protocol at the official site https://github.com/fNIRS/snirf.
+
+.. contents:: Page contents
+   :local:
+   :depth: 2
+
 """
 
 
@@ -29,14 +34,14 @@ You can read the SNIRF protocol at the official site https://github.com/fNIRS/sn
 # License: BSD (3-clause)
 
 import os
-
 import mne
 import snirf
+
 from mne.io import read_raw_nirx, read_raw_snirf
-from mne.preprocessing.nirs import beer_lambert_law, optical_density
+from mne.preprocessing.nirs import optical_density, beer_lambert_law
+from mne_nirs.io import write_raw_snirf
 from numpy.testing import assert_allclose
 
-from mne_nirs.io import write_raw_snirf
 
 # %%
 # Import raw NIRS data from vendor
@@ -46,7 +51,7 @@ from mne_nirs.io import write_raw_snirf
 
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
+fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
 raw_intensity = read_raw_nirx(fnirs_raw_dir).load_data()
 
 
@@ -56,22 +61,22 @@ raw_intensity = read_raw_nirx(fnirs_raw_dir).load_data()
 #
 # Now we can write this data back to disk in the SNIRF format.
 
-write_raw_snirf(raw_intensity, "test_raw.snirf")
+write_raw_snirf(raw_intensity, 'test_raw.snirf')
 
 
 # %%
 # Read back SNIRF file
 # --------------------
-#
+# 
 # Next we can read back the snirf file.
 
-snirf_intensity = read_raw_snirf("test_raw.snirf")
+snirf_intensity = read_raw_snirf('test_raw.snirf')
 
 
 # %%
 # Compare files
 # -------------
-#
+# 
 # Finally we can compare the data of the original to the SNIRF format and
 # ensure that the values are the same.
 
@@ -90,7 +95,7 @@ snirf_intensity.plot(n_channels=30, duration=300, show_scrollbars=False)
 # https://github.com/BUNPC/pysnirf2. Below we demonstrate that the files created
 # by MNE-NIRS are compliant with the specification.
 
-result = snirf.validateSnirf("test_raw.snirf")
+result = snirf.validateSnirf('test_raw.snirf')
 assert result.is_valid()
 result.display()
 
@@ -102,9 +107,9 @@ result.display()
 # MNE-NIRS cal also be used to write optical density data to SNIRF files.
 
 raw_od = optical_density(raw_intensity)
-write_raw_snirf(raw_od, "test_raw_od.snirf")
+write_raw_snirf(raw_od, 'test_raw_od.snirf')
 
-result = snirf.validateSnirf("test_raw_od.snirf")
+result = snirf.validateSnirf('test_raw_od.snirf')
 assert result.is_valid()
 result.display()
 
@@ -116,8 +121,8 @@ result.display()
 # And it can write valid haemoglobin data to SNIRF files.
 
 raw_hb = beer_lambert_law(raw_od)
-write_raw_snirf(raw_hb, "test_raw_hb.snirf")
+write_raw_snirf(raw_hb, 'test_raw_hb.snirf')
 
-result = snirf.validateSnirf("test_raw_hb.snirf")
+result = snirf.validateSnirf('test_raw_hb.snirf')
 assert result.is_valid()
 result.display()

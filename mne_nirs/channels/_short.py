@@ -2,10 +2,10 @@
 #
 # License: BSD (3-clause)
 
-import mne
-from mne.io import BaseRaw
 from mne.preprocessing.nirs import source_detector_distances
 from mne.utils import _validate_type
+from mne.io import BaseRaw
+import mne
 
 
 def get_short_channels(raw, max_dist=0.01):
@@ -24,14 +24,14 @@ def get_short_channels(raw, max_dist=0.01):
     raw : instance of Raw
         Raw instance with only short channels.
     """
-    short_chans = raw.copy().load_data()
-    _validate_type(short_chans, BaseRaw, "raw")
 
-    picks = mne.pick_types(
-        short_chans.info, meg=False, eeg=False, fnirs=True, exclude=[]
-    )
+    short_chans = raw.copy().load_data()
+    _validate_type(short_chans, BaseRaw, 'raw')
+
+    picks = mne.pick_types(short_chans.info, meg=False, eeg=False, fnirs=True,
+                           exclude=[])
     if not len(picks):
-        raise RuntimeError("Short channel extraction for NIRS signals only.")
+        raise RuntimeError('Short channel extraction for NIRS signals only.')
 
     dists = source_detector_distances(short_chans.info, picks=picks)
     short_chans.pick(picks[dists < max_dist])
@@ -57,14 +57,14 @@ def get_long_channels(raw, min_dist=0.015, max_dist=0.045):
     raw : instance of Raw
         Raw instance with only long channels.
     """
-    long_chans = raw.copy().load_data()
-    _validate_type(long_chans, BaseRaw, "raw")
 
-    picks = mne.pick_types(
-        long_chans.info, meg=False, eeg=False, fnirs=True, exclude=[]
-    )
+    long_chans = raw.copy().load_data()
+    _validate_type(long_chans, BaseRaw, 'raw')
+
+    picks = mne.pick_types(long_chans.info, meg=False, eeg=False, fnirs=True,
+                           exclude=[])
     if not len(picks):
-        raise RuntimeError("Short channel extraction for NIRS signals only.")
+        raise RuntimeError('Short channel extraction for NIRS signals only.')
 
     dists = source_detector_distances(long_chans.info, picks=picks)
     long_chans.pick(picks[(dists > min_dist) & (dists < max_dist)])

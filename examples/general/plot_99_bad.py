@@ -32,6 +32,12 @@ is used as a basis for this analysis, so most of the document looks similar.
 However, at the midpoint we replace the real data with noise and demonstrate
 that without careful attention to the analysis parameter it would still
 appear as if a fNIRS response is observed.
+
+
+.. contents:: Page contents
+   :local:
+   :depth: 2
+
 """
 # sphinx_gallery_thumbnail_number = 7
 

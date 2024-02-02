@@ -4,36 +4,23 @@
 
 
 import numpy as np
-from mne import verbose
+
 from mne.viz import plot_alignment
+from mne import verbose
 
 
 @verbose
-def plot_nirs_source_detector(
-    data,
-    info=None,
-    radius=0.001,
-    trans=None,
-    subject=None,
-    subjects_dir=None,
-    surfaces="head",
-    coord_frame="head",
-    meg=None,
-    eeg="original",
-    fwd=None,
-    dig=False,
-    ecog=True,
-    src=None,
-    mri_fiducials=False,
-    bem=None,
-    seeg=True,
-    fnirs=False,
-    show_axes=False,
-    fig=None,
-    cmap=None,
-    interaction="trackball",
-    verbose=None,
-):
+def plot_nirs_source_detector(data, info=None, radius=0.001,
+                              trans=None, subject=None,
+                              subjects_dir=None,
+                              surfaces='head', coord_frame='head',
+                              meg=None, eeg='original', fwd=None,
+                              dig=False, ecog=True, src=None,
+                              mri_fiducials=False,
+                              bem=None, seeg=True, fnirs=False,
+                              show_axes=False,
+                              fig=None, cmap=None,
+                              interaction='trackball', verbose=None):
     """
     3D visualisation of fNIRS response magnitude.
 
@@ -155,67 +142,47 @@ def plot_nirs_source_detector(
     if cmap is None:
         if (vmin >= 0) & (vmax >= 0):
             # For positive only data use magma
-            cmap = "Oranges"
+            cmap = 'Oranges'
         else:
             # Otherwise use blue to red and ensure zero sits at white
-            vmin = -1.0 * np.max(np.abs(data))
+            vmin = -1. * np.max(np.abs(data))
             vmax = np.max(np.abs(data))
-            cmap = "RdBu_r"
+            cmap = 'RdBu_r'
 
     if isinstance(radius, (int, float)):
-        radius = np.ones(len(info["chs"])) * radius
+        radius = np.ones(len(info['chs'])) * radius
 
     # Plot requested alignment
     fig = plot_alignment(
-        info=info,
-        trans=trans,
-        subject=subject,
+        info=info, trans=trans, subject=subject,
         subjects_dir=subjects_dir,
-        surfaces=surfaces,
-        coord_frame=coord_frame,
-        meg=meg,
-        eeg=eeg,
-        fwd=fwd,
-        dig=dig,
-        ecog=ecog,
-        src=src,
+        surfaces=surfaces, coord_frame=coord_frame,
+        meg=meg, eeg=eeg, fwd=fwd,
+        dig=dig, ecog=ecog, src=src,
         mri_fiducials=mri_fiducials,
-        bem=bem,
-        seeg=seeg,
-        fnirs=fnirs,
+        bem=bem, seeg=seeg, fnirs=fnirs,
         show_axes=show_axes,
         fig=fig,
-        interaction=interaction,
-        verbose=verbose,
-    )
+        interaction=interaction, verbose=verbose)
 
     from mne.viz.backends.renderer import _get_renderer
-
     renderer = _get_renderer(fig)
 
     # Overlay channels between source and detectors
-    for idx, ch in enumerate(info["chs"]):
-        locs = ch["loc"]
+    for idx, ch in enumerate(info['chs']):
+        locs = ch['loc']
 
-        renderer.tube(
-            origin=[np.array([locs[3], locs[4], locs[5]])],
-            destination=[np.array([locs[6], locs[7], locs[8]])],
-            scalars=np.array([[1.0, 1.0]]) * data[idx],
-            radius=radius[idx],
-            colormap=cmap,
-            vmin=vmin,
-            vmax=vmax,
-        )
+        renderer.tube(origin=[np.array([locs[3], locs[4], locs[5]])],
+                      destination=[np.array([locs[6], locs[7], locs[8]])],
+                      scalars=np.array([[1.0, 1.0]]) * data[idx],
+                      radius=radius[idx], colormap=cmap,
+                      vmin=vmin, vmax=vmax)
 
-    t = renderer.tube(
-        origin=[np.array([0, 0, 0])],
-        destination=[np.array([0, 0, 0.001])],
-        scalars=np.array([[vmin, vmax]]),
-        radius=0.0001,
-        colormap=cmap,
-        vmin=vmin,
-        vmax=vmax,
-    )
+    t = renderer.tube(origin=[np.array([0, 0, 0])],
+                      destination=[np.array([0, 0, 0.001])],
+                      scalars=np.array([[vmin, vmax]]),
+                      radius=0.0001, colormap=cmap,
+                      vmin=vmin, vmax=vmax)
     renderer.scalarbar(t)
 
     return fig

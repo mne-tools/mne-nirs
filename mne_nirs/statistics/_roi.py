@@ -3,10 +3,12 @@
 # License: BSD (3-clause)
 
 import numpy as np
+
 from mne.utils import warn
 
 
-def glm_region_of_interest(glm, group_by, cond_idx, cond_name, weighted=True):
+def glm_region_of_interest(glm, group_by, cond_idx,
+                           cond_name, weighted=True):
     """
     Calculate statistics for region of interest.
 
@@ -35,20 +37,18 @@ def glm_region_of_interest(glm, group_by, cond_idx, cond_name, weighted=True):
     stats : DataFrame
         Statistics for each ROI.
     """
-    warn(
-        '"glm_region_of_interest" has been deprecated in favor of the more '
-        "comprehensive GLM class and will be removed in v1.0.0. "
-        'Use the RegressionResults class "region_of_interest_dataframe()" '
-        "method instead.",
-        DeprecationWarning,
-    )
+    warn('"glm_region_of_interest" has been deprecated in favor of the more '
+         'comprehensive GLM class and will be removed in v1.0.0. '
+         'Use the RegressionResults class "region_of_interest_dataframe()" '
+         'method instead.',
+         DeprecationWarning)
 
-    return _glm_region_of_interest(
-        glm, group_by, cond_idx, cond_name, weighted=weighted
-    )
+    return _glm_region_of_interest(glm, group_by,
+                                   cond_idx, cond_name, weighted=weighted)
 
 
-def _glm_region_of_interest(stats, group_by, cond_idx, cond_name, weighted=True):
+def _glm_region_of_interest(stats, group_by, cond_idx,
+                            cond_name, weighted=True):
     """
     Calculate statistics for region of interest.
 
@@ -85,8 +85,8 @@ def _glm_region_of_interest(stats, group_by, cond_idx, cond_name, weighted=True)
     stats : DataFrame
         Statistics for each ROI.
     """
-    import pandas as pd
     from scipy import stats as ss
+    import pandas as pd
 
     df = pd.DataFrame()
 
@@ -94,6 +94,7 @@ def _glm_region_of_interest(stats, group_by, cond_idx, cond_name, weighted=True)
     chromas = np.array([name[-3:] for name in ch_names])
 
     for region in group_by:
+
         if isinstance(weighted, dict):
             weights_region = weighted[region]
 
@@ -101,6 +102,7 @@ def _glm_region_of_interest(stats, group_by, cond_idx, cond_name, weighted=True)
         picks = group_by[region]
 
         for chroma in np.unique(chromas[picks]):
+
             chroma_idxs = np.where([c == chroma for c in chromas[picks]])[0]
             chroma_picks = [picks[ci] for ci in chroma_idxs]
 
@@ -115,7 +117,7 @@ def _glm_region_of_interest(stats, group_by, cond_idx, cond_name, weighted=True)
 
             # Apply weighting by standard error or custom values
             if weighted is True:
-                weights = 1.0 / np.asarray(ses)
+                weights = 1. / np.asarray(ses)
             elif weighted is False:
                 weights = np.ones((len(ses), 1))
             elif isinstance(weighted, dict):
@@ -134,18 +136,14 @@ def _glm_region_of_interest(stats, group_by, cond_idx, cond_name, weighted=True)
             p = 2 * ss.t.cdf(-1.0 * np.abs(t), df=dfe)
 
             this_df = pd.DataFrame(
-                {
-                    "ROI": roi_name,
-                    "Condition": cond_name,
-                    "Chroma": chroma,
-                    "theta": theta / 1.0e6,
-                    "se": s,
-                    "t": t,
-                    "dfe": dfe,
-                    "p": p,
-                },
-                index=[0],
-            )
+                {'ROI': roi_name,
+                 'Condition': cond_name,
+                 'Chroma': chroma,
+                 'theta': theta / 1.0e6,
+                 'se': s,
+                 't': t,
+                 'dfe': dfe,
+                 'p': p, }, index=[0])
             df = pd.concat([df, this_df], ignore_index=True)
 
     df.reset_index(inplace=True, drop=True)

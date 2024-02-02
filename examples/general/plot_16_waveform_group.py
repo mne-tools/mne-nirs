@@ -64,6 +64,10 @@ information about triggers, condition names, etc.
    Participants tapped their thumb to their fingers for the entire 5 sec.
    Conditions were presented in a random order with a randomised inter-
    stimulus interval.
+
+.. contents:: Page contents
+   :local:
+   :depth: 2
 """
 # sphinx_gallery_thumbnail_number = 2
 
@@ -72,36 +76,33 @@ information about triggers, condition names, etc.
 # License: BSD (3-clause)
 
 # Import common libraries
+import pandas as pd
+from itertools import compress
 from collections import defaultdict
 from copy import deepcopy
-from itertools import compress
 from pprint import pprint
-
-# Import Plotting Library
-import matplotlib.pyplot as plt
-import pandas as pd
-import seaborn as sns
-
-# Import StatsModels
-import statsmodels.formula.api as smf
-from mne import Epochs, events_from_annotations, set_log_level
-from mne.preprocessing.nirs import (
-    beer_lambert_law,
-    optical_density,
-    scalp_coupling_index,
-    temporal_derivative_distribution_repair,
-)
 
 # Import MNE processing
 from mne.viz import plot_compare_evokeds
+from mne import Epochs, events_from_annotations, set_log_level
+
+# Import MNE-NIRS processing
+from mne_nirs.channels import get_long_channels
+from mne_nirs.channels import picks_pair_to_idx
+from mne_nirs.datasets import fnirs_motor_group
+from mne.preprocessing.nirs import beer_lambert_law, optical_density,\
+    temporal_derivative_distribution_repair, scalp_coupling_index
+from mne_nirs.signal_enhancement import enhance_negative_correlation
 
 # Import MNE-BIDS processing
 from mne_bids import BIDSPath, read_raw_bids
 
-# Import MNE-NIRS processing
-from mne_nirs.channels import get_long_channels, picks_pair_to_idx
-from mne_nirs.datasets import fnirs_motor_group
-from mne_nirs.signal_enhancement import enhance_negative_correlation
+# Import StatsModels
+import statsmodels.formula.api as smf
+
+# Import Plotting Library
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Set general parameters
 set_log_level("WARNING")  # Don't show info, as it is repetitive for many subjects
@@ -123,8 +124,8 @@ set_log_level("WARNING")  # Don't show info, as it is repetitive for many subjec
 # and :ref:`artifact correction tutorial <ex-fnirs-artifacts>`.
 # As such, this example will skim over the individual-level details.
 
-
 def individual_analysis(bids_path):
+
     # Read data with annotations in BIDS format
     raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
     raw_intensity = get_long_channels(raw_intensity, min_dist=0.01)
@@ -141,31 +142,20 @@ def individual_analysis(bids_path):
 
     # Convert to haemoglobin and filter
     raw_haemo = beer_lambert_law(raw_od, ppf=0.1)
-    raw_haemo = raw_haemo.filter(
-        0.02, 0.3, h_trans_bandwidth=0.1, l_trans_bandwidth=0.01, verbose=False
-    )
+    raw_haemo = raw_haemo.filter(0.02, 0.3,
+                                 h_trans_bandwidth=0.1, l_trans_bandwidth=0.01,
+                                 verbose=False)
 
     # Apply further data cleaning techniques and extract epochs
     raw_haemo = enhance_negative_correlation(raw_haemo)
     # Extract events but ignore those with
     # the word Ends (i.e. drop ExperimentEnds events)
-    events, event_dict = events_from_annotations(
-        raw_haemo, verbose=False, regexp="^(?![Ends]).*$"
-    )
-    epochs = Epochs(
-        raw_haemo,
-        events,
-        event_id=event_dict,
-        tmin=-5,
-        tmax=20,
-        reject=dict(hbo=200e-6),
-        reject_by_annotation=True,
-        proj=True,
-        baseline=(None, 0),
-        detrend=0,
-        preload=True,
-        verbose=False,
-    )
+    events, event_dict = events_from_annotations(raw_haemo, verbose=False,
+                                                 regexp='^(?![Ends]).*$')
+    epochs = Epochs(raw_haemo, events, event_id=event_dict, tmin=-5, tmax=20,
+                    reject=dict(hbo=200e-6), reject_by_annotation=True,
+                    proj=True, baseline=(None, 0), detrend=0,
+                    preload=True, verbose=False)
 
     return raw_haemo, epochs
 
@@ -184,15 +174,11 @@ def individual_analysis(bids_path):
 all_evokeds = defaultdict(list)
 
 for sub in range(1, 6):  # Loop from first to fifth subject
+
     # Create path to file based on experiment info
-    bids_path = BIDSPath(
-        subject="%02d" % sub,
-        task="tapping",
-        datatype="nirs",
-        root=fnirs_motor_group.data_path(),
-        suffix="nirs",
-        extension=".snirf",
-    )
+    bids_path = BIDSPath(subject="%02d" % sub, task="tapping", datatype="nirs",
+                         root=fnirs_motor_group.data_path(), suffix="nirs",
+                         extension=".snirf")
 
     # Analyse data and return both ROI and channel results
     raw_haemo, epochs = individual_analysis(bids_path)
@@ -223,21 +209,13 @@ pprint(all_evokeds)
 fig, axes = plt.subplots(nrows=1, ncols=len(all_evokeds), figsize=(17, 5))
 lims = dict(hbo=[-5, 12], hbr=[-5, 12])
 
-for pick, color in zip(["hbo", "hbr"], ["r", "b"]):
+for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
     for idx, evoked in enumerate(all_evokeds):
-        plot_compare_evokeds(
-            {evoked: all_evokeds[evoked]},
-            combine="mean",
-            picks=pick,
-            axes=axes[idx],
-            show=False,
-            colors=[color],
-            legend=False,
-            ylim=lims,
-            ci=0.95,
-            show_sensors=idx == 2,
-        )
-        axes[idx].set_title(f"{evoked}")
+        plot_compare_evokeds({evoked: all_evokeds[evoked]}, combine='mean',
+                             picks=pick, axes=axes[idx], show=False,
+                             colors=[color], legend=False, ylim=lims, ci=0.95,
+                             show_sensors=idx == 2)
+        axes[idx].set_title('{}'.format(evoked))
 axes[0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 
 # %%
@@ -277,10 +255,8 @@ left = [[4, 3], [1, 3], [3, 3], [1, 2], [2, 3], [1, 1]]
 right = [[8, 7], [5, 7], [7, 7], [5, 6], [6, 7], [5, 5]]
 
 # Then generate the correct indices for each pair and store in dictionary
-rois = dict(
-    Left_Hemisphere=picks_pair_to_idx(raw_haemo, left),
-    Right_Hemisphere=picks_pair_to_idx(raw_haemo, right),
-)
+rois = dict(Left_Hemisphere=picks_pair_to_idx(raw_haemo, left),
+            Right_Hemisphere=picks_pair_to_idx(raw_haemo, right))
 
 pprint(rois)
 
@@ -293,29 +269,22 @@ pprint(rois)
 # regions of the brain for each condition.
 
 # Specify the figure size and limits per chromophore.
-fig, axes = plt.subplots(nrows=len(rois), ncols=len(all_evokeds), figsize=(15, 6))
+fig, axes = plt.subplots(nrows=len(rois), ncols=len(all_evokeds),
+                         figsize=(15, 6))
 lims = dict(hbo=[-8, 16], hbr=[-8, 16])
 
-for pick, color in zip(["hbo", "hbr"], ["r", "b"]):
+for (pick, color) in zip(['hbo', 'hbr'], ['r', 'b']):
     for ridx, roi in enumerate(rois):
         for cidx, evoked in enumerate(all_evokeds):
-            if pick == "hbr":
+            if pick == 'hbr':
                 picks = rois[roi][1::2]  # Select only the hbr channels
             else:
                 picks = rois[roi][0::2]  # Select only the hbo channels
 
-            plot_compare_evokeds(
-                {evoked: all_evokeds[evoked]},
-                combine="mean",
-                picks=picks,
-                axes=axes[ridx, cidx],
-                show=False,
-                colors=[color],
-                legend=False,
-                ylim=lims,
-                ci=0.95,
-                show_sensors=cidx == 2,
-            )
+            plot_compare_evokeds({evoked: all_evokeds[evoked]}, combine='mean',
+                                 picks=picks, axes=axes[ridx, cidx],
+                                 show=False, colors=[color], legend=False,
+                                 ylim=lims, ci=0.95, show_sensors=cidx == 2)
             axes[ridx, cidx].set_title("")
         axes[0, cidx].set_title(f"{evoked}")
         axes[ridx, 0].set_ylabel(f"{roi}\nChromophore (ΔμMol)")
@@ -340,7 +309,7 @@ axes[0, 0].legend(["Oxyhaemoglobin", "Deoxyhaemoglobin"])
 # to a csv file for easy analysis in any statistical analysis software.
 # We also demonstrate two example analyses on these values below.
 
-df = pd.DataFrame(columns=["ID", "ROI", "Chroma", "Condition", "Value"])
+df = pd.DataFrame(columns=['ID', 'ROI', 'Chroma', 'Condition', 'Value'])
 
 for idx, evoked in enumerate(all_evokeds):
     subj_id = 0
@@ -353,18 +322,11 @@ for idx, evoked in enumerate(all_evokeds):
 
                 # Append metadata and extracted feature to dataframe
                 this_df = pd.DataFrame(
-                    {
-                        "ID": subj_id,
-                        "ROI": roi,
-                        "Chroma": chroma,
-                        "Condition": evoked,
-                        "Value": value,
-                    },
-                    index=[0],
-                )
+                    {'ID': subj_id, 'ROI': roi, 'Chroma': chroma,
+                     'Condition': evoked, 'Value': value}, index=[0])
                 df = pd.concat([df, this_df], ignore_index=True)
 df.reset_index(inplace=True, drop=True)
-df["Value"] = pd.to_numeric(df["Value"])  # some Pandas have this as object
+df['Value'] = pd.to_numeric(df['Value'])  # some Pandas have this as object
 
 # You can export the dataframe for analysis in your favorite stats program
 df.to_csv("stats-export.csv")
@@ -387,21 +349,12 @@ df.head()
 # For this reason, fNIRS is most appropriate for detecting changes within a
 # single ROI between conditions.
 
-sns.catplot(
-    x="Condition",
-    y="Value",
-    hue="ID",
-    data=df.query("Chroma == 'hbo'"),
-    errorbar=None,
-    palette="muted",
-    height=4,
-    s=10,
-)
+sns.catplot(x="Condition", y="Value", hue="ID", data=df.query("Chroma == 'hbo'"), errorbar=None, palette="muted", height=4, s=10)
 
 
 # %%
 # Research question 1: Comparison of conditions
-# ---------------------------------------------
+# ---------------------------------------------------------------------------------------------------
 #
 # In this example question we ask: is the HbO response in the
 # left ROI to tapping with the right hand larger
@@ -413,7 +366,8 @@ input_data = df.query("Condition in ['Control', 'Tapping/Right']")
 input_data = input_data.query("Chroma in ['hbo']")
 input_data = input_data.query("ROI in ['Left_Hemisphere']")
 
-roi_model = smf.mixedlm("Value ~ Condition", input_data, groups=input_data["ID"]).fit()
+roi_model = smf.mixedlm("Value ~ Condition", input_data,
+                        groups=input_data["ID"]).fit()
 roi_model.summary()
 
 # %%
@@ -436,28 +390,22 @@ roi_model.summary()
 
 # Encode the ROIs as ipsi- or contralateral to the hand that is tapping.
 df["Hemisphere"] = "Unknown"
-df.loc[
-    (df["Condition"] == "Tapping/Right") & (df["ROI"] == "Right_Hemisphere"),
-    "Hemisphere",
-] = "Ipsilateral"
-df.loc[
-    (df["Condition"] == "Tapping/Right") & (df["ROI"] == "Left_Hemisphere"),
-    "Hemisphere",
-] = "Contralateral"
-df.loc[
-    (df["Condition"] == "Tapping/Left") & (df["ROI"] == "Left_Hemisphere"), "Hemisphere"
-] = "Ipsilateral"
-df.loc[
-    (df["Condition"] == "Tapping/Left") & (df["ROI"] == "Right_Hemisphere"),
-    "Hemisphere",
-] = "Contralateral"
+df.loc[(df["Condition"] == "Tapping/Right") &
+       (df["ROI"] == "Right_Hemisphere"), "Hemisphere"] = "Ipsilateral"
+df.loc[(df["Condition"] == "Tapping/Right") &
+       (df["ROI"] == "Left_Hemisphere"), "Hemisphere"] = "Contralateral"
+df.loc[(df["Condition"] == "Tapping/Left") &
+       (df["ROI"] == "Left_Hemisphere"), "Hemisphere"] = "Ipsilateral"
+df.loc[(df["Condition"] == "Tapping/Left") &
+       (df["ROI"] == "Right_Hemisphere"), "Hemisphere"] = "Contralateral"
 
 # Subset the data for example model
 input_data = df.query("Condition in ['Tapping/Right', 'Tapping/Left']")
 input_data = input_data.query("Chroma in ['hbo']")
 assert len(input_data)
 
-roi_model = smf.mixedlm("Value ~ Hemisphere", input_data, groups=input_data["ID"]).fit()
+roi_model = smf.mixedlm("Value ~ Hemisphere", input_data,
+                        groups=input_data["ID"]).fit()
 roi_model.summary()
 
 # %%

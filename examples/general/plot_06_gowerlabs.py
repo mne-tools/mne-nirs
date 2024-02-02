@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 r"""
 .. _tut-gowerlabs-data:
 
@@ -5,7 +6,7 @@ r"""
 Read Gowerlabs LUMO data
 ========================
 
-`LUMO <https://www.gowerlabs.co.uk/lumo>`__ is a modular, wearable,
+`LUMO <https://www.gowerlabs.co.uk/lumo>`__ is a modular, wearable, 
 high-density diffuse optical tomography (HD-DOT) system produced by
 `Gowerlabs <https://www.gowerlabs.co.uk>`__. This tutorial demonstrates
 how to load data from LUMO, and how to utilise 3D digitisation
@@ -30,10 +31,11 @@ to ensure you have all the required packages installed we recommend using the
 # License: BSD (3-clause)
 
 import os.path as op
-
 import mne
 from mne.datasets.testing import data_path
+
 from mne.viz import set_3d_view
+
 
 # %%
 # Import Gowerlabs Example File
@@ -49,7 +51,7 @@ from mne.viz import set_3d_view
 import mne_nirs.io
 
 testing_path = data_path(download=True)
-fname = op.join(testing_path, "SNIRF", "GowerLabs", "lumomat-1-1-0.snirf")
+fname = op.join(testing_path, 'SNIRF', 'GowerLabs', 'lumomat-1-1-0.snirf')
 
 # %%
 # We can view the path to the data by calling the variable `fname`.
@@ -79,7 +81,7 @@ raw.plot(duration=60)
 #
 # We observe valid data in each channel, and note that the file includes a
 # number of event annotations.
-# Annotations are a flexible tool to represent events in your experiment.
+# Annotations are a flexible tool to represent events in your experiment. 
 # They can also be used to annotate other useful information such as bad
 # segments of data, participant movements, etc. We can inspect the
 # annotations to ensure they match what we expect from our experiment.
@@ -91,8 +93,8 @@ raw.annotations
 # The implementation of annotations varies between manufacturers. Rather
 # than recording the onset and duration of a stimulus condition, LUMO records
 # discrete event markers which have a nominal one second duration. Each
-# marker can consist of an arbitrary character or string. In this sample,
-# there were six `A` annotations, one `Cat` annotation, and two `Dog`
+# marker can consist of an arbitrary character or string. In this sample, 
+# there were six `A` annotations, one `Cat` annotation, and two `Dog` 
 # annotations. We can view the specific data for each annotation by converting
 # the annotations to a dataframe.
 
@@ -121,17 +123,11 @@ raw.annotations.to_data_frame()
 # Below we see that there are three LUMO tiles, each with three sources
 # and four detectors.
 
-subjects_dir = op.join(mne.datasets.sample.data_path(), "subjects")
+subjects_dir = op.join(mne.datasets.sample.data_path(), 'subjects')
 mne.datasets.fetch_fsaverage(subjects_dir=subjects_dir)
 
-brain = mne.viz.Brain(
-    "fsaverage",
-    subjects_dir=subjects_dir,
-    alpha=0.0,
-    cortex="low_contrast",
-    background="w",
-)
-brain.add_sensors(raw.info, trans="fsaverage", fnirs=["sources", "detectors"])
+brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, alpha=0.0, cortex='low_contrast', background="w")
+brain.add_sensors(raw.info, trans='fsaverage', fnirs=["sources", "detectors"])
 brain.show_view(azimuth=130, elevation=80, distance=700)
 
 
@@ -146,16 +142,10 @@ brain.show_view(azimuth=130, elevation=80, distance=700)
 #           to coregistration. You can also use the MNE-Python
 #           coregistration GUI :func:`mne:mne.gui.coregistration`.
 
-plot_kwargs = dict(
-    subjects_dir=subjects_dir,
-    surfaces="brain",
-    dig=True,
-    eeg=[],
-    fnirs=["sources", "detectors"],
-    show_axes=True,
-    coord_frame="head",
-    mri_fiducials=True,
-)
+plot_kwargs = dict(subjects_dir=subjects_dir,
+                   surfaces="brain", dig=True, eeg=[],
+                   fnirs=['sources', 'detectors'], show_axes=True,
+                   coord_frame='head', mri_fiducials=True)
 
 fig = mne.viz.plot_alignment(trans="fsaverage", subject="fsaverage", **plot_kwargs)
 set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
@@ -178,9 +168,7 @@ set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
 # including :ref:`mne:tut-auto-coreg`.
 #
 
-fig = mne.viz.plot_alignment(
-    raw.info, trans="fsaverage", subject="fsaverage", **plot_kwargs
-)
+fig = mne.viz.plot_alignment(raw.info, trans="fsaverage", subject="fsaverage", **plot_kwargs)
 set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
 
 # %%
@@ -191,14 +179,10 @@ set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
 # a rotation and translation of the optode frame to minimise the
 # distance between the fiducials.
 
-coreg = mne.coreg.Coregistration(
-    raw.info, "fsaverage", subjects_dir, fiducials="estimated"
-)
-coreg.fit_fiducials(lpa_weight=1.0, nasion_weight=1.0, rpa_weight=1.0)
+coreg = mne.coreg.Coregistration(raw.info, "fsaverage", subjects_dir, fiducials="estimated")
+coreg.fit_fiducials(lpa_weight=1., nasion_weight=1., rpa_weight=1.)
 
-fig = mne.viz.plot_alignment(
-    raw.info, trans=coreg.trans, subject="fsaverage", **plot_kwargs
-)
+fig = mne.viz.plot_alignment(raw.info, trans=coreg.trans, subject="fsaverage", **plot_kwargs)
 set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
 
 
@@ -210,10 +194,8 @@ set_3d_view(figure=fig, azimuth=90, elevation=0, distance=1)
 # an individualised MRI scan. You can also :func:`mne:mne.scale_mri` to scale
 # the generic MRI head.
 
-brain = mne.viz.Brain(
-    "fsaverage", subjects_dir=subjects_dir, background="w", cortex="0.5", alpha=0.3
-)
-brain.add_sensors(raw.info, trans=coreg.trans, fnirs=["sources", "detectors"])
+brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5', alpha=0.3)
+brain.add_sensors(raw.info, trans=coreg.trans, fnirs=['sources', 'detectors'])
 brain.show_view(azimuth=90, elevation=90, distance=500)
 
 
@@ -241,10 +223,8 @@ mne_nirs.io.write_raw_snirf(raw, "raw_coregistered_to_fsaverage.snirf")
 raw_w_coreg = mne.io.read_raw_snirf("raw_coregistered_to_fsaverage.snirf")
 
 # Now you can simply use `trans = "fsaverage"`.
-brain = mne.viz.Brain(
-    "fsaverage", subjects_dir=subjects_dir, background="w", cortex="0.5", alpha=0.3
-)
-brain.add_sensors(raw_w_coreg.info, trans="fsaverage", fnirs=["sources", "detectors"])
+brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5', alpha=0.3)
+brain.add_sensors(raw_w_coreg.info, trans="fsaverage", fnirs=['sources', 'detectors'])
 
 
 # %%

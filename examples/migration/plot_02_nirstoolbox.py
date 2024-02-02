@@ -48,6 +48,11 @@ Finally a mixed effects model is run on the group level dat.
    pipeline = nirs.modules.MixedEffects();
    pipeline.formula = 'beta ~ -1 + cond + (1|Name)';
    group_stats = pipeline.run(subj_stats);
+
+.. contents:: Page contents
+   :local:
+   :depth: 2
+
 """
 
 # %%

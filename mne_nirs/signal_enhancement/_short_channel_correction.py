@@ -3,11 +3,12 @@
 # License: BSD (3-clause)
 
 import numpy as np
-from mne import pick_types
-from mne.io import BaseRaw
-from mne.preprocessing.nirs import source_detector_distances
-from mne.utils import _validate_type
 from scipy import linalg
+
+from mne.io import BaseRaw
+from mne import pick_types
+from mne.utils import _validate_type
+from mne.preprocessing.nirs import source_detector_distances
 
 
 def short_channel_regression(raw, max_dist=0.01):
@@ -35,12 +36,12 @@ def short_channel_regression(raw, max_dist=0.01):
     .. footbibliography::
     """
     raw = raw.copy().load_data()
-    _validate_type(raw, BaseRaw, "raw")
+    _validate_type(raw, BaseRaw, 'raw')
 
-    picks_od = pick_types(raw.info, fnirs="fnirs_od")
+    picks_od = pick_types(raw.info, fnirs='fnirs_od')
 
     if len(picks_od) == 0:
-        raise RuntimeError("Data must be optical density.")
+        raise RuntimeError('Data must be optical density.')
 
     distances = source_detector_distances(raw.info)
 
@@ -48,11 +49,12 @@ def short_channel_regression(raw, max_dist=0.01):
     picks_long = picks_od[distances[picks_od] > max_dist]
 
     if len(picks_short) == 0:
-        raise RuntimeError("No short channels present.")
+        raise RuntimeError('No short channels present.')
     if len(picks_long) == 0:
-        raise RuntimeError("No long channels present.")
+        raise RuntimeError('No long channels present.')
 
     for pick in picks_long:
+
         short_idx = _find_nearest_short(raw, pick, picks_short)
 
         A_l = raw.get_data(pick).ravel()
@@ -68,7 +70,8 @@ def short_channel_regression(raw, max_dist=0.01):
 
 
 def _find_nearest_short(raw, pick, short_picks):
-    """Return index of closest short channel.
+    """"
+    Return index of closest short channel
 
     Parameters
     ----------
@@ -87,9 +90,9 @@ def _find_nearest_short(raw, pick, short_picks):
         in short_picks.
 
     """
-    dist = [
-        linalg.norm(raw.info["chs"][pick]["loc"][:3] - raw.info["chs"][p_sh]["loc"][:3])
-        for p_sh in short_picks
-    ]
+
+    dist = [linalg.norm(raw.info['chs'][pick]['loc'][:3] -
+                        raw.info['chs'][p_sh]['loc'][:3])
+            for p_sh in short_picks]
 
     return short_picks[np.argmin(dist)]

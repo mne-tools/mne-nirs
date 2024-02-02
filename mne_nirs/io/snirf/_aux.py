@@ -2,13 +2,12 @@
 #
 # License: BSD (3-clause)
 
-import logging
-
-import h5py
 import numpy as np
-from mne.io import Raw
-from pandas import DataFrame
+import logging
+import h5py
 from scipy import interpolate
+from pandas import DataFrame
+from mne.io import Raw
 
 
 def read_snirf_aux_data(fname: str, raw: Raw):
@@ -30,31 +29,33 @@ def read_snirf_aux_data(fname: str, raw: Raw):
     fname : str
         Path to the SNIRF data file.
     """
-    with h5py.File(fname, "r") as dat:
-        if "nirs" in dat:
+
+    with h5py.File(fname, 'r') as dat:
+        if 'nirs' in dat:
             basename = "nirs"
-        elif "nirs1" in dat:
+        elif 'nirs1' in dat:
             basename = "nirs1"
         else:
             raise RuntimeError("Data does not contain nirs field")
 
         all_keys = list(dat.get(basename).keys())
-        aux_keys = [i for i in all_keys if i.startswith("aux")]
-        aux_names = [_decode_name(dat.get(f"{basename}/{k}/name")) for k in aux_keys]
+        aux_keys = [i for i in all_keys if i.startswith('aux')]
+        aux_names = [_decode_name(dat.get(f'{basename}/{k}/name'))
+                     for k in aux_keys]
         logging.debug(f"Found auxiliary channels {aux_names}")
 
-        d = {"times": raw.times}
+        d = {'times': raw.times}
         for idx, aux in enumerate(aux_keys):
-            aux_data = np.array(dat.get(f"{basename}/{aux}/dataTimeSeries"))
-            aux_time = np.array(dat.get(f"{basename}/{aux}/time"))
-            aux_data_interp = interpolate.interp1d(
-                aux_time, aux_data, axis=0, bounds_error=False, fill_value="extrapolate"
-            )
+            aux_data = np.array(dat.get(f'{basename}/{aux}/dataTimeSeries'))
+            aux_time = np.array(dat.get(f'{basename}/{aux}/time'))
+            aux_data_interp = interpolate.interp1d(aux_time, aux_data,
+                                                   axis=0, bounds_error=False,
+                                                   fill_value='extrapolate')
             aux_data_matched_to_raw = aux_data_interp(raw.times)
             d[aux_names[idx]] = aux_data_matched_to_raw
 
         df = DataFrame(data=d)
-        df = df.set_index("times")
+        df = df.set_index('times')
 
     return df
 
