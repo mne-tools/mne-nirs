@@ -162,10 +162,10 @@ raw_haemo.plot(n_channels=len(raw_haemo.ch_names), duration=500, show_scrollbars
 # remove this. A high pass filter is also included to remove slow drifts
 # in the data.
 
-fig = raw_haemo.plot_psd(average=True, amplitude=False)
+fig = raw_haemo.compute_psd().plot(average=True, amplitude=False)
 fig.suptitle("Before filtering", weight="bold", size="x-large")
 raw_haemo = raw_haemo.filter(0.05, 0.7, h_trans_bandwidth=0.2, l_trans_bandwidth=0.02)
-fig = raw_haemo.plot_psd(average=True, amplitude=False)
+fig = raw_haemo.compute_psd().plot(average=True, amplitude=False)
 fig.suptitle("After filtering", weight="bold", size="x-large")
 
 # %%

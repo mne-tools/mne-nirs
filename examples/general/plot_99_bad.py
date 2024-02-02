@@ -115,10 +115,10 @@ raw_haemo._data[::2, :] = np.random.randn(20, 23239) / 1.0e6 * 3
 # Do not do this!!
 #
 
-fig = raw_haemo.plot_psd(average=True, amplitude=False)
+fig = raw_haemo.compute_psd().plot(average=True, amplitude=False)
 fig.suptitle("Before filtering", weight="bold", size="x-large")
 raw_haemo = raw_haemo.filter(0.05, 0.1, h_trans_bandwidth=0.2, l_trans_bandwidth=0.02)
-fig = raw_haemo.plot_psd(average=True, amplitude=False)
+fig = raw_haemo.compute_psd().plot(average=True, amplitude=False)
 fig.suptitle("After filtering", weight="bold", size="x-large")
 
 

@@ -107,6 +107,9 @@ exclude_patterns = ["_build", "_templates"]
 # A list of ignored prefixes for module index sorting.
 modindex_common_prefix = ["mne_nirs."]
 
+# TODO: Enable this and fix links
+# default_role = "py:obj"
+
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = "sphinx"
 
@@ -151,12 +154,84 @@ numpydoc_validation_exclude = {  # set of regex
     # copied from sklearn
     r"mne\.utils\.deprecated",
 }
-
+numpydoc_xref_param_type = True
+numpydoc_xref_aliases = {
+    "BaseRaw": "mne.io.Raw",
+    "dataframe": "pandas.DataFrame",
+    "DataFrame": "pandas.DataFrame",
+    "ConductorModel": "mne.bem.ConductorModel",
+    "Forward": "mne.Forward",
+    "Info": "mne.Info",
+    "Raw": "mne.io.Raw",
+    "RawBOXY": "mne.io.Raw",
+    "RawHitachi": "mne.io.Raw",
+    "RawNIRX": "mne.io.Raw",
+    "RawSNIRF": "mne.io.Raw",
+    "SourceSpaces": "mne.SourceSpaces",
+    "Transform": "mne.transforms.Transform",
+}
+numpydoc_xref_ignore = {
+    # words (some of these should be fixed)
+    "instance",
+    "of",
+    "or",
+    "None",
+    "array",
+    "like",
+    "shape",
+    "dtype",
+    "str",
+    "figure",
+    "pairs",
+    "mayavi.mlab.Figure",
+    "mayavi.core.api.Scene",
+    "color",
+    "Figure",
+    "String",
+    "default",
+    "colormap",
+    "length",
+    "Bool",
+    "Axes",
+    "Pandas",
+    "model",
+    "optional",
+    "output",
+    "Nilearn",
+    "in",
+    "specified",
+    "as",
+    "matplotlib.Figure",
+    "MNE",
+    "As",
+    "two",
+    "values",
+    "ResultsGLM",
+    "Contrast",
+    "p",
+    "q",
+    "Number",
+    "Array",
+    "number",
+    "n_windows",
+    "n_nirs",
+    "n_add_reg",
+    "n_frames",
+    "n_onsets",
+    "derivative",
+    "integers",
+    "lists",
+}
 
 # sphinxcontrib-bibtex
 bibtex_bibfiles = ["./references.bib", "./references-nirs.bib"]
 bibtex_style = "unsrt"
 bibtex_footbibliography_header = ""
+
+nitpick_ignore_regex = [
+    # Type hints for undocumented types
+    ("py:.*", r"mne\.io\..*\.Raw.*"),  # RawEDF etc.
+]
 
 
 # -- Options for HTML output ----------------------------------------------
@@ -281,6 +356,7 @@ intersphinx_mapping = {
     "numpy": ("https://numpy.org/devdocs", None),
     "scipy": ("https://scipy.github.io/devdocs", None),
     "matplotlib": ("https://matplotlib.org/stable", None),
+    "pandas": ("https://pandas.pydata.org/pandas-docs/stable", None),
     "mne": ("https://mne.tools/stable", None),
     "nilearn": ("http://nilearn.github.io/stable", None),
     "sklearn": ("https://scikit-learn.org/stable", None),

@@ -87,8 +87,8 @@ design_matrix = make_first_level_design_matrix(raw_haemo, drift_order=0, stim_du
 # Rescale to be in expected units of uM.
 hrf = raw_haemo.copy().pick(picks=[0])
 hrf._data[0] = 1e-6 * (design_matrix["Tapping_Left"] + design_matrix["Tapping_Right"]).T
-hrf.pick(picks="hbo").plot_psd(
-    average=True, fmax=2, xscale="log", color="r", show=False, amplitude=False
+hrf.pick(picks="hbo").compute_psd(fmax=2).plot(
+    average=True, xscale="log", color="r", show=False, amplitude=False
 )
 
 
@@ -111,8 +111,8 @@ hrf.pick(picks="hbo").plot_psd(
 
 # rescale data to fit in plot. TODO: fix this
 raw_haemo._data = raw_haemo._data * 1e-2
-raw_haemo.pick(picks="hbo").plot_psd(
-    average=True, fmax=2, xscale="log", amplitude=False
+raw_haemo.pick(picks="hbo").compute_psd(fmax=2).plot(
+    average=True, xscale="log", amplitude=False
 )
 
 
@@ -145,8 +145,8 @@ epochs = mne.Epochs(
     verbose=True,
 )
 
-epochs.pick(picks="hbo").plot_psd(
-    average=True, fmax=2, color="g", xscale="log", amplitude=False
+epochs.pick(picks="hbo").compute_psd(fmax=2).plot(
+    average=True, color="g", xscale="log", amplitude=False
 )
 
 
@@ -198,14 +198,16 @@ mne.viz.plot_filter(
 # removes these unwanted components and they are not visible in the
 # epoched data.
 
-fig = hrf.pick(picks="hbo").plot_psd(
-    average=True, fmax=2, color="r", show=False, amplitude=False
+fig = (
+    hrf.pick(picks="hbo")
+    .compute_psd(fmax=2)
+    .plot(average=True, color="r", show=False, amplitude=False)
 )
-raw_haemo.pick(picks="hbo").plot_psd(
-    average=True, fmax=2, ax=fig.axes, show=False, amplitude=False
+raw_haemo.pick(picks="hbo").compute_psd(fmax=2).plot(
+    average=True, axes=fig.axes, show=False, amplitude=False
 )
-epochs.pick(picks="hbo").plot_psd(
-    average=True, fmax=2, ax=fig.axes, show=False, color="g", amplitude=False
+epochs.pick(picks="hbo").compute_psd(fmax=2).plot(
+    average=True, axes=fig.axes, show=False, color="g", amplitude=False
 )
 mne.viz.plot_filter(
     filter_params,
@@ -237,12 +239,12 @@ fig.axes[0].set_title("")
 # The green line illustrates the signal before filtering, and the red line
 # shows the signal after filtering.
 
-fig = raw_haemo.plot_psd(
-    average=True, fmax=2, xscale="log", color="r", show=False, amplitude=False
+fig = raw_haemo.compute_psd(fmax=2).plot(
+    average=True, xscale="log", color="r", show=False, amplitude=False
 )
 raw_haemo = raw_haemo.filter(l_freq=None, h_freq=0.4, h_trans_bandwidth=0.2)
-raw_haemo.plot_psd(
-    average=True, fmax=2, xscale="log", ax=fig.axes, color="g", amplitude=False
+raw_haemo.compute_psd(fmax=2).plot(
+    average=True, xscale="log", axes=fig.axes, color="g", amplitude=False
 )
 
 
@@ -273,10 +275,9 @@ for rep in range(2):
                     isi_max=max_isi,
                 )
                 raw._data[0] = raw._data[0] - np.mean(raw._data[0])
-                raw.pick(picks="hbo").plot_psd(
+                raw.pick(picks="hbo").compute_psd(fmax=2).plot(
                     average=True,
-                    fmax=2,
-                    ax=axes[rep, column],
+                    axes=axes[rep, column],
                     show=False,
                     color=sm.cmap(sm.norm(max_isi)),
                     xscale="log",
