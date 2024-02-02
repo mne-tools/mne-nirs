@@ -6,12 +6,12 @@
 
 import os
 import shutil
+import pooch
 from functools import partial
 
-import pooch
-from mne.datasets import fetch_dataset
-from mne.datasets.utils import has_dataset
 from mne.utils import verbose
+from mne.datasets.utils import has_dataset
+from mne.datasets import fetch_dataset
 
 from ...fixes import _mne_path
 
@@ -55,6 +55,7 @@ def data_path(path=None, force_update=False, update_path=True, download=True,
     ----------
     .. footbibliography::
     """
+
     dataset_params = dict(
         archive_name='BIDS-NIRS-Tapping-master.zip',
         hash='md5:da3cac7252005f0a64fdba5c683cf3dd',

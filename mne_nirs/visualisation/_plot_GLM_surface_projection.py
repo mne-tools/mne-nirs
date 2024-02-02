@@ -3,12 +3,12 @@
 # License: BSD (3-clause)
 
 import os
+import numpy as np
 from copy import deepcopy
 
-import numpy as np
-from mne import EvokedArray, Info, read_source_spaces, stc_near_sensors
+from mne import stc_near_sensors, EvokedArray, read_source_spaces, Info
 from mne.io.constants import FIFF
-from mne.utils import get_subjects_dir, verbose
+from mne.utils import verbose, get_subjects_dir
 
 
 @verbose

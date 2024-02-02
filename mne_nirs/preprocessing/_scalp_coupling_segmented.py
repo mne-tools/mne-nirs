@@ -3,11 +3,13 @@
 # License: BSD (3-clause)
 
 import numpy as np
+
 from mne import pick_types
-from mne.filter import filter_data
 from mne.io import BaseRaw
-from mne.preprocessing.nirs import _channel_frequencies, _check_channels_ordered
 from mne.utils import _validate_type, verbose
+from mne.preprocessing.nirs import (_channel_frequencies,
+                                    _check_channels_ordered)
+from mne.filter import filter_data
 
 
 @verbose
@@ -58,6 +60,7 @@ def scalp_coupling_index_windowed(raw, time_window=10, threshold=0.1,
            quality assessment of fNIRS scans." Optics and the Brain.
            Optical Society of America, 2020.
     """
+
     raw = raw.copy().load_data()
     _validate_type(raw, BaseRaw, 'raw')
 

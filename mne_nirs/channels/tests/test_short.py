@@ -4,12 +4,11 @@
 
 
 import os
-
 import mne
 import numpy as np
 import pytest
-from mne.preprocessing.nirs import source_detector_distances
 
+from mne.preprocessing.nirs import source_detector_distances
 from mne_nirs.channels import get_long_channels, get_short_channels
 
 

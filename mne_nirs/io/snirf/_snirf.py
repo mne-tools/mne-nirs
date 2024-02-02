@@ -3,13 +3,14 @@
 # License: BSD (3-clause)
 
 import datetime
-import re
 
 import h5py as h5py
+import re
 import numpy as np
-from mne.channels import make_standard_montage
 from mne.io.pick import _picks_to_idx
-from mne.transforms import _get_trans, apply_trans
+from mne.transforms import apply_trans, _get_trans
+from mne.channels import make_standard_montage
+
 
 # The currently-implemented spec can be found here:
 # https://raw.githubusercontent.com/fNIRS/snirf/v1.1/snirf_specification.md
@@ -44,6 +45,7 @@ def write_raw_snirf(raw, fname, add_montage=False):
         Should the montage be added as landmarks to
         facilitate compatibility with AtlasViewer.
     """
+
     supported_types = ['fnirs_cw_amplitude', 'fnirs_od', 'hbo', 'hbr']
     picks = _picks_to_idx(raw.info, supported_types, exclude=[])
     assert len(picks) == len(raw.ch_names),\

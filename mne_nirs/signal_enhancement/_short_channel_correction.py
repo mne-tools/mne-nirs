@@ -3,11 +3,12 @@
 # License: BSD (3-clause)
 
 import numpy as np
-from mne import pick_types
-from mne.io import BaseRaw
-from mne.preprocessing.nirs import source_detector_distances
-from mne.utils import _validate_type
 from scipy import linalg
+
+from mne.io import BaseRaw
+from mne import pick_types
+from mne.utils import _validate_type
+from mne.preprocessing.nirs import source_detector_distances
 
 
 def short_channel_regression(raw, max_dist=0.01):
@@ -89,6 +90,7 @@ def _find_nearest_short(raw, pick, short_picks):
         in short_picks.
 
     """
+
     dist = [linalg.norm(raw.info['chs'][pick]['loc'][:3] -
                         raw.info['chs'][p_sh]['loc'][:3])
             for p_sh in short_picks]

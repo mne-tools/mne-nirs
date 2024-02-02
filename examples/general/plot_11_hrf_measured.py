@@ -32,16 +32,20 @@ This GLM analysis is a wrapper over the excellent
 # License: BSD (3-clause)
 
 import os
-
-import matplotlib.pyplot as plt
-import mne
 import numpy as np
-from nilearn.plotting import plot_design_matrix
+import matplotlib.pyplot as plt
 
+import mne
 import mne_nirs
-from mne_nirs.channels import get_long_channels, get_short_channels, picks_pair_to_idx
+
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_glm
+from mne_nirs.channels import (get_long_channels,
+                               get_short_channels,
+                               picks_pair_to_idx)
+
+from nilearn.plotting import plot_design_matrix
+
 
 # %%
 # Import raw NIRS data
@@ -137,7 +141,7 @@ s = mne_nirs.experimental_design.create_boxcar(raw_haemo)
 fig, ax = plt.subplots(figsize=(15, 6), constrained_layout=True)
 ax.plot(raw_haemo.times, s)
 ax.legend(["Control", "Left", "Right"], loc="upper right")
-ax.set_xlabel("Time (s)")
+ax.set_xlabel("Time (s)");
 
 
 # %%

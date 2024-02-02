@@ -2,13 +2,12 @@
 #
 # License: BSD (3-clause)
 
-import logging
-
-import h5py
 import numpy as np
-from mne.io import Raw
-from pandas import DataFrame
+import logging
+import h5py
 from scipy import interpolate
+from pandas import DataFrame
+from mne.io import Raw
 
 
 def read_snirf_aux_data(fname: str, raw: Raw):
@@ -30,6 +29,7 @@ def read_snirf_aux_data(fname: str, raw: Raw):
     fname : str
         Path to the SNIRF data file.
     """
+
     with h5py.File(fname, 'r') as dat:
         if 'nirs' in dat:
             basename = "nirs"

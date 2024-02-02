@@ -2,15 +2,16 @@
 #
 # License: BSD (3-clause)
 
-import nilearn
-import numpy as np
 import pytest
+import numpy as np
+import nilearn
+
 from mne import Covariance
 from mne.simulation import add_noise
 
 from mne_nirs.experimental_design import make_first_level_design_matrix
+from mne_nirs.statistics import run_glm, run_GLM
 from mne_nirs.simulation import simulate_nirs_raw
-from mne_nirs.statistics import run_GLM, run_glm
 
 iir_filter = [1., -0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.024286]
 

@@ -3,8 +3,9 @@
 # License: BSD (3-clause)
 
 import numpy as np
-from mne import pick_types
+
 from mne.io import BaseRaw
+from mne import pick_types
 from mne.utils import _validate_type
 
 

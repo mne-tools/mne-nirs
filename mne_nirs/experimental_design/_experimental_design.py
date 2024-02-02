@@ -2,8 +2,8 @@
 #
 # License: BSD (3-clause)
 
-import mne
 import numpy as np
+import mne
 
 
 def make_first_level_design_matrix(raw, stim_dur=1.,

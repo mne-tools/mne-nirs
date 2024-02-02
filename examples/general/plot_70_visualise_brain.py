@@ -27,23 +27,24 @@ This tutorial glosses over the processing details, see the
 #
 # License: BSD (3-clause)
 
-import mne
 import numpy as np
 import pandas as pd
-import statsmodels.formula.api as smf
-from mne.preprocessing.nirs import beer_lambert_law, optical_density
-from mne_bids import BIDSPath, get_entity_vals, read_raw_bids
 
+import mne
+from mne.preprocessing.nirs import optical_density, beer_lambert_law
+
+import statsmodels.formula.api as smf
+
+from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
 import mne_nirs
-from mne_nirs.channels import get_long_channels, get_short_channels
-from mne_nirs.datasets import fnirs_motor_group
+
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.io.fold import fold_landmark_specificity
 from mne_nirs.statistics import run_glm, statsmodels_to_results
-from mne_nirs.visualisation import (
-    plot_glm_surface_projection,
-    plot_nirs_source_detector,
-)
+from mne_nirs.channels import get_long_channels, get_short_channels
+from mne_nirs.io.fold import fold_landmark_specificity
+from mne_nirs.visualisation import plot_nirs_source_detector, plot_glm_surface_projection
+from mne_nirs.datasets import fnirs_motor_group
+
 
 # %%
 # Download example data

@@ -2,11 +2,10 @@
 #
 # License: BSD (3-clause)
 
+from mne_nirs.simulation import simulate_nirs_raw
 import numpy as np
 import pytest
-
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.simulation import simulate_nirs_raw
 
 
 def test_simulate_NIRS_single_channel():

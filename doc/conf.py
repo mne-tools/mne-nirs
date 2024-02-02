@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # project-template documentation build configuration file, created by
 # sphinx-quickstart on Mon Jan 18 14:44:12 2016.
@@ -11,20 +12,18 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import os
-import sys
-import warnings
 from datetime import datetime, timezone
-
+import sys
+import os
+import warnings
 import sphinx.util.logging
 from sphinx_gallery.sorting import FileNameSortKey
 
 sys.path.append("../")
 import mne
 from mne.fixes import _compare_version
-from mne.tests.test_docstring_parameters import error_ignores
-
 import mne_nirs
+from mne.tests.test_docstring_parameters import error_ignores
 
 sphinx_logger = sphinx.util.logging.getLogger("mne")
 
@@ -292,8 +291,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index', 'project-template.tex', 'project-template Documentation',
-     'Robert Luke', 'manual'),
+    ('index', 'project-template.tex', u'project-template Documentation',
+     u'Robert Luke', 'manual'),
 ]
 
 
@@ -302,8 +301,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'project-template', 'project-template Documentation',
-     ['Robert Luke'], 1)
+    ('index', 'project-template', u'project-template Documentation',
+     [u'Robert Luke'], 1)
 ]
 
 
@@ -313,8 +312,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'project-template', 'project-template Documentation',
-     'Robert Luke', 'project-template', 'One line description of project.',
+    ('index', 'project-template', u'project-template Documentation',
+     u'Robert Luke', 'project-template', 'One line description of project.',
      'Miscellaneous'),
 ]
 

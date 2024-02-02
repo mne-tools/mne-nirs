@@ -4,18 +4,20 @@
 
 import os
 
-import matplotlib
-import mne
-import nilearn
-import numpy as np
 import pandas
 import pytest
+import numpy as np
+import matplotlib
 from matplotlib.pyplot import Axes
+
+import mne
 from mne.datasets import testing
 from mne.fixes import _compare_version
+import nilearn
 
+from mne_nirs.statistics import RegressionResults, read_glm
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import RegressionResults, read_glm, run_glm
+from mne_nirs.statistics import run_glm
 
 data_path = testing.data_path(download=False)
 subjects_dir = data_path / '/subjects'

@@ -53,13 +53,12 @@ in the relevant literature sidebar.
 # License: BSD (3-clause)
 
 import os
-from itertools import compress
-
-import matplotlib.pyplot as plt
 import mne
 import numpy as np
-from mne.preprocessing.nirs import optical_density
+from itertools import compress
+import matplotlib.pyplot as plt
 
+from mne.preprocessing.nirs import optical_density
 from mne_nirs.preprocessing import peak_power, scalp_coupling_index_windowed
 from mne_nirs.visualisation import plot_timechannel_quality_metric
 

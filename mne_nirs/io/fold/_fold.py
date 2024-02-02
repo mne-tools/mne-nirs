@@ -4,13 +4,14 @@
 
 import os.path as op
 
-import mne
-import numpy as np
 import pandas as pd
+import numpy as np
+
+import mne
+from mne.transforms import apply_trans, _get_trans
+from mne.utils import _validate_type, _check_fname, warn
 from mne.io import BaseRaw
 from mne.io.constants import FIFF
-from mne.transforms import _get_trans, apply_trans
-from mne.utils import _check_fname, _validate_type, warn
 
 
 def _read_fold_xls(fname, atlas="Juelich"):

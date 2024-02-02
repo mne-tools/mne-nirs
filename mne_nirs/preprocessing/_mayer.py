@@ -4,9 +4,10 @@
 
 import numpy as np
 import pandas as pd
+
 from mne import pick_types
 from mne.io import BaseRaw
-from mne.utils import _require_version, _validate_type
+from mne.utils import _validate_type, _require_version
 
 
 def quantify_mayer_fooof(raw, num_oscillations=1, centre_frequency=0.01,
