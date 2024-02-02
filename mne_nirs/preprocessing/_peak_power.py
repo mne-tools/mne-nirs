@@ -63,10 +63,6 @@ def peak_power(raw, time_window=10, threshold=0.1, l_freq=0.7, h_freq=1.5,
     raw = raw.copy().load_data()
     _validate_type(raw, BaseRaw, 'raw')
 
-    if not len(pick_types(raw.info, fnirs='fnirs_od')):
-        raise RuntimeError('Scalp coupling index '
-                           'should be run on optical density data.')
-
     picks = _validate_nirs_info(raw.info)
 
     filtered_data = filter_data(raw._data, raw.info['sfreq'], l_freq, h_freq,
@@ -90,10 +86,10 @@ def peak_power(raw, time_window=10, threshold=0.1, l_freq=0.7, h_freq=1.5,
         t_stop = raw.times[end_sample]
         times.append((t_start, t_stop))
 
-        for ii in picks[::2]:
+        for ii in range(0, len(picks), 2):
 
-            c1 = filtered_data[ii][start_sample:end_sample]
-            c2 = filtered_data[ii + 1][start_sample:end_sample]
+            c1 = filtered_data[picks[ii]][start_sample:end_sample]
+            c2 = filtered_data[picks[ii + 1]][start_sample:end_sample]
 
             # protect against zero
             c1 = c1 / (np.std(c1) or 1)
@@ -109,5 +105,5 @@ def peak_power(raw, time_window=10, threshold=0.1, l_freq=0.7, h_freq=1.5,
             if (threshold is not None) & (max(pxx) < threshold):
                 raw.annotations.append(t_start, time_window, 'BAD_PeakPower',
                                        ch_names=[raw.ch_names[ii:ii + 2]])
-
+    scores = scores[np.argsort(picks)]
     return raw, scores, times
