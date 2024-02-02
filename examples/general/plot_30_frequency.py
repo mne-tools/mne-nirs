@@ -24,13 +24,14 @@ that is applied to the data.
 # License: BSD (3-clause)
 
 import os
-import mne
-import mne_nirs
-import numpy as np
+
 import matplotlib.pyplot as plt
+import mne
+import numpy as np
+
+import mne_nirs
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.simulation import simulate_nirs_raw
-
 
 # %%
 # Import and preprocess data
@@ -46,19 +47,20 @@ from mne_nirs.simulation import simulate_nirs_raw
 # for a detailed introduction to processing NIRS with MNE.
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
-raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir,
-                                     verbose=True).load_data()
+fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
+raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir, verbose=True).load_data()
 new_des = [des for des in raw_intensity.annotations.description]
-new_des = ['Control' if x == "1.0" else x for x in new_des]
-new_des = ['Tapping_Left' if x == "2.0" else x for x in new_des]
-new_des = ['Tapping_Right' if x == "3.0" else x for x in new_des]
-annot = mne.Annotations(raw_intensity.annotations.onset,
-                        raw_intensity.annotations.duration * 5., new_des)
+new_des = ["Control" if x == "1.0" else x for x in new_des]
+new_des = ["Tapping_Left" if x == "2.0" else x for x in new_des]
+new_des = ["Tapping_Right" if x == "3.0" else x for x in new_des]
+annot = mne.Annotations(
+    raw_intensity.annotations.onset, raw_intensity.annotations.duration * 5.0, new_des
+)
 raw_intensity.set_annotations(annot)
 raw_intensity.crop(60, 2967)
 raw_intensity.annotations.delete(
-    np.where([d == 'Control' for d in raw_intensity.annotations.description]))
+    np.where([d == "Control" for d in raw_intensity.annotations.description])
+)
 
 raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
 raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
@@ -83,17 +85,16 @@ raw_haemo = mne_nirs.channels.get_long_channels(raw_haemo)
 # We note there is a peak at 0.03 which corresponds approximately to
 # the repetition rate of the experiment.
 
-design_matrix = make_first_level_design_matrix(
-    raw_haemo, drift_order=0, stim_dur=5.)
+design_matrix = make_first_level_design_matrix(raw_haemo, drift_order=0, stim_dur=5.0)
 
 # This is a bit of a hack.
 # Overwrite the first NIRS channel with the expected response.
 # Rescale to be in expected units of uM.
 hrf = raw_haemo.copy().pick(picks=[0])
-hrf._data[0] = 1e-6 * (design_matrix['Tapping_Left'] +
-                       design_matrix['Tapping_Right']).T
-hrf.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log',
-                               color='r', show=False)
+hrf._data[0] = 1e-6 * (design_matrix["Tapping_Left"] + design_matrix["Tapping_Right"]).T
+hrf.pick(picks="hbo").plot_psd(
+    average=True, fmax=2, xscale="log", color="r", show=False, amplitude=False
+)
 
 
 # %%
@@ -115,7 +116,9 @@ hrf.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log',
 
 # rescale data to fit in plot. TODO: fix this
 raw_haemo._data = raw_haemo._data * 1e-2
-raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log')
+raw_haemo.pick(picks="hbo").plot_psd(
+    average=True, fmax=2, xscale="log", amplitude=False
+)
 
 
 # %%
@@ -129,17 +132,27 @@ raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2, xscale='log')
 # is still visible.
 
 events, _ = mne.events_from_annotations(raw_haemo)
-event_dict = {'Tapping_Left': 1, 'Tapping_Right': 2}
+event_dict = {"Tapping_Left": 1, "Tapping_Right": 2}
 reject_criteria = dict(hbo=120e-6)
 tmin, tmax = -5, 15
-epochs = mne.Epochs(raw_haemo, events, event_id=event_dict,
-                    tmin=tmin, tmax=tmax,
-                    reject=reject_criteria, reject_by_annotation=True,
-                    proj=True, baseline=(None, 0), preload=True,
-                    detrend=None, verbose=True)
+epochs = mne.Epochs(
+    raw_haemo,
+    events,
+    event_id=event_dict,
+    tmin=tmin,
+    tmax=tmax,
+    reject=reject_criteria,
+    reject_by_annotation=True,
+    proj=True,
+    baseline=(None, 0),
+    preload=True,
+    detrend=None,
+    verbose=True,
+)
 
-epochs.pick(picks='hbo').plot_psd(average=True, fmax=2,
-                                  color='g', xscale='log')
+epochs.pick(picks="hbo").plot_psd(
+    average=True, fmax=2, color="g", xscale="log", amplitude=False
+)
 
 
 # %%
@@ -154,12 +167,21 @@ epochs.pick(picks='hbo').plot_psd(average=True, fmax=2,
 # after epoching.
 
 filter_params = mne.filter.create_filter(
-    raw_haemo.get_data(), raw_haemo.info['sfreq'],
-    l_freq=None, h_freq=0.4, h_trans_bandwidth=0.2)
+    raw_haemo.get_data(),
+    raw_haemo.info["sfreq"],
+    l_freq=None,
+    h_freq=0.4,
+    h_trans_bandwidth=0.2,
+)
 
-mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
-                    flim=(0.005, 2), fscale='log', gain=False,
-                    plot='magnitude')
+mne.viz.plot_filter(
+    filter_params,
+    raw_haemo.info["sfreq"],
+    flim=(0.005, 2),
+    fscale="log",
+    gain=False,
+    plot="magnitude",
+)
 
 
 # %%
@@ -181,22 +203,35 @@ mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
 # removes these unwanted components and they are not visible in the
 # epoched data.
 
-fig = hrf.pick(picks='hbo').plot_psd(average=True, fmax=2,
-                                     color='r', show=False)
-raw_haemo.pick(picks='hbo').plot_psd(average=True, fmax=2,
-                                     ax=fig.axes, show=False)
-epochs.pick(picks='hbo').plot_psd(average=True, fmax=2, ax=fig.axes,
-                                  show=False, color='g')
-mne.viz.plot_filter(filter_params, raw_haemo.info['sfreq'],
-                    flim=(0.005, 2), fscale='log', gain=False,
-                    plot='magnitude', axes=fig.axes, show=False)
+fig = hrf.pick(picks="hbo").plot_psd(
+    average=True, fmax=2, color="r", show=False, amplitude=False
+)
+raw_haemo.pick(picks="hbo").plot_psd(
+    average=True, fmax=2, ax=fig.axes, show=False, amplitude=False
+)
+epochs.pick(picks="hbo").plot_psd(
+    average=True, fmax=2, ax=fig.axes, show=False, color="g", amplitude=False
+)
+mne.viz.plot_filter(
+    filter_params,
+    raw_haemo.info["sfreq"],
+    flim=(0.005, 2),
+    fscale="log",
+    gain=False,
+    plot="magnitude",
+    axes=fig.axes,
+    show=False,
+)
 
-leg_lines = [line for line in fig.axes[0].lines if line.get_linestyle() == '-']
-fig.legend(leg_lines, ['Model Response', 'Measured Data',
-                       'Epoched Data', 'Filter Response'],
-                       loc="lower left", bbox_to_anchor=(0.15, 0.2))
-fig.axes[0].set_ylabel('Filter Magnitude (dB) [invalid for other lines]')
-fig.axes[0].set_title('')
+leg_lines = [line for line in fig.axes[0].lines if line.get_linestyle() == "-"]
+fig.legend(
+    leg_lines,
+    ["Model Response", "Measured Data", "Epoched Data", "Filter Response"],
+    loc="lower left",
+    bbox_to_anchor=(0.15, 0.2),
+)
+fig.axes[0].set_ylabel("Filter Magnitude (dB) [invalid for other lines]")
+fig.axes[0].set_title("")
 
 
 # %%
@@ -207,9 +242,13 @@ fig.axes[0].set_title('')
 # The green line illustrates the signal before filtering, and the red line
 # shows the signal after filtering.
 
-fig = raw_haemo.plot_psd(average=True, fmax=2, xscale='log', color='r', show=False)
+fig = raw_haemo.plot_psd(
+    average=True, fmax=2, xscale="log", color="r", show=False, amplitude=False
+)
 raw_haemo = raw_haemo.filter(l_freq=None, h_freq=0.4, h_trans_bandwidth=0.2)
-raw_haemo.plot_psd(average=True, fmax=2, xscale='log', ax=fig.axes, color='g')
+raw_haemo.plot_psd(
+    average=True, fmax=2, xscale="log", ax=fig.axes, color="g", amplitude=False
+)
 
 
 # %%
@@ -224,25 +263,33 @@ raw_haemo.plot_psd(average=True, fmax=2, xscale='log', ax=fig.axes, color='g')
 # Some common high pass filter values from literature are shown in red.
 
 
-sm = plt.cm.ScalarMappable(cmap='viridis', norm=plt.Normalize(vmin=0, vmax=60))
+sm = plt.cm.ScalarMappable(cmap="viridis", norm=plt.Normalize(vmin=0, vmax=60))
 fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(20, 10))
 for rep in range(2):
     for column, min_isi in enumerate([0, 15]):
         for row, max_isi in enumerate([15, 30, 45, 60]):
             if max_isi >= min_isi:
-                 raw = simulate_nirs_raw(sfreq=4., sig_dur=60 * 60,
-                                         amplitude=1., stim_dur=5.,
-                                         isi_min=min_isi, isi_max=max_isi)
-                 raw._data[0] = raw._data[0] - np.mean(raw._data[0])
-                 raw.pick(picks='hbo').plot_psd(
-                     average=True, fmax=2, ax=axes[rep, column],
-                     show=False, color=sm.cmap(sm.norm(max_isi)),
-                     xscale='log')
-                 axes[rep, column].set_ylim(-60, 20)
-                 axes[rep, column].set_title('ISI: {} (s) to Max ISI'.
-                                             format(min_isi))
-                 for filt in [0.01, 0.02, 0.05]:
-                     axes[rep, column].axvline(x=filt,
-                                               linestyle=":", color='red')
+                raw = simulate_nirs_raw(
+                    sfreq=4.0,
+                    sig_dur=60 * 60,
+                    amplitude=1.0,
+                    stim_dur=5.0,
+                    isi_min=min_isi,
+                    isi_max=max_isi,
+                )
+                raw._data[0] = raw._data[0] - np.mean(raw._data[0])
+                raw.pick(picks="hbo").plot_psd(
+                    average=True,
+                    fmax=2,
+                    ax=axes[rep, column],
+                    show=False,
+                    color=sm.cmap(sm.norm(max_isi)),
+                    xscale="log",
+                    amplitude=False,
+                )
+                axes[rep, column].set_ylim(-60, 20)
+                axes[rep, column].set_title(f"ISI: {min_isi} (s) to Max ISI")
+                for filt in [0.01, 0.02, 0.05]:
+                    axes[rep, column].axvline(x=filt, linestyle=":", color="red")
         axes[1, column].set_xlabel("Frequency (Hz)")
-    plt.colorbar(sm, ax=axes[rep, 1], label='Max ISI (s)')
+    plt.colorbar(sm, ax=axes[rep, 1], label="Max ISI (s)")
