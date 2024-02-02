@@ -2,11 +2,12 @@
 #
 # License: BSD (3-clause)
 
-import numpy as np
 import re
+
+import numpy as np
 from mne import pick_types
-from mne.utils import _validate_type
 from mne.io import BaseRaw
+from mne.utils import _validate_type
 
 
 def list_sources(raw):
@@ -23,12 +24,11 @@ def list_sources(raw):
     sources : list
         Unique list of all sources in ascending order.
     """
-    _validate_type(raw, BaseRaw, 'raw')
+    _validate_type(raw, BaseRaw, "raw")
 
-    picks = pick_types(raw.info, meg=False, eeg=False, fnirs=True,
-                       exclude=[])
+    picks = pick_types(raw.info, meg=False, eeg=False, fnirs=True, exclude=[])
     if not len(picks):
-        raise RuntimeError('Listing source is for fNIRS signals only.')
+        raise RuntimeError("Listing source is for fNIRS signals only.")
 
     sources = list()
     ch_names = raw.ch_names
@@ -55,12 +55,11 @@ def list_detectors(raw):
     sources : list
         Unique list of all detectors in ascending order.
     """
-    _validate_type(raw, BaseRaw, 'raw')
+    _validate_type(raw, BaseRaw, "raw")
 
-    picks = pick_types(raw.info, meg=False, eeg=False, fnirs=True,
-                       exclude=[])
+    picks = pick_types(raw.info, meg=False, eeg=False, fnirs=True, exclude=[])
     if not len(picks):
-        raise RuntimeError('Listing source is for fNIRS signals only.')
+        raise RuntimeError("Listing source is for fNIRS signals only.")
 
     detectors = list()
     ch_names = raw.ch_names
@@ -95,12 +94,15 @@ def drop_sources(raw, sources):
     try:
         all_str = all([isinstance(src, int) for src in sources])
     except TypeError:
-        raise ValueError("'ch_names' must be iterable, got "
-                         "type {} ({}).".format(type(sources), sources))
+        raise ValueError(
+            "'ch_names' must be iterable, got " f"type {type(sources)} ({sources})."
+        )
 
     if not all_str:
-        raise ValueError("Each element in 'ch_names' must be int, got "
-                         "{}.".format([type(ch) for ch in sources]))
+        raise ValueError(
+            "Each element in 'ch_names' must be int, got "
+            f"{[type(ch) for ch in sources]}."
+        )
 
     keeps = np.ones(len(raw.ch_names))
     for src in sources:
@@ -136,12 +138,15 @@ def drop_detectors(raw, detectors):
     try:
         all_str = all([isinstance(det, int) for det in detectors])
     except TypeError:
-        raise ValueError("'ch_names' must be iterable, got "
-                         "type {} ({}).".format(type(detectors), detectors))
+        raise ValueError(
+            "'ch_names' must be iterable, got " f"type {type(detectors)} ({detectors})."
+        )
 
     if not all_str:
-        raise ValueError("Each element in 'ch_names' must be int, got "
-                         "{}.".format([type(det) for det in detectors]))
+        raise ValueError(
+            "Each element in 'ch_names' must be int, got "
+            f"{[type(det) for det in detectors]}."
+        )
 
     keeps = np.ones(len(raw.ch_names))
     for det in detectors:
@@ -177,12 +182,15 @@ def pick_sources(raw, sources):
     try:
         all_str = all([isinstance(src, int) for src in sources])
     except TypeError:
-        raise ValueError("'ch_names' must be iterable, got "
-                         "type {} ({}).".format(type(sources), sources))
+        raise ValueError(
+            "'ch_names' must be iterable, got " f"type {type(sources)} ({sources})."
+        )
 
     if not all_str:
-        raise ValueError("Each element in 'ch_names' must be int, got "
-                         "{}.".format([type(ch) for ch in sources]))
+        raise ValueError(
+            "Each element in 'ch_names' must be int, got "
+            f"{[type(ch) for ch in sources]}."
+        )
 
     keeps = np.zeros(len(raw.ch_names))
     for src in sources:
@@ -218,12 +226,15 @@ def pick_detectors(raw, detectors):
     try:
         all_str = all([isinstance(det, int) for det in detectors])
     except TypeError:
-        raise ValueError("'ch_names' must be iterable, got "
-                         "type {} ({}).".format(type(detectors), detectors))
+        raise ValueError(
+            "'ch_names' must be iterable, got " f"type {type(detectors)} ({detectors})."
+        )
 
     if not all_str:
-        raise ValueError("Each element in 'ch_names' must be int, got "
-                         "{}.".format([type(det) for det in detectors]))
+        raise ValueError(
+            "Each element in 'ch_names' must be int, got "
+            f"{[type(det) for det in detectors]}."
+        )
 
     keeps = np.zeros(len(raw.ch_names))
     for det in detectors:

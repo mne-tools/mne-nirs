@@ -35,31 +35,27 @@ information about triggers, condition names, etc.
    Simply modify the ``read_raw_`` function to match your data type.
    See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
    to use your data with MNE-Python.
-
-.. contents:: Page contents
-   :local:
-   :depth: 2
-"""
+"""  # noqa: E501
 # Authors: Robert Luke <mail@robertluke.net>
 #
 # License: BSD (3-clause)
 
 # Import common libraries
 from os.path import join
+
 import pandas as pd
 
 # Import MNE functions
-from mne.preprocessing.nirs import optical_density, beer_lambert_law
-
-# Import MNE-NIRS functions
-from mne_nirs.statistics import run_glm
-from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import read_glm
-from mne_nirs.datasets import fnirs_motor_group
+from mne.preprocessing.nirs import beer_lambert_law, optical_density
 
 # Import MNE-BIDS processing
-from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
+from mne_bids import BIDSPath, get_entity_vals, read_raw_bids
 
+from mne_nirs.datasets import fnirs_motor_group
+from mne_nirs.experimental_design import make_first_level_design_matrix
+
+# Import MNE-NIRS functions
+from mne_nirs.statistics import read_glm, run_glm
 
 # %%
 # Set up directories
@@ -87,7 +83,7 @@ print(dataset.directory)
 # %%
 # For example we can automatically query the subjects, tasks, and sessions.
 
-subjects = get_entity_vals(root, 'subject')
+subjects = get_entity_vals(root, "subject")
 print(subjects)
 
 
@@ -107,10 +103,9 @@ subjects = subjects[:2]
 
 
 def individual_analysis(bids_path):
-
     raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
-    # Delete annotation labeled 15, as these just signify the start and end of experiment.
-    raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
+    # Delete annotation labeled 15, as these just signify the experiment start and end.
+    raw_intensity.annotations.delete(raw_intensity.annotations.description == "15.0")
     raw_intensity.pick(picks=range(20)).crop(200).resample(0.3)  # Reduce load
     raw_haemo = beer_lambert_law(optical_density(raw_intensity), ppf=0.1)
     design_matrix = make_first_level_design_matrix(raw_haemo)
@@ -128,12 +123,10 @@ def individual_analysis(bids_path):
 
 
 for sub in subjects:
-
     # Create path to file based on experiment info
-    data_path = dataset.update(subject=sub,
-                               datatype="nirs",
-                               suffix="nirs",
-                               extension=".snirf")
+    data_path = dataset.update(
+        subject=sub, datatype="nirs", suffix="nirs", extension=".snirf"
+    )
 
     # Analyse data and glm results
     glm = individual_analysis(data_path)
@@ -144,7 +137,11 @@ for sub in subjects:
 
     save_path = dataset.copy().update(
         root=join(root, "derivatives"),
-        datatype="nirs", suffix="glm", extension=".h5",check=False)
+        datatype="nirs",
+        suffix="glm",
+        extension=".h5",
+        check=False,
+    )
     # Ensure the folder exists, and make it if not.
     save_path.fpath.parent.mkdir(exist_ok=True, parents=True)
 
@@ -162,7 +159,6 @@ for sub in subjects:
 df = pd.DataFrame()
 
 for sub in subjects:
-
     # Point to the correct subject
     save_path = save_path.update(subject=sub)
 

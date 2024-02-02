@@ -36,11 +36,6 @@ motion corrected using TDDR, and converted to haemoglobin concentration.
    tddr = hmrMotionCorrectTDDR(dod,SD,fs);
    ppf = [6 6];
    dc = hmrOD2Conc(tddr,SD,ppf);
-
-.. contents:: Page contents
-   :local:
-   :depth: 2
-
 """
 
 # %%
@@ -54,12 +49,14 @@ motion corrected using TDDR, and converted to haemoglobin concentration.
 # License: BSD (3-clause)
 
 import os
+
 import mne
-
 from mne.io import read_raw_nirx
-from mne.preprocessing.nirs import (optical_density, beer_lambert_law,
-                                    temporal_derivative_distribution_repair)
-
+from mne.preprocessing.nirs import (
+    beer_lambert_law,
+    optical_density,
+    temporal_derivative_distribution_repair,
+)
 
 # %%
 # Convert to optical density and motion correct
@@ -70,7 +67,7 @@ from mne.preprocessing.nirs import (optical_density, beer_lambert_law,
 
 # First we obtain the path to the data
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
+fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
 
 # Next we read the data
 raw_intensity = read_raw_nirx(fnirs_raw_dir).load_data()
@@ -97,7 +94,7 @@ corrected_tddr = temporal_derivative_distribution_repair(raw_od)
 # To exactly match the results from Homer we can manually set the ppf value to
 # 6 in MNE.
 
-raw_h = beer_lambert_law(corrected_tddr, ppf=6.)
+raw_h = beer_lambert_law(corrected_tddr, ppf=6.0)
 
 
 # %%

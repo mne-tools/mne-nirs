@@ -50,12 +50,7 @@ This GLM analysis is a wrapper over the excellent
    Simply modify the ``read_raw_`` function to match your data type.
    See :ref:`data importing tutorial <tut-importing-fnirs-data>` to learn how
    to use your data with MNE-Python.
-
-.. contents:: Page contents
-   :local:
-   :depth: 2
-
-"""
+"""  # noqa: E501
 # sphinx_gallery_thumbnail_number = 1
 
 # Authors: Robert Luke <mail@robertluke.net>
@@ -64,28 +59,26 @@ This GLM analysis is a wrapper over the excellent
 
 
 # Import common libraries
+# Import Plotting Library
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-
-# Import MNE processing
-from mne.preprocessing.nirs import optical_density, beer_lambert_law
-
-# Import MNE-NIRS processing
-from mne_nirs.statistics import run_glm
-from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import statsmodels_to_results
-from mne_nirs.datasets import fnirs_motor_group
-from mne_nirs.channels import get_short_channels, get_long_channels
-
-# Import MNE-BIDS processing
-from mne_bids import BIDSPath, read_raw_bids
 
 # Import StatsModels
 import statsmodels.formula.api as smf
 
-# Import Plotting Library
-import matplotlib.pyplot as plt
+# Import MNE processing
+from mne.preprocessing.nirs import beer_lambert_law, optical_density
 
+# Import MNE-BIDS processing
+from mne_bids import BIDSPath, read_raw_bids
+
+from mne_nirs.channels import get_long_channels, get_short_channels
+from mne_nirs.datasets import fnirs_motor_group
+from mne_nirs.experimental_design import make_first_level_design_matrix
+
+# Import MNE-NIRS processing
+from mne_nirs.statistics import run_glm, statsmodels_to_results
 
 # %%
 # Define FIR analysis
@@ -98,14 +91,15 @@ import matplotlib.pyplot as plt
 # Due to the chosen sample rate of 0.5 Hz, these delays
 # correspond to 0, 2, 4... seconds from the onset of the stimulus.
 
-def analysis(fname, ID):
 
+def analysis(fname, ID):
     raw_intensity = read_raw_bids(bids_path=fname, verbose=False)
-    # Delete annotation labeled 15, as these just signify the start and end of experiment.
-    raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
+    # Delete annotation labeled 15, as these just signify the experiment start and end.
+    raw_intensity.annotations.delete(raw_intensity.annotations.description == "15.0")
     # sanitize event names
     raw_intensity.annotations.description[:] = [
-        d.replace('/', '_') for d in raw_intensity.annotations.description]
+        d.replace("/", "_") for d in raw_intensity.annotations.description
+    ]
 
     # Convert signal to haemoglobin and just keep hbo
     raw_od = optical_density(raw_intensity)
@@ -117,13 +111,15 @@ def analysis(fname, ID):
     raw_haemo = get_long_channels(raw_haemo)
 
     # Create a design matrix
-    design_matrix = make_first_level_design_matrix(raw_haemo,
-                                                   hrf_model='fir',
-                                                   stim_dur=1.0,
-                                                   fir_delays=range(10),
-                                                   drift_model='cosine',
-                                                   high_pass=0.01,
-                                                   oversampling=1)
+    design_matrix = make_first_level_design_matrix(
+        raw_haemo,
+        hrf_model="fir",
+        stim_dur=1.0,
+        fir_delays=range(10),
+        drift_model="cosine",
+        high_pass=0.01,
+        oversampling=1,
+    )
     # Add short channels as regressor in GLM
     for chan in range(len(short_chans.ch_names)):
         design_matrix[f"short_{chan}"] = short_chans.get_data(chan).T
@@ -139,7 +135,7 @@ def analysis(fname, ID):
     df_ind = glm_est.to_dataframe_region_of_interest(rois, conditions)
 
     df_ind["ID"] = ID
-    df_ind["theta"] = [t * 1.e6 for t in df_ind["theta"]]
+    df_ind["theta"] = [t * 1.0e6 for t in df_ind["theta"]]
 
     return df_ind, raw_haemo, design_matrix
 
@@ -155,12 +151,17 @@ def analysis(fname, ID):
 df = pd.DataFrame()
 
 for sub in range(1, 6):  # Loop from first to fifth subject
-    ID = '%02d' % sub  # Tidy the subject name
+    ID = "%02d" % sub  # Tidy the subject name
 
     # Create path to file based on experiment info
-    bids_path = BIDSPath(subject=ID, task="tapping",
-                         root=fnirs_motor_group.data_path(),
-                         datatype="nirs", suffix="nirs", extension=".snirf")
+    bids_path = BIDSPath(
+        subject=ID,
+        task="tapping",
+        root=fnirs_motor_group.data_path(),
+        datatype="nirs",
+        suffix="nirs",
+        extension=".snirf",
+    )
 
     df_individual, raw, dm = analysis(bids_path, ID)
 
@@ -183,9 +184,9 @@ df = df.query("isDelay in [True]")
 df = df.query("isTapping in [True]")
 # Make a new column that stores the condition name for tidier model below
 df.loc[:, "TidyCond"] = ""
-df.loc[df["isTapping"] == True, "TidyCond"] = "Tapping"
+df.loc[df["isTapping"] == True, "TidyCond"] = "Tapping"  # noqa: E712
 # Finally, extract the FIR delay in to its own column in data frame
-df.loc[:, "delay"] = [n.split('_')[-1] for n in df.Condition]
+df.loc[:, "delay"] = [n.split("_")[-1] for n in df.Condition]
 
 # To simplify this example we will only look at the right hand tapping
 # condition so we now remove the left tapping conditions from the
@@ -202,8 +203,7 @@ dm = dm[[dm.columns[i] for i in dm_cols_not_left]]
 # of FIR delay for each chromophore on the evoked response with participant
 # (ID) as a random variable.
 
-lme = smf.mixedlm('theta ~ -1 + delay:TidyCond:Chroma', df,
-                  groups=df["ID"]).fit()
+lme = smf.mixedlm("theta ~ -1 + delay:TidyCond:Chroma", df, groups=df["ID"]).fit()
 
 # The model is summarised below, and is not displayed here.
 # You can display the model output using: lme.summary()
@@ -221,7 +221,7 @@ lme = smf.mixedlm('theta ~ -1 + delay:TidyCond:Chroma', df,
 # Create a dataframe from LME model for plotting below
 df_sum = statsmodels_to_results(lme)
 df_sum["delay"] = [int(n) for n in df_sum["delay"]]
-df_sum = df_sum.sort_values('delay')
+df_sum = df_sum.sort_values("delay")
 
 # Print the result for the oxyhaemoglobin data in the tapping condition
 df_sum.query("TidyCond in ['Tapping']").query("Chroma in ['hbo']")
@@ -272,9 +272,9 @@ index_values = np.asarray(index_values)
 
 # Plot the result
 axes[0].plot(index_values, np.asarray(dm_cond))
-axes[1].plot(index_values,np.asarray(dm_cond_scaled_hbo))
-axes[2].plot(index_values, np.sum(dm_cond_scaled_hbo, axis=1), 'r')
-axes[2].plot(index_values, np.sum(dm_cond_scaled_hbr, axis=1), 'b')
+axes[1].plot(index_values, np.asarray(dm_cond_scaled_hbo))
+axes[2].plot(index_values, np.sum(dm_cond_scaled_hbo, axis=1), "r")
+axes[2].plot(index_values, np.sum(dm_cond_scaled_hbr, axis=1), "b")
 
 # Format the plot
 for ax in range(3):
@@ -310,16 +310,22 @@ dm_cond_scaled_hbr_u95 = dm_cond * u95_hbr
 fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(7, 7))
 
 # Plot the result
-axes.plot(index_values, np.sum(dm_cond_scaled_hbo, axis=1), 'r')
-axes.plot(index_values, np.sum(dm_cond_scaled_hbr, axis=1), 'b')
-axes.fill_between(index_values,
-                  np.asarray(np.sum(dm_cond_scaled_hbo_l95, axis=1)),
-                  np.asarray(np.sum(dm_cond_scaled_hbo_u95, axis=1)),
-                  facecolor='red', alpha=0.25)
-axes.fill_between(index_values,
-                  np.asarray(np.sum(dm_cond_scaled_hbr_l95, axis=1)),
-                  np.asarray(np.sum(dm_cond_scaled_hbr_u95, axis=1)),
-                  facecolor='blue', alpha=0.25)
+axes.plot(index_values, np.sum(dm_cond_scaled_hbo, axis=1), "r")
+axes.plot(index_values, np.sum(dm_cond_scaled_hbr, axis=1), "b")
+axes.fill_between(
+    index_values,
+    np.asarray(np.sum(dm_cond_scaled_hbo_l95, axis=1)),
+    np.asarray(np.sum(dm_cond_scaled_hbo_u95, axis=1)),
+    facecolor="red",
+    alpha=0.25,
+)
+axes.fill_between(
+    index_values,
+    np.asarray(np.sum(dm_cond_scaled_hbr_l95, axis=1)),
+    np.asarray(np.sum(dm_cond_scaled_hbr_u95, axis=1)),
+    facecolor="blue",
+    alpha=0.25,
+)
 
 # Format the plot
 axes.set_xlim(-5, 30)
