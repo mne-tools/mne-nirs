@@ -63,7 +63,7 @@ jobs:
           create-args: >-
             python=${{ env.PYTHON_VERSION }}
         if: matrix.kind == 'conda'
-      - run: pip intsall -r requirements_testing.txt
+      - run: pip install -r requirements_testing.txt
       - run: pip install -ve .
       - run: mne sys_info
       - run: ./tools/github_actions_download.sh
