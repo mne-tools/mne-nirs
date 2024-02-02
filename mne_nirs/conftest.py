@@ -54,6 +54,7 @@ def pytest_configure(config):
     ignore:use_inf_as_na option is deprecated.*:FutureWarning
     # nilearn
     ignore:The provided callable <function sum.*:FutureWarning
+    ignore:The parameter "contrast_type" will be removed.*:DeprecationWarning
     # TODO: in an example (should fix eventually)
     ignore:The behavior of DataFrame concatenation.*:FutureWarning
     # mne-bids needs a release

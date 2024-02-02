@@ -165,7 +165,7 @@ ax.set_xlabel("Time (s)");
 # parameter value. See the nilearn documentation for recommendations on setting
 # these values. In short, they suggest "The cutoff period (1/high_pass) should be
 # set as the longest period between two trials of the same condition multiplied by 2.
-# For instance, if the longest period is 32s, the high_pass frequency shall be 1/64 Hz ~ 0.016 Hz"`.
+# For instance, if the longest period is 32s, the high_pass frequency shall be 1/64 Hz ~ 0.016 Hz".
 
 design_matrix = make_first_level_design_matrix(raw_haemo,
                                                drift_model='cosine',
