@@ -3,6 +3,7 @@
 # License: BSD (3-clause)
 
 from copy import deepcopy
+from inspect import getfullargspec
 from pathlib import PosixPath
 import warnings
 
@@ -725,8 +726,15 @@ def run_glm(raw, design_matrix, noise_model='ar1', bins=0,
 
 def _compute_contrast(glm_est, contrast, contrast_type=None):
     from nilearn.glm.contrasts import compute_contrast as _cc
-    return _cc(np.array(list(glm_est.keys())), glm_est, contrast,
-               contrast_type=contrast_type)
+
+    key = "contrast_type"
+    _ccc = _cc
+    if hasattr(_cc, "__wrapped__"):
+        _ccc = _cc.__wrapped__
+    key = "stat_type" if "stat_type" in getfullargspec(_ccc).args else "contrast_type"
+    return _cc(
+        np.array(list(glm_est.keys())), glm_est, contrast, **{key: contrast_type}
+    )
 
 
 def read_glm(fname):

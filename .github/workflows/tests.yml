@@ -1,0 +1,72 @@
+name: 'tests'
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number }}-${{ github.event.type }}
+  cancel-in-progress: true
+
+jobs:
+  # PIP + non-default stim channel + log level info
+  job:
+    name: '${{ matrix.os }} / ${{ matrix.kind }} / ${{ matrix.mne}}'
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        shell: bash -el {0}
+    env:
+      DISPLAY: ':99.0'
+      MNE_LOGGING_LEVEL: 'info'
+      MNE_STIM_CHANNEL: 'STI101'
+      OPENBLAS_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+      PYTHON_VERSION: '3.10'
+      MNEPYTHON: ${{ matrix.mne }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            mne: stable
+            kind: pip
+            python: "3.8"  # oldest
+          - os: ubuntu-latest
+            mne: dev
+            kind: pip
+            python: "3.12"  # newest
+          - os: macos-latest
+            mne: dev
+            kind: conda
+            python: "3.11"
+          - os: windows-latest
+            mne: dev
+            kind: conda
+            python: "3.9"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+        if: matrix.kind == 'pip'
+      - uses: pyvista/setup-headless-display-action@main
+        with:
+          qt: true
+          pyvista: false
+      - uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-file: environment.yml
+          environment-name: mne-nirs
+          create-args: >-
+            python=${{ env.PYTHON_VERSION }}
+        if: matrix.kind == 'conda'
+      - run: pip install -r requirements_testing.txt
+      - run: pip install -ve .
+      - run: mne sys_info
+      - run: ./tools/github_actions_download.sh
+      - run: pytest --cov=mne_nirs --cov-report xml -vv -m "not examples" "mne_nirs/"
+      - uses: codecov/codecov-action@v1
+        if: success()

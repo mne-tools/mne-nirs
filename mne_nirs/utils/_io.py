@@ -65,30 +65,53 @@ def glm_to_tidy(info, statistic, design_matrix, wide=True, order=None):
 
 def _tidy_Contrast(data, glm_est, design_matrix):
     df = pd.DataFrame()
+    if hasattr(glm_est, "stat_type"):
+        contrast_type = glm_est.stat_type
+    else:  # nilearn < 0.10
+        contrast_type = glm_est.contrast_type
     for idx, ch in enumerate(data.ch_names):
-        df = pd.concat([
-            df,
-            pd.DataFrame({'ch_name': ch,
-                          'ContrastType': glm_est.contrast_type,
-                          'variable': "effect",
-                          'value': glm_est.effect[0][idx]},
-                         index=[0]),
-            pd.DataFrame({'ch_name': ch,
-                          'ContrastType': glm_est.contrast_type,
-                          'variable': "p_value",
-                          'value': glm_est.p_value()[idx]},
-                         index=[1]),
-            pd.DataFrame({'ch_name': ch,
-                          'ContrastType': glm_est.contrast_type,
-                          'variable': "stat",
-                          'value': glm_est.stat()[idx]},
-                         index=[2]),
-            pd.DataFrame({'ch_name': ch,
-                          'ContrastType': glm_est.contrast_type,
-                          'variable': "z_score",
-                          'value': glm_est.z_score()[idx]},
-                         index=[3]),
-        ], ignore_index=True)
+        df = pd.concat(
+            [
+                df,
+                pd.DataFrame(
+                    {
+                        "ch_name": ch,
+                        "ContrastType": contrast_type,
+                        "variable": "effect",
+                        "value": glm_est.effect[0][idx],
+                    },
+                    index=[0],
+                ),
+                pd.DataFrame(
+                    {
+                        "ch_name": ch,
+                        "ContrastType": contrast_type,
+                        "variable": "p_value",
+                        "value": glm_est.p_value()[idx],
+                    },
+                    index=[1],
+                ),
+                pd.DataFrame(
+                    {
+                        "ch_name": ch,
+                        "ContrastType": contrast_type,
+                        "variable": "stat",
+                        "value": glm_est.stat()[idx],
+                    },
+                    index=[2],
+                ),
+                pd.DataFrame(
+                    {
+                        "ch_name": ch,
+                        "ContrastType": contrast_type,
+                        "variable": "z_score",
+                        "value": glm_est.z_score()[idx],
+                    },
+                    index=[3],
+                ),
+            ],
+            ignore_index=True,
+        )
     return df
 
 

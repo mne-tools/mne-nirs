@@ -19,15 +19,11 @@ An alternative epoching style analysis on the same data can be
 viewed in the
 :ref:`waveform analysis example <tut-fnirs-processing>`.
 See
-`Luke et al (2021) <https://www.spiedigitallibrary.org/journals/neurophotonics/volume-8/issue-2/025008/Analysis-methods-for-measuring-passive-auditory-fNIRS-responses-generated-by/10.1117/1.NPh.8.2.025008.short>`_
+`Luke et al (2021) <https://www.spiedigitallibrary.org/journals/neurophotonics/volume-8/issue-2/025008/Analysis-methods-for-measuring-passive-auditory-fNIRS-responses-generated-by/10.1117/1.NPh.8.2.025008.short>`__
 for a comparison of the epoching and GLM approaches.
 
 This GLM analysis is a wrapper over the excellent
-`Nilearn GLM <http://nilearn.github.io/modules/reference.html#module-nilearn.glm>`_.
-
-.. contents:: Page contents
-   :local:
-   :depth: 2
+`Nilearn GLM <http://nilearn.github.io/modules/reference.html#module-nilearn.glm>`__.
 """
 # sphinx_gallery_thumbnail_number = 9
 
@@ -66,8 +62,7 @@ from nilearn.plotting import plot_design_matrix
 #
 #    Optodes were placed over the motor cortex using the standard NIRX motor
 #    montage, but with 8 short channels added (see their web page for details).
-#    To view the sensor locations run
-#    `raw_intensity.plot_sensors()`.
+#    To view the sensor locations run ``raw_intensity.plot_sensors()``.
 #    A sound was presented to indicate which hand the participant should tap.
 #    Participants tapped their thumb to their fingers for 5s.
 #    Conditions were presented in a random order with a randomised inter
@@ -157,7 +152,7 @@ ax.set_xlabel("Time (s)");
 #
 #    For further discussion on design matrices see
 #    the Nilearn examples. Specifically the
-#    `first level model example <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_first_level_details.html>`_.
+#    `first level model example <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_first_level_details.html>`__.
 #
 # Next we create a model to fit our data to.
 # The model consists of various components to model different things we assume
@@ -168,9 +163,9 @@ ax.set_xlabel("Time (s)");
 # (as described above).
 # We also include a cosine drift model with components up to the high pass
 # parameter value. See the nilearn documentation for recommendations on setting
-# these values. In short, they suggest `"The cutoff period (1/high_pass) should be
+# these values. In short, they suggest "The cutoff period (1/high_pass) should be
 # set as the longest period between two trials of the same condition multiplied by 2.
-# For instance, if the longest period is 32s, the high_pass frequency shall be 1/64 Hz ~ 0.016 Hz"`.
+# For instance, if the longest period is 32s, the high_pass frequency shall be 1/64 Hz ~ 0.016 Hz".
 
 design_matrix = make_first_level_design_matrix(raw_haemo,
                                                drift_model='cosine',
@@ -420,7 +415,7 @@ df
 # -----------------
 #
 # We can also define a contrast as described in
-# `Nilearn docs <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_localizer_surface_analysis.html>`_
+# `Nilearn docs <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_localizer_surface_analysis.html>`__
 # and plot it.
 # Here we contrast the response to tapping on the left hand with the response
 # from tapping on the right hand.
