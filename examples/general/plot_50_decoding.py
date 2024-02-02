@@ -43,25 +43,27 @@ Luke et. al. (2021)
 
 
 # Import common libraries
-import contextlib
 import os
-
+import contextlib
 import numpy as np
-from mne import Epochs, events_from_annotations
-from mne.decoding import Scaler, Vectorizer, cross_val_multiscore
-
-# Import MNE-Python processing
-from mne.preprocessing.nirs import beer_lambert_law, optical_density
-
-# Import MNE-BIDS processing
-from mne_bids import BIDSPath, get_entity_vals, read_raw_bids
-from sklearn.linear_model import LogisticRegression
 
 # Import sklearn processing
 from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LogisticRegression
+
+# Import MNE-Python processing
+from mne.preprocessing.nirs import optical_density, beer_lambert_law
+from mne import Epochs, events_from_annotations
+from mne.decoding import (Scaler,
+                          cross_val_multiscore,
+                          Vectorizer)
 
 # Import MNE-NIRS processing
 from mne_nirs.datasets.fnirs_motor_group import data_path
+
+# Import MNE-BIDS processing
+from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
+
 
 # %%
 # Set up directories

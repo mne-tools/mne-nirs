@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 r"""
 .. _tut-gowerlabs-data:
 
@@ -5,7 +6,7 @@ r"""
 Read Gowerlabs LUMO data
 ========================
 
-`LUMO <https://www.gowerlabs.co.uk/lumo>`__ is a modular, wearable,
+`LUMO <https://www.gowerlabs.co.uk/lumo>`__ is a modular, wearable, 
 high-density diffuse optical tomography (HD-DOT) system produced by
 `Gowerlabs <https://www.gowerlabs.co.uk>`__. This tutorial demonstrates
 how to load data from LUMO, and how to utilise 3D digitisation
@@ -30,10 +31,11 @@ to ensure you have all the required packages installed we recommend using the
 # License: BSD (3-clause)
 
 import os.path as op
-
 import mne
 from mne.datasets.testing import data_path
+
 from mne.viz import set_3d_view
+
 
 # %%
 # Import Gowerlabs Example File
@@ -79,7 +81,7 @@ raw.plot(duration=60)
 #
 # We observe valid data in each channel, and note that the file includes a
 # number of event annotations.
-# Annotations are a flexible tool to represent events in your experiment.
+# Annotations are a flexible tool to represent events in your experiment. 
 # They can also be used to annotate other useful information such as bad
 # segments of data, participant movements, etc. We can inspect the
 # annotations to ensure they match what we expect from our experiment.
@@ -91,8 +93,8 @@ raw.annotations
 # The implementation of annotations varies between manufacturers. Rather
 # than recording the onset and duration of a stimulus condition, LUMO records
 # discrete event markers which have a nominal one second duration. Each
-# marker can consist of an arbitrary character or string. In this sample,
-# there were six `A` annotations, one `Cat` annotation, and two `Dog`
+# marker can consist of an arbitrary character or string. In this sample, 
+# there were six `A` annotations, one `Cat` annotation, and two `Dog` 
 # annotations. We can view the specific data for each annotation by converting
 # the annotations to a dataframe.
 

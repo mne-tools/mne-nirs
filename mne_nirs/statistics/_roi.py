@@ -3,6 +3,7 @@
 # License: BSD (3-clause)
 
 import numpy as np
+
 from mne.utils import warn
 
 
@@ -84,8 +85,8 @@ def _glm_region_of_interest(stats, group_by, cond_idx,
     stats : DataFrame
         Statistics for each ROI.
     """
-    import pandas as pd
     from scipy import stats as ss
+    import pandas as pd
 
     df = pd.DataFrame()
 

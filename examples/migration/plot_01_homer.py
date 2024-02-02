@@ -54,14 +54,12 @@ motion corrected using TDDR, and converted to haemoglobin concentration.
 # License: BSD (3-clause)
 
 import os
-
 import mne
+
 from mne.io import read_raw_nirx
-from mne.preprocessing.nirs import (
-    beer_lambert_law,
-    optical_density,
-    temporal_derivative_distribution_repair,
-)
+from mne.preprocessing.nirs import (optical_density, beer_lambert_law,
+                                    temporal_derivative_distribution_repair)
+
 
 # %%
 # Convert to optical density and motion correct

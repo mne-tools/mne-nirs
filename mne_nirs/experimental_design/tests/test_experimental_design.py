@@ -5,14 +5,10 @@
 import os
 
 import mne
-import numpy as np
-
 import mne_nirs
-from mne_nirs.experimental_design import (
-    drift_high_pass,
-    longest_inter_annotation_interval,
-    make_first_level_design_matrix,
-)
+import numpy as np
+from mne_nirs.experimental_design import make_first_level_design_matrix, \
+    longest_inter_annotation_interval, drift_high_pass
 from mne_nirs.simulation import simulate_nirs_raw
 
 

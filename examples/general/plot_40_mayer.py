@@ -46,15 +46,17 @@ data for the purpose of extracting Mayer waves oscillation parameters.
 # License: BSD (3-clause)
 
 import os
-
-import matplotlib.pyplot as plt
 import mne
 import numpy as np
-from fooof import FOOOF
-from mne.preprocessing.nirs import beer_lambert_law, optical_density
+import matplotlib.pyplot as plt
+
+from mne.preprocessing.nirs import optical_density, beer_lambert_law
 
 from mne_nirs.channels import get_long_channels
 from mne_nirs.preprocessing import quantify_mayer_fooof
+
+from fooof import FOOOF
+
 
 # %%
 # Import and preprocess data

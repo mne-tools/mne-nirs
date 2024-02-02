@@ -21,15 +21,13 @@ measurement length has on response amplitude estimates.
 #
 # License: BSD (3-clause)
 
-import matplotlib.pylab as plt
 import mne
-import numpy as np
-from nilearn.plotting import plot_design_matrix
-
 import mne_nirs
+import matplotlib.pylab as plt
+import numpy as np
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_glm
-
+from nilearn.plotting import plot_design_matrix
 np.random.seed(1)
 
 

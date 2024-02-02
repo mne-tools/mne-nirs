@@ -3,12 +3,10 @@
 # License: BSD (3-clause)
 
 import os
-
 import mne
+import mne_nirs
 import numpy as np
 import pytest
-
-import mne_nirs
 
 
 def _load_dataset():

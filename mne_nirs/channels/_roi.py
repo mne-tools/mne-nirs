@@ -38,6 +38,7 @@ def picks_pair_to_idx(raw, sd_pairs, on_missing='error'):
     picks : list of integers
         List of picks corresponding to requested source detector pairs.
     """
+
     ch_names = raw.ch_names
     picks = list()
 

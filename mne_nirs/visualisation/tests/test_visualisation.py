@@ -2,22 +2,25 @@
 #
 # License: BSD (3-clause)
 
-import warnings
 from collections import defaultdict
 
-import mne
-import numpy as np
 import pytest
+import numpy as np
+import mne
+import mne_nirs
+import warnings
+
 from mne.datasets import testing
 from mne.utils import catch_logging, check_version
 
-import mne_nirs
+from mne_nirs.experimental_design.tests.test_experimental_design import \
+    _load_dataset
 from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.experimental_design.tests.test_experimental_design import _load_dataset
 from mne_nirs.statistics import run_glm
-from mne_nirs.statistics.tests.test_glm_type import _get_glm_result
-from mne_nirs.utils import glm_to_tidy
 from mne_nirs.visualisation import plot_glm_surface_projection
+from mne_nirs.utils import glm_to_tidy
+from mne_nirs.statistics.tests.test_glm_type import _get_glm_result
+
 
 testing_path = testing.data_path(download=False)
 raw_path = str(testing_path) + '/NIRx/nirscout/nirx_15_2_recording_w_short'

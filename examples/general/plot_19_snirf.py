@@ -34,14 +34,14 @@ You can read the SNIRF protocol at the official site https://github.com/fNIRS/sn
 # License: BSD (3-clause)
 
 import os
-
 import mne
 import snirf
+
 from mne.io import read_raw_nirx, read_raw_snirf
-from mne.preprocessing.nirs import beer_lambert_law, optical_density
+from mne.preprocessing.nirs import optical_density, beer_lambert_law
+from mne_nirs.io import write_raw_snirf
 from numpy.testing import assert_allclose
 
-from mne_nirs.io import write_raw_snirf
 
 # %%
 # Import raw NIRS data from vendor
@@ -67,7 +67,7 @@ write_raw_snirf(raw_intensity, 'test_raw.snirf')
 # %%
 # Read back SNIRF file
 # --------------------
-#
+# 
 # Next we can read back the snirf file.
 
 snirf_intensity = read_raw_snirf('test_raw.snirf')
@@ -76,7 +76,7 @@ snirf_intensity = read_raw_snirf('test_raw.snirf')
 # %%
 # Compare files
 # -------------
-#
+# 
 # Finally we can compare the data of the original to the SNIRF format and
 # ensure that the values are the same.
 

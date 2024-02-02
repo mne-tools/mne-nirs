@@ -1,21 +1,22 @@
+# -*- coding: utf-8 -*-
 # Authors: Robert Luke  <mail@robertluke.net>
 #          simplified BSD-3 license
 
-import datetime
 import os.path as op
-
+import datetime
 import h5py
-import pandas as pd
-import pytest
-from mne.datasets.testing import data_path, requires_testing_data
-from mne.io import read_raw_nirx, read_raw_snirf
-from mne.preprocessing.nirs import beer_lambert_law, optical_density
-from mne.utils import object_diff
 from numpy.testing import assert_allclose, assert_array_equal
-from snirf import Snirf, validateSnirf
+import pytest
+import pandas as pd
+from snirf import validateSnirf, Snirf
 
+from mne.datasets.testing import data_path, requires_testing_data
+from mne.utils import object_diff
+from mne.io import read_raw_snirf, read_raw_nirx
+from mne.preprocessing.nirs import optical_density, beer_lambert_law
+from mne_nirs.io.snirf import write_raw_snirf, SPEC_FORMAT_VERSION, \
+    read_snirf_aux_data
 import mne_nirs.datasets.snirf_with_aux as aux
-from mne_nirs.io.snirf import SPEC_FORMAT_VERSION, read_snirf_aux_data, write_raw_snirf
 
 fname_nirx_15_0 = op.join(data_path(download=False),
                           'NIRx', 'nirscout', 'nirx_15_0_recording')

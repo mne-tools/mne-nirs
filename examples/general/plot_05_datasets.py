@@ -25,9 +25,9 @@ dataset.
 # License: BSD (3-clause)
 
 
+import mne_nirs
 import mne_bids.stats
 
-import mne_nirs
 
 # %%
 # *******************

@@ -3,14 +3,16 @@
 # License: BSD (3-clause)
 
 import numpy as np
-import pandas as pd
-import pytest
-import statsmodels.formula.api as smf
-from mne.utils import check_version
 from numpy.testing import assert_allclose
 
-from mne_nirs.experimental_design import make_first_level_design_matrix
+import pytest
+import pandas as pd
+import statsmodels.formula.api as smf
+
+from mne.utils import check_version
+
 from mne_nirs.simulation import simulate_nirs_raw
+from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_glm, statsmodels_to_results
 
 

@@ -27,16 +27,20 @@ this can be incorporated in to your analysis.
 #
 # License: BSD (3-clause)
 
-import matplotlib.pyplot as plt
-import mne
 import numpy as np
+import matplotlib.pyplot as plt
 import pandas as pd
+
+import mne
+
+from mne_nirs.experimental_design import make_first_level_design_matrix
+from mne_nirs.channels import (get_long_channels,
+                               get_short_channels)
+from mne_nirs.io.snirf import read_snirf_aux_data
+from mne_nirs.datasets.snirf_with_aux import data_path
+
 from nilearn.plotting import plot_design_matrix
 
-from mne_nirs.channels import get_long_channels, get_short_channels
-from mne_nirs.datasets.snirf_with_aux import data_path
-from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.io.snirf import read_snirf_aux_data
 
 # %%
 # Import raw NIRS data
