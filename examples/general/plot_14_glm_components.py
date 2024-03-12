@@ -47,7 +47,6 @@ MNE-NIRS will wrap all required Nilearn functions so you don't need to access th
 #
 # License: BSD (3-clause)
 
-
 # Import common libraries
 import os
 

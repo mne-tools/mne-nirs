@@ -68,7 +68,6 @@ information about triggers, condition names, etc.
 #
 # License: BSD (3-clause)
 
-
 # Import common libraries
 import matplotlib as mpl
 

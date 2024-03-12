@@ -57,7 +57,6 @@ This GLM analysis is a wrapper over the excellent
 #
 # License: BSD (3-clause)
 
-
 # Import common libraries
 # Import Plotting Library
 import matplotlib.pyplot as plt
