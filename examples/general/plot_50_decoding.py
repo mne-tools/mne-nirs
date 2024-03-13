@@ -36,7 +36,6 @@ Luke et. al. (2021)
 #          Alexandre Gramfort <alexandre.gramfort@inria.fr>
 # License: BSD (3-clause)
 
-
 # Import common libraries
 import contextlib
 import os
