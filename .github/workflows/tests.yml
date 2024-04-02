@@ -14,17 +14,12 @@ jobs:
   # PIP + non-default stim channel + log level info
   job:
     name: '${{ matrix.os }} / ${{ matrix.kind }} / ${{ matrix.mne}}'
-    runs-on: ubuntu-20.04
+    runs-on: ${{ matrix.os }}
     defaults:
       run:
         shell: bash -el {0}
     env:
-      DISPLAY: ':99.0'
-      MNE_LOGGING_LEVEL: 'info'
-      MNE_STIM_CHANNEL: 'STI101'
-      OPENBLAS_NUM_THREADS: '1'
-      PYTHONUNBUFFERED: '1'
-      PYTHON_VERSION: '3.10'
+      PYTHON_VERSION: ${{ matrix.python}}
       MNEPYTHON: ${{ matrix.mne }}
     strategy:
       fail-fast: false
@@ -33,7 +28,7 @@ jobs:
           - os: ubuntu-latest
             mne: stable
             kind: pip
-            python: "3.8"  # oldest
+            python: "3.9"  # oldest
           - os: ubuntu-latest
             mne: dev
             kind: pip
@@ -45,7 +40,7 @@ jobs:
           - os: windows-latest
             mne: dev
             kind: conda
-            python: "3.9"
+            python: "3.10"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -64,6 +59,8 @@ jobs:
             python=${{ env.PYTHON_VERSION }}
         if: matrix.kind == 'conda'
       - run: pip install -r requirements_testing.txt
+      - run: pip install git+https://github.com/mne-tools/mne-python
+        if: matrix.mne == 'dev'
       - run: pip install -ve .
       - run: mne sys_info
       - run: ./tools/github_actions_download.sh
