@@ -56,7 +56,8 @@ jobs:
             python=${{ matrix.python }}
         if: matrix.kind == 'conda'
       - run: pip install -r requirements_testing.txt
-      - run: pip install --upgrade --pre git+https://github.com/mne-tools/mne-python git+https://github.com/nilearn/nilearn
+      - run: git clone https://github.com/mne-tools/mne-python
+      - run: pip install --upgrade --pre ./mne-python git+https://github.com/nilearn/nilearn
         if: matrix.mne == 'dev'
         name: Install MNE and nilearn dev
       # - run: pip install --upgrade --pre --force --only-binary=":all:" --index-url "https://pypi.anaconda.org/scientific-python-nightly-wheels/simple" "numpy>=2.0.0rc1" scipy h5py matplotlib pandas scikit-learn statsmodels "tables>=3.9.3.dev0"
@@ -64,6 +65,11 @@ jobs:
       #   name: Install numpy, scipy, nilearn pre
       - run: pip install -ve .
       - run: mne sys_info
+      - run: ./mne-python/tools/get_testing_version.sh
+      - uses: actions/cache@v4
+        with:
+          key: ${{ env.TESTING_VERSION }}
+          path: ~/mne_data
       - run: ./tools/github_actions_download.sh
       - run: pytest --cov=mne_nirs --cov-report xml -vv -m "not examples" "mne_nirs/"
       - uses: codecov/codecov-action@v1
