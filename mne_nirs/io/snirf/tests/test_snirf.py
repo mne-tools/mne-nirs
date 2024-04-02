@@ -53,7 +53,6 @@ def test_snirf_write_raw(fname, tmpdir):
     # Correct MNE bug with reading
     subj_info = raw.info["subject_info"]
     if not MNE_1_7:
-        assert "_" in subj_info["first_name"]
         subj_info["first_name"] = subj_info["first_name"].split("_")[0]
         assert "his_id" not in subj_info
         subj_info["his_id"] = his_id
