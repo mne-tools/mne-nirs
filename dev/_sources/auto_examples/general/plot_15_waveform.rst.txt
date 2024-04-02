@@ -293,7 +293,7 @@ To achieve this we pick all the channels that are not considered to be short.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f5ef3863d00>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f2924af9750>
 
 
 
@@ -327,7 +327,7 @@ The raw intensity values are then converted to optical density.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f5ef3f5ee60>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f2924ee6e60>
 
 
 
@@ -434,7 +434,7 @@ the modified Beer-Lambert law.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f5ef3d1b5b0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f2907de68c0>
 
 
 
@@ -643,14 +643,14 @@ the HbO peak.
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_010.png
-         :alt: Oxyhemoglobin (mean), µM
+         :alt: Deoxyhemoglobin (mean), µM
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_010.png
          :class: sphx-glr-multi-img
 
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_011.png
-         :alt: Deoxyhemoglobin (mean), µM
+         :alt: Oxyhemoglobin (mean), µM
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_011.png
          :class: sphx-glr-multi-img
 
@@ -701,14 +701,14 @@ that it does not show the expected morphology.
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_012.png
-         :alt: Oxyhemoglobin (mean), µM
+         :alt: Deoxyhemoglobin (mean), µM
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_012.png
          :class: sphx-glr-multi-img
 
     *
 
       .. image-sg:: /auto_examples/general/images/sphx_glr_plot_15_waveform_013.png
-         :alt: Deoxyhemoglobin (mean), µM
+         :alt: Oxyhemoglobin (mean), µM
          :srcset: /auto_examples/general/images/sphx_glr_plot_15_waveform_013.png
          :class: sphx-glr-multi-img
 
@@ -1040,14 +1040,14 @@ driving the topographic plot above.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f5ee0a0fac0>
+    <matplotlib.legend.Legend object at 0x7f2904205990>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 26.049 seconds)
+   **Total running time of the script:** (0 minutes 23.919 seconds)
 
 **Estimated memory usage:**  26 MB
 
