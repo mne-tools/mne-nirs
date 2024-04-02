@@ -59,7 +59,7 @@ jobs:
       - run: pip install --upgrade --pre git+https://github.com/mne-tools/mne-python git+https://github.com/nilearn/nilearn
         if: matrix.mne == 'dev'
         name: Install MNE dev
-      - run: pip install --upgrade --pre --index-url "https://pypi.anaconda.org/scientific-python-nightly-wheels/simple" "numpy>=2.0.0rc1" scipy h5py matplotlib pandas scikit-learn
+      - run: pip install --upgrade --pre --only-binary=":all:" --index-url "https://pypi.anaconda.org/scientific-python-nightly-wheels/simple" "numpy>=2.0.0rc1" scipy h5py matplotlib pandas scikit-learn
         if: matrix.mne == 'dev' && startsWith(matrix.os, 'ubuntu')
         name: Install numpy, scipy, nilearn pre
       - run: pip install -ve .
