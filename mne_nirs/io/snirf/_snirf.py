@@ -98,7 +98,12 @@ def _add_metadata_tags(raw, nirs):
     metadata_tags.create_dataset("MeasurementTime", data=_str_encode(timestr))
 
     # Store demographic info
-    subject_id = raw.info["subject_info"]["his_id"]
+    subject_id = "_".join(
+        raw.info["subject_info"][key]
+        for key in ["first_name", "middle_name", "last_name"]
+        if key in raw.info["subject_info"]
+    )
+    subject_id = raw.info["subject_info"].get("his_id", subject_id)
     metadata_tags.create_dataset("SubjectID", data=_str_encode(subject_id))
 
     # Store the units of measurement

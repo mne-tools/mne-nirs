@@ -47,7 +47,7 @@ def test_snirf_write_raw(fname, tmpdir):
     assert raw_orig.info["subject_info"]["his_id"] == his_id
     test_file = tmpdir.join("test_raw.snirf")
     write_raw_snirf(raw_orig, test_file)
-    raw = read_raw_snirf(test_file)
+    raw = read_raw_snirf(test_file, preload=True)
     # Correct MNE bug with reading
     subj_info = raw.info["subject_info"]
     if not check_version("mne", "1.7"):
@@ -95,6 +95,12 @@ def test_snirf_write_raw(fname, tmpdir):
 
     _verify_snirf_required_fields(test_file)
     _verify_snirf_version_str(test_file)
+
+    # make sure one can be written and read with no his_id (e.g., old MNE-Python)
+    del raw.info["subject_info"]["his_id"]
+    write_raw_snirf(raw, test_file)
+    raw = read_raw_snirf(test_file)
+    assert raw.info["subject_info"]["his_id"] == his_id
 
 
 @requires_testing_data
