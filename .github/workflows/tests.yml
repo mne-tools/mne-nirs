@@ -13,7 +13,7 @@ concurrency:
 jobs:
   # PIP + non-default stim channel + log level info
   job:
-    name: '${{ matrix.os }} / ${{ matrix.kind }} / ${{ matrix.mne}}'
+    name: '${{ matrix.os }} / ${{ matrix.kind }} / ${{ matrix.mne }}'
     runs-on: ${{ matrix.os }}
     defaults:
       run:
