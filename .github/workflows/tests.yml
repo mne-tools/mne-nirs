@@ -13,19 +13,11 @@ concurrency:
 jobs:
   # PIP + non-default stim channel + log level info
   job:
-    name: '${{ matrix.os }} / ${{ matrix.kind }} / ${{ matrix.mne}}'
-    runs-on: ubuntu-20.04
+    name: '${{ matrix.os }} / ${{ matrix.kind }} / ${{ matrix.mne }}'
+    runs-on: ${{ matrix.os }}
     defaults:
       run:
         shell: bash -el {0}
-    env:
-      DISPLAY: ':99.0'
-      MNE_LOGGING_LEVEL: 'info'
-      MNE_STIM_CHANNEL: 'STI101'
-      OPENBLAS_NUM_THREADS: '1'
-      PYTHONUNBUFFERED: '1'
-      PYTHON_VERSION: '3.10'
-      MNEPYTHON: ${{ matrix.mne }}
     strategy:
       fail-fast: false
       matrix:
@@ -33,7 +25,7 @@ jobs:
           - os: ubuntu-latest
             mne: stable
             kind: pip
-            python: "3.8"  # oldest
+            python: "3.9"  # oldest
           - os: ubuntu-latest
             mne: dev
             kind: pip
@@ -45,12 +37,12 @@ jobs:
           - os: windows-latest
             mne: dev
             kind: conda
-            python: "3.9"
+            python: "3.10"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version: ${{ matrix.python }}
         if: matrix.kind == 'pip'
       - uses: pyvista/setup-headless-display-action@main
         with:
@@ -61,12 +53,25 @@ jobs:
           environment-file: environment.yml
           environment-name: mne-nirs
           create-args: >-
-            python=${{ env.PYTHON_VERSION }}
+            python=${{ matrix.python }}
         if: matrix.kind == 'conda'
       - run: pip install -r requirements_testing.txt
+      - run: git clone https://github.com/mne-tools/mne-python
+      - run: pip install --upgrade --pre -e ./mne-python git+https://github.com/nilearn/nilearn
+        if: matrix.mne == 'dev'
+        name: Install MNE and nilearn dev
+      # - run: pip install --upgrade --pre --force --only-binary=":all:" --index-url "https://pypi.anaconda.org/scientific-python-nightly-wheels/simple" "numpy>=2.0.0rc1" scipy h5py matplotlib pandas scikit-learn statsmodels "tables>=3.9.3.dev0"
+      #   if: matrix.mne == 'dev' && startsWith(matrix.os, 'ubuntu')
+      #   name: Install numpy, scipy, nilearn pre
       - run: pip install -ve .
       - run: mne sys_info
+      - run: ./tools/get_testing_version.sh
+        working-directory: mne-python
+      - uses: actions/cache@v4
+        with:
+          key: ${{ env.TESTING_VERSION }}
+          path: ~/mne_data
       - run: ./tools/github_actions_download.sh
       - run: pytest --cov=mne_nirs --cov-report xml -vv -m "not examples" "mne_nirs/"
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v4
         if: success()

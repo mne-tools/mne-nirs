@@ -307,7 +307,7 @@ def _source_detector_fold_table(raw, cidx, reference, fold_tbl, interpolate):
     if len(tbl) == 0 and interpolate:
         # Try something hopefully not too terrible: pick the one with the
         # smallest net distance
-        good = np.in1d(fold_tbl["Source"], reference["label"]) & np.in1d(
+        good = np.isin(fold_tbl["Source"], reference["label"]) & np.isin(
             fold_tbl["Detector"], reference["label"]
         )
         assert good.any()

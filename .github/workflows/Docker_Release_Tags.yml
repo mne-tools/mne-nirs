@@ -18,33 +18,21 @@ on:
 
 jobs:
   version:
-
     runs-on: ubuntu-latest
-
     steps:
-
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
+      - uses: actions/checkout@v4
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build docker image
         run: docker-compose build --build-arg mne_python_v=${{ github.event.inputs.mne_python }} --build-arg mne_nirs_v=${{ github.event.inputs.mne_nirs }} --build-arg nilearn_v=${{ github.event.inputs.nilearn }} base
-
-      - name: List docker images
-        run: docker images
-
+      - run: docker images
       - name: Rename base image tag for release
         run: docker tag mne-tools/mne-nirs ghcr.io/mne-tools/mne-nirs:${{ github.event.inputs.mne_nirs }}
-
       - name: Push image to github
         run: docker push ghcr.io/mne-tools/mne-nirs:${{ github.event.inputs.mne_nirs }}
-
       - name: System info
         run: docker run ghcr.io/mne-tools/mne-nirs:${{ github.event.inputs.mne_nirs }} python -c "import mne_nirs; print(mne_nirs.__version__)"

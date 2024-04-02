@@ -13,28 +13,21 @@ concurrency:
 
 jobs:
   latest:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        shell: bash -el {0}
     steps:
-
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build docker image
-        run: docker-compose build worker
-
+      - run: docker-compose build worker
       - name: System info
         run: docker run mne-tools/mne-nirs python -c "import mne; mne.sys_info()"
-
       - name: MNE-NIRS info
         run: docker run mne-tools/mne-nirs python -c "import mne_nirs; print(mne_nirs.__version__)"
-
       - name: Run visualisation test
         run: docker run -v `pwd`:/opt/app/examples mne-tools/mne-nirs ipython /opt/app/examples/.github/workflows/docker_tests.py
