@@ -63,6 +63,10 @@ def pytest_configure(config):
     ignore:Mesa version 10\.2\.4 is too old.*:RuntimeWarning
     # Pandas
     ignore:np\.find_common_type is deprecated.*:DeprecationWarning
+    # statsmodels
+    ignore:The numpy\.linalg\.linalg has been made private.*:DeprecationWarning
+    # sklearn
+    ignore:KMeans is known to have a memory leak on Windows with MKL.*:UserWarning
     """  # noqa: E501
     for warning_line in warning_lines.split("\n"):
         warning_line = warning_line.strip()
