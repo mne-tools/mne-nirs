@@ -10,7 +10,7 @@ import pytest
 from mne.datasets.testing import data_path, requires_testing_data
 from mne.io import read_raw_nirx, read_raw_snirf
 from mne.preprocessing.nirs import beer_lambert_law, optical_density
-from mne.utils import object_diff
+from mne.utils import check_version, object_diff
 from numpy.testing import assert_allclose, assert_array_equal
 from snirf import Snirf, validateSnirf
 
@@ -38,9 +38,24 @@ pytest.importorskip("h5py")
 def test_snirf_write_raw(fname, tmpdir):
     """Test reading NIRX files."""
     raw_orig = read_raw_nirx(fname, preload=True)
+    subj_info = raw_orig.info["subject_info"]
+    his_id = "_".join(  # this is how MNE-Python creates his_id for NIRX files
+        subj_info[key]
+        for key in ("first_name", "middle_name", "last_name")
+        if key in subj_info
+    )
+    assert raw_orig.info["subject_info"]["his_id"] == his_id
     test_file = tmpdir.join("test_raw.snirf")
     write_raw_snirf(raw_orig, test_file)
     raw = read_raw_snirf(test_file)
+    # Correct MNE bug with reading
+    subj_info = raw.info["subject_info"]
+    if not check_version("mne", "1.7"):
+        assert "_" in subj_info["first_name"]
+        subj_info["first_name"] = subj_info["first_name"].split("_")[0]
+        assert "his_id" not in subj_info
+        subj_info["his_id"] = his_id
+    assert subj_info["his_id"] == his_id
 
     result = validateSnirf(str(test_file))
     if result.is_valid():
