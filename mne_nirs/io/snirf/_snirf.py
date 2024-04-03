@@ -98,7 +98,12 @@ def _add_metadata_tags(raw, nirs):
     metadata_tags.create_dataset("MeasurementTime", data=_str_encode(timestr))
 
     # Store demographic info
-    subject_id = raw.info["subject_info"]["first_name"]
+    subject_id = "_".join(
+        raw.info["subject_info"][key]
+        for key in ["first_name", "middle_name", "last_name"]
+        if key in raw.info["subject_info"]
+    )
+    subject_id = raw.info["subject_info"].get("his_id", subject_id)
     metadata_tags.create_dataset("SubjectID", data=_str_encode(subject_id))
 
     # Store the units of measurement
@@ -111,12 +116,10 @@ def _add_metadata_tags(raw, nirs):
         birthday = datetime.date(*raw.info["subject_info"]["birthday"])
         birthstr = birthday.strftime("%Y-%m-%d")
         metadata_tags.create_dataset("DateOfBirth", data=[_str_encode(birthstr)])
-    if "middle_name" in raw.info["subject_info"]:
-        middle_name = raw.info["subject_info"]["middle_name"]
-        metadata_tags.create_dataset("middleName", data=[_str_encode(middle_name)])
-    if "last_name" in raw.info["subject_info"]:
-        last_name = raw.info["subject_info"]["last_name"]
-        metadata_tags.create_dataset("lastName", data=[_str_encode(last_name)])
+    for key in ("first", "middle", "last"):
+        name = raw.info["subject_info"].get(f"{key}_name", None)
+        if name is not None:
+            metadata_tags.create_dataset(f"{key}Name", data=[_str_encode(name)])
     if "sex" in raw.info["subject_info"]:
         sex = str(int(raw.info["subject_info"]["sex"]))
         metadata_tags.create_dataset("sex", data=[_str_encode(sex)])
