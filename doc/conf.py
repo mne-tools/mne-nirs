@@ -232,6 +232,9 @@ nitpick_ignore_regex = [
     # Type hints for undocumented types
     ("py:.*", r"mne\.io\..*\.Raw.*"),  # RawEDF etc.
 ]
+suppress_warnings = [
+    "config.cache",  # our rebuild is okay
+]
 
 
 # -- Options for HTML output ----------------------------------------------

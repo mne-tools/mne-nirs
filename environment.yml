@@ -2,9 +2,9 @@ name: mne-nirs
 channels:
 - conda-forge
 dependencies:
-- python>=3.8
+- python>=3.9
 - pip
 - mne
 - nilearn
 - statsmodels
-- pytables
+- pytables>=3.8
