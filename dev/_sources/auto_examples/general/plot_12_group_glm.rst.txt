@@ -433,7 +433,7 @@ and that the responses look to be contralateral to the tapping hand.
  .. code-block:: none
 
 
-    <seaborn.axisgrid.FacetGrid object at 0x7f4ae62a1090>
+    <seaborn.axisgrid.FacetGrid object at 0x7fb73575d690>
 
 
 
@@ -492,7 +492,7 @@ model by using the code
 
  .. code-block:: none
 
-    /home/circleci/python_env/lib/python3.10/site-packages/statsmodels/regression/mixed_linear_model.py:2238: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+    /home/circleci/python_env/lib/python3.10/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
       warnings.warn(msg, ConvergenceWarning)
 
 
@@ -708,10 +708,10 @@ Filled symbols represent HbO, unfilled symbols represent HbR.
 
  .. code-block:: none
 
-    /home/circleci/python_env/lib/python3.10/site-packages/statsmodels/regression/mixed_linear_model.py:2238: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+    /home/circleci/python_env/lib/python3.10/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
       warnings.warn(msg, ConvergenceWarning)
 
-    <seaborn.axisgrid.FacetGrid object at 0x7f49bb48c8b0>
+    <seaborn.axisgrid.FacetGrid object at 0x7fb73581b160>
 
 
 
@@ -855,7 +855,7 @@ in a topographic representation.
 
  .. code-block:: none
 
-    /home/circleci/python_env/lib/python3.10/site-packages/statsmodels/regression/mixed_linear_model.py:2238: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+    /home/circleci/python_env/lib/python3.10/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
       warnings.warn(msg, ConvergenceWarning)
 
     <AxesSubplot: title={'center': 'Contrast'}>
@@ -1787,9 +1787,9 @@ hand of tapping and most likely originate from the primary motor cortex.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 26.290 seconds)
+   **Total running time of the script:** (0 minutes 26.248 seconds)
 
-**Estimated memory usage:**  529 MB
+**Estimated memory usage:**  446 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_12_group_glm.py:

@@ -40,7 +40,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script src="../../_static/documentation_options.js?v=47855553"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
@@ -485,7 +485,7 @@ tiles, and thus channels.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;/home/circleci/mne_data/MNE-testing-data/SNIRF/GowerLabs/lumomat-1-1-0.snirf&#39;
 </pre></div>
 </div>
-<p>To load the file we call the function <a class="reference external" href="https://mne.tools/stable/generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="(in MNE v1.6)"><code class="docutils literal notranslate"><span class="pre">mne.io.read_raw_snirf()</span></code></a>.</p>
+<p>To load the file we call the function <a class="reference external" href="https://mne.tools/stable/generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="(in MNE v1.7)"><code class="docutils literal notranslate"><span class="pre">mne.io.read_raw_snirf()</span></code></a>.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="mne.io.read_raw_snirf" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_raw_snirf</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -598,7 +598,7 @@ and signal annotations.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_06_gowerlabs_001.png" srcset="../../_images/sphx_glr_plot_06_gowerlabs_001.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f49bb43fd90&gt;
+<img src="../../_images/sphx_glr_plot_06_gowerlabs_001.png" srcset="../../_images/sphx_glr_plot_06_gowerlabs_001.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fb6687bfb50&gt;
 </pre></div>
 </div>
 <p>We observe valid data in each channel, and note that the file includes a
@@ -713,7 +713,7 @@ the annotations to a dataframe.</p>
 <p>The position of optodes in 3D space is recorded and stored in the SNIRF file.
 These positions are stored in head coordinate frame,
 for a detailed overview of coordinate frames and how they are handled in MNE
-see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/20_source_alignment.html#tut-source-alignment" title="(in MNE v1.6)"><span>Source alignment and coordinate frames</span></a>.</p>
+see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/20_source_alignment.html#tut-source-alignment" title="(in MNE v1.7)"><span>Source alignment and coordinate frames</span></a>.</p>
 <p>Within the SNIRF file, the position of each optode is stored,
 along with scalp landmarks (“fiducials”).
 These positions are in an arbitrary space, and must be aligned to a scan of
@@ -754,7 +754,7 @@ First, lets just look at the <cite>fsaverage</cite> head that we will use.</p>
 <p class="admonition-title">Note</p>
 <p>In this tutorial we use an automated code based approach
 to coregistration. You can also use the MNE-Python
-coregistration GUI <a class="reference external" href="https://mne.tools/stable/generated/mne.gui.coregistration.html#mne.gui.coregistration" title="(in MNE v1.6)"><code class="docutils literal notranslate"><span class="pre">mne.gui.coregistration()</span></code></a>.</p>
+coregistration GUI <a class="reference external" href="https://mne.tools/stable/generated/mne.gui.coregistration.html#mne.gui.coregistration" title="(in MNE v1.7)"><code class="docutils literal notranslate"><span class="pre">mne.gui.coregistration()</span></code></a>.</p>
 </div>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
     <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span>
@@ -778,7 +778,7 @@ coregistration GUI <a class="reference external" href="https://mne.tools/stable/
 <p>This is what a head model will look like. If you have an MRI from
 the participant you can use freesurfer to generate the required files.
 For further details on generating freesurfer reconstructions see
-<a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/10_background_freesurfer.html#tut-freesurfer-reconstruction" title="(in MNE v1.6)"><span>FreeSurfer MRI reconstruction</span></a>.</p>
+<a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/10_background_freesurfer.html#tut-freesurfer-reconstruction" title="(in MNE v1.7)"><span>FreeSurfer MRI reconstruction</span></a>.</p>
 <p>In the figure above you can see the brain in grey. You can also
 see the MRI fiducial positions marked with diamonds.
 The nasion fiducial is marked in green, the left and right
@@ -786,7 +786,7 @@ preauricular points (LPA and RPA) in red and blue respectively.</p>
 <p>Next, we simultaneously plot the <cite>fsaverage</cite> head, and the
 data we wish to align to this head. This process is called
 coregistration and is described in several MNE-Python tutorials
-including <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/25_automated_coreg.html#tut-auto-coreg" title="(in MNE v1.6)"><span>Using an automated approach to coregistration</span></a>.</p>
+including <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/25_automated_coreg.html#tut-auto-coreg" title="(in MNE v1.7)"><span>Using an automated approach to coregistration</span></a>.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.plot_alignment.html#mne.viz.plot_alignment" title="mne.viz.plot_alignment" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_alignment</span></a><span class="p">(</span>
     <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="o">**</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a>
 <span class="p">)</span>
@@ -826,7 +826,7 @@ Channel types:: fnirs_cw_amplitude: 216
 the optodes are well aligned to the brain, and the distance between diamonds (MRI)
 and circles (subject) fiducials is minimised. There is still some distance
 between the fiducial pairs, this is because we used a generic head rather than
-an individualised MRI scan. You can also <a class="reference external" href="https://mne.tools/stable/generated/mne.scale_mri.html#mne.scale_mri" title="(in MNE v1.6)"><code class="docutils literal notranslate"><span class="pre">mne.scale_mri()</span></code></a> to scale
+an individualised MRI scan. You can also <a class="reference external" href="https://mne.tools/stable/generated/mne.scale_mri.html#mne.scale_mri" title="(in MNE v1.7)"><code class="docutils literal notranslate"><span class="pre">mne.scale_mri()</span></code></a> to scale
 the generic MRI head.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span>
     <span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s2">&quot;0.5&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span>
@@ -969,8 +969,8 @@ Channel types:: fnirs_cw_amplitude: 216
 <p class="admonition-title">Note</p>
 <p>HD-DOT specific tutorials are currently under development.</p>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 24.318 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  189 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 25.750 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  182 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-06-gowerlabs-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_06_gowerlabs.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
@@ -1080,7 +1080,7 @@ Channel types:: fnirs_cw_amplitude: 216
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-04-16T18:46:49.739180+00:00" class="localized">2024-04-16 18:46 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-04-23T15:27:44.070029+00:00" class="localized">2024-04-23 15:27 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
