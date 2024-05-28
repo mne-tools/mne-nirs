@@ -500,94 +500,340 @@ Reading 0 ... 273  =      0.000 ...    27.300 secs...
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
-<details open>
-    <summary><strong>General</strong></summary>
-    <table class="table table-hover table-striped table-sm table-responsive small">
-        <tr>
-            <th>Measurement date</th>
+<script type="text/javascript">
+    const toggleVisibility = (className) => {
 
-            <td>January 01, 2000  00:00:00 GMT</td>
+  const elements = document.querySelectorAll(`.${className}`)
 
-        </tr>
-        <tr>
-            <th>Experimenter</th>
+  elements.forEach(element => {
+    if (element.classList.contains('repr-section-header')) {
+      // Don't collapse the section header row.
+       return
+    }
+    if (element.classList.contains('repr-element-collapsed')) {
+      // Force a reflow to ensure the display change takes effect before removing the class
+      element.classList.remove('repr-element-collapsed')
+      element.offsetHeight // This forces the browser to recalculate layout
+      element.classList.remove('repr-element-faded')
+    } else {
+      // Start transition to hide the element
+      element.classList.add('repr-element-faded')
+      element.addEventListener('transitionend', handler = (e) => {
+        if (e.propertyName === 'opacity' && getComputedStyle(element).opacity === '0.2') {
+          element.classList.add('repr-element-collapsed')
+          element.removeEventListener('transitionend', handler)
+        }
+      });
+    }
+  });
 
-            <td>Unknown</td>
+  // Take care of button (adjust caret)
+  const button = document.querySelectorAll(`.repr-section-header.${className} > th.repr-section-toggle-col > button`)[0]
+  button.classList.toggle('collapsed')
 
-        </tr>
-        <tr>
-            <th>Participant</th>
+  // Take care of the tooltip of the section header row
+  const sectionHeaderRow = document.querySelectorAll(`tr.repr-section-header.${className}`)[0]
+  sectionHeaderRow.classList.toggle('collapsed')
+  sectionHeaderRow.title = sectionHeaderRow.title === 'Hide section' ? 'Show section' : 'Hide section'
+}
+</script>
+
+<style type="text/css">
+    table.repr.table.table-hover.table-striped.table-sm.table-responsive.small {
+  /* Don't make rows wider than they need to be. */
+  display: inline;
+}
+
+table > tbody > tr.repr-element > td {
+  /* Apply a tighter layout to the table cells. */
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  padding-right: 1rem;
+}
+
+table > tbody > tr > td.repr-section-toggle-col {
+  /* Remove background and border of the first cell in every row
+     (this row is only used for the collapse / uncollapse caret)
+
+     TODO: Need to find a good solution for VS Code that works in both
+           light and dark mode. */
+  border-color: transparent;
+  --bs-table-accent-bg: transparent;
+}
+
+tr.repr-section-header {
+  /* Remove stripes from section header rows */
+  background-color: transparent;
+  border-color: transparent;
+  --bs-table-striped-bg: transparent;
+  cursor: pointer;
+}
+
+tr.repr-section-header > th {
+  text-align: left !important;
+  vertical-align: middle;
+}
+
+.repr-element, tr.repr-element > td {
+  opacity: 1;
+  text-align: left !important;
+}
+
+.repr-element-faded {
+  transition: 0.3s ease;
+  opacity: 0.2;
+}
+
+.repr-element-collapsed {
+  display: none;
+}
+
+/* Collapse / uncollapse button and the caret it contains. */
+.repr-section-toggle-col button {
+  cursor: pointer;
+  width: 1rem;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+span.collapse-uncollapse-caret {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+}
+
+/* The collapse / uncollapse carets were copied from the free Font Awesome collection and adjusted. */
+
+/* Default to black carets for light mode */
+.repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+}
+
+.repr-section-toggle-col
+  > button:not(.collapsed)
+  > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+}
+
+/* Use white carets for dark mode */
+@media (prefers-color-scheme: dark) {
+  .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+  }
+
+  .repr-section-toggle-col
+    > button:not(.collapsed)
+    > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+  }
+}
+
+.channel-names-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  cursor: pointer;
+  color: #0d6efd;
+}
+
+.channel-names-btn:hover {
+  color: #0a58ca;
+}
+</style>
 
 
-            <td>Subject Unknown</td>
 
-
-        </tr>
-    </table>
-    </details>
-    <details open>
-        <summary><strong>Channels</strong></summary>
-        <table class="table table-hover table-striped table-sm table-responsive small">
-            <tr>
-                <th>Digitized points</th>
-
-                <td>5 points</td>
-
-            </tr>
-            <tr>
-                <th>Good channels</th>
-                <td>216 fNIRS (CW amplitude)</td>
-            </tr>
-            <tr>
-                <th>Bad channels</th>
-                <td>None</td>
-            </tr>
-            <tr>
-                <th>EOG channels</th>
-                <td>Not available</td>
-            </tr>
-            <tr>
-                <th>ECG channels</th>
-                <td>Not available</td>
-            </tr>
-        </table>
-        </details>
-        <details open>
-            <summary><strong>Data</strong></summary>
-            <table class="table table-hover table-striped table-sm table-responsive small">
-
-                <tr>
-                    <th>Sampling frequency</th>
-                    <td>10.00 Hz</td>
-                </tr>
-
-
-                <tr>
-                    <th>Highpass</th>
-                    <td>0.00 Hz</td>
-                </tr>
-
-
-                <tr>
-                    <th>Lowpass</th>
-                    <td>5.00 Hz</td>
-                </tr>
+<table class="repr table table-hover table-striped table-sm table-responsive small">
 
 
 
-                <tr>
-                    <th>Filenames</th>
-                    <td>lumomat-1-1-0.snirf</td>
-                </tr>
 
 
-                <tr>
-                    <th>Duration</th>
-                    <td>00:00:28 (HH:MM:SS)</td>
-                </tr>
 
-            </table>
-            </details>
+
+
+<tr class="repr-section-header general-e92ffa3a-6789-48f5-9dd7-49773a28ca9e"  title="Hide section"
+    onclick="toggleVisibility('general-e92ffa3a-6789-48f5-9dd7-49773a28ca9e')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>General</strong>
+    </th>
+</tr>
+
+<tr class="repr-element general-e92ffa3a-6789-48f5-9dd7-49773a28ca9e ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Filename(s)</td>
+    <td>
+
+        lumomat-1-1-0.snirf
+
+
+    </td>
+</tr>
+
+<tr class="repr-element general-e92ffa3a-6789-48f5-9dd7-49773a28ca9e ">
+    <td class="repr-section-toggle-col"></td>
+    <td>MNE object type</td>
+    <td>RawSNIRF</td>
+</tr>
+<tr class="repr-element general-e92ffa3a-6789-48f5-9dd7-49773a28ca9e ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Measurement date</td>
+
+    <td>2000-01-01 at 00:00:00 UTC</td>
+
+</tr>
+<tr class="repr-element general-e92ffa3a-6789-48f5-9dd7-49773a28ca9e ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Participant</td>
+
+
+    <td>Subject Unknown</td>
+
+
+</tr>
+<tr class="repr-element general-e92ffa3a-6789-48f5-9dd7-49773a28ca9e ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Experimenter</td>
+
+    <td>Unknown</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header acquisition-60a1a055-5741-41c1-8fd8-0b8fff900015"  title="Hide section"
+    onclick="toggleVisibility('acquisition-60a1a055-5741-41c1-8fd8-0b8fff900015')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Acquisition</strong>
+    </th>
+</tr>
+
+<tr class="repr-element acquisition-60a1a055-5741-41c1-8fd8-0b8fff900015 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Duration</td>
+    <td>00:00:28 (HH:MM:SS)</td>
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-element acquisition-60a1a055-5741-41c1-8fd8-0b8fff900015 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Sampling frequency</td>
+    <td>10.00 Hz</td>
+</tr>
+
+
+<tr class="repr-element acquisition-60a1a055-5741-41c1-8fd8-0b8fff900015 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Time points</td>
+    <td>274</td>
+</tr>
+
+
+
+
+
+
+
+
+
+<tr class="repr-section-header channels-8cac329c-616b-4369-a652-66f197a3a633"  title="Hide section"
+    onclick="toggleVisibility('channels-8cac329c-616b-4369-a652-66f197a3a633')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Channels</strong>
+    </th>
+</tr>
+
+
+<tr class="repr-element channels-8cac329c-616b-4369-a652-66f197a3a633 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>fNIRS (CW amplitude)</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good fNIRS (CW amplitude):\n\nS1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850')" title="(Click to open in popup)&#13;&#13;S1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850">
+            216
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-8cac329c-616b-4369-a652-66f197a3a633 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Head & sensor digitization</td>
+
+    <td>5 points</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header filters-73618e48-7cda-4d75-b49b-a6ebdf8f2e91"  title="Hide section"
+    onclick="toggleVisibility('filters-73618e48-7cda-4d75-b49b-a6ebdf8f2e91')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Filters</strong>
+    </th>
+</tr>
+
+<tr class="repr-element filters-73618e48-7cda-4d75-b49b-a6ebdf8f2e91 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Highpass</td>
+    <td>0.00 Hz</td>
+</tr>
+
+
+<tr class="repr-element filters-73618e48-7cda-4d75-b49b-a6ebdf8f2e91 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Lowpass</td>
+    <td>5.00 Hz</td>
+</tr>
+
+
+</table>
 </div>
 <br />
 <br /></section>
@@ -598,7 +844,7 @@ and signal annotations.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_06_gowerlabs_001.png" srcset="../../_images/sphx_glr_plot_06_gowerlabs_001.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fdfa01716c0&gt;
+<img src="../../_images/sphx_glr_plot_06_gowerlabs_001.png" srcset="../../_images/sphx_glr_plot_06_gowerlabs_001.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f6734235000&gt;
 </pre></div>
 </div>
 <p>We observe valid data in each channel, and note that the file includes a
@@ -851,94 +1097,340 @@ interface using the <cite>fsaverage</cite> head.</p>
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
-<details open>
-    <summary><strong>General</strong></summary>
-    <table class="table table-hover table-striped table-sm table-responsive small">
-        <tr>
-            <th>Measurement date</th>
+<script type="text/javascript">
+    const toggleVisibility = (className) => {
 
-            <td>January 01, 2000  00:00:00 GMT</td>
+  const elements = document.querySelectorAll(`.${className}`)
 
-        </tr>
-        <tr>
-            <th>Experimenter</th>
+  elements.forEach(element => {
+    if (element.classList.contains('repr-section-header')) {
+      // Don't collapse the section header row.
+       return
+    }
+    if (element.classList.contains('repr-element-collapsed')) {
+      // Force a reflow to ensure the display change takes effect before removing the class
+      element.classList.remove('repr-element-collapsed')
+      element.offsetHeight // This forces the browser to recalculate layout
+      element.classList.remove('repr-element-faded')
+    } else {
+      // Start transition to hide the element
+      element.classList.add('repr-element-faded')
+      element.addEventListener('transitionend', handler = (e) => {
+        if (e.propertyName === 'opacity' && getComputedStyle(element).opacity === '0.2') {
+          element.classList.add('repr-element-collapsed')
+          element.removeEventListener('transitionend', handler)
+        }
+      });
+    }
+  });
 
-            <td>Unknown</td>
+  // Take care of button (adjust caret)
+  const button = document.querySelectorAll(`.repr-section-header.${className} > th.repr-section-toggle-col > button`)[0]
+  button.classList.toggle('collapsed')
 
-        </tr>
-        <tr>
-            <th>Participant</th>
+  // Take care of the tooltip of the section header row
+  const sectionHeaderRow = document.querySelectorAll(`tr.repr-section-header.${className}`)[0]
+  sectionHeaderRow.classList.toggle('collapsed')
+  sectionHeaderRow.title = sectionHeaderRow.title === 'Hide section' ? 'Show section' : 'Hide section'
+}
+</script>
+
+<style type="text/css">
+    table.repr.table.table-hover.table-striped.table-sm.table-responsive.small {
+  /* Don't make rows wider than they need to be. */
+  display: inline;
+}
+
+table > tbody > tr.repr-element > td {
+  /* Apply a tighter layout to the table cells. */
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  padding-right: 1rem;
+}
+
+table > tbody > tr > td.repr-section-toggle-col {
+  /* Remove background and border of the first cell in every row
+     (this row is only used for the collapse / uncollapse caret)
+
+     TODO: Need to find a good solution for VS Code that works in both
+           light and dark mode. */
+  border-color: transparent;
+  --bs-table-accent-bg: transparent;
+}
+
+tr.repr-section-header {
+  /* Remove stripes from section header rows */
+  background-color: transparent;
+  border-color: transparent;
+  --bs-table-striped-bg: transparent;
+  cursor: pointer;
+}
+
+tr.repr-section-header > th {
+  text-align: left !important;
+  vertical-align: middle;
+}
+
+.repr-element, tr.repr-element > td {
+  opacity: 1;
+  text-align: left !important;
+}
+
+.repr-element-faded {
+  transition: 0.3s ease;
+  opacity: 0.2;
+}
+
+.repr-element-collapsed {
+  display: none;
+}
+
+/* Collapse / uncollapse button and the caret it contains. */
+.repr-section-toggle-col button {
+  cursor: pointer;
+  width: 1rem;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+span.collapse-uncollapse-caret {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+}
+
+/* The collapse / uncollapse carets were copied from the free Font Awesome collection and adjusted. */
+
+/* Default to black carets for light mode */
+.repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+}
+
+.repr-section-toggle-col
+  > button:not(.collapsed)
+  > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+}
+
+/* Use white carets for dark mode */
+@media (prefers-color-scheme: dark) {
+  .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+  }
+
+  .repr-section-toggle-col
+    > button:not(.collapsed)
+    > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+  }
+}
+
+.channel-names-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  cursor: pointer;
+  color: #0d6efd;
+}
+
+.channel-names-btn:hover {
+  color: #0a58ca;
+}
+</style>
 
 
-            <td>Subject Unknown</td>
 
-
-        </tr>
-    </table>
-    </details>
-    <details open>
-        <summary><strong>Channels</strong></summary>
-        <table class="table table-hover table-striped table-sm table-responsive small">
-            <tr>
-                <th>Digitized points</th>
-
-                <td>24 points</td>
-
-            </tr>
-            <tr>
-                <th>Good channels</th>
-                <td>216 fNIRS (CW amplitude)</td>
-            </tr>
-            <tr>
-                <th>Bad channels</th>
-                <td>None</td>
-            </tr>
-            <tr>
-                <th>EOG channels</th>
-                <td>Not available</td>
-            </tr>
-            <tr>
-                <th>ECG channels</th>
-                <td>Not available</td>
-            </tr>
-        </table>
-        </details>
-        <details open>
-            <summary><strong>Data</strong></summary>
-            <table class="table table-hover table-striped table-sm table-responsive small">
-
-                <tr>
-                    <th>Sampling frequency</th>
-                    <td>10.00 Hz</td>
-                </tr>
-
-
-                <tr>
-                    <th>Highpass</th>
-                    <td>0.00 Hz</td>
-                </tr>
-
-
-                <tr>
-                    <th>Lowpass</th>
-                    <td>5.00 Hz</td>
-                </tr>
+<table class="repr table table-hover table-striped table-sm table-responsive small">
 
 
 
-                <tr>
-                    <th>Filenames</th>
-                    <td>lumomat-1-1-0.snirf</td>
-                </tr>
 
 
-                <tr>
-                    <th>Duration</th>
-                    <td>00:00:28 (HH:MM:SS)</td>
-                </tr>
 
-            </table>
-            </details>
+
+
+<tr class="repr-section-header general-f68915fb-3e2e-4f91-a689-895a549b476d"  title="Hide section"
+    onclick="toggleVisibility('general-f68915fb-3e2e-4f91-a689-895a549b476d')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>General</strong>
+    </th>
+</tr>
+
+<tr class="repr-element general-f68915fb-3e2e-4f91-a689-895a549b476d ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Filename(s)</td>
+    <td>
+
+        lumomat-1-1-0.snirf
+
+
+    </td>
+</tr>
+
+<tr class="repr-element general-f68915fb-3e2e-4f91-a689-895a549b476d ">
+    <td class="repr-section-toggle-col"></td>
+    <td>MNE object type</td>
+    <td>RawSNIRF</td>
+</tr>
+<tr class="repr-element general-f68915fb-3e2e-4f91-a689-895a549b476d ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Measurement date</td>
+
+    <td>2000-01-01 at 00:00:00 UTC</td>
+
+</tr>
+<tr class="repr-element general-f68915fb-3e2e-4f91-a689-895a549b476d ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Participant</td>
+
+
+    <td>Subject Unknown</td>
+
+
+</tr>
+<tr class="repr-element general-f68915fb-3e2e-4f91-a689-895a549b476d ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Experimenter</td>
+
+    <td>Unknown</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header acquisition-2b6c0fca-8ded-4056-88e7-ba01559b3487"  title="Hide section"
+    onclick="toggleVisibility('acquisition-2b6c0fca-8ded-4056-88e7-ba01559b3487')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Acquisition</strong>
+    </th>
+</tr>
+
+<tr class="repr-element acquisition-2b6c0fca-8ded-4056-88e7-ba01559b3487 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Duration</td>
+    <td>00:00:28 (HH:MM:SS)</td>
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-element acquisition-2b6c0fca-8ded-4056-88e7-ba01559b3487 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Sampling frequency</td>
+    <td>10.00 Hz</td>
+</tr>
+
+
+<tr class="repr-element acquisition-2b6c0fca-8ded-4056-88e7-ba01559b3487 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Time points</td>
+    <td>274</td>
+</tr>
+
+
+
+
+
+
+
+
+
+<tr class="repr-section-header channels-7787a43e-8bd5-48ee-9796-fb3758ed73b7"  title="Hide section"
+    onclick="toggleVisibility('channels-7787a43e-8bd5-48ee-9796-fb3758ed73b7')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Channels</strong>
+    </th>
+</tr>
+
+
+<tr class="repr-element channels-7787a43e-8bd5-48ee-9796-fb3758ed73b7 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>fNIRS (CW amplitude)</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good fNIRS (CW amplitude):\n\nS1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850')" title="(Click to open in popup)&#13;&#13;S1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850">
+            216
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-7787a43e-8bd5-48ee-9796-fb3758ed73b7 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Head & sensor digitization</td>
+
+    <td>24 points</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header filters-51cc0bd5-9a76-4ee4-9b60-efef542f60fb"  title="Hide section"
+    onclick="toggleVisibility('filters-51cc0bd5-9a76-4ee4-9b60-efef542f60fb')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Filters</strong>
+    </th>
+</tr>
+
+<tr class="repr-element filters-51cc0bd5-9a76-4ee4-9b60-efef542f60fb ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Highpass</td>
+    <td>0.00 Hz</td>
+</tr>
+
+
+<tr class="repr-element filters-51cc0bd5-9a76-4ee4-9b60-efef542f60fb ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Lowpass</td>
+    <td>5.00 Hz</td>
+</tr>
+
+
+</table>
 </div>
 <br />
 <br /><p>You can then save the coregistered object.</p>
@@ -969,8 +1461,8 @@ Channel types:: fnirs_cw_amplitude: 216
 <p class="admonition-title">Note</p>
 <p>HD-DOT specific tutorials are currently under development.</p>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 26.226 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  163 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 30.214 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  164 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-06-gowerlabs-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_06_gowerlabs.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
@@ -1080,7 +1572,7 @@ Channel types:: fnirs_cw_amplitude: 216
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-05-13T23:06:23.308422+00:00" class="localized">2024-05-13 23:06 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-05-28T13:23:34.786048+00:00" class="localized">2024-05-28 13:23 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
