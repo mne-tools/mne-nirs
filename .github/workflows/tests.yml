@@ -2,10 +2,11 @@ name: 'tests'
 on:
   push:
     branches:
-      - '*'
+      - 'main'
   pull_request:
     branches:
       - '*'
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number }}-${{ github.event.type }}
   cancel-in-progress: true
@@ -63,7 +64,7 @@ jobs:
       # - run: pip install --upgrade --pre --force --only-binary=":all:" --index-url "https://pypi.anaconda.org/scientific-python-nightly-wheels/simple" "numpy>=2.0.0rc1" scipy h5py matplotlib pandas scikit-learn statsmodels "tables>=3.9.3.dev0"
       #   if: matrix.mne == 'dev' && startsWith(matrix.os, 'ubuntu')
       #   name: Install numpy, scipy, nilearn pre
-      - run: pip install -ve .
+      - run: pip install -ve . "numpy<2"
       - run: mne sys_info
       - run: ./tools/get_testing_version.sh
         working-directory: mne-python
