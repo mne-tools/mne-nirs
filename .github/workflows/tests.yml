@@ -58,7 +58,7 @@ jobs:
         if: matrix.kind == 'conda'
       # For some reason both qt6 and qt6 get installed on macOS
       - run: conda remove -y qt5-libs
-        if: matrix.kind == 'conda' and startsWith(matrix.os, 'macos')
+        if: matrix.kind == 'conda' && startsWith(matrix.os, 'macos')
       - run: pip install -r requirements_testing.txt
       - run: git clone https://github.com/mne-tools/mne-python
       - run: pip install --upgrade --pre -e ./mne-python git+https://github.com/nilearn/nilearn
