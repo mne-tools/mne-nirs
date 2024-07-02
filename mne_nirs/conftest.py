@@ -8,7 +8,6 @@ from unittest import mock
 
 import mne
 import pytest
-from mne.datasets import testing
 
 # most of this adapted from MNE-Python
 
@@ -131,9 +130,10 @@ def options_3d():
 
 
 @pytest.fixture
-@testing.requires_testing_data
 def requires_pyvista(options_3d):
     """Require pyvista."""
+    if not mne.datasets.has_dataset("testing"):
+        pytest.skip("Requires mne-testing-data")
     pyvista = pytest.importorskip("pyvista")
     pytest.importorskip("pyvistaqt")
     pyvista.close_all()
