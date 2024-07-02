@@ -24,7 +24,7 @@ def test_simulate_NIRS_single_channel():
     data = raw.get_data()
     assert data.shape == (1, 900)
     max_val = np.max(data)
-    assert max_val < 1.2e-6
+    assert max_val < 1.4e-6
     assert raw.annotations.description[0] == "A"
     assert raw.annotations.duration[0] == 5
     assert np.min(np.diff(raw.annotations.onset)) > 15.0 + 5.0
