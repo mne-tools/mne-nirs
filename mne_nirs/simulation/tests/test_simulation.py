@@ -10,6 +10,7 @@ from mne_nirs.simulation import simulate_nirs_raw
 
 
 def test_simulate_NIRS_single_channel():
+    np.random.seed(0)  # TODO: Add random_state and refactor
     raw = simulate_nirs_raw(
         sfreq=3.0,
         amplitude=1.0,
@@ -20,8 +21,10 @@ def test_simulate_NIRS_single_channel():
     )
     assert "hbo" in raw
     assert raw.info["sfreq"] == 3.0
-    assert raw.get_data().shape == (1, 900)
-    assert np.max(raw.get_data()) < 1.2 * 1.0e-6
+    data = raw.get_data()
+    assert data.shape == (1, 900)
+    max_val = np.max(data)
+    assert max_val < 1.2e-6
     assert raw.annotations.description[0] == "A"
     assert raw.annotations.duration[0] == 5
     assert np.min(np.diff(raw.annotations.onset)) > 15.0 + 5.0
@@ -39,6 +42,7 @@ def test_simulate_NIRS_single_channel():
 
 
 def test_simulate_NIRS_multi_channel():
+    np.random.seed(0)  # TODO: Add random_state and refactor
     raw = simulate_nirs_raw(
         sfreq=3.0,
         amplitude=[0.0, 2.0, 4.0],
