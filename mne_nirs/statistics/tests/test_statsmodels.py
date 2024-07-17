@@ -46,14 +46,14 @@ def test_statsmodel_to_df(func):
     df_cha["theta"] = df_cha["theta"] * 1.0e6
     roi_model = func("theta ~ -1 + Condition", df_cha, groups=df_cha["ID"]).fit()
     df = statsmodels_to_results(roi_model)
-    assert type(df) == pd.DataFrame
+    assert isinstance(df, pd.DataFrame)
     assert_allclose(df["Coef."]["Condition[A]"], amplitude, rtol=0.1)
     assert df["Significant"]["Condition[A]"]
     assert df.shape == (8, 8)
 
     roi_model = smf.rlm("theta ~ -1 + Condition", df_cha, groups=df_cha["ID"]).fit()
     df = statsmodels_to_results(roi_model)
-    assert type(df) == pd.DataFrame
+    assert isinstance(df, pd.DataFrame)
     assert_allclose(df["Coef."]["Condition[A]"], amplitude, rtol=0.1)
     assert df["Significant"]["Condition[A]"]
     assert df.shape == (8, 8)

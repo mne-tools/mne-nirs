@@ -157,7 +157,7 @@ def test_run_plot_GLM_projection(requires_pyvista):
             surface="white",
             subjects_dir=subjects_dir,
         )
-        assert type(brain) == mne.viz._brain.Brain
+        assert isinstance(brain, mne.viz._brain.Brain)
 
 
 @pytest.mark.parametrize(
