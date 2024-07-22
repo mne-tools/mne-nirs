@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "mne-nirs"
 description = "An MNE compatible package for processing near-infrared spectroscopy data"
-dynamic = ["version"]
+version = "0.7.0"
 maintainers = [{ name = "Robert Luke", email = "robert.luke@mq.edu.au" }]
 license = { text = "BSD-3-Clause" }
 readme = { file = "README.rst", content-type = "text/x-rst" }
