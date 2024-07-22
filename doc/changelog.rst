@@ -14,4 +14,4 @@ Patch version changes indicate backward compatible bug fixes.
 
 To install a specific version of the library you would run ``pip install mne-nirs==0.3.0``, where ``0.3.0`` is the version you wish to install.
 
-Changes are listed in `the release page <https://github.com/mne-tools/mne-nirs/releases`__.
+Changes are listed in `the release page <https://github.com/mne-tools/mne-nirs/releases>`__.
