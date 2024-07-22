@@ -112,8 +112,10 @@ def _add_metadata_tags(raw, nirs):
     metadata_tags.create_dataset("FrequencyUnit", data=_str_encode("Hz"))
 
     # Add non standard (but allowed) custom metadata tags
-    if "birthday" in raw.info["subject_info"]:
-        birthday = datetime.date(*raw.info["subject_info"]["birthday"])
+    if raw.info["subject_info"].get("birthday", None) is not None:
+        birthday = raw.info["subject_info"]["birthday"]
+        if isinstance(birthday, tuple):
+            birthday = datetime.date(*birthday)
         birthstr = birthday.strftime("%Y-%m-%d")
         metadata_tags.create_dataset("DateOfBirth", data=[_str_encode(birthstr)])
     for key in ("first", "middle", "last"):
