@@ -1,4 +1,11 @@
-from ._version import __version__
+from importlib.metadata import version
+
+try:
+    __version__ = version("mne-nirs")
+except Exception:
+    __version__ = "0.0.0"
+del version
+
 
 from . import channels
 from . import datasets
