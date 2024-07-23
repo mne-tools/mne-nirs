@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Signal Quality Evaluation &#8212; MNE-NIRS 0.8.0.dev1+g764bf7d2 documentation</title>
+    <title>Signal Quality Evaluation &#8212; MNE-NIRS 0.8.0.dev2+gf75aa00e documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../_static/documentation_options.js?v=849861ca"></script>
+    <script src="../../_static/documentation_options.js?v=c36bc796"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -501,7 +501,7 @@ We then convert the data to optical density and plot the raw signal.</p>
 </div>
 <img src="../../_images/sphx_glr_plot_22_quality_001.png" srcset="../../_images/sphx_glr_plot_22_quality_001.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
 
-&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa06c249fc0&gt;
+&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f80e500b0a0&gt;
 </pre></div>
 </div>
 <p>From the above plot we observe that the data is relatively clean.
@@ -546,7 +546,7 @@ channels are now displayed in grey to indicate they are bad.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">raw_od</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_channels</span><span class="o">=</span><span class="mi">55</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span> <span class="n">show_scrollbars</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">clipping</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_22_quality_003.png" srcset="../../_images/sphx_glr_plot_22_quality_003.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa06c29eb90&gt;
+<img src="../../_images/sphx_glr_plot_22_quality_003.png" srcset="../../_images/sphx_glr_plot_22_quality_003.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f80e4f6b0a0&gt;
 </pre></div>
 </div>
 <p>Similarly, we can view the montage diagram and view where on the head
@@ -647,7 +647,7 @@ has been added.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_22_quality_008.png" srcset="../../_images/sphx_glr_plot_22_quality_008.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa06c22bc70&gt;
+<img src="../../_images/sphx_glr_plot_22_quality_008.png" srcset="../../_images/sphx_glr_plot_22_quality_008.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f8150131fc0&gt;
 </pre></div>
 </div>
 </section>
@@ -692,7 +692,7 @@ on S2-D4).</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_22_quality_010.png" srcset="../../_images/sphx_glr_plot_22_quality_010.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa06fe94280&gt;
+<img src="../../_images/sphx_glr_plot_22_quality_010.png" srcset="../../_images/sphx_glr_plot_22_quality_010.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f805040c3a0&gt;
 </pre></div>
 </div>
 <p>These channel and time specific annotations are used by downstream
@@ -705,7 +705,7 @@ and bad time segments are marked in red.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">raw_od</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_channels</span><span class="o">=</span><span class="mi">55</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span> <span class="n">show_scrollbars</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">clipping</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_22_quality_011.png" srcset="../../_images/sphx_glr_plot_22_quality_011.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fa06f9db520&gt;
+<img src="../../_images/sphx_glr_plot_22_quality_011.png" srcset="../../_images/sphx_glr_plot_22_quality_011.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f80e4538ca0&gt;
 </pre></div>
 </div>
 </section>
@@ -717,7 +717,7 @@ And one metric for determining specific time and channel segments that are
 bad.
 It was demonstrated how bad segments are visualised and how bad segments
 are treated in downstream analysis.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 28.471 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 28.556 seconds)</p>
 <p><strong>Estimated memory usage:</strong>  432 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-22-quality-py">
 <div class="binder-badge docutils container">
@@ -838,7 +838,7 @@ are treated in downstream analysis.</p>
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-07-22T23:53:18.509735+00:00" class="localized">2024-07-22 23:53 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-07-23T00:19:05.276301+00:00" class="localized">2024-07-23 00:19 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
