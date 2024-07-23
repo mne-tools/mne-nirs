@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_general_plot_70_visualise_brain.py>`
-        to download the full example code or to run this example in your browser via Binder
+        to download the full example code. or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
 
@@ -34,11 +34,7 @@ and overlay the sensor locations and regions of interest.
 This tutorial glosses over the processing details, see the
 :ref:`GLM tutorial <tut-fnirs-hrf>` for details on the preprocessing.
 
-.. contents:: Page contents
-   :local:
-   :depth: 2
-
-.. GENERATED FROM PYTHON SOURCE LINES 24-49
+.. GENERATED FROM PYTHON SOURCE LINES 18-42
 
 .. code-block:: Python
 
@@ -48,23 +44,23 @@ This tutorial glosses over the processing details, see the
     #
     # License: BSD (3-clause)
 
+    import mne
     import numpy as np
     import pandas as pd
-
-    import mne
-    from mne.preprocessing.nirs import optical_density, beer_lambert_law
-
     import statsmodels.formula.api as smf
+    from mne.preprocessing.nirs import beer_lambert_law, optical_density
+    from mne_bids import BIDSPath, get_entity_vals, read_raw_bids
 
-    from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
     import mne_nirs
-
-    from mne_nirs.experimental_design import make_first_level_design_matrix
-    from mne_nirs.statistics import run_glm, statsmodels_to_results
     from mne_nirs.channels import get_long_channels, get_short_channels
-    from mne_nirs.io.fold import fold_landmark_specificity
-    from mne_nirs.visualisation import plot_nirs_source_detector, plot_glm_surface_projection
     from mne_nirs.datasets import fnirs_motor_group
+    from mne_nirs.experimental_design import make_first_level_design_matrix
+    from mne_nirs.io.fold import fold_landmark_specificity
+    from mne_nirs.statistics import run_glm, statsmodels_to_results
+    from mne_nirs.visualisation import (
+        plot_glm_surface_projection,
+        plot_nirs_source_detector,
+    )
 
 
 
@@ -73,34 +69,39 @@ This tutorial glosses over the processing details, see the
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 50-54
+.. GENERATED FROM PYTHON SOURCE LINES 43-47
 
 Download example data
 -------------------------------
 
 First, the data required data for this tutorial is downloaded.
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-60
+.. GENERATED FROM PYTHON SOURCE LINES 49-53
 
 Download example fNIRS data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Download the ``audio_or_visual_speech`` dataset and load the first measurement.
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-70
+.. GENERATED FROM PYTHON SOURCE LINES 53-69
 
 .. code-block:: Python
 
 
     root = mne_nirs.datasets.audio_or_visual_speech.data_path()
-    dataset = BIDSPath(root=root, suffix="nirs", extension=".snirf", subject="04",
-                       task="AudioVisualBroadVsRestricted", datatype="nirs", session="01")
+    dataset = BIDSPath(
+        root=root,
+        suffix="nirs",
+        extension=".snirf",
+        subject="04",
+        task="AudioVisualBroadVsRestricted",
+        datatype="nirs",
+        session="01",
+    )
     raw = mne.io.read_raw_snirf(dataset.fpath)
-    raw.annotations.rename({'1.0': 'Audio',
-                            '2.0': 'Video',
-                            '3.0': 'Control',
-                            '15.0': 'Ends'})
+    raw.annotations.rename(
+        {"1.0": "Audio", "2.0": "Video", "3.0": "Control", "15.0": "Ends"}
+    )
 
 
 
@@ -115,23 +116,27 @@ Download the ``audio_or_visual_speech`` dataset and load the first measurement.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-75
+.. GENERATED FROM PYTHON SOURCE LINES 70-74
 
 Download annotation information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Download the HCP-MMP parcellation.
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-83
+.. GENERATED FROM PYTHON SOURCE LINES 74-86
 
 .. code-block:: Python
 
 
     # Download anatomical locations
-    subjects_dir = str(mne.datasets.sample.data_path()) + '/subjects'
+    subjects_dir = str(mne.datasets.sample.data_path()) + "/subjects"
     mne.datasets.fetch_hcp_mmp_parcellation(subjects_dir=subjects_dir, accept=True)
-    labels = mne.read_labels_from_annot('fsaverage', 'HCPMMP1', 'lh', subjects_dir=subjects_dir)
-    labels_combined = mne.read_labels_from_annot('fsaverage', 'HCPMMP1_combined', 'lh', subjects_dir=subjects_dir)
+    labels = mne.read_labels_from_annot(
+        "fsaverage", "HCPMMP1", "lh", subjects_dir=subjects_dir
+    )
+    labels_combined = mne.read_labels_from_annot(
+        "fsaverage", "HCPMMP1_combined", "lh", subjects_dir=subjects_dir
+    )
 
 
 
@@ -141,7 +146,7 @@ Download the HCP-MMP parcellation.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-94
+.. GENERATED FROM PYTHON SOURCE LINES 87-97
 
 Verify placement of sensors
 ---------------------------
@@ -154,13 +159,17 @@ pairs, and the orange dots represent channel locations.
 In this example we can see channels over the left inferior frontal gyrus,
 auditory cortex, planum temporale, and occipital lobe.
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-99
+.. GENERATED FROM PYTHON SOURCE LINES 97-106
 
 .. code-block:: Python
 
 
-    brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5')
-    brain.add_sensors(raw.info, trans='fsaverage', fnirs=['channels', 'pairs', 'sources', 'detectors'])
+    brain = mne.viz.Brain(
+        "fsaverage", subjects_dir=subjects_dir, background="w", cortex="0.5"
+    )
+    brain.add_sensors(
+        raw.info, trans="fsaverage", fnirs=["channels", "pairs", "sources", "detectors"]
+    )
     brain.show_view(azimuth=180, elevation=80, distance=450)
 
 
@@ -175,7 +184,7 @@ auditory cortex, planum temporale, and occipital lobe.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 100-109
+.. GENERATED FROM PYTHON SOURCE LINES 107-116
 
 .. _tut-fnirs-vis-brain-plot-3d-montage:
 
@@ -187,19 +196,20 @@ in the correct locations in a 3D view. The function
 :func:`mne_nirs.visualisation.plot_3d_montage` gives us this once we
 specify which views to use to show each channel pair:
 
-.. GENERATED FROM PYTHON SOURCE LINES 109-119
+.. GENERATED FROM PYTHON SOURCE LINES 116-127
 
 .. code-block:: Python
 
 
     view_map = {
-        'left-lat': np.r_[np.arange(1, 27), 28],
-        'caudal': np.r_[27, np.arange(43, 53)],
-        'right-lat': np.r_[np.arange(29, 43), 44],
+        "left-lat": np.r_[np.arange(1, 27), 28],
+        "caudal": np.r_[27, np.arange(43, 53)],
+        "right-lat": np.r_[np.arange(29, 43), 44],
     }
 
     fig_montage = mne_nirs.visualisation.plot_3d_montage(
-        raw.info, view_map=view_map, subjects_dir=subjects_dir)
+        raw.info, view_map=view_map, subjects_dir=subjects_dir
+    )
 
 
 
@@ -213,7 +223,7 @@ specify which views to use to show each channel pair:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 120-128
+.. GENERATED FROM PYTHON SOURCE LINES 128-136
 
 Plot sensor channels and anatomical region of interest
 ------------------------------------------------------
@@ -224,16 +234,20 @@ the relevant brain structures.
 In this example we highlight the primary auditory cortex in blue,
 and we can see that a number of channels are placed over this structure.
 
-.. GENERATED FROM PYTHON SOURCE LINES 128-137
+.. GENERATED FROM PYTHON SOURCE LINES 136-149
 
 .. code-block:: Python
 
 
-    brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5')
-    brain.add_sensors(raw.info, trans='fsaverage', fnirs=['channels', 'pairs', 'sources', 'detectors'])
+    brain = mne.viz.Brain(
+        "fsaverage", subjects_dir=subjects_dir, background="w", cortex="0.5"
+    )
+    brain.add_sensors(
+        raw.info, trans="fsaverage", fnirs=["channels", "pairs", "sources", "detectors"]
+    )
 
-    aud_label = [label for label in labels if label.name == 'L_A1_ROI-lh'][0]
-    brain.add_label(aud_label, borders=False, color='blue')
+    aud_label = [label for label in labels if label.name == "L_A1_ROI-lh"][0]
+    brain.add_label(aud_label, borders=False, color="blue")
     brain.show_view(azimuth=180, elevation=80, distance=450)
 
 
@@ -249,7 +263,7 @@ and we can see that a number of channels are placed over this structure.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 138-157
+.. GENERATED FROM PYTHON SOURCE LINES 150-171
 
 Plot channels sensitive to anatomical region of interest
 --------------------------------------------------------
@@ -261,7 +275,9 @@ Plot channels sensitive to anatomical region of interest
    The tool is very intuitive and easy to use.
    Be sure to cite the authors if you use their tool or data:
 
-   Morais, Guilherme Augusto Zimeo, Joana Bisol Balardin, and João Ricardo Sato. "fNIRS optodes’ location decider (fOLD): a toolbox for probe arrangement guided by brain regions-of-interest." Scientific reports 8.1 (2018): 1-11.
+   Morais, Guilherme Augusto Zimeo, Joana Bisol Balardin, and João Ricardo Sato.
+   "fNIRS optodes’ location decider (fOLD): a toolbox for probe arrangement guided by
+   brain regions-of-interest." Scientific reports 8.1 (2018): 1-11.
 
 Rather than simply eye balling the sensor and ROIs of interest, we can
 quantify the specificity of each channel to the anatomical region of interest
@@ -271,22 +287,26 @@ use data from the fOLD toolbox :footcite:`morais2018fnirs`.
 To see more details about how to use the fOLD data see
 :ref:`this tutorial <tut-fnirs-group-relating>`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 157-173
+.. GENERATED FROM PYTHON SOURCE LINES 171-191
 
 .. code-block:: Python
 
 
     # Return specificity of each channel to the Left IFG
-    specificity = fold_landmark_specificity(raw, 'L IFG (p. Triangularis)')
+    specificity = fold_landmark_specificity(raw, "L IFG (p. Triangularis)")
 
     # Retain only channels with specificity to left IFG of greater than 50%
     raw_IFG = raw.copy().pick(picks=np.where(specificity > 50)[0])
 
-    brain = mne.viz.Brain('fsaverage', subjects_dir=subjects_dir, background='w', cortex='0.5')
-    brain.add_sensors(raw_IFG.info, trans='fsaverage', fnirs=['channels', 'pairs'])
+    brain = mne.viz.Brain(
+        "fsaverage", subjects_dir=subjects_dir, background="w", cortex="0.5"
+    )
+    brain.add_sensors(raw_IFG.info, trans="fsaverage", fnirs=["channels", "pairs"])
 
-    ifg_label = [label for label in labels_combined if label.name == 'Inferior Frontal Cortex-lh'][0]
-    brain.add_label(ifg_label, borders=False, color='green')
+    ifg_label = [
+        label for label in labels_combined if label.name == "Inferior Frontal Cortex-lh"
+    ][0]
+    brain.add_label(ifg_label, borders=False, color="green")
 
     brain.show_view(azimuth=140, elevation=95, distance=360)
 
@@ -303,24 +323,30 @@ To see more details about how to use the fOLD data see
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 174-182
+.. GENERATED FROM PYTHON SOURCE LINES 192-200
 
-Alternatively, we can retain all channels and visualise the specificity of each channel the ROI
-by encoding the specificty in the color of the line between each source and detector.
-In this example we see that several channels have substantial specificity to
+Alternatively, we can retain all channels and visualise the specificity of each
+channel by encoding the specificty in the color of the line between each source and
+detector. In this example we see that several channels have substantial specificity to
 the region of interest.
 
 Note: this function currently doesn't support the new MNE brain API, so does
 not allow the same behaviour as above (adding sensors, highlighting ROIs etc).
 It should be updated in the near future.
 
-.. GENERATED FROM PYTHON SOURCE LINES 183-189
+.. GENERATED FROM PYTHON SOURCE LINES 201-213
 
 .. code-block:: Python
 
 
-    fig = plot_nirs_source_detector(specificity, raw.info, surfaces='brain',
-                                    subject='fsaverage', subjects_dir=subjects_dir, trans='fsaverage')
+    fig = plot_nirs_source_detector(
+        specificity,
+        raw.info,
+        surfaces="brain",
+        subject="fsaverage",
+        subjects_dir=subjects_dir,
+        trans="fsaverage",
+    )
     mne.viz.set_3d_view(fig, azimuth=140, elevation=95)
 
 
@@ -336,7 +362,7 @@ It should be updated in the near future.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 190-202
+.. GENERATED FROM PYTHON SOURCE LINES 214-226
 
 Anatomically informed weighting in region of interest analysis
 --------------------------------------------------------------
@@ -351,7 +377,7 @@ The details of the GLM analysis will not be described here, instead view the
 :ref:`fNIRS GLM tutorial <tut-fnirs-hrf>`. Instead, comments are provided
 for the weighted region of interest function call.
 
-.. GENERATED FROM PYTHON SOURCE LINES 202-237
+.. GENERATED FROM PYTHON SOURCE LINES 226-269
 
 .. code-block:: Python
 
@@ -363,7 +389,9 @@ for the weighted region of interest function call.
     sht_chans = get_short_channels(raw_haemo)
     raw_haemo = get_long_channels(raw_haemo)
     design_matrix = make_first_level_design_matrix(raw_haemo, stim_dur=13.0)
-    design_matrix["ShortHbO"] = np.mean(sht_chans.copy().pick(picks="hbo").get_data(), axis=0)
+    design_matrix["ShortHbO"] = np.mean(
+        sht_chans.copy().pick(picks="hbo").get_data(), axis=0
+    )
     glm_est = run_glm(raw_haemo, design_matrix)
 
     # First we create a dictionary for each region of interest.
@@ -374,8 +402,12 @@ for the weighted region of interest function call.
     rois["Visual_weighted"] = range(len(glm_est.ch_names))
 
     # Next we compute the specificity for each channel to the auditory and visual cortex.
-    spec_aud = fold_landmark_specificity(raw_haemo, '42 - Primary and Auditory Association Cortex', atlas="Brodmann")
-    spec_vis = fold_landmark_specificity(raw_haemo, '17 - Primary Visual Cortex (V1)', atlas="Brodmann")
+    spec_aud = fold_landmark_specificity(
+        raw_haemo, "42 - Primary and Auditory Association Cortex", atlas="Brodmann"
+    )
+    spec_vis = fold_landmark_specificity(
+        raw_haemo, "17 - Primary Visual Cortex (V1)", atlas="Brodmann"
+    )
 
     # Next we create a dictionary to store the weights for each channel in the ROI.
     # The weights will be the specificity to the ROI.
@@ -385,7 +417,9 @@ for the weighted region of interest function call.
     weights["Visual_weighted"] = spec_vis
 
     # Finally we compute region of interest results using the weights specified above
-    out = glm_est.to_dataframe_region_of_interest(rois, ["Video", "Control"], weighted=weights)
+    out = glm_est.to_dataframe_region_of_interest(
+        rois, ["Video", "Control"], weighted=weights
+    )
     out["Significant"] = out["p"] < 0.05
     out
 
@@ -488,14 +522,14 @@ for the weighted region of interest function call.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 238-242
+.. GENERATED FROM PYTHON SOURCE LINES 270-274
 
 In the table above we observe that the response to the visual condition
 is only present in the visual region of interest. You can use this
 technique to load any custom weighting, including weights exported from
 other software.
 
-.. GENERATED FROM PYTHON SOURCE LINES 245-252
+.. GENERATED FROM PYTHON SOURCE LINES 277-284
 
 Preprocess fNIRS data
 ---------------------
@@ -505,19 +539,19 @@ First, we process the fNIRS data. This is a duplication of the GLM tutorial
 analysis. The details will not be described here, instead view the
 :ref:`fNIRS GLM tutorial <tut-fnirs-hrf>`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 252-320
+.. GENERATED FROM PYTHON SOURCE LINES 284-356
 
 .. code-block:: Python
 
 
 
     def individual_analysis(bids_path, ID):
-
         raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
-        raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
-         # sanitize event names
+        raw_intensity.annotations.delete(raw_intensity.annotations.description == "15.0")
+        # sanitize event names
         raw_intensity.annotations.description[:] = [
-            d.replace('/', '_') for d in raw_intensity.annotations.description]
+            d.replace("/", "_") for d in raw_intensity.annotations.description
+        ]
 
         # Convert signal to haemoglobin and resample
         raw_od = optical_density(raw_intensity)
@@ -532,8 +566,12 @@ analysis. The details will not be described here, instead view the
         design_matrix = make_first_level_design_matrix(raw_haemo, stim_dur=5.0)
 
         # Append short channels mean to design matrix
-        design_matrix["ShortHbO"] = np.mean(sht_chans.copy().pick(picks="hbo").get_data(), axis=0)
-        design_matrix["ShortHbR"] = np.mean(sht_chans.copy().pick(picks="hbr").get_data(), axis=0)
+        design_matrix["ShortHbO"] = np.mean(
+            sht_chans.copy().pick(picks="hbo").get_data(), axis=0
+        )
+        design_matrix["ShortHbR"] = np.mean(
+            sht_chans.copy().pick(picks="hbr").get_data(), axis=0
+        )
 
         # Run GLM
         glm_est = run_glm(raw_haemo, design_matrix)
@@ -545,20 +583,20 @@ analysis. The details will not be described here, instead view the
         cha["ID"] = ID
 
         # Convert to uM for nicer plotting below.
-        cha["theta"] = [t * 1.e6 for t in cha["theta"]]
+        cha["theta"] = [t * 1.0e6 for t in cha["theta"]]
 
         return raw_haemo, cha
 
 
     # Get dataset details
     root = fnirs_motor_group.data_path()
-    dataset = BIDSPath(root=root, task="tapping",
-                       datatype="nirs", suffix="nirs", extension=".snirf")
-    subjects = get_entity_vals(root, 'subject')
+    dataset = BIDSPath(
+        root=root, task="tapping", datatype="nirs", suffix="nirs", extension=".snirf"
+    )
+    subjects = get_entity_vals(root, "subject")
 
     df_cha = pd.DataFrame()  # To store channel level results
     for sub in subjects:  # Loop from first to fifth subject
-
         # Create path to file based on experiment info
         bids_path = dataset.update(subject=sub)
 
@@ -571,8 +609,9 @@ analysis. The details will not be described here, instead view the
     ch_summary = df_cha.query("Condition in ['Tapping_Right']")
     assert len(ch_summary)
     ch_summary = ch_summary.query("Chroma in ['hbo']")
-    ch_model = smf.mixedlm("theta ~ -1 + ch_name", ch_summary,
-                           groups=ch_summary["ID"]).fit(method='nm')
+    ch_model = smf.mixedlm("theta ~ -1 + ch_name", ch_summary, groups=ch_summary["ID"]).fit(
+        method="nm"
+    )
     model_df = statsmodels_to_results(ch_model, order=raw_haemo.copy().pick("hbo").ch_names)
 
 
@@ -583,33 +622,42 @@ analysis. The details will not be described here, instead view the
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 321-328
+.. GENERATED FROM PYTHON SOURCE LINES 357-364
 
 Plot surface projection of GLM results
 --------------------------------------
 
-Finally, we can project the GLM results from each channel to the nearest cortical surface
-and overlay the sensor positions and two different regions of interest.
+Finally, we can project the GLM results from each channel to the nearest cortical
+surface and overlay the sensor positions and two different regions of interest.
 In this example we also highlight the premotor cortex and auditory association cortex
 in green and blue respectively.
 
-.. GENERATED FROM PYTHON SOURCE LINES 328-344
+.. GENERATED FROM PYTHON SOURCE LINES 364-390
 
 .. code-block:: Python
 
 
     # Plot the projection and sensor locations
-    brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"), model_df, colorbar=True)
-    brain.add_sensors(raw_haemo.info, trans='fsaverage', fnirs=['channels', 'pairs', 'sources', 'detectors'])
+    brain = plot_glm_surface_projection(
+        raw_haemo.copy().pick("hbo"), model_df, colorbar=True
+    )
+    brain.add_sensors(
+        raw_haemo.info,
+        trans="fsaverage",
+        fnirs=["channels", "pairs", "sources", "detectors"],
+    )
 
     # mark the premotor cortex in green
-    aud_label = [label for label in labels_combined if label.name == 'Premotor Cortex-lh'][0]
-    brain.add_label(aud_label, borders=True, color='green')
+    aud_label = [label for label in labels_combined if label.name == "Premotor Cortex-lh"][
+        0
+    ]
+    brain.add_label(aud_label, borders=True, color="green")
 
     # mark the auditory association cortex in blue
-    aud_label = [label for label in labels_combined if label.name == 'Auditory Association Cortex-lh'][0]
-    brain.add_label(aud_label, borders=True, color='blue')
+    aud_label = [
+        label for label in labels_combined if label.name == "Auditory Association Cortex-lh"
+    ][0]
+    brain.add_label(aud_label, borders=True, color="blue")
 
     brain.show_view(azimuth=160, elevation=60, distance=400)
 
@@ -626,7 +674,7 @@ in green and blue respectively.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 345-349
+.. GENERATED FROM PYTHON SOURCE LINES 391-395
 
 Bibliography
 -----------------------------------------------
@@ -636,9 +684,9 @@ Bibliography
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 7.523 seconds)
+   **Total running time of the script:** (0 minutes 32.629 seconds)
 
-**Estimated memory usage:**  26 MB
+**Estimated memory usage:**  446 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_70_visualise_brain.py:
@@ -661,6 +709,10 @@ Bibliography
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_70_visualise_brain.py <plot_70_visualise_brain.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_70_visualise_brain.zip <plot_70_visualise_brain.zip>`
 
 
 .. only:: html

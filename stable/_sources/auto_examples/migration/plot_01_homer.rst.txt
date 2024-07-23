@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_migration_plot_01_homer.py>`
-        to download the full example code or to run this example in your browser via Binder
+        to download the full example code. or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
 
@@ -56,18 +56,14 @@ motion corrected using TDDR, and converted to haemoglobin concentration.
    ppf = [6 6];
    dc = hmrOD2Conc(tddr,SD,ppf);
 
-.. contents:: Page contents
-   :local:
-   :depth: 2
-
-.. GENERATED FROM PYTHON SOURCE LINES 47-51
+.. GENERATED FROM PYTHON SOURCE LINES 42-46
 
 MNE equivalent of Homer script
 ==============================
 
 First the necessary libraries and functions are imported.
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-64
+.. GENERATED FROM PYTHON SOURCE LINES 46-61
 
 .. code-block:: Python
 
@@ -77,11 +73,14 @@ First the necessary libraries and functions are imported.
     # License: BSD (3-clause)
 
     import os
+
     import mne
-
     from mne.io import read_raw_nirx
-    from mne.preprocessing.nirs import (optical_density, beer_lambert_law,
-                                        temporal_derivative_distribution_repair)
+    from mne.preprocessing.nirs import (
+        beer_lambert_law,
+        optical_density,
+        temporal_derivative_distribution_repair,
+    )
 
 
 
@@ -90,8 +89,7 @@ First the necessary libraries and functions are imported.
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 65-70
+.. GENERATED FROM PYTHON SOURCE LINES 62-67
 
 Convert to optical density and motion correct
 ---------------------------------------------
@@ -99,14 +97,14 @@ Convert to optical density and motion correct
 First we load the data which simply involves pointing the load function
 to the correct directory.
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-79
+.. GENERATED FROM PYTHON SOURCE LINES 67-76
 
 .. code-block:: Python
 
 
     # First we obtain the path to the data
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-    fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
+    fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
 
     # Next we read the data
     raw_intensity = read_raw_nirx(fnirs_raw_dir).load_data()
@@ -119,7 +117,7 @@ to the correct directory.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-85
+.. GENERATED FROM PYTHON SOURCE LINES 77-82
 
 Convert signal to optical density and apply TDDR
 ------------------------------------------------
@@ -127,7 +125,7 @@ Convert signal to optical density and apply TDDR
 As with Homer we can convert the intensity data to optical density and
 apply motion correction using the TDDR method.
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-90
+.. GENERATED FROM PYTHON SOURCE LINES 82-87
 
 .. code-block:: Python
 
@@ -143,7 +141,7 @@ apply motion correction using the TDDR method.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-99
+.. GENERATED FROM PYTHON SOURCE LINES 88-96
 
 Convert to haemoglobin concentration
 ------------------------------------
@@ -154,12 +152,12 @@ Homer uses a default value of ppf=6, whereas MNE uses ppf=0.1,
 To exactly match the results from Homer we can manually set the ppf value to
 6 in MNE.
 
-.. GENERATED FROM PYTHON SOURCE LINES 99-103
+.. GENERATED FROM PYTHON SOURCE LINES 96-100
 
 .. code-block:: Python
 
 
-    raw_h = beer_lambert_law(corrected_tddr, ppf=6.)
+    raw_h = beer_lambert_law(corrected_tddr, ppf=6.0)
 
 
 
@@ -169,7 +167,7 @@ To exactly match the results from Homer we can manually set the ppf value to
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-113
+.. GENERATED FROM PYTHON SOURCE LINES 101-110
 
 Further analysis details
 ------------------------------------
@@ -184,9 +182,9 @@ https://github.com/mne-tools/mne-nirs/issues
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 3.311 seconds)
+   **Total running time of the script:** (0 minutes 2.554 seconds)
 
-**Estimated memory usage:**  9 MB
+**Estimated memory usage:**  429 MB
 
 
 .. _sphx_glr_download_auto_examples_migration_plot_01_homer.py:
@@ -209,6 +207,10 @@ https://github.com/mne-tools/mne-nirs/issues
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_01_homer.py <plot_01_homer.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_01_homer.zip <plot_01_homer.zip>`
 
 
 .. only:: html

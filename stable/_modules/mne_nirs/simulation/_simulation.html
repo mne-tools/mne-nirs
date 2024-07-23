@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne_nirs.simulation._simulation &#8212; MNE-NIRS 0.6.0 documentation</title>
+    <title>mne_nirs.simulation._simulation &#8212; MNE-NIRS 0.7.0 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
@@ -38,8 +38,8 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../_static/documentation_options.js?v=8fa8b3e9"></script>
-    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/documentation_options.js?v=fe7df9b0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../_static/copybutton.js?v=f281be69"></script>
@@ -59,7 +59,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/mne_nirs/simulation/_simulation';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.6';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.7';
         </script>
     <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -210,7 +210,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -323,7 +323,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -388,15 +388,17 @@ document.write(`
 
 <div class="viewcode-block" id="simulate_nirs_raw">
 <a class="viewcode-back" href="../../../generated/mne_nirs.simulation.simulate_nirs_raw.html#mne_nirs.simulation.simulate_nirs_raw">[docs]</a>
-<span class="k">def</span> <span class="nf">simulate_nirs_raw</span><span class="p">(</span><span class="n">sfreq</span><span class="o">=</span><span class="mf">3.</span><span class="p">,</span>
-                      <span class="n">amplitude</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
-                      <span class="n">annot_desc</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">,</span>
-                      <span class="n">sig_dur</span><span class="o">=</span><span class="mf">300.</span><span class="p">,</span>
-                      <span class="n">stim_dur</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span>
-                      <span class="n">isi_min</span><span class="o">=</span><span class="mf">15.</span><span class="p">,</span>
-                      <span class="n">isi_max</span><span class="o">=</span><span class="mf">45.</span><span class="p">,</span>
-                      <span class="n">ch_name</span><span class="o">=</span><span class="s1">&#39;Simulated&#39;</span><span class="p">,</span>
-                      <span class="n">hrf_model</span><span class="o">=</span><span class="s1">&#39;glover&#39;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">simulate_nirs_raw</span><span class="p">(</span>
+    <span class="n">sfreq</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>
+    <span class="n">amplitude</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">annot_desc</span><span class="o">=</span><span class="s2">&quot;A&quot;</span><span class="p">,</span>
+    <span class="n">sig_dur</span><span class="o">=</span><span class="mf">300.0</span><span class="p">,</span>
+    <span class="n">stim_dur</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span>
+    <span class="n">isi_min</span><span class="o">=</span><span class="mf">15.0</span><span class="p">,</span>
+    <span class="n">isi_max</span><span class="o">=</span><span class="mf">45.0</span><span class="p">,</span>
+    <span class="n">ch_name</span><span class="o">=</span><span class="s2">&quot;Simulated&quot;</span><span class="p">,</span>
+    <span class="n">hrf_model</span><span class="o">=</span><span class="s2">&quot;glover&quot;</span><span class="p">,</span>
+<span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create simulated fNIRS data.</span>
 
@@ -439,21 +441,23 @@ document.write(`
     <span class="kn">from</span> <span class="nn">nilearn.glm.first_level</span> <span class="kn">import</span> <span class="n">make_first_level_design_matrix</span>
     <span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
 
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">amplitude</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">amplitude</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="n">amplitude</span> <span class="o">=</span> <span class="p">[</span><span class="n">amplitude</span><span class="p">]</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">annot_desc</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">annot_desc</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="n">annot_desc</span> <span class="o">=</span> <span class="p">[</span><span class="n">annot_desc</span><span class="p">]</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">stim_dur</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stim_dur</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="n">stim_dur</span> <span class="o">=</span> <span class="p">[</span><span class="n">stim_dur</span><span class="p">]</span>
 
     <span class="n">frame_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">sig_dur</span> <span class="o">*</span> <span class="n">sfreq</span><span class="p">)</span> <span class="o">/</span> <span class="n">sfreq</span>
 
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">amplitude</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">annot_desc</span><span class="p">),</span> <span class="s2">&quot;Same number of amplitudes as &quot;</span> \
-                                              <span class="s2">&quot;annotations required.&quot;</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">amplitude</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">stim_dur</span><span class="p">),</span> <span class="s2">&quot;Same number of amplitudes as &quot;</span> \
-                                            <span class="s2">&quot;durations required.&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">amplitude</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">annot_desc</span><span class="p">),</span> <span class="p">(</span>
+        <span class="s2">&quot;Same number of amplitudes as &quot;</span> <span class="s2">&quot;annotations required.&quot;</span>
+    <span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">amplitude</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">stim_dur</span><span class="p">),</span> <span class="p">(</span>
+        <span class="s2">&quot;Same number of amplitudes as &quot;</span> <span class="s2">&quot;durations required.&quot;</span>
+    <span class="p">)</span>
 
-    <span class="n">onset</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">onset</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="n">onsets</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">conditions</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">durations</span> <span class="o">=</span> <span class="p">[]</span>
@@ -464,29 +468,32 @@ document.write(`
         <span class="n">conditions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annot_desc</span><span class="p">[</span><span class="n">c_idx</span><span class="p">])</span>
         <span class="n">durations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stim_dur</span><span class="p">[</span><span class="n">c_idx</span><span class="p">])</span>
 
-    <span class="n">events</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;trial_type&#39;</span><span class="p">:</span> <span class="n">conditions</span><span class="p">,</span>
-                        <span class="s1">&#39;onset&#39;</span><span class="p">:</span> <span class="n">onsets</span><span class="p">,</span>
-                        <span class="s1">&#39;duration&#39;</span><span class="p">:</span> <span class="n">durations</span><span class="p">})</span>
+    <span class="n">events</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">{</span><span class="s2">&quot;trial_type&quot;</span><span class="p">:</span> <span class="n">conditions</span><span class="p">,</span> <span class="s2">&quot;onset&quot;</span><span class="p">:</span> <span class="n">onsets</span><span class="p">,</span> <span class="s2">&quot;duration&quot;</span><span class="p">:</span> <span class="n">durations</span><span class="p">}</span>
+    <span class="p">)</span>
 
-    <span class="n">dm</span> <span class="o">=</span> <span class="n">make_first_level_design_matrix</span><span class="p">(</span><span class="n">frame_times</span><span class="p">,</span> <span class="n">events</span><span class="p">,</span>
-                                        <span class="n">hrf_model</span><span class="o">=</span><span class="n">hrf_model</span><span class="p">,</span>
-                                        <span class="n">drift_model</span><span class="o">=</span><span class="s1">&#39;polynomial&#39;</span><span class="p">,</span>
-                                        <span class="n">drift_order</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">dm</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">)</span>
+    <span class="n">dm</span> <span class="o">=</span> <span class="n">make_first_level_design_matrix</span><span class="p">(</span>
+        <span class="n">frame_times</span><span class="p">,</span>
+        <span class="n">events</span><span class="p">,</span>
+        <span class="n">hrf_model</span><span class="o">=</span><span class="n">hrf_model</span><span class="p">,</span>
+        <span class="n">drift_model</span><span class="o">=</span><span class="s2">&quot;polynomial&quot;</span><span class="p">,</span>
+        <span class="n">drift_order</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">dm</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">)</span>
 
     <span class="n">annotations</span> <span class="o">=</span> <span class="n">Annotations</span><span class="p">(</span><span class="n">onsets</span><span class="p">,</span> <span class="n">durations</span><span class="p">,</span> <span class="n">conditions</span><span class="p">)</span>
 
-    <span class="n">info</span> <span class="o">=</span> <span class="n">create_info</span><span class="p">(</span><span class="n">ch_names</span><span class="o">=</span><span class="p">[</span><span class="n">ch_name</span><span class="p">],</span> <span class="n">sfreq</span><span class="o">=</span><span class="n">sfreq</span><span class="p">,</span> <span class="n">ch_types</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;hbo&#39;</span><span class="p">])</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">create_info</span><span class="p">(</span><span class="n">ch_names</span><span class="o">=</span><span class="p">[</span><span class="n">ch_name</span><span class="p">],</span> <span class="n">sfreq</span><span class="o">=</span><span class="n">sfreq</span><span class="p">,</span> <span class="n">ch_types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;hbo&quot;</span><span class="p">])</span>
 
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">annot</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">annot_desc</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">annot</span> <span class="ow">in</span> <span class="n">dm</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
             <span class="n">dm</span><span class="p">[</span><span class="n">annot</span><span class="p">]</span> <span class="o">*=</span> <span class="n">amplitude</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
 
-    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dm</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.e-6</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dm</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.0e-6</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 
     <span class="n">raw</span> <span class="o">=</span> <span class="n">RawArray</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">raw</span><span class="o">.</span><span class="n">set_annotations</span><span class="p">(</span><span class="n">annotations</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="s1">&#39;error&#39;</span><span class="p">)</span>
+    <span class="n">raw</span><span class="o">.</span><span class="n">set_annotations</span><span class="p">(</span><span class="n">annotations</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">raw</span></div>
 
@@ -533,7 +540,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2023, MNE Developers. Last updated <time datetime="2023-12-07T23:54:19.732358+00:00" class="localized">2023-12-07 23:54 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-07-23T00:18:52.995210+00:00" class="localized">2024-07-23 00:18 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

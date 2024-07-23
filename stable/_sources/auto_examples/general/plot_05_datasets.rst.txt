@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_general_plot_05_datasets.py>`
-        to download the full example code or to run this example in your browser via Binder
+        to download the full example code. or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
 
@@ -36,7 +36,7 @@ Each dataset is provided in BIDs format, as such we can use the MNE-BIDS
 package to quickly report the number of trials for each condition in the
 dataset.
 
-.. GENERATED FROM PYTHON SOURCE LINES 21-32
+.. GENERATED FROM PYTHON SOURCE LINES 21-31
 
 .. code-block:: Python
 
@@ -46,10 +46,9 @@ dataset.
     #
     # License: BSD (3-clause)
 
-
-    import mne_nirs
     import mne_bids.stats
 
+    import mne_nirs
 
 
 
@@ -58,7 +57,7 @@ dataset.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-45
+.. GENERATED FROM PYTHON SOURCE LINES 32-44
 
 *******************
 Finger Tapping Data
@@ -73,7 +72,7 @@ tapping their thumb to fingers on the left hand, the second condition was the
 same but with the right hand. The final condition was a control, with no
 motor task.
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-50
+.. GENERATED FROM PYTHON SOURCE LINES 44-49
 
 .. code-block:: Python
 
@@ -172,7 +171,7 @@ motor task.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-62
+.. GENERATED FROM PYTHON SOURCE LINES 50-61
 
 *************************
 Auditory Speech and Noise
@@ -186,7 +185,7 @@ design with three conditions. The first condition consisted of speech,
 the second condition consisted of low frequency noise.
 The final condition was a control, no audio was presented to the listeners.
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-67
+.. GENERATED FROM PYTHON SOURCE LINES 61-66
 
 .. code-block:: Python
 
@@ -370,7 +369,7 @@ The final condition was a control, no audio was presented to the listeners.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-79
+.. GENERATED FROM PYTHON SOURCE LINES 67-78
 
 **********************
 Audio or Visual Speech
@@ -384,7 +383,7 @@ or visual only.
 In addition to the audio visual stimuli, a control condition was also
 presented randomly throughout the experiment.
 
-.. GENERATED FROM PYTHON SOURCE LINES 79-84
+.. GENERATED FROM PYTHON SOURCE LINES 78-83
 
 .. code-block:: Python
 
@@ -505,7 +504,7 @@ presented randomly throughout the experiment.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-89
+.. GENERATED FROM PYTHON SOURCE LINES 84-88
 
 Bibliography
 -----------------------------------------------
@@ -515,9 +514,9 @@ Bibliography
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.361 seconds)
+   **Total running time of the script:** (0 minutes 1.239 seconds)
 
-**Estimated memory usage:**  10 MB
+**Estimated memory usage:**  430 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_05_datasets.py:
@@ -540,6 +539,10 @@ Bibliography
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_05_datasets.py <plot_05_datasets.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_05_datasets.zip <plot_05_datasets.zip>`
 
 
 .. only:: html

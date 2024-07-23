@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne.io.boxy.boxy &#8212; MNE-NIRS 0.6.0 documentation</title>
+    <title>mne.io.boxy.boxy &#8212; MNE-NIRS 0.7.0 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
@@ -38,8 +38,8 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../../_static/documentation_options.js?v=8fa8b3e9"></script>
-    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/documentation_options.js?v=fe7df9b0"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../../_static/copybutton.js?v=f281be69"></script>
@@ -59,7 +59,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/mne/io/boxy/boxy';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.6';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.7';
         </script>
     <link rel="icon" href="../../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../../genindex.html" />
@@ -210,7 +210,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -323,7 +323,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -396,7 +396,7 @@ document.write(`
 <div class="viewcode-block" id="read_raw_boxy">
 <a class="viewcode-back" href="../../../../generated/mne.io.read_raw_boxy.html#mne.io.read_raw_boxy">[docs]</a>
 <span class="nd">@fill_doc</span>
-<span class="k">def</span> <span class="nf">read_raw_boxy</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">read_raw_boxy</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RawBOXY&quot;</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Reader for an optical imaging recording.</span>
 
 <span class="sd">    This function has been tested using the ISS Imagent I and II systems</span>
@@ -441,7 +441,7 @@ document.write(`
 
     <span class="nd">@verbose</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading </span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="c1"># Read header file and grab some info.</span>
         <span class="n">start_line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
@@ -450,7 +450,7 @@ document.write(`
         <span class="n">raw_extras</span><span class="p">[</span><span class="s2">&quot;offsets&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>  <span class="c1"># keep track of our offsets</span>
         <span class="n">sfreq</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">fname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">_check_fname</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;fname&quot;</span><span class="p">))</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
             <span class="n">line_num</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">i_line</span> <span class="o">=</span> <span class="n">fid</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
             <span class="k">while</span> <span class="n">i_line</span><span class="p">:</span>
@@ -487,8 +487,7 @@ document.write(`
                     <span class="c1"># Check that the BOXY version is supported</span>
                     <span class="k">if</span> <span class="n">boxy_ver</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;0.40&quot;</span><span class="p">,</span> <span class="s2">&quot;0.84&quot;</span><span class="p">]:</span>
                         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                            <span class="s2">&quot;MNE has not been tested with BOXY &quot;</span>
-                            <span class="s2">&quot;version (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">boxy_ver</span>
+                            <span class="sa">f</span><span class="s2">&quot;MNE has not been tested with BOXY version (</span><span class="si">{</span><span class="n">boxy_ver</span><span class="si">}</span><span class="s2">)&quot;</span>
                         <span class="p">)</span>
                 <span class="k">elif</span> <span class="s2">&quot;Detector Channels&quot;</span> <span class="ow">in</span> <span class="n">i_line</span><span class="p">:</span>
                     <span class="n">raw_extras</span><span class="p">[</span><span class="s2">&quot;detect_num&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">i_line</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
@@ -552,7 +551,7 @@ document.write(`
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw_extras</span><span class="p">[</span><span class="s2">&quot;offsets&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="n">delta</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s2">&quot;non-parsed&quot;</span><span class="p">:</span>
             <span class="n">delta</span> <span class="o">//=</span> <span class="n">raw_extras</span><span class="p">[</span><span class="s2">&quot;source_num&quot;</span><span class="p">]</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">RawBOXY</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">info</span><span class="p">,</span>
             <span class="n">preload</span><span class="p">,</span>
             <span class="n">filenames</span><span class="o">=</span><span class="p">[</span><span class="n">fname</span><span class="p">],</span>
@@ -617,7 +616,7 @@ document.write(`
 
         <span class="c1"># Loop through our data.</span>
         <span class="n">one</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">col_names</span><span class="p">),</span> <span class="n">stop_read</span> <span class="o">-</span> <span class="n">start_read</span><span class="p">))</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">boxy_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">boxy_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
             <span class="c1"># Just a more efficient version of this:</span>
             <span class="c1"># ii = 0</span>
             <span class="c1"># for line_num, i_line in enumerate(fid):</span>
@@ -708,7 +707,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2023, MNE Developers. Last updated <time datetime="2023-12-07T23:54:19.732358+00:00" class="localized">2023-12-07 23:54 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-07-23T00:18:52.995210+00:00" class="localized">2024-07-23 00:18 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

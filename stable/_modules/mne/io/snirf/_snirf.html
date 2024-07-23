@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne.io.snirf._snirf &#8212; MNE-NIRS 0.6.0 documentation</title>
+    <title>mne.io.snirf._snirf &#8212; MNE-NIRS 0.7.0 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
@@ -38,8 +38,8 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../../_static/documentation_options.js?v=8fa8b3e9"></script>
-    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/documentation_options.js?v=fe7df9b0"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../../_static/copybutton.js?v=f281be69"></script>
@@ -59,7 +59,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/mne/io/snirf/_snirf';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.6';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.7';
         </script>
     <link rel="icon" href="../../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../../genindex.html" />
@@ -210,7 +210,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -323,7 +323,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -402,7 +402,9 @@ document.write(`
 <div class="viewcode-block" id="read_raw_snirf">
 <a class="viewcode-back" href="../../../../generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf">[docs]</a>
 <span class="nd">@fill_doc</span>
-<span class="k">def</span> <span class="nf">read_raw_snirf</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">optode_frame</span><span class="o">=</span><span class="s2">&quot;unknown&quot;</span><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">read_raw_snirf</span><span class="p">(</span>
+    <span class="n">fname</span><span class="p">,</span> <span class="n">optode_frame</span><span class="o">=</span><span class="s2">&quot;unknown&quot;</span><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RawSNIRF&quot;</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Reader for a continuous wave SNIRF data.</span>
 
 <span class="sd">    .. note:: This reader supports the .snirf file type only,</span>
@@ -439,7 +441,7 @@ document.write(`
 
 
 <span class="k">def</span> <span class="nf">_open</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;latin-1&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;latin-1&quot;</span><span class="p">)</span>
 
 
 <span class="nd">@fill_doc</span>
@@ -471,7 +473,7 @@ document.write(`
         <span class="n">h5py</span> <span class="o">=</span> <span class="n">_import_h5py</span><span class="p">()</span>
 
         <span class="n">fname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">_check_fname</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;fname&quot;</span><span class="p">))</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading </span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">dat</span><span class="p">:</span>
             <span class="k">if</span> <span class="s2">&quot;data2&quot;</span> <span class="ow">in</span> <span class="n">dat</span><span class="p">[</span><span class="s2">&quot;nirs&quot;</span><span class="p">]:</span>
@@ -548,7 +550,7 @@ document.write(`
                         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">channels</span>
                     <span class="p">]</span>
                 <span class="p">)</span>
-                <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;S</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">]</span>
+                <span class="n">sources</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">):</span> <span class="sa">f</span><span class="s2">&quot;S</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">}</span>
 
             <span class="k">if</span> <span class="s2">&quot;detectorLabels_disabled&quot;</span> <span class="ow">in</span> <span class="n">dat</span><span class="p">[</span><span class="s2">&quot;nirs/probe&quot;</span><span class="p">]:</span>
                 <span class="c1"># This is disabled as</span>
@@ -565,7 +567,7 @@ document.write(`
                         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">channels</span>
                     <span class="p">]</span>
                 <span class="p">)</span>
-                <span class="n">detectors</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;D</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detectors</span><span class="p">]</span>
+                <span class="n">detectors</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">):</span> <span class="sa">f</span><span class="s2">&quot;D</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detectors</span><span class="p">}</span>
 
             <span class="c1"># Extract source and detector locations</span>
             <span class="c1"># 3D positions are optional in SNIRF,</span>
@@ -604,9 +606,6 @@ document.write(`
                     <span class="s2">&quot;location information&quot;</span>
                 <span class="p">)</span>
 
-            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">sources</span><span class="p">)</span> <span class="o">==</span> <span class="n">srcPos3D</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">detectors</span><span class="p">)</span> <span class="o">==</span> <span class="n">detPos3D</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
             <span class="n">chnames</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">ch_types</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">chan</span> <span class="ow">in</span> <span class="n">channels</span><span class="p">:</span>
@@ -628,9 +627,9 @@ document.write(`
                         <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                     <span class="p">)</span>
                     <span class="n">ch_name</span> <span class="o">=</span> <span class="p">(</span>
-                        <span class="n">sources</span><span class="p">[</span><span class="n">src_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+                        <span class="n">sources</span><span class="p">[</span><span class="n">src_idx</span><span class="p">]</span>
                         <span class="o">+</span> <span class="s2">&quot;_&quot;</span>
-                        <span class="o">+</span> <span class="n">detectors</span><span class="p">[</span><span class="n">det_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+                        <span class="o">+</span> <span class="n">detectors</span><span class="p">[</span><span class="n">det_idx</span><span class="p">]</span>
                         <span class="o">+</span> <span class="s2">&quot; &quot;</span>
                         <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">fnirs_wavelengths</span><span class="p">[</span><span class="n">wve_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
                     <span class="p">)</span>
@@ -645,7 +644,7 @@ document.write(`
                     <span class="c1"># Convert between SNIRF processed names and MNE type names</span>
                     <span class="n">dt_id</span> <span class="o">=</span> <span class="n">dt_id</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;dod&quot;</span><span class="p">,</span> <span class="s2">&quot;fnirs_od&quot;</span><span class="p">)</span>
 
-                    <span class="n">ch_name</span> <span class="o">=</span> <span class="n">sources</span><span class="p">[</span><span class="n">src_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">detectors</span><span class="p">[</span><span class="n">det_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+                    <span class="n">ch_name</span> <span class="o">=</span> <span class="n">sources</span><span class="p">[</span><span class="n">src_idx</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">detectors</span><span class="p">[</span><span class="n">det_idx</span><span class="p">]</span>
 
                     <span class="k">if</span> <span class="n">dt_id</span> <span class="o">==</span> <span class="s2">&quot;fnirs_od&quot;</span><span class="p">:</span>
                         <span class="n">wve_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
@@ -668,7 +667,8 @@ document.write(`
 
             <span class="n">subject_info</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;nirs/metaDataTags/SubjectID&quot;</span><span class="p">))</span>
-            <span class="n">subject_info</span><span class="p">[</span><span class="s2">&quot;first_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_correct_shape</span><span class="p">(</span><span class="n">names</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="n">_correct_shape</span><span class="p">(</span><span class="n">names</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
+            <span class="n">subject_info</span><span class="p">[</span><span class="s2">&quot;his_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">names</span>
             <span class="c1"># Read non standard (but allowed) custom metadata tags</span>
             <span class="k">if</span> <span class="s2">&quot;lastName&quot;</span> <span class="ow">in</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;nirs/metaDataTags/&quot;</span><span class="p">):</span>
                 <span class="n">ln</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/nirs/metaDataTags/lastName&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
@@ -676,6 +676,12 @@ document.write(`
             <span class="k">if</span> <span class="s2">&quot;middleName&quot;</span> <span class="ow">in</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;nirs/metaDataTags/&quot;</span><span class="p">):</span>
                 <span class="n">m</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/nirs/metaDataTags/middleName&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
                 <span class="n">subject_info</span><span class="p">[</span><span class="s2">&quot;middle_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span>
+            <span class="k">if</span> <span class="s2">&quot;firstName&quot;</span> <span class="ow">in</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;nirs/metaDataTags/&quot;</span><span class="p">):</span>
+                <span class="n">fn</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/nirs/metaDataTags/firstName&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
+                <span class="n">subject_info</span><span class="p">[</span><span class="s2">&quot;first_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fn</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># MNE &lt; 1.7 used to not write the firstName tag, so pull it from names</span>
+                <span class="n">subject_info</span><span class="p">[</span><span class="s2">&quot;first_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">names</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">if</span> <span class="s2">&quot;sex&quot;</span> <span class="ow">in</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;nirs/metaDataTags/&quot;</span><span class="p">):</span>
                 <span class="n">s</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/nirs/metaDataTags/sex&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;Male&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">}:</span>
@@ -795,10 +801,10 @@ document.write(`
                 <span class="n">info</span><span class="p">[</span><span class="s2">&quot;dig&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dig</span>
 
             <span class="n">str_date</span> <span class="o">=</span> <span class="n">_correct_shape</span><span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/nirs/metaDataTags/MeasurementDate&quot;</span><span class="p">)))</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/nirs/metaDataTags/MeasurementDate&quot;</span><span class="p">))</span>
             <span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
             <span class="n">str_time</span> <span class="o">=</span> <span class="n">_correct_shape</span><span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/nirs/metaDataTags/MeasurementTime&quot;</span><span class="p">)))</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/nirs/metaDataTags/MeasurementTime&quot;</span><span class="p">))</span>
             <span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
             <span class="n">str_datetime</span> <span class="o">=</span> <span class="n">str_date</span> <span class="o">+</span> <span class="n">str_time</span>
 
@@ -832,7 +838,7 @@ document.write(`
                 <span class="p">)</span>
                 <span class="n">birth_matched</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(\d+)-(\d+)-(\d+)&quot;</span><span class="p">,</span> <span class="n">str_birth</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">birth_matched</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">birthday</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">birthday</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span>
                         <span class="nb">int</span><span class="p">(</span><span class="n">birth_matched</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">]),</span>
                         <span class="nb">int</span><span class="p">(</span><span class="n">birth_matched</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">1</span><span class="p">]),</span>
                         <span class="nb">int</span><span class="p">(</span><span class="n">birth_matched</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">2</span><span class="p">]),</span>
@@ -840,7 +846,7 @@ document.write(`
                     <span class="k">with</span> <span class="n">info</span><span class="o">.</span><span class="n">_unlock</span><span class="p">():</span>
                         <span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">][</span><span class="s2">&quot;birthday&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">birthday</span>
 
-            <span class="nb">super</span><span class="p">(</span><span class="n">RawSNIRF</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
                 <span class="n">info</span><span class="p">,</span>
                 <span class="n">preload</span><span class="p">,</span>
                 <span class="n">filenames</span><span class="o">=</span><span class="p">[</span><span class="n">fname</span><span class="p">],</span>
@@ -1003,7 +1009,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2023, MNE Developers. Last updated <time datetime="2023-12-07T23:54:19.732358+00:00" class="localized">2023-12-07 23:54 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-07-23T00:18:52.995210+00:00" class="localized">2024-07-23 00:18 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

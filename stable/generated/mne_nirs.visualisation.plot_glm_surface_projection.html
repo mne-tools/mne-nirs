@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>mne_nirs.visualisation.plot_glm_surface_projection &#8212; MNE-NIRS 0.6.0 documentation</title>
+    <title>mne_nirs.visualisation.plot_glm_surface_projection &#8212; MNE-NIRS 0.7.0 documentation</title>
   
   
   
@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
@@ -39,8 +39,8 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../_static/documentation_options.js?v=8fa8b3e9"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/documentation_options.js?v=fe7df9b0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'generated/mne_nirs.visualisation.plot_glm_surface_projection';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.6';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.7';
         </script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -213,7 +213,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -330,7 +330,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -489,28 +489,28 @@ visualisation.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>inst</strong><span class="classifier">instance of Raw</span></dt><dd><p>Haemoglobin data.</p>
+<dt><strong>inst</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Raw</span></code></a></span></dt><dd><p>Haemoglobin data.</p>
 </dd>
-<dt><strong>statsmodel_df</strong><span class="classifier">dataframe</span></dt><dd><p>As produced by produced by <cite>statsmodels_to_results</cite>.</p>
+<dt><strong>statsmodel_df</strong><span class="classifier"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dataframe</span></code></a></span></dt><dd><p>As produced by produced by <cite>statsmodels_to_results</cite>.</p>
 </dd>
-<dt><strong>picks</strong><span class="classifier">str | array-like | slice | None</span></dt><dd><p>Channels to include. Slices and lists of integers will be interpreted as 
+<dt><strong>picks</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://numpy.org/devdocs/glossary.html#term-array_like" title="(in NumPy v2.1.dev0)"><span>array_like</span></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">slice</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Channels to include. Slices and lists of integers will be interpreted as 
 channel indices. In lists, channel <em>type</em> strings (e.g., <code class="docutils literal notranslate"><span class="pre">['meg',</span> 
 <span class="pre">'eeg']</span></code>) will pick channels of those types, channel <em>name</em> strings (e.g., 
 <code class="docutils literal notranslate"><span class="pre">['MEG0111',</span> <span class="pre">'MEG2623']</span></code> will pick the given channels. Can also be the 
-string values “all” to pick all channels, or “data” to pick <a class="reference external" href="https://mne.tools/stable/documentation/glossary.html#term-data-channels" title="(in MNE v1.6)"><span class="xref std std-term">data 
-channels</span></a>. None (default) will pick good sEEG, ECoG, and DBS channels.</p>
+string values <code class="docutils literal notranslate"><span class="pre">'all'</span></code> to pick all channels, or <code class="docutils literal notranslate"><span class="pre">'data'</span></code> to pick 
+<a class="reference external" href="https://mne.tools/stable/documentation/glossary.html#term-data-channels" title="(in MNE v1.7)"><span class="xref std std-term">data channels</span></a>. None (default) will pick good sEEG, ECoG, and DBS channels.</p>
 </dd>
-<dt><strong>value</strong><span class="classifier">str</span></dt><dd><p>Column from dataframe to plot.</p>
+<dt><strong>value</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Column from dataframe to plot.</p>
 </dd>
-<dt><strong>background</strong><span class="classifier">matplotlib color</span></dt><dd><p>Color of the background of the display window.</p>
+<dt><strong>background</strong><span class="classifier"><a class="reference external" href="https://matplotlib.org/stable/index.html#module-matplotlib" title="(in Matplotlib v3.9.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib</span></code></a> color</span></dt><dd><p>Color of the background of the display window.</p>
 </dd>
-<dt><strong>figure</strong><span class="classifier">mayavi.core.api.Scene, matplotlib.figure.Figure, list, int, None</span></dt><dd><p>If None, a new figure will be created. If multiple views or a
+<dt><strong>figure</strong><span class="classifier">mayavi.core.api.Scene, <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.9.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib.figure.Figure</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>If None, a new figure will be created. If multiple views or a
 split view is requested, this must be a list of the appropriate
 length. If int is provided it will be used to identify the Mayavi
 figure by it’s id or create a new figure with the given id. If an
 instance of matplotlib figure, mpl backend is used for plotting.</p>
 </dd>
-<dt><strong>clim</strong><span class="classifier">str | dict</span></dt><dd><p>Colorbar properties specification. If ‘auto’, set clim automatically
+<dt><strong>clim</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a></span></dt><dd><p>Colorbar properties specification. If ‘auto’, set clim automatically
 based on data percentiles. If dict, should contain:</p>
 <blockquote>
 <div><dl class="simple">
@@ -531,46 +531,46 @@ Only sequential colormaps should be used with <code class="docutils literal notr
 only divergent colormaps should be used with <code class="docutils literal notranslate"><span class="pre">pos_lims</span></code>.</p>
 </div>
 </dd>
-<dt><strong>mode</strong><span class="classifier">str</span></dt><dd><p>Can be “sum” to do a linear sum of weights, “weighted” to make this
+<dt><strong>mode</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Can be “sum” to do a linear sum of weights, “weighted” to make this
 a weighted sum, “nearest” to
 use only the weight of the nearest sensor, or “single” to
 do a distance-weight of the nearest sensor. Default is “sum”.</p>
 </dd>
-<dt><strong>colormap</strong><span class="classifier">str</span></dt><dd><p>Colormap to use.</p>
+<dt><strong>colormap</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Colormap to use.</p>
 </dd>
-<dt><strong>surface</strong><span class="classifier">str</span></dt><dd><p>The type of surface (inflated, white etc.).</p>
+<dt><strong>surface</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The type of surface (inflated, white etc.).</p>
 </dd>
-<dt><strong>hemi</strong><span class="classifier">str</span></dt><dd><p>Hemisphere id (ie ‘lh’, ‘rh’, ‘both’, or ‘split’). In the case
+<dt><strong>hemi</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Hemisphere id (ie ‘lh’, ‘rh’, ‘both’, or ‘split’). In the case
 of ‘both’, both hemispheres are shown in the same window.
 In the case of ‘split’ hemispheres are displayed side-by-side
 in different viewing panes.</p>
 </dd>
-<dt><strong>size</strong><span class="classifier">float or tuple of float</span></dt><dd><p>The size of the window, in pixels. can be one number to specify
+<dt><strong>size</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">tuple</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a></span></dt><dd><p>The size of the window, in pixels. can be one number to specify
 a square window, or the (width, height) of a rectangular window.
 Has no effect with mpl backend.</p>
 </dd>
-<dt><strong>view</strong><span class="classifier">str</span></dt><dd><p>View to set brain to.</p>
+<dt><strong>view</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>View to set brain to.</p>
 </dd>
-<dt><strong>colorbar</strong><span class="classifier">bool</span></dt><dd><p>If True, display colorbar on scene.</p>
+<dt><strong>colorbar</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.12)"><span class="xref std std-ref">bool</span></a></span></dt><dd><p>If True, display colorbar on scene.</p>
 </dd>
-<dt><strong>distance</strong><span class="classifier">float</span></dt><dd><p>Distance (m) defining the activation “ball” of the sensor.</p>
+<dt><strong>distance</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a></span></dt><dd><p>Distance (m) defining the activation “ball” of the sensor.</p>
 </dd>
-<dt><strong>subjects_dir</strong><span class="classifier">path-like | None</span></dt><dd><p>The path to the directory containing the FreeSurfer subjects
+<dt><strong>subjects_dir</strong><span class="classifier">path-like | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>The path to the directory containing the FreeSurfer subjects
 reconstructions. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, defaults to the <code class="docutils literal notranslate"><span class="pre">SUBJECTS_DIR</span></code> environment
 variable.</p>
 </dd>
-<dt><strong>src</strong><span class="classifier">instance of SourceSpaces</span></dt><dd><p>The source space.</p>
+<dt><strong>src</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.SourceSpaces.html#mne.SourceSpaces" title="(in MNE v1.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SourceSpaces</span></code></a></span></dt><dd><p>The source space.</p>
 </dd>
-<dt><strong>verbose</strong><span class="classifier">bool | str | int | None</span></dt><dd><p>Control verbosity of the logging output. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, use the default
+<dt><strong>verbose</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.12)"><span class="xref std std-ref">bool</span></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Control verbosity of the logging output. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, use the default
 verbosity level. See the <a class="reference external" href="https://docs.python.org/3/tutorial/stdlib2.html#tut-logging" title="(in Python v3.12)"><span class="xref std std-ref">logging documentation</span></a> and
-<a class="reference external" href="https://mne.tools/stable/generated/mne.verbose.html#mne.verbose" title="(in MNE v1.6)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.verbose()</span></code></a> for details. Should only be passed as a keyword
+<a class="reference external" href="https://mne.tools/stable/generated/mne.verbose.html#mne.verbose" title="(in MNE v1.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.verbose()</span></code></a> for details. Should only be passed as a keyword
 argument.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><dl class="simple">
-<dt><strong>figure</strong><span class="classifier">instance of mne.viz.Brain | matplotlib.figure.Figure</span></dt><dd><p>An instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="(in MNE v1.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.viz.Brain</span></code></a> or matplotlib figure.</p>
+<dd class="field-even"><dl>
+<dt><strong>figure</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="(in MNE v1.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mne.viz.Brain</span></code></a> | <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.9.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib.figure.Figure</span></code></a></span></dt><dd><p>An instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="(in MNE v1.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.viz.Brain</span></code></a> or matplotlib figure.</p>
 </dd>
 </dl>
 </dd>
@@ -579,10 +579,10 @@ argument.</p>
 
 <section id="examples-using-mne-nirs-visualisation-plot-glm-surface-projection">
 <span id="sphx-glr-backreferences-mne-nirs-visualisation-plot-glm-surface-projection"></span><h2>Examples using <code class="docutils literal notranslate"><span class="pre">mne_nirs.visualisation.plot_glm_surface_projection</span></code><a class="headerlink" href="#examples-using-mne-nirs-visualisation-plot-glm-surface-projection" title="Link to this heading">#</a></h2>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This is an example of a group level GLM based functional near-infrared spectroscopy (fNIRS) ana..."><img alt="" src="../_images/sphx_glr_plot_12_group_glm_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This is an example of a group level GLM based functional near-infrared spectroscopy (fNIRS) analysis in MNE-NIRS."><img alt="" src="../_images/sphx_glr_plot_12_group_glm_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/general/plot_12_group_glm.html#sphx-glr-auto-examples-general-plot-12-group-glm-py"><span class="std std-ref">Group Level GLM Analysis</span></a></p>
   <div class="sphx-glr-thumbnail-title">Group Level GLM Analysis</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how you can utilise anatomical and sensor position information in you..."><img alt="" src="../_images/sphx_glr_plot_70_visualise_brain_thumb.png" />
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how you can utilise anatomical and sensor position information in your analysis pipeline. This information can be used to verify measurement/analysis and also improve analysis accuracy novi2020integration."><img alt="" src="../_images/sphx_glr_plot_70_visualise_brain_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/general/plot_70_visualise_brain.html#sphx-glr-auto-examples-general-plot-70-visualise-brain-py"><span class="std std-ref">Utilising Anatomical Information</span></a></p>
   <div class="sphx-glr-thumbnail-title">Utilising Anatomical Information</div>
 </div></div></section>
@@ -678,7 +678,7 @@ argument.</p>
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2023, MNE Developers. Last updated <time datetime="2023-12-07T23:54:19.732358+00:00" class="localized">2023-12-07 23:54 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-07-23T00:18:52.995210+00:00" class="localized">2024-07-23 00:18 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

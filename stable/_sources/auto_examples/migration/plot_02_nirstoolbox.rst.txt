@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_migration_plot_02_nirstoolbox.py>`
-        to download the full example code or to run this example in your browser via Binder
+        to download the full example code. or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
 
@@ -68,11 +68,7 @@ Finally a mixed effects model is run on the group level dat.
    pipeline.formula = 'beta ~ -1 + cond + (1|Name)';
    group_stats = pipeline.run(subj_stats);
 
-.. contents:: Page contents
-   :local:
-   :depth: 2
-
-.. GENERATED FROM PYTHON SOURCE LINES 59-66
+.. GENERATED FROM PYTHON SOURCE LINES 54-61
 
 MNE equivalent of nirs-toolbox script
 =====================================
@@ -82,7 +78,7 @@ in :ref:`the group level tutorial <tut-fnirs-group>`.
 
 So this page will focus on the differences between the two approaches.
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-74
+.. GENERATED FROM PYTHON SOURCE LINES 64-69
 
 Differences between toolboxes
 ---------------------------------------------
@@ -90,7 +86,7 @@ Differences between toolboxes
 MNE does not have iterative reweighting of the noise estimate
 in the GLM analysis.
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-84
+.. GENERATED FROM PYTHON SOURCE LINES 72-79
 
 Further analysis details
 ------------------------------------
@@ -105,7 +101,7 @@ https://github.com/mne-tools/mne-nirs/issues
 
    **Total running time of the script:** (0 minutes 0.000 seconds)
 
-**Estimated memory usage:**  9 MB
+**Estimated memory usage:**  429 MB
 
 
 .. _sphx_glr_download_auto_examples_migration_plot_02_nirstoolbox.py:
@@ -128,6 +124,10 @@ https://github.com/mne-tools/mne-nirs/issues
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_02_nirstoolbox.py <plot_02_nirstoolbox.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_02_nirstoolbox.zip <plot_02_nirstoolbox.zip>`
 
 
 .. only:: html

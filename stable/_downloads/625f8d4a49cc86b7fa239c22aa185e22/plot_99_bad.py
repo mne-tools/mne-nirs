@@ -32,12 +32,6 @@ is used as a basis for this analysis, so most of the document looks similar.
 However, at the midpoint we replace the real data with noise and demonstrate
 that without careful attention to the analysis parameter it would still
 appear as if a fNIRS response is observed.
-
-
-.. contents:: Page contents
-   :local:
-   :depth: 2
-
 """
 # sphinx_gallery_thumbnail_number = 7
 
@@ -47,14 +41,16 @@ appear as if a fNIRS response is observed.
 # License: BSD (3-clause)
 
 import os
-import numpy as np
 
 import mne
+import numpy as np
+
 import mne_nirs
+
 np.random.seed(1)
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-fnirs_cw_amplitude_dir = os.path.join(fnirs_data_folder, 'Participant-1')
+fnirs_cw_amplitude_dir = os.path.join(fnirs_data_folder, "Participant-1")
 raw_intensity = mne.io.read_raw_nirx(fnirs_cw_amplitude_dir, verbose=True)
 raw_intensity.load_data()
 
@@ -70,10 +66,12 @@ raw_intensity.load_data()
 
 picks = mne.pick_types(raw_intensity.info, meg=False, fnirs=True)
 dists = mne.preprocessing.nirs.source_detector_distances(
-    raw_intensity.info, picks=picks)
+    raw_intensity.info, picks=picks
+)
 raw_intensity.pick(picks[dists > 0.01])
-raw_intensity.plot(n_channels=len(raw_intensity.ch_names),
-                   duration=500, show_scrollbars=False)
+raw_intensity.plot(
+    n_channels=len(raw_intensity.ch_names), duration=500, show_scrollbars=False
+)
 
 
 # %%
@@ -83,8 +81,7 @@ raw_intensity.plot(n_channels=len(raw_intensity.ch_names),
 # The raw intensity values are then converted to optical density.
 
 raw_od = mne.preprocessing.nirs.optical_density(raw_intensity)
-raw_od.plot(n_channels=len(raw_od.ch_names),
-            duration=500, show_scrollbars=False)
+raw_od.plot(n_channels=len(raw_od.ch_names), duration=500, show_scrollbars=False)
 
 
 # %%
@@ -95,9 +92,7 @@ raw_od.plot(n_channels=len(raw_od.ch_names),
 # the modified Beer-Lambert law.
 
 raw_haemo = mne.preprocessing.nirs.beer_lambert_law(raw_od, ppf=0.1)
-raw_haemo.plot(n_channels=len(raw_haemo.ch_names),
-               duration=500, show_scrollbars=False)
-
+raw_haemo.plot(n_channels=len(raw_haemo.ch_names), duration=500, show_scrollbars=False)
 
 
 # %%
@@ -109,7 +104,7 @@ raw_haemo.plot(n_channels=len(raw_haemo.ch_names),
 
 
 raw_haemo._data = np.random.randn(40, 23239) / 1.0e6 * 1
-raw_haemo._data[::2, :]= np.random.randn(20, 23239) / 1.0e6 * 3
+raw_haemo._data[::2, :] = np.random.randn(20, 23239) / 1.0e6 * 3
 
 
 # %%
@@ -120,12 +115,11 @@ raw_haemo._data[::2, :]= np.random.randn(20, 23239) / 1.0e6 * 3
 # Do not do this!!
 #
 
-fig = raw_haemo.plot_psd(average=True)
-fig.suptitle('Before filtering', weight='bold', size='x-large')
-raw_haemo = raw_haemo.filter(0.05, 0.1, h_trans_bandwidth=0.2,
-                             l_trans_bandwidth=0.02)
-fig = raw_haemo.plot_psd(average=True)
-fig.suptitle('After filtering', weight='bold', size='x-large')
+fig = raw_haemo.compute_psd().plot(average=True, amplitude=False)
+fig.suptitle("Before filtering", weight="bold", size="x-large")
+raw_haemo = raw_haemo.filter(0.05, 0.1, h_trans_bandwidth=0.2, l_trans_bandwidth=0.02)
+fig = raw_haemo.compute_psd().plot(average=True, amplitude=False)
+fig.suptitle("After filtering", weight="bold", size="x-large")
 
 
 # %%
@@ -148,12 +142,11 @@ raw_haemo = mne_nirs.signal_enhancement.enhance_negative_correlation(raw_haemo)
 # First we extract the events of interest and visualise them to ensure they are
 # correct.
 
-events, _ = mne.events_from_annotations(raw_haemo, event_id={'1.0': 1,
-                                                             '2.0': 2,
-                                                             '3.0': 3})
-event_dict = {'Control': 1, 'Tapping/Left': 2, 'Tapping/Right': 3}
-fig = mne.viz.plot_events(events, event_id=event_dict,
-                          sfreq=raw_haemo.info['sfreq'])
+events, _ = mne.events_from_annotations(
+    raw_haemo, event_id={"1.0": 1, "2.0": 2, "3.0": 3}
+)
+event_dict = {"Control": 1, "Tapping/Left": 2, "Tapping/Right": 3}
+fig = mne.viz.plot_events(events, event_id=event_dict, sfreq=raw_haemo.info["sfreq"])
 
 
 # %%
@@ -164,11 +157,20 @@ fig = mne.viz.plot_events(events, event_id=event_dict,
 reject_criteria = dict(hbo=10e-6)
 tmin, tmax = -1.5, 10.5
 
-epochs = mne.Epochs(raw_haemo, events, event_id=event_dict,
-                    tmin=tmin, tmax=tmax,
-                    reject=reject_criteria, reject_by_annotation=True,
-                    proj=True, baseline=(None, 0), preload=True,
-                    detrend=1, verbose=True)
+epochs = mne.Epochs(
+    raw_haemo,
+    events,
+    event_id=event_dict,
+    tmin=tmin,
+    tmax=tmax,
+    reject=reject_criteria,
+    reject_by_annotation=True,
+    proj=True,
+    baseline=(None, 0),
+    preload=True,
+    detrend=1,
+    verbose=True,
+)
 
 
 # %%
@@ -179,17 +181,18 @@ epochs = mne.Epochs(raw_haemo, events, event_id=event_dict,
 # both the HbO and HbR on the same figure to illustrate the relation between
 # the two signals.
 
-evoked_dict = {'Tapping/HbO': epochs['Tapping'].average(picks='hbo'),
-               'Tapping/HbR': epochs['Tapping'].average(picks='hbr')}
+evoked_dict = {
+    "Tapping/HbO": epochs["Tapping"].average(picks="hbo"),
+    "Tapping/HbR": epochs["Tapping"].average(picks="hbr"),
+}
 
 # Rename channels until the encoding of frequency in ch_name is fixed
 for condition in evoked_dict:
     evoked_dict[condition].rename_channels(lambda x: x[:-4])
 
-color_dict = dict(HbO='#AA3377', HbR='b')
+color_dict = dict(HbO="#AA3377", HbR="b")
 
-mne.viz.plot_compare_evokeds(evoked_dict, combine="mean", ci=0.95,
-                             colors=color_dict)
+mne.viz.plot_compare_evokeds(evoked_dict, combine="mean", ci=0.95, colors=color_dict)
 
 
 # %%

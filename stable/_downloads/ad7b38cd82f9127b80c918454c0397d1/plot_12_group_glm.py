@@ -61,47 +61,39 @@ information about triggers, condition names, etc.
    Participants tapped their thumb to their fingers for 5s.
    Conditions were presented in a random order with a randomised inter
    stimulus interval.
-
-.. contents:: Page contents
-   :local:
-   :depth: 2
-"""
+"""  # noqa: E501
 # sphinx_gallery_thumbnail_number = 2
 
 # Authors: Robert Luke <mail@robertluke.net>
 #
 # License: BSD (3-clause)
 
-
 # Import common libraries
+import matplotlib as mpl
+
+# Import Plotting Library
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-
-# Import MNE processing
-from mne.preprocessing.nirs import optical_density, beer_lambert_law
-
-# Import MNE-NIRS processing
-from mne_nirs.statistics import run_glm
-from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import statsmodels_to_results
-from mne_nirs.channels import get_short_channels, get_long_channels
-from mne_nirs.channels import picks_pair_to_idx
-from mne_nirs.visualisation import plot_glm_group_topo
-from mne_nirs.datasets import fnirs_motor_group
-from mne_nirs.visualisation import plot_glm_surface_projection
-from mne_nirs.io.fold import fold_channel_specificity
-
-# Import MNE-BIDS processing
-from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
+import seaborn as sns
 
 # Import StatsModels
 import statsmodels.formula.api as smf
 
-# Import Plotting Library
-import matplotlib.pyplot as plt
-import matplotlib as mpl
-import seaborn as sns
+# Import MNE processing
+from mne.preprocessing.nirs import beer_lambert_law, optical_density
 
+# Import MNE-BIDS processing
+from mne_bids import BIDSPath, get_entity_vals, read_raw_bids
+
+from mne_nirs.channels import get_long_channels, get_short_channels, picks_pair_to_idx
+from mne_nirs.datasets import fnirs_motor_group
+from mne_nirs.experimental_design import make_first_level_design_matrix
+from mne_nirs.io.fold import fold_channel_specificity
+
+# Import MNE-NIRS processing
+from mne_nirs.statistics import run_glm, statsmodels_to_results
+from mne_nirs.visualisation import plot_glm_group_topo, plot_glm_surface_projection
 
 # %%
 # Set up directories
@@ -123,15 +115,16 @@ print(root)
 # We inform the software that we are analysing nirs data that is saved in
 # the snirf format.
 
-dataset = BIDSPath(root=root, task="tapping",
-                   datatype="nirs", suffix="nirs", extension=".snirf")
+dataset = BIDSPath(
+    root=root, task="tapping", datatype="nirs", suffix="nirs", extension=".snirf"
+)
 
 print(dataset.directory)
 
 # %%
 # For example we can automatically query the subjects, tasks, and sessions.
 
-subjects = get_entity_vals(root, 'subject')
+subjects = get_entity_vals(root, "subject")
 print(subjects)
 
 
@@ -172,13 +165,13 @@ print(subjects)
 
 
 def individual_analysis(bids_path, ID):
-
     raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
-    # Delete annotation labeled 15, as these just signify the start and end of experiment.
-    raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
+    # Delete annotation labeled 15, as these just signify the experiment start and end.
+    raw_intensity.annotations.delete(raw_intensity.annotations.description == "15.0")
     # sanitize event names
     raw_intensity.annotations.description[:] = [
-        d.replace('/', '_') for d in raw_intensity.annotations.description]
+        d.replace("/", "_") for d in raw_intensity.annotations.description
+    ]
 
     # Convert signal to haemoglobin and resample
     raw_od = optical_density(raw_intensity)
@@ -193,8 +186,12 @@ def individual_analysis(bids_path, ID):
     design_matrix = make_first_level_design_matrix(raw_haemo, stim_dur=5.0)
 
     # Append short channels mean to design matrix
-    design_matrix["ShortHbO"] = np.mean(sht_chans.copy().pick(picks="hbo").get_data(), axis=0)
-    design_matrix["ShortHbR"] = np.mean(sht_chans.copy().pick(picks="hbr").get_data(), axis=0)
+    design_matrix["ShortHbO"] = np.mean(
+        sht_chans.copy().pick(picks="hbo").get_data(), axis=0
+    )
+    design_matrix["ShortHbR"] = np.mean(
+        sht_chans.copy().pick(picks="hbr").get_data(), axis=0
+    )
 
     # Run GLM
     glm_est = run_glm(raw_haemo, design_matrix)
@@ -205,22 +202,24 @@ def individual_analysis(bids_path, ID):
     right = [[8, 7], [5, 7], [7, 7], [5, 6], [6, 7], [5, 5]]
     # Then generate the correct indices for each pair
     groups = dict(
-        Left_Hemisphere=picks_pair_to_idx(raw_haemo, left, on_missing='ignore'),
-        Right_Hemisphere=picks_pair_to_idx(raw_haemo, right, on_missing='ignore'))
+        Left_Hemisphere=picks_pair_to_idx(raw_haemo, left, on_missing="ignore"),
+        Right_Hemisphere=picks_pair_to_idx(raw_haemo, right, on_missing="ignore"),
+    )
 
     # Extract channel metrics
     cha = glm_est.to_dataframe()
 
     # Compute region of interest results from channel data
-    roi = glm_est.to_dataframe_region_of_interest(groups,
-                                                  design_matrix.columns,
-                                                  demographic_info=True)
+    roi = glm_est.to_dataframe_region_of_interest(
+        groups, design_matrix.columns, demographic_info=True
+    )
 
     # Define left vs right tapping contrast
     contrast_matrix = np.eye(design_matrix.shape[1])
-    basic_conts = dict([(column, contrast_matrix[i])
-                        for i, column in enumerate(design_matrix.columns)])
-    contrast_LvR = basic_conts['Tapping_Left'] - basic_conts['Tapping_Right']
+    basic_conts = dict(
+        [(column, contrast_matrix[i]) for i, column in enumerate(design_matrix.columns)]
+    )
+    contrast_LvR = basic_conts["Tapping_Left"] - basic_conts["Tapping_Right"]
 
     # Compute defined contrast
     contrast = glm_est.compute_contrast(contrast_LvR)
@@ -230,9 +229,9 @@ def individual_analysis(bids_path, ID):
     roi["ID"] = cha["ID"] = con["ID"] = ID
 
     # Convert to uM for nicer plotting below.
-    cha["theta"] = [t * 1.e6 for t in cha["theta"]]
-    roi["theta"] = [t * 1.e6 for t in roi["theta"]]
-    con["effect"] = [t * 1.e6 for t in con["effect"]]
+    cha["theta"] = [t * 1.0e6 for t in cha["theta"]]
+    roi["theta"] = [t * 1.0e6 for t in roi["theta"]]
+    con["effect"] = [t * 1.0e6 for t in con["effect"]]
 
     return raw_haemo, roi, cha, con
 
@@ -251,7 +250,6 @@ df_cha = pd.DataFrame()  # To store channel level results
 df_con = pd.DataFrame()  # To store channel level contrast results
 
 for sub in subjects:  # Loop from first to fifth subject
-
     # Create path to file based on experiment info
     bids_path = dataset.update(subject=sub)
 
@@ -278,7 +276,18 @@ for sub in subjects:  # Loop from first to fifth subject
 grp_results = df_roi.query("Condition in ['Control', 'Tapping_Left', 'Tapping_Right']")
 grp_results = grp_results.query("Chroma in ['hbo']")
 
-sns.catplot(x="Condition", y="theta", col="ID", hue="ROI", data=grp_results, col_wrap=5, errorbar=None, palette="muted", height=4, s=10)
+sns.catplot(
+    x="Condition",
+    y="theta",
+    col="ID",
+    hue="ROI",
+    data=grp_results,
+    col_wrap=5,
+    errorbar=None,
+    palette="muted",
+    height=4,
+    s=10,
+)
 
 
 # %%
@@ -316,8 +325,9 @@ sns.catplot(x="Condition", y="theta", col="ID", hue="ROI", data=grp_results, col
 
 grp_results = df_roi.query("Condition in ['Control','Tapping_Left', 'Tapping_Right']")
 
-roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
-                        grp_results, groups=grp_results["ID"]).fit(method='nm')
+roi_model = smf.mixedlm(
+    "theta ~ -1 + ROI:Condition:Chroma", grp_results, groups=grp_results["ID"]
+).fit(method="nm")
 roi_model.summary()
 
 
@@ -348,8 +358,9 @@ grp_results = df_roi.query("Condition in ['Tapping_Left', 'Tapping_Right']")
 grp_results = grp_results.query("Chroma in ['hbo']")
 grp_results = grp_results.query("ROI in ['Right_Hemisphere']")
 
-roi_model = smf.mixedlm("theta ~ Condition + Sex",
-                        grp_results, groups=grp_results["ID"]).fit(method='nm')
+roi_model = smf.mixedlm(
+    "theta ~ Condition + Sex", grp_results, groups=grp_results["ID"]
+).fit(method="nm")
 roi_model.summary()
 
 # %%
@@ -367,12 +378,22 @@ roi_model.summary()
 
 # Regenerate the results from the original group model above
 grp_results = df_roi.query("Condition in ['Control','Tapping_Left', 'Tapping_Right']")
-roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
-                        grp_results, groups=grp_results["ID"]).fit(method='nm')
+roi_model = smf.mixedlm(
+    "theta ~ -1 + ROI:Condition:Chroma", grp_results, groups=grp_results["ID"]
+).fit(method="nm")
 
 df = statsmodels_to_results(roi_model)
 
-sns.catplot(x="Condition", y="Coef.", hue="ROI", data=df.query("Chroma == 'hbo'"), errorbar=None, palette="muted", height=4, s=10)
+sns.catplot(
+    x="Condition",
+    y="Coef.",
+    hue="ROI",
+    data=df.query("Chroma == 'hbo'"),
+    errorbar=None,
+    palette="muted",
+    height=4,
+    s=10,
+)
 
 
 # %%
@@ -386,47 +407,66 @@ sns.catplot(x="Condition", y="Coef.", hue="ROI", data=df.query("Chroma == 'hbo'"
 # than region of interest as above).
 # Then we pass these results to the topomap function.
 
-fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(10, 10),
-                         gridspec_kw=dict(width_ratios=[1, 1]))
+fig, axes = plt.subplots(
+    nrows=2, ncols=2, figsize=(10, 10), gridspec_kw=dict(width_ratios=[1, 1])
+)
 
 # Cut down the dataframe just to the conditions we are interested in
 ch_summary = df_cha.query("Condition in ['Tapping_Left', 'Tapping_Right']")
 ch_summary = ch_summary.query("Chroma in ['hbo']")
 
 # Run group level model and convert to dataframe
-ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:Condition",
-                       ch_summary, groups=ch_summary["ID"]).fit(method='nm')
+ch_model = smf.mixedlm(
+    "theta ~ -1 + ch_name:Chroma:Condition", ch_summary, groups=ch_summary["ID"]
+).fit(method="nm")
 ch_model_df = statsmodels_to_results(ch_model)
 
 # Plot the two conditions
-plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
-                    ch_model_df.query("Condition in ['Tapping_Left']"),
-                    colorbar=False, axes=axes[0, 0],
-                    vlim=(0, 20), cmap=mpl.cm.Oranges)
+plot_glm_group_topo(
+    raw_haemo.copy().pick(picks="hbo"),
+    ch_model_df.query("Condition in ['Tapping_Left']"),
+    colorbar=False,
+    axes=axes[0, 0],
+    vlim=(0, 20),
+    cmap=mpl.cm.Oranges,
+)
 
-plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
-                    ch_model_df.query("Condition in ['Tapping_Right']"),
-                    colorbar=True, axes=axes[0, 1],
-                    vlim=(0, 20), cmap=mpl.cm.Oranges)
+plot_glm_group_topo(
+    raw_haemo.copy().pick(picks="hbo"),
+    ch_model_df.query("Condition in ['Tapping_Right']"),
+    colorbar=True,
+    axes=axes[0, 1],
+    vlim=(0, 20),
+    cmap=mpl.cm.Oranges,
+)
 
 # Cut down the dataframe just to the conditions we are interested in
 ch_summary = df_cha.query("Condition in ['Tapping_Left', 'Tapping_Right']")
 ch_summary = ch_summary.query("Chroma in ['hbr']")
 
 # Run group level model and convert to dataframe
-ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:Condition",
-                       ch_summary, groups=ch_summary["ID"]).fit(method='nm')
+ch_model = smf.mixedlm(
+    "theta ~ -1 + ch_name:Chroma:Condition", ch_summary, groups=ch_summary["ID"]
+).fit(method="nm")
 ch_model_df = statsmodels_to_results(ch_model)
 
 # Plot the two conditions
-plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
-                    ch_model_df.query("Condition in ['Tapping_Left']"),
-                    colorbar=False, axes=axes[1, 0],
-                    vlim=(-10, 0), cmap=mpl.cm.Blues_r)
-plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
-                    ch_model_df.query("Condition in ['Tapping_Right']"),
-                    colorbar=True, axes=axes[1, 1],
-                    vlim=(-10, 0), cmap=mpl.cm.Blues_r)
+plot_glm_group_topo(
+    raw_haemo.copy().pick(picks="hbr"),
+    ch_model_df.query("Condition in ['Tapping_Left']"),
+    colorbar=False,
+    axes=axes[1, 0],
+    vlim=(-10, 0),
+    cmap=mpl.cm.Blues_r,
+)
+plot_glm_group_topo(
+    raw_haemo.copy().pick(picks="hbr"),
+    ch_model_df.query("Condition in ['Tapping_Right']"),
+    colorbar=True,
+    axes=axes[1, 1],
+    vlim=(-10, 0),
+    cmap=mpl.cm.Blues_r,
+)
 
 
 # %%
@@ -441,14 +481,16 @@ fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(6, 6))
 con_summary = df_con.query("Chroma in ['hbo']")
 
 # Run group level model and convert to dataframe
-con_model = smf.mixedlm("effect ~ -1 + ch_name:Chroma",
-                        con_summary, groups=con_summary["ID"]).fit(method='nm')
-con_model_df = statsmodels_to_results(con_model,
-                                      order=raw_haemo.copy().pick(
-                                          picks="hbo").ch_names)
+con_model = smf.mixedlm(
+    "effect ~ -1 + ch_name:Chroma", con_summary, groups=con_summary["ID"]
+).fit(method="nm")
+con_model_df = statsmodels_to_results(
+    con_model, order=raw_haemo.copy().pick(picks="hbo").ch_names
+)
 
-plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
-                    con_model_df, colorbar=True, axes=axes)
+plot_glm_group_topo(
+    raw_haemo.copy().pick(picks="hbo"), con_model_df, colorbar=True, axes=axes
+)
 
 
 # %%
@@ -457,8 +499,12 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
 # And set all channels that dont have a significant response to zero.
 #
 
-plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
-                    con_model_df, colorbar=True, threshold=True)
+plot_glm_group_topo(
+    raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
+    con_model_df,
+    colorbar=True,
+    threshold=True,
+)
 
 
 # %%
@@ -479,28 +525,40 @@ plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
 
 
 # Generate brain figure from data
-clim = dict(kind='value', pos_lims=(0, 8, 11))
-brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
-                                    con_model_df, clim=clim, view='dorsal',
-                                    colorbar=True, size=(800, 700))
-brain.add_text(0.05, 0.95, "Left-Right", 'title', font_size=16, color='k')
+clim = dict(kind="value", pos_lims=(0, 8, 11))
+brain = plot_glm_surface_projection(
+    raw_haemo.copy().pick("hbo"),
+    con_model_df,
+    clim=clim,
+    view="dorsal",
+    colorbar=True,
+    size=(800, 700),
+)
+brain.add_text(0.05, 0.95, "Left-Right", "title", font_size=16, color="k")
 
 # Run model code as above
-clim = dict(kind='value', pos_lims=(0, 11.5, 17))
-for idx, cond in enumerate(['Tapping_Left', 'Tapping_Right']):
-
+clim = dict(kind="value", pos_lims=(0, 11.5, 17))
+for idx, cond in enumerate(["Tapping_Left", "Tapping_Right"]):
     # Run same model as explained in the sections above
     ch_summary = df_cha.query("Condition in [@cond]")
     ch_summary = ch_summary.query("Chroma in ['hbo']")
-    ch_model = smf.mixedlm("theta ~ -1 + ch_name", ch_summary,
-                           groups=ch_summary["ID"]).fit(method='nm')
-    model_df = statsmodels_to_results(ch_model, order=raw_haemo.copy().pick("hbo").ch_names)
+    ch_model = smf.mixedlm(
+        "theta ~ -1 + ch_name", ch_summary, groups=ch_summary["ID"]
+    ).fit(method="nm")
+    model_df = statsmodels_to_results(
+        ch_model, order=raw_haemo.copy().pick("hbo").ch_names
+    )
 
     # Generate brain figure from data
-    brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
-                                        model_df, clim=clim, view='dorsal',
-                                        colorbar=True, size=(800, 700))
-    brain.add_text(0.05, 0.95, cond, 'title', font_size=16, color='k')
+    brain = plot_glm_surface_projection(
+        raw_haemo.copy().pick("hbo"),
+        model_df,
+        clim=clim,
+        view="dorsal",
+        colorbar=True,
+        size=(800, 700),
+    )
+    brain.add_text(0.05, 0.95, cond, "title", font_size=16, color="k")
 
 
 # %%
@@ -514,16 +572,17 @@ ch_summary = df_cha.query("Condition in ['Tapping_Left', 'Tapping_Right']")
 ch_summary = ch_summary.query("Chroma in ['hbo']")
 
 # Run group level model and convert to dataframe
-ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:Condition",
-                       ch_summary, groups=ch_summary["ID"]).fit(method='nm')
+ch_model = smf.mixedlm(
+    "theta ~ -1 + ch_name:Chroma:Condition", ch_summary, groups=ch_summary["ID"]
+).fit(method="nm")
 
 # Here we can use the order argument to ensure the channel name order
-ch_model_df = statsmodels_to_results(ch_model,
-                                     order=raw_haemo.copy().pick(
-                                         picks="hbo").ch_names)
+ch_model_df = statsmodels_to_results(
+    ch_model, order=raw_haemo.copy().pick(picks="hbo").ch_names
+)
 # And make the table prettier
 ch_model_df.reset_index(drop=True, inplace=True)
-ch_model_df = ch_model_df.set_index(['ch_name', 'Condition'])
+ch_model_df = ch_model_df.set_index(["ch_name", "Condition"])
 ch_model_df
 
 
@@ -540,7 +599,9 @@ ch_model_df
 #    The tool is very intuitive and easy to use.
 #    Be sure to cite the authors if you use their tool or data:
 #
-#    Morais, Guilherme Augusto Zimeo, Joana Bisol Balardin, and João Ricardo Sato. "fNIRS optodes’ location decider (fOLD): a toolbox for probe arrangement guided by brain regions-of-interest." Scientific reports 8.1 (2018): 1-11.
+#    Morais, Guilherme Augusto Zimeo, Joana Bisol Balardin, and João Ricardo Sato.
+#    "fNIRS optodes’ location decider (fOLD): a toolbox for probe arrangement guided by
+#    brain regions-of-interest." Scientific reports 8.1 (2018): 1-11.
 #
 # It can be useful to understand what brain structures
 # the measured response may have resulted from. Here we illustrate
@@ -555,7 +616,7 @@ ch_model_df
 # that they provide. See the Notes section of
 # :func:`mne_nirs.io.fold_channel_specificity` for more information.
 
-largest_response_channel = ch_model_df.loc[ch_model_df['Coef.'].idxmax()]
+largest_response_channel = ch_model_df.loc[ch_model_df["Coef."].idxmax()]
 largest_response_channel
 
 

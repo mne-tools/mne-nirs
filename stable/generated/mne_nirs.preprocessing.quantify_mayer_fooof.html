@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>mne_nirs.preprocessing.quantify_mayer_fooof &#8212; MNE-NIRS 0.6.0 documentation</title>
+    <title>mne_nirs.preprocessing.quantify_mayer_fooof &#8212; MNE-NIRS 0.7.0 documentation</title>
   
   
   
@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
@@ -39,8 +39,8 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../_static/documentation_options.js?v=8fa8b3e9"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/documentation_options.js?v=fe7df9b0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'generated/mne_nirs.preprocessing.quantify_mayer_fooof';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.6';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.7';
         </script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -213,7 +213,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -330,7 +330,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -475,7 +475,7 @@ document.write(`
 <h1>mne_nirs.preprocessing.quantify_mayer_fooof<a class="headerlink" href="#mne-nirs-preprocessing-quantify-mayer-fooof" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="mne_nirs.preprocessing.quantify_mayer_fooof">
-<span class="sig-prename descclassname"><span class="pre">mne_nirs.preprocessing.</span></span><span class="sig-name descname"><span class="pre">quantify_mayer_fooof</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_oscillations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centre_frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_df_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_fft</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peak_width_limits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.5,</span> <span class="pre">12.0)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mne_nirs/preprocessing/_mayer.html#quantify_mayer_fooof"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_nirs.preprocessing.quantify_mayer_fooof" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mne_nirs.preprocessing.</span></span><span class="sig-name descname"><span class="pre">quantify_mayer_fooof</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_oscillations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centre_frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_df_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_fft</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peak_width_limits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.5,</span> <span class="pre">12.0)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mne_nirs/preprocessing/_mayer.html#quantify_mayer_fooof"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_nirs.preprocessing.quantify_mayer_fooof" title="Link to this definition">#</a></dt>
 <dd><p>Quantify Mayer wave properties using FOOOF analysis.</p>
 <p>The Fitting Oscillations &amp; One Over F (FOOOF)
 <a class="footnote-reference brackets" href="#footcite-donoghue2020parameterizing" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
@@ -486,10 +486,10 @@ the oscillation closest to the <cite>centre_frequency</cite> is assumed to be th
 Mayer wave oscillation. The parameters for this oscillation are returned
 as a dataframe. You can return multiple closest oscillations to the
 centre_frequency by increasing the <cite>num_oscillations</cite> parameter.</p>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>raw</strong><span class="classifier">instance of Raw</span></dt><dd><p>The haemoglobin data.</p>
+<dd class="field-odd"><dl>
+<dt><strong>raw</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Raw</span></code></a></span></dt><dd><p>The haemoglobin data.</p>
 </dd>
 <dt><strong>num_oscillations</strong><span class="classifier">number</span></dt><dd><p>Number of parameterised oscilations to be returned. These are selected
 in increasing distance from the <cite>centre_frequency</cite>.</p>
@@ -498,30 +498,30 @@ in increasing distance from the <cite>centre_frequency</cite>.</p>
 </dd>
 <dt><strong>extra_df_fields</strong><span class="classifier">number</span></dt><dd><p>Dictionary of values to be appended to the dataframe.</p>
 </dd>
-<dt><strong>fmin</strong><span class="classifier">float</span></dt><dd><p>Min frequency of interest.</p>
+<dt><strong>fmin</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a></span></dt><dd><p>Min frequency of interest.</p>
 </dd>
-<dt><strong>fmax</strong><span class="classifier">float</span></dt><dd><p>Max frequency of interest.</p>
+<dt><strong>fmax</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a></span></dt><dd><p>Max frequency of interest.</p>
 </dd>
-<dt><strong>tmin</strong><span class="classifier">float | None</span></dt><dd><p>Min time of interest.</p>
+<dt><strong>tmin</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Min time of interest.</p>
 </dd>
-<dt><strong>tmax</strong><span class="classifier">float | None</span></dt><dd><p>Max time of interest.</p>
+<dt><strong>tmax</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Max time of interest.</p>
 </dd>
-<dt><strong>n_fft</strong><span class="classifier">int</span></dt><dd><p>The length of FFT used, must be <code class="docutils literal notranslate"><span class="pre">&gt;=</span> <span class="pre">n_per_seg</span></code> (default: 256).
+<dt><strong>n_fft</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>The length of FFT used, must be <code class="docutils literal notranslate"><span class="pre">&gt;=</span> <span class="pre">n_per_seg</span></code> (default: 256).
 The segments will be zero-padded if <code class="docutils literal notranslate"><span class="pre">n_fft</span> <span class="pre">&gt;</span> <span class="pre">n_per_seg</span></code>.
 If n_per_seg is None, n_fft must be &lt;= number of time points
 in the data.</p>
 </dd>
-<dt><strong>n_overlap</strong><span class="classifier">int</span></dt><dd><p>The number of points of overlap between segments. Will be adjusted
+<dt><strong>n_overlap</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>The number of points of overlap between segments. Will be adjusted
 to be &lt;= n_per_seg. The default value is 0.</p>
 </dd>
-<dt><strong>peak_width_limits</strong><span class="classifier">tuple of (float, float), optional, default: (0.5, 12.0)</span></dt><dd><p>Limits on possible peak width, in Hz, as (lower_bound, upper_bound).
+<dt><strong>peak_width_limits</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">tuple</span></code></a> of (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a>), optional, default: (0.5, 12.0)</span></dt><dd><p>Limits on possible peak width, in Hz, as (lower_bound, upper_bound).
 As used by FOOOF.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><dl class="simple">
-<dt><strong>df</strong><span class="classifier">DataFrame</span></dt><dd><p>Dataframe with columns.</p>
+<dd class="field-even"><dl>
+<dt><strong>df</strong><span class="classifier"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataFrame</span></code></a></span></dt><dd><p>Dataframe with columns.</p>
 </dd>
 </dl>
 </dd>
@@ -543,7 +543,7 @@ As used by FOOOF.</p>
 
 <section id="examples-using-mne-nirs-preprocessing-quantify-mayer-fooof">
 <span id="sphx-glr-backreferences-mne-nirs-preprocessing-quantify-mayer-fooof"></span><h2>Examples using <code class="docutils literal notranslate"><span class="pre">mne_nirs.preprocessing.quantify_mayer_fooof</span></code><a class="headerlink" href="#examples-using-mne-nirs-preprocessing-quantify-mayer-fooof" title="Link to this heading">#</a></h2>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="   This tutorial is only possible due to the excellent and generous work of    the FOOOF author..."><img alt="" src="../_images/sphx_glr_plot_40_mayer_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="   This tutorial is only possible due to the excellent and generous work of    the FOOOF authors. Please visit their site https://fooof-tools.github.io/fooof.    Also be sure to cite their various papers:"><img alt="" src="../_images/sphx_glr_plot_40_mayer_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/general/plot_40_mayer.html#sphx-glr-auto-examples-general-plot-40-mayer-py"><span class="std std-ref">Mayer Wave Parametrisation</span></a></p>
   <div class="sphx-glr-thumbnail-title">Mayer Wave Parametrisation</div>
 </div></div></section>
@@ -639,7 +639,7 @@ As used by FOOOF.</p>
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2023, MNE Developers. Last updated <time datetime="2023-12-07T23:54:19.732358+00:00" class="localized">2023-12-07 23:54 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-07-23T00:18:52.995210+00:00" class="localized">2024-07-23 00:18 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

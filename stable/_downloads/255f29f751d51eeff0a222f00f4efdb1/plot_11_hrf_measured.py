@@ -19,15 +19,11 @@ An alternative epoching style analysis on the same data can be
 viewed in the
 :ref:`waveform analysis example <tut-fnirs-processing>`.
 See
-`Luke et al (2021) <https://www.spiedigitallibrary.org/journals/neurophotonics/volume-8/issue-2/025008/Analysis-methods-for-measuring-passive-auditory-fNIRS-responses-generated-by/10.1117/1.NPh.8.2.025008.short>`_
+`Luke et al (2021) <https://www.spiedigitallibrary.org/journals/neurophotonics/volume-8/issue-2/025008/Analysis-methods-for-measuring-passive-auditory-fNIRS-responses-generated-by/10.1117/1.NPh.8.2.025008.short>`__
 for a comparison of the epoching and GLM approaches.
 
 This GLM analysis is a wrapper over the excellent
-`Nilearn GLM <http://nilearn.github.io/modules/reference.html#module-nilearn.glm>`_.
-
-.. contents:: Page contents
-   :local:
-   :depth: 2
+`Nilearn GLM <http://nilearn.github.io/modules/reference.html#module-nilearn.glm>`__.
 """
 # sphinx_gallery_thumbnail_number = 9
 
@@ -36,20 +32,16 @@ This GLM analysis is a wrapper over the excellent
 # License: BSD (3-clause)
 
 import os
-import numpy as np
+
 import matplotlib.pyplot as plt
-
 import mne
-import mne_nirs
-
-from mne_nirs.experimental_design import make_first_level_design_matrix
-from mne_nirs.statistics import run_glm
-from mne_nirs.channels import (get_long_channels,
-                               get_short_channels,
-                               picks_pair_to_idx)
-
+import numpy as np
 from nilearn.plotting import plot_design_matrix
 
+import mne_nirs
+from mne_nirs.channels import get_long_channels, get_short_channels, picks_pair_to_idx
+from mne_nirs.experimental_design import make_first_level_design_matrix
+from mne_nirs.statistics import run_glm
 
 # %%
 # Import raw NIRS data
@@ -66,15 +58,14 @@ from nilearn.plotting import plot_design_matrix
 #
 #    Optodes were placed over the motor cortex using the standard NIRX motor
 #    montage, but with 8 short channels added (see their web page for details).
-#    To view the sensor locations run
-#    `raw_intensity.plot_sensors()`.
+#    To view the sensor locations run ``raw_intensity.plot_sensors()``.
 #    A sound was presented to indicate which hand the participant should tap.
 #    Participants tapped their thumb to their fingers for 5s.
 #    Conditions were presented in a random order with a randomised inter
 #    stimulus interval.
 
 fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
+fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
 raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
 raw_intensity.resample(0.7)
 
@@ -89,10 +80,10 @@ raw_intensity.resample(0.7)
 #
 # Because of limitations with ``nilearn``, we use ``'_'`` to separate conditions
 # rather than the standard ``'/'``.
-raw_intensity.annotations.rename({'1.0': 'Control',
-                                  '2.0': 'Tapping_Left',
-                                  '3.0': 'Tapping_Right'})
-raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
+raw_intensity.annotations.rename(
+    {"1.0": "Control", "2.0": "Tapping_Left", "3.0": "Tapping_Right"}
+)
+raw_intensity.annotations.delete(raw_intensity.annotations.description == "15.0")
 raw_intensity.annotations.set_durations(5)
 
 
@@ -133,7 +124,7 @@ raw_haemo = get_long_channels(raw_haemo)
 # events is also randomised.
 
 events, event_dict = mne.events_from_annotations(raw_haemo, verbose=False)
-mne.viz.plot_events(events, event_id=event_dict, sfreq=raw_haemo.info['sfreq'])
+mne.viz.plot_events(events, event_id=event_dict, sfreq=raw_haemo.info["sfreq"])
 
 
 # %%
@@ -146,7 +137,7 @@ s = mne_nirs.experimental_design.create_boxcar(raw_haemo)
 fig, ax = plt.subplots(figsize=(15, 6), constrained_layout=True)
 ax.plot(raw_haemo.times, s)
 ax.legend(["Control", "Left", "Right"], loc="upper right")
-ax.set_xlabel("Time (s)");
+ax.set_xlabel("Time (s)")
 
 
 # %%
@@ -157,7 +148,7 @@ ax.set_xlabel("Time (s)");
 #
 #    For further discussion on design matrices see
 #    the Nilearn examples. Specifically the
-#    `first level model example <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_first_level_details.html>`_.
+#    `first level model example <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_first_level_details.html>`__.
 #
 # Next we create a model to fit our data to.
 # The model consists of various components to model different things we assume
@@ -168,15 +159,18 @@ ax.set_xlabel("Time (s)");
 # (as described above).
 # We also include a cosine drift model with components up to the high pass
 # parameter value. See the nilearn documentation for recommendations on setting
-# these values. In short, they suggest `"The cutoff period (1/high_pass) should be
+# these values. In short, they suggest "The cutoff period (1/high_pass) should be
 # set as the longest period between two trials of the same condition multiplied by 2.
-# For instance, if the longest period is 32s, the high_pass frequency shall be 1/64 Hz ~ 0.016 Hz"`.
+# For instance, if the longest period is 32s, the high_pass frequency shall be
+# 1/64 Hz ~ 0.016 Hz".
 
-design_matrix = make_first_level_design_matrix(raw_haemo,
-                                               drift_model='cosine',
-                                               high_pass=0.005,  # Must be specified per experiment
-                                               hrf_model='spm',
-                                               stim_dur=5.0)
+design_matrix = make_first_level_design_matrix(
+    raw_haemo,
+    drift_model="cosine",
+    high_pass=0.005,  # Must be specified per experiment
+    hrf_model="spm",
+    stim_dur=5.0,
+)
 
 
 # %%
@@ -187,11 +181,13 @@ design_matrix = make_first_level_design_matrix(raw_haemo,
 # related to each experimental condition
 # uncontaminated by systemic effects.
 
-design_matrix["ShortHbO"] = np.mean(short_chs.copy().pick(
-                                    picks="hbo").get_data(), axis=0)
+design_matrix["ShortHbO"] = np.mean(
+    short_chs.copy().pick(picks="hbo").get_data(), axis=0
+)
 
-design_matrix["ShortHbR"] = np.mean(short_chs.copy().pick(
-                                    picks="hbr").get_data(), axis=0)
+design_matrix["ShortHbR"] = np.mean(
+    short_chs.copy().pick(picks="hbr").get_data(), axis=0
+)
 
 
 # %%
@@ -230,7 +226,7 @@ fig = plot_design_matrix(design_matrix, ax=ax1)
 fig, ax = plt.subplots(constrained_layout=True)
 s = mne_nirs.experimental_design.create_boxcar(raw_intensity, stim_dur=5.0)
 ax.plot(raw_intensity.times, s[:, 1])
-ax.plot(design_matrix['Tapping_Left'])
+ax.plot(design_matrix["Tapping_Left"])
 ax.legend(["Stimulus", "Expected Response"])
 ax.set(xlim=(180, 300), xlabel="Time (s)", ylabel="Amplitude")
 
@@ -269,7 +265,7 @@ glm_est
 # Note: as we wish to retain both channels for further the analysis below,
 # we operate on a copy to demonstrate this channel picking functionality.
 
-glm_est.copy().pick('S1_D1 hbr')
+glm_est.copy().pick("S1_D1 hbr")
 
 # %%
 #
@@ -287,7 +283,7 @@ glm_est.MSE()
 # For example, to determine the MSE for channel `S1` `D1` for the hbr type
 # you would call:
 
-glm_est.copy().pick('S1_D1 hbr').MSE()
+glm_est.copy().pick("S1_D1 hbr").MSE()
 
 
 # %%
@@ -325,7 +321,7 @@ glm_est.scatter()
 # negative of HbO as expected.
 
 glm_est = run_glm(raw_haemo, design_matrix)
-glm_est.plot_topo(conditions=['Tapping_Left', 'Tapping_Right'])
+glm_est.plot_topo(conditions=["Tapping_Left", "Tapping_Right"])
 
 
 # %%
@@ -350,15 +346,21 @@ glm_est.plot_topo(conditions=['Tapping_Left', 'Tapping_Right'])
 # apparent that the data does not indicate that activity spreads across
 # the center of the head.
 
-fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 6), gridspec_kw=dict(width_ratios=[0.92, 1]))
+fig, axes = plt.subplots(
+    nrows=1, ncols=2, figsize=(10, 6), gridspec_kw=dict(width_ratios=[0.92, 1])
+)
 
 glm_hbo = glm_est.copy().pick(picks="hbo")
-conditions = ['Tapping_Right']
+conditions = ["Tapping_Right"]
 
 glm_hbo.plot_topo(axes=axes[0], colorbar=False, conditions=conditions)
 
-glm_hbo.copy().pick(picks=range(10)).plot_topo(conditions=conditions, axes=axes[1], colorbar=False, vlim=(-16, 16))
-glm_hbo.copy().pick(picks=range(10, 20)).plot_topo(conditions=conditions, axes=axes[1], colorbar=False, vlim=(-16, 16))
+glm_hbo.copy().pick(picks=range(10)).plot_topo(
+    conditions=conditions, axes=axes[1], colorbar=False, vlim=(-16, 16)
+)
+glm_hbo.copy().pick(picks=range(10, 20)).plot_topo(
+    conditions=conditions, axes=axes[1], colorbar=False, vlim=(-16, 16)
+)
 
 axes[0].set_title("Smoothed across hemispheres")
 axes[1].set_title("Hemispheres plotted independently")
@@ -369,7 +371,9 @@ axes[1].set_title("Hemispheres plotted independently")
 # Another way to view the data is to project the GLM estimates to the nearest
 # cortical surface
 
-glm_est.copy().surface_projection(condition="Tapping_Right", view="dorsal", chroma="hbo")
+glm_est.copy().surface_projection(
+    condition="Tapping_Right", view="dorsal", chroma="hbo"
+)
 
 
 # %%
@@ -393,15 +397,15 @@ glm_est.copy().surface_projection(condition="Tapping_Right", view="dorsal", chro
 # The fOLD toolbox can be used to assist in the design of ROIs.
 # And consideration should be paid to ensure optimal size ROIs are selected.
 
-left = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 3],
-        [2, 4], [3, 2], [3, 3], [4, 3], [4, 4]]
-right = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7],
-         [6, 8], [7, 6], [7, 7], [8, 7], [8, 8]]
+left = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 3], [2, 4], [3, 2], [3, 3], [4, 3], [4, 4]]
+right = [[5, 5], [5, 6], [5, 7], [6, 5], [6, 7], [6, 8], [7, 6], [7, 7], [8, 7], [8, 8]]
 
-groups = dict(Left_ROI=picks_pair_to_idx(raw_haemo, left),
-              Right_ROI=picks_pair_to_idx(raw_haemo, right))
+groups = dict(
+    Left_ROI=picks_pair_to_idx(raw_haemo, left),
+    Right_ROI=picks_pair_to_idx(raw_haemo, right),
+)
 
-conditions = ['Control', 'Tapping_Left', 'Tapping_Right']
+conditions = ["Control", "Tapping_Left", "Tapping_Right"]
 
 df = glm_est.to_dataframe_region_of_interest(groups, conditions)
 
@@ -420,15 +424,16 @@ df
 # -----------------
 #
 # We can also define a contrast as described in
-# `Nilearn docs <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_localizer_surface_analysis.html>`_
+# `Nilearn docs <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_localizer_surface_analysis.html>`__
 # and plot it.
 # Here we contrast the response to tapping on the left hand with the response
 # from tapping on the right hand.
 
 contrast_matrix = np.eye(design_matrix.shape[1])
-basic_conts = dict([(column, contrast_matrix[i])
-                   for i, column in enumerate(design_matrix.columns)])
-contrast_LvR = basic_conts['Tapping_Left'] - basic_conts['Tapping_Right']
+basic_conts = dict(
+    [(column, contrast_matrix[i]) for i, column in enumerate(design_matrix.columns)]
+)
+contrast_LvR = basic_conts["Tapping_Left"] - basic_conts["Tapping_Right"]
 
 contrast = glm_est.compute_contrast(contrast_LvR)
 contrast.plot_topo()
@@ -462,9 +467,9 @@ df = glm_est.to_dataframe()
 # motor cortex, so we dont expect 100% of channels to detect responses to
 # the tapping, but we do expect 5% or less for the false positive rate.
 
-(df
- .query('Condition in ["Control", "Tapping_Left", "Tapping_Right"]')
- .drop(['df', 'mse', 'p_value', 't'], axis=1)
- .groupby(['Condition', 'Chroma', 'ch_name'])
- .agg(['mean'])
- )
+(
+    df.query('Condition in ["Control", "Tapping_Left", "Tapping_Right"]')
+    .drop(["df", "mse", "p_value", "t"], axis=1)
+    .groupby(["Condition", "Chroma", "ch_name"])
+    .agg(["mean"])
+)

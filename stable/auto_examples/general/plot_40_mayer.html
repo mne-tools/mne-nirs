@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Mayer Wave Parametrisation &#8212; MNE-NIRS 0.6.0 documentation</title>
+    <title>Mayer Wave Parametrisation &#8212; MNE-NIRS 0.7.0 documentation</title>
   
   
   
@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
@@ -39,8 +39,8 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../_static/documentation_options.js?v=8fa8b3e9"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/documentation_options.js?v=fe7df9b0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/general/plot_40_mayer';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.6';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.7';
         </script>
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -213,7 +213,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -330,7 +330,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -429,7 +429,7 @@ document.write(`
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
 <p><a class="reference internal" href="#sphx-glr-download-auto-examples-general-plot-40-mayer-py"><span class="std std-ref">Go to the end</span></a>
-to download the full example code or to run this example in your browser via Binder</p>
+to download the full example code. or to run this example in your browser via Binder</p>
 </div>
 <section class="sphx-glr-example-title" id="mayer-wave-parametrisation">
 <span id="tut-mayer"></span><span id="sphx-glr-auto-examples-general-plot-40-mayer-py"></span><h1>Mayer Wave Parametrisation<a class="headerlink" href="#mayer-wave-parametrisation" title="Link to this heading">#</a></h1>
@@ -458,34 +458,23 @@ authors over at <a class="reference external" href="https://fooof-tools.github.i
 You should read their excellent documentation. Their work should be considered
 the primary resource, and this is just an example of how to apply it to fNIRS
 data for the purpose of extracting Mayer waves oscillation parameters.</p>
-<nav class="contents local" id="page-contents">
-<p class="topic-title">Page contents</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="#import-and-preprocess-data" id="id5">Import and preprocess data</a></p></li>
-<li><p><a class="reference internal" href="#process-data-with-fooof" id="id6">Process data with FOOOF</a></p></li>
-<li><p><a class="reference internal" href="#use-mne-nirs-to-quantify-mayer-wave-oscillation" id="id7">Use MNE-NIRS to quantify Mayer wave oscillation</a></p></li>
-<li><p><a class="reference internal" href="#conclusion" id="id8">Conclusion</a></p></li>
-<li><p><a class="reference internal" href="#bibliography" id="id9">Bibliography</a></p></li>
-</ul>
-</nav>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Authors: Robert Luke &lt;mail@robertluke.net&gt;</span>
 <span class="c1">#</span>
 <span class="c1"># License: BSD (3-clause)</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">mne</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="kn">from</span> <span class="nn">mne.preprocessing.nirs</span> <span class="kn">import</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.optical_density.html#mne.preprocessing.nirs.optical_density" title="mne.preprocessing.nirs.optical_density" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">optical_density</span></a><span class="p">,</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.beer_lambert_law.html#mne.preprocessing.nirs.beer_lambert_law" title="mne.preprocessing.nirs.beer_lambert_law" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">beer_lambert_law</span></a>
+<span class="kn">from</span> <span class="nn">fooof</span> <span class="kn">import</span> <span class="n">FOOOF</span>
+<span class="kn">from</span> <span class="nn">mne.preprocessing.nirs</span> <span class="kn">import</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.beer_lambert_law.html#mne.preprocessing.nirs.beer_lambert_law" title="mne.preprocessing.nirs.beer_lambert_law" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">beer_lambert_law</span></a><span class="p">,</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.optical_density.html#mne.preprocessing.nirs.optical_density" title="mne.preprocessing.nirs.optical_density" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">optical_density</span></a>
 
 <span class="kn">from</span> <span class="nn">mne_nirs.channels</span> <span class="kn">import</span> <a href="../../generated/mne_nirs.channels.get_long_channels.html#mne_nirs.channels.get_long_channels" title="mne_nirs.channels.get_long_channels" class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function"><span class="n">get_long_channels</span></a>
 <span class="kn">from</span> <span class="nn">mne_nirs.preprocessing</span> <span class="kn">import</span> <a href="../../generated/mne_nirs.preprocessing.quantify_mayer_fooof.html#mne_nirs.preprocessing.quantify_mayer_fooof" title="mne_nirs.preprocessing.quantify_mayer_fooof" class="sphx-glr-backref-module-mne_nirs-preprocessing sphx-glr-backref-type-py-function"><span class="n">quantify_mayer_fooof</span></a>
-
-<span class="kn">from</span> <span class="nn">fooof</span> <span class="kn">import</span> <span class="n">FOOOF</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/circleci/project/examples/general/plot_40_mayer.py:58: DeprecationWarning:
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/circleci/project/examples/general/plot_40_mayer.py:47: DeprecationWarning:
 The `fooof` package is being deprecated and replaced by the `specparam` (spectral parameterization) package.
 This version of `fooof` (1.1) is fully functional, but will not be further updated.
 New projects are recommended to update to using `specparam` (see Changelog for details).
@@ -493,10 +482,10 @@ New projects are recommended to update to using `specparam` (see Changelog for d
 </pre></div>
 </div>
 <section id="import-and-preprocess-data">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Import and preprocess data</a><a class="headerlink" href="#import-and-preprocess-data" title="Link to this heading">#</a></h2>
+<h2>Import and preprocess data<a class="headerlink" href="#import-and-preprocess-data" title="Link to this heading">#</a></h2>
 <p>We read in the data and convert to haemoglobin concentration.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_data_folder</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.datasets.fnirs_motor.data_path.html#mne.datasets.fnirs_motor.data_path" title="mne.datasets.fnirs_motor.data_path" class="sphx-glr-backref-module-mne-datasets-fnirs_motor sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fnirs_motor</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">()</span>
-<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_raw_dir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_data_folder</span></a><span class="p">,</span> <span class="s1">&#39;Participant-1&#39;</span><span class="p">)</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_raw_dir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_data_folder</span></a><span class="p">,</span> <span class="s2">&quot;Participant-1&quot;</span><span class="p">)</span>
 <span class="n">raw</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.read_raw_nirx.html#mne.io.read_raw_nirx" title="mne.io.read_raw_nirx" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_raw_nirx</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_raw_dir</span></a><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
 
 <span class="n">raw</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.optical_density.html#mne.preprocessing.nirs.optical_density" title="mne.preprocessing.nirs.optical_density" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">optical_density</span></a><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
@@ -511,99 +500,346 @@ New projects are recommended to update to using `specparam` (see Changelog for d
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
-<details open>
-    <summary><strong>General</strong></summary>
-    <table class="table table-hover table-striped table-sm table-responsive small">
-        <tr>
-            <th>Measurement date</th>
+<script type="text/javascript">
+    const toggleVisibility = (className) => {
 
-            <td>November 02, 2019  13:16:16 GMT</td>
+  const elements = document.querySelectorAll(`.${className}`)
 
-        </tr>
-        <tr>
-            <th>Experimenter</th>
+  elements.forEach(element => {
+    if (element.classList.contains('repr-section-header')) {
+      // Don't collapse the section header row.
+       return
+    }
+    if (element.classList.contains('repr-element-collapsed')) {
+      // Force a reflow to ensure the display change takes effect before removing the class
+      element.classList.remove('repr-element-collapsed')
+      element.offsetHeight // This forces the browser to recalculate layout
+      element.classList.remove('repr-element-faded')
+    } else {
+      // Start transition to hide the element
+      element.classList.add('repr-element-faded')
+      element.addEventListener('transitionend', handler = (e) => {
+        if (e.propertyName === 'opacity' && getComputedStyle(element).opacity === '0.2') {
+          element.classList.add('repr-element-collapsed')
+          element.removeEventListener('transitionend', handler)
+        }
+      });
+    }
+  });
 
-            <td>Unknown</td>
+  // Take care of button (adjust caret)
+  const button = document.querySelectorAll(`.repr-section-header.${className} > th.repr-section-toggle-col > button`)[0]
+  button.classList.toggle('collapsed')
 
-        </tr>
-        <tr>
-            <th>Participant</th>
+  // Take care of the tooltip of the section header row
+  const sectionHeaderRow = document.querySelectorAll(`tr.repr-section-header.${className}`)[0]
+  sectionHeaderRow.classList.toggle('collapsed')
+  sectionHeaderRow.title = sectionHeaderRow.title === 'Hide section' ? 'Show section' : 'Hide section'
+}
+</script>
+
+<style type="text/css">
+    table.repr.table.table-hover.table-striped.table-sm.table-responsive.small {
+  /* Don't make rows wider than they need to be. */
+  display: inline;
+}
+
+table > tbody > tr.repr-element > td {
+  /* Apply a tighter layout to the table cells. */
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  padding-right: 1rem;
+}
+
+table > tbody > tr > td.repr-section-toggle-col {
+  /* Remove background and border of the first cell in every row
+     (this row is only used for the collapse / uncollapse caret)
+
+     TODO: Need to find a good solution for VS Code that works in both
+           light and dark mode. */
+  border-color: transparent;
+  --bs-table-accent-bg: transparent;
+}
+
+tr.repr-section-header {
+  /* Remove stripes from section header rows */
+  background-color: transparent;
+  border-color: transparent;
+  --bs-table-striped-bg: transparent;
+  cursor: pointer;
+}
+
+tr.repr-section-header > th {
+  text-align: left !important;
+  vertical-align: middle;
+}
+
+.repr-element, tr.repr-element > td {
+  opacity: 1;
+  text-align: left !important;
+}
+
+.repr-element-faded {
+  transition: 0.3s ease;
+  opacity: 0.2;
+}
+
+.repr-element-collapsed {
+  display: none;
+}
+
+/* Collapse / uncollapse button and the caret it contains. */
+.repr-section-toggle-col button {
+  cursor: pointer;
+  width: 1rem;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+span.collapse-uncollapse-caret {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+}
+
+/* The collapse / uncollapse carets were copied from the free Font Awesome collection and adjusted. */
+
+/* Default to black carets for light mode */
+.repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+}
+
+.repr-section-toggle-col
+  > button:not(.collapsed)
+  > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+}
+
+/* Use white carets for dark mode */
+@media (prefers-color-scheme: dark) {
+  .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+  }
+
+  .repr-section-toggle-col
+    > button:not(.collapsed)
+    > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+  }
+}
+
+.channel-names-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  cursor: pointer;
+  color: #0d6efd;
+}
+
+.channel-names-btn:hover {
+  color: #0a58ca;
+}
+</style>
 
 
-            <td>P1</td>
 
-
-        </tr>
-    </table>
-    </details>
-    <details open>
-        <summary><strong>Channels</strong></summary>
-        <table class="table table-hover table-striped table-sm table-responsive small">
-            <tr>
-                <th>Digitized points</th>
-
-                <td>31 points</td>
-
-            </tr>
-            <tr>
-                <th>Good channels</th>
-                <td>20 Oxyhemoglobin</td>
-            </tr>
-            <tr>
-                <th>Bad channels</th>
-                <td>None</td>
-            </tr>
-            <tr>
-                <th>EOG channels</th>
-                <td>Not available</td>
-            </tr>
-            <tr>
-                <th>ECG channels</th>
-                <td>Not available</td>
-            </tr>
-        </table>
-        </details>
-        <details open>
-            <summary><strong>Data</strong></summary>
-            <table class="table table-hover table-striped table-sm table-responsive small">
-
-                <tr>
-                    <th>Sampling frequency</th>
-                    <td>2.00 Hz</td>
-                </tr>
-
-
-                <tr>
-                    <th>Highpass</th>
-                    <td>0.00 Hz</td>
-                </tr>
-
-
-                <tr>
-                    <th>Lowpass</th>
-                    <td>1.00 Hz</td>
-                </tr>
+<table class="repr table table-hover table-striped table-sm table-responsive small">
 
 
 
-                <tr>
-                    <th>Filenames</th>
-                    <td>Participant-1</td>
-                </tr>
 
 
-                <tr>
-                    <th>Duration</th>
-                    <td>00:49:34 (HH:MM:SS)</td>
-                </tr>
 
-            </table>
-            </details>
+
+
+<tr class="repr-section-header general-d23c7705-de46-4351-8e31-8e1d452867cb"  title="Hide section"
+    onclick="toggleVisibility('general-d23c7705-de46-4351-8e31-8e1d452867cb')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>General</strong>
+    </th>
+</tr>
+
+<tr class="repr-element general-d23c7705-de46-4351-8e31-8e1d452867cb ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Filename(s)</td>
+    <td>
+
+        Participant-1
+
+
+    </td>
+</tr>
+
+<tr class="repr-element general-d23c7705-de46-4351-8e31-8e1d452867cb ">
+    <td class="repr-section-toggle-col"></td>
+    <td>MNE object type</td>
+    <td>RawNIRX</td>
+</tr>
+<tr class="repr-element general-d23c7705-de46-4351-8e31-8e1d452867cb ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Measurement date</td>
+
+    <td>2019-11-02 at 13:16:16 UTC</td>
+
+</tr>
+<tr class="repr-element general-d23c7705-de46-4351-8e31-8e1d452867cb ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Participant</td>
+
+
+    <td>P1</td>
+
+
+</tr>
+<tr class="repr-element general-d23c7705-de46-4351-8e31-8e1d452867cb ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Experimenter</td>
+
+    <td>Unknown</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header acquisition-504cceae-b9b2-4dc0-95e8-006a0cb8a753"
+    title="Hide section"  onclick="toggleVisibility('acquisition-504cceae-b9b2-4dc0-95e8-006a0cb8a753')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Acquisition</strong>
+    </th>
+</tr>
+
+<tr class="repr-element acquisition-504cceae-b9b2-4dc0-95e8-006a0cb8a753 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Duration</td>
+    <td>00:49:34 (HH:MM:SS)</td>
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-element acquisition-504cceae-b9b2-4dc0-95e8-006a0cb8a753 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Sampling frequency</td>
+    <td>2.00 Hz</td>
+</tr>
+
+
+<tr class="repr-element acquisition-504cceae-b9b2-4dc0-95e8-006a0cb8a753 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Time points</td>
+    <td>5,949</td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+<tr class="repr-section-header channels-612dab63-6f68-4883-8884-6162780433d4"  title="Hide section"
+    onclick="toggleVisibility('channels-612dab63-6f68-4883-8884-6162780433d4')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Channels</strong>
+    </th>
+</tr>
+
+
+<tr class="repr-element channels-612dab63-6f68-4883-8884-6162780433d4 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Oxyhemoglobin</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good Oxyhemoglobin:\n\nS1_D1&nbsp;hbo, S1_D2&nbsp;hbo, S1_D3&nbsp;hbo, S2_D1&nbsp;hbo, S2_D3&nbsp;hbo, S2_D4&nbsp;hbo, S3_D2&nbsp;hbo, S3_D3&nbsp;hbo, S4_D3&nbsp;hbo, S4_D4&nbsp;hbo, S5_D5&nbsp;hbo, S5_D6&nbsp;hbo, S5_D7&nbsp;hbo, S6_D5&nbsp;hbo, S6_D7&nbsp;hbo, S6_D8&nbsp;hbo, S7_D6&nbsp;hbo, S7_D7&nbsp;hbo, S8_D7&nbsp;hbo, S8_D8&nbsp;hbo')" title="(Click to open in popup)&#13;&#13;S1_D1&nbsp;hbo, S1_D2&nbsp;hbo, S1_D3&nbsp;hbo, S2_D1&nbsp;hbo, S2_D3&nbsp;hbo, S2_D4&nbsp;hbo, S3_D2&nbsp;hbo, S3_D3&nbsp;hbo, S4_D3&nbsp;hbo, S4_D4&nbsp;hbo, S5_D5&nbsp;hbo, S5_D6&nbsp;hbo, S5_D7&nbsp;hbo, S6_D5&nbsp;hbo, S6_D7&nbsp;hbo, S6_D8&nbsp;hbo, S7_D6&nbsp;hbo, S7_D7&nbsp;hbo, S8_D7&nbsp;hbo, S8_D8&nbsp;hbo">
+            20
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-612dab63-6f68-4883-8884-6162780433d4 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Head & sensor digitization</td>
+
+    <td>31 points</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header filters-c36fb553-1d16-47f3-b2d2-3b75015cefa5"  title="Hide section"
+    onclick="toggleVisibility('filters-c36fb553-1d16-47f3-b2d2-3b75015cefa5')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Filters</strong>
+    </th>
+</tr>
+
+<tr class="repr-element filters-c36fb553-1d16-47f3-b2d2-3b75015cefa5 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Highpass</td>
+    <td>0.00 Hz</td>
+</tr>
+
+
+<tr class="repr-element filters-c36fb553-1d16-47f3-b2d2-3b75015cefa5 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Lowpass</td>
+    <td>1.00 Hz</td>
+</tr>
+
+
+</table>
 </div>
 <br />
 <br /></section>
 <section id="process-data-with-fooof">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Process data with FOOOF</a><a class="headerlink" href="#process-data-with-fooof" title="Link to this heading">#</a></h2>
+<h2>Process data with FOOOF<a class="headerlink" href="#process-data-with-fooof" title="Link to this heading">#</a></h2>
 <p>Next we estimate the power spectral density of the data and pass this to
 the FOOOF algorithm.</p>
 <p>I recommend using the FOOOF algorithm as provided by the authors rather
@@ -627,9 +863,9 @@ it matches well to the data.</p>
     <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a> <span class="o">=</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a> <span class="o">*</span> <span class="mi">10</span>
     <span class="k">return</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">spectra</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a>
 
+
 <span class="c1"># Prepare data for FOOOF</span>
-<a href="https://mne.tools/stable/generated/mne.time_frequency.Spectrum.html#mne.time_frequency.Spectrum" title="mne.time_frequency.Spectrum" class="sphx-glr-backref-module-mne-time_frequency sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">psd</span></a> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">compute_psd</span><span class="p">(</span>
-    <span class="n">fmin</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">fmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_overlap</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">n_fft</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<a href="https://mne.tools/stable/generated/mne.time_frequency.Spectrum.html#mne.time_frequency.Spectrum" title="mne.time_frequency.Spectrum" class="sphx-glr-backref-module-mne-time_frequency sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">psd</span></a> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">compute_psd</span><span class="p">(</span><span class="n">fmin</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">fmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_overlap</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">n_fft</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">spectra</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.time_frequency.Spectrum.html#mne.time_frequency.Spectrum.get_data" title="mne.time_frequency.Spectrum.get_data" class="sphx-glr-backref-module-mne-time_frequency sphx-glr-backref-type-py-method"><span class="n">psd</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">(</span><span class="n">return_freqs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">spectra</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a> <span class="o">=</span> <span class="n">scale_up_spectra</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">spectra</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a><span class="p">)</span>
 
@@ -640,18 +876,18 @@ it matches well to the data.</p>
 
 <span class="n">fm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.mean.html#numpy.mean" title="numpy.mean" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">mean</span></a><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">spectra</span></a><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freq_range</span></a><span class="p">)</span>
 
-<a href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axs</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">fm</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">plot_peaks</span><span class="o">=</span><span class="s1">&#39;shade&#39;</span><span class="p">,</span> <span class="n">data_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;orange&#39;</span><span class="p">},</span> <span class="n">ax</span><span class="o">=</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axs</span></a><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">fm</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">plot_peaks</span><span class="o">=</span><span class="s2">&quot;shade&quot;</span><span class="p">,</span> <span class="n">data_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">},</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">)</span>
 <span class="c1"># Correct for x10 scaling above</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xticks.html#matplotlib.pyplot.xticks" title="matplotlib.pyplot.xticks" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">xticks</span></a><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">])</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_40_mayer_001.png" srcset="../../_images/sphx_glr_plot_40_mayer_001.png" alt="plot 40 mayer" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>([&lt;matplotlib.axis.XTick object at 0x7fb734976770&gt;, &lt;matplotlib.axis.XTick object at 0x7fb734976a10&gt;, &lt;matplotlib.axis.XTick object at 0x7fb629aaddb0&gt;, &lt;matplotlib.axis.XTick object at 0x7fb7372e57b0&gt;, &lt;matplotlib.axis.XTick object at 0x7fb78ffe6680&gt;, &lt;matplotlib.axis.XTick object at 0x7fb7372e5d20&gt;, &lt;matplotlib.axis.XTick object at 0x7fb78ffe69e0&gt;], [Text(0, 0, &#39;0.0&#39;), Text(1, 0, &#39;0.1&#39;), Text(2, 0, &#39;0.2&#39;), Text(3, 0, &#39;0.3&#39;), Text(4, 0, &#39;0.4&#39;), Text(5, 0, &#39;0.5&#39;), Text(6, 0, &#39;0.6&#39;)])
+<img src="../../_images/sphx_glr_plot_40_mayer_001.png" srcset="../../_images/sphx_glr_plot_40_mayer_001.png" alt="plot 40 mayer" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>([&lt;matplotlib.axis.XTick object at 0x7f8755081360&gt;, &lt;matplotlib.axis.XTick object at 0x7f8755083c40&gt;, &lt;matplotlib.axis.XTick object at 0x7f87550832e0&gt;, &lt;matplotlib.axis.XTick object at 0x7f885475e020&gt;, &lt;matplotlib.axis.XTick object at 0x7f885475ded0&gt;, &lt;matplotlib.axis.XTick object at 0x7f88715c33a0&gt;, &lt;matplotlib.axis.XTick object at 0x7f88715c3b50&gt;], [Text(0, 0, &#39;0.0&#39;), Text(1, 0, &#39;0.1&#39;), Text(2, 0, &#39;0.2&#39;), Text(3, 0, &#39;0.3&#39;), Text(4, 0, &#39;0.4&#39;), Text(5, 0, &#39;0.5&#39;), Text(6, 0, &#39;0.6&#39;)])
 </pre></div>
 </div>
 </section>
 <section id="use-mne-nirs-to-quantify-mayer-wave-oscillation">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Use MNE-NIRS to quantify Mayer wave oscillation</a><a class="headerlink" href="#use-mne-nirs-to-quantify-mayer-wave-oscillation" title="Link to this heading">#</a></h2>
+<h2>Use MNE-NIRS to quantify Mayer wave oscillation<a class="headerlink" href="#use-mne-nirs-to-quantify-mayer-wave-oscillation" title="Link to this heading">#</a></h2>
 <p>MNE-NIRS provides a convenient function to estimate the Mayer wave
 parameters that takes care of the frequency scaling and selects the component
 most likely associated with the Mayer wave. It returns this data in a pandas
@@ -703,13 +939,13 @@ authors if you use this function.</p>
 <br />
 <br /></section>
 <section id="conclusion">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Conclusion</a><a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
 <p>We have demonstrated how to use the FOOOF algorithm for quantifying Mayer
 wave parameters, and highlighted the <cite>quantify_mayer_fooof</cite> for conveniently
 applying this analysis to fNIRS data with MNE-NIRS.</p>
 <p>An example measurement illustrated what the presence of a Mayer wave
-looks like with a power spectral density. The measurement also illustrated that the Mayer wave
-is not a perfect sinusoid, as evidenced by the broad spectral content.
+looks like with a power spectral density. The measurement also illustrated that the
+Mayer wave is not a perfect sinusoid, as evidenced by the broad spectral content.
 Further, the example illustrated that the Mayer wave is not always precisely locked
 to 0.1 Hz, both visual inspection and FOOOF quantification indicate a 0.09 Hz
 centre frequency.</p>
@@ -725,7 +961,7 @@ and
 for how to use short channels in either a GLM or averaging analysis with MNE-NIRS.</p>
 </section>
 <section id="bibliography">
-<h2><a class="toc-backref" href="#id9" role="doc-backlink">Bibliography</a><a class="headerlink" href="#bibliography" title="Link to this heading">#</a></h2>
+<h2>Bibliography<a class="headerlink" href="#bibliography" title="Link to this heading">#</a></h2>
 <div class="docutils container" id="id4">
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="footcite-donoghue2020parameterizing" role="doc-footnote">
@@ -739,17 +975,21 @@ for how to use short channels in either a GLM or averaging analysis with MNE-NIR
 </aside>
 </aside>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 6.305 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  9 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.670 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  429 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-40-mayer-py">
 <div class="binder-badge docutils container">
-<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_40_mayer.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" width="150px" /></a>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_40_mayer.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
+</a>
 </div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/0df5fcff3f3714838da4659c71f816c9/plot_40_mayer.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_40_mayer.ipynb</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/991d75f9e37a8c8640f1e02fc0b39e55/plot_40_mayer.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_40_mayer.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/041c4b673215d772a275de09ea7452d7/plot_40_mayer.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">plot_40_mayer.zip</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -849,7 +1089,7 @@ for how to use short channels in either a GLM or averaging analysis with MNE-NIR
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2023, MNE Developers. Last updated <time datetime="2023-12-07T23:54:19.732358+00:00" class="localized">2023-12-07 23:54 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-07-23T00:18:52.995210+00:00" class="localized">2024-07-23 00:18 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

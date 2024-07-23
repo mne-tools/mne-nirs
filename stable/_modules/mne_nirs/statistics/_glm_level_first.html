@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne_nirs.statistics._glm_level_first &#8212; MNE-NIRS 0.6.0 documentation</title>
+    <title>mne_nirs.statistics._glm_level_first &#8212; MNE-NIRS 0.7.0 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
@@ -38,8 +38,8 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../_static/documentation_options.js?v=8fa8b3e9"></script>
-    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/documentation_options.js?v=fe7df9b0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../_static/copybutton.js?v=f281be69"></script>
@@ -59,7 +59,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/mne_nirs/statistics/_glm_level_first';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.6';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.7';
         </script>
     <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -210,7 +210,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -323,7 +323,7 @@ document.write(`
 document.write(`
   <div class="version-switcher__container dropdown">
     <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
-      0.6  <!-- this text may get changed later by javascript -->
+      0.7  <!-- this text may get changed later by javascript -->
       <span class="caret"></span>
     </button>
     <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
@@ -381,17 +381,18 @@ document.write(`
 <span class="c1">#</span>
 <span class="c1"># License: BSD (3-clause)</span>
 
-<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">PosixPath</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">getfullargspec</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">PosixPath</span>
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">array_equal</span><span class="p">,</span> <span class="n">where</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">h5io</span> <span class="kn">import</span> <span class="n">read_hdf5</span><span class="p">,</span> <span class="n">write_hdf5</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">array_equal</span><span class="p">,</span> <span class="n">where</span>
 
 <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">(</span><span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
     <span class="kn">import</span> <span class="nn">nilearn.glm</span>
     <span class="kn">from</span> <span class="nn">nilearn.glm.first_level</span> <span class="kn">import</span> <span class="n">run_glm</span> <span class="k">as</span> <span class="n">nilearn_glm</span>
 
@@ -399,15 +400,14 @@ document.write(`
     <span class="kn">from</span> <span class="nn">mne._fiff.meas_info</span> <span class="kn">import</span> <span class="n">ContainsMixin</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">mne.io.meas_info</span> <span class="kn">import</span> <span class="n">ContainsMixin</span>
-<span class="kn">from</span> <span class="nn">mne.utils</span> <span class="kn">import</span> <span class="n">fill_doc</span><span class="p">,</span> <span class="n">warn</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">check_fname</span><span class="p">,</span> <span class="n">_validate_type</span>
-<span class="kn">from</span> <span class="nn">mne.io.pick</span> <span class="kn">import</span> <span class="n">_picks_to_idx</span>
-<span class="kn">from</span> <span class="nn">mne.io.constants</span> <span class="kn">import</span> <span class="n">FIFF</span>
 <span class="kn">from</span> <span class="nn">mne</span> <span class="kn">import</span> <span class="n">Info</span><span class="p">,</span> <span class="n">pick_info</span>
+<span class="kn">from</span> <span class="nn">mne.io.constants</span> <span class="kn">import</span> <span class="n">FIFF</span>
+<span class="kn">from</span> <span class="nn">mne.io.pick</span> <span class="kn">import</span> <span class="n">_picks_to_idx</span>
+<span class="kn">from</span> <span class="nn">mne.utils</span> <span class="kn">import</span> <span class="n">_validate_type</span><span class="p">,</span> <span class="n">check_fname</span><span class="p">,</span> <span class="n">fill_doc</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">warn</span>
 
-<span class="kn">from</span> <span class="nn">..visualisation._plot_GLM_topo</span> <span class="kn">import</span> <span class="n">_plot_glm_topo</span><span class="p">,</span>\
-    <span class="n">_plot_glm_contrast_topo</span>
-<span class="kn">from</span> <span class="nn">..visualisation</span> <span class="kn">import</span> <span class="n">plot_glm_surface_projection</span>
 <span class="kn">from</span> <span class="nn">..statistics._roi</span> <span class="kn">import</span> <span class="n">_glm_region_of_interest</span>
+<span class="kn">from</span> <span class="nn">..visualisation</span> <span class="kn">import</span> <span class="n">plot_glm_surface_projection</span>
+<span class="kn">from</span> <span class="nn">..visualisation._plot_GLM_topo</span> <span class="kn">import</span> <span class="n">_plot_glm_contrast_topo</span><span class="p">,</span> <span class="n">_plot_glm_topo</span>
 
 
 <span class="nd">@fill_doc</span>
@@ -423,13 +423,13 @@ document.write(`
 <span class="sd">        names : array</span>
 <span class="sd">            The channel names.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;ch_names&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;ch_names&quot;</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GLM Results for </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span><span class="si">}</span><span class="s2"> channels&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;GLM Results for </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span><span class="si">}</span><span class="s2"> channels&quot;</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GLM Results for </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span><span class="si">}</span><span class="s2"> channels&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;GLM Results for </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span><span class="si">}</span><span class="s2"> channels&quot;</span>
 
     <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span>
@@ -444,24 +444,29 @@ document.write(`
 <span class="sd">        state : dict</span>
 <span class="sd">            State of the object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">state</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span>
-            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span>
-            <span class="n">design</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">design</span><span class="p">,</span>
-            <span class="n">info</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span>
-            <span class="n">preload</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">preload</span><span class="p">,</span>
-            <span class="n">classname</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
-        <span class="p">))</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]:</span>
-                <span class="n">state</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">],</span>
-                              <span class="n">nilearn</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">regression</span><span class="o">.</span><span class="n">OLSModel</span><span class="p">):</span>
-                    <span class="n">state</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;modelname&#39;</span><span class="p">]</span> <span class="o">=</span> \
-                        <span class="nb">str</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
-                    <span class="n">state</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> \
-                        <span class="n">state</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">nilearn</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">contrasts</span><span class="o">.</span><span class="n">Contrast</span><span class="p">):</span>
-            <span class="n">state</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span>
+            <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span>
+                <span class="n">design</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">design</span><span class="p">,</span>
+                <span class="n">info</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span>
+                <span class="n">preload</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">preload</span><span class="p">,</span>
+                <span class="n">classname</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]:</span>
+                <span class="n">state</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
+                    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;model&quot;</span><span class="p">],</span> <span class="n">nilearn</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">regression</span><span class="o">.</span><span class="n">OLSModel</span>
+                <span class="p">):</span>
+                    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;modelname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span>
+                        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;model&quot;</span><span class="p">]</span><span class="o">.</span><span class="vm">__class__</span>
+                    <span class="p">)</span>
+                    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;model&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span>
+                        <span class="s2">&quot;model&quot;</span>
+                    <span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">],</span> <span class="n">nilearn</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">contrasts</span><span class="o">.</span><span class="n">Contrast</span><span class="p">):</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span>
         <span class="k">return</span> <span class="n">state</span>
 
     <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -485,14 +490,14 @@ document.write(`
 <span class="sd">            Should end in ``&#39;glm.h5&#39;``.</span>
 <span class="sd">        %(overwrite)s</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">_validate_type</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;path-like&#39;</span><span class="p">,</span> <span class="s1">&#39;fname&#39;</span><span class="p">)</span>
+        <span class="n">_validate_type</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;path-like&quot;</span><span class="p">,</span> <span class="s2">&quot;fname&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">PosixPath</span><span class="p">):</span>
             <span class="n">fname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;glm.h5&#39;</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;The filename must end with glm.h5, &#39;</span>
-                          <span class="sa">f</span><span class="s1">&#39;instead received </span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="n">write_hdf5</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_state</span><span class="p">(),</span>
-                   <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;mnepython&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;glm.h5&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span>
+                <span class="s2">&quot;The filename must end with glm.h5, &quot;</span> <span class="sa">f</span><span class="s2">&quot;instead received </span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="n">write_hdf5</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_state</span><span class="p">(),</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;mnepython&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a tidy dataframe representing the GLM results.</span>
@@ -508,12 +513,14 @@ document.write(`
 <span class="sd">            Dataframe containing GLM results.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">glm_to_tidy</span>
+
         <span class="k">if</span> <span class="n">order</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ch_names</span>
         <span class="k">return</span> <span class="n">glm_to_tidy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">design</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">scatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conditions</span><span class="o">=</span><span class="p">[],</span> <span class="n">exclude_no_interest</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">no_interest</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">scatter</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">conditions</span><span class="o">=</span><span class="p">(),</span> <span class="n">exclude_no_interest</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">no_interest</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Scatter plot of the GLM results.</span>
 
 <span class="sd">        Parameters</span>
@@ -538,6 +545,7 @@ document.write(`
         <span class="k">if</span> <span class="n">no_interest</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">no_interest</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;drift&quot;</span><span class="p">,</span> <span class="s2">&quot;constant&quot;</span><span class="p">,</span> <span class="s2">&quot;short&quot;</span><span class="p">,</span> <span class="s2">&quot;Short&quot;</span><span class="p">]</span>
         <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
         <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
 
         <span class="n">x_column</span> <span class="o">=</span> <span class="s2">&quot;Condition&quot;</span>
@@ -547,12 +555,12 @@ document.write(`
             <span class="n">y_column</span> <span class="o">=</span> <span class="s2">&quot;effect&quot;</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">conditions</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">conditions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">]</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;ContrastType in @conditions&#39;</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ContrastType in @conditions&quot;</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">conditions</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">conditions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">columns</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;Condition in @conditions&#39;</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Condition in @conditions&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">exclude_no_interest</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">no_i</span> <span class="ow">in</span> <span class="n">no_interest</span><span class="p">:</span>
@@ -571,7 +579,7 @@ document.write(`
         <span class="n">axes</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;Oxyhaemoglobin&quot;</span><span class="p">,</span> <span class="s2">&quot;Deoxyhaemoglobin&quot;</span><span class="p">])</span>
         <span class="n">axes</span><span class="o">.</span><span class="n">hlines</span><span class="p">([</span><span class="mf">0.0</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">x_column</span><span class="p">]))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">x_column</span><span class="p">]))</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">:</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">axes</span>
 
@@ -604,7 +612,7 @@ document.write(`
 
     <span class="nd">@data</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Data must be a dictionary type&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">array_equal</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Dictionary keys must match ch_names&quot;</span><span class="p">)</span>
@@ -613,8 +621,7 @@ document.write(`
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Data names and channel names do not match&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">d</span><span class="p">])</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">nilearn</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">regression</span><span class="o">.</span><span class="n">RegressionResults</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Dictionary items must be&quot;</span>
-                                <span class="s2">&quot; nilearn RegressionResults&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Dictionary items must be&quot;</span> <span class="s2">&quot; nilearn RegressionResults&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
 
@@ -628,9 +635,9 @@ document.write(`
         <span class="n">same_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">==</span> <span class="n">res</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
         <span class="n">same_design</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design</span> <span class="o">==</span> <span class="n">res</span><span class="o">.</span><span class="n">design</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
         <span class="n">same_ch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span> <span class="o">==</span> <span class="n">res</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span>
-        <span class="n">same_theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([(</span><span class="n">res</span><span class="o">.</span><span class="n">theta</span><span class="p">()[</span><span class="n">idx</span><span class="p">]</span> <span class="o">==</span> <span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-                             <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span>
-                             <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">())])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span>
+        <span class="n">same_theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="p">[(</span><span class="n">res</span><span class="o">.</span><span class="n">theta</span><span class="p">()[</span><span class="n">idx</span><span class="p">]</span> <span class="o">==</span> <span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">())]</span>
+        <span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">same_ch</span> <span class="ow">and</span> <span class="n">same_design</span> <span class="ow">and</span> <span class="n">same_keys</span> <span class="ow">and</span> <span class="n">same_theta</span><span class="p">)</span>
 
 <div class="viewcode-block" id="RegressionResults.pick">
@@ -651,8 +658,7 @@ document.write(`
 <span class="sd">        inst : instance of ResultsGLM</span>
 <span class="sd">            The modified instance.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">picks</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="n">picks</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">exclude</span><span class="p">,</span>
-                              <span class="n">allow_empty</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">picks</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="n">picks</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">exclude</span><span class="p">,</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">pick_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="n">picks</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">}</span>
         <span class="k">return</span> <span class="bp">self</span></div>
@@ -719,16 +725,24 @@ document.write(`
 <span class="sd">            Yields the statistics of the contrast</span>
 <span class="sd">            (effects, variance, p-values).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">cont</span> <span class="o">=</span> <span class="n">_compute_contrast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="n">contrast</span><span class="p">,</span>
-                                 <span class="n">contrast_type</span><span class="o">=</span><span class="n">contrast_type</span><span class="p">)</span>
+        <span class="n">cont</span> <span class="o">=</span> <span class="n">_compute_contrast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="n">contrast</span><span class="p">,</span> <span class="n">contrast_type</span><span class="o">=</span><span class="n">contrast_type</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ContrastResults</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="n">cont</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">design</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="RegressionResults.plot_topo">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.plot_topo">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot_topo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">vlim</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-                  <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>
-                  <span class="n">sphere</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">plot_topo</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">vlim</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>
+        <span class="n">sphere</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot 2D topography of GLM data.</span>
 
 <span class="sd">        Parameters</span>
@@ -760,17 +774,26 @@ document.write(`
 <span class="sd">            Figure of each design matrix component for hbo (top row)</span>
 <span class="sd">            and hbr (bottom row).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_plot_glm_topo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">design</span><span class="p">,</span>
-                              <span class="n">requested_conditions</span><span class="o">=</span><span class="n">conditions</span><span class="p">,</span>
-                              <span class="n">axes</span><span class="o">=</span><span class="n">axes</span><span class="p">,</span> <span class="n">vlim</span><span class="o">=</span><span class="n">vlim</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span>
-                              <span class="n">colorbar</span><span class="o">=</span><span class="n">colorbar</span><span class="p">,</span>
-                              <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span> <span class="n">sphere</span><span class="o">=</span><span class="n">sphere</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">_plot_glm_topo</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">design</span><span class="p">,</span>
+            <span class="n">requested_conditions</span><span class="o">=</span><span class="n">conditions</span><span class="p">,</span>
+            <span class="n">axes</span><span class="o">=</span><span class="n">axes</span><span class="p">,</span>
+            <span class="n">vlim</span><span class="o">=</span><span class="n">vlim</span><span class="p">,</span>
+            <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
+            <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span>
+            <span class="n">colorbar</span><span class="o">=</span><span class="n">colorbar</span><span class="p">,</span>
+            <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
+            <span class="n">sphere</span><span class="o">=</span><span class="n">sphere</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="RegressionResults.to_dataframe_region_of_interest">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.to_dataframe_region_of_interest">[docs]</a>
-    <span class="k">def</span> <span class="nf">to_dataframe_region_of_interest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_by</span><span class="p">,</span> <span class="n">condition</span><span class="p">,</span>
-                                        <span class="n">weighted</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">demographic_info</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">to_dataframe_region_of_interest</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">group_by</span><span class="p">,</span> <span class="n">condition</span><span class="p">,</span> <span class="n">weighted</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">demographic_info</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Region of interest results as a dataframe.</span>
 
 <span class="sd">        Parameters</span>
@@ -808,12 +831,12 @@ document.write(`
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">weighted</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">weighted</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">!=</span> <span class="n">group_by</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Keys of group_by and weighted &quot;</span>
-                               <span class="s2">&quot;must be the same&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;Keys of group_by and weighted &quot;</span> <span class="s2">&quot;must be the same&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">weighted</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">weighted</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">group_by</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The length of the keys for group_by &quot;</span>
-                                     <span class="s2">&quot;and weighted must match&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;The length of the keys for group_by &quot;</span> <span class="s2">&quot;and weighted must match&quot;</span>
+                    <span class="p">)</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">weighted</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Weights must be positive values&quot;</span><span class="p">)</span>
 
@@ -821,11 +844,14 @@ document.write(`
         <span class="k">for</span> <span class="n">cond</span> <span class="ow">in</span> <span class="n">condition</span><span class="p">:</span>
             <span class="n">cond_idx</span> <span class="o">=</span> <span class="n">where</span><span class="p">([</span><span class="n">c</span> <span class="o">==</span> <span class="n">cond</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">columns</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">cond_idx</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;condition </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">cond</span><span class="p">)</span><span class="si">}</span><span class="s1"> not found in &#39;</span>
-                               <span class="sa">f</span><span class="s1">&#39;self.design.columns: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">columns</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;condition </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">cond</span><span class="p">)</span><span class="si">}</span><span class="s2"> not found in &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;self.design.columns: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">design</span><span class="o">.</span><span class="n">columns</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
 
-            <span class="n">roi</span> <span class="o">=</span> <span class="n">_glm_region_of_interest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="n">group_by</span><span class="p">,</span>
-                                          <span class="n">cond_idx</span><span class="p">,</span> <span class="n">cond</span><span class="p">,</span> <span class="n">weighted</span><span class="p">)</span>
+            <span class="n">roi</span> <span class="o">=</span> <span class="n">_glm_region_of_interest</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="n">group_by</span><span class="p">,</span> <span class="n">cond_idx</span><span class="p">,</span> <span class="n">cond</span><span class="p">,</span> <span class="n">weighted</span>
+            <span class="p">)</span>
             <span class="n">tidy</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">tidy</span><span class="p">,</span> <span class="n">roi</span><span class="p">])</span>
 
         <span class="k">if</span> <span class="n">weighted</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -836,20 +862,18 @@ document.write(`
             <span class="n">tidy</span><span class="p">[</span><span class="s2">&quot;Weighted&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Custom&quot;</span>
 
         <span class="k">if</span> <span class="n">demographic_info</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s1">&#39;age&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;subject_info&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="n">tidy</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">][</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
-            <span class="k">if</span> <span class="s1">&#39;sex&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;subject_info&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">][</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">==</span> \
-                        <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_SUBJ_SEX_MALE</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;age&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">tidy</span><span class="p">[</span><span class="s2">&quot;Age&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">][</span><span class="s2">&quot;age&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s2">&quot;sex&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">][</span><span class="s2">&quot;sex&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_SUBJ_SEX_MALE</span><span class="p">:</span>
                     <span class="n">sex</span> <span class="o">=</span> <span class="s2">&quot;male&quot;</span>
-                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">][</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">==</span> \
-                        <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_SUBJ_SEX_FEMALE</span><span class="p">:</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">][</span><span class="s2">&quot;sex&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_SUBJ_SEX_FEMALE</span><span class="p">:</span>
                     <span class="n">sex</span> <span class="o">=</span> <span class="s2">&quot;female&quot;</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">sex</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span>
-                <span class="n">tidy</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sex</span>
-            <span class="k">if</span> <span class="s1">&#39;Hand&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;subject_info&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="n">tidy</span><span class="p">[</span><span class="s1">&#39;Hand&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">][</span><span class="s1">&#39;hand&#39;</span><span class="p">]</span>
+                <span class="n">tidy</span><span class="p">[</span><span class="s2">&quot;Sex&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sex</span>
+            <span class="k">if</span> <span class="s2">&quot;Hand&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">tidy</span><span class="p">[</span><span class="s2">&quot;Hand&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">][</span><span class="s2">&quot;hand&quot;</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="n">tidy</span></div>
 
@@ -857,12 +881,25 @@ document.write(`
 <div class="viewcode-block" id="RegressionResults.surface_projection">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.surface_projection">[docs]</a>
     <span class="nd">@verbose</span>
-    <span class="k">def</span> <span class="nf">surface_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chroma</span><span class="o">=</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                           <span class="n">background</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">figure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clim</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
-                           <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span>
-                           <span class="n">surface</span><span class="o">=</span><span class="s1">&#39;pial&#39;</span><span class="p">,</span> <span class="n">hemi</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
-                           <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>
-                           <span class="n">subjects_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">surface_projection</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">chroma</span><span class="o">=</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span>
+        <span class="n">condition</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">background</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span>
+        <span class="n">figure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">clim</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+        <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;weighted&quot;</span><span class="p">,</span>
+        <span class="n">colormap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span>
+        <span class="n">surface</span><span class="o">=</span><span class="s2">&quot;pial&quot;</span><span class="p">,</span>
+        <span class="n">hemi</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span>
+        <span class="n">size</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
+        <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">distance</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>
+        <span class="n">subjects_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">src</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Project GLM results on to the surface of the brain.</span>
 
@@ -928,7 +965,6 @@ document.write(`
 <span class="sd">        figure : instance of mne.viz.Brain | matplotlib.figure.Figure</span>
 <span class="sd">            An instance of :class:`mne.viz.Brain` or matplotlib figure.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">condition</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;You must provide a condition to plot&quot;</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span>
@@ -936,24 +972,34 @@ document.write(`
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_use</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s1">&#39;condition=</span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span><span class="si">}</span><span class="s1"> not found in conditions: &#39;</span>
-                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Condition&quot;</span><span class="p">]))</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Condition&quot;</span><span class="p">]))</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">df_use</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Chroma in @chroma&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">df</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e6</span>
 
         <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">chroma</span><span class="p">)</span><span class="o">.</span><span class="n">info</span>
 
-        <span class="k">return</span> <span class="n">plot_glm_surface_projection</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;theta&quot;</span><span class="p">,</span>
-                                           <span class="n">picks</span><span class="o">=</span><span class="n">chroma</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="n">background</span><span class="p">,</span>
-                                           <span class="n">figure</span><span class="o">=</span><span class="n">figure</span><span class="p">,</span> <span class="n">clim</span><span class="o">=</span><span class="n">clim</span><span class="p">,</span>
-                                           <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="n">colormap</span><span class="p">,</span>
-                                           <span class="n">surface</span><span class="o">=</span><span class="n">surface</span><span class="p">,</span> <span class="n">hemi</span><span class="o">=</span><span class="n">hemi</span><span class="p">,</span>
-                                           <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
-                                           <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span> <span class="n">colorbar</span><span class="o">=</span><span class="n">colorbar</span><span class="p">,</span>
-                                           <span class="n">distance</span><span class="o">=</span><span class="n">distance</span><span class="p">,</span>
-                                           <span class="n">subjects_dir</span><span class="o">=</span><span class="n">subjects_dir</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="n">src</span><span class="p">,</span>
-                                           <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
-                                           <span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">plot_glm_surface_projection</span><span class="p">(</span>
+            <span class="n">info</span><span class="p">,</span>
+            <span class="n">df</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="s2">&quot;theta&quot;</span><span class="p">,</span>
+            <span class="n">picks</span><span class="o">=</span><span class="n">chroma</span><span class="p">,</span>
+            <span class="n">background</span><span class="o">=</span><span class="n">background</span><span class="p">,</span>
+            <span class="n">figure</span><span class="o">=</span><span class="n">figure</span><span class="p">,</span>
+            <span class="n">clim</span><span class="o">=</span><span class="n">clim</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+            <span class="n">colormap</span><span class="o">=</span><span class="n">colormap</span><span class="p">,</span>
+            <span class="n">surface</span><span class="o">=</span><span class="n">surface</span><span class="p">,</span>
+            <span class="n">hemi</span><span class="o">=</span><span class="n">hemi</span><span class="p">,</span>
+            <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
+            <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span>
+            <span class="n">colorbar</span><span class="o">=</span><span class="n">colorbar</span><span class="p">,</span>
+            <span class="n">distance</span><span class="o">=</span><span class="n">distance</span><span class="p">,</span>
+            <span class="n">subjects_dir</span><span class="o">=</span><span class="n">subjects_dir</span><span class="p">,</span>
+            <span class="n">src</span><span class="o">=</span><span class="n">src</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+        <span class="p">)</span></div>
 </div>
 
 
@@ -1000,8 +1046,9 @@ document.write(`
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">nilearn</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">contrasts</span><span class="o">.</span><span class="n">Contrast</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Data must be a nilearn glm contrast type&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">effect</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Data results must be the same length &quot;</span>
-                            <span class="s2">&quot;as the number of channels&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s2">&quot;Data results must be the same length &quot;</span> <span class="s2">&quot;as the number of channels&quot;</span>
+            <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
 
@@ -1024,14 +1071,14 @@ document.write(`
 <span class="sd">            Figure of each design matrix component for hbo (top row)</span>
 <span class="sd">            and hbr (bottom row).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_plot_glm_contrast_topo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span>
-                                       <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span> <span class="n">sphere</span><span class="o">=</span><span class="n">sphere</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">_plot_glm_contrast_topo</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span> <span class="n">sphere</span><span class="o">=</span><span class="n">sphere</span>
+        <span class="p">)</span></div>
 </div>
 
 
 
-<span class="k">def</span> <span class="nf">run_GLM</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">,</span> <span class="n">noise_model</span><span class="o">=</span><span class="s1">&#39;ar1&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-            <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">run_GLM</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">,</span> <span class="n">noise_model</span><span class="o">=</span><span class="s2">&quot;ar1&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Run GLM on data using supplied design matrix.</span>
 
@@ -1060,25 +1107,33 @@ document.write(`
 <span class="sd">        &#39;all CPUs&#39;.</span>
 <span class="sd">    verbose : int, optional</span>
 <span class="sd">        The verbosity level. Default is 0.</span>
+
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    glm_estimates : dict</span>
 <span class="sd">        Keys correspond to the different labels values values are</span>
 <span class="sd">        RegressionResults instances corresponding to the voxels.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">warn</span><span class="p">(</span><span class="s1">&#39;&quot;run_GLM&quot; has been deprecated in favor of the more &#39;</span>
-         <span class="s1">&#39;comprehensive run_glm function, and will be removed in v1.0.0. &#39;</span>
-         <span class="s1">&#39;See the changelog for further details.&#39;</span><span class="p">,</span>
-         <span class="ne">DeprecationWarning</span><span class="p">)</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">run_glm</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">,</span> <span class="n">noise_model</span><span class="o">=</span><span class="n">noise_model</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span>
-                  <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="n">warn</span><span class="p">(</span>
+        <span class="s1">&#39;&quot;run_GLM&quot; has been deprecated in favor of the more &#39;</span>
+        <span class="s2">&quot;comprehensive run_glm function, and will be removed in v1.0.0. &quot;</span>
+        <span class="s2">&quot;See the changelog for further details.&quot;</span><span class="p">,</span>
+        <span class="ne">DeprecationWarning</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">run_glm</span><span class="p">(</span>
+        <span class="n">raw</span><span class="p">,</span>
+        <span class="n">design_matrix</span><span class="p">,</span>
+        <span class="n">noise_model</span><span class="o">=</span><span class="n">noise_model</span><span class="p">,</span>
+        <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span>
+        <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">data</span>
 
 
 <div class="viewcode-block" id="run_glm">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.run_glm.html#mne_nirs.statistics.run_glm">[docs]</a>
-<span class="k">def</span> <span class="nf">run_glm</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">,</span> <span class="n">noise_model</span><span class="o">=</span><span class="s1">&#39;ar1&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-            <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">run_glm</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">,</span> <span class="n">noise_model</span><span class="o">=</span><span class="s2">&quot;ar1&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    GLM fit for an MNE structure containing fNIRS data.</span>
 
@@ -1117,10 +1172,10 @@ document.write(`
 <span class="sd">    glm_estimates : RegressionResults</span>
 <span class="sd">        RegressionResults class which stores the GLM results.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">picks</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="s1">&#39;fnirs&#39;</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">picks</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="s2">&quot;fnirs&quot;</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">ch_names</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span>
 
-    <span class="k">if</span> <span class="n">noise_model</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">noise_model</span> <span class="o">==</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span>
         <span class="n">noise_model</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;ar</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;sfreq&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">4</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="k">if</span> <span class="n">bins</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -1128,10 +1183,14 @@ document.write(`
 
     <span class="n">results</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">pick</span> <span class="ow">in</span> <span class="n">picks</span><span class="p">:</span>
-        <span class="n">labels</span><span class="p">,</span> <span class="n">glm_estimates</span> <span class="o">=</span> <span class="n">nilearn_glm</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">pick</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                                            <span class="n">design_matrix</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-                                            <span class="n">noise_model</span><span class="o">=</span><span class="n">noise_model</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span>
-                                            <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="n">labels</span><span class="p">,</span> <span class="n">glm_estimates</span> <span class="o">=</span> <span class="n">nilearn_glm</span><span class="p">(</span>
+            <span class="n">raw</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">pick</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+            <span class="n">design_matrix</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+            <span class="n">noise_model</span><span class="o">=</span><span class="n">noise_model</span><span class="p">,</span>
+            <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">results</span><span class="p">[</span><span class="n">ch_names</span><span class="p">[</span><span class="n">pick</span><span class="p">]]</span> <span class="o">=</span> <span class="n">glm_estimates</span><span class="p">[</span><span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
 
     <span class="k">return</span> <span class="n">RegressionResults</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">)</span></div>
@@ -1140,8 +1199,15 @@ document.write(`
 
 <span class="k">def</span> <span class="nf">_compute_contrast</span><span class="p">(</span><span class="n">glm_est</span><span class="p">,</span> <span class="n">contrast</span><span class="p">,</span> <span class="n">contrast_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">nilearn.glm.contrasts</span> <span class="kn">import</span> <span class="n">compute_contrast</span> <span class="k">as</span> <span class="n">_cc</span>
-    <span class="k">return</span> <span class="n">_cc</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">glm_est</span><span class="o">.</span><span class="n">keys</span><span class="p">())),</span> <span class="n">glm_est</span><span class="p">,</span> <span class="n">contrast</span><span class="p">,</span>
-               <span class="n">contrast_type</span><span class="o">=</span><span class="n">contrast_type</span><span class="p">)</span>
+
+    <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;contrast_type&quot;</span>
+    <span class="n">_ccc</span> <span class="o">=</span> <span class="n">_cc</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">_cc</span><span class="p">,</span> <span class="s2">&quot;__wrapped__&quot;</span><span class="p">):</span>
+        <span class="n">_ccc</span> <span class="o">=</span> <span class="n">_cc</span><span class="o">.</span><span class="n">__wrapped__</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;stat_type&quot;</span> <span class="k">if</span> <span class="s2">&quot;stat_type&quot;</span> <span class="ow">in</span> <span class="n">getfullargspec</span><span class="p">(</span><span class="n">_ccc</span><span class="p">)</span><span class="o">.</span><span class="n">args</span> <span class="k">else</span> <span class="s2">&quot;contrast_type&quot;</span>
+    <span class="k">return</span> <span class="n">_cc</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">glm_est</span><span class="o">.</span><span class="n">keys</span><span class="p">())),</span> <span class="n">glm_est</span><span class="p">,</span> <span class="n">contrast</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">contrast_type</span><span class="p">}</span>
+    <span class="p">)</span>
 
 
 <div class="viewcode-block" id="read_glm">
@@ -1161,8 +1227,8 @@ document.write(`
 <span class="sd">        RegressionResults or ContrastResults class</span>
 <span class="sd">        which stores the GLM results.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">check_fname</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;path-like&#39;</span><span class="p">,</span> <span class="s1">&#39;glm.h5&#39;</span><span class="p">)</span>
-    <span class="n">glm</span> <span class="o">=</span> <span class="n">read_hdf5</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;mnepython&#39;</span><span class="p">)</span>
+    <span class="n">check_fname</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;path-like&quot;</span><span class="p">,</span> <span class="s2">&quot;glm.h5&quot;</span><span class="p">)</span>
+    <span class="n">glm</span> <span class="o">=</span> <span class="n">read_hdf5</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;mnepython&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_state_to_glm</span><span class="p">(</span><span class="n">glm</span><span class="p">)</span></div>
 
 
@@ -1182,60 +1248,67 @@ document.write(`
 <span class="sd">        RegressionResults or ContrastResults class</span>
 <span class="sd">        which stores the GLM results.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;classname&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&lt;class &#39;mne_nirs.statistics._glm_level_first&quot;</span> \
-                           <span class="s2">&quot;.RegressionResults&#39;&gt;&quot;</span><span class="p">:</span>
-
-        <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]:</span>
-
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;classname&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&lt;class &#39;mne_nirs.statistics._glm_level_first&quot;</span>
+        <span class="s2">&quot;.RegressionResults&#39;&gt;&quot;</span>
+    <span class="p">):</span>
+        <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]:</span>
             <span class="c1"># Recreate model type</span>
-            <span class="k">if</span> <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;modelname&#39;</span><span class="p">]</span> <span class="o">==</span> \
-                    <span class="s2">&quot;&lt;class &#39;nilearn.glm.regression.ARModel&#39;&gt;&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;modelname&quot;</span><span class="p">]</span>
+                <span class="o">==</span> <span class="s2">&quot;&lt;class &#39;nilearn.glm.regression.ARModel&#39;&gt;&quot;</span>
+            <span class="p">):</span>
                 <span class="n">model</span> <span class="o">=</span> <span class="n">nilearn</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">regression</span><span class="o">.</span><span class="n">ARModel</span><span class="p">(</span>
-                    <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">][</span><span class="s1">&#39;design&#39;</span><span class="p">],</span>
-                    <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">][</span><span class="s1">&#39;rho&#39;</span><span class="p">],</span>
+                    <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;model&quot;</span><span class="p">][</span><span class="s2">&quot;design&quot;</span><span class="p">],</span>
+                    <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;model&quot;</span><span class="p">][</span><span class="s2">&quot;rho&quot;</span><span class="p">],</span>
                 <span class="p">)</span>
 
-            <span class="k">elif</span> <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;modelname&#39;</span><span class="p">]</span> <span class="o">==</span> \
-                    <span class="s2">&quot;&lt;class &#39;nilearn.glm.regression.OLSModel&#39;&gt;&quot;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="p">(</span>
+                <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;modelname&quot;</span><span class="p">]</span>
+                <span class="o">==</span> <span class="s2">&quot;&lt;class &#39;nilearn.glm.regression.OLSModel&#39;&gt;&quot;</span>
+            <span class="p">):</span>
                 <span class="n">model</span> <span class="o">=</span> <span class="n">nilearn</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">regression</span><span class="o">.</span><span class="n">OLSModel</span><span class="p">(</span>
-                    <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">][</span><span class="s1">&#39;design&#39;</span><span class="p">],</span>
+                    <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;model&quot;</span><span class="p">][</span><span class="s2">&quot;design&quot;</span><span class="p">],</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;Unknown model type &quot;</span>
-                              <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;modelname&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span>
+                    <span class="s2">&quot;Unknown model type &quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;modelname&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
 
-            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">]:</span>
-                <span class="n">model</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
-            <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;model&quot;</span><span class="p">]:</span>
+                <span class="n">model</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;model&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
+            <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;model&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span>
 
             <span class="c1"># Then recreate result type</span>
             <span class="n">res</span> <span class="o">=</span> <span class="n">nilearn</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">regression</span><span class="o">.</span><span class="n">RegressionResults</span><span class="p">(</span>
-                <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;theta&#39;</span><span class="p">],</span>
-                <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span>
-                <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">],</span>
-                <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;whitened_Y&#39;</span><span class="p">],</span>
-                <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;whitened_residuals&#39;</span><span class="p">],</span>
-                <span class="n">cov</span><span class="o">=</span><span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s1">&#39;cov&#39;</span><span class="p">]</span>
+                <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;theta&quot;</span><span class="p">],</span>
+                <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;Y&quot;</span><span class="p">],</span>
+                <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;model&quot;</span><span class="p">],</span>
+                <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;whitened_Y&quot;</span><span class="p">],</span>
+                <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;whitened_residuals&quot;</span><span class="p">],</span>
+                <span class="n">cov</span><span class="o">=</span><span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="s2">&quot;cov&quot;</span><span class="p">],</span>
             <span class="p">)</span>
-            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">]:</span>
-                <span class="n">res</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
-            <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">]:</span>
+                <span class="n">res</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
+            <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span>
 
         <span class="c1"># Ensure order of dictionary matches info</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">][</span><span class="s1">&#39;ch_names&#39;</span><span class="p">]}</span>
-        <span class="k">return</span> <span class="n">RegressionResults</span><span class="p">(</span><span class="n">Info</span><span class="p">(</span><span class="n">glm</span><span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">]),</span> <span class="n">data</span><span class="p">,</span> <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;design&#39;</span><span class="p">])</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;ch_names&quot;</span><span class="p">]}</span>
+        <span class="k">return</span> <span class="n">RegressionResults</span><span class="p">(</span><span class="n">Info</span><span class="p">(</span><span class="n">glm</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]),</span> <span class="n">data</span><span class="p">,</span> <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;design&quot;</span><span class="p">])</span>
 
-    <span class="k">elif</span> <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;classname&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&lt;class &#39;mne_nirs.statistics._glm_level_first&quot;</span> \
-                             <span class="s2">&quot;.ContrastResults&#39;&gt;&quot;</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">nilearn</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">contrasts</span><span class="o">.</span><span class="n">Contrast</span><span class="p">(</span><span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;effect&#39;</span><span class="p">],</span>
-                                              <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;variance&#39;</span><span class="p">])</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]:</span>
-            <span class="n">data</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">ContrastResults</span><span class="p">(</span><span class="n">Info</span><span class="p">(</span><span class="n">glm</span><span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">]),</span> <span class="n">data</span><span class="p">,</span> <span class="n">glm</span><span class="p">[</span><span class="s1">&#39;design&#39;</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="p">(</span>
+        <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;classname&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&lt;class &#39;mne_nirs.statistics._glm_level_first&quot;</span>
+        <span class="s2">&quot;.ContrastResults&#39;&gt;&quot;</span>
+    <span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">nilearn</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">contrasts</span><span class="o">.</span><span class="n">Contrast</span><span class="p">(</span>
+            <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">],</span> <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;variance&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]:</span>
+            <span class="n">data</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">ContrastResults</span><span class="p">(</span><span class="n">Info</span><span class="p">(</span><span class="n">glm</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]),</span> <span class="n">data</span><span class="p">,</span> <span class="n">glm</span><span class="p">[</span><span class="s2">&quot;design&quot;</span><span class="p">])</span>
 
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;Unable to read data&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="s2">&quot;Unable to read data&quot;</span><span class="p">)</span>
 </pre></div>
 
                 </article>
@@ -1279,7 +1352,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2023, MNE Developers. Last updated <time datetime="2023-12-07T23:54:19.732358+00:00" class="localized">2023-12-07 23:54 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-07-23T00:18:52.995210+00:00" class="localized">2024-07-23 00:18 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

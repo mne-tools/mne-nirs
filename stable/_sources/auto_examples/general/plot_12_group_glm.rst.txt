@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_general_plot_12_group_glm.py>`
-        to download the full example code or to run this example in your browser via Binder
+        to download the full example code. or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
 
@@ -81,11 +81,7 @@ information about triggers, condition names, etc.
    Conditions were presented in a random order with a randomised inter
    stimulus interval.
 
-.. contents:: Page contents
-   :local:
-   :depth: 2
-
-.. GENERATED FROM PYTHON SOURCE LINES 69-106
+.. GENERATED FROM PYTHON SOURCE LINES 65-98
 
 .. code-block:: Python
 
@@ -95,35 +91,32 @@ information about triggers, condition names, etc.
     #
     # License: BSD (3-clause)
 
-
     # Import common libraries
+    import matplotlib as mpl
+
+    # Import Plotting Library
+    import matplotlib.pyplot as plt
     import numpy as np
     import pandas as pd
-
-    # Import MNE processing
-    from mne.preprocessing.nirs import optical_density, beer_lambert_law
-
-    # Import MNE-NIRS processing
-    from mne_nirs.statistics import run_glm
-    from mne_nirs.experimental_design import make_first_level_design_matrix
-    from mne_nirs.statistics import statsmodels_to_results
-    from mne_nirs.channels import get_short_channels, get_long_channels
-    from mne_nirs.channels import picks_pair_to_idx
-    from mne_nirs.visualisation import plot_glm_group_topo
-    from mne_nirs.datasets import fnirs_motor_group
-    from mne_nirs.visualisation import plot_glm_surface_projection
-    from mne_nirs.io.fold import fold_channel_specificity
-
-    # Import MNE-BIDS processing
-    from mne_bids import BIDSPath, read_raw_bids, get_entity_vals
+    import seaborn as sns
 
     # Import StatsModels
     import statsmodels.formula.api as smf
 
-    # Import Plotting Library
-    import matplotlib.pyplot as plt
-    import matplotlib as mpl
-    import seaborn as sns
+    # Import MNE processing
+    from mne.preprocessing.nirs import beer_lambert_law, optical_density
+
+    # Import MNE-BIDS processing
+    from mne_bids import BIDSPath, get_entity_vals, read_raw_bids
+
+    from mne_nirs.channels import get_long_channels, get_short_channels, picks_pair_to_idx
+    from mne_nirs.datasets import fnirs_motor_group
+    from mne_nirs.experimental_design import make_first_level_design_matrix
+    from mne_nirs.io.fold import fold_channel_specificity
+
+    # Import MNE-NIRS processing
+    from mne_nirs.statistics import run_glm, statsmodels_to_results
+    from mne_nirs.visualisation import plot_glm_group_topo, plot_glm_surface_projection
 
 
 
@@ -132,8 +125,7 @@ information about triggers, condition names, etc.
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 107-115
+.. GENERATED FROM PYTHON SOURCE LINES 99-107
 
 Set up directories
 ------------------
@@ -144,7 +136,7 @@ without manually specifying the trigger names etc.
 We first define where the root directory of our dataset is.
 In this example we use the example dataset ``fnirs_motor_group``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 115-120
+.. GENERATED FROM PYTHON SOURCE LINES 107-112
 
 .. code-block:: Python
 
@@ -166,20 +158,21 @@ In this example we use the example dataset ``fnirs_motor_group``.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 121-125
+.. GENERATED FROM PYTHON SOURCE LINES 113-117
 
 And as we are using MNE-BIDS we can create a BIDSPath object.
 This class helps to handle all the path wrangling.
 We inform the software that we are analysing nirs data that is saved in
 the snirf format.
 
-.. GENERATED FROM PYTHON SOURCE LINES 125-131
+.. GENERATED FROM PYTHON SOURCE LINES 117-124
 
 .. code-block:: Python
 
 
-    dataset = BIDSPath(root=root, task="tapping",
-                       datatype="nirs", suffix="nirs", extension=".snirf")
+    dataset = BIDSPath(
+        root=root, task="tapping", datatype="nirs", suffix="nirs", extension=".snirf"
+    )
 
     print(dataset.directory)
 
@@ -196,16 +189,16 @@ the snirf format.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 132-133
+.. GENERATED FROM PYTHON SOURCE LINES 125-126
 
 For example we can automatically query the subjects, tasks, and sessions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 133-138
+.. GENERATED FROM PYTHON SOURCE LINES 126-131
 
 .. code-block:: Python
 
 
-    subjects = get_entity_vals(root, 'subject')
+    subjects = get_entity_vals(root, "subject")
     print(subjects)
 
 
@@ -222,7 +215,7 @@ For example we can automatically query the subjects, tasks, and sessions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 139-172
+.. GENERATED FROM PYTHON SOURCE LINES 132-165
 
 Define individual analysis
 --------------------------
@@ -258,20 +251,20 @@ analyses.
    for more information. In the meantime use the following code to replace the
    illegal characters.
 
-.. GENERATED FROM PYTHON SOURCE LINES 172-240
+.. GENERATED FROM PYTHON SOURCE LINES 165-239
 
 .. code-block:: Python
 
 
 
     def individual_analysis(bids_path, ID):
-
         raw_intensity = read_raw_bids(bids_path=bids_path, verbose=False)
-        # Delete annotation labeled 15, as these just signify the start and end of experiment.
-        raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
+        # Delete annotation labeled 15, as these just signify the experiment start and end.
+        raw_intensity.annotations.delete(raw_intensity.annotations.description == "15.0")
         # sanitize event names
         raw_intensity.annotations.description[:] = [
-            d.replace('/', '_') for d in raw_intensity.annotations.description]
+            d.replace("/", "_") for d in raw_intensity.annotations.description
+        ]
 
         # Convert signal to haemoglobin and resample
         raw_od = optical_density(raw_intensity)
@@ -286,8 +279,12 @@ analyses.
         design_matrix = make_first_level_design_matrix(raw_haemo, stim_dur=5.0)
 
         # Append short channels mean to design matrix
-        design_matrix["ShortHbO"] = np.mean(sht_chans.copy().pick(picks="hbo").get_data(), axis=0)
-        design_matrix["ShortHbR"] = np.mean(sht_chans.copy().pick(picks="hbr").get_data(), axis=0)
+        design_matrix["ShortHbO"] = np.mean(
+            sht_chans.copy().pick(picks="hbo").get_data(), axis=0
+        )
+        design_matrix["ShortHbR"] = np.mean(
+            sht_chans.copy().pick(picks="hbr").get_data(), axis=0
+        )
 
         # Run GLM
         glm_est = run_glm(raw_haemo, design_matrix)
@@ -298,22 +295,24 @@ analyses.
         right = [[8, 7], [5, 7], [7, 7], [5, 6], [6, 7], [5, 5]]
         # Then generate the correct indices for each pair
         groups = dict(
-            Left_Hemisphere=picks_pair_to_idx(raw_haemo, left, on_missing='ignore'),
-            Right_Hemisphere=picks_pair_to_idx(raw_haemo, right, on_missing='ignore'))
+            Left_Hemisphere=picks_pair_to_idx(raw_haemo, left, on_missing="ignore"),
+            Right_Hemisphere=picks_pair_to_idx(raw_haemo, right, on_missing="ignore"),
+        )
 
         # Extract channel metrics
         cha = glm_est.to_dataframe()
 
         # Compute region of interest results from channel data
-        roi = glm_est.to_dataframe_region_of_interest(groups,
-                                                      design_matrix.columns,
-                                                      demographic_info=True)
+        roi = glm_est.to_dataframe_region_of_interest(
+            groups, design_matrix.columns, demographic_info=True
+        )
 
         # Define left vs right tapping contrast
         contrast_matrix = np.eye(design_matrix.shape[1])
-        basic_conts = dict([(column, contrast_matrix[i])
-                            for i, column in enumerate(design_matrix.columns)])
-        contrast_LvR = basic_conts['Tapping_Left'] - basic_conts['Tapping_Right']
+        basic_conts = dict(
+            [(column, contrast_matrix[i]) for i, column in enumerate(design_matrix.columns)]
+        )
+        contrast_LvR = basic_conts["Tapping_Left"] - basic_conts["Tapping_Right"]
 
         # Compute defined contrast
         contrast = glm_est.compute_contrast(contrast_LvR)
@@ -323,9 +322,9 @@ analyses.
         roi["ID"] = cha["ID"] = con["ID"] = ID
 
         # Convert to uM for nicer plotting below.
-        cha["theta"] = [t * 1.e6 for t in cha["theta"]]
-        roi["theta"] = [t * 1.e6 for t in roi["theta"]]
-        con["effect"] = [t * 1.e6 for t in con["effect"]]
+        cha["theta"] = [t * 1.0e6 for t in cha["theta"]]
+        roi["theta"] = [t * 1.0e6 for t in roi["theta"]]
+        con["effect"] = [t * 1.0e6 for t in con["effect"]]
 
         return raw_haemo, roi, cha, con
 
@@ -337,7 +336,7 @@ analyses.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 241-248
+.. GENERATED FROM PYTHON SOURCE LINES 240-247
 
 Run analysis on all participants
 --------------------------------
@@ -347,7 +346,7 @@ on each. We append the individual results in to a large dataframe that
 will contain the results from all measurements. We create a group dataframe
 for the region of interest, channel level, and contrast results.
 
-.. GENERATED FROM PYTHON SOURCE LINES 248-267
+.. GENERATED FROM PYTHON SOURCE LINES 247-265
 
 .. code-block:: Python
 
@@ -357,7 +356,6 @@ for the region of interest, channel level, and contrast results.
     df_con = pd.DataFrame()  # To store channel level contrast results
 
     for sub in subjects:  # Loop from first to fifth subject
-
         # Create path to file based on experiment info
         bids_path = dataset.update(subject=sub)
 
@@ -387,7 +385,7 @@ for the region of interest, channel level, and contrast results.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 268-277
+.. GENERATED FROM PYTHON SOURCE LINES 266-275
 
 Visualise Individual results
 ----------------------------
@@ -399,7 +397,7 @@ values and observe they are in the expect range.
 We can already see that the control condition is always near zero,
 and that the responses look to be contralateral to the tapping hand.
 
-.. GENERATED FROM PYTHON SOURCE LINES 277-284
+.. GENERATED FROM PYTHON SOURCE LINES 275-293
 
 .. code-block:: Python
 
@@ -407,7 +405,18 @@ and that the responses look to be contralateral to the tapping hand.
     grp_results = df_roi.query("Condition in ['Control', 'Tapping_Left', 'Tapping_Right']")
     grp_results = grp_results.query("Chroma in ['hbo']")
 
-    sns.catplot(x="Condition", y="theta", col="ID", hue="ROI", data=grp_results, col_wrap=5, errorbar=None, palette="muted", height=4, s=10)
+    sns.catplot(
+        x="Condition",
+        y="theta",
+        col="ID",
+        hue="ROI",
+        data=grp_results,
+        col_wrap=5,
+        errorbar=None,
+        palette="muted",
+        height=4,
+        s=10,
+    )
 
 
 
@@ -424,11 +433,11 @@ and that the responses look to be contralateral to the tapping hand.
  .. code-block:: none
 
 
-    <seaborn.axisgrid.FacetGrid object at 0x7fb734909330>
+    <seaborn.axisgrid.FacetGrid object at 0x7f8854dfabc0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 285-316
+.. GENERATED FROM PYTHON SOURCE LINES 294-325
 
 Compute group level results
 ---------------------------
@@ -462,15 +471,16 @@ Alternatively, we could use a robust linear
 model by using the code
 `roi_model = rlm('theta ~ -1 + ROI:Condition:Chroma', grp_results).fit()`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 316-324
+.. GENERATED FROM PYTHON SOURCE LINES 325-334
 
 .. code-block:: Python
 
 
     grp_results = df_roi.query("Condition in ['Control','Tapping_Left', 'Tapping_Right']")
 
-    roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
-                            grp_results, groups=grp_results["ID"]).fit(method='nm')
+    roi_model = smf.mixedlm(
+        "theta ~ -1 + ROI:Condition:Chroma", grp_results, groups=grp_results["ID"]
+    ).fit(method="nm")
     roi_model.summary()
 
 
@@ -482,7 +492,7 @@ model by using the code
 
  .. code-block:: none
 
-    /home/circleci/python_env/lib/python3.10/site-packages/statsmodels/regression/mixed_linear_model.py:2238: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+    /home/circleci/python_env/lib/python3.10/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
       warnings.warn(msg, ConvergenceWarning)
 
 
@@ -558,7 +568,7 @@ model by using the code
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 325-346
+.. GENERATED FROM PYTHON SOURCE LINES 335-356
 
 Second level analysis with covariates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -582,7 +592,7 @@ are smaller when the right hand was used (as expected for these
 contralaterally dominant responses) and there is no significant
 effect of gender.
 
-.. GENERATED FROM PYTHON SOURCE LINES 346-355
+.. GENERATED FROM PYTHON SOURCE LINES 356-366
 
 .. code-block:: Python
 
@@ -591,8 +601,9 @@ effect of gender.
     grp_results = grp_results.query("Chroma in ['hbo']")
     grp_results = grp_results.query("ROI in ['Right_Hemisphere']")
 
-    roi_model = smf.mixedlm("theta ~ Condition + Sex",
-                            grp_results, groups=grp_results["ID"]).fit(method='nm')
+    roi_model = smf.mixedlm(
+        "theta ~ Condition + Sex", grp_results, groups=grp_results["ID"]
+    ).fit(method="nm")
     roi_model.summary()
 
 
@@ -645,7 +656,7 @@ effect of gender.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 356-367
+.. GENERATED FROM PYTHON SOURCE LINES 367-378
 
 Visualise group results
 -----------------------
@@ -659,19 +670,29 @@ We also observe the the tapping response is
 larger in the contralateral hemisphere.
 Filled symbols represent HbO, unfilled symbols represent HbR.
 
-.. GENERATED FROM PYTHON SOURCE LINES 367-378
+.. GENERATED FROM PYTHON SOURCE LINES 378-399
 
 .. code-block:: Python
 
 
     # Regenerate the results from the original group model above
     grp_results = df_roi.query("Condition in ['Control','Tapping_Left', 'Tapping_Right']")
-    roi_model = smf.mixedlm("theta ~ -1 + ROI:Condition:Chroma",
-                            grp_results, groups=grp_results["ID"]).fit(method='nm')
+    roi_model = smf.mixedlm(
+        "theta ~ -1 + ROI:Condition:Chroma", grp_results, groups=grp_results["ID"]
+    ).fit(method="nm")
 
     df = statsmodels_to_results(roi_model)
 
-    sns.catplot(x="Condition", y="Coef.", hue="ROI", data=df.query("Chroma == 'hbo'"), errorbar=None, palette="muted", height=4, s=10)
+    sns.catplot(
+        x="Condition",
+        y="Coef.",
+        hue="ROI",
+        data=df.query("Chroma == 'hbo'"),
+        errorbar=None,
+        palette="muted",
+        height=4,
+        s=10,
+    )
 
 
 
@@ -687,14 +708,14 @@ Filled symbols represent HbO, unfilled symbols represent HbR.
 
  .. code-block:: none
 
-    /home/circleci/python_env/lib/python3.10/site-packages/statsmodels/regression/mixed_linear_model.py:2238: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+    /home/circleci/python_env/lib/python3.10/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
       warnings.warn(msg, ConvergenceWarning)
 
-    <seaborn.axisgrid.FacetGrid object at 0x7fb7370fde70>
+    <seaborn.axisgrid.FacetGrid object at 0x7f885486b640>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 379-388
+.. GENERATED FROM PYTHON SOURCE LINES 400-409
 
 Group topographic visualisation
 -------------------------------
@@ -706,52 +727,71 @@ First we compute the mixed effects model for each channel (rather
 than region of interest as above).
 Then we pass these results to the topomap function.
 
-.. GENERATED FROM PYTHON SOURCE LINES 388-432
+.. GENERATED FROM PYTHON SOURCE LINES 409-472
 
 .. code-block:: Python
 
 
-    fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(10, 10),
-                             gridspec_kw=dict(width_ratios=[1, 1]))
+    fig, axes = plt.subplots(
+        nrows=2, ncols=2, figsize=(10, 10), gridspec_kw=dict(width_ratios=[1, 1])
+    )
 
     # Cut down the dataframe just to the conditions we are interested in
     ch_summary = df_cha.query("Condition in ['Tapping_Left', 'Tapping_Right']")
     ch_summary = ch_summary.query("Chroma in ['hbo']")
 
     # Run group level model and convert to dataframe
-    ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:Condition",
-                           ch_summary, groups=ch_summary["ID"]).fit(method='nm')
+    ch_model = smf.mixedlm(
+        "theta ~ -1 + ch_name:Chroma:Condition", ch_summary, groups=ch_summary["ID"]
+    ).fit(method="nm")
     ch_model_df = statsmodels_to_results(ch_model)
 
     # Plot the two conditions
-    plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
-                        ch_model_df.query("Condition in ['Tapping_Left']"),
-                        colorbar=False, axes=axes[0, 0],
-                        vlim=(0, 20), cmap=mpl.cm.Oranges)
+    plot_glm_group_topo(
+        raw_haemo.copy().pick(picks="hbo"),
+        ch_model_df.query("Condition in ['Tapping_Left']"),
+        colorbar=False,
+        axes=axes[0, 0],
+        vlim=(0, 20),
+        cmap=mpl.cm.Oranges,
+    )
 
-    plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
-                        ch_model_df.query("Condition in ['Tapping_Right']"),
-                        colorbar=True, axes=axes[0, 1],
-                        vlim=(0, 20), cmap=mpl.cm.Oranges)
+    plot_glm_group_topo(
+        raw_haemo.copy().pick(picks="hbo"),
+        ch_model_df.query("Condition in ['Tapping_Right']"),
+        colorbar=True,
+        axes=axes[0, 1],
+        vlim=(0, 20),
+        cmap=mpl.cm.Oranges,
+    )
 
     # Cut down the dataframe just to the conditions we are interested in
     ch_summary = df_cha.query("Condition in ['Tapping_Left', 'Tapping_Right']")
     ch_summary = ch_summary.query("Chroma in ['hbr']")
 
     # Run group level model and convert to dataframe
-    ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:Condition",
-                           ch_summary, groups=ch_summary["ID"]).fit(method='nm')
+    ch_model = smf.mixedlm(
+        "theta ~ -1 + ch_name:Chroma:Condition", ch_summary, groups=ch_summary["ID"]
+    ).fit(method="nm")
     ch_model_df = statsmodels_to_results(ch_model)
 
     # Plot the two conditions
-    plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
-                        ch_model_df.query("Condition in ['Tapping_Left']"),
-                        colorbar=False, axes=axes[1, 0],
-                        vlim=(-10, 0), cmap=mpl.cm.Blues_r)
-    plot_glm_group_topo(raw_haemo.copy().pick(picks="hbr"),
-                        ch_model_df.query("Condition in ['Tapping_Right']"),
-                        colorbar=True, axes=axes[1, 1],
-                        vlim=(-10, 0), cmap=mpl.cm.Blues_r)
+    plot_glm_group_topo(
+        raw_haemo.copy().pick(picks="hbr"),
+        ch_model_df.query("Condition in ['Tapping_Left']"),
+        colorbar=False,
+        axes=axes[1, 0],
+        vlim=(-10, 0),
+        cmap=mpl.cm.Blues_r,
+    )
+    plot_glm_group_topo(
+        raw_haemo.copy().pick(picks="hbr"),
+        ch_model_df.query("Condition in ['Tapping_Right']"),
+        colorbar=True,
+        axes=axes[1, 1],
+        vlim=(-10, 0),
+        cmap=mpl.cm.Blues_r,
+    )
 
 
 
@@ -768,11 +808,11 @@ Then we pass these results to the topomap function.
  .. code-block:: none
 
 
-    <Axes: title={'center': 'Tapping_Right'}>
+    <AxesSubplot: title={'center': 'Tapping_Right'}>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 433-439
+.. GENERATED FROM PYTHON SOURCE LINES 473-479
 
 Contrasts
 ---------
@@ -781,7 +821,7 @@ Finally we can examine the difference between the left and right hand
 tapping conditions by viewing the contrast results
 in a topographic representation.
 
-.. GENERATED FROM PYTHON SOURCE LINES 439-454
+.. GENERATED FROM PYTHON SOURCE LINES 479-496
 
 .. code-block:: Python
 
@@ -790,14 +830,16 @@ in a topographic representation.
     con_summary = df_con.query("Chroma in ['hbo']")
 
     # Run group level model and convert to dataframe
-    con_model = smf.mixedlm("effect ~ -1 + ch_name:Chroma",
-                            con_summary, groups=con_summary["ID"]).fit(method='nm')
-    con_model_df = statsmodels_to_results(con_model,
-                                          order=raw_haemo.copy().pick(
-                                              picks="hbo").ch_names)
+    con_model = smf.mixedlm(
+        "effect ~ -1 + ch_name:Chroma", con_summary, groups=con_summary["ID"]
+    ).fit(method="nm")
+    con_model_df = statsmodels_to_results(
+        con_model, order=raw_haemo.copy().pick(picks="hbo").ch_names
+    )
 
-    plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo"),
-                        con_model_df, colorbar=True, axes=axes)
+    plot_glm_group_topo(
+        raw_haemo.copy().pick(picks="hbo"), con_model_df, colorbar=True, axes=axes
+    )
 
 
 
@@ -813,26 +855,30 @@ in a topographic representation.
 
  .. code-block:: none
 
-    /home/circleci/python_env/lib/python3.10/site-packages/statsmodels/regression/mixed_linear_model.py:2238: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+    /home/circleci/python_env/lib/python3.10/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
       warnings.warn(msg, ConvergenceWarning)
 
-    <Axes: title={'center': 'Contrast'}>
+    <AxesSubplot: title={'center': 'Contrast'}>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 455-458
+.. GENERATED FROM PYTHON SOURCE LINES 497-500
 
 Or we can view only the left hemisphere for the contrast.
 And set all channels that dont have a significant response to zero.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 459-464
+.. GENERATED FROM PYTHON SOURCE LINES 501-510
 
 .. code-block:: Python
 
 
-    plot_glm_group_topo(raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
-                        con_model_df, colorbar=True, threshold=True)
+    plot_glm_group_topo(
+        raw_haemo.copy().pick(picks="hbo").pick(picks=range(10)),
+        con_model_df,
+        colorbar=True,
+        threshold=True,
+    )
 
 
 
@@ -850,11 +896,11 @@ And set all channels that dont have a significant response to zero.
 
     Reducing GLM results to match MNE data
 
-    <Axes: title={'center': 'Contrast'}>
+    <AxesSubplot: title={'center': 'Contrast'}>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 465-479
+.. GENERATED FROM PYTHON SOURCE LINES 511-525
 
 Cortical Surface Projections
 ----------------------------
@@ -871,35 +917,47 @@ fashion.
 As in the topo plots above you can see that the activity is predominately
 contralateral to the side of finger tapping.
 
-.. GENERATED FROM PYTHON SOURCE LINES 479-506
+.. GENERATED FROM PYTHON SOURCE LINES 525-564
 
 .. code-block:: Python
 
 
 
     # Generate brain figure from data
-    clim = dict(kind='value', pos_lims=(0, 8, 11))
-    brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
-                                        con_model_df, clim=clim, view='dorsal',
-                                        colorbar=True, size=(800, 700))
-    brain.add_text(0.05, 0.95, "Left-Right", 'title', font_size=16, color='k')
+    clim = dict(kind="value", pos_lims=(0, 8, 11))
+    brain = plot_glm_surface_projection(
+        raw_haemo.copy().pick("hbo"),
+        con_model_df,
+        clim=clim,
+        view="dorsal",
+        colorbar=True,
+        size=(800, 700),
+    )
+    brain.add_text(0.05, 0.95, "Left-Right", "title", font_size=16, color="k")
 
     # Run model code as above
-    clim = dict(kind='value', pos_lims=(0, 11.5, 17))
-    for idx, cond in enumerate(['Tapping_Left', 'Tapping_Right']):
-
+    clim = dict(kind="value", pos_lims=(0, 11.5, 17))
+    for idx, cond in enumerate(["Tapping_Left", "Tapping_Right"]):
         # Run same model as explained in the sections above
         ch_summary = df_cha.query("Condition in [@cond]")
         ch_summary = ch_summary.query("Chroma in ['hbo']")
-        ch_model = smf.mixedlm("theta ~ -1 + ch_name", ch_summary,
-                               groups=ch_summary["ID"]).fit(method='nm')
-        model_df = statsmodels_to_results(ch_model, order=raw_haemo.copy().pick("hbo").ch_names)
+        ch_model = smf.mixedlm(
+            "theta ~ -1 + ch_name", ch_summary, groups=ch_summary["ID"]
+        ).fit(method="nm")
+        model_df = statsmodels_to_results(
+            ch_model, order=raw_haemo.copy().pick("hbo").ch_names
+        )
 
         # Generate brain figure from data
-        brain = plot_glm_surface_projection(raw_haemo.copy().pick("hbo"),
-                                            model_df, clim=clim, view='dorsal',
-                                            colorbar=True, size=(800, 700))
-        brain.add_text(0.05, 0.95, cond, 'title', font_size=16, color='k')
+        brain = plot_glm_surface_projection(
+            raw_haemo.copy().pick("hbo"),
+            model_df,
+            clim=clim,
+            view="dorsal",
+            colorbar=True,
+            size=(800, 700),
+        )
+        brain.add_text(0.05, 0.95, cond, "title", font_size=16, color="k")
 
 
 
@@ -931,7 +989,7 @@ contralateral to the side of finger tapping.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 507-512
+.. GENERATED FROM PYTHON SOURCE LINES 565-570
 
 Table of channel level results
 ------------------------------
@@ -939,7 +997,7 @@ Table of channel level results
 Sometimes a reviewer wants a long table of results per channel.
 This can be generated from the statistics dataframe.
 
-.. GENERATED FROM PYTHON SOURCE LINES 512-530
+.. GENERATED FROM PYTHON SOURCE LINES 570-589
 
 .. code-block:: Python
 
@@ -948,16 +1006,17 @@ This can be generated from the statistics dataframe.
     ch_summary = ch_summary.query("Chroma in ['hbo']")
 
     # Run group level model and convert to dataframe
-    ch_model = smf.mixedlm("theta ~ -1 + ch_name:Chroma:Condition",
-                           ch_summary, groups=ch_summary["ID"]).fit(method='nm')
+    ch_model = smf.mixedlm(
+        "theta ~ -1 + ch_name:Chroma:Condition", ch_summary, groups=ch_summary["ID"]
+    ).fit(method="nm")
 
     # Here we can use the order argument to ensure the channel name order
-    ch_model_df = statsmodels_to_results(ch_model,
-                                         order=raw_haemo.copy().pick(
-                                             picks="hbo").ch_names)
+    ch_model_df = statsmodels_to_results(
+        ch_model, order=raw_haemo.copy().pick(picks="hbo").ch_names
+    )
     # And make the table prettier
     ch_model_df.reset_index(drop=True, inplace=True)
-    ch_model_df = ch_model_df.set_index(['ch_name', 'Condition'])
+    ch_model_df = ch_model_df.set_index(["ch_name", "Condition"])
     ch_model_df
 
 
@@ -1478,7 +1537,7 @@ This can be generated from the statistics dataframe.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 531-557
+.. GENERATED FROM PYTHON SOURCE LINES 590-618
 
 .. _tut-fnirs-group-relating:
 
@@ -1492,7 +1551,9 @@ Relating Responses to Brain Landmarks
    The tool is very intuitive and easy to use.
    Be sure to cite the authors if you use their tool or data:
 
-   Morais, Guilherme Augusto Zimeo, Joana Bisol Balardin, and João Ricardo Sato. "fNIRS optodes’ location decider (fOLD): a toolbox for probe arrangement guided by brain regions-of-interest." Scientific reports 8.1 (2018): 1-11.
+   Morais, Guilherme Augusto Zimeo, Joana Bisol Balardin, and João Ricardo Sato.
+   "fNIRS optodes’ location decider (fOLD): a toolbox for probe arrangement guided by
+   brain regions-of-interest." Scientific reports 8.1 (2018): 1-11.
 
 It can be useful to understand what brain structures
 the measured response may have resulted from. Here we illustrate
@@ -1507,12 +1568,12 @@ MNE-NIRS does not distribute the fOLD toolbox or the data
 that they provide. See the Notes section of
 :func:`mne_nirs.io.fold_channel_specificity` for more information.
 
-.. GENERATED FROM PYTHON SOURCE LINES 557-562
+.. GENERATED FROM PYTHON SOURCE LINES 618-623
 
 .. code-block:: Python
 
 
-    largest_response_channel = ch_model_df.loc[ch_model_df['Coef.'].idxmax()]
+    largest_response_channel = ch_model_df.loc[ch_model_df["Coef."].idxmax()]
     largest_response_channel
 
 
@@ -1537,7 +1598,7 @@ that they provide. See the Notes section of
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 563-568
+.. GENERATED FROM PYTHON SOURCE LINES 624-629
 
 Next we use information from the fOLD toolbox to report the
 channel specificity to different brain regions.
@@ -1545,7 +1606,7 @@ For licensing reasons, these files are not distributed with MNE-NIRS.
 To set up your system to use the fOLD functions, see the Notes section of
 :func:`mne_nirs.io.fold_channel_specificity`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 569-574
+.. GENERATED FROM PYTHON SOURCE LINES 630-635
 
 .. code-block:: Python
 
@@ -1706,14 +1767,14 @@ To set up your system to use the fOLD functions, see the Notes section of
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 575-579
+.. GENERATED FROM PYTHON SOURCE LINES 636-640
 
 We observe that the channel with the largest response to tapping
 had the greatest specificity to the Precentral Gyrus, which is
 the site of the primary motor cortex. This is consistent
 with the expectation for a finger tapping task.
 
-.. GENERATED FROM PYTHON SOURCE LINES 583-590
+.. GENERATED FROM PYTHON SOURCE LINES 644-651
 
 Conclusion
 ----------
@@ -1726,9 +1787,9 @@ hand of tapping and most likely originate from the primary motor cortex.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 37.153 seconds)
+   **Total running time of the script:** (0 minutes 26.833 seconds)
 
-**Estimated memory usage:**  482 MB
+**Estimated memory usage:**  856 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_12_group_glm.py:
@@ -1751,6 +1812,10 @@ hand of tapping and most likely originate from the primary motor cortex.
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_12_group_glm.py <plot_12_group_glm.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_12_group_glm.zip <plot_12_group_glm.zip>`
 
 
 .. only:: html

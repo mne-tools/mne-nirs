@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_general_plot_14_glm_components.py>`
-        to download the full example code or to run this example in your browser via Binder
+        to download the full example code. or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
 
@@ -60,12 +60,7 @@ various choices available in your analysis.
 However, this is just to illustrate various points. In reality (see all other tutorials),
 MNE-NIRS will wrap all required Nilearn functions so you don't need to access them directly.
 
-
-.. contents:: Page contents
-   :local:
-   :depth: 2
-
-.. GENERATED FROM PYTHON SOURCE LINES 50-75
+.. GENERATED FROM PYTHON SOURCE LINES 44-71
 
 .. code-block:: Python
 
@@ -75,23 +70,26 @@ MNE-NIRS will wrap all required Nilearn functions so you don't need to access th
     #
     # License: BSD (3-clause)
 
-
     # Import common libraries
     import os
-    import numpy as np
-    import mne
 
-    # Import MNE-NIRS processing
-    from mne_nirs.experimental_design import make_first_level_design_matrix, \
-        longest_inter_annotation_interval, drift_high_pass
+    import matplotlib as mpl
+
+    # Import Plotting Library
+    import matplotlib.pyplot as plt
+    import mne
+    import numpy as np
 
     # Import Nilearn
     from nilearn.glm import first_level
     from nilearn.plotting import plot_design_matrix
 
-    # Import Plotting Library
-    import matplotlib.pyplot as plt
-    import matplotlib as mpl
+    # Import MNE-NIRS processing
+    from mne_nirs.experimental_design import (
+        drift_high_pass,
+        longest_inter_annotation_interval,
+        make_first_level_design_matrix,
+    )
 
 
 
@@ -100,8 +98,7 @@ MNE-NIRS will wrap all required Nilearn functions so you don't need to access th
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 76-90
+.. GENERATED FROM PYTHON SOURCE LINES 72-86
 
 Haemodynamic Response Function
 ---------------------------------------------------------------------
@@ -118,7 +115,7 @@ but for analysing actual data you should use the MNE-NIRS
 :func:`mne_nirs.experimental_design.make_first_level_design_matrix`
 wrapper.
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-105
+.. GENERATED FROM PYTHON SOURCE LINES 89-101
 
 HRF Model Selection
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -133,7 +130,7 @@ These differ in their response dynamics.
 Both are plotted on top of each other below for comparison.
 Note that they differ in their peak timing and undershoot.
 
-.. GENERATED FROM PYTHON SOURCE LINES 105-120
+.. GENERATED FROM PYTHON SOURCE LINES 101-116
 
 .. code-block:: Python
 
@@ -166,11 +163,11 @@ Note that they differ in their peak timing and undershoot.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fb75c3d0160>
+    <matplotlib.legend.Legend object at 0x7f8754ed82b0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 121-135
+.. GENERATED FROM PYTHON SOURCE LINES 117-131
 
 Regressor Computation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -187,14 +184,14 @@ to specify the time over which the model should be convolved.
 Modifying the duration changes the regressor timecourse. Below we demonstrate
 how this varies for several duration values with the Glover HRF.
 
-.. GENERATED FROM PYTHON SOURCE LINES 135-170
+.. GENERATED FROM PYTHON SOURCE LINES 131-165
 
 .. code-block:: Python
 
 
+
     # Convenient functions so we dont need to repeat code below
     def generate_stim(onset, amplitude, duration, hrf_model, maxtime=30):
-
         # Generate signal with specified duration and onset
         frame_times = np.linspace(0, maxtime, 601)
         exp_condition = np.array((onset, duration, amplitude)).reshape(3, 1)
@@ -209,8 +206,7 @@ how this varies for several duration values with the Glover HRF.
 
 
     def plot_regressor(onset, amplitude, duration, hrf_model):
-        frame_times, stim, signal = generate_stim(
-            onset, amplitude, duration, hrf_model)
+        frame_times, stim, signal = generate_stim(onset, amplitude, duration, hrf_model)
         plt.fill(frame_times, stim, "k", alpha=0.5, label="stimulus")
         plt.plot(frame_times, signal.T[0], label="Regressor")
         plt.xlabel("Time (s)")
@@ -238,14 +234,14 @@ how this varies for several duration values with the Glover HRF.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 171-175
+.. GENERATED FROM PYTHON SOURCE LINES 166-170
 
 If the duration is increased we see the resulting regressor
 is modified, and the transformation is not a simple scaling.
 
 For a 3 second duration:
 
-.. GENERATED FROM PYTHON SOURCE LINES 176-181
+.. GENERATED FROM PYTHON SOURCE LINES 171-176
 
 .. code-block:: Python
 
@@ -266,11 +262,11 @@ For a 3 second duration:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 182-183
+.. GENERATED FROM PYTHON SOURCE LINES 177-178
 
 Or for a 5 second duration:
 
-.. GENERATED FROM PYTHON SOURCE LINES 184-189
+.. GENERATED FROM PYTHON SOURCE LINES 179-184
 
 .. code-block:: Python
 
@@ -291,11 +287,11 @@ Or for a 5 second duration:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 190-191
+.. GENERATED FROM PYTHON SOURCE LINES 185-186
 
 Or for a 15 second duration:
 
-.. GENERATED FROM PYTHON SOURCE LINES 192-197
+.. GENERATED FROM PYTHON SOURCE LINES 187-192
 
 .. code-block:: Python
 
@@ -316,12 +312,12 @@ Or for a 15 second duration:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 198-200
+.. GENERATED FROM PYTHON SOURCE LINES 193-195
 
 We can plot multiple durations together to see how the
 resulting regressor varies as a function of this parameter.
 
-.. GENERATED FROM PYTHON SOURCE LINES 201-216
+.. GENERATED FROM PYTHON SOURCE LINES 196-212
 
 .. code-block:: Python
 
@@ -332,7 +328,8 @@ resulting regressor varies as a function of this parameter.
 
     for n in [1, 3, 5, 10, 15, 20, 25, 30, 35]:
         frame_times, stim, signal = generate_stim(
-            onset, amplitude, n, hrf_model, maxtime=50)
+            onset, amplitude, n, hrf_model, maxtime=50
+        )
         axes.plot(frame_times, signal.T[0], label="Regressor", c=cmap(norm(n)))
 
     axes.set_xlabel("Time (s)")
@@ -354,11 +351,11 @@ resulting regressor varies as a function of this parameter.
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7fb734a32f80>
+    <matplotlib.colorbar.Colorbar object at 0x7f8882d067a0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 217-239
+.. GENERATED FROM PYTHON SOURCE LINES 213-235
 
 Inclusion in Design matrix
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -383,19 +380,19 @@ See the :ref:`MNE-NIRS fNIRS GLM tutorial <tut-fnirs-hrf>` for more details.
 First we import the example data, crop to just the first few minutes,
 and give names to the annotations.
 
-.. GENERATED FROM PYTHON SOURCE LINES 239-251
+.. GENERATED FROM PYTHON SOURCE LINES 235-247
 
 .. code-block:: Python
 
 
     fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
-    fnirs_raw_dir = os.path.join(fnirs_data_folder, 'Participant-1')
+    fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
     raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data().crop(tmax=300)
     # raw_intensity.resample(0.7)
-    raw_intensity.annotations.rename({'1.0': 'Control',
-                                      '2.0': 'Tapping/Left',
-                                      '3.0': 'Tapping/Right'})
-    raw_intensity.annotations.delete(raw_intensity.annotations.description == '15.0')
+    raw_intensity.annotations.rename(
+        {"1.0": "Control", "2.0": "Tapping/Left", "3.0": "Tapping/Right"}
+    )
+    raw_intensity.annotations.delete(raw_intensity.annotations.description == "15.0")
     raw_intensity.annotations.set_durations(5)
 
 
@@ -414,7 +411,7 @@ and give names to the annotations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 252-261
+.. GENERATED FROM PYTHON SOURCE LINES 248-257
 
 Next we generate the design matrix and plot it.
 This representation of the regressor is transposed,
@@ -422,22 +419,24 @@ time goes down the vertical
 axis and is specified in scan number (fMRI hangover) or sample.
 There is no colorbar for this plot, as specified in Nilearn.
 
-We can see that when each event occurs the model value increases before returning to baseline.
-this is the same information as was shown in the time courses above, except displayed differently
-with color representing amplitude.
+We can see that when each event occurs the model value increases before returning to
+baseline. This is the same information as was shown in the time courses above, except
+displayed differently with color representing amplitude.
 
-.. GENERATED FROM PYTHON SOURCE LINES 262-275
+.. GENERATED FROM PYTHON SOURCE LINES 258-273
 
 .. code-block:: Python
 
 
-    design_matrix = make_first_level_design_matrix(raw_intensity,
-                                                   # Ignore drift model for now, see section below
-                                                   drift_model='polynomial',
-                                                   drift_order=0,
-                                                   # Here we specify the HRF and duration
-                                                   hrf_model='glover',
-                                                   stim_dur=3.0)
+    design_matrix = make_first_level_design_matrix(
+        raw_intensity,
+        # Ignore drift model for now, see section below
+        drift_model="polynomial",
+        drift_order=0,
+        # Here we specify the HRF and duration
+        hrf_model="glover",
+        stim_dur=3.0,
+    )
 
     fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
     fig = plot_design_matrix(design_matrix, ax=ax1)
@@ -455,23 +454,25 @@ with color representing amplitude.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 276-278
+.. GENERATED FROM PYTHON SOURCE LINES 274-276
 
 As before we can explore the effect of modifying the duration,
 the resulting regressor for each annotation is elongated.
 
-.. GENERATED FROM PYTHON SOURCE LINES 279-292
+.. GENERATED FROM PYTHON SOURCE LINES 277-292
 
 .. code-block:: Python
 
 
-    design_matrix = make_first_level_design_matrix(raw_intensity,
-                                                   # Ignore drift model for now, see section below
-                                                   drift_model='polynomial',
-                                                   drift_order=0,
-                                                   # Here we specify the HRF and duration
-                                                   hrf_model='glover',
-                                                   stim_dur=13.0)
+    design_matrix = make_first_level_design_matrix(
+        raw_intensity,
+        # Ignore drift model for now, see section below
+        drift_model="polynomial",
+        drift_order=0,
+        # Here we specify the HRF and duration
+        hrf_model="glover",
+        stim_dur=13.0,
+    )
 
     fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
     fig = plot_design_matrix(design_matrix, ax=ax1)
@@ -495,18 +496,20 @@ Depending on your experimental design the resulting responses
 may overlap (for example an event related design).
 This is not an issue, the design matrix can handle overlapping responses.
 
-.. GENERATED FROM PYTHON SOURCE LINES 297-310
+.. GENERATED FROM PYTHON SOURCE LINES 297-312
 
 .. code-block:: Python
 
 
-    design_matrix = make_first_level_design_matrix(raw_intensity,
-                                                   # Ignore drift model for now, see section below
-                                                   drift_model='polynomial',
-                                                   drift_order=0,
-                                                   # Here we specify the HRF and duration
-                                                   hrf_model='glover',
-                                                   stim_dur=30.0)
+    design_matrix = make_first_level_design_matrix(
+        raw_intensity,
+        # Ignore drift model for now, see section below
+        drift_model="polynomial",
+        drift_order=0,
+        # Here we specify the HRF and duration
+        hrf_model="glover",
+        stim_dur=30.0,
+    )
 
     fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
     fig = plot_design_matrix(design_matrix, ax=ax1)
@@ -524,7 +527,7 @@ This is not an issue, the design matrix can handle overlapping responses.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 311-332
+.. GENERATED FROM PYTHON SOURCE LINES 313-334
 
 Drift Regressors
 ---------------------------------------------------------------------
@@ -548,7 +551,7 @@ Polynomial and cosine drift regressors.
    so a decreasing drift can be modeled by the increasing drift
    regressor with a negative coefficient.
 
-.. GENERATED FROM PYTHON SOURCE LINES 335-345
+.. GENERATED FROM PYTHON SOURCE LINES 337-347
 
 Polynomial Drift Regressors
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -561,14 +564,14 @@ As an example we demonstrate how to include up to a fifth order polynomial.
 You can observe that with increasing polynomial order,
 higher frequency components will be regressed from the signal.
 
-.. GENERATED FROM PYTHON SOURCE LINES 345-354
+.. GENERATED FROM PYTHON SOURCE LINES 347-356
 
 .. code-block:: Python
 
 
-    design_matrix = make_first_level_design_matrix(raw_intensity,
-                                                   drift_model='polynomial',
-                                                   drift_order=5)
+    design_matrix = make_first_level_design_matrix(
+        raw_intensity, drift_model="polynomial", drift_order=5
+    )
 
     fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
     fig = plot_design_matrix(design_matrix, ax=ax1)
@@ -586,7 +589,7 @@ higher frequency components will be regressed from the signal.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 355-364
+.. GENERATED FROM PYTHON SOURCE LINES 357-366
 
 Cosine Drift Regressors
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -598,14 +601,14 @@ which may be interpreted as a high pass filter.
 In the example below we demonstrate how to regress our signals up to 0.01 Hz.
 We observe that the function has included 6 drift regressors in the design matrix.
 
-.. GENERATED FROM PYTHON SOURCE LINES 364-373
+.. GENERATED FROM PYTHON SOURCE LINES 366-375
 
 .. code-block:: Python
 
 
-    design_matrix = make_first_level_design_matrix(raw_intensity,
-                                                   drift_model='cosine',
-                                                   high_pass=0.01)
+    design_matrix = make_first_level_design_matrix(
+        raw_intensity, drift_model="cosine", high_pass=0.01
+    )
 
     fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
     fig = plot_design_matrix(design_matrix, ax=ax1)
@@ -623,20 +626,20 @@ We observe that the function has included 6 drift regressors in the design matri
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 374-377
+.. GENERATED FROM PYTHON SOURCE LINES 376-379
 
 As described above, including additional regressor components will remove
 higher frequency components. So we can increase the high pass cut off and
 this should add more regressors.
 
-.. GENERATED FROM PYTHON SOURCE LINES 378-387
+.. GENERATED FROM PYTHON SOURCE LINES 380-389
 
 .. code-block:: Python
 
 
-    design_matrix = make_first_level_design_matrix(raw_intensity,
-                                                   drift_model='cosine',
-                                                   high_pass=0.03)
+    design_matrix = make_first_level_design_matrix(
+        raw_intensity, drift_model="cosine", high_pass=0.03
+    )
 
     fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
     fig = plot_design_matrix(design_matrix, ax=ax1)
@@ -654,7 +657,7 @@ this should add more regressors.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 388-406
+.. GENERATED FROM PYTHON SOURCE LINES 390-409
 
 Selecting Drift Regressors
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -666,22 +669,23 @@ based on annotation timing and expected brain responses
 the high pass cut off can be set on first principles.
 
 The Nilearn documentation states that
-"The cutoff period (1/high_pass) should be set as the longest period between two trials of the same condition multiplied by 2.
-For instance, if the longest period is 32s, the high_pass frequency shall be 1/64 Hz ~ 0.016 Hz."
+"The cutoff period (1/high_pass) should be set as the longest period between two
+trials of the same condition multiplied by 2. For instance, if the longest period is
+32s, the high_pass frequency shall be 1/64 Hz ~ 0.016 Hz."
 `(reference) <http://nilearn.github.io/auto_examples/04_glm_first_level/plot_first_level_details.html#changing-the-drift-model>`__.
 
-To assist in selecting a high pass value a few convenience functions are included in MNE-NIRS.
-First we can query what the longest ISI is per annotation, but first we must be sure
-to remove annotations we aren't interested in (in this experiment the trigger
+To assist in selecting a high pass value a few convenience functions are included in
+MNE-NIRS. First we can query what the longest ISI is per annotation, but first we must
+be sure to remove annotations we aren't interested in (in this experiment the trigger
 15 is not of interest).
 
-.. GENERATED FROM PYTHON SOURCE LINES 406-414
+.. GENERATED FROM PYTHON SOURCE LINES 409-417
 
 .. code-block:: Python
 
 
     raw_original = mne.io.read_raw_nirx(fnirs_raw_dir)
-    raw_original.annotations.delete(raw_original.annotations.description == '15.0')
+    raw_original.annotations.delete(raw_original.annotations.description == "15.0")
 
     isis, names = longest_inter_annotation_interval(raw_original)
     print(isis)
@@ -701,7 +705,7 @@ to remove annotations we aren't interested in (in this experiment the trigger
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 415-422
+.. GENERATED FROM PYTHON SOURCE LINES 418-425
 
 We see that the longest period between two trials is 435 seconds. Which multiplied
 by two is 870 seconds. So a high pass value of 1/870 or 0.001 Hz is appropriate.
@@ -711,7 +715,7 @@ to suggest the high pass value. Note however, that you should not blindly follow
 this functions suggestion, as each experiment is different. Instead use this as
 a sanity check on your own calculations.
 
-.. GENERATED FROM PYTHON SOURCE LINES 423-427
+.. GENERATED FROM PYTHON SOURCE LINES 426-430
 
 .. code-block:: Python
 
@@ -732,19 +736,19 @@ a sanity check on your own calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 428-431
+.. GENERATED FROM PYTHON SOURCE LINES 431-434
 
 For example, if all conditions were evoking the same response it may make more
 sense to include them as a single condition when computing the ISI.
 This would be achieved by renaming the triggers.
 
-.. GENERATED FROM PYTHON SOURCE LINES 432-438
+.. GENERATED FROM PYTHON SOURCE LINES 435-441
 
 .. code-block:: Python
 
 
-    raw_original.annotations.rename({'2.0': 'Tapping', '3.0': 'Tapping'})
-    raw_original.annotations.delete(raw_original.annotations.description == '1.0')
+    raw_original.annotations.rename({"2.0": "Tapping", "3.0": "Tapping"})
+    raw_original.annotations.delete(raw_original.annotations.description == "1.0")
     isis, names = longest_inter_annotation_interval(raw_original)
     print(isis)
     print(drift_high_pass(raw_original))
@@ -765,9 +769,9 @@ This would be achieved by renaming the triggers.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 19.210 seconds)
+   **Total running time of the script:** (0 minutes 14.508 seconds)
 
-**Estimated memory usage:**  9 MB
+**Estimated memory usage:**  429 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_14_glm_components.py:
@@ -790,6 +794,10 @@ This would be achieved by renaming the triggers.
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_14_glm_components.py <plot_14_glm_components.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_14_glm_components.zip <plot_14_glm_components.zip>`
 
 
 .. only:: html
