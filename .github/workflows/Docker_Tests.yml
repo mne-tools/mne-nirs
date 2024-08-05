@@ -24,7 +24,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - run: docker-compose build worker
+      - run: docker compose build worker
       - name: System info
         run: docker run mne-tools/mne-nirs python -c "import mne; mne.sys_info()"
       - name: MNE-NIRS info
