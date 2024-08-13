@@ -33,7 +33,6 @@ classifiers = [
     "Operating System :: MacOS",
     "Programming Language :: Python :: 3",
 ]
-scripts = { mne = "mne.commands.utils:main" }
 dependencies = [
     "numpy>=1.11.3,<3",
     "scipy>=0.17.1",
