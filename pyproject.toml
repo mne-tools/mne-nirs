@@ -50,7 +50,7 @@ Download = "https://github.com/mne-tools/mne-nirs"
 
 [project.optional-dependencies]
 tests = ["pytest", "pytest-cov"]
-docs = ["sphinx", "sphinx-gallery", "sphinx_rtd_theme", "numpydoc", "matplotlib"]
+docs = ["sphinx", "sphinx-gallery", "pydata_sphinx_theme", "numpydoc", "matplotlib"]
 
 [tool.hatch.build]
 exclude = [
