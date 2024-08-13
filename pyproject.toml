@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "mne-nirs"
 description = "An MNE compatible package for processing near-infrared spectroscopy data"
-version = "0.7.0"
+version = "0.7.1"
 maintainers = [{ name = "Robert Luke", email = "robert.luke@mq.edu.au" }]
 license = { text = "BSD-3-Clause" }
 readme = { file = "README.rst", content-type = "text/x-rst" }
@@ -33,7 +33,6 @@ classifiers = [
     "Operating System :: MacOS",
     "Programming Language :: Python :: 3",
 ]
-scripts = { mne = "mne.commands.utils:main" }
 dependencies = [
     "numpy>=1.11.3,<3",
     "scipy>=0.17.1",
