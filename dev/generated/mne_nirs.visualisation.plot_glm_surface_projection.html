@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>mne_nirs.visualisation.plot_glm_surface_projection &#8212; MNE-NIRS 0.8.0.dev8+g204d8ea documentation</title>
+    <title>mne_nirs.visualisation.plot_glm_surface_projection &#8212; MNE-NIRS 0.8.0.dev9+g1e43928 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../_static/documentation_options.js?v=7198f715"></script>
+    <script src="../_static/documentation_options.js?v=03980752"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -489,7 +489,7 @@ visualisation.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>inst</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Raw</span></code></a></span></dt><dd><p>Haemoglobin data.</p>
+<dt><strong>inst</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Raw</span></code></a></span></dt><dd><p>Haemoglobin data.</p>
 </dd>
 <dt><strong>statsmodel_df</strong><span class="classifier"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dataframe</span></code></a></span></dt><dd><p>As produced by produced by <cite>statsmodels_to_results</cite>.</p>
 </dd>
@@ -498,7 +498,7 @@ channel indices. In lists, channel <em>type</em> strings (e.g., <code class="doc
 <span class="pre">'eeg']</span></code>) will pick channels of those types, channel <em>name</em> strings (e.g., 
 <code class="docutils literal notranslate"><span class="pre">['MEG0111',</span> <span class="pre">'MEG2623']</span></code> will pick the given channels. Can also be the 
 string values <code class="docutils literal notranslate"><span class="pre">'all'</span></code> to pick all channels, or <code class="docutils literal notranslate"><span class="pre">'data'</span></code> to pick 
-<a class="reference external" href="https://mne.tools/stable/documentation/glossary.html#term-data-channels" title="(in MNE v1.7)"><span class="xref std std-term">data channels</span></a>. None (default) will pick good sEEG, ECoG, and DBS channels.</p>
+<a class="reference external" href="https://mne.tools/stable/documentation/glossary.html#term-data-channels" title="(in MNE v1.8)"><span class="xref std std-term">data channels</span></a>. None (default) will pick good sEEG, ECoG, and DBS channels.</p>
 </dd>
 <dt><strong>value</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Column from dataframe to plot.</p>
 </dd>
@@ -559,18 +559,18 @@ Has no effect with mpl backend.</p>
 reconstructions. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, defaults to the <code class="docutils literal notranslate"><span class="pre">SUBJECTS_DIR</span></code> environment
 variable.</p>
 </dd>
-<dt><strong>src</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.SourceSpaces.html#mne.SourceSpaces" title="(in MNE v1.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SourceSpaces</span></code></a></span></dt><dd><p>The source space.</p>
+<dt><strong>src</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.SourceSpaces.html#mne.SourceSpaces" title="(in MNE v1.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SourceSpaces</span></code></a></span></dt><dd><p>The source space.</p>
 </dd>
 <dt><strong>verbose</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.12)"><span class="xref std std-ref">bool</span></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Control verbosity of the logging output. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, use the default
 verbosity level. See the <a class="reference external" href="https://docs.python.org/3/tutorial/stdlib2.html#tut-logging" title="(in Python v3.12)"><span class="xref std std-ref">logging documentation</span></a> and
-<a class="reference external" href="https://mne.tools/stable/generated/mne.verbose.html#mne.verbose" title="(in MNE v1.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.verbose()</span></code></a> for details. Should only be passed as a keyword
+<a class="reference external" href="https://mne.tools/stable/generated/mne.verbose.html#mne.verbose" title="(in MNE v1.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.verbose()</span></code></a> for details. Should only be passed as a keyword
 argument.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl>
-<dt><strong>figure</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="(in MNE v1.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mne.viz.Brain</span></code></a> | <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.9.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib.figure.Figure</span></code></a></span></dt><dd><p>An instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="(in MNE v1.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.viz.Brain</span></code></a> or matplotlib figure.</p>
+<dt><strong>figure</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="(in MNE v1.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mne.viz.Brain</span></code></a> | <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.9.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib.figure.Figure</span></code></a></span></dt><dd><p>An instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="(in MNE v1.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.viz.Brain</span></code></a> or matplotlib figure.</p>
 </dd>
 </dl>
 </dd>
@@ -678,7 +678,7 @@ argument.</p>
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-08-13T21:55:45.381025+00:00" class="localized">2024-08-13 21:55 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-08-19T22:24:24.466695+00:00" class="localized">2024-08-19 22:24 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

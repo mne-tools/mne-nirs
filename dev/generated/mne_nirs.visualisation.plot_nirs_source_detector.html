@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>mne_nirs.visualisation.plot_nirs_source_detector &#8212; MNE-NIRS 0.8.0.dev8+g204d8ea documentation</title>
+    <title>mne_nirs.visualisation.plot_nirs_source_detector &#8212; MNE-NIRS 0.8.0.dev9+g1e43928 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../_static/documentation_options.js?v=7198f715"></script>
+    <script src="../_static/documentation_options.js?v=03980752"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -492,7 +492,7 @@ If None (default), no sensor information will be shown.</p>
 </dd>
 <dt><strong>radius</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/numbers.html#module-numbers" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numbers</span></code></a></span></dt><dd><p>Tube radius for connecting links.</p>
 </dd>
-<dt><strong>trans</strong><span class="classifier">path-like | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a> | instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.transforms.Transform.html#mne.transforms.Transform" title="(in MNE v1.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Transform</span></code></a> | <code class="docutils literal notranslate"><span class="pre">&quot;fsaverage&quot;</span></code> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>If str, the path to the head&lt;-&gt;MRI transform <code class="docutils literal notranslate"><span class="pre">*-trans.fif</span></code> file produced
+<dt><strong>trans</strong><span class="classifier">path-like | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a> | instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.transforms.Transform.html#mne.transforms.Transform" title="(in MNE v1.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Transform</span></code></a> | <code class="docutils literal notranslate"><span class="pre">&quot;fsaverage&quot;</span></code> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>If str, the path to the head&lt;-&gt;MRI transform <code class="docutils literal notranslate"><span class="pre">*-trans.fif</span></code> file produced
 during coregistration. Can also be <code class="docutils literal notranslate"><span class="pre">'fsaverage'</span></code> to use the built-in
 fsaverage transformation.
 If trans is None, an identity matrix is assumed.</p>
@@ -544,7 +544,7 @@ modeling</p>
 <p>Can also be a list of these options, or an empty list (<code class="docutils literal notranslate"><span class="pre">[]</span></code>,
 equivalent of <code class="docutils literal notranslate"><span class="pre">False</span></code>).</p>
 </dd>
-<dt><strong>fwd</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.Forward.html#mne.Forward" title="(in MNE v1.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Forward</span></code></a></span></dt><dd><p>The forward solution. If present, the orientations of the dipoles
+<dt><strong>fwd</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.Forward.html#mne.Forward" title="(in MNE v1.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Forward</span></code></a></span></dt><dd><p>The forward solution. If present, the orientations of the dipoles
 present in the forward solution are displayed.</p>
 </dd>
 <dt><strong>dig</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.12)"><span class="xref std std-ref">bool</span></a> | ‘fiducials’</span></dt><dd><p>If True, plot the digitization points; ‘fiducials’ to plot fiducial
@@ -552,13 +552,13 @@ points only.</p>
 </dd>
 <dt><strong>ecog</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.12)"><span class="xref std std-ref">bool</span></a></span></dt><dd><p>If True (default), show ECoG sensors.</p>
 </dd>
-<dt><strong>src</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.SourceSpaces.html#mne.SourceSpaces" title="(in MNE v1.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SourceSpaces</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>If not None, also plot the source space points.</p>
+<dt><strong>src</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.SourceSpaces.html#mne.SourceSpaces" title="(in MNE v1.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SourceSpaces</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>If not None, also plot the source space points.</p>
 </dd>
 <dt><strong>mri_fiducials</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.12)"><span class="xref std std-ref">bool</span></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Plot MRI fiducials (default False). If <code class="docutils literal notranslate"><span class="pre">True</span></code>, look for a file with
 the canonical name (<code class="docutils literal notranslate"><span class="pre">bem/{subject}-fiducials.fif</span></code>). If <code class="docutils literal notranslate"><span class="pre">str</span></code> it
 should provide the full path to the fiducials file.</p>
 </dd>
-<dt><strong>bem</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a> | instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.bem.ConductorModel.html#mne.bem.ConductorModel" title="(in MNE v1.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConductorModel</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Can be either the BEM surfaces (list of dict), a BEM solution or a
+<dt><strong>bem</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a> | instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.bem.ConductorModel.html#mne.bem.ConductorModel" title="(in MNE v1.8)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConductorModel</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Can be either the BEM surfaces (list of dict), a BEM solution or a
 sphere model. If None, we first try loading
 <cite>‘$SUBJECTS_DIR/$SUBJECT/bem/$SUBJECT-$SOURCE.fif’</cite>, and then look for
 <cite>‘$SUBJECT*$SOURCE.fif’</cite> in the same directory. For <cite>‘outer_skin’</cite>,
@@ -595,7 +595,7 @@ camera.</p>
 </dd>
 <dt><strong>verbose</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.12)"><span class="xref std std-ref">bool</span></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Control verbosity of the logging output. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, use the default
 verbosity level. See the <a class="reference external" href="https://docs.python.org/3/tutorial/stdlib2.html#tut-logging" title="(in Python v3.12)"><span class="xref std std-ref">logging documentation</span></a> and
-<a class="reference external" href="https://mne.tools/stable/generated/mne.verbose.html#mne.verbose" title="(in MNE v1.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.verbose()</span></code></a> for details. Should only be passed as a keyword
+<a class="reference external" href="https://mne.tools/stable/generated/mne.verbose.html#mne.verbose" title="(in MNE v1.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.verbose()</span></code></a> for details. Should only be passed as a keyword
 argument.</p>
 </dd>
 </dl>
@@ -608,7 +608,7 @@ argument.</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>For more information see <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.plot_alignment.html#mne.viz.plot_alignment" title="(in MNE v1.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.viz.plot_alignment()</span></code></a>.</p>
+<p>For more information see <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.plot_alignment.html#mne.viz.plot_alignment" title="(in MNE v1.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.viz.plot_alignment()</span></code></a>.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.15.</span></p>
 </div>
@@ -712,7 +712,7 @@ argument.</p>
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-08-13T21:55:45.381025+00:00" class="localized">2024-08-13 21:55 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-08-19T22:24:24.466695+00:00" class="localized">2024-08-19 22:24 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
