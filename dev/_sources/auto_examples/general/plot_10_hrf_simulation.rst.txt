@@ -97,7 +97,7 @@ The simulated signal is plotted below.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f6eeabd3d90>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f07a4b84d30>
 
 
 
@@ -130,6 +130,13 @@ For more details on this procedure see :ref:`tut-fnirs-hrf`.
    :srcset: /auto_examples/general/images/sphx_glr_plot_10_hrf_simulation_002.png
    :class: sphx-glr-single-img
 
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /home/circleci/python_env/lib/python3.10/site-packages/nilearn/plotting/matrix_plotting.py:503: UserWarning: The figure layout has changed to tight
+      plt.tight_layout()
 
 
 
@@ -177,7 +184,7 @@ We also see that the mean square error of the model fit is close to zero.
 
  .. code-block:: none
 
-    Estimate: [4.e-06]   MSE: 4.437545829889748e-43   Error (uM): [0.]
+    Estimate: [4.e-06]   MSE: 3.3125850843655136e-43   Error (uM): [8.47032947e-16]
 
 
 
@@ -289,7 +296,7 @@ However, the error is greater for the colored than white noise.
  .. code-block:: none
 
     Adding noise to 1/1 channels (1 channels in cov)
-    Estimate: [5.7962519e-06]   MSE: 4.702233956265054e-10   Error (uM): [1.7962519]
+    Estimate: [5.7962519e-06]   MSE: 4.702233956265053e-10   Error (uM): [1.7962519]
 
 
 
@@ -419,7 +426,7 @@ but how does this affect the accuracy of the response estimate?
 
  .. code-block:: none
 
-    Estimate: [4.41889913e-06]   MSE: 9.881737675188427e-12   Error (uM): [0.41889913]
+    Estimate: [4.41889913e-06]   MSE: 9.88173767518843e-12   Error (uM): [0.41889913]
 
 
 
@@ -446,9 +453,9 @@ model of the noise can improve the accuracy of the response estimate.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 7.134 seconds)
+   **Total running time of the script:** (0 minutes 6.523 seconds)
 
-**Estimated memory usage:**  432 MB
+**Estimated memory usage:**  453 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_10_hrf_simulation.py:
