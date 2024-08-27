@@ -26,7 +26,7 @@ jobs:
           - os: ubuntu-latest
             mne: stable
             kind: pip
-            python: "3.9"  # oldest
+            python: "3.10"  # oldest
           - os: ubuntu-latest
             mne: dev
             kind: pip
