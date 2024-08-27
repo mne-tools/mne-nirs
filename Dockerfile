@@ -4,6 +4,9 @@ ARG mne_nirs_v=main
 
 FROM ghcr.io/mne-tools/mne-python-plot:${mne_python_v}
 
+ARG nilearn_v
+ARG mne_nirs_v
+
 USER mne_user
 WORKDIR $HOME_DIR
 
