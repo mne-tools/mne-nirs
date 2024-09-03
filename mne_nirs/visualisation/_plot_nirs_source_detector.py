@@ -162,7 +162,7 @@ def plot_nirs_source_detector(
             vmax = np.max(np.abs(data))
             cmap = "RdBu_r"
 
-    if isinstance(radius, (int, float)):
+    if isinstance(radius, int | float):
         radius = np.ones(len(info["chs"])) * radius
 
     # Plot requested alignment
