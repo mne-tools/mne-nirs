@@ -70,6 +70,10 @@ def _tidy_Contrast(data, glm_est, design_matrix):
         contrast_type = glm_est.stat_type
     else:  # nilearn < 0.10
         contrast_type = glm_est.contrast_type
+    effect = glm_est.effect
+    if effect.ndim == 2:  # old nilearn
+        assert effect.shape[0] == 1
+        effect = effect[0]
     for idx, ch in enumerate(data.ch_names):
         df = pd.concat(
             [
@@ -79,7 +83,7 @@ def _tidy_Contrast(data, glm_est, design_matrix):
                         "ch_name": ch,
                         "ContrastType": contrast_type,
                         "variable": "effect",
-                        "value": glm_est.effect[0][idx],
+                        "value": effect[idx],
                     },
                     index=[0],
                 ),

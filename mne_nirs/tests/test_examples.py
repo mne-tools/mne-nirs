@@ -44,6 +44,8 @@ requires_mne_bids_nirs = pytest.mark.skipif(
 )
 
 
+# TODO: Change ax= to axes= once nilearn 0.11 is out
+@pytest.mark.filterwarnings('ignore:The parameter "ax" will be removed.*:')
 @pytest.mark.filterwarnings("ignore:No bad channels to interpolate.*:")
 @pytest.mark.filterwarnings("ignore:divide by zero encountered.*:")
 @pytest.mark.filterwarnings("ignore:invalid value encountered.*:")
