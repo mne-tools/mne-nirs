@@ -118,7 +118,10 @@ def _plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None):
     types = np.unique(info.get_channel_types())
 
     # Extract values to plot and rescale to uM
-    estimates = contrast.effect[0]
+    estimates = contrast.effect
+    if estimates.ndim == 2:  # old nilearn
+        assert estimates.shape[0] == 1
+        estimates = estimates[0]
     estimates = estimates * 1e6
 
     # Create subplots for figures
