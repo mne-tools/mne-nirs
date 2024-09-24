@@ -166,154 +166,144 @@ And we can look at the file metadata by calling the variable `raw`.
 
     <div class="output_subarea output_html rendered_html output_result">
     <script type="text/javascript">
-        const toggleVisibility = (className) => {
+        // must be `var` (not `const`) because this can get embedded multiple times on a page
+    var toggleVisibility = (className) => {
 
-      const elements = document.querySelectorAll(`.${className}`)
+        const elements = document.querySelectorAll(`.${className}`);
 
-      elements.forEach(element => {
-        if (element.classList.contains('repr-section-header')) {
-          // Don't collapse the section header row.
-           return
-        }
-        if (element.classList.contains('repr-element-collapsed')) {
-          // Force a reflow to ensure the display change takes effect before removing the class
-          element.classList.remove('repr-element-collapsed')
-          element.offsetHeight // This forces the browser to recalculate layout
-          element.classList.remove('repr-element-faded')
-        } else {
-          // Start transition to hide the element
-          element.classList.add('repr-element-faded')
-          element.addEventListener('transitionend', handler = (e) => {
-            if (e.propertyName === 'opacity' && getComputedStyle(element).opacity === '0.2') {
-              element.classList.add('repr-element-collapsed')
-              element.removeEventListener('transitionend', handler)
+        elements.forEach(element => {
+            if (element.classList.contains("mne-repr-section-header")) {
+                return  // Don't collapse the section header row
             }
-          });
-        }
-      });
+            element.classList.toggle("mne-repr-collapsed");
+        });
 
-      // Take care of button (adjust caret)
-      const button = document.querySelectorAll(`.repr-section-header.${className} > th.repr-section-toggle-col > button`)[0]
-      button.classList.toggle('collapsed')
+        // trigger caret to rotate
+        var sel = `.mne-repr-section-header.${className} > th.mne-repr-section-toggle > button`;
+        const button = document.querySelector(sel);
+        button.classList.toggle("collapsed");
 
-      // Take care of the tooltip of the section header row
-      const sectionHeaderRow = document.querySelectorAll(`tr.repr-section-header.${className}`)[0]
-      sectionHeaderRow.classList.toggle('collapsed')
-      sectionHeaderRow.title = sectionHeaderRow.title === 'Hide section' ? 'Show section' : 'Hide section'
+        // adjust tooltip
+        sel = `tr.mne-repr-section-header.${className}`;
+        const secHeadRow = document.querySelector(sel);
+        secHeadRow.classList.toggle("collapsed");
+        secHeadRow.title = secHeadRow.title === "Hide section" ? "Show section" : "Hide section";
     }
     </script>
 
     <style type="text/css">
-        table.repr.table.table-hover.table-striped.table-sm.table-responsive.small {
-      /* Don't make rows wider than they need to be. */
-      display: inline;
+        /*
+    Styles in this section apply both to the sphinx-built website docs and to notebooks
+    rendered in an IDE or in Jupyter. In our web docs, styles here are complemented by
+    doc/_static/styles.css and other CSS files (e.g. from the sphinx theme, sphinx-gallery,
+    or bootstrap). In IDEs/Jupyter, those style files are unavailable, so only the rules in
+    this file apply (plus whatever default styling the IDE applies).
+    */
+    .mne-repr-table {
+        display: inline;  /* prevent using full container width */
+    }
+    .mne-repr-table tr.mne-repr-section-header > th {
+        padding-top: 1rem;
+        text-align: left;
+        vertical-align: middle;
+    }
+    .mne-repr-section-toggle > button {
+        all: unset;
+        display: block;
+        height: 1rem;
+        width: 1rem;
+    }
+    .mne-repr-section-toggle > button > svg {
+        height: 60%;
     }
 
-    table > tbody > tr.repr-element > td {
-      /* Apply a tighter layout to the table cells. */
-      padding-top: 0.1rem;
-      padding-bottom: 0.1rem;
-      padding-right: 1rem;
+    /* transition (rotation) effects on the collapser button */
+    .mne-repr-section-toggle > button.collapsed > svg {
+        transition: 0.1s ease-out;
+        transform: rotate(-90deg);
+    }
+    .mne-repr-section-toggle > button:not(.collapsed) > svg {
+        transition: 0.1s ease-out;
+        transform: rotate(0deg);
     }
 
-    table > tbody > tr > td.repr-section-toggle-col {
-      /* Remove background and border of the first cell in every row
-         (this row is only used for the collapse / uncollapse caret)
-
-         TODO: Need to find a good solution for VS Code that works in both
-               light and dark mode. */
-      border-color: transparent;
-      --bs-table-accent-bg: transparent;
+    /* hide collapsed table rows */
+    .mne-repr-collapsed {
+        display: none;
     }
 
-    tr.repr-section-header {
-      /* Remove stripes from section header rows */
-      background-color: transparent;
-      border-color: transparent;
-      --bs-table-striped-bg: transparent;
-      cursor: pointer;
-    }
 
-    tr.repr-section-header > th {
-      text-align: left !important;
-      vertical-align: middle;
-    }
+    @layer {
+        /*
+        Selectors in a `@layer` will always be lower-precedence than selectors outside the
+        layer. So even though e.g. `div.output_html` is present in the sphinx-rendered
+        website docs, the styles here won't take effect there as long as some other rule
+        somewhere in the page's CSS targets the same element.
 
-    .repr-element, tr.repr-element > td {
-      opacity: 1;
-      text-align: left !important;
-    }
+        In IDEs or Jupyter notebooks, though, the CSS files from the sphinx theme,
+        sphinx-gallery, and bootstrap are unavailable, so these styles will apply.
 
-    .repr-element-faded {
-      transition: 0.3s ease;
-      opacity: 0.2;
-    }
+        Notes:
 
-    .repr-element-collapsed {
-      display: none;
-    }
-
-    /* Collapse / uncollapse button and the caret it contains. */
-    .repr-section-toggle-col button {
-      cursor: pointer;
-      width: 1rem;
-      background-color: transparent;
-      border-color: transparent;
-    }
-
-    span.collapse-uncollapse-caret {
-      width: 1rem;
-      height: 1rem;
-      display: block;
-      background-repeat: no-repeat;
-      background-position: left;
-      background-size: contain;
-    }
-
-    /* The collapse / uncollapse carets were copied from the free Font Awesome collection and adjusted. */
-
-    /* Default to black carets for light mode */
-    .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
-      background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
-    }
-
-    .repr-section-toggle-col
-      > button:not(.collapsed)
-      > span.collapse-uncollapse-caret {
-      background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
-    }
-
-    /* Use white carets for dark mode */
-    @media (prefers-color-scheme: dark) {
-      .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
-        background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
-      }
-
-      .repr-section-toggle-col
-        > button:not(.collapsed)
-        > span.collapse-uncollapse-caret {
-        background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
-      }
-    }
-
-    .channel-names-btn {
-      padding: 0;
-      border: none;
-      background: none;
-      text-decoration: underline;
-      text-decoration-style: dashed;
-      cursor: pointer;
-      color: #0d6efd;
-    }
-
-    .channel-names-btn:hover {
-      color: #0a58ca;
+        - the selector `.accordion-body` is for MNE Reports
+        - the selector `.output_html` is for VSCode's notebook interface
+        - the selector `.jp-RenderedHTML` is for Jupyter notebook
+        - variables starting with `--theme-` are VSCode-specific.
+        - variables starting with `--jp-` are Jupyter styles, *some of which* are also
+          available in VSCode. Here we try the `--theme-` variable first, then fall back to
+          the `--jp-` ones.
+        */
+        .mne-repr-table {
+            --mne-toggle-color: var(--theme-foreground, var(--jp-ui-font-color1));
+            --mne-button-bg-color: var(--theme-button-background, var(--jp-info-color0, var(--jp-content-link-color)));
+            --mne-button-fg-color: var(--theme-button-foreground, var(--jp-ui-inverse-font-color0, var(--jp-editor-background)));
+            --mne-button-hover-bg-color: var(--theme-button-hover-background, var(--jp-info-color1));
+            --mne-button-radius: var(--jp-border-radius, 0.25rem);
+        }
+        /* chevron position/alignment; in VSCode it looks ok without adjusting */
+        .accordion-body .mne-repr-section-toggle > button,
+        .jp-RenderedHTML .mne-repr-section-toggle > button {
+            padding: 0 0 45% 25% !important;
+        }
+        /* chevron color; MNE Report doesn't have light/dark mode */
+        div.output_html .mne-repr-section-toggle > button > svg > path,
+        .jp-RenderedHTML .mne-repr-section-toggle > button > svg > path {
+            fill: var(--mne-toggle-color);
+        }
+        .accordion-body .mne-ch-names-btn,
+        div.output_html .mne-ch-names-btn,
+        .jp-RenderedHTML .mne-ch-names-btn {
+            -webkit-border-radius: var(--mne-button-radius);
+            -moz-border-radius: var(--mne-button-radius);
+            border-radius: var(--mne-button-radius);
+            border: none;
+            background-image: none;
+            background-color: var(--mne-button-bg-color);
+            color: var(--mne-button-fg-color);
+            font-size: inherit;
+            min-width: 1.5rem;
+            padding: 0.25rem;
+            text-align: center;
+            text-decoration: none;
+        }
+        .accordion-body .mne-ch-names-btn:hover,
+        div.output_html .mne.ch-names-btn:hover,
+        .jp-RenderedHTML .mne-ch-names-btn:hover {
+            background-color: var(--mne-button-hover-bg-color);
+            text-decoration: underline;
+        }
+        .accordion-body .mne-ch-names-btn:focus-visible,
+        div.output_html .mne-ch-names-btn:focus-visible,
+        .jp-RenderedHTML .mne-ch-names-btn:focus-visible {
+            outline: 0.1875rem solid var(--mne-button-bg-color) !important;
+            outline-offset: 0.1875rem !important;
+        }
     }
     </style>
 
 
 
-    <table class="repr table table-hover table-striped table-sm table-responsive small">
+    <table class="table mne-repr-table">
     
 
 
@@ -322,12 +312,12 @@ And we can look at the file metadata by calling the variable `raw`.
 
 
 
-    <tr class="repr-section-header general-2e10bb42-96ba-4422-acdf-cebb1a102d85"  title="Hide section" 
-        onclick="toggleVisibility('general-2e10bb42-96ba-4422-acdf-cebb1a102d85')">
-        <th class="repr-section-toggle-col">
-            <button>
-            
-                <span class="collapse-uncollapse-caret"></span>
+    <tr class="mne-repr-section-header general-6c4aec0a-32d9-42c2-a450-32dcb78f4d38"
+         title="Hide section" 
+        onclick="toggleVisibility('general-6c4aec0a-32d9-42c2-a450-32dcb78f4d38')">
+        <th class="mne-repr-section-toggle">
+            <button >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
             </button>
         </th>
         <th colspan="2">
@@ -335,8 +325,9 @@ And we can look at the file metadata by calling the variable `raw`.
         </th>
     </tr>
 
-    <tr class="repr-element general-2e10bb42-96ba-4422-acdf-cebb1a102d85 ">
-        <td class="repr-section-toggle-col"></td>
+
+    <tr class="repr-element general-6c4aec0a-32d9-42c2-a450-32dcb78f4d38 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Filename(s)</td>
         <td>
         
@@ -346,20 +337,20 @@ And we can look at the file metadata by calling the variable `raw`.
         </td>
     </tr>
 
-    <tr class="repr-element general-2e10bb42-96ba-4422-acdf-cebb1a102d85 ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element general-6c4aec0a-32d9-42c2-a450-32dcb78f4d38 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>MNE object type</td>
         <td>RawSNIRF</td>
     </tr>
-    <tr class="repr-element general-2e10bb42-96ba-4422-acdf-cebb1a102d85 ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element general-6c4aec0a-32d9-42c2-a450-32dcb78f4d38 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Measurement date</td>
     
         <td>2000-01-01 at 00:00:00 UTC</td>
     
     </tr>
-    <tr class="repr-element general-2e10bb42-96ba-4422-acdf-cebb1a102d85 ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element general-6c4aec0a-32d9-42c2-a450-32dcb78f4d38 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Participant</td>
     
     
@@ -367,8 +358,8 @@ And we can look at the file metadata by calling the variable `raw`.
     
     
     </tr>
-    <tr class="repr-element general-2e10bb42-96ba-4422-acdf-cebb1a102d85 ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element general-6c4aec0a-32d9-42c2-a450-32dcb78f4d38 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Experimenter</td>
     
         <td>Unknown</td>
@@ -382,12 +373,12 @@ And we can look at the file metadata by calling the variable `raw`.
 
 
 
-    <tr class="repr-section-header acquisition-0dc2e17c-865d-4e3d-80e8-32f238307d20" 
-        title="Hide section"  onclick="toggleVisibility('acquisition-0dc2e17c-865d-4e3d-80e8-32f238307d20')">
-        <th class="repr-section-toggle-col">
-            <button>
-            
-                <span class="collapse-uncollapse-caret"></span>
+    <tr class="mne-repr-section-header acquisition-30ed088d-c053-4325-a56e-7ce81304d14a"
+         title="Hide section" 
+        onclick="toggleVisibility('acquisition-30ed088d-c053-4325-a56e-7ce81304d14a')">
+        <th class="mne-repr-section-toggle">
+            <button >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
             </button>
         </th>
         <th colspan="2">
@@ -395,8 +386,9 @@ And we can look at the file metadata by calling the variable `raw`.
         </th>
     </tr>
 
-    <tr class="repr-element acquisition-0dc2e17c-865d-4e3d-80e8-32f238307d20 ">
-        <td class="repr-section-toggle-col"></td>
+
+    <tr class="repr-element acquisition-30ed088d-c053-4325-a56e-7ce81304d14a ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Duration</td>
         <td>00:00:28 (HH:MM:SS)</td>
     </tr>
@@ -408,15 +400,15 @@ And we can look at the file metadata by calling the variable `raw`.
 
 
 
-    <tr class="repr-element acquisition-0dc2e17c-865d-4e3d-80e8-32f238307d20 ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element acquisition-30ed088d-c053-4325-a56e-7ce81304d14a ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Sampling frequency</td>
         <td>10.00 Hz</td>
     </tr>
 
 
-    <tr class="repr-element acquisition-0dc2e17c-865d-4e3d-80e8-32f238307d20 ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element acquisition-30ed088d-c053-4325-a56e-7ce81304d14a ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Time points</td>
         <td>274</td>
     </tr>
@@ -430,12 +422,12 @@ And we can look at the file metadata by calling the variable `raw`.
 
 
 
-    <tr class="repr-section-header channels-655119fe-0f9c-4e9e-96b6-43faeada90d4"  title="Hide section" 
-        onclick="toggleVisibility('channels-655119fe-0f9c-4e9e-96b6-43faeada90d4')">
-        <th class="repr-section-toggle-col">
-            <button>
-            
-                <span class="collapse-uncollapse-caret"></span>
+    <tr class="mne-repr-section-header channels-2a9d59cb-67cb-4251-a435-6376a6a623ff"
+         title="Hide section" 
+        onclick="toggleVisibility('channels-2a9d59cb-67cb-4251-a435-6376a6a623ff')">
+        <th class="mne-repr-section-toggle">
+            <button >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
             </button>
         </th>
         <th colspan="2">
@@ -444,11 +436,12 @@ And we can look at the file metadata by calling the variable `raw`.
     </tr>
 
 
-    <tr class="repr-element channels-655119fe-0f9c-4e9e-96b6-43faeada90d4 ">
-        <td class="repr-section-toggle-col"></td>
+
+    <tr class="repr-element channels-2a9d59cb-67cb-4251-a435-6376a6a623ff ">
+        <td class="mne-repr-section-toggle"></td>
         <td>fNIRS (CW amplitude)</td>
         <td>
-            <button class="channel-names-btn" onclick="alert('Good fNIRS (CW amplitude):\n\nS1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850')" title="(Click to open in popup)&#13;&#13;S1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850">
+            <button class="mne-ch-names-btn sd-sphinx-override sd-btn sd-btn-info sd-text-wrap sd-shadow-sm" onclick="alert('Good fNIRS (CW amplitude):\n\nS1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850')" title="(Click to open in popup)&#13;&#13;S1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850">
                 216
             </button>
 
@@ -457,8 +450,8 @@ And we can look at the file metadata by calling the variable `raw`.
     </tr>
 
 
-    <tr class="repr-element channels-655119fe-0f9c-4e9e-96b6-43faeada90d4 ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element channels-2a9d59cb-67cb-4251-a435-6376a6a623ff ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Head & sensor digitization</td>
     
         <td>5 points</td>
@@ -472,12 +465,12 @@ And we can look at the file metadata by calling the variable `raw`.
 
 
 
-    <tr class="repr-section-header filters-26965458-016d-4660-8f45-4c73e9dfcb63"  title="Hide section" 
-        onclick="toggleVisibility('filters-26965458-016d-4660-8f45-4c73e9dfcb63')">
-        <th class="repr-section-toggle-col">
-            <button>
-            
-                <span class="collapse-uncollapse-caret"></span>
+    <tr class="mne-repr-section-header filters-756644aa-1520-4625-8b7f-60b1ee6035d7"
+         title="Hide section" 
+        onclick="toggleVisibility('filters-756644aa-1520-4625-8b7f-60b1ee6035d7')">
+        <th class="mne-repr-section-toggle">
+            <button >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
             </button>
         </th>
         <th colspan="2">
@@ -485,15 +478,16 @@ And we can look at the file metadata by calling the variable `raw`.
         </th>
     </tr>
 
-    <tr class="repr-element filters-26965458-016d-4660-8f45-4c73e9dfcb63 ">
-        <td class="repr-section-toggle-col"></td>
+
+    <tr class="repr-element filters-756644aa-1520-4625-8b7f-60b1ee6035d7 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Highpass</td>
         <td>0.00 Hz</td>
     </tr>
 
 
-    <tr class="repr-element filters-26965458-016d-4660-8f45-4c73e9dfcb63 ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element filters-756644aa-1520-4625-8b7f-60b1ee6035d7 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Lowpass</td>
         <td>5.00 Hz</td>
     </tr>
@@ -532,7 +526,7 @@ and signal annotations.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fe6b09f2440>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fcca87ef6d0>
 
 
 
@@ -951,154 +945,144 @@ interface using the `fsaverage` head.
 
     <div class="output_subarea output_html rendered_html output_result">
     <script type="text/javascript">
-        const toggleVisibility = (className) => {
+        // must be `var` (not `const`) because this can get embedded multiple times on a page
+    var toggleVisibility = (className) => {
 
-      const elements = document.querySelectorAll(`.${className}`)
+        const elements = document.querySelectorAll(`.${className}`);
 
-      elements.forEach(element => {
-        if (element.classList.contains('repr-section-header')) {
-          // Don't collapse the section header row.
-           return
-        }
-        if (element.classList.contains('repr-element-collapsed')) {
-          // Force a reflow to ensure the display change takes effect before removing the class
-          element.classList.remove('repr-element-collapsed')
-          element.offsetHeight // This forces the browser to recalculate layout
-          element.classList.remove('repr-element-faded')
-        } else {
-          // Start transition to hide the element
-          element.classList.add('repr-element-faded')
-          element.addEventListener('transitionend', handler = (e) => {
-            if (e.propertyName === 'opacity' && getComputedStyle(element).opacity === '0.2') {
-              element.classList.add('repr-element-collapsed')
-              element.removeEventListener('transitionend', handler)
+        elements.forEach(element => {
+            if (element.classList.contains("mne-repr-section-header")) {
+                return  // Don't collapse the section header row
             }
-          });
-        }
-      });
+            element.classList.toggle("mne-repr-collapsed");
+        });
 
-      // Take care of button (adjust caret)
-      const button = document.querySelectorAll(`.repr-section-header.${className} > th.repr-section-toggle-col > button`)[0]
-      button.classList.toggle('collapsed')
+        // trigger caret to rotate
+        var sel = `.mne-repr-section-header.${className} > th.mne-repr-section-toggle > button`;
+        const button = document.querySelector(sel);
+        button.classList.toggle("collapsed");
 
-      // Take care of the tooltip of the section header row
-      const sectionHeaderRow = document.querySelectorAll(`tr.repr-section-header.${className}`)[0]
-      sectionHeaderRow.classList.toggle('collapsed')
-      sectionHeaderRow.title = sectionHeaderRow.title === 'Hide section' ? 'Show section' : 'Hide section'
+        // adjust tooltip
+        sel = `tr.mne-repr-section-header.${className}`;
+        const secHeadRow = document.querySelector(sel);
+        secHeadRow.classList.toggle("collapsed");
+        secHeadRow.title = secHeadRow.title === "Hide section" ? "Show section" : "Hide section";
     }
     </script>
 
     <style type="text/css">
-        table.repr.table.table-hover.table-striped.table-sm.table-responsive.small {
-      /* Don't make rows wider than they need to be. */
-      display: inline;
+        /*
+    Styles in this section apply both to the sphinx-built website docs and to notebooks
+    rendered in an IDE or in Jupyter. In our web docs, styles here are complemented by
+    doc/_static/styles.css and other CSS files (e.g. from the sphinx theme, sphinx-gallery,
+    or bootstrap). In IDEs/Jupyter, those style files are unavailable, so only the rules in
+    this file apply (plus whatever default styling the IDE applies).
+    */
+    .mne-repr-table {
+        display: inline;  /* prevent using full container width */
+    }
+    .mne-repr-table tr.mne-repr-section-header > th {
+        padding-top: 1rem;
+        text-align: left;
+        vertical-align: middle;
+    }
+    .mne-repr-section-toggle > button {
+        all: unset;
+        display: block;
+        height: 1rem;
+        width: 1rem;
+    }
+    .mne-repr-section-toggle > button > svg {
+        height: 60%;
     }
 
-    table > tbody > tr.repr-element > td {
-      /* Apply a tighter layout to the table cells. */
-      padding-top: 0.1rem;
-      padding-bottom: 0.1rem;
-      padding-right: 1rem;
+    /* transition (rotation) effects on the collapser button */
+    .mne-repr-section-toggle > button.collapsed > svg {
+        transition: 0.1s ease-out;
+        transform: rotate(-90deg);
+    }
+    .mne-repr-section-toggle > button:not(.collapsed) > svg {
+        transition: 0.1s ease-out;
+        transform: rotate(0deg);
     }
 
-    table > tbody > tr > td.repr-section-toggle-col {
-      /* Remove background and border of the first cell in every row
-         (this row is only used for the collapse / uncollapse caret)
-
-         TODO: Need to find a good solution for VS Code that works in both
-               light and dark mode. */
-      border-color: transparent;
-      --bs-table-accent-bg: transparent;
+    /* hide collapsed table rows */
+    .mne-repr-collapsed {
+        display: none;
     }
 
-    tr.repr-section-header {
-      /* Remove stripes from section header rows */
-      background-color: transparent;
-      border-color: transparent;
-      --bs-table-striped-bg: transparent;
-      cursor: pointer;
-    }
 
-    tr.repr-section-header > th {
-      text-align: left !important;
-      vertical-align: middle;
-    }
+    @layer {
+        /*
+        Selectors in a `@layer` will always be lower-precedence than selectors outside the
+        layer. So even though e.g. `div.output_html` is present in the sphinx-rendered
+        website docs, the styles here won't take effect there as long as some other rule
+        somewhere in the page's CSS targets the same element.
 
-    .repr-element, tr.repr-element > td {
-      opacity: 1;
-      text-align: left !important;
-    }
+        In IDEs or Jupyter notebooks, though, the CSS files from the sphinx theme,
+        sphinx-gallery, and bootstrap are unavailable, so these styles will apply.
 
-    .repr-element-faded {
-      transition: 0.3s ease;
-      opacity: 0.2;
-    }
+        Notes:
 
-    .repr-element-collapsed {
-      display: none;
-    }
-
-    /* Collapse / uncollapse button and the caret it contains. */
-    .repr-section-toggle-col button {
-      cursor: pointer;
-      width: 1rem;
-      background-color: transparent;
-      border-color: transparent;
-    }
-
-    span.collapse-uncollapse-caret {
-      width: 1rem;
-      height: 1rem;
-      display: block;
-      background-repeat: no-repeat;
-      background-position: left;
-      background-size: contain;
-    }
-
-    /* The collapse / uncollapse carets were copied from the free Font Awesome collection and adjusted. */
-
-    /* Default to black carets for light mode */
-    .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
-      background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
-    }
-
-    .repr-section-toggle-col
-      > button:not(.collapsed)
-      > span.collapse-uncollapse-caret {
-      background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
-    }
-
-    /* Use white carets for dark mode */
-    @media (prefers-color-scheme: dark) {
-      .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
-        background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
-      }
-
-      .repr-section-toggle-col
-        > button:not(.collapsed)
-        > span.collapse-uncollapse-caret {
-        background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
-      }
-    }
-
-    .channel-names-btn {
-      padding: 0;
-      border: none;
-      background: none;
-      text-decoration: underline;
-      text-decoration-style: dashed;
-      cursor: pointer;
-      color: #0d6efd;
-    }
-
-    .channel-names-btn:hover {
-      color: #0a58ca;
+        - the selector `.accordion-body` is for MNE Reports
+        - the selector `.output_html` is for VSCode's notebook interface
+        - the selector `.jp-RenderedHTML` is for Jupyter notebook
+        - variables starting with `--theme-` are VSCode-specific.
+        - variables starting with `--jp-` are Jupyter styles, *some of which* are also
+          available in VSCode. Here we try the `--theme-` variable first, then fall back to
+          the `--jp-` ones.
+        */
+        .mne-repr-table {
+            --mne-toggle-color: var(--theme-foreground, var(--jp-ui-font-color1));
+            --mne-button-bg-color: var(--theme-button-background, var(--jp-info-color0, var(--jp-content-link-color)));
+            --mne-button-fg-color: var(--theme-button-foreground, var(--jp-ui-inverse-font-color0, var(--jp-editor-background)));
+            --mne-button-hover-bg-color: var(--theme-button-hover-background, var(--jp-info-color1));
+            --mne-button-radius: var(--jp-border-radius, 0.25rem);
+        }
+        /* chevron position/alignment; in VSCode it looks ok without adjusting */
+        .accordion-body .mne-repr-section-toggle > button,
+        .jp-RenderedHTML .mne-repr-section-toggle > button {
+            padding: 0 0 45% 25% !important;
+        }
+        /* chevron color; MNE Report doesn't have light/dark mode */
+        div.output_html .mne-repr-section-toggle > button > svg > path,
+        .jp-RenderedHTML .mne-repr-section-toggle > button > svg > path {
+            fill: var(--mne-toggle-color);
+        }
+        .accordion-body .mne-ch-names-btn,
+        div.output_html .mne-ch-names-btn,
+        .jp-RenderedHTML .mne-ch-names-btn {
+            -webkit-border-radius: var(--mne-button-radius);
+            -moz-border-radius: var(--mne-button-radius);
+            border-radius: var(--mne-button-radius);
+            border: none;
+            background-image: none;
+            background-color: var(--mne-button-bg-color);
+            color: var(--mne-button-fg-color);
+            font-size: inherit;
+            min-width: 1.5rem;
+            padding: 0.25rem;
+            text-align: center;
+            text-decoration: none;
+        }
+        .accordion-body .mne-ch-names-btn:hover,
+        div.output_html .mne.ch-names-btn:hover,
+        .jp-RenderedHTML .mne-ch-names-btn:hover {
+            background-color: var(--mne-button-hover-bg-color);
+            text-decoration: underline;
+        }
+        .accordion-body .mne-ch-names-btn:focus-visible,
+        div.output_html .mne-ch-names-btn:focus-visible,
+        .jp-RenderedHTML .mne-ch-names-btn:focus-visible {
+            outline: 0.1875rem solid var(--mne-button-bg-color) !important;
+            outline-offset: 0.1875rem !important;
+        }
     }
     </style>
 
 
 
-    <table class="repr table table-hover table-striped table-sm table-responsive small">
+    <table class="table mne-repr-table">
     
 
 
@@ -1107,12 +1091,12 @@ interface using the `fsaverage` head.
 
 
 
-    <tr class="repr-section-header general-f18968c9-6cca-4596-a748-eb3caa26c7b3"  title="Hide section" 
-        onclick="toggleVisibility('general-f18968c9-6cca-4596-a748-eb3caa26c7b3')">
-        <th class="repr-section-toggle-col">
-            <button>
-            
-                <span class="collapse-uncollapse-caret"></span>
+    <tr class="mne-repr-section-header general-dc0bd79f-96db-4e09-b832-09bec4c743d3"
+         title="Hide section" 
+        onclick="toggleVisibility('general-dc0bd79f-96db-4e09-b832-09bec4c743d3')">
+        <th class="mne-repr-section-toggle">
+            <button >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
             </button>
         </th>
         <th colspan="2">
@@ -1120,8 +1104,9 @@ interface using the `fsaverage` head.
         </th>
     </tr>
 
-    <tr class="repr-element general-f18968c9-6cca-4596-a748-eb3caa26c7b3 ">
-        <td class="repr-section-toggle-col"></td>
+
+    <tr class="repr-element general-dc0bd79f-96db-4e09-b832-09bec4c743d3 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Filename(s)</td>
         <td>
         
@@ -1131,20 +1116,20 @@ interface using the `fsaverage` head.
         </td>
     </tr>
 
-    <tr class="repr-element general-f18968c9-6cca-4596-a748-eb3caa26c7b3 ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element general-dc0bd79f-96db-4e09-b832-09bec4c743d3 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>MNE object type</td>
         <td>RawSNIRF</td>
     </tr>
-    <tr class="repr-element general-f18968c9-6cca-4596-a748-eb3caa26c7b3 ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element general-dc0bd79f-96db-4e09-b832-09bec4c743d3 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Measurement date</td>
     
         <td>2000-01-01 at 00:00:00 UTC</td>
     
     </tr>
-    <tr class="repr-element general-f18968c9-6cca-4596-a748-eb3caa26c7b3 ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element general-dc0bd79f-96db-4e09-b832-09bec4c743d3 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Participant</td>
     
     
@@ -1152,8 +1137,8 @@ interface using the `fsaverage` head.
     
     
     </tr>
-    <tr class="repr-element general-f18968c9-6cca-4596-a748-eb3caa26c7b3 ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element general-dc0bd79f-96db-4e09-b832-09bec4c743d3 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Experimenter</td>
     
         <td>Unknown</td>
@@ -1167,12 +1152,12 @@ interface using the `fsaverage` head.
 
 
 
-    <tr class="repr-section-header acquisition-35b1f7d9-b074-4a2a-9543-a185c66edecd" 
-        title="Hide section"  onclick="toggleVisibility('acquisition-35b1f7d9-b074-4a2a-9543-a185c66edecd')">
-        <th class="repr-section-toggle-col">
-            <button>
-            
-                <span class="collapse-uncollapse-caret"></span>
+    <tr class="mne-repr-section-header acquisition-72303644-9476-4c8b-954f-c0dd3d57036b"
+         title="Hide section" 
+        onclick="toggleVisibility('acquisition-72303644-9476-4c8b-954f-c0dd3d57036b')">
+        <th class="mne-repr-section-toggle">
+            <button >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
             </button>
         </th>
         <th colspan="2">
@@ -1180,8 +1165,9 @@ interface using the `fsaverage` head.
         </th>
     </tr>
 
-    <tr class="repr-element acquisition-35b1f7d9-b074-4a2a-9543-a185c66edecd ">
-        <td class="repr-section-toggle-col"></td>
+
+    <tr class="repr-element acquisition-72303644-9476-4c8b-954f-c0dd3d57036b ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Duration</td>
         <td>00:00:28 (HH:MM:SS)</td>
     </tr>
@@ -1193,15 +1179,15 @@ interface using the `fsaverage` head.
 
 
 
-    <tr class="repr-element acquisition-35b1f7d9-b074-4a2a-9543-a185c66edecd ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element acquisition-72303644-9476-4c8b-954f-c0dd3d57036b ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Sampling frequency</td>
         <td>10.00 Hz</td>
     </tr>
 
 
-    <tr class="repr-element acquisition-35b1f7d9-b074-4a2a-9543-a185c66edecd ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element acquisition-72303644-9476-4c8b-954f-c0dd3d57036b ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Time points</td>
         <td>274</td>
     </tr>
@@ -1215,12 +1201,12 @@ interface using the `fsaverage` head.
 
 
 
-    <tr class="repr-section-header channels-4114ed37-716e-4981-83f2-8c8c173cd406"  title="Hide section" 
-        onclick="toggleVisibility('channels-4114ed37-716e-4981-83f2-8c8c173cd406')">
-        <th class="repr-section-toggle-col">
-            <button>
-            
-                <span class="collapse-uncollapse-caret"></span>
+    <tr class="mne-repr-section-header channels-8ed26308-a05b-40af-a534-30a88e1ccb0b"
+         title="Hide section" 
+        onclick="toggleVisibility('channels-8ed26308-a05b-40af-a534-30a88e1ccb0b')">
+        <th class="mne-repr-section-toggle">
+            <button >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
             </button>
         </th>
         <th colspan="2">
@@ -1229,11 +1215,12 @@ interface using the `fsaverage` head.
     </tr>
 
 
-    <tr class="repr-element channels-4114ed37-716e-4981-83f2-8c8c173cd406 ">
-        <td class="repr-section-toggle-col"></td>
+
+    <tr class="repr-element channels-8ed26308-a05b-40af-a534-30a88e1ccb0b ">
+        <td class="mne-repr-section-toggle"></td>
         <td>fNIRS (CW amplitude)</td>
         <td>
-            <button class="channel-names-btn" onclick="alert('Good fNIRS (CW amplitude):\n\nS1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850')" title="(Click to open in popup)&#13;&#13;S1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850">
+            <button class="mne-ch-names-btn sd-sphinx-override sd-btn sd-btn-info sd-text-wrap sd-shadow-sm" onclick="alert('Good fNIRS (CW amplitude):\n\nS1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850')" title="(Click to open in popup)&#13;&#13;S1_D1&nbsp;735, S1_D2&nbsp;735, S1_D3&nbsp;735, S1_D4&nbsp;735, S1_D5&nbsp;735, S1_D6&nbsp;735, S1_D7&nbsp;735, S1_D8&nbsp;735, S1_D9&nbsp;735, S1_D10&nbsp;735, S1_D11&nbsp;735, S1_D12&nbsp;735, S2_D1&nbsp;735, S2_D2&nbsp;735, S2_D3&nbsp;735, S2_D4&nbsp;735, S2_D5&nbsp;735, S2_D6&nbsp;735, S2_D7&nbsp;735, S2_D8&nbsp;735, S2_D9&nbsp;735, S2_D10&nbsp;735, S2_D11&nbsp;735, S2_D12&nbsp;735, S3_D1&nbsp;735, S3_D2&nbsp;735, S3_D3&nbsp;735, S3_D4&nbsp;735, S3_D5&nbsp;735, S3_D6&nbsp;735, S3_D7&nbsp;735, S3_D8&nbsp;735, S3_D9&nbsp;735, S3_D10&nbsp;735, S3_D11&nbsp;735, S3_D12&nbsp;735, S1_D1&nbsp;850, S1_D2&nbsp;850, S1_D3&nbsp;850, S1_D4&nbsp;850, S1_D5&nbsp;850, S1_D6&nbsp;850, S1_D7&nbsp;850, S1_D8&nbsp;850, S1_D9&nbsp;850, S1_D10&nbsp;850, S1_D11&nbsp;850, S1_D12&nbsp;850, S2_D1&nbsp;850, S2_D2&nbsp;850, S2_D3&nbsp;850, S2_D4&nbsp;850, S2_D5&nbsp;850, S2_D6&nbsp;850, S2_D7&nbsp;850, S2_D8&nbsp;850, S2_D9&nbsp;850, S2_D10&nbsp;850, S2_D11&nbsp;850, S2_D12&nbsp;850, S3_D1&nbsp;850, S3_D2&nbsp;850, S3_D3&nbsp;850, S3_D4&nbsp;850, S3_D5&nbsp;850, S3_D6&nbsp;850, S3_D7&nbsp;850, S3_D8&nbsp;850, S3_D9&nbsp;850, S3_D10&nbsp;850, S3_D11&nbsp;850, S3_D12&nbsp;850, S4_D1&nbsp;735, S4_D2&nbsp;735, S4_D3&nbsp;735, S4_D4&nbsp;735, S4_D5&nbsp;735, S4_D6&nbsp;735, S4_D7&nbsp;735, S4_D8&nbsp;735, S4_D9&nbsp;735, S4_D10&nbsp;735, S4_D11&nbsp;735, S4_D12&nbsp;735, S5_D1&nbsp;735, S5_D2&nbsp;735, S5_D3&nbsp;735, S5_D4&nbsp;735, S5_D5&nbsp;735, S5_D6&nbsp;735, S5_D7&nbsp;735, S5_D8&nbsp;735, S5_D9&nbsp;735, S5_D10&nbsp;735, S5_D11&nbsp;735, S5_D12&nbsp;735, S6_D1&nbsp;735, S6_D2&nbsp;735, S6_D3&nbsp;735, S6_D4&nbsp;735, S6_D5&nbsp;735, S6_D6&nbsp;735, S6_D7&nbsp;735, S6_D8&nbsp;735, S6_D9&nbsp;735, S6_D10&nbsp;735, S6_D11&nbsp;735, S6_D12&nbsp;735, S4_D1&nbsp;850, S4_D2&nbsp;850, S4_D3&nbsp;850, S4_D4&nbsp;850, S4_D5&nbsp;850, S4_D6&nbsp;850, S4_D7&nbsp;850, S4_D8&nbsp;850, S4_D9&nbsp;850, S4_D10&nbsp;850, S4_D11&nbsp;850, S4_D12&nbsp;850, S5_D1&nbsp;850, S5_D2&nbsp;850, S5_D3&nbsp;850, S5_D4&nbsp;850, S5_D5&nbsp;850, S5_D6&nbsp;850, S5_D7&nbsp;850, S5_D8&nbsp;850, S5_D9&nbsp;850, S5_D10&nbsp;850, S5_D11&nbsp;850, S5_D12&nbsp;850, S6_D1&nbsp;850, S6_D2&nbsp;850, S6_D3&nbsp;850, S6_D4&nbsp;850, S6_D5&nbsp;850, S6_D6&nbsp;850, S6_D7&nbsp;850, S6_D8&nbsp;850, S6_D9&nbsp;850, S6_D10&nbsp;850, S6_D11&nbsp;850, S6_D12&nbsp;850, S7_D1&nbsp;735, S7_D2&nbsp;735, S7_D3&nbsp;735, S7_D4&nbsp;735, S7_D5&nbsp;735, S7_D6&nbsp;735, S7_D7&nbsp;735, S7_D8&nbsp;735, S7_D9&nbsp;735, S7_D10&nbsp;735, S7_D11&nbsp;735, S7_D12&nbsp;735, S8_D1&nbsp;735, S8_D2&nbsp;735, S8_D3&nbsp;735, S8_D4&nbsp;735, S8_D5&nbsp;735, S8_D6&nbsp;735, S8_D7&nbsp;735, S8_D8&nbsp;735, S8_D9&nbsp;735, S8_D10&nbsp;735, S8_D11&nbsp;735, S8_D12&nbsp;735, S9_D1&nbsp;735, S9_D2&nbsp;735, S9_D3&nbsp;735, S9_D4&nbsp;735, S9_D5&nbsp;735, S9_D6&nbsp;735, S9_D7&nbsp;735, S9_D8&nbsp;735, S9_D9&nbsp;735, S9_D10&nbsp;735, S9_D11&nbsp;735, S9_D12&nbsp;735, S7_D1&nbsp;850, S7_D2&nbsp;850, S7_D3&nbsp;850, S7_D4&nbsp;850, S7_D5&nbsp;850, S7_D6&nbsp;850, S7_D7&nbsp;850, S7_D8&nbsp;850, S7_D9&nbsp;850, S7_D10&nbsp;850, S7_D11&nbsp;850, S7_D12&nbsp;850, S8_D1&nbsp;850, S8_D2&nbsp;850, S8_D3&nbsp;850, S8_D4&nbsp;850, S8_D5&nbsp;850, S8_D6&nbsp;850, S8_D7&nbsp;850, S8_D8&nbsp;850, S8_D9&nbsp;850, S8_D10&nbsp;850, S8_D11&nbsp;850, S8_D12&nbsp;850, S9_D1&nbsp;850, S9_D2&nbsp;850, S9_D3&nbsp;850, S9_D4&nbsp;850, S9_D5&nbsp;850, S9_D6&nbsp;850, S9_D7&nbsp;850, S9_D8&nbsp;850, S9_D9&nbsp;850, S9_D10&nbsp;850, S9_D11&nbsp;850, S9_D12&nbsp;850">
                 216
             </button>
 
@@ -1242,8 +1229,8 @@ interface using the `fsaverage` head.
     </tr>
 
 
-    <tr class="repr-element channels-4114ed37-716e-4981-83f2-8c8c173cd406 ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element channels-8ed26308-a05b-40af-a534-30a88e1ccb0b ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Head & sensor digitization</td>
     
         <td>24 points</td>
@@ -1257,12 +1244,12 @@ interface using the `fsaverage` head.
 
 
 
-    <tr class="repr-section-header filters-34a76c29-11cc-4abd-a829-6c57d837605f"  title="Hide section" 
-        onclick="toggleVisibility('filters-34a76c29-11cc-4abd-a829-6c57d837605f')">
-        <th class="repr-section-toggle-col">
-            <button>
-            
-                <span class="collapse-uncollapse-caret"></span>
+    <tr class="mne-repr-section-header filters-e0b3bea5-e79e-4c7c-8e97-df9c304e64d9"
+         title="Hide section" 
+        onclick="toggleVisibility('filters-e0b3bea5-e79e-4c7c-8e97-df9c304e64d9')">
+        <th class="mne-repr-section-toggle">
+            <button >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
             </button>
         </th>
         <th colspan="2">
@@ -1270,15 +1257,16 @@ interface using the `fsaverage` head.
         </th>
     </tr>
 
-    <tr class="repr-element filters-34a76c29-11cc-4abd-a829-6c57d837605f ">
-        <td class="repr-section-toggle-col"></td>
+
+    <tr class="repr-element filters-e0b3bea5-e79e-4c7c-8e97-df9c304e64d9 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Highpass</td>
         <td>0.00 Hz</td>
     </tr>
 
 
-    <tr class="repr-element filters-34a76c29-11cc-4abd-a829-6c57d837605f ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element filters-e0b3bea5-e79e-4c7c-8e97-df9c304e64d9 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Lowpass</td>
         <td>5.00 Hz</td>
     </tr>
@@ -1357,9 +1345,9 @@ From here you can use your favorite analysis technique such as
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 25.649 seconds)
+   **Total running time of the script:** (0 minutes 24.505 seconds)
 
-**Estimated memory usage:**  606 MB
+**Estimated memory usage:**  609 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_06_gowerlabs.py:

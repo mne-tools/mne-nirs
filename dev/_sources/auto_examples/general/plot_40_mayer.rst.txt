@@ -129,154 +129,144 @@ We read in the data and convert to haemoglobin concentration.
 
     <div class="output_subarea output_html rendered_html output_result">
     <script type="text/javascript">
-        const toggleVisibility = (className) => {
+        // must be `var` (not `const`) because this can get embedded multiple times on a page
+    var toggleVisibility = (className) => {
 
-      const elements = document.querySelectorAll(`.${className}`)
+        const elements = document.querySelectorAll(`.${className}`);
 
-      elements.forEach(element => {
-        if (element.classList.contains('repr-section-header')) {
-          // Don't collapse the section header row.
-           return
-        }
-        if (element.classList.contains('repr-element-collapsed')) {
-          // Force a reflow to ensure the display change takes effect before removing the class
-          element.classList.remove('repr-element-collapsed')
-          element.offsetHeight // This forces the browser to recalculate layout
-          element.classList.remove('repr-element-faded')
-        } else {
-          // Start transition to hide the element
-          element.classList.add('repr-element-faded')
-          element.addEventListener('transitionend', handler = (e) => {
-            if (e.propertyName === 'opacity' && getComputedStyle(element).opacity === '0.2') {
-              element.classList.add('repr-element-collapsed')
-              element.removeEventListener('transitionend', handler)
+        elements.forEach(element => {
+            if (element.classList.contains("mne-repr-section-header")) {
+                return  // Don't collapse the section header row
             }
-          });
-        }
-      });
+            element.classList.toggle("mne-repr-collapsed");
+        });
 
-      // Take care of button (adjust caret)
-      const button = document.querySelectorAll(`.repr-section-header.${className} > th.repr-section-toggle-col > button`)[0]
-      button.classList.toggle('collapsed')
+        // trigger caret to rotate
+        var sel = `.mne-repr-section-header.${className} > th.mne-repr-section-toggle > button`;
+        const button = document.querySelector(sel);
+        button.classList.toggle("collapsed");
 
-      // Take care of the tooltip of the section header row
-      const sectionHeaderRow = document.querySelectorAll(`tr.repr-section-header.${className}`)[0]
-      sectionHeaderRow.classList.toggle('collapsed')
-      sectionHeaderRow.title = sectionHeaderRow.title === 'Hide section' ? 'Show section' : 'Hide section'
+        // adjust tooltip
+        sel = `tr.mne-repr-section-header.${className}`;
+        const secHeadRow = document.querySelector(sel);
+        secHeadRow.classList.toggle("collapsed");
+        secHeadRow.title = secHeadRow.title === "Hide section" ? "Show section" : "Hide section";
     }
     </script>
 
     <style type="text/css">
-        table.repr.table.table-hover.table-striped.table-sm.table-responsive.small {
-      /* Don't make rows wider than they need to be. */
-      display: inline;
+        /*
+    Styles in this section apply both to the sphinx-built website docs and to notebooks
+    rendered in an IDE or in Jupyter. In our web docs, styles here are complemented by
+    doc/_static/styles.css and other CSS files (e.g. from the sphinx theme, sphinx-gallery,
+    or bootstrap). In IDEs/Jupyter, those style files are unavailable, so only the rules in
+    this file apply (plus whatever default styling the IDE applies).
+    */
+    .mne-repr-table {
+        display: inline;  /* prevent using full container width */
+    }
+    .mne-repr-table tr.mne-repr-section-header > th {
+        padding-top: 1rem;
+        text-align: left;
+        vertical-align: middle;
+    }
+    .mne-repr-section-toggle > button {
+        all: unset;
+        display: block;
+        height: 1rem;
+        width: 1rem;
+    }
+    .mne-repr-section-toggle > button > svg {
+        height: 60%;
     }
 
-    table > tbody > tr.repr-element > td {
-      /* Apply a tighter layout to the table cells. */
-      padding-top: 0.1rem;
-      padding-bottom: 0.1rem;
-      padding-right: 1rem;
+    /* transition (rotation) effects on the collapser button */
+    .mne-repr-section-toggle > button.collapsed > svg {
+        transition: 0.1s ease-out;
+        transform: rotate(-90deg);
+    }
+    .mne-repr-section-toggle > button:not(.collapsed) > svg {
+        transition: 0.1s ease-out;
+        transform: rotate(0deg);
     }
 
-    table > tbody > tr > td.repr-section-toggle-col {
-      /* Remove background and border of the first cell in every row
-         (this row is only used for the collapse / uncollapse caret)
-
-         TODO: Need to find a good solution for VS Code that works in both
-               light and dark mode. */
-      border-color: transparent;
-      --bs-table-accent-bg: transparent;
+    /* hide collapsed table rows */
+    .mne-repr-collapsed {
+        display: none;
     }
 
-    tr.repr-section-header {
-      /* Remove stripes from section header rows */
-      background-color: transparent;
-      border-color: transparent;
-      --bs-table-striped-bg: transparent;
-      cursor: pointer;
-    }
 
-    tr.repr-section-header > th {
-      text-align: left !important;
-      vertical-align: middle;
-    }
+    @layer {
+        /*
+        Selectors in a `@layer` will always be lower-precedence than selectors outside the
+        layer. So even though e.g. `div.output_html` is present in the sphinx-rendered
+        website docs, the styles here won't take effect there as long as some other rule
+        somewhere in the page's CSS targets the same element.
 
-    .repr-element, tr.repr-element > td {
-      opacity: 1;
-      text-align: left !important;
-    }
+        In IDEs or Jupyter notebooks, though, the CSS files from the sphinx theme,
+        sphinx-gallery, and bootstrap are unavailable, so these styles will apply.
 
-    .repr-element-faded {
-      transition: 0.3s ease;
-      opacity: 0.2;
-    }
+        Notes:
 
-    .repr-element-collapsed {
-      display: none;
-    }
-
-    /* Collapse / uncollapse button and the caret it contains. */
-    .repr-section-toggle-col button {
-      cursor: pointer;
-      width: 1rem;
-      background-color: transparent;
-      border-color: transparent;
-    }
-
-    span.collapse-uncollapse-caret {
-      width: 1rem;
-      height: 1rem;
-      display: block;
-      background-repeat: no-repeat;
-      background-position: left;
-      background-size: contain;
-    }
-
-    /* The collapse / uncollapse carets were copied from the free Font Awesome collection and adjusted. */
-
-    /* Default to black carets for light mode */
-    .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
-      background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
-    }
-
-    .repr-section-toggle-col
-      > button:not(.collapsed)
-      > span.collapse-uncollapse-caret {
-      background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
-    }
-
-    /* Use white carets for dark mode */
-    @media (prefers-color-scheme: dark) {
-      .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
-        background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
-      }
-
-      .repr-section-toggle-col
-        > button:not(.collapsed)
-        > span.collapse-uncollapse-caret {
-        background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
-      }
-    }
-
-    .channel-names-btn {
-      padding: 0;
-      border: none;
-      background: none;
-      text-decoration: underline;
-      text-decoration-style: dashed;
-      cursor: pointer;
-      color: #0d6efd;
-    }
-
-    .channel-names-btn:hover {
-      color: #0a58ca;
+        - the selector `.accordion-body` is for MNE Reports
+        - the selector `.output_html` is for VSCode's notebook interface
+        - the selector `.jp-RenderedHTML` is for Jupyter notebook
+        - variables starting with `--theme-` are VSCode-specific.
+        - variables starting with `--jp-` are Jupyter styles, *some of which* are also
+          available in VSCode. Here we try the `--theme-` variable first, then fall back to
+          the `--jp-` ones.
+        */
+        .mne-repr-table {
+            --mne-toggle-color: var(--theme-foreground, var(--jp-ui-font-color1));
+            --mne-button-bg-color: var(--theme-button-background, var(--jp-info-color0, var(--jp-content-link-color)));
+            --mne-button-fg-color: var(--theme-button-foreground, var(--jp-ui-inverse-font-color0, var(--jp-editor-background)));
+            --mne-button-hover-bg-color: var(--theme-button-hover-background, var(--jp-info-color1));
+            --mne-button-radius: var(--jp-border-radius, 0.25rem);
+        }
+        /* chevron position/alignment; in VSCode it looks ok without adjusting */
+        .accordion-body .mne-repr-section-toggle > button,
+        .jp-RenderedHTML .mne-repr-section-toggle > button {
+            padding: 0 0 45% 25% !important;
+        }
+        /* chevron color; MNE Report doesn't have light/dark mode */
+        div.output_html .mne-repr-section-toggle > button > svg > path,
+        .jp-RenderedHTML .mne-repr-section-toggle > button > svg > path {
+            fill: var(--mne-toggle-color);
+        }
+        .accordion-body .mne-ch-names-btn,
+        div.output_html .mne-ch-names-btn,
+        .jp-RenderedHTML .mne-ch-names-btn {
+            -webkit-border-radius: var(--mne-button-radius);
+            -moz-border-radius: var(--mne-button-radius);
+            border-radius: var(--mne-button-radius);
+            border: none;
+            background-image: none;
+            background-color: var(--mne-button-bg-color);
+            color: var(--mne-button-fg-color);
+            font-size: inherit;
+            min-width: 1.5rem;
+            padding: 0.25rem;
+            text-align: center;
+            text-decoration: none;
+        }
+        .accordion-body .mne-ch-names-btn:hover,
+        div.output_html .mne.ch-names-btn:hover,
+        .jp-RenderedHTML .mne-ch-names-btn:hover {
+            background-color: var(--mne-button-hover-bg-color);
+            text-decoration: underline;
+        }
+        .accordion-body .mne-ch-names-btn:focus-visible,
+        div.output_html .mne-ch-names-btn:focus-visible,
+        .jp-RenderedHTML .mne-ch-names-btn:focus-visible {
+            outline: 0.1875rem solid var(--mne-button-bg-color) !important;
+            outline-offset: 0.1875rem !important;
+        }
     }
     </style>
 
 
 
-    <table class="repr table table-hover table-striped table-sm table-responsive small">
+    <table class="table mne-repr-table">
     
 
 
@@ -285,12 +275,12 @@ We read in the data and convert to haemoglobin concentration.
 
 
 
-    <tr class="repr-section-header general-28863454-c531-4533-81d8-d9fc63cfee7f"  title="Hide section" 
-        onclick="toggleVisibility('general-28863454-c531-4533-81d8-d9fc63cfee7f')">
-        <th class="repr-section-toggle-col">
-            <button>
-            
-                <span class="collapse-uncollapse-caret"></span>
+    <tr class="mne-repr-section-header general-453d9ac3-2bb1-4754-82e9-e4e2db2df089"
+         title="Hide section" 
+        onclick="toggleVisibility('general-453d9ac3-2bb1-4754-82e9-e4e2db2df089')">
+        <th class="mne-repr-section-toggle">
+            <button >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
             </button>
         </th>
         <th colspan="2">
@@ -298,8 +288,9 @@ We read in the data and convert to haemoglobin concentration.
         </th>
     </tr>
 
-    <tr class="repr-element general-28863454-c531-4533-81d8-d9fc63cfee7f ">
-        <td class="repr-section-toggle-col"></td>
+
+    <tr class="repr-element general-453d9ac3-2bb1-4754-82e9-e4e2db2df089 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Filename(s)</td>
         <td>
         
@@ -309,20 +300,20 @@ We read in the data and convert to haemoglobin concentration.
         </td>
     </tr>
 
-    <tr class="repr-element general-28863454-c531-4533-81d8-d9fc63cfee7f ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element general-453d9ac3-2bb1-4754-82e9-e4e2db2df089 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>MNE object type</td>
         <td>RawNIRX</td>
     </tr>
-    <tr class="repr-element general-28863454-c531-4533-81d8-d9fc63cfee7f ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element general-453d9ac3-2bb1-4754-82e9-e4e2db2df089 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Measurement date</td>
     
         <td>2019-11-02 at 13:16:16 UTC</td>
     
     </tr>
-    <tr class="repr-element general-28863454-c531-4533-81d8-d9fc63cfee7f ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element general-453d9ac3-2bb1-4754-82e9-e4e2db2df089 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Participant</td>
     
     
@@ -330,8 +321,8 @@ We read in the data and convert to haemoglobin concentration.
     
     
     </tr>
-    <tr class="repr-element general-28863454-c531-4533-81d8-d9fc63cfee7f ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element general-453d9ac3-2bb1-4754-82e9-e4e2db2df089 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Experimenter</td>
     
         <td>Unknown</td>
@@ -345,12 +336,12 @@ We read in the data and convert to haemoglobin concentration.
 
 
 
-    <tr class="repr-section-header acquisition-3b43be25-376e-4169-9a6d-f660f118bb3c" 
-        title="Hide section"  onclick="toggleVisibility('acquisition-3b43be25-376e-4169-9a6d-f660f118bb3c')">
-        <th class="repr-section-toggle-col">
-            <button>
-            
-                <span class="collapse-uncollapse-caret"></span>
+    <tr class="mne-repr-section-header acquisition-eeb6da20-6676-424f-b18c-857bd4996534"
+         title="Hide section" 
+        onclick="toggleVisibility('acquisition-eeb6da20-6676-424f-b18c-857bd4996534')">
+        <th class="mne-repr-section-toggle">
+            <button >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
             </button>
         </th>
         <th colspan="2">
@@ -358,8 +349,9 @@ We read in the data and convert to haemoglobin concentration.
         </th>
     </tr>
 
-    <tr class="repr-element acquisition-3b43be25-376e-4169-9a6d-f660f118bb3c ">
-        <td class="repr-section-toggle-col"></td>
+
+    <tr class="repr-element acquisition-eeb6da20-6676-424f-b18c-857bd4996534 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Duration</td>
         <td>00:49:34 (HH:MM:SS)</td>
     </tr>
@@ -371,15 +363,15 @@ We read in the data and convert to haemoglobin concentration.
 
 
 
-    <tr class="repr-element acquisition-3b43be25-376e-4169-9a6d-f660f118bb3c ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element acquisition-eeb6da20-6676-424f-b18c-857bd4996534 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Sampling frequency</td>
         <td>2.00 Hz</td>
     </tr>
 
 
-    <tr class="repr-element acquisition-3b43be25-376e-4169-9a6d-f660f118bb3c ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element acquisition-eeb6da20-6676-424f-b18c-857bd4996534 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Time points</td>
         <td>5,949</td>
     </tr>
@@ -393,12 +385,12 @@ We read in the data and convert to haemoglobin concentration.
 
 
 
-    <tr class="repr-section-header channels-712d0d23-3f1f-474c-9737-03745463c30a"  title="Hide section" 
-        onclick="toggleVisibility('channels-712d0d23-3f1f-474c-9737-03745463c30a')">
-        <th class="repr-section-toggle-col">
-            <button>
-            
-                <span class="collapse-uncollapse-caret"></span>
+    <tr class="mne-repr-section-header channels-ab18a648-ff21-40fe-afe0-2eb55bdbb0c3"
+         title="Hide section" 
+        onclick="toggleVisibility('channels-ab18a648-ff21-40fe-afe0-2eb55bdbb0c3')">
+        <th class="mne-repr-section-toggle">
+            <button >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
             </button>
         </th>
         <th colspan="2">
@@ -407,11 +399,12 @@ We read in the data and convert to haemoglobin concentration.
     </tr>
 
 
-    <tr class="repr-element channels-712d0d23-3f1f-474c-9737-03745463c30a ">
-        <td class="repr-section-toggle-col"></td>
+
+    <tr class="repr-element channels-ab18a648-ff21-40fe-afe0-2eb55bdbb0c3 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Oxyhemoglobin</td>
         <td>
-            <button class="channel-names-btn" onclick="alert('Good Oxyhemoglobin:\n\nS1_D1&nbsp;hbo, S1_D2&nbsp;hbo, S1_D3&nbsp;hbo, S2_D1&nbsp;hbo, S2_D3&nbsp;hbo, S2_D4&nbsp;hbo, S3_D2&nbsp;hbo, S3_D3&nbsp;hbo, S4_D3&nbsp;hbo, S4_D4&nbsp;hbo, S5_D5&nbsp;hbo, S5_D6&nbsp;hbo, S5_D7&nbsp;hbo, S6_D5&nbsp;hbo, S6_D7&nbsp;hbo, S6_D8&nbsp;hbo, S7_D6&nbsp;hbo, S7_D7&nbsp;hbo, S8_D7&nbsp;hbo, S8_D8&nbsp;hbo')" title="(Click to open in popup)&#13;&#13;S1_D1&nbsp;hbo, S1_D2&nbsp;hbo, S1_D3&nbsp;hbo, S2_D1&nbsp;hbo, S2_D3&nbsp;hbo, S2_D4&nbsp;hbo, S3_D2&nbsp;hbo, S3_D3&nbsp;hbo, S4_D3&nbsp;hbo, S4_D4&nbsp;hbo, S5_D5&nbsp;hbo, S5_D6&nbsp;hbo, S5_D7&nbsp;hbo, S6_D5&nbsp;hbo, S6_D7&nbsp;hbo, S6_D8&nbsp;hbo, S7_D6&nbsp;hbo, S7_D7&nbsp;hbo, S8_D7&nbsp;hbo, S8_D8&nbsp;hbo">
+            <button class="mne-ch-names-btn sd-sphinx-override sd-btn sd-btn-info sd-text-wrap sd-shadow-sm" onclick="alert('Good Oxyhemoglobin:\n\nS1_D1&nbsp;hbo, S1_D2&nbsp;hbo, S1_D3&nbsp;hbo, S2_D1&nbsp;hbo, S2_D3&nbsp;hbo, S2_D4&nbsp;hbo, S3_D2&nbsp;hbo, S3_D3&nbsp;hbo, S4_D3&nbsp;hbo, S4_D4&nbsp;hbo, S5_D5&nbsp;hbo, S5_D6&nbsp;hbo, S5_D7&nbsp;hbo, S6_D5&nbsp;hbo, S6_D7&nbsp;hbo, S6_D8&nbsp;hbo, S7_D6&nbsp;hbo, S7_D7&nbsp;hbo, S8_D7&nbsp;hbo, S8_D8&nbsp;hbo')" title="(Click to open in popup)&#13;&#13;S1_D1&nbsp;hbo, S1_D2&nbsp;hbo, S1_D3&nbsp;hbo, S2_D1&nbsp;hbo, S2_D3&nbsp;hbo, S2_D4&nbsp;hbo, S3_D2&nbsp;hbo, S3_D3&nbsp;hbo, S4_D3&nbsp;hbo, S4_D4&nbsp;hbo, S5_D5&nbsp;hbo, S5_D6&nbsp;hbo, S5_D7&nbsp;hbo, S6_D5&nbsp;hbo, S6_D7&nbsp;hbo, S6_D8&nbsp;hbo, S7_D6&nbsp;hbo, S7_D7&nbsp;hbo, S8_D7&nbsp;hbo, S8_D8&nbsp;hbo">
                 20
             </button>
 
@@ -420,8 +413,8 @@ We read in the data and convert to haemoglobin concentration.
     </tr>
 
 
-    <tr class="repr-element channels-712d0d23-3f1f-474c-9737-03745463c30a ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element channels-ab18a648-ff21-40fe-afe0-2eb55bdbb0c3 ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Head & sensor digitization</td>
     
         <td>31 points</td>
@@ -435,12 +428,12 @@ We read in the data and convert to haemoglobin concentration.
 
 
 
-    <tr class="repr-section-header filters-f6cc085b-613a-48bd-944a-e2e4cc248d47"  title="Hide section" 
-        onclick="toggleVisibility('filters-f6cc085b-613a-48bd-944a-e2e4cc248d47')">
-        <th class="repr-section-toggle-col">
-            <button>
-            
-                <span class="collapse-uncollapse-caret"></span>
+    <tr class="mne-repr-section-header filters-b6ef6f15-f7d9-43dd-ba4f-3771617ef08d"
+         title="Hide section" 
+        onclick="toggleVisibility('filters-b6ef6f15-f7d9-43dd-ba4f-3771617ef08d')">
+        <th class="mne-repr-section-toggle">
+            <button >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
             </button>
         </th>
         <th colspan="2">
@@ -448,15 +441,16 @@ We read in the data and convert to haemoglobin concentration.
         </th>
     </tr>
 
-    <tr class="repr-element filters-f6cc085b-613a-48bd-944a-e2e4cc248d47 ">
-        <td class="repr-section-toggle-col"></td>
+
+    <tr class="repr-element filters-b6ef6f15-f7d9-43dd-ba4f-3771617ef08d ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Highpass</td>
         <td>0.00 Hz</td>
     </tr>
 
 
-    <tr class="repr-element filters-f6cc085b-613a-48bd-944a-e2e4cc248d47 ">
-        <td class="repr-section-toggle-col"></td>
+    <tr class="repr-element filters-b6ef6f15-f7d9-43dd-ba4f-3771617ef08d ">
+        <td class="mne-repr-section-toggle"></td>
         <td>Lowpass</td>
         <td>1.00 Hz</td>
     </tr>
@@ -538,7 +532,7 @@ it matches well to the data.
  .. code-block:: none
 
 
-    ([<matplotlib.axis.XTick object at 0x7fe6b15e5120>, <matplotlib.axis.XTick object at 0x7fe6b15e6bc0>, <matplotlib.axis.XTick object at 0x7fe6b15e4f10>, <matplotlib.axis.XTick object at 0x7fe6b15abeb0>, <matplotlib.axis.XTick object at 0x7fe6b0b02830>, <matplotlib.axis.XTick object at 0x7fe6b0b01d80>, <matplotlib.axis.XTick object at 0x7fe6b0b01ed0>], [Text(0, 0, '0.0'), Text(1, 0, '0.1'), Text(2, 0, '0.2'), Text(3, 0, '0.3'), Text(4, 0, '0.4'), Text(5, 0, '0.5'), Text(6, 0, '0.6')])
+    ([<matplotlib.axis.XTick object at 0x7fcdadf64760>, <matplotlib.axis.XTick object at 0x7fcdadf67d30>, <matplotlib.axis.XTick object at 0x7fcd4d089ed0>, <matplotlib.axis.XTick object at 0x7fcdc90fd030>, <matplotlib.axis.XTick object at 0x7fcdc90fc3a0>, <matplotlib.axis.XTick object at 0x7fcdc8fe7940>, <matplotlib.axis.XTick object at 0x7fcdc8fe5510>], [Text(0, 0, '0.0'), Text(1, 0, '0.1'), Text(2, 0, '0.2'), Text(3, 0, '0.3'), Text(4, 0, '0.4'), Text(5, 0, '0.5'), Text(6, 0, '0.6')])
 
 
 
@@ -648,9 +642,9 @@ Bibliography
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.070 seconds)
+   **Total running time of the script:** (0 minutes 5.167 seconds)
 
-**Estimated memory usage:**  448 MB
+**Estimated memory usage:**  452 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_40_mayer.py:

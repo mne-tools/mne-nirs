@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>GLM Analysis (Measured) &#8212; MNE-NIRS 0.8.0.dev13+g1f261da documentation</title>
+    <title>GLM Analysis (Measured) &#8212; MNE-NIRS 0.8.0.dev14+gec66fce documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../_static/documentation_options.js?v=93c71be2"></script>
+    <script src="../../_static/documentation_options.js?v=f55eec1f"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -500,154 +500,144 @@ Reading 0 ... 23238  =      0.000 ...  2974.464 secs...
 </div>
 <div class="output_subarea output_html rendered_html output_result">
 <script type="text/javascript">
-    const toggleVisibility = (className) => {
+    // must be `var` (not `const`) because this can get embedded multiple times on a page
+var toggleVisibility = (className) => {
 
-  const elements = document.querySelectorAll(`.${className}`)
+    const elements = document.querySelectorAll(`.${className}`);
 
-  elements.forEach(element => {
-    if (element.classList.contains('repr-section-header')) {
-      // Don't collapse the section header row.
-       return
-    }
-    if (element.classList.contains('repr-element-collapsed')) {
-      // Force a reflow to ensure the display change takes effect before removing the class
-      element.classList.remove('repr-element-collapsed')
-      element.offsetHeight // This forces the browser to recalculate layout
-      element.classList.remove('repr-element-faded')
-    } else {
-      // Start transition to hide the element
-      element.classList.add('repr-element-faded')
-      element.addEventListener('transitionend', handler = (e) => {
-        if (e.propertyName === 'opacity' && getComputedStyle(element).opacity === '0.2') {
-          element.classList.add('repr-element-collapsed')
-          element.removeEventListener('transitionend', handler)
+    elements.forEach(element => {
+        if (element.classList.contains("mne-repr-section-header")) {
+            return  // Don't collapse the section header row
         }
-      });
-    }
-  });
+        element.classList.toggle("mne-repr-collapsed");
+    });
 
-  // Take care of button (adjust caret)
-  const button = document.querySelectorAll(`.repr-section-header.${className} > th.repr-section-toggle-col > button`)[0]
-  button.classList.toggle('collapsed')
+    // trigger caret to rotate
+    var sel = `.mne-repr-section-header.${className} > th.mne-repr-section-toggle > button`;
+    const button = document.querySelector(sel);
+    button.classList.toggle("collapsed");
 
-  // Take care of the tooltip of the section header row
-  const sectionHeaderRow = document.querySelectorAll(`tr.repr-section-header.${className}`)[0]
-  sectionHeaderRow.classList.toggle('collapsed')
-  sectionHeaderRow.title = sectionHeaderRow.title === 'Hide section' ? 'Show section' : 'Hide section'
+    // adjust tooltip
+    sel = `tr.mne-repr-section-header.${className}`;
+    const secHeadRow = document.querySelector(sel);
+    secHeadRow.classList.toggle("collapsed");
+    secHeadRow.title = secHeadRow.title === "Hide section" ? "Show section" : "Hide section";
 }
 </script>
 
 <style type="text/css">
-    table.repr.table.table-hover.table-striped.table-sm.table-responsive.small {
-  /* Don't make rows wider than they need to be. */
-  display: inline;
+    /*
+Styles in this section apply both to the sphinx-built website docs and to notebooks
+rendered in an IDE or in Jupyter. In our web docs, styles here are complemented by
+doc/_static/styles.css and other CSS files (e.g. from the sphinx theme, sphinx-gallery,
+or bootstrap). In IDEs/Jupyter, those style files are unavailable, so only the rules in
+this file apply (plus whatever default styling the IDE applies).
+*/
+.mne-repr-table {
+    display: inline;  /* prevent using full container width */
+}
+.mne-repr-table tr.mne-repr-section-header > th {
+    padding-top: 1rem;
+    text-align: left;
+    vertical-align: middle;
+}
+.mne-repr-section-toggle > button {
+    all: unset;
+    display: block;
+    height: 1rem;
+    width: 1rem;
+}
+.mne-repr-section-toggle > button > svg {
+    height: 60%;
 }
 
-table > tbody > tr.repr-element > td {
-  /* Apply a tighter layout to the table cells. */
-  padding-top: 0.1rem;
-  padding-bottom: 0.1rem;
-  padding-right: 1rem;
+/* transition (rotation) effects on the collapser button */
+.mne-repr-section-toggle > button.collapsed > svg {
+    transition: 0.1s ease-out;
+    transform: rotate(-90deg);
+}
+.mne-repr-section-toggle > button:not(.collapsed) > svg {
+    transition: 0.1s ease-out;
+    transform: rotate(0deg);
 }
 
-table > tbody > tr > td.repr-section-toggle-col {
-  /* Remove background and border of the first cell in every row
-     (this row is only used for the collapse / uncollapse caret)
-
-     TODO: Need to find a good solution for VS Code that works in both
-           light and dark mode. */
-  border-color: transparent;
-  --bs-table-accent-bg: transparent;
+/* hide collapsed table rows */
+.mne-repr-collapsed {
+    display: none;
 }
 
-tr.repr-section-header {
-  /* Remove stripes from section header rows */
-  background-color: transparent;
-  border-color: transparent;
-  --bs-table-striped-bg: transparent;
-  cursor: pointer;
-}
 
-tr.repr-section-header > th {
-  text-align: left !important;
-  vertical-align: middle;
-}
+@layer {
+    /*
+    Selectors in a `@layer` will always be lower-precedence than selectors outside the
+    layer. So even though e.g. `div.output_html` is present in the sphinx-rendered
+    website docs, the styles here won't take effect there as long as some other rule
+    somewhere in the page's CSS targets the same element.
 
-.repr-element, tr.repr-element > td {
-  opacity: 1;
-  text-align: left !important;
-}
+    In IDEs or Jupyter notebooks, though, the CSS files from the sphinx theme,
+    sphinx-gallery, and bootstrap are unavailable, so these styles will apply.
 
-.repr-element-faded {
-  transition: 0.3s ease;
-  opacity: 0.2;
-}
+    Notes:
 
-.repr-element-collapsed {
-  display: none;
-}
-
-/* Collapse / uncollapse button and the caret it contains. */
-.repr-section-toggle-col button {
-  cursor: pointer;
-  width: 1rem;
-  background-color: transparent;
-  border-color: transparent;
-}
-
-span.collapse-uncollapse-caret {
-  width: 1rem;
-  height: 1rem;
-  display: block;
-  background-repeat: no-repeat;
-  background-position: left;
-  background-size: contain;
-}
-
-/* The collapse / uncollapse carets were copied from the free Font Awesome collection and adjusted. */
-
-/* Default to black carets for light mode */
-.repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
-  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
-}
-
-.repr-section-toggle-col
-  > button:not(.collapsed)
-  > span.collapse-uncollapse-caret {
-  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
-}
-
-/* Use white carets for dark mode */
-@media (prefers-color-scheme: dark) {
-  .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
-    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
-  }
-
-  .repr-section-toggle-col
-    > button:not(.collapsed)
-    > span.collapse-uncollapse-caret {
-    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
-  }
-}
-
-.channel-names-btn {
-  padding: 0;
-  border: none;
-  background: none;
-  text-decoration: underline;
-  text-decoration-style: dashed;
-  cursor: pointer;
-  color: #0d6efd;
-}
-
-.channel-names-btn:hover {
-  color: #0a58ca;
+    - the selector `.accordion-body` is for MNE Reports
+    - the selector `.output_html` is for VSCode's notebook interface
+    - the selector `.jp-RenderedHTML` is for Jupyter notebook
+    - variables starting with `--theme-` are VSCode-specific.
+    - variables starting with `--jp-` are Jupyter styles, *some of which* are also
+      available in VSCode. Here we try the `--theme-` variable first, then fall back to
+      the `--jp-` ones.
+    */
+    .mne-repr-table {
+        --mne-toggle-color: var(--theme-foreground, var(--jp-ui-font-color1));
+        --mne-button-bg-color: var(--theme-button-background, var(--jp-info-color0, var(--jp-content-link-color)));
+        --mne-button-fg-color: var(--theme-button-foreground, var(--jp-ui-inverse-font-color0, var(--jp-editor-background)));
+        --mne-button-hover-bg-color: var(--theme-button-hover-background, var(--jp-info-color1));
+        --mne-button-radius: var(--jp-border-radius, 0.25rem);
+    }
+    /* chevron position/alignment; in VSCode it looks ok without adjusting */
+    .accordion-body .mne-repr-section-toggle > button,
+    .jp-RenderedHTML .mne-repr-section-toggle > button {
+        padding: 0 0 45% 25% !important;
+    }
+    /* chevron color; MNE Report doesn't have light/dark mode */
+    div.output_html .mne-repr-section-toggle > button > svg > path,
+    .jp-RenderedHTML .mne-repr-section-toggle > button > svg > path {
+        fill: var(--mne-toggle-color);
+    }
+    .accordion-body .mne-ch-names-btn,
+    div.output_html .mne-ch-names-btn,
+    .jp-RenderedHTML .mne-ch-names-btn {
+        -webkit-border-radius: var(--mne-button-radius);
+        -moz-border-radius: var(--mne-button-radius);
+        border-radius: var(--mne-button-radius);
+        border: none;
+        background-image: none;
+        background-color: var(--mne-button-bg-color);
+        color: var(--mne-button-fg-color);
+        font-size: inherit;
+        min-width: 1.5rem;
+        padding: 0.25rem;
+        text-align: center;
+        text-decoration: none;
+    }
+    .accordion-body .mne-ch-names-btn:hover,
+    div.output_html .mne.ch-names-btn:hover,
+    .jp-RenderedHTML .mne-ch-names-btn:hover {
+        background-color: var(--mne-button-hover-bg-color);
+        text-decoration: underline;
+    }
+    .accordion-body .mne-ch-names-btn:focus-visible,
+    div.output_html .mne-ch-names-btn:focus-visible,
+    .jp-RenderedHTML .mne-ch-names-btn:focus-visible {
+        outline: 0.1875rem solid var(--mne-button-bg-color) !important;
+        outline-offset: 0.1875rem !important;
+    }
 }
 </style>
 
 
 
-<table class="repr table table-hover table-striped table-sm table-responsive small">
+<table class="table mne-repr-table">
 
 
 
@@ -656,12 +646,12 @@ span.collapse-uncollapse-caret {
 
 
 
-<tr class="repr-section-header general-8902ef1d-466f-49d4-8984-3f4f7e6b6e7f"  title="Hide section"
-    onclick="toggleVisibility('general-8902ef1d-466f-49d4-8984-3f4f7e6b6e7f')">
-    <th class="repr-section-toggle-col">
-        <button>
-
-            <span class="collapse-uncollapse-caret"></span>
+<tr class="mne-repr-section-header general-1d42db93-45ac-4895-b262-12d9d778888c"
+     title="Hide section"
+    onclick="toggleVisibility('general-1d42db93-45ac-4895-b262-12d9d778888c')">
+    <th class="mne-repr-section-toggle">
+        <button >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
         </button>
     </th>
     <th colspan="2">
@@ -669,8 +659,9 @@ span.collapse-uncollapse-caret {
     </th>
 </tr>
 
-<tr class="repr-element general-8902ef1d-466f-49d4-8984-3f4f7e6b6e7f ">
-    <td class="repr-section-toggle-col"></td>
+
+<tr class="repr-element general-1d42db93-45ac-4895-b262-12d9d778888c ">
+    <td class="mne-repr-section-toggle"></td>
     <td>Filename(s)</td>
     <td>
 
@@ -680,20 +671,20 @@ span.collapse-uncollapse-caret {
     </td>
 </tr>
 
-<tr class="repr-element general-8902ef1d-466f-49d4-8984-3f4f7e6b6e7f ">
-    <td class="repr-section-toggle-col"></td>
+<tr class="repr-element general-1d42db93-45ac-4895-b262-12d9d778888c ">
+    <td class="mne-repr-section-toggle"></td>
     <td>MNE object type</td>
     <td>RawNIRX</td>
 </tr>
-<tr class="repr-element general-8902ef1d-466f-49d4-8984-3f4f7e6b6e7f ">
-    <td class="repr-section-toggle-col"></td>
+<tr class="repr-element general-1d42db93-45ac-4895-b262-12d9d778888c ">
+    <td class="mne-repr-section-toggle"></td>
     <td>Measurement date</td>
 
     <td>2019-11-02 at 13:16:16 UTC</td>
 
 </tr>
-<tr class="repr-element general-8902ef1d-466f-49d4-8984-3f4f7e6b6e7f ">
-    <td class="repr-section-toggle-col"></td>
+<tr class="repr-element general-1d42db93-45ac-4895-b262-12d9d778888c ">
+    <td class="mne-repr-section-toggle"></td>
     <td>Participant</td>
 
 
@@ -701,8 +692,8 @@ span.collapse-uncollapse-caret {
 
 
 </tr>
-<tr class="repr-element general-8902ef1d-466f-49d4-8984-3f4f7e6b6e7f ">
-    <td class="repr-section-toggle-col"></td>
+<tr class="repr-element general-1d42db93-45ac-4895-b262-12d9d778888c ">
+    <td class="mne-repr-section-toggle"></td>
     <td>Experimenter</td>
 
     <td>Unknown</td>
@@ -716,12 +707,12 @@ span.collapse-uncollapse-caret {
 
 
 
-<tr class="repr-section-header acquisition-21b0f269-755e-4312-80fc-745530ac0b42"
-    title="Hide section"  onclick="toggleVisibility('acquisition-21b0f269-755e-4312-80fc-745530ac0b42')">
-    <th class="repr-section-toggle-col">
-        <button>
-
-            <span class="collapse-uncollapse-caret"></span>
+<tr class="mne-repr-section-header acquisition-d661b0e3-020a-4ef3-9c22-c064c4da997d"
+     title="Hide section"
+    onclick="toggleVisibility('acquisition-d661b0e3-020a-4ef3-9c22-c064c4da997d')">
+    <th class="mne-repr-section-toggle">
+        <button >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
         </button>
     </th>
     <th colspan="2">
@@ -729,8 +720,9 @@ span.collapse-uncollapse-caret {
     </th>
 </tr>
 
-<tr class="repr-element acquisition-21b0f269-755e-4312-80fc-745530ac0b42 ">
-    <td class="repr-section-toggle-col"></td>
+
+<tr class="repr-element acquisition-d661b0e3-020a-4ef3-9c22-c064c4da997d ">
+    <td class="mne-repr-section-toggle"></td>
     <td>Duration</td>
     <td>00:49:33 (HH:MM:SS)</td>
 </tr>
@@ -742,15 +734,15 @@ span.collapse-uncollapse-caret {
 
 
 
-<tr class="repr-element acquisition-21b0f269-755e-4312-80fc-745530ac0b42 ">
-    <td class="repr-section-toggle-col"></td>
+<tr class="repr-element acquisition-d661b0e3-020a-4ef3-9c22-c064c4da997d ">
+    <td class="mne-repr-section-toggle"></td>
     <td>Sampling frequency</td>
     <td>0.70 Hz</td>
 </tr>
 
 
-<tr class="repr-element acquisition-21b0f269-755e-4312-80fc-745530ac0b42 ">
-    <td class="repr-section-toggle-col"></td>
+<tr class="repr-element acquisition-d661b0e3-020a-4ef3-9c22-c064c4da997d ">
+    <td class="mne-repr-section-toggle"></td>
     <td>Time points</td>
     <td>2,082</td>
 </tr>
@@ -764,12 +756,12 @@ span.collapse-uncollapse-caret {
 
 
 
-<tr class="repr-section-header channels-c00d040b-4a18-4c76-89a2-72a34404825b"  title="Hide section"
-    onclick="toggleVisibility('channels-c00d040b-4a18-4c76-89a2-72a34404825b')">
-    <th class="repr-section-toggle-col">
-        <button>
-
-            <span class="collapse-uncollapse-caret"></span>
+<tr class="mne-repr-section-header channels-86da122c-b9d6-48b1-8025-c253508e2c28"
+     title="Hide section"
+    onclick="toggleVisibility('channels-86da122c-b9d6-48b1-8025-c253508e2c28')">
+    <th class="mne-repr-section-toggle">
+        <button >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
         </button>
     </th>
     <th colspan="2">
@@ -778,11 +770,12 @@ span.collapse-uncollapse-caret {
 </tr>
 
 
-<tr class="repr-element channels-c00d040b-4a18-4c76-89a2-72a34404825b ">
-    <td class="repr-section-toggle-col"></td>
+
+<tr class="repr-element channels-86da122c-b9d6-48b1-8025-c253508e2c28 ">
+    <td class="mne-repr-section-toggle"></td>
     <td>fNIRS (CW amplitude)</td>
     <td>
-        <button class="channel-names-btn" onclick="alert('Good fNIRS (CW amplitude):\n\nS1_D1&nbsp;760, S1_D1&nbsp;850, S1_D2&nbsp;760, S1_D2&nbsp;850, S1_D3&nbsp;760, S1_D3&nbsp;850, S1_D9&nbsp;760, S1_D9&nbsp;850, S2_D1&nbsp;760, S2_D1&nbsp;850, S2_D3&nbsp;760, S2_D3&nbsp;850, S2_D4&nbsp;760, S2_D4&nbsp;850, S2_D10&nbsp;760, S2_D10&nbsp;850, S3_D2&nbsp;760, S3_D2&nbsp;850, S3_D3&nbsp;760, S3_D3&nbsp;850, S3_D11&nbsp;760, S3_D11&nbsp;850, S4_D3&nbsp;760, S4_D3&nbsp;850, S4_D4&nbsp;760, S4_D4&nbsp;850, S4_D12&nbsp;760, S4_D12&nbsp;850, S5_D5&nbsp;760, S5_D5&nbsp;850, S5_D6&nbsp;760, S5_D6&nbsp;850, S5_D7&nbsp;760, S5_D7&nbsp;850, S5_D13&nbsp;760, S5_D13&nbsp;850, S6_D5&nbsp;760, S6_D5&nbsp;850, S6_D7&nbsp;760, S6_D7&nbsp;850, S6_D8&nbsp;760, S6_D8&nbsp;850, S6_D14&nbsp;760, S6_D14&nbsp;850, S7_D6&nbsp;760, S7_D6&nbsp;850, S7_D7&nbsp;760, S7_D7&nbsp;850, S7_D15&nbsp;760, S7_D15&nbsp;850, S8_D7&nbsp;760, S8_D7&nbsp;850, S8_D8&nbsp;760, S8_D8&nbsp;850, S8_D16&nbsp;760, S8_D16&nbsp;850')" title="(Click to open in popup)&#13;&#13;S1_D1&nbsp;760, S1_D1&nbsp;850, S1_D2&nbsp;760, S1_D2&nbsp;850, S1_D3&nbsp;760, S1_D3&nbsp;850, S1_D9&nbsp;760, S1_D9&nbsp;850, S2_D1&nbsp;760, S2_D1&nbsp;850, S2_D3&nbsp;760, S2_D3&nbsp;850, S2_D4&nbsp;760, S2_D4&nbsp;850, S2_D10&nbsp;760, S2_D10&nbsp;850, S3_D2&nbsp;760, S3_D2&nbsp;850, S3_D3&nbsp;760, S3_D3&nbsp;850, S3_D11&nbsp;760, S3_D11&nbsp;850, S4_D3&nbsp;760, S4_D3&nbsp;850, S4_D4&nbsp;760, S4_D4&nbsp;850, S4_D12&nbsp;760, S4_D12&nbsp;850, S5_D5&nbsp;760, S5_D5&nbsp;850, S5_D6&nbsp;760, S5_D6&nbsp;850, S5_D7&nbsp;760, S5_D7&nbsp;850, S5_D13&nbsp;760, S5_D13&nbsp;850, S6_D5&nbsp;760, S6_D5&nbsp;850, S6_D7&nbsp;760, S6_D7&nbsp;850, S6_D8&nbsp;760, S6_D8&nbsp;850, S6_D14&nbsp;760, S6_D14&nbsp;850, S7_D6&nbsp;760, S7_D6&nbsp;850, S7_D7&nbsp;760, S7_D7&nbsp;850, S7_D15&nbsp;760, S7_D15&nbsp;850, S8_D7&nbsp;760, S8_D7&nbsp;850, S8_D8&nbsp;760, S8_D8&nbsp;850, S8_D16&nbsp;760, S8_D16&nbsp;850">
+        <button class="mne-ch-names-btn sd-sphinx-override sd-btn sd-btn-info sd-text-wrap sd-shadow-sm" onclick="alert('Good fNIRS (CW amplitude):\n\nS1_D1&nbsp;760, S1_D1&nbsp;850, S1_D2&nbsp;760, S1_D2&nbsp;850, S1_D3&nbsp;760, S1_D3&nbsp;850, S1_D9&nbsp;760, S1_D9&nbsp;850, S2_D1&nbsp;760, S2_D1&nbsp;850, S2_D3&nbsp;760, S2_D3&nbsp;850, S2_D4&nbsp;760, S2_D4&nbsp;850, S2_D10&nbsp;760, S2_D10&nbsp;850, S3_D2&nbsp;760, S3_D2&nbsp;850, S3_D3&nbsp;760, S3_D3&nbsp;850, S3_D11&nbsp;760, S3_D11&nbsp;850, S4_D3&nbsp;760, S4_D3&nbsp;850, S4_D4&nbsp;760, S4_D4&nbsp;850, S4_D12&nbsp;760, S4_D12&nbsp;850, S5_D5&nbsp;760, S5_D5&nbsp;850, S5_D6&nbsp;760, S5_D6&nbsp;850, S5_D7&nbsp;760, S5_D7&nbsp;850, S5_D13&nbsp;760, S5_D13&nbsp;850, S6_D5&nbsp;760, S6_D5&nbsp;850, S6_D7&nbsp;760, S6_D7&nbsp;850, S6_D8&nbsp;760, S6_D8&nbsp;850, S6_D14&nbsp;760, S6_D14&nbsp;850, S7_D6&nbsp;760, S7_D6&nbsp;850, S7_D7&nbsp;760, S7_D7&nbsp;850, S7_D15&nbsp;760, S7_D15&nbsp;850, S8_D7&nbsp;760, S8_D7&nbsp;850, S8_D8&nbsp;760, S8_D8&nbsp;850, S8_D16&nbsp;760, S8_D16&nbsp;850')" title="(Click to open in popup)&#13;&#13;S1_D1&nbsp;760, S1_D1&nbsp;850, S1_D2&nbsp;760, S1_D2&nbsp;850, S1_D3&nbsp;760, S1_D3&nbsp;850, S1_D9&nbsp;760, S1_D9&nbsp;850, S2_D1&nbsp;760, S2_D1&nbsp;850, S2_D3&nbsp;760, S2_D3&nbsp;850, S2_D4&nbsp;760, S2_D4&nbsp;850, S2_D10&nbsp;760, S2_D10&nbsp;850, S3_D2&nbsp;760, S3_D2&nbsp;850, S3_D3&nbsp;760, S3_D3&nbsp;850, S3_D11&nbsp;760, S3_D11&nbsp;850, S4_D3&nbsp;760, S4_D3&nbsp;850, S4_D4&nbsp;760, S4_D4&nbsp;850, S4_D12&nbsp;760, S4_D12&nbsp;850, S5_D5&nbsp;760, S5_D5&nbsp;850, S5_D6&nbsp;760, S5_D6&nbsp;850, S5_D7&nbsp;760, S5_D7&nbsp;850, S5_D13&nbsp;760, S5_D13&nbsp;850, S6_D5&nbsp;760, S6_D5&nbsp;850, S6_D7&nbsp;760, S6_D7&nbsp;850, S6_D8&nbsp;760, S6_D8&nbsp;850, S6_D14&nbsp;760, S6_D14&nbsp;850, S7_D6&nbsp;760, S7_D6&nbsp;850, S7_D7&nbsp;760, S7_D7&nbsp;850, S7_D15&nbsp;760, S7_D15&nbsp;850, S8_D7&nbsp;760, S8_D7&nbsp;850, S8_D8&nbsp;760, S8_D8&nbsp;850, S8_D16&nbsp;760, S8_D16&nbsp;850">
             56
         </button>
 
@@ -791,8 +784,8 @@ span.collapse-uncollapse-caret {
 </tr>
 
 
-<tr class="repr-element channels-c00d040b-4a18-4c76-89a2-72a34404825b ">
-    <td class="repr-section-toggle-col"></td>
+<tr class="repr-element channels-86da122c-b9d6-48b1-8025-c253508e2c28 ">
+    <td class="mne-repr-section-toggle"></td>
     <td>Head & sensor digitization</td>
 
     <td>31 points</td>
@@ -806,12 +799,12 @@ span.collapse-uncollapse-caret {
 
 
 
-<tr class="repr-section-header filters-31683cc4-2d55-4250-87b5-02ee89514bde"  title="Hide section"
-    onclick="toggleVisibility('filters-31683cc4-2d55-4250-87b5-02ee89514bde')">
-    <th class="repr-section-toggle-col">
-        <button>
-
-            <span class="collapse-uncollapse-caret"></span>
+<tr class="mne-repr-section-header filters-4b91f1b6-0196-4bb8-a788-6ed464ca57a1"
+     title="Hide section"
+    onclick="toggleVisibility('filters-4b91f1b6-0196-4bb8-a788-6ed464ca57a1')">
+    <th class="mne-repr-section-toggle">
+        <button >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
         </button>
     </th>
     <th colspan="2">
@@ -819,15 +812,16 @@ span.collapse-uncollapse-caret {
     </th>
 </tr>
 
-<tr class="repr-element filters-31683cc4-2d55-4250-87b5-02ee89514bde ">
-    <td class="repr-section-toggle-col"></td>
+
+<tr class="repr-element filters-4b91f1b6-0196-4bb8-a788-6ed464ca57a1 ">
+    <td class="mne-repr-section-toggle"></td>
     <td>Highpass</td>
     <td>0.00 Hz</td>
 </tr>
 
 
-<tr class="repr-element filters-31683cc4-2d55-4250-87b5-02ee89514bde ">
-    <td class="repr-section-toggle-col"></td>
+<tr class="repr-element filters-4b91f1b6-0196-4bb8-a788-6ed464ca57a1 ">
+    <td class="mne-repr-section-toggle"></td>
     <td>Lowpass</td>
     <td>0.35 Hz</td>
 </tr>
@@ -1309,7 +1303,7 @@ cortical surface</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_11_hrf_measured_008.png" srcset="../../_images/sphx_glr_plot_11_hrf_measured_008.png" alt="plot 11 hrf measured" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne.viz._brain._brain.Brain object at 0x7fe6b1c8b970&gt;
+<img src="../../_images/sphx_glr_plot_11_hrf_measured_008.png" srcset="../../_images/sphx_glr_plot_11_hrf_measured_008.png" alt="plot 11 hrf measured" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne.viz._brain._brain.Brain object at 0x7fcd4d65c550&gt;
 </pre></div>
 </div>
 </section>
@@ -1735,8 +1729,8 @@ the tapping, but we do expect 5% or less for the false positive rate.</p>
 </div>
 </div>
 <br />
-<br /><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 16.878 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  694 MB</p>
+<br /><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 16.658 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  703 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-11-hrf-measured-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_11_hrf_measured.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
@@ -1856,7 +1850,7 @@ the tapping, but we do expect 5% or less for the false positive rate.</p>
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-09-16T22:25:45.330683+00:00" class="localized">2024-09-16 22:25 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-09-24T17:38:18.482921+00:00" class="localized">2024-09-24 17:38 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
