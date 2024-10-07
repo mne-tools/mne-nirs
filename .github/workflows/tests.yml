@@ -49,7 +49,7 @@ jobs:
         with:
           qt: true
           pyvista: false
-      - uses: mamba-org/setup-micromamba@v1
+      - uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: environment.yml
           environment-name: mne-nirs
