@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne.io.hitachi.hitachi &#8212; MNE-NIRS 0.8.0.dev14+gec66fce documentation</title>
+    <title>mne.io.hitachi.hitachi &#8212; MNE-NIRS 0.8.0.dev17+g7d77589 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../../_static/documentation_options.js?v=f55eec1f"></script>
+    <script src="../../../../_static/documentation_options.js?v=3ce9c2a3"></script>
     <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -454,7 +454,7 @@ document.write(`
             <span class="n">fname</span> <span class="o">=</span> <span class="p">[</span><span class="n">fname</span><span class="p">]</span>
         <span class="n">fname</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>  <span class="c1"># our own list that we can modify</span>
         <span class="k">for</span> <span class="n">fi</span><span class="p">,</span> <span class="n">this_fname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
-            <span class="n">fname</span><span class="p">[</span><span class="n">fi</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">_check_fname</span><span class="p">(</span><span class="n">this_fname</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;fname[</span><span class="si">{</span><span class="n">fi</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">))</span>
+            <span class="n">fname</span><span class="p">[</span><span class="n">fi</span><span class="p">]</span> <span class="o">=</span> <span class="n">_check_fname</span><span class="p">(</span><span class="n">this_fname</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;fname[</span><span class="si">{</span><span class="n">fi</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
         <span class="n">infos</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="n">probes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="n">last_samps</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
@@ -483,11 +483,10 @@ document.write(`
         <span class="n">raw_extras</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">probes</span><span class="o">=</span><span class="n">probes</span><span class="p">)]</span>
         <span class="c1"># One representative filename is good enough here</span>
         <span class="c1"># (additional filenames indicate temporal concat, not ch concat)</span>
-        <span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">fname</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">info</span><span class="p">,</span>
             <span class="n">preload</span><span class="p">,</span>
-            <span class="n">filenames</span><span class="o">=</span><span class="n">filenames</span><span class="p">,</span>
+            <span class="n">filenames</span><span class="o">=</span><span class="p">[</span><span class="n">fname</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
             <span class="n">last_samps</span><span class="o">=</span><span class="n">last_samps</span><span class="p">,</span>
             <span class="n">raw_extras</span><span class="o">=</span><span class="n">raw_extras</span><span class="p">,</span>
             <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
@@ -766,7 +765,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-09-24T17:38:18.482921+00:00" class="localized">2024-09-24 17:38 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-10-07T19:19:46.143247+00:00" class="localized">2024-10-07 19:19 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
