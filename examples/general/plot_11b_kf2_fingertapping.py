@@ -32,30 +32,26 @@ high channel density.
 
 # Authors: Julien ...       < >
 #          John D Griffiths <john.griffiths@utoronto.ca>
-#          Eric Larson      < >          
-# 
+#          Eric Larson      < >
+#
 # License: BSD (3-clause)
 
 # ( If running in colab, install packages and download data... )
 # !pip install gdown h5py matplotlib numpy pandas scipy mne@git+https://github.com/mne-tools/mne-python.git@b1cf3107e93cd4f91b2ecad6147cf4706a18dbe1 mne-nirs
 # !gdown --output Hb_Moments.snirf 1VYtux3p3hcM41FPjmnAwDgc4MM8DBxkg
 
-import pathlib
-    
 import h5py
-import matplotlib.pyplot as plt
 import matplotlib
-import nilearn.plotting
-    
-import numpy as np
-import pandas as pd
-    
+import matplotlib.pyplot as plt
 import mne
 import mne.channels
 import mne.io.snirf
+import nilearn.plotting
+import numpy as np
+import pandas as pd
+
 import mne_nirs.experimental_design
 import mne_nirs.statistics
-
 
 # %%
 # Import raw NIRS data
@@ -69,7 +65,7 @@ import mne_nirs.statistics
 snirf_file = "Hb_Moments.snirf"
 raw = mne.io.snirf.read_raw_snirf(snirf_file)
 raw.load_data()
-#raw._data *= 1e-6
+# raw._data *= 1e-6
 
 
 # %%
@@ -80,13 +76,17 @@ raw.load_data()
 #
 # Fortunately, the SNIRF file is a hdf5 archive and it's quite easy to find what you need once you've looked at the `SNIRF specification <https://github.com/fNIRS/snirf/blob/master/snirf_specification.md>`_ .
 
-probe_keys = [("detectorLabels", str),
-              ("sourceLabels", str),
-              ("sourcePos3D", float),
-              ("detectorPos3D", float),]
+probe_keys = [
+    ("detectorLabels", str),
+    ("sourceLabels", str),
+    ("sourcePos3D", float),
+    ("detectorPos3D", float),
+]
 with h5py.File(snirf_file, "r") as file:
-    probe_data = {  key: np.array(file["nirs"]["probe"][key]).astype(dtype)
-                    for key, dtype in probe_keys  }
+    probe_data = {
+        key: np.array(file["nirs"]["probe"][key]).astype(dtype)
+        for key, dtype in probe_keys
+    }
 print([*probe_data])
 
 
@@ -102,10 +102,10 @@ raw.annotations.to_data_frame()
 # Unfortunately MNE didn't load the block types so we don't know whether a block is LEFT or RIGHT tapping. Fear not! the SNIRF file has it all, albeit in a convoluted format... let's reconstruct the information here."""
 
 with h5py.File(snirf_file, "r") as file:
-  ctr = 1
-  while (stim:=f"stim{ctr}") in file["nirs"]:
-    print(stim, np.array(file["nirs"][stim]["name"]))
-    ctr+=1
+    ctr = 1
+    while (stim := f"stim{ctr}") in file["nirs"]:
+        print(stim, np.array(file["nirs"][stim]["name"]))
+        ctr += 1
 
 
 # %%
@@ -113,36 +113,41 @@ with h5py.File(snirf_file, "r") as file:
 # Looks like "stim1" has the StartBlock event information, let's dig in:
 
 with h5py.File(snirf_file, "r") as file:
-  df_start_block = pd.DataFrame(data = np.array(file["nirs"]["stim1"]["data"]), columns=[col.decode('UTF-8') for col in file["nirs"]["stim1"]["dataLabels"]])
+    df_start_block = pd.DataFrame(
+        data=np.array(file["nirs"]["stim1"]["data"]),
+        columns=[col.decode("UTF-8") for col in file["nirs"]["stim1"]["dataLabels"]],
+    )
 df_start_block
 
 
-# %%  
-# 
+# %%
+#
 # Ok, `BlockType.Left` and `BlockType.Right` look useful.
 # Alright, now we can make events from the MNE annotations and sort them into two types, left and right tapping blocks.
 
 # %%
-# Define the events 
+# Define the events
 # ------------------------------------
 #
 events, _ = mne.events_from_annotations(raw, {"StartBlock": 1})
 event_id = {"Tapping/Left": 1, "Tapping/Right": 2}
-events[df_start_block["BlockType.Left"] == 1., 2] = event_id["Tapping/Left"]
-events[df_start_block["BlockType.Right"] == 1., 2] = event_id["Tapping/Right"]
+events[df_start_block["BlockType.Left"] == 1.0, 2] = event_id["Tapping/Left"]
+events[df_start_block["BlockType.Right"] == 1.0, 2] = event_id["Tapping/Right"]
 events
 
-# %% 
+# %%
 #
 # Plot the events
-mne.viz.plot_events(events, event_id=event_id, sfreq=raw.info["sfreq"]);
+mne.viz.plot_events(events, event_id=event_id, sfreq=raw.info["sfreq"])
 
 
 # %%
 #
 # Convert useful events back to annotations...
-event_desc = {v:k for k, v in event_id.items()}
-annotations_from_events = mne.annotations_from_events(events, raw.info['sfreq'], event_desc=event_desc)
+event_desc = {v: k for k, v in event_id.items()}
+annotations_from_events = mne.annotations_from_events(
+    events, raw.info["sfreq"], event_desc=event_desc
+)
 
 
 # %%
@@ -195,8 +200,12 @@ epochs.info["chs"][0]
 # %%
 #
 # Extract the indices of the sources and detectors from the "channel names" and also the source and detector positions so we can access the source detector distance for each channel.
-idx_sources = np.array([int(ch.split("_")[0][1:]) - 1 for ch in epochs.info["ch_names"]])
-idx_detectors = np.array([int(ch.split("_")[1].split(" ")[0][1:]) - 1 for ch in epochs.info["ch_names"]])
+idx_sources = np.array(
+    [int(ch.split("_")[0][1:]) - 1 for ch in epochs.info["ch_names"]]
+)
+idx_detectors = np.array(
+    [int(ch.split("_")[1].split(" ")[0][1:]) - 1 for ch in epochs.info["ch_names"]]
+)
 source_positions = np.array(probe_data["sourcePos3D"])[idx_sources]
 detector_positions = np.array(probe_data["detectorPos3D"])[idx_detectors]
 sds = np.sqrt(np.sum((source_positions - detector_positions) ** 2, axis=1))
@@ -246,55 +255,90 @@ fig.suptitle(chromophore)
 # %%
 #
 # Despite the absence of thresholding, we can discern:
-#- LEFT tapping (first row): a nice hotspot in the right motor cortex at 10s
-#- RIGHT tapping (second row): a nice hotspot in the left motor cortex at 10s
-#- LEFT - RIGHT tapping (last row): hotspot in the right motor cortex, and negative counterpart in the left motor cortex, at 10s
+# - LEFT tapping (first row): a nice hotspot in the right motor cortex at 10s
+# - RIGHT tapping (second row): a nice hotspot in the left motor cortex at 10s
+# - LEFT - RIGHT tapping (last row): hotspot in the right motor cortex, and negative counterpart in the left motor cortex, at 10s
 #
 
 # %%
 #
 # Now let's look at the time courses:
-idx_sources = np.array([int(ch.split("_")[0][1:]) - 1 for ch in left_evoked.info["ch_names"]])
+idx_sources = np.array(
+    [int(ch.split("_")[0][1:]) - 1 for ch in left_evoked.info["ch_names"]]
+)
 is_selected_hbo = np.array([ch.endswith("hbo") for ch in left_evoked.info["ch_names"]])
 
 
 # %%
 #
 # MODULE 21 is in the left motor cortex, MODULE 20 in the right motor cortex
-is_left_motor = is_selected_hbo & (idx_sources== np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M021S01")[0])
-is_right_motor = is_selected_hbo & (idx_sources== np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M020S01")[0])
+is_left_motor = is_selected_hbo & (
+    idx_sources == np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M021S01")[0]
+)
+is_right_motor = is_selected_hbo & (
+    idx_sources == np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M020S01")[0]
+)
 
 # %%
 #
 # average all channels coming from source 20 or 21 formed with detectors between 15-30mm from the source
-right_evoked_combined = mne.channels.combine_channels(right_evoked, {"left_motor": np.flatnonzero(is_left_motor), "right_motor": np.flatnonzero(is_right_motor)})
-left_evoked_combined = mne.channels.combine_channels(left_evoked, {"left_motor": np.flatnonzero(is_left_motor), "right_motor": np.flatnonzero(is_right_motor)})
+right_evoked_combined = mne.channels.combine_channels(
+    right_evoked,
+    {
+        "left_motor": np.flatnonzero(is_left_motor),
+        "right_motor": np.flatnonzero(is_right_motor),
+    },
+)
+left_evoked_combined = mne.channels.combine_channels(
+    left_evoked,
+    {
+        "left_motor": np.flatnonzero(is_left_motor),
+        "right_motor": np.flatnonzero(is_right_motor),
+    },
+)
 
 # %%
 #
 # now plot these
 fig, axes = plt.subplots(figsize=(10, 5), ncols=2, sharey=True)
-mne.viz.plot_compare_evokeds(dict(left=left_evoked_combined.copy().pick_channels(["left_motor"]), right=right_evoked_combined.copy().pick_channels(["left_motor"])), legend='upper left', axes=axes[0], show=False)
+mne.viz.plot_compare_evokeds(
+    dict(
+        left=left_evoked_combined.copy().pick_channels(["left_motor"]),
+        right=right_evoked_combined.copy().pick_channels(["left_motor"]),
+    ),
+    legend="upper left",
+    axes=axes[0],
+    show=False,
+)
 axes[0].set_title("Left motor cortex\n\n")
-mne.viz.plot_compare_evokeds(dict(left=left_evoked_combined.copy().pick_channels(["right_motor"]), right=right_evoked_combined.copy().pick_channels(["right_motor"])), legend=False, axes=axes[1], show=False)
+mne.viz.plot_compare_evokeds(
+    dict(
+        left=left_evoked_combined.copy().pick_channels(["right_motor"]),
+        right=right_evoked_combined.copy().pick_channels(["right_motor"]),
+    ),
+    legend=False,
+    axes=axes[1],
+    show=False,
+)
 axes[1].set_title("Right motor cortex\n\n")
 plt.tight_layout()
-
 
 
 # %%
 # GLM Analysis
 # ------------------------------------
 #
-# GLM analysis in MNE-NIRS is powered under the hood by `Nilearn` functionality. 
-# 
-# Here we mostly followed `this tutorial <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_11_hrf_measured.html#sphx-glr-auto-examples-general-plot-11-hrf-measured-py>`_ 
+# GLM analysis in MNE-NIRS is powered under the hood by `Nilearn` functionality.
+#
+# Here we mostly followed `this tutorial <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_11_hrf_measured.html#sphx-glr-auto-examples-general-plot-11-hrf-measured-py>`_
 #
 
 # %%
 #
 # First show the boxcar design looks
-s = mne_nirs.experimental_design.create_boxcar(raw, stim_dur=(stim_dur:=df_start_block["Duration"].mean()))
+s = mne_nirs.experimental_design.create_boxcar(
+    raw, stim_dur=(stim_dur := df_start_block["Duration"].mean())
+)
 fig, ax = plt.subplots(figsize=(15, 6), constrained_layout=True)
 ax.plot(raw.times, s)
 ax.legend(["Left", "Right"], loc="upper right")
@@ -324,23 +368,29 @@ nilearn.plotting.plot_design_matrix(design_matrix, ax=ax)
 # Estimate the GLM model
 
 # (clear channel names because mne_nirs plot_topo doesn't have the option to hide sensor names, and we have a LOT)
-mne.channels.rename_channels(raw.info, {ch: '' for ch in raw.info['ch_names']}, allow_duplicates=True)
-glm_est = mne_nirs.statistics.run_glm(raw, design_matrix, noise_model= "auto")
+mne.channels.rename_channels(
+    raw.info, {ch: "" for ch in raw.info["ch_names"]}, allow_duplicates=True
+)
+glm_est = mne_nirs.statistics.run_glm(raw, design_matrix, noise_model="auto")
 
 # %%
 #
 # Now plot the GLM results of the comparison between tapping and control task on the scalp
 
-# A hack to remove channel markers from a topoplot 
+
+# A hack to remove channel markers from a topoplot
 def remove_markers_from_topo(topo):
-    for marker in topo.findobj(match=matplotlib.collections.PathCollection):  marker.set_visible(False)  
-    for marker in topo.findobj(match=matplotlib.spines.Spine): marker.set_visible(False)  
-    for marker in topo.findobj(match=matplotlib.text.Text): 
-        if marker.get_text() == '-': marker.set_visible(False)  
+    for marker in topo.findobj(match=matplotlib.collections.PathCollection):
+        marker.set_visible(False)
+    for marker in topo.findobj(match=matplotlib.spines.Spine):
+        marker.set_visible(False)
+    for marker in topo.findobj(match=matplotlib.text.Text):
+        if marker.get_text() == "-":
+            marker.set_visible(False)
 
 
-fig, ax = plt.subplots(figsize=(6, 6), constrained_layout=True,ncols=2, nrows=2);
-topo = glm_est.plot_topo(conditions=["Tapping/Left", "Tapping/Right"],axes=ax); 
+fig, ax = plt.subplots(figsize=(6, 6), constrained_layout=True, ncols=2, nrows=2)
+topo = glm_est.plot_topo(conditions=["Tapping/Left", "Tapping/Right"], axes=ax)
 remove_markers_from_topo(topo)
 plt.show()
 
@@ -349,10 +399,15 @@ plt.show()
 #
 # compute simple contrasts: LEFT, RIGHT, and LEFT - RIGHT
 contrast_matrix = np.eye(2)
-basic_conts = dict([(column, contrast_matrix[i]) for i, column in enumerate(design_matrix.columns) if i<2])
+basic_conts = dict(
+    [
+        (column, contrast_matrix[i])
+        for i, column in enumerate(design_matrix.columns)
+        if i < 2
+    ]
+)
 contrast_LvR = basic_conts["Tapping/Left"] - basic_conts["Tapping/Right"]
 contrast = glm_est.compute_contrast(contrast_LvR)
-topo = contrast.plot_topo();
+topo = contrast.plot_topo()
 remove_markers_from_topo(topo)
 plt.show()
-
