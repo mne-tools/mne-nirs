@@ -37,21 +37,21 @@ high channel density.
 # License: BSD (3-clause)
 
 # Importage
-import pathlib
 import os
-import matplotlib
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
+
 import gdown
 import h5py
-import nilearn.plotting
+import matplotlib
+import matplotlib.pyplot as plt
 import mne
 import mne.channels
 import mne.io.snirf
+import nilearn.plotting
+import numpy as np
+import pandas as pd
+
 import mne_nirs.experimental_design
 import mne_nirs.statistics
-
 
 # %%
 # Import raw NIRS data
@@ -63,9 +63,10 @@ import mne_nirs.statistics
 # After reading the data we resample down to 1Hz to meet github memory constraints.
 
 # first download the data
-snirf_id = '1VYtux3p3hcM41FPjmnAwDgc4MM8DBxkg'
+snirf_id = "1VYtux3p3hcM41FPjmnAwDgc4MM8DBxkg"
 snirf_file = "Hb_Moments.snirf"
-if not os.path.isfile(snirf_file): gdown.download(id=snirf_id, output=snirf_file)
+if not os.path.isfile(snirf_file):
+    gdown.download(id=snirf_id, output=snirf_file)
 
 # now load into an MNE object
 raw = mne.io.snirf.read_raw_snirf(snirf_file)
