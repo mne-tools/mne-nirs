@@ -30,37 +30,28 @@ high channel density.
 """
 # sphinx_gallery_thumbnail_number = 10
 
-# Authors: Julien ...       < >
-#          John D Griffiths <john.griffiths@utoronto.ca>
-#          Eric Larson      < >
+# Authors: Julien DuBois     <https://github.com/julien-dubois-k>
+#          John D Griffiths  <john.griffiths@utoronto.ca>
+#          Eric Larson       <https://larsoner.com>
 #
 # License: BSD (3-clause)
 
-# ( If running in colab, install packages and download data... )
-# !pip install gdown h5py matplotlib numpy pandas scipy mne@git+https://github.com/mne-tools/mne-python.git@b1cf3107e93cd4f91b2ecad6147cf4706a18dbe1 mne-nirs
-# !gdown --output Hb_Moments.snirf 1VYtux3p3hcM41FPjmnAwDgc4MM8DBxkg
-
-import h5py
+# Importage
+import pathlib
+import os
 import matplotlib
-<<<<<<< HEAD
-import nilearn.plotting
-    
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import gdown
-    
-=======
-import matplotlib.pyplot as plt
->>>>>>> 8b6815551a19d9248e38403b1477074600da68cc
+import h5py
+import nilearn.plotting
 import mne
 import mne.channels
 import mne.io.snirf
-import nilearn.plotting
-import numpy as np
-import pandas as pd
-
 import mne_nirs.experimental_design
 import mne_nirs.statistics
+
 
 # %%
 # Import raw NIRS data
@@ -71,11 +62,12 @@ import mne_nirs.statistics
 #
 # After reading the data we resample down to 1Hz to meet github memory constraints.
 
+# first download the data
 snirf_id = '1VYtux3p3hcM41FPjmnAwDgc4MM8DBxkg'
 snirf_file = "Hb_Moments.snirf"
-is not os.path.isfile(snirf_file):
-  gdown.download(id=snirf_id, snirf_file)
+if not os.path.isfile(snirf_file): gdown.download(id=snirf_id, output=snirf_file)
 
+# now load into an MNE object
 raw = mne.io.snirf.read_raw_snirf(snirf_file)
 raw.load_data()
 # raw._data *= 1e-6
