@@ -4,8 +4,8 @@
 Finger Tapping Analysis with Kernel Flow2 Data
 ================================================
 
-This example follows closely the :ref:`tut-fnirs-hrf` 
-`mne-nirs` finger tapping example with some minor variations, 
+This example follows closely the :ref:`tut-fnirs-hrf`
+`mne-nirs` finger tapping example with some minor variations,
 using fNIRS data from the Kernel Flow 2 (KF2) system.
 
 KF2 is a time-domain (TD)-fNIRS system, and so some aspects of the
