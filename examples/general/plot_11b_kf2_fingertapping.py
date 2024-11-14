@@ -78,10 +78,12 @@ raw.load_data()
 # Get more info from the snirf file
 # ------------------------------------
 #
-# Unfortunately, a lot of useful information that is in the SNIRF file is not yet read by the MNE SNIRF reader. For example, the actual source and detector names (which reflect the modules they belong to).
+# Unfortunately, a lot of useful information that is in the SNIRF file is not 
+# yet read by the MNE SNIRF reader. For example, the actual source and detector
+# names (which reflect the modules they belong to).
 #
-#
-# Fortunately, the SNIRF file is a hdf5 archive and it's quite easy to find what you need once you've looked at the `SNIRF specification <https://github.com/fNIRS/snirf/blob/master/snirf_specification.md>`_ .
+# Fortunately, it's quite easy to find what you need in the SNIRF hdf archive from the 
+# `SNIRF specification <https://github.com/fNIRS/snirf/blob/master/snirf_specification.md>`_
 
 probe_keys = [
     ("detectorLabels", str),
@@ -106,7 +108,9 @@ raw.annotations.to_data_frame()
 
 # %%
 #
-# Unfortunately MNE didn't load the block types so we don't know whether a block is LEFT or RIGHT tapping. Fear not! the SNIRF file has it all, albeit in a convoluted format. Let's reconstruct the information here:
+# Unfortunately MNE didn't load the block types so we don't know whether 
+# a block is LEFT or RIGHT tapping. Fear not! the SNIRF file has it all, 
+# albeit in a convoluted format. Let's reconstruct the information here:
 
 with h5py.File(snirf_file, "r") as file:
     ctr = 1
@@ -130,7 +134,8 @@ df_start_block
 # %%
 #
 # Ok, `BlockType.Left` and `BlockType.Right` look useful.
-# Alright, now we can make events from the MNE annotations and sort them into two types, left and right tapping blocks.
+# Alright, now we can make events from the MNE annotations and sort 
+# them into two types, left and right tapping blocks.
 
 # %%
 # Define the events
@@ -167,10 +172,14 @@ raw.set_annotations(annotations_from_events)
 # Epoch the data
 # ------------------------------------
 #
-# The SNIRF Hb Moments file contains data that has been preprocessed quite extensively and is almost "ready for consumption".
-# Details of the preprocessing are outlined on the `Kernel Docs <https://docs.kernel.com/docs/data-export-pipelines>`_ .
-# All that remains to be done is some filtering to focus on the "neural" band. We typically use a moving-average filter for detrending and a FIR filter for low-pass filtering.
-# With MNE, we can use the available bandpass FIR filter to achieve similar effects.
+# The SNIRF Hb Moments file contains data that has been 
+# preprocessed quite extensively and is almost "ready for consumption".
+# Details of the preprocessing are outlined on the 
+# `Kernel Docs <https://docs.kernel.com/docs/data-export-pipelines>`_ .
+# All that remains to be done is some filtering to focus on the 
+# "neural" band. We typically use a moving-average filter for 
+# detrending and a FIR filter for low-pass filtering. With MNE, we 
+# can use the available bandpass FIR filter to achieve similar effects.
 
 raw_filt = raw.copy().filter(0.01, 0.1, h_trans_bandwidth=0.01, l_trans_bandwidth=0.01)
 
@@ -206,7 +215,9 @@ epochs.info["chs"][0]
 
 # %%
 #
-# Extract the indices of the sources and detectors from the "channel names" and also the source and detector positions so we can access the source detector distance for each channel.
+# Extract the indices of the sources and detectors from the "channel names" 
+# and also the source and detector positions so we can access the source 
+# detector distance for each channel.
 idx_sources = np.array(
     [int(ch.split("_")[0][1:]) - 1 for ch in epochs.info["ch_names"]]
 )
@@ -219,7 +230,9 @@ sds = np.sqrt(np.sum((source_positions - detector_positions) ** 2, axis=1))
 
 # %%
 #
-# Make `evoked` objects for the evoked response to LEFT and RIGHT tapping, and for the contrast left < right, for channels with a source-detector distance between 15-30mm
+# Make `evoked` objects for the evoked response to LEFT and RIGHT tapping, 
+# and for the contrast left < right, for channels with a source-detector 
+# distance between 15-30mm
 idx_channels = np.flatnonzero((sds > 15) & (sds < 30))
 left_evoked = epochs["Tapping/Left"].average(picks=idx_channels)
 right_evoked = epochs["Tapping/Right"].average(picks=idx_channels)
@@ -264,7 +277,8 @@ fig.suptitle(chromophore)
 # Despite the absence of thresholding, we can discern:
 # - LEFT tapping (first row): a nice hotspot in the right motor cortex at 10s
 # - RIGHT tapping (second row): a nice hotspot in the left motor cortex at 10s
-# - LEFT - RIGHT tapping (last row): hotspot in the right motor cortex, and negative counterpart in the left motor cortex, at 10s
+# - LEFT - RIGHT tapping (last row): hotspot in the right motor cortex, and 
+#   negative counterpart in the left motor cortex, at 10s
 #
 
 # %%
@@ -288,7 +302,8 @@ is_right_motor = is_selected_hbo & (
 
 # %%
 #
-# average all channels coming from source 20 or 21 formed with detectors between 15-30mm from the source
+# average all channels coming from source 20 or 21 formed with detectors 
+# between 15-30mm from the source
 right_evoked_combined = mne.channels.combine_channels(
     right_evoked,
     {
@@ -337,7 +352,7 @@ plt.tight_layout()
 #
 # GLM analysis in MNE-NIRS is powered under the hood by `Nilearn` functionality.
 #
-# Here we mostly followed `this tutorial <https://mne.tools/mne-nirs/stable/auto_examples/general/plot_11_hrf_measured.html#sphx-glr-auto-examples-general-plot-11-hrf-measured-py>`_
+# Here we mostly followed the :ref:`tut-fnirs-hrf` tutorial 
 #
 
 # %%
@@ -374,7 +389,8 @@ nilearn.plotting.plot_design_matrix(design_matrix, ax=ax)
 #
 # Estimate the GLM model
 
-# (clear channel names because mne_nirs plot_topo doesn't have the option to hide sensor names, and we have a LOT)
+# (clear channel names because mne_nirs plot_topo doesn't have the 
+# option to hide sensor names, and we have a LOT)
 mne.channels.rename_channels(
     raw.info, {ch: "" for ch in raw.info["ch_names"]}, allow_duplicates=True
 )
@@ -382,7 +398,8 @@ glm_est = mne_nirs.statistics.run_glm(raw, design_matrix, noise_model="auto")
 
 # %%
 #
-# Now plot the GLM results of the comparison between tapping and control task on the scalp
+# Now plot the GLM results of the comparison between tapping and 
+# control task on the scalp
 
 
 # A hack to remove channel markers from a topoplot
