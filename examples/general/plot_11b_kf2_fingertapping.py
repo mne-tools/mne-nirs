@@ -42,7 +42,16 @@ high channel density.
 
 import h5py
 import matplotlib
+<<<<<<< HEAD
+import nilearn.plotting
+    
+import numpy as np
+import pandas as pd
+import gdown
+    
+=======
 import matplotlib.pyplot as plt
+>>>>>>> 8b6815551a19d9248e38403b1477074600da68cc
 import mne
 import mne.channels
 import mne.io.snirf
@@ -56,13 +65,17 @@ import mne_nirs.statistics
 # %%
 # Import raw NIRS data
 # --------------------
-
+#
 # First we import the motor tapping data, These data are similar to those
 # described and used in the  ``MNE fNIRS tutorial <mne:tut-fnirs-processing>``
 #
 # After reading the data we resample down to 1Hz to meet github memory constraints.
 
+snirf_id = '1VYtux3p3hcM41FPjmnAwDgc4MM8DBxkg'
 snirf_file = "Hb_Moments.snirf"
+is not os.path.isfile(snirf_file):
+  gdown.download(id=snirf_id, snirf_file)
+
 raw = mne.io.snirf.read_raw_snirf(snirf_file)
 raw.load_data()
 # raw._data *= 1e-6
@@ -73,6 +86,7 @@ raw.load_data()
 # ------------------------------------
 #
 # Unfortunately, a lot of useful information that is in the SNIRF file is not yet read by the MNE SNIRF reader. For example, the actual source and detector names (which reflect the modules they belong to).
+#
 #
 # Fortunately, the SNIRF file is a hdf5 archive and it's quite easy to find what you need once you've looked at the `SNIRF specification <https://github.com/fNIRS/snirf/blob/master/snirf_specification.md>`_ .
 
@@ -99,7 +113,7 @@ raw.annotations.to_data_frame()
 
 # %%
 #
-# Unfortunately MNE didn't load the block types so we don't know whether a block is LEFT or RIGHT tapping. Fear not! the SNIRF file has it all, albeit in a convoluted format... let's reconstruct the information here."""
+# Unfortunately MNE didn't load the block types so we don't know whether a block is LEFT or RIGHT tapping. Fear not! the SNIRF file has it all, albeit in a convoluted format. Let's reconstruct the information here:
 
 with h5py.File(snirf_file, "r") as file:
     ctr = 1
