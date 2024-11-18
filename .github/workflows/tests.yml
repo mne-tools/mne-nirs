@@ -74,5 +74,5 @@ jobs:
           path: ~/mne_data
       - run: ./tools/github_actions_download.sh
       - run: pytest --cov=mne_nirs --cov-report xml -vv -m "not examples" "mne_nirs/"
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         if: success()
