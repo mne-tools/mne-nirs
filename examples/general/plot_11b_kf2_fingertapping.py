@@ -275,6 +275,7 @@ fig.suptitle(chromophore)
 # %%
 #
 # Despite the absence of thresholding, we can discern:
+
 # - LEFT tapping (first row): a nice hotspot in the right motor cortex at 10s
 # - RIGHT tapping (second row): a nice hotspot in the left motor cortex at 10s
 # - LEFT - RIGHT tapping (last row): hotspot in the right motor cortex, and
