@@ -118,21 +118,19 @@ pygments_style = "sphinx"
 numpydoc_class_members_toctree = False
 numpydoc_attributes_as_param_list = True
 numpydoc_validate = True
-numpydoc_validation_checks = (
-    {"all"}
-    | {
-        # These we do not live by:
-        "GL01",  # Docstring should start in the line immediately after the quotes
-        "EX01",
-        "EX02",  # examples failed (we test them separately)
-        "ES01",  # no extended summary
-        "SA01",  # no see also
-        "YD01",  # no yields section
-        "SA04",  # no description in See Also
-        "PR04",  # Parameter "shape (n_channels" has no type
-        "RT02",  # The first line of the Returns section should contain only the type, unless multiple values are being returned  # noqa
-    }
-)
+numpydoc_validation_checks = {
+    "all",
+    # These we do not live by:
+    "GL01",  # Docstring should start in the line immediately after the quotes
+    "EX01",
+    "EX02",  # examples failed (we test them separately)
+    "ES01",  # no extended summary
+    "SA01",  # no see also
+    "YD01",  # no yields section
+    "SA04",  # no description in See Also
+    "PR04",  # Parameter "shape (n_channels" has no type
+    "RT02",  # The first line of the Returns section should contain only the type, unless multiple values are being returned  # noqa
+}
 numpydoc_validation_exclude = {  # set of regex
     # dict subclasses
     r"\.clear",
