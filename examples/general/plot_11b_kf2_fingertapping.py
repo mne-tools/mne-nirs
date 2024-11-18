@@ -185,7 +185,8 @@ raw_filt = raw.copy().filter(0.01, 0.1, h_trans_bandwidth=0.01, l_trans_bandwidt
 
 # %%
 #
-# A little bit of MNE syntax to epoch the data with respect to the events we just extracted:
+# A little bit of MNE syntax to epoch the data with respect to the events we just
+# extracted:
 
 tmin, tmax = -5, 45
 epochs = mne.Epochs(
