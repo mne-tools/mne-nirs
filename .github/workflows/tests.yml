@@ -58,7 +58,7 @@ jobs:
         if: matrix.kind == 'conda'
       - run: pip install -r requirements_testing.txt
       - run: git clone https://github.com/mne-tools/mne-python
-      - run: pip install --upgrade --pre -e ./mne-python git+https://github.com/nilearn/nilearn
+      - run: pip install --upgrade --pre -e ./mne-python "git+https://github.com/larsoner/nilearn@sklearn"
         if: matrix.mne == 'dev'
         name: Install MNE and nilearn dev
       # - run: pip install --upgrade --pre --force --only-binary=":all:" --index-url "https://pypi.anaconda.org/scientific-python-nightly-wheels/simple" "numpy>=2.0.0rc1" scipy h5py matplotlib pandas scikit-learn statsmodels "tables>=3.9.3.dev0"
