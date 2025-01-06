@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne_nirs.visualisation._plot_GLM_topo &#8212; MNE-NIRS 0.8.0.dev32+g34146ef documentation</title>
+    <title>mne_nirs.visualisation._plot_GLM_topo &#8212; MNE-NIRS 0.8.0.dev33+g0c41a93 documentation</title>
   
   
   
@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../_static/documentation_options.js?v=ccf79b62"></script>
+    <script src="../../../_static/documentation_options.js?v=2965028b"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -381,21 +381,21 @@ document.write(`
 <span class="c1">#</span>
 <span class="c1"># License: BSD (3-clause)</span>
 
-<span class="kn">import</span> <span class="nn">inspect</span>
-<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
 
-<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">mne</span> <span class="kn">import</span> <span class="n">Info</span><span class="p">,</span> <span class="n">pick_info</span>
-<span class="kn">from</span> <span class="nn">mne.channels.layout</span> <span class="kn">import</span> <span class="n">_merge_ch_data</span>
-<span class="kn">from</span> <span class="nn">mne.io.pick</span> <span class="kn">import</span> <span class="n">_picks_to_idx</span>
-<span class="kn">from</span> <span class="nn">mne.utils</span> <span class="kn">import</span> <span class="n">warn</span>
-<span class="kn">from</span> <span class="nn">mne.viz</span> <span class="kn">import</span> <span class="n">plot_topomap</span>
-<span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1.axes_divider</span> <span class="kn">import</span> <span class="n">make_axes_locatable</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpl</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mne</span><span class="w"> </span><span class="kn">import</span> <span class="n">Info</span><span class="p">,</span> <span class="n">pick_info</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mne.channels.layout</span><span class="w"> </span><span class="kn">import</span> <span class="n">_merge_ch_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mne.io.pick</span><span class="w"> </span><span class="kn">import</span> <span class="n">_picks_to_idx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mne.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">warn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mne.viz</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_topomap</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.axes_grid1.axes_divider</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_axes_locatable</span>
 
 
-<span class="k">def</span> <span class="nf">_plot_glm_topo</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_plot_glm_topo</span><span class="p">(</span>
     <span class="n">inst</span><span class="p">,</span>
     <span class="n">glm_estimates</span><span class="p">,</span>
     <span class="n">design_matrix</span><span class="p">,</span>
@@ -490,7 +490,7 @@ document.write(`
     <span class="k">return</span> <span class="n">_get_fig_from_axes</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_plot_glm_contrast_topo</span><span class="p">(</span><span class="n">inst</span><span class="p">,</span> <span class="n">contrast</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">sphere</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_plot_glm_contrast_topo</span><span class="p">(</span><span class="n">inst</span><span class="p">,</span> <span class="n">contrast</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">sphere</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">info</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">inst</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inst</span><span class="p">,</span> <span class="n">Info</span><span class="p">)</span> <span class="k">else</span> <span class="n">inst</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
 
     <span class="c1"># Extract types. One subplot is created per type (hbo/hbr)</span>
@@ -550,7 +550,7 @@ document.write(`
 
 <div class="viewcode-block" id="plot_glm_group_topo">
 <a class="viewcode-back" href="../../../generated/mne_nirs.visualisation.plot_glm_group_topo.html#mne_nirs.visualisation.plot_glm_group_topo">[docs]</a>
-<span class="k">def</span> <span class="nf">plot_glm_group_topo</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_glm_group_topo</span><span class="p">(</span>
     <span class="n">inst</span><span class="p">,</span>
     <span class="n">statsmodel_df</span><span class="p">,</span>
     <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Coef.&quot;</span><span class="p">,</span>
@@ -709,9 +709,9 @@ document.write(`
 
 
 
-<span class="k">def</span> <span class="nf">_handle_overlaps</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">sphere</span><span class="p">,</span> <span class="n">estimates</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_handle_overlaps</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">sphere</span><span class="p">,</span> <span class="n">estimates</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Prepare for topomap including merging channels.&quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">mne.viz.topomap</span> <span class="kn">import</span> <span class="n">_prepare_topomap_plot</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mne.viz.topomap</span><span class="w"> </span><span class="kn">import</span> <span class="n">_prepare_topomap_plot</span>
 
     <span class="n">picks</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">info_subset</span> <span class="o">=</span> <span class="n">pick_info</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">picks</span><span class="p">)</span>
@@ -728,7 +728,7 @@ document.write(`
     <span class="k">return</span> <span class="n">estmrg</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">ch_names</span><span class="p">,</span> <span class="n">sphere</span>
 
 
-<span class="k">def</span> <span class="nf">_get_fig_from_axes</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_fig_from_axes</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">mpl</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">SubplotBase</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
     <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span> <span class="ow">is</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -737,7 +737,7 @@ document.write(`
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to extract figure from </span><span class="si">{</span><span class="n">ax</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_handle_vlim</span><span class="p">(</span><span class="n">vlim</span><span class="p">,</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">estimates</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_handle_vlim</span><span class="p">(</span><span class="n">vlim</span><span class="p">,</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">estimates</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">vmin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">vmax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">warn</span><span class="p">(</span>
             <span class="s2">&quot;vmin and vmax are deprecated and will be removed in the next &quot;</span>
@@ -800,7 +800,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-12-23T22:45:25.434900+00:00" class="localized">2024-12-23 22:45 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-01-06T23:22:35.447497+00:00" class="localized">2025-01-06 23:22 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

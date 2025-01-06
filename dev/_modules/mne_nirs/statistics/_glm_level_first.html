@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne_nirs.statistics._glm_level_first &#8212; MNE-NIRS 0.8.0.dev32+g34146ef documentation</title>
+    <title>mne_nirs.statistics._glm_level_first &#8212; MNE-NIRS 0.8.0.dev33+g0c41a93 documentation</title>
   
   
   
@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../_static/documentation_options.js?v=ccf79b62"></script>
+    <script src="../../../_static/documentation_options.js?v=2965028b"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -381,41 +381,41 @@ document.write(`
 <span class="c1">#</span>
 <span class="c1"># License: BSD (3-clause)</span>
 
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
-<span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">getfullargspec</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">PosixPath</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">inspect</span><span class="w"> </span><span class="kn">import</span> <span class="n">getfullargspec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">PosixPath</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">h5io</span> <span class="kn">import</span> <span class="n">read_hdf5</span><span class="p">,</span> <span class="n">write_hdf5</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">array_equal</span><span class="p">,</span> <span class="n">where</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">h5io</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_hdf5</span><span class="p">,</span> <span class="n">write_hdf5</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">array_equal</span><span class="p">,</span> <span class="n">where</span>
 
 <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">(</span><span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
-    <span class="kn">import</span> <span class="nn">nilearn.glm</span>
-    <span class="kn">from</span> <span class="nn">nilearn.glm.first_level</span> <span class="kn">import</span> <span class="n">run_glm</span> <span class="k">as</span> <span class="n">nilearn_glm</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">nilearn.glm</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">nilearn.glm.first_level</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_glm</span> <span class="k">as</span> <span class="n">nilearn_glm</span>
 
 <span class="k">try</span><span class="p">:</span>  <span class="c1"># remove once MNE 1.6 is required</span>
-    <span class="kn">from</span> <span class="nn">mne._fiff.meas_info</span> <span class="kn">import</span> <span class="n">ContainsMixin</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mne._fiff.meas_info</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContainsMixin</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">mne.io.meas_info</span> <span class="kn">import</span> <span class="n">ContainsMixin</span>
-<span class="kn">from</span> <span class="nn">mne</span> <span class="kn">import</span> <span class="n">Info</span><span class="p">,</span> <span class="n">pick_info</span>
-<span class="kn">from</span> <span class="nn">mne.io.constants</span> <span class="kn">import</span> <span class="n">FIFF</span>
-<span class="kn">from</span> <span class="nn">mne.io.pick</span> <span class="kn">import</span> <span class="n">_picks_to_idx</span>
-<span class="kn">from</span> <span class="nn">mne.utils</span> <span class="kn">import</span> <span class="n">_validate_type</span><span class="p">,</span> <span class="n">check_fname</span><span class="p">,</span> <span class="n">fill_doc</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">warn</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mne.io.meas_info</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContainsMixin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mne</span><span class="w"> </span><span class="kn">import</span> <span class="n">Info</span><span class="p">,</span> <span class="n">pick_info</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mne.io.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">FIFF</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mne.io.pick</span><span class="w"> </span><span class="kn">import</span> <span class="n">_picks_to_idx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mne.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_validate_type</span><span class="p">,</span> <span class="n">check_fname</span><span class="p">,</span> <span class="n">fill_doc</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">warn</span>
 
-<span class="kn">from</span> <span class="nn">..statistics._roi</span> <span class="kn">import</span> <span class="n">_glm_region_of_interest</span>
-<span class="kn">from</span> <span class="nn">..visualisation</span> <span class="kn">import</span> <span class="n">plot_glm_surface_projection</span>
-<span class="kn">from</span> <span class="nn">..visualisation._plot_GLM_topo</span> <span class="kn">import</span> <span class="n">_plot_glm_contrast_topo</span><span class="p">,</span> <span class="n">_plot_glm_topo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..statistics._roi</span><span class="w"> </span><span class="kn">import</span> <span class="n">_glm_region_of_interest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..visualisation</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_glm_surface_projection</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..visualisation._plot_GLM_topo</span><span class="w"> </span><span class="kn">import</span> <span class="n">_plot_glm_contrast_topo</span><span class="p">,</span> <span class="n">_plot_glm_topo</span>
 
 
 <span class="nd">@fill_doc</span>
-<span class="k">class</span> <span class="nc">_BaseGLM</span><span class="p">(</span><span class="n">ContainsMixin</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">_BaseGLM</span><span class="p">(</span><span class="n">ContainsMixin</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Base GLM results class.&quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">ch_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ch_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the channel names.</span>
 
 <span class="sd">        Returns</span>
@@ -425,16 +425,16 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;ch_names&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;GLM Results for </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span><span class="si">}</span><span class="s2"> channels&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;GLM Results for </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span><span class="si">}</span><span class="s2"> channels&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># noqa: D105</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># noqa: D105</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the state of the GLM results as a dictionary.</span>
 
 <span class="sd">        See _state_to_glm for inverse operation.</span>
@@ -469,7 +469,7 @@ document.write(`
             <span class="n">state</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span>
         <span class="k">return</span> <span class="n">state</span>
 
-    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a copy of the GLM results.</span>
 
 <span class="sd">        Returns</span>
@@ -480,7 +480,7 @@ document.write(`
         <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="nd">@fill_doc</span>
-    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Save GLM results to disk.</span>
 
 <span class="sd">        Parameters</span>
@@ -499,7 +499,7 @@ document.write(`
             <span class="p">)</span>
         <span class="n">write_hdf5</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_state</span><span class="p">(),</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;mnepython&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a tidy dataframe representing the GLM results.</span>
 
 <span class="sd">        Parameters</span>
@@ -512,13 +512,13 @@ document.write(`
 <span class="sd">        tidy : pandas.DataFrame</span>
 <span class="sd">            Dataframe containing GLM results.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">glm_to_tidy</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">..utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">glm_to_tidy</span>
 
         <span class="k">if</span> <span class="n">order</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ch_names</span>
         <span class="k">return</span> <span class="n">glm_to_tidy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">design</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">scatter</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scatter</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">conditions</span><span class="o">=</span><span class="p">(),</span> <span class="n">exclude_no_interest</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">no_interest</span><span class="o">=</span><span class="kc">None</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Scatter plot of the GLM results.</span>
@@ -544,7 +544,7 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">no_interest</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">no_interest</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;drift&quot;</span><span class="p">,</span> <span class="s2">&quot;constant&quot;</span><span class="p">,</span> <span class="s2">&quot;short&quot;</span><span class="p">,</span> <span class="s2">&quot;Short&quot;</span><span class="p">]</span>
-        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
         <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
 
@@ -587,7 +587,7 @@ document.write(`
 <div class="viewcode-block" id="RegressionResults">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults">[docs]</a>
 <span class="nd">@fill_doc</span>
-<span class="k">class</span> <span class="nc">RegressionResults</span><span class="p">(</span><span class="n">_BaseGLM</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RegressionResults</span><span class="p">(</span><span class="n">_BaseGLM</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class containing GLM regression results.</span>
 
@@ -607,11 +607,11 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span>
 
     <span class="nd">@data</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Data must be a dictionary type&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">array_equal</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">):</span>
@@ -625,13 +625,13 @@ document.write(`
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">design</span><span class="p">):</span>  <span class="c1"># noqa: D102</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">design</span><span class="p">):</span>  <span class="c1"># noqa: D102</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="n">info</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">design</span> <span class="o">=</span> <span class="n">design</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preload</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
         <span class="n">same_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">==</span> <span class="n">res</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
         <span class="n">same_design</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design</span> <span class="o">==</span> <span class="n">res</span><span class="o">.</span><span class="n">design</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
         <span class="n">same_ch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span> <span class="o">==</span> <span class="n">res</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span>
@@ -643,7 +643,7 @@ document.write(`
 <div class="viewcode-block" id="RegressionResults.pick">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.pick">[docs]</a>
     <span class="nd">@fill_doc</span>
-    <span class="k">def</span> <span class="nf">pick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">picks</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">()):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">picks</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">()):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Pick a subset of channels.</span>
 
 <span class="sd">        Parameters</span>
@@ -666,7 +666,7 @@ document.write(`
 
 <div class="viewcode-block" id="RegressionResults.theta">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.theta">[docs]</a>
-    <span class="k">def</span> <span class="nf">theta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">theta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the GLM theta results.</span>
 
 <span class="sd">        Returns</span>
@@ -679,7 +679,7 @@ document.write(`
 
 <div class="viewcode-block" id="RegressionResults.MSE">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.MSE">[docs]</a>
-    <span class="k">def</span> <span class="nf">MSE</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">MSE</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the GLM MSE.</span>
 
 <span class="sd">        Returns</span>
@@ -692,7 +692,7 @@ document.write(`
 
 <div class="viewcode-block" id="RegressionResults.model">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.model">[docs]</a>
-    <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the GLM model.</span>
 
 <span class="sd">        Returns</span>
@@ -705,7 +705,7 @@ document.write(`
 
 <div class="viewcode-block" id="RegressionResults.compute_contrast">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.compute_contrast">[docs]</a>
-    <span class="k">def</span> <span class="nf">compute_contrast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contrast</span><span class="p">,</span> <span class="n">contrast_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_contrast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contrast</span><span class="p">,</span> <span class="n">contrast_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute contrasts on regression results.</span>
 
@@ -731,7 +731,7 @@ document.write(`
 
 <div class="viewcode-block" id="RegressionResults.plot_topo">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.plot_topo">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot_topo</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_topo</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">conditions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -791,7 +791,7 @@ document.write(`
 
 <div class="viewcode-block" id="RegressionResults.to_dataframe_region_of_interest">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.to_dataframe_region_of_interest">[docs]</a>
-    <span class="k">def</span> <span class="nf">to_dataframe_region_of_interest</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dataframe_region_of_interest</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">group_by</span><span class="p">,</span> <span class="n">condition</span><span class="p">,</span> <span class="n">weighted</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">demographic_info</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Region of interest results as a dataframe.</span>
@@ -881,7 +881,7 @@ document.write(`
 <div class="viewcode-block" id="RegressionResults.surface_projection">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults.surface_projection">[docs]</a>
     <span class="nd">@verbose</span>
-    <span class="k">def</span> <span class="nf">surface_projection</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">surface_projection</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">chroma</span><span class="o">=</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span>
         <span class="n">condition</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1007,7 +1007,7 @@ document.write(`
 <div class="viewcode-block" id="ContrastResults">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.ContrastResults.html#mne_nirs.statistics.ContrastResults">[docs]</a>
 <span class="nd">@fill_doc</span>
-<span class="k">class</span> <span class="nc">ContrastResults</span><span class="p">(</span><span class="n">_BaseGLM</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ContrastResults</span><span class="p">(</span><span class="n">_BaseGLM</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class containing GLM contrast results.</span>
 
@@ -1026,23 +1026,23 @@ document.write(`
 <span class="sd">        Result class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">design</span><span class="p">):</span>  <span class="c1"># noqa: D102</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">design</span><span class="p">):</span>  <span class="c1"># noqa: D102</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="n">info</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">design</span> <span class="o">=</span> <span class="n">design</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preload</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
         <span class="n">same_design</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">design</span> <span class="o">==</span> <span class="n">res</span><span class="o">.</span><span class="n">design</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
         <span class="n">same_ch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span> <span class="o">==</span> <span class="n">res</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">same_ch</span> <span class="ow">and</span> <span class="n">same_design</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span>
 
     <span class="nd">@data</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">nilearn</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">contrasts</span><span class="o">.</span><span class="n">Contrast</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Data must be a nilearn glm contrast type&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">effect</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">):</span>
@@ -1054,7 +1054,7 @@ document.write(`
 
 <div class="viewcode-block" id="ContrastResults.plot_topo">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.ContrastResults.html#mne_nirs.statistics.ContrastResults.plot_topo">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot_topo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">sphere</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_topo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">sphere</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot topomap GLM contrast data.</span>
 
@@ -1078,7 +1078,7 @@ document.write(`
 
 
 
-<span class="k">def</span> <span class="nf">run_GLM</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">,</span> <span class="n">noise_model</span><span class="o">=</span><span class="s2">&quot;ar1&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">run_GLM</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">,</span> <span class="n">noise_model</span><span class="o">=</span><span class="s2">&quot;ar1&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Run GLM on data using supplied design matrix.</span>
 
@@ -1133,7 +1133,7 @@ document.write(`
 
 <div class="viewcode-block" id="run_glm">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.run_glm.html#mne_nirs.statistics.run_glm">[docs]</a>
-<span class="k">def</span> <span class="nf">run_glm</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">,</span> <span class="n">noise_model</span><span class="o">=</span><span class="s2">&quot;ar1&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">run_glm</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">design_matrix</span><span class="p">,</span> <span class="n">noise_model</span><span class="o">=</span><span class="s2">&quot;ar1&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    GLM fit for an MNE structure containing fNIRS data.</span>
 
@@ -1197,8 +1197,8 @@ document.write(`
 
 
 
-<span class="k">def</span> <span class="nf">_compute_contrast</span><span class="p">(</span><span class="n">glm_est</span><span class="p">,</span> <span class="n">contrast</span><span class="p">,</span> <span class="n">contrast_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">nilearn.glm.contrasts</span> <span class="kn">import</span> <span class="n">compute_contrast</span> <span class="k">as</span> <span class="n">_cc</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_compute_contrast</span><span class="p">(</span><span class="n">glm_est</span><span class="p">,</span> <span class="n">contrast</span><span class="p">,</span> <span class="n">contrast_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">nilearn.glm.contrasts</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_contrast</span> <span class="k">as</span> <span class="n">_cc</span>
 
     <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;contrast_type&quot;</span>
     <span class="n">_ccc</span> <span class="o">=</span> <span class="n">_cc</span>
@@ -1212,7 +1212,7 @@ document.write(`
 
 <div class="viewcode-block" id="read_glm">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.read_glm.html#mne_nirs.statistics.read_glm">[docs]</a>
-<span class="k">def</span> <span class="nf">read_glm</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_glm</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read GLM results from disk.</span>
 
@@ -1233,7 +1233,7 @@ document.write(`
 
 
 
-<span class="k">def</span> <span class="nf">_state_to_glm</span><span class="p">(</span><span class="n">glm</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_state_to_glm</span><span class="p">(</span><span class="n">glm</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert state of GLM stored as dictionary to a MNE-NIRS GLM type.</span>
 
@@ -1352,7 +1352,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2024, MNE Developers. Last updated <time datetime="2024-12-23T22:45:25.434900+00:00" class="localized">2024-12-23 22:45 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-01-06T23:22:35.447497+00:00" class="localized">2025-01-06 23:22 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
