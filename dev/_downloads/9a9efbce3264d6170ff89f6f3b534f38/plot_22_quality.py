@@ -170,7 +170,7 @@ plot_timechannel_quality_metric(
     scores,
     times,
     threshold=0.7,
-    title="Scalp Coupling Index " "Quality Evaluation",
+    title="Scalp Coupling Index Quality Evaluation",
 )
 
 # %%

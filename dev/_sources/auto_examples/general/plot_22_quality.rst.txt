@@ -129,7 +129,7 @@ We then convert the data to optical density and plot the raw signal.
 
     Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f26f23d1870>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f2cabd9d000>
 
 
 
@@ -242,7 +242,7 @@ channels are now displayed in grey to indicate they are bad.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f25cca43490>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f2caa55e320>
 
 
 
@@ -345,7 +345,7 @@ define a window length that is appropriate for the experiment.
         scores,
         times,
         threshold=0.7,
-        title="Scalp Coupling Index " "Quality Evaluation",
+        title="Scalp Coupling Index Quality Evaluation",
     )
 
 
@@ -470,7 +470,7 @@ has been added.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f27362c96c0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f2cab0a5000>
 
 
 
@@ -562,7 +562,7 @@ on S2-D4).
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f26f1bc0f70>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f2cabce5120>
 
 
 
@@ -597,7 +597,7 @@ and bad time segments are marked in red.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f26f35feef0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f2caba7fe20>
 
 
 
@@ -617,9 +617,9 @@ are treated in downstream analysis.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 28.617 seconds)
+   **Total running time of the script:** (0 minutes 31.687 seconds)
 
-**Estimated memory usage:**  466 MB
+**Estimated memory usage:**  465 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_22_quality.py:

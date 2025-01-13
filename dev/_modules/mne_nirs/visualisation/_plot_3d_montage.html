@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne_nirs.visualisation._plot_3d_montage &#8212; MNE-NIRS 0.8.0.dev33+g0c41a93 documentation</title>
+    <title>mne_nirs.visualisation._plot_3d_montage &#8212; MNE-NIRS 0.8.0.dev34+gdd7d580 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../_static/documentation_options.js?v=2965028b"></script>
+    <script src="../../../_static/documentation_options.js?v=2989dd78"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -519,14 +519,11 @@ document.write(`
         <span class="k">if</span> <span class="n">bad</span><span class="p">:</span>
             <span class="n">src_det_names</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="s2">&quot;Could not automatically map source/detector names to &quot;</span>
-                <span class="s2">&quot;10-20 locations.&quot;</span>
+                <span class="s2">&quot;Could not automatically map source/detector names to 10-20 locations.&quot;</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">src_det_names</span> <span class="o">=</span> <span class="n">locs</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="s2">&quot;Source-detector names automatically mapped to 10-20 &quot;</span> <span class="s2">&quot;locations&quot;</span>
-            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Source-detector names automatically mapped to 10-20 locations&quot;</span><span class="p">)</span>
 
     <span class="n">head_mri_t</span> <span class="o">=</span> <span class="n">_get_trans</span><span class="p">(</span><span class="n">trans</span><span class="p">,</span> <span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="s2">&quot;mri&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">del</span> <span class="n">trans</span>
@@ -676,7 +673,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-01-06T23:22:35.447497+00:00" class="localized">2025-01-06 23:22 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-01-13T22:45:46.230598+00:00" class="localized">2025-01-13 22:45 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
