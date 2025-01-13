@@ -14,7 +14,7 @@ from mne.utils import check_version
 def examples_path():
     if not os.path.isdir("BIDS-NIRS-Tapping"):
         os.system(
-            "git clone --depth 1 " "https://github.com/rob-luke/BIDS-NIRS-Tapping.git"
+            "git clone --depth 1 https://github.com/rob-luke/BIDS-NIRS-Tapping.git"
         )
 
     if os.path.isdir("examples"):

@@ -46,17 +46,17 @@ def write_raw_snirf(raw, fname, add_montage=False):
     """
     supported_types = ["fnirs_cw_amplitude", "fnirs_od", "hbo", "hbr"]
     picks = _picks_to_idx(raw.info, supported_types, exclude=[])
-    assert len(picks) == len(
-        raw.ch_names
-    ), "Data must only be of type fnirs_cw_amplitude,  fnirs_od, hbo or hbr"
+    assert len(picks) == len(raw.ch_names), (
+        "Data must only be of type fnirs_cw_amplitude,  fnirs_od, hbo or hbr"
+    )
     if ("fnirs_cw_amplitude" in raw) or ("fnirs_od" in raw):
-        assert (
-            len(np.unique(raw.info.get_channel_types())) == 1
-        ), "All channels must be of the same type"
+        assert len(np.unique(raw.info.get_channel_types())) == 1, (
+            "All channels must be of the same type"
+        )
     elif ("hbo" in raw) or ("hbr" in raw):
-        assert (
-            len(np.unique(raw.info.get_channel_types())) <= 2
-        ), "Channels must be of type hbo and hbr"
+        assert len(np.unique(raw.info.get_channel_types())) <= 2, (
+            "Channels must be of type hbo and hbr"
+        )
 
     with h5py.File(fname, "w") as f:
         nirs = f.create_group("/nirs")
