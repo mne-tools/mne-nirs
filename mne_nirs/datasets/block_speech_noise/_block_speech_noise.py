@@ -75,7 +75,7 @@ def data_path(
     dpath = str(dpath)
 
     # Do some wrangling to deal with nested directories
-    bad_name = os.path.join(dpath, "2021-fNIRS-Analysis-Methods-" "Passive-Auditory")
+    bad_name = os.path.join(dpath, "2021-fNIRS-Analysis-Methods-Passive-Auditory")
     if os.path.isdir(bad_name):
         os.rename(bad_name, dpath + ".true")
         shutil.rmtree(dpath)

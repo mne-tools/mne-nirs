@@ -101,9 +101,9 @@ def plot_glm_surface_projection(
     info = deepcopy(inst if isinstance(inst, Info) else inst.info)
     if not (info.ch_names == list(statsmodel_df["ch_name"].values)):
         raise RuntimeError(
-            'MNE data structure does not match dataframe '
-            f'results.\nMNE = {info.ch_names}.\n'
-            f'GLM = {list(statsmodel_df["ch_name"].values)}'
+            "MNE data structure does not match dataframe "
+            f"results.\nMNE = {info.ch_names}.\n"
+            f"GLM = {list(statsmodel_df['ch_name'].values)}"
         )
 
     ea = EvokedArray(np.tile(statsmodel_df[value].values.T, (1, 1)).T, info.copy())

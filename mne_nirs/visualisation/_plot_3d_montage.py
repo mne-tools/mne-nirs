@@ -138,14 +138,11 @@ def plot_3d_montage(
         if bad:
             src_det_names = None
             logger.info(
-                "Could not automatically map source/detector names to "
-                "10-20 locations."
+                "Could not automatically map source/detector names to 10-20 locations."
             )
         else:
             src_det_names = locs
-            logger.info(
-                "Source-detector names automatically mapped to 10-20 " "locations"
-            )
+            logger.info("Source-detector names automatically mapped to 10-20 locations")
 
     head_mri_t = _get_trans(trans, "head", "mri")[0]
     del trans
