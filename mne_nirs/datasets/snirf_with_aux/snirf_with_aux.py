@@ -52,8 +52,8 @@ def data_path(
     """
     dataset_params = dict(
         archive_name="2022-08-05_002.snirf.zip",
-        hash="md5:35ce75d1715c8cca801894a7120b5691",
-        url="https://forae.s3.amazonaws.com/2022-08-05_002.snirf.zip",
+        hash="md5:c012485b80d762a65b05d812761c0f4c",
+        url="https://osf.io/download/682ddabd4d28c665accacc7c?version=2",
         folder_name="fNIRS-SNIRF-aux",
         dataset_name="snirf_with_aux",
         config_key="MNE_DATASETS_SNIRFAUX_PATH",

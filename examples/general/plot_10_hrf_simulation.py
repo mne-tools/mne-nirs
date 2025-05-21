@@ -59,7 +59,7 @@ design_matrix = make_first_level_design_matrix(
     raw, stim_dur=5.0, drift_order=1, drift_model="polynomial"
 )
 fig, ax1 = plt.subplots(figsize=(10, 6), constrained_layout=True)
-fig = plot_design_matrix(design_matrix, ax=ax1)
+fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 # %%

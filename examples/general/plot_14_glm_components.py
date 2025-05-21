@@ -267,7 +267,7 @@ design_matrix = make_first_level_design_matrix(
 )
 
 fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
-fig = plot_design_matrix(design_matrix, ax=ax1)
+fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 # %%
@@ -286,7 +286,7 @@ design_matrix = make_first_level_design_matrix(
 )
 
 fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
-fig = plot_design_matrix(design_matrix, ax=ax1)
+fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 # %%
@@ -306,7 +306,7 @@ design_matrix = make_first_level_design_matrix(
 )
 
 fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
-fig = plot_design_matrix(design_matrix, ax=ax1)
+fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 # %%
@@ -350,7 +350,7 @@ design_matrix = make_first_level_design_matrix(
 )
 
 fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
-fig = plot_design_matrix(design_matrix, ax=ax1)
+fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 # %%
@@ -369,7 +369,7 @@ design_matrix = make_first_level_design_matrix(
 )
 
 fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
-fig = plot_design_matrix(design_matrix, ax=ax1)
+fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 # %%
@@ -383,7 +383,7 @@ design_matrix = make_first_level_design_matrix(
 )
 
 fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
-fig = plot_design_matrix(design_matrix, ax=ax1)
+fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 # %%
