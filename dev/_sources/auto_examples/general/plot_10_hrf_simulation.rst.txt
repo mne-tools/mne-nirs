@@ -97,7 +97,7 @@ The simulated signal is plotted below.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f9015f17520>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7fc810a67eb0>
 
 
 
@@ -119,7 +119,7 @@ For more details on this procedure see :ref:`tut-fnirs-hrf`.
         raw, stim_dur=5.0, drift_order=1, drift_model="polynomial"
     )
     fig, ax1 = plt.subplots(figsize=(10, 6), constrained_layout=True)
-    fig = plot_design_matrix(design_matrix, ax=ax1)
+    fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 
@@ -130,13 +130,6 @@ For more details on this procedure see :ref:`tut-fnirs-hrf`.
    :srcset: /auto_examples/general/images/sphx_glr_plot_10_hrf_simulation_002.png
    :class: sphx-glr-single-img
 
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/circleci/project/examples/general/plot_10_hrf_simulation.py:62: DeprecationWarning: The parameter "ax" will be removed in 0.13.0 release of Nilearn. Please use the parameter "axes" instead.
-      fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
 
@@ -453,9 +446,9 @@ model of the noise can improve the accuracy of the response estimate.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.775 seconds)
+   **Total running time of the script:** (0 minutes 6.977 seconds)
 
-**Estimated memory usage:**  478 MB
+**Estimated memory usage:**  479 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_10_hrf_simulation.py:

@@ -163,7 +163,7 @@ Note that they differ in their peak timing and undershoot.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f9015ed8370>
+    <matplotlib.legend.Legend object at 0x7fc80a669360>
 
 
 
@@ -351,7 +351,7 @@ resulting regressor varies as a function of this parameter.
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f900f9b1330>
+    <matplotlib.colorbar.Colorbar object at 0x7fc80ad8d180>
 
 
 
@@ -439,7 +439,7 @@ displayed differently with color representing amplitude.
     )
 
     fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
-    fig = plot_design_matrix(design_matrix, ax=ax1)
+    fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 
@@ -450,13 +450,6 @@ displayed differently with color representing amplitude.
    :srcset: /auto_examples/general/images/sphx_glr_plot_14_glm_components_007.png
    :class: sphx-glr-single-img
 
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/circleci/project/examples/general/plot_14_glm_components.py:270: DeprecationWarning: The parameter "ax" will be removed in 0.13.0 release of Nilearn. Please use the parameter "axes" instead.
-      fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
 
@@ -482,7 +475,7 @@ the resulting regressor for each annotation is elongated.
     )
 
     fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
-    fig = plot_design_matrix(design_matrix, ax=ax1)
+    fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 
@@ -493,13 +486,6 @@ the resulting regressor for each annotation is elongated.
    :srcset: /auto_examples/general/images/sphx_glr_plot_14_glm_components_008.png
    :class: sphx-glr-single-img
 
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/circleci/project/examples/general/plot_14_glm_components.py:289: DeprecationWarning: The parameter "ax" will be removed in 0.13.0 release of Nilearn. Please use the parameter "axes" instead.
-      fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
 
@@ -526,7 +512,7 @@ This is not an issue, the design matrix can handle overlapping responses.
     )
 
     fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
-    fig = plot_design_matrix(design_matrix, ax=ax1)
+    fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 
@@ -537,13 +523,6 @@ This is not an issue, the design matrix can handle overlapping responses.
    :srcset: /auto_examples/general/images/sphx_glr_plot_14_glm_components_009.png
    :class: sphx-glr-single-img
 
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/circleci/project/examples/general/plot_14_glm_components.py:309: DeprecationWarning: The parameter "ax" will be removed in 0.13.0 release of Nilearn. Please use the parameter "axes" instead.
-      fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
 
@@ -595,7 +574,7 @@ higher frequency components will be regressed from the signal.
     )
 
     fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
-    fig = plot_design_matrix(design_matrix, ax=ax1)
+    fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 
@@ -606,13 +585,6 @@ higher frequency components will be regressed from the signal.
    :srcset: /auto_examples/general/images/sphx_glr_plot_14_glm_components_010.png
    :class: sphx-glr-single-img
 
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/circleci/project/examples/general/plot_14_glm_components.py:353: DeprecationWarning: The parameter "ax" will be removed in 0.13.0 release of Nilearn. Please use the parameter "axes" instead.
-      fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
 
@@ -639,7 +611,7 @@ We observe that the function has included 6 drift regressors in the design matri
     )
 
     fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
-    fig = plot_design_matrix(design_matrix, ax=ax1)
+    fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 
@@ -650,13 +622,6 @@ We observe that the function has included 6 drift regressors in the design matri
    :srcset: /auto_examples/general/images/sphx_glr_plot_14_glm_components_011.png
    :class: sphx-glr-single-img
 
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/circleci/project/examples/general/plot_14_glm_components.py:372: DeprecationWarning: The parameter "ax" will be removed in 0.13.0 release of Nilearn. Please use the parameter "axes" instead.
-      fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
 
@@ -677,7 +642,7 @@ this should add more regressors.
     )
 
     fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
-    fig = plot_design_matrix(design_matrix, ax=ax1)
+    fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 
@@ -688,13 +653,6 @@ this should add more regressors.
    :srcset: /auto_examples/general/images/sphx_glr_plot_14_glm_components_012.png
    :class: sphx-glr-single-img
 
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/circleci/project/examples/general/plot_14_glm_components.py:386: DeprecationWarning: The parameter "ax" will be removed in 0.13.0 release of Nilearn. Please use the parameter "axes" instead.
-      fig = plot_design_matrix(design_matrix, ax=ax1)
 
 
 
@@ -811,9 +769,9 @@ This would be achieved by renaming the triggers.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 14.286 seconds)
+   **Total running time of the script:** (0 minutes 14.311 seconds)
 
-**Estimated memory usage:**  476 MB
+**Estimated memory usage:**  478 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_14_glm_components.py:
