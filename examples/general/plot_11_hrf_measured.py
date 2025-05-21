@@ -200,7 +200,7 @@ design_matrix["ShortHbR"] = np.mean(
 # The last columns illustrate the short channel signals.
 
 fig, ax1 = plt.subplots(figsize=(10, 6), constrained_layout=True)
-fig = plot_design_matrix(design_matrix, ax=ax1)
+fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 # %%
