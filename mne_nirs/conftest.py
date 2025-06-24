@@ -66,6 +66,7 @@ def pytest_configure(config):
     ignore:The numpy\.linalg\.linalg has been made private.*:DeprecationWarning
     # sklearn
     ignore:KMeans is known to have a memory leak on Windows with MKL.*:UserWarning
+    ignore:.*The `disp` and `iprint` options of the L-BFGS-B.*:DeprecationWarning
     """  # noqa: E501
     for warning_line in warning_lines.split("\n"):
         warning_line = warning_line.strip()

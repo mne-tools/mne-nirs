@@ -58,12 +58,12 @@ jobs:
         if: matrix.kind == 'conda'
       - run: pip install -r requirements_testing.txt
       - run: git clone https://github.com/mne-tools/mne-python
-      - run: pip install --upgrade --pre -e ./mne-python "git+https://github.com/larsoner/nilearn@sklearn"
+      - run: pip install --upgrade --pre -e ./mne-python "git+https://github.com/nilearn/nilearn"
         if: matrix.mne == 'dev'
         name: Install MNE and nilearn dev
-      # - run: pip install --upgrade --pre --force --only-binary=":all:" --index-url "https://pypi.anaconda.org/scientific-python-nightly-wheels/simple" "numpy>=2.0.0rc1" scipy h5py matplotlib pandas scikit-learn statsmodels "tables>=3.9.3.dev0"
-      #   if: matrix.mne == 'dev' && startsWith(matrix.os, 'ubuntu')
-      #   name: Install numpy, scipy, nilearn pre
+      - run: pip install --upgrade --pre cycler "formulaic>=1.1.0" && pip install --upgrade --pre --only-binary=":all:" --index-url "https://pypi.anaconda.org/scientific-python-nightly-wheels/simple" "numpy>=2.0.0rc1" scipy h5py "matplotlib>=3.11.0.dev991" pandas scikit-learn "statsmodels>=0.15.0.dev655" "tables>=3.9.3.dev0"
+        if: matrix.mne == 'dev' && startsWith(matrix.os, 'ubuntu')
+        name: Install numpy, scipy, nilearn pre
       - run: pip install -ve . "numpy<2"
       - run: mne sys_info
       - run: ./tools/get_testing_version.sh
