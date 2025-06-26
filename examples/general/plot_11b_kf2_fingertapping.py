@@ -41,7 +41,6 @@ import os
 
 import gdown
 import h5py
-import matplotlib
 import matplotlib.pyplot as plt
 import mne
 import mne.channels
@@ -69,10 +68,9 @@ if not os.path.isfile(snirf_file):
     gdown.download(id=snirf_id, output=snirf_file)
 
 # now load into an MNE object
-raw = mne.io.snirf.read_raw_snirf(snirf_file)
-raw.load_data()
-# raw._data *= 1e-6
-
+raw = mne.io.snirf.read_raw_snirf(snirf_file).load_data().resample(1)
+raw.plot(duration=60)  # look at the data
+raw.get_channel_types(unique=True)
 
 # %%
 # Get more info from the snirf file
@@ -403,21 +401,10 @@ glm_est = mne_nirs.statistics.run_glm(raw, design_matrix, noise_model="auto")
 # Now plot the GLM results of the comparison between tapping and
 # control task on the scalp
 
-
-# A hack to remove channel markers from a topoplot
-def remove_markers_from_topo(topo):
-    for marker in topo.findobj(match=matplotlib.collections.PathCollection):
-        marker.set_visible(False)
-    for marker in topo.findobj(match=matplotlib.spines.Spine):
-        marker.set_visible(False)
-    for marker in topo.findobj(match=matplotlib.text.Text):
-        if marker.get_text() == "-":
-            marker.set_visible(False)
-
-
-fig, ax = plt.subplots(figsize=(6, 6), constrained_layout=True, ncols=2, nrows=2)
-topo = glm_est.plot_topo(conditions=["Tapping/Left", "Tapping/Right"], axes=ax)
-remove_markers_from_topo(topo)
+fig, ax = plt.subplots(figsize=(6, 6), ncols=2, nrows=2, layout="constrained")
+topo = glm_est.plot_topo(
+    conditions=["Tapping/Left", "Tapping/Right"], axes=ax, sensors=False
+)
 
 
 # %%
@@ -433,5 +420,4 @@ basic_conts = dict(
 )
 contrast_LvR = basic_conts["Tapping/Left"] - basic_conts["Tapping/Right"]
 contrast = glm_est.compute_contrast(contrast_LvR)
-topo = contrast.plot_topo()
-remove_markers_from_topo(topo)
+topo = contrast.plot_topo(sensors=False)
