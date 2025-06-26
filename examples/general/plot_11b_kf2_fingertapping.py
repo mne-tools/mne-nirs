@@ -383,8 +383,8 @@ design_matrix = mne_nirs.experimental_design.make_first_level_design_matrix(
 # %%
 #
 # Next, plot the design matrix
-fig, ax = plt.subplots(figsize=(10, 6), constrained_layout=True)
-nilearn.plotting.plot_design_matrix(design_matrix, ax=ax)
+fig, axes = plt.subplots(figsize=(10, 6), constrained_layout=True)
+nilearn.plotting.plot_design_matrix(design_matrix, axes=axes)
 
 
 # %%
@@ -418,7 +418,6 @@ def remove_markers_from_topo(topo):
 fig, ax = plt.subplots(figsize=(6, 6), constrained_layout=True, ncols=2, nrows=2)
 topo = glm_est.plot_topo(conditions=["Tapping/Left", "Tapping/Right"], axes=ax)
 remove_markers_from_topo(topo)
-plt.show()
 
 
 # %%
@@ -436,4 +435,3 @@ contrast_LvR = basic_conts["Tapping/Left"] - basic_conts["Tapping/Right"]
 contrast = glm_est.compute_contrast(contrast_LvR)
 topo = contrast.plot_topo()
 remove_markers_from_topo(topo)
-plt.show()
