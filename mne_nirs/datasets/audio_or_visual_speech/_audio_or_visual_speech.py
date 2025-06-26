@@ -56,8 +56,7 @@ def data_path(
     .. footbibliography::
     """
     dataset_params = dict(
-        archive_name="2021-fNIRS-Audio-visual-speech-"
-        "Broad-vs-restricted-regions.zip",
+        archive_name="2021-fNIRS-Audio-visual-speech-Broad-vs-restricted-regions.zip",
         hash="md5:16cac6565880dae6aed9b69100399d0b",
         url="https://osf.io/xwerv/download?version=1",
         folder_name="fNIRS-audio-visual-speech",
@@ -77,7 +76,7 @@ def data_path(
 
     # Do some wrangling to deal with nested directories
     bad_name = os.path.join(
-        dpath, "2021-fNIRS-Audio-visual-speech-" "Broad-vs-restricted-regions"
+        dpath, "2021-fNIRS-Audio-visual-speech-Broad-vs-restricted-regions"
     )
     if os.path.isdir(bad_name):
         os.rename(bad_name, dpath + ".true")

@@ -70,10 +70,10 @@ def simulate_nirs_raw(
     frame_times = np.arange(sig_dur * sfreq) / sfreq
 
     assert len(amplitude) == len(annot_desc), (
-        "Same number of amplitudes as " "annotations required."
+        "Same number of amplitudes as annotations required."
     )
     assert len(amplitude) == len(stim_dur), (
-        "Same number of amplitudes as " "durations required."
+        "Same number of amplitudes as durations required."
     )
 
     onset = 0.0

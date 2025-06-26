@@ -95,7 +95,7 @@ def drop_sources(raw, sources):
         all_str = all([isinstance(src, int) for src in sources])
     except TypeError:
         raise ValueError(
-            "'ch_names' must be iterable, got " f"type {type(sources)} ({sources})."
+            f"'ch_names' must be iterable, got type {type(sources)} ({sources})."
         )
 
     if not all_str:
@@ -139,7 +139,7 @@ def drop_detectors(raw, detectors):
         all_str = all([isinstance(det, int) for det in detectors])
     except TypeError:
         raise ValueError(
-            "'ch_names' must be iterable, got " f"type {type(detectors)} ({detectors})."
+            f"'ch_names' must be iterable, got type {type(detectors)} ({detectors})."
         )
 
     if not all_str:
@@ -183,7 +183,7 @@ def pick_sources(raw, sources):
         all_str = all([isinstance(src, int) for src in sources])
     except TypeError:
         raise ValueError(
-            "'ch_names' must be iterable, got " f"type {type(sources)} ({sources})."
+            f"'ch_names' must be iterable, got type {type(sources)} ({sources})."
         )
 
     if not all_str:
@@ -227,7 +227,7 @@ def pick_detectors(raw, detectors):
         all_str = all([isinstance(det, int) for det in detectors])
     except TypeError:
         raise ValueError(
-            "'ch_names' must be iterable, got " f"type {type(detectors)} ({detectors})."
+            f"'ch_names' must be iterable, got type {type(detectors)} ({detectors})."
         )
 
     if not all_str:

@@ -116,7 +116,7 @@ class _BaseGLM(ContainsMixin):
             fname = str(fname)
         if not fname.endswith("glm.h5"):
             raise OSError(
-                "The filename must end with glm.h5, " f"instead received {fname}"
+                f"The filename must end with glm.h5, instead received {fname}"
             )
         write_hdf5(fname, self._get_state(), overwrite=overwrite, title="mnepython")
 
@@ -240,7 +240,7 @@ class RegressionResults(_BaseGLM):
                 raise TypeError("Data names and channel names do not match")
         for d in data:
             if type(data[d]) is not nilearn.glm.regression.RegressionResults:
-                raise TypeError("Dictionary items must be" " nilearn RegressionResults")
+                raise TypeError("Dictionary items must be nilearn RegressionResults")
 
         self._data = data
 
@@ -430,11 +430,11 @@ class RegressionResults(_BaseGLM):
 
         if isinstance(weighted, dict):
             if weighted.keys() != group_by.keys():
-                raise KeyError("Keys of group_by and weighted " "must be the same")
+                raise KeyError("Keys of group_by and weighted must be the same")
             for key in weighted.keys():
                 if len(weighted[key]) != len(group_by[key]):
                     raise ValueError(
-                        "The length of the keys for group_by " "and weighted must match"
+                        "The length of the keys for group_by and weighted must match"
                     )
                 if (np.array(weighted[key]) < 0).any():
                     raise ValueError("Weights must be positive values")
@@ -567,8 +567,8 @@ class RegressionResults(_BaseGLM):
         df_use = df.query("Condition in @condition")
         if len(df_use) == 0:
             raise KeyError(
-                f'condition={repr(condition)} not found in conditions: '
-                f'{sorted(set(df["Condition"]))}'
+                f"condition={repr(condition)} not found in conditions: "
+                f"{sorted(set(df['Condition']))}"
             )
         df = df_use
         df = df.query("Chroma in @chroma").copy()
@@ -639,7 +639,7 @@ class ContrastResults(_BaseGLM):
             raise TypeError("Data must be a nilearn glm contrast type")
         if data.effect.size != len(self.info.ch_names):
             raise TypeError(
-                "Data results must be the same length " "as the number of channels"
+                "Data results must be the same length as the number of channels"
             )
 
         self._data = data
@@ -853,9 +853,7 @@ def _state_to_glm(glm):
                     glm["data"][channel]["model"]["design"],
                 )
             else:
-                raise OSError(
-                    "Unknown model type " f"{glm['data'][channel]['modelname']}"
-                )
+                raise OSError(f"Unknown model type {glm['data'][channel]['modelname']}")
 
             for key in glm["data"][channel]["model"]:
                 model.__setattr__(key, glm["data"][channel]["model"][key])

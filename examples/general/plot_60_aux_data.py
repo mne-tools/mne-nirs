@@ -126,7 +126,7 @@ design_matrix["ShortHbR"] = np.mean(
 # not yet contain any auxiliary data.
 
 fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
-fig = plot_design_matrix(design_matrix, ax=ax1)
+fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 # %%
@@ -170,7 +170,7 @@ design_matrix = pd.concat([design_matrix, aux_df], axis=1)
 # And we can visually display the design matrix and verify
 # the data is included.
 fig, ax1 = plt.subplots(figsize=(10, 6), nrows=1, ncols=1)
-fig = plot_design_matrix(design_matrix, ax=ax1)
+fig = plot_design_matrix(design_matrix, axes=ax1)
 
 
 # %%

@@ -88,7 +88,7 @@ def quantify_mayer_fooof(
         # or raw data, I just haven't tried this. Let me know if this works
         # for you and we can ease this restriction.
         raise RuntimeError(
-            "Mayer wave estimation should be run on " "haemoglobin concentration data."
+            "Mayer wave estimation should be run on haemoglobin concentration data."
         )
 
     df = pd.DataFrame()
