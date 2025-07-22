@@ -18,6 +18,12 @@ def summary_to_dataframe(summary):
     if type(results) is not pd.core.frame.DataFrame:
         results = StringIO(summary.tables[1].as_html())
         results = pd.read_html(results, header=0, index_col=0)[0]
+    # Newer statsmodels + pandas these can end up as strings
+    for key in ("Std.Err.", "[0.025", "0.975]"):
+        if key in results.columns and results[key].dtype == "str":
+            results[key] = (
+                results[key].str.extract("([0-9.]+)", expand=False).astype(float)
+            )
     return results
 
 
