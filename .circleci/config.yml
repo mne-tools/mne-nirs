@@ -6,6 +6,8 @@ jobs:
     build_docs:
       docker:
         - image: cimg/base:current-22.04
+      # TODO: Revert this once our examples are fixed!
+      resource_class: large  # memory
       steps:
         - restore_cache:
             keys:
