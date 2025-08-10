@@ -37,20 +37,24 @@ high channel density.
 # License: BSD (3-clause)
 
 # Importage
-import os
+import os, sys, glob, h5py, gdown, numpy as np, pandas as pd
 
-import gdown
-import h5py
-import matplotlib.pyplot as plt
-import mne
-import mne.channels
-import mne.io.snirf
-import nilearn.plotting
-import numpy as np
-import pandas as pd
+from matplotlib import pyplot as plt
+from matplotlib import gridspec, colors as mcolors
 
-import mne_nirs.experimental_design
-import mne_nirs.statistics
+from mne.datasets import camh_kf_fnirs_fingertapping
+from mne import events_from_annotations as get_events_from_annotations,annotations_from_events as get_annotations_from_events
+from mne.channels import rename_channels,combine_channels
+from mne.viz import plot_topomap,plot_events,plot_compare_evokeds
+from mne.viz.utils import _check_sphere
+from mne.io.snirf import read_raw_snirf
+from mne import Epochs
+
+from mne_nirs.experimental_design import create_boxcar
+from mne_nirs.statistics import run_glm
+from mne_nirs.experimental_design import make_first_level_design_matrix
+
+from nilearn.plotting import plot_design_matrix
 
 # %%
 # Import raw NIRS data
@@ -62,15 +66,14 @@ import mne_nirs.statistics
 # After reading the data we resample down to 1Hz to meet github memory constraints.
 
 # first download the data
-snirf_id = "1VYtux3p3hcM41FPjmnAwDgc4MM8DBxkg"
-snirf_file = "Hb_Moments.snirf"
-if not os.path.isfile(snirf_file):
-    gdown.download(id=snirf_id, output=snirf_file)
+snirf_dir = camh_kf_fnirs_fingertapping.data_path()
+snirf_file = os.path.join(snirf_dir, 'sub-01', 'ses-01', 'nirs',
+            'sub-01_ses-01_task-fingertapping_nirs_HB_MOMENTS.snirf')
 
 # now load into an MNE object
-raw = mne.io.snirf.read_raw_snirf(snirf_file).load_data().resample(1)
-raw.plot(duration=60)  # look at the data
-raw.get_channel_types(unique=True)
+raw = read_raw_snirf(snirf_file).load_data().resample(1)
+sphere_coreg_pts = _check_sphere('auto', raw.copy().info.set_montage(raw.get_montage()))
+print(sphere_coreg_pts)
 
 # %%
 # Get more info from the snirf file
@@ -139,7 +142,7 @@ df_start_block
 # Define the events
 # ------------------------------------
 #
-events, _ = mne.events_from_annotations(raw, {"StartBlock": 1})
+events, _ = get_events_from_annotations(raw, {"StartBlock": 1})
 event_id = {"Tapping/Left": 1, "Tapping/Right": 2}
 events[df_start_block["BlockType.Left"] == 1.0, 2] = event_id["Tapping/Left"]
 events[df_start_block["BlockType.Right"] == 1.0, 2] = event_id["Tapping/Right"]
@@ -148,14 +151,14 @@ events
 # %%
 #
 # Plot the events
-mne.viz.plot_events(events, event_id=event_id, sfreq=raw.info["sfreq"])
+plot_events(events, event_id=event_id, sfreq=raw.info["sfreq"])
 
 
 # %%
 #
 # Convert useful events back to annotations...
 event_desc = {v: k for k, v in event_id.items()}
-annotations_from_events = mne.annotations_from_events(
+annotations_from_events = get_annotations_from_events(
     events, raw.info["sfreq"], event_desc=event_desc
 )
 
@@ -187,7 +190,7 @@ raw_filt = raw.copy().filter(0.01, 0.1, h_trans_bandwidth=0.01, l_trans_bandwidt
 # extracted:
 
 tmin, tmax = -5, 45
-epochs = mne.Epochs(
+epochs = Epochs(
     raw_filt,
     events,
     event_id=event_id,
@@ -237,14 +240,17 @@ left_evoked = epochs["Tapping/Left"].average(picks=idx_channels)
 right_evoked = epochs["Tapping/Right"].average(picks=idx_channels)
 left_right_evoked = left_evoked.copy()
 left_right_evoked._data = left_evoked._data - right_evoked._data
+right_left_evoked = left_evoked.copy()
+right_left_evoked._data = right_evoked._data - left_evoked._data
+
 
 # %%
 #
 # Now plot the evoked data
 chromophore = "hbo"
 times = [0, 10, 20, 30, 40]
-vlim = (-2, 2)
-
+vlim=(-5E6,5E6) #vlim = (-2, 2)
+                     
 plot_topo_kwargs = dict(
     ch_type=chromophore,
     sensors=False,
@@ -253,21 +259,22 @@ plot_topo_kwargs = dict(
     extrapolate="local",
     contours=0,
     colorbar=False,
-    show=False,
-)
+    show=False, 
+    sphere=sphere_coreg_pts)
 
-fig, ax = plt.subplots(
-    figsize=(12, 8), nrows=3, ncols=len(times), sharex=True, sharey=True
-)
+fig, ax = plt.subplots(figsize=(12, 8), nrows=4, ncols=len(times),
+                       sharex=True, sharey=True)
 
 for idx_time, time in enumerate(times):
     _ = left_evoked.plot_topomap([time], axes=ax[0][idx_time], **plot_topo_kwargs)
     _ = right_evoked.plot_topomap([time], axes=ax[1][idx_time], **plot_topo_kwargs)
     _ = left_right_evoked.plot_topomap([time], axes=ax[2][idx_time], **plot_topo_kwargs)
+    _ = right_left_evoked.plot_topomap([time], axes=ax[3][idx_time], **plot_topo_kwargs)    
     if idx_time == 0:
         ax[0][0].set_ylabel("LEFT")
         ax[1][0].set_ylabel("RIGHT")
-        ax[2][0].set_ylabel("LEFT - RIGHT")
+        ax[2][0].set_ylabel("LEFT  < RIGHT")
+        ax[3][0].set_ylabel("RIGHT > LEFT")
 fig.suptitle(chromophore)
 
 
@@ -293,6 +300,9 @@ is_selected_hbo = np.array([ch.endswith("hbo") for ch in left_evoked.info["ch_na
 # %%
 #
 # MODULE 21 is in the left motor cortex, MODULE 20 in the right motor cortex
+print('Channel numbers for module 20, sensor 01 and module 21, sensor 01')
+print(np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M020S01"))
+print(np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M021S01"))
 is_left_motor = is_selected_hbo & (
     idx_sources == np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M021S01")[0]
 )
@@ -300,18 +310,31 @@ is_right_motor = is_selected_hbo & (
     idx_sources == np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M020S01")[0]
 )
 
+
 # %%
 #
-# average all channels coming from source 20 or 21 formed with detectors
+# take a look at these and the rest of the KF2 channel locations on a montage plot
+fig, ax = plt.subplots(figsize=(20,10))
+left_evoked.info.get_montage().plot(axes=ax, show_names=True, sphere='auto');
+plt.tight_layout()
+
+fig, ax = plt.subplots(figsize=(20,10))
+left_evoked.info.get_montage().plot(axes=ax, show_names=['S61', 'S64'], sphere='auto');
+plt.tight_layout()
+
+
+# %%
+#
+# Now average all channels coming from source 20 or 21 formed with detectors
 # between 15-30mm from the source
-right_evoked_combined = mne.channels.combine_channels(
+right_evoked_combined = combine_channels(
     right_evoked,
     {
         "left_motor": np.flatnonzero(is_left_motor),
         "right_motor": np.flatnonzero(is_right_motor),
     },
 )
-left_evoked_combined = mne.channels.combine_channels(
+left_evoked_combined = combine_channels(
     left_evoked,
     {
         "left_motor": np.flatnonzero(is_left_motor),
@@ -321,9 +344,9 @@ left_evoked_combined = mne.channels.combine_channels(
 
 # %%
 #
-# now plot these
+# and plot the evoked time series for these channel averages 
 fig, axes = plt.subplots(figsize=(10, 5), ncols=2, sharey=True)
-mne.viz.plot_compare_evokeds(
+plot_compare_evokeds(
     dict(
         left=left_evoked_combined.copy().pick_channels(["left_motor"]),
         right=right_evoked_combined.copy().pick_channels(["left_motor"]),
@@ -333,7 +356,7 @@ mne.viz.plot_compare_evokeds(
     show=False,
 )
 axes[0].set_title("Left motor cortex\n\n")
-mne.viz.plot_compare_evokeds(
+plot_compare_evokeds(
     dict(
         left=left_evoked_combined.copy().pick_channels(["right_motor"]),
         right=right_evoked_combined.copy().pick_channels(["right_motor"]),
@@ -358,7 +381,7 @@ plt.tight_layout()
 # %%
 #
 # First show the boxcar design looks
-s = mne_nirs.experimental_design.create_boxcar(
+s = create_boxcar(
     raw, stim_dur=(stim_dur := df_start_block["Duration"].mean())
 )
 fig, ax = plt.subplots(figsize=(15, 6), constrained_layout=True)
@@ -370,7 +393,7 @@ ax.set_xlabel("Time (s)")
 # %%
 #
 # Now make a design matrix, including drift regressors
-design_matrix = mne_nirs.experimental_design.make_first_level_design_matrix(
+design_matrix = make_first_level_design_matrix(
     raw,
     drift_model="cosine",
     high_pass=0.01,  # Must be specified per experiment
@@ -382,7 +405,7 @@ design_matrix = mne_nirs.experimental_design.make_first_level_design_matrix(
 #
 # Next, plot the design matrix
 fig, axes = plt.subplots(figsize=(10, 6), constrained_layout=True)
-nilearn.plotting.plot_design_matrix(design_matrix, axes=axes)
+plot_design_matrix(design_matrix, axes=axes)
 
 
 # %%
@@ -391,10 +414,11 @@ nilearn.plotting.plot_design_matrix(design_matrix, axes=axes)
 
 # (clear channel names because mne_nirs plot_topo doesn't have the
 # option to hide sensor names, and we have a LOT)
-mne.channels.rename_channels(
+rename_channels(
     raw.info, {ch: "" for ch in raw.info["ch_names"]}, allow_duplicates=True
 )
-glm_est = mne_nirs.statistics.run_glm(raw, design_matrix, noise_model="auto")
+glm_est = run_glm(raw, design_matrix, noise_model="auto")
+
 
 # %%
 #
@@ -409,15 +433,92 @@ topo = glm_est.plot_topo(
 
 # %%
 #
-# compute simple contrasts: LEFT, RIGHT, and LEFT - RIGHT
+# compute simple contrasts: LEFT, RIGHT, LEFT>RIGHT, and RIGHT>LEFT
 contrast_matrix = np.eye(2)
 basic_conts = dict(
-    [
-        (column, contrast_matrix[i])
+    [(column, contrast_matrix[i])
         for i, column in enumerate(design_matrix.columns)
         if i < 2
-    ]
-)
-contrast_LvR = basic_conts["Tapping/Left"] - basic_conts["Tapping/Right"]
-contrast = glm_est.compute_contrast(contrast_LvR)
-topo = contrast.plot_topo(sensors=False)
+    ])
+contrast_L = basic_conts["Tapping/Left"]; 
+contrast_R = basic_conts["Tapping/Right"]
+contrast_LvR = contrast_L - contrast_R;   
+contrast_RvL = contrast_R - contrast_L
+
+# compute contrasts and put into a series of dicts for plotting
+condict_hboLR = {'LH FT HbO': glm_est.copy().pick('hbo').compute_contrast(contrast_L), 
+                 'RH FT HbO': glm_est.copy().pick('hbo').compute_contrast(contrast_R)}
+condict_hboLvsR = {'LH FT > RH FT HbO': glm_est.copy().pick('hbo').compute_contrast(contrast_LvR), 
+                   'RH FT > LH FT HbO': glm_est.copy().pick('hbo').compute_contrast(contrast_RvL)}
+
+condict_hbrLR = {'LH FT HbR': glm_est.copy().pick('hbr').compute_contrast(contrast_L), 
+                 'RH FT HbR': glm_est.copy().pick('hbr').compute_contrast(contrast_R)}
+condict_hbrLvsR = {'LH FT > RH FT HbR': glm_est.copy().pick('hbr').compute_contrast(contrast_LvR), 
+                   'RH FT > LH FT HbR': glm_est.copy().pick('hbr').compute_contrast(contrast_RvL)}
+
+# Make Reds with transparent "under" and "bad" (for NaNs/masked)
+cmap = plt.get_cmap('Reds').copy()
+cmap.set_under((1, 1, 1, 0))  # fully transparent for values < vmin
+cmap.set_bad((1, 1, 1, 0))    # also transparent for NaNs / masked
+
+plot_params = dict(
+    sensors=False,
+    image_interp="linear",
+    extrapolate='local',
+    contours=0, #colorbar=False,
+    sphere=sphere_coreg_pts,
+    show=False,
+    cmap=cmap)
+
+# Make a convenience function for plotting the contrast data 
+def plot2glmtttopos(condict, plot_params, thr_p, vlim):
+
+    fig, axes = plt.subplots(1, 2, figsize=(10, 6))
+    for ax in axes: ax.set_facecolor('white')  # what shows through transparency
+    
+    for con_it,(con_name,conest) in enumerate(condict.items()):    
+        t_map = conest.data.stat()
+        p_map = conest.data.p_value()
+        t_map_masked = t_map.copy()
+        #t_map_masked[p_map>thr_p] = 0
+        t_map_masked[p_map>thr_p] = np.ma.masked
+        chromo = str(np.unique(conest.get_channel_types())[0])
+        plot_topomap(t_map_masked,conest.info,axes=axes[con_it],
+                     vlim=vlim,ch_type=chromo,**plot_params)
+        
+        axes[con_it].set_title(con_name, fontsize=15)
+
+    plt.tight_layout(rect=[0, 0.08, 1, 1])   
+    # Shared horizontal colorbar (choose the scale you want to display)
+    cbar_ax = fig.add_axes([0.25, 0.02, 0.5, 0.035])
+    norm = mcolors.Normalize(vmin=vlim[0], vmax=vlim[1])#  # or match one panel: vmin=6/vmin=7
+    fig.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=plot_params['cmap']),
+                 cax=cbar_ax, orientation='horizontal', label='Stat value')    
+    #plt.show()
+    plt.tight_layout()
+
+
+# %%
+#
+# Hbo activations relative to baseline for left-handed and right-handed tapping
+plot2glmtttopos(condict_hboLR, plot_params, thr_p = 1E-8, vlim=(0.01,15));
+
+
+# %%
+#
+# Hbo activations for left-handed vs right-handed tapping and vice versa
+plot2glmtttopos(condict_hboLvsR, plot_params, thr_p = 1E-2, vlim=(0.01,5));
+
+
+# %%
+#
+# Hbr activations relative to baseline for left-handed and right-handed tapping
+plot2glmtttopos(condict_hbrLR, plot_params, thr_p = 0.1, vlim=(0.001,2));
+
+
+# %%
+#
+# Hbr activations for left-handed vs right-handed tapping and vice versa
+plot2glmtttopos(condict_hbrLvsR, plot_params, thr_p = 0.1, vlim=(0.001,2));
+
+
