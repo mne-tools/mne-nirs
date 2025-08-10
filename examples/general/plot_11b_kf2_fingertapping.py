@@ -37,24 +37,25 @@ high channel density.
 # License: BSD (3-clause)
 
 # Importage
-import os, sys, glob, h5py, gdown, numpy as np, pandas as pd
+import os
 
+import h5py
+import numpy as np
+import pandas as pd
+from matplotlib import colors as mcolors
 from matplotlib import pyplot as plt
-from matplotlib import gridspec, colors as mcolors
-
-from mne.datasets import camh_kf_fnirs_fingertapping
-from mne import events_from_annotations as get_events_from_annotations,annotations_from_events as get_annotations_from_events
-from mne.channels import rename_channels,combine_channels
-from mne.viz import plot_topomap,plot_events,plot_compare_evokeds
-from mne.viz.utils import _check_sphere
-from mne.io.snirf import read_raw_snirf
 from mne import Epochs
-
-from mne_nirs.experimental_design import create_boxcar
-from mne_nirs.statistics import run_glm
-from mne_nirs.experimental_design import make_first_level_design_matrix
-
+from mne import annotations_from_events as get_annotations_from_events
+from mne import events_from_annotations as get_events_from_annotations
+from mne.channels import combine_channels, rename_channels
+from mne.datasets import camh_kf_fnirs_fingertapping
+from mne.io.snirf import read_raw_snirf
+from mne.viz import plot_compare_evokeds, plot_events, plot_topomap
+from mne.viz.utils import _check_sphere
 from nilearn.plotting import plot_design_matrix
+
+from mne_nirs.experimental_design import create_boxcar, make_first_level_design_matrix
+from mne_nirs.statistics import run_glm
 
 # %%
 # Import raw NIRS data
@@ -67,12 +68,17 @@ from nilearn.plotting import plot_design_matrix
 
 # first download the data
 snirf_dir = camh_kf_fnirs_fingertapping.data_path()
-snirf_file = os.path.join(snirf_dir, 'sub-01', 'ses-01', 'nirs',
-            'sub-01_ses-01_task-fingertapping_nirs_HB_MOMENTS.snirf')
+snirf_file = os.path.join(
+    snirf_dir,
+    "sub-01",
+    "ses-01",
+    "nirs",
+    "sub-01_ses-01_task-fingertapping_nirs_HB_MOMENTS.snirf",
+)
 
 # now load into an MNE object
 raw = read_raw_snirf(snirf_file).load_data().resample(1)
-sphere_coreg_pts = _check_sphere('auto', raw.copy().info.set_montage(raw.get_montage()))
+sphere_coreg_pts = _check_sphere("auto", raw.copy().info.set_montage(raw.get_montage()))
 print(sphere_coreg_pts)
 
 # %%
@@ -249,8 +255,8 @@ right_left_evoked._data = right_evoked._data - left_evoked._data
 # Now plot the evoked data
 chromophore = "hbo"
 times = [0, 10, 20, 30, 40]
-vlim=(-5E6,5E6) #vlim = (-2, 2)
-                     
+vlim = (-5e6, 5e6)  # vlim = (-2, 2)
+
 plot_topo_kwargs = dict(
     ch_type=chromophore,
     sensors=False,
@@ -259,17 +265,19 @@ plot_topo_kwargs = dict(
     extrapolate="local",
     contours=0,
     colorbar=False,
-    show=False, 
-    sphere=sphere_coreg_pts)
+    show=False,
+    sphere=sphere_coreg_pts,
+)
 
-fig, ax = plt.subplots(figsize=(12, 8), nrows=4, ncols=len(times),
-                       sharex=True, sharey=True)
+fig, ax = plt.subplots(
+    figsize=(12, 8), nrows=4, ncols=len(times), sharex=True, sharey=True
+)
 
 for idx_time, time in enumerate(times):
     _ = left_evoked.plot_topomap([time], axes=ax[0][idx_time], **plot_topo_kwargs)
     _ = right_evoked.plot_topomap([time], axes=ax[1][idx_time], **plot_topo_kwargs)
     _ = left_right_evoked.plot_topomap([time], axes=ax[2][idx_time], **plot_topo_kwargs)
-    _ = right_left_evoked.plot_topomap([time], axes=ax[3][idx_time], **plot_topo_kwargs)    
+    _ = right_left_evoked.plot_topomap([time], axes=ax[3][idx_time], **plot_topo_kwargs)
     if idx_time == 0:
         ax[0][0].set_ylabel("LEFT")
         ax[1][0].set_ylabel("RIGHT")
@@ -300,7 +308,7 @@ is_selected_hbo = np.array([ch.endswith("hbo") for ch in left_evoked.info["ch_na
 # %%
 #
 # MODULE 21 is in the left motor cortex, MODULE 20 in the right motor cortex
-print('Channel numbers for module 20, sensor 01 and module 21, sensor 01')
+print("Channel numbers for module 20, sensor 01 and module 21, sensor 01")
 print(np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M020S01"))
 print(np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M021S01"))
 is_left_motor = is_selected_hbo & (
@@ -314,12 +322,12 @@ is_right_motor = is_selected_hbo & (
 # %%
 #
 # take a look at these and the rest of the KF2 channel locations on a montage plot
-fig, ax = plt.subplots(figsize=(20,10))
-left_evoked.info.get_montage().plot(axes=ax, show_names=True, sphere='auto');
+fig, ax = plt.subplots(figsize=(20, 10))
+left_evoked.info.get_montage().plot(axes=ax, show_names=True, sphere="auto")
 plt.tight_layout()
 
-fig, ax = plt.subplots(figsize=(20,10))
-left_evoked.info.get_montage().plot(axes=ax, show_names=['S61', 'S64'], sphere='auto');
+fig, ax = plt.subplots(figsize=(20, 10))
+left_evoked.info.get_montage().plot(axes=ax, show_names=["S61", "S64"], sphere="auto")
 plt.tight_layout()
 
 
@@ -344,7 +352,7 @@ left_evoked_combined = combine_channels(
 
 # %%
 #
-# and plot the evoked time series for these channel averages 
+# and plot the evoked time series for these channel averages
 fig, axes = plt.subplots(figsize=(10, 5), ncols=2, sharey=True)
 plot_compare_evokeds(
     dict(
@@ -381,9 +389,7 @@ plt.tight_layout()
 # %%
 #
 # First show the boxcar design looks
-s = create_boxcar(
-    raw, stim_dur=(stim_dur := df_start_block["Duration"].mean())
-)
+s = create_boxcar(raw, stim_dur=(stim_dur := df_start_block["Duration"].mean()))
 fig, ax = plt.subplots(figsize=(15, 6), constrained_layout=True)
 ax.plot(raw.times, s)
 ax.legend(["Left", "Right"], loc="upper right")
@@ -436,89 +442,111 @@ topo = glm_est.plot_topo(
 # compute simple contrasts: LEFT, RIGHT, LEFT>RIGHT, and RIGHT>LEFT
 contrast_matrix = np.eye(2)
 basic_conts = dict(
-    [(column, contrast_matrix[i])
+    [
+        (column, contrast_matrix[i])
         for i, column in enumerate(design_matrix.columns)
         if i < 2
-    ])
-contrast_L = basic_conts["Tapping/Left"]; 
+    ]
+)
+contrast_L = basic_conts["Tapping/Left"]
 contrast_R = basic_conts["Tapping/Right"]
-contrast_LvR = contrast_L - contrast_R;   
+contrast_LvR = contrast_L - contrast_R
 contrast_RvL = contrast_R - contrast_L
 
 # compute contrasts and put into a series of dicts for plotting
-condict_hboLR = {'LH FT HbO': glm_est.copy().pick('hbo').compute_contrast(contrast_L), 
-                 'RH FT HbO': glm_est.copy().pick('hbo').compute_contrast(contrast_R)}
-condict_hboLvsR = {'LH FT > RH FT HbO': glm_est.copy().pick('hbo').compute_contrast(contrast_LvR), 
-                   'RH FT > LH FT HbO': glm_est.copy().pick('hbo').compute_contrast(contrast_RvL)}
+condict_hboLR = {
+    "LH FT HbO": glm_est.copy().pick("hbo").compute_contrast(contrast_L),
+    "RH FT HbO": glm_est.copy().pick("hbo").compute_contrast(contrast_R),
+}
+condict_hboLvsR = {
+    "LH FT > RH FT HbO": glm_est.copy().pick("hbo").compute_contrast(contrast_LvR),
+    "RH FT > LH FT HbO": glm_est.copy().pick("hbo").compute_contrast(contrast_RvL),
+}
 
-condict_hbrLR = {'LH FT HbR': glm_est.copy().pick('hbr').compute_contrast(contrast_L), 
-                 'RH FT HbR': glm_est.copy().pick('hbr').compute_contrast(contrast_R)}
-condict_hbrLvsR = {'LH FT > RH FT HbR': glm_est.copy().pick('hbr').compute_contrast(contrast_LvR), 
-                   'RH FT > LH FT HbR': glm_est.copy().pick('hbr').compute_contrast(contrast_RvL)}
+condict_hbrLR = {
+    "LH FT HbR": glm_est.copy().pick("hbr").compute_contrast(contrast_L),
+    "RH FT HbR": glm_est.copy().pick("hbr").compute_contrast(contrast_R),
+}
+condict_hbrLvsR = {
+    "LH FT > RH FT HbR": glm_est.copy().pick("hbr").compute_contrast(contrast_LvR),
+    "RH FT > LH FT HbR": glm_est.copy().pick("hbr").compute_contrast(contrast_RvL),
+}
 
 # Make Reds with transparent "under" and "bad" (for NaNs/masked)
-cmap = plt.get_cmap('Reds').copy()
+cmap = plt.get_cmap("Reds").copy()
 cmap.set_under((1, 1, 1, 0))  # fully transparent for values < vmin
-cmap.set_bad((1, 1, 1, 0))    # also transparent for NaNs / masked
+cmap.set_bad((1, 1, 1, 0))  # also transparent for NaNs / masked
 
 plot_params = dict(
     sensors=False,
     image_interp="linear",
-    extrapolate='local',
-    contours=0, #colorbar=False,
+    extrapolate="local",
+    contours=0,  # colorbar=False,
     sphere=sphere_coreg_pts,
     show=False,
-    cmap=cmap)
+    cmap=cmap,
+)
 
-# Make a convenience function for plotting the contrast data 
+
+# Make a convenience function for plotting the contrast data
 def plot2glmtttopos(condict, plot_params, thr_p, vlim):
-
     fig, axes = plt.subplots(1, 2, figsize=(10, 6))
-    for ax in axes: ax.set_facecolor('white')  # what shows through transparency
-    
-    for con_it,(con_name,conest) in enumerate(condict.items()):    
+    for ax in axes:
+        ax.set_facecolor("white")  # what shows through transparency
+
+    for con_it, (con_name, conest) in enumerate(condict.items()):
         t_map = conest.data.stat()
         p_map = conest.data.p_value()
         t_map_masked = t_map.copy()
-        #t_map_masked[p_map>thr_p] = 0
-        t_map_masked[p_map>thr_p] = np.ma.masked
+        # t_map_masked[p_map>thr_p] = 0
+        t_map_masked[p_map > thr_p] = np.ma.masked
         chromo = str(np.unique(conest.get_channel_types())[0])
-        plot_topomap(t_map_masked,conest.info,axes=axes[con_it],
-                     vlim=vlim,ch_type=chromo,**plot_params)
-        
+        plot_topomap(
+            t_map_masked,
+            conest.info,
+            axes=axes[con_it],
+            vlim=vlim,
+            ch_type=chromo,
+            **plot_params,
+        )
+
         axes[con_it].set_title(con_name, fontsize=15)
 
-    plt.tight_layout(rect=[0, 0.08, 1, 1])   
+    plt.tight_layout(rect=[0, 0.08, 1, 1])
     # Shared horizontal colorbar (choose the scale you want to display)
     cbar_ax = fig.add_axes([0.25, 0.02, 0.5, 0.035])
-    norm = mcolors.Normalize(vmin=vlim[0], vmax=vlim[1])#  # or match one panel: vmin=6/vmin=7
-    fig.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=plot_params['cmap']),
-                 cax=cbar_ax, orientation='horizontal', label='Stat value')    
-    #plt.show()
+    norm = mcolors.Normalize(
+        vmin=vlim[0], vmax=vlim[1]
+    )  #  # or match one panel: vmin=6/vmin=7
+    fig.colorbar(
+        plt.cm.ScalarMappable(norm=norm, cmap=plot_params["cmap"]),
+        cax=cbar_ax,
+        orientation="horizontal",
+        label="Stat value",
+    )
+    # plt.show()
     plt.tight_layout()
 
 
 # %%
 #
 # Hbo activations relative to baseline for left-handed and right-handed tapping
-plot2glmtttopos(condict_hboLR, plot_params, thr_p = 1E-8, vlim=(0.01,15));
+plot2glmtttopos(condict_hboLR, plot_params, thr_p=1e-8, vlim=(0.01, 15))
 
 
 # %%
 #
 # Hbo activations for left-handed vs right-handed tapping and vice versa
-plot2glmtttopos(condict_hboLvsR, plot_params, thr_p = 1E-2, vlim=(0.01,5));
+plot2glmtttopos(condict_hboLvsR, plot_params, thr_p=1e-2, vlim=(0.01, 5))
 
 
 # %%
 #
 # Hbr activations relative to baseline for left-handed and right-handed tapping
-plot2glmtttopos(condict_hbrLR, plot_params, thr_p = 0.1, vlim=(0.001,2));
+plot2glmtttopos(condict_hbrLR, plot_params, thr_p=0.1, vlim=(0.001, 2))
 
 
 # %%
 #
 # Hbr activations for left-handed vs right-handed tapping and vice versa
-plot2glmtttopos(condict_hbrLvsR, plot_params, thr_p = 0.1, vlim=(0.001,2));
-
-
+plot2glmtttopos(condict_hbrLvsR, plot_params, thr_p=0.1, vlim=(0.001, 2))
