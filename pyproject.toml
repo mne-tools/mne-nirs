@@ -73,7 +73,7 @@ ignore-words = ".github/workflows/ignore_words.txt"
 builtin = "clear,rare,informal,names,usage"
 skip = "doc/references.bib"
 
-[tool.ruff]
+[tool.ruff.lint]
 select = ["A", "B006", "D", "E", "F", "I", "W", "UP"]
 exclude = ["__init__.py"]
 ignore = [
@@ -83,7 +83,7 @@ ignore = [
     "UP031", # Use format specifiers instead of percent format
 ]
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "numpy"
 ignore-decorators = [
     "property",
