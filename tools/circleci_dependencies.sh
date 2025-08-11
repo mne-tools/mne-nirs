@@ -11,7 +11,7 @@ echo "Installing dependencies"
 python -m pip install --upgrade --progress-bar off \
     -r requirements.txt -r requirements_testing.txt -r requirements_doc.txt \
     "mne-qt-browser[opengl] @ git+https://github.com/mne-tools/mne-qt-browser.git@main" \
-    "https://github.com/larsoner/mne-python/archive/refs/heads/feature/TD-nirs_snirf.zip" \
+    "https://github.com/JohnGriffiths/mne-python/archive/refs/heads/kf-fnirs-dataset.zip" \
     "mne-bids" \
     --only-binary="numpy,scipy,scikit-learn,matplotlib,pandas,ndindex,tables" \
     -e .
