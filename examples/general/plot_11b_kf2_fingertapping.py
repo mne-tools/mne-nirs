@@ -57,12 +57,12 @@ from mne import Epochs
 from mne import annotations_from_events as get_annotations_from_events
 from mne import events_from_annotations as get_events_from_annotations
 from mne.channels import combine_channels, rename_channels
-from mne.datasets import camh_kf_fnirs_fingertapping
 from mne.io.snirf import read_raw_snirf
 from mne.viz import plot_compare_evokeds, plot_events, plot_topomap
 from mne.viz.utils import _check_sphere
 from nilearn.plotting import plot_design_matrix
 
+from mne_nirs.datasets import camh_kf_fnirs_fingertapping
 from mne_nirs.experimental_design import create_boxcar, make_first_level_design_matrix
 from mne_nirs.statistics import run_glm
 
