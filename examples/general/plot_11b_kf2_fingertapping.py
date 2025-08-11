@@ -526,8 +526,8 @@ def plot2glmtttopos(condict, plot_params, thr_p, vlim):
 # %%
 #
 # Start with HbO activations relative to baseline for left-handed and right-handed
-# tapping. We'll also employ another standard neuroimaging approach of viewing a
-# result at various significance levels, and looking at how it 'resolves down' spatially.
+# tapping. We'll also employ another standard neuroimaging approach of viewing a result
+# at various significance levels, and looking at how it 'resolves down' spatially.
 # Here are topoplots of the effect sizes for L>baseline and R>baseline finger tapping,
 # at three signifiance threshodling levels (p<0.01, p<0.0001, p0.0000001)
 plot2glmtttopos(condict_hboLR, plot_params, thr_p=0.01, vlim=(0.01, 15))
@@ -541,10 +541,11 @@ plot2glmtttopos(condict_hboLR, plot_params, thr_p=0.0001, vlim=(0.01, 15))
 plot2glmtttopos(condict_hboLR, plot_params, thr_p=0.0000000001, vlim=(0.01, 15))
 
 # %%
-# A few comments here. First, there are two consistent zones of activation - motor cortex
-# and occipital cortex - with a core pattern that does not change with thresholding.
-# The fact that the pattern is visible at high thresholding levels indicates this is a
-# very strong effect. The motor activation is correctly located and lateralized, so
+# A few comments here. First, there are two consistent zones of activation - motor
+# cortex and occipital cortex - with a core pattern that does not change with
+# thresholding. The fact that the pattern is visible at high thresholding levels
+# indicates this is a very strong effect.
+# The motor activation is correctly located and lateralized, so
 # right-handed tapping clearly activations left motor cortex, and left-handed tapping
 # activates right motor cortex. Both of these conditions also produce a strong visual
 # activation - which is expected, because the visual stimlus (see above description)
