@@ -20,7 +20,7 @@ Addiction and Mental Health (CAMH) in Toronto in August 2025. It consists
 of two 13-minute runs of the Kernel Finger tapping task, which is part of
 the standard task battery distributed with the Flow2 system. Additional
 recordings with the same task are also available on the Kernel Website.
-The :ref:`experiment design <plot-the-design-matrix>` follows the usual
+The :ref:`experiment design <tut-fnirs-glm-components>` follows the usual
 structure for motor tasks of this kind: three conditions (left-handed tapping,
 right-handed tapping, and no tapping + fixation cross), alternating
 pseudo-randomly. For the tapping conditinos, a minimal hand diagram is
