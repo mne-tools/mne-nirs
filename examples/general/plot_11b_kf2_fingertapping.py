@@ -15,26 +15,26 @@ and test of ``mne-nirs`` for TD data, and also as an example of fNIRS
 brain activity measurements from a high-density (~5000 channel)
 whole-head montage.
 
-The `dataset <https://osf.io/4nsrv>`_ was collected at the Centre for 
-Addiction and Mental Health (CAMH) in Toronto in August 2025. It consists 
-of two 13-minute runs of the Kernel Finger tapping task, which is part of 
-the standard task battery distributed with the Flow2 system. Additional 
-recordings with the same task are also available on the Kernel Website. 
-The :ref:`experiment design <plot-the-design-matrix>` follows the usual 
-structure for motor tasks of this kind: three conditions (left-handed tapping, 
-right-handed tapping, and no tapping + fixation cross), alternating 
-pseudo-randomly. For the tapping conditinos, a minimal hand diagram is 
-displayed that shows red flashes on the fingertips, indicating which finger 
-should be tapped on the thumb. The highlighted finger alternates every few 
-seconds, with each finger change defining a trial. Here we do not make use 
+The `dataset <https://osf.io/4nsrv>`_ was collected at the Centre for
+Addiction and Mental Health (CAMH) in Toronto in August 2025. It consists
+of two 13-minute runs of the Kernel Finger tapping task, which is part of
+the standard task battery distributed with the Flow2 system. Additional
+recordings with the same task are also available on the Kernel Website.
+The :ref:`experiment design <plot-the-design-matrix>` follows the usual
+structure for motor tasks of this kind: three conditions (left-handed tapping,
+right-handed tapping, and no tapping + fixation cross), alternating
+pseudo-randomly. For the tapping conditinos, a minimal hand diagram is
+displayed that shows red flashes on the fingertips, indicating which finger
+should be tapped on the thumb. The highlighted finger alternates every few
+seconds, with each finger change defining a trial. Here we do not make use
 of the full event-related component of the design, but do block-wise comparisons
-between the three conditions. 
+between the three conditions.
 
-As with the main ``mne-nirs`` finger tapping example, the following demonstrates 
-an ‘Evoked’ (trial-averaging) and GLM-based analysis of this experiment. 
-There are some modifications made to the visualization code to accomodate the 
-(substantially) higher channel density, and also to demonstrate an alternative 
-(slightly cleaner) way of displaying symmetric contrasts. 
+As with the main ``mne-nirs`` finger tapping example, the following demonstrates
+an ‘Evoked’ (trial-averaging) and GLM-based analysis of this experiment.
+There are some modifications made to the visualization code to accomodate the
+(substantially) higher channel density, and also to demonstrate an alternative
+(slightly cleaner) way of displaying symmetric contrasts.
 
 """
 # sphinx_gallery_thumbnail_number = 10
@@ -46,24 +46,25 @@ There are some modifications made to the visualization code to accomodate the
 # License: BSD (3-clause)
 
 # Importage
-import os, sys, glob, h5py, gdown, numpy as np, pandas as pd
+import os
 
+import h5py
+import numpy as np
+import pandas as pd
+from matplotlib import colors as mcolors
 from matplotlib import pyplot as plt
-from matplotlib import gridspec, colors as mcolors
-
-from mne.datasets import camh_kf_fnirs_fingertapping
-from mne import events_from_annotations as get_events_from_annotations,annotations_from_events as get_annotations_from_events
-from mne.channels import rename_channels,combine_channels
-from mne.viz import plot_topomap,plot_events,plot_compare_evokeds
-from mne.viz.utils import _check_sphere
-from mne.io.snirf import read_raw_snirf
 from mne import Epochs
-
-from mne_nirs.experimental_design import create_boxcar
-from mne_nirs.statistics import run_glm
-from mne_nirs.experimental_design import make_first_level_design_matrix
-
+from mne import annotations_from_events as get_annotations_from_events
+from mne import events_from_annotations as get_events_from_annotations
+from mne.channels import combine_channels, rename_channels
+from mne.datasets import camh_kf_fnirs_fingertapping
+from mne.io.snirf import read_raw_snirf
+from mne.viz import plot_compare_evokeds, plot_events, plot_topomap
+from mne.viz.utils import _check_sphere
 from nilearn.plotting import plot_design_matrix
+
+from mne_nirs.experimental_design import create_boxcar, make_first_level_design_matrix
+from mne_nirs.statistics import run_glm
 
 # %%
 # Import raw NIRS data
@@ -76,12 +77,17 @@ from nilearn.plotting import plot_design_matrix
 
 # first download the data
 snirf_dir = camh_kf_fnirs_fingertapping.data_path()
-snirf_file = os.path.join(snirf_dir, 'sub-01', 'ses-01', 'nirs',
-            'sub-01_ses-01_task-fingertapping_nirs_HB_MOMENTS.snirf')
+snirf_file = os.path.join(
+    snirf_dir,
+    "sub-01",
+    "ses-01",
+    "nirs",
+    "sub-01_ses-01_task-fingertapping_nirs_HB_MOMENTS.snirf",
+)
 
 # now load into an MNE object
 raw = read_raw_snirf(snirf_file).load_data().resample(1)
-sphere_coreg_pts = _check_sphere('auto', raw.copy().info.set_montage(raw.get_montage()))
+sphere_coreg_pts = _check_sphere("auto", raw.copy().info.set_montage(raw.get_montage()))
 print(sphere_coreg_pts)
 
 # %%
@@ -258,8 +264,8 @@ right_left_evoked._data = right_evoked._data - left_evoked._data
 # Now plot the evoked data
 chromophore = "hbo"
 times = [0, 10, 20, 30, 40]
-vlim=(-5E6,5E6) #vlim = (-2, 2)
-                     
+vlim = (-5e6, 5e6)  # vlim = (-2, 2)
+
 plot_topo_kwargs = dict(
     ch_type=chromophore,
     sensors=False,
@@ -268,17 +274,19 @@ plot_topo_kwargs = dict(
     extrapolate="local",
     contours=0,
     colorbar=False,
-    show=False, 
-    sphere=sphere_coreg_pts)
+    show=False,
+    sphere=sphere_coreg_pts,
+)
 
-fig, ax = plt.subplots(figsize=(12, 8), nrows=4, ncols=len(times),
-                       sharex=True, sharey=True)
+fig, ax = plt.subplots(
+    figsize=(12, 8), nrows=4, ncols=len(times), sharex=True, sharey=True
+)
 
 for idx_time, time in enumerate(times):
     _ = left_evoked.plot_topomap([time], axes=ax[0][idx_time], **plot_topo_kwargs)
     _ = right_evoked.plot_topomap([time], axes=ax[1][idx_time], **plot_topo_kwargs)
     _ = left_right_evoked.plot_topomap([time], axes=ax[2][idx_time], **plot_topo_kwargs)
-    _ = right_left_evoked.plot_topomap([time], axes=ax[3][idx_time], **plot_topo_kwargs)    
+    _ = right_left_evoked.plot_topomap([time], axes=ax[3][idx_time], **plot_topo_kwargs)
     if idx_time == 0:
         ax[0][0].set_ylabel("LEFT")
         ax[1][0].set_ylabel("RIGHT")
@@ -309,7 +317,7 @@ is_selected_hbo = np.array([ch.endswith("hbo") for ch in left_evoked.info["ch_na
 # %%
 #
 # MODULE 21 is in the left motor cortex, MODULE 20 in the right motor cortex
-print('Channel numbers for module 20, sensor 01 and module 21, sensor 01')
+print("Channel numbers for module 20, sensor 01 and module 21, sensor 01")
 print(np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M020S01"))
 print(np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M021S01"))
 is_left_motor = is_selected_hbo & (
@@ -323,12 +331,12 @@ is_right_motor = is_selected_hbo & (
 # %%
 #
 # take a look at these and the rest of the KF2 channel locations on a montage plot
-fig, ax = plt.subplots(figsize=(20,10))
-left_evoked.info.get_montage().plot(axes=ax, show_names=True, sphere='auto');
+fig, ax = plt.subplots(figsize=(20, 10))
+left_evoked.info.get_montage().plot(axes=ax, show_names=True, sphere="auto")
 plt.tight_layout()
 
-fig, ax = plt.subplots(figsize=(20,10))
-left_evoked.info.get_montage().plot(axes=ax, show_names=['S61', 'S64'], sphere='auto');
+fig, ax = plt.subplots(figsize=(20, 10))
+left_evoked.info.get_montage().plot(axes=ax, show_names=["S61", "S64"], sphere="auto")
 plt.tight_layout()
 
 
@@ -353,7 +361,7 @@ left_evoked_combined = combine_channels(
 
 # %%
 #
-# and plot the evoked time series for these channel averages 
+# and plot the evoked time series for these channel averages
 fig, axes = plt.subplots(figsize=(10, 5), ncols=2, sharey=True)
 plot_compare_evokeds(
     dict(
@@ -390,9 +398,7 @@ plt.tight_layout()
 # %%
 #
 # First show how the boxcar design looks
-s = create_boxcar(
-    raw, stim_dur=(stim_dur := df_start_block["Duration"].mean())
-)
+s = create_boxcar(raw, stim_dur=(stim_dur := df_start_block["Duration"].mean()))
 fig, ax = plt.subplots(figsize=(15, 6), constrained_layout=True)
 ax.plot(raw.times, s)
 ax.legend(["Left", "Right"], loc="upper right")
@@ -411,7 +417,7 @@ design_matrix = make_first_level_design_matrix(
 )
 
 fig, axes = plt.subplots(figsize=(10, 6), constrained_layout=True)
-plot_design_matrix(design_matrix, axes=axes);
+plot_design_matrix(design_matrix, axes=axes)
 
 
 # %%
@@ -428,118 +434,139 @@ glm_est = run_glm(raw, design_matrix, noise_model="auto")
 # compute simple contrasts: LEFT, RIGHT, LEFT>RIGHT, and RIGHT>LEFT
 contrast_matrix = np.eye(2)
 basic_conts = dict(
-    [(column, contrast_matrix[i])
+    [
+        (column, contrast_matrix[i])
         for i, column in enumerate(design_matrix.columns)
         if i < 2
-    ])
-contrast_L = basic_conts["Tapping/Left"]; 
+    ]
+)
+contrast_L = basic_conts["Tapping/Left"]
 contrast_R = basic_conts["Tapping/Right"]
-contrast_LvR = contrast_L - contrast_R;   
+contrast_LvR = contrast_L - contrast_R
 contrast_RvL = contrast_R - contrast_L
 
 # compute contrasts and put into a series of dicts for plotting
-condict_hboLR = {'LH FT HbO': glm_est.copy().pick('hbo').compute_contrast(contrast_L), 
-                 'RH FT HbO': glm_est.copy().pick('hbo').compute_contrast(contrast_R)}
-condict_hboLvsR = {'LH FT > RH FT HbO': glm_est.copy().pick('hbo').compute_contrast(contrast_LvR), 
-                   'RH FT > LH FT HbO': glm_est.copy().pick('hbo').compute_contrast(contrast_RvL)}
+condict_hboLR = {
+    "LH FT HbO": glm_est.copy().pick("hbo").compute_contrast(contrast_L),
+    "RH FT HbO": glm_est.copy().pick("hbo").compute_contrast(contrast_R),
+}
+condict_hboLvsR = {
+    "LH FT > RH FT HbO": glm_est.copy().pick("hbo").compute_contrast(contrast_LvR),
+    "RH FT > LH FT HbO": glm_est.copy().pick("hbo").compute_contrast(contrast_RvL),
+}
 
-condict_hbrLR = {'LH FT HbR': glm_est.copy().pick('hbr').compute_contrast(contrast_L), 
-                 'RH FT HbR': glm_est.copy().pick('hbr').compute_contrast(contrast_R)}
-condict_hbrLvsR = {'LH FT > RH FT HbR': glm_est.copy().pick('hbr').compute_contrast(contrast_LvR), 
-                   'RH FT > LH FT HbR': glm_est.copy().pick('hbr').compute_contrast(contrast_RvL)}
+condict_hbrLR = {
+    "LH FT HbR": glm_est.copy().pick("hbr").compute_contrast(contrast_L),
+    "RH FT HbR": glm_est.copy().pick("hbr").compute_contrast(contrast_R),
+}
+condict_hbrLvsR = {
+    "LH FT > RH FT HbR": glm_est.copy().pick("hbr").compute_contrast(contrast_LvR),
+    "RH FT > LH FT HbR": glm_est.copy().pick("hbr").compute_contrast(contrast_RvL),
+}
 
 # make a single-color colormap with transparent "under" and "bad" (for NaNs/masked)
-cmap = plt.get_cmap('Reds').copy()
+cmap = plt.get_cmap("Reds").copy()
 cmap.set_under((1, 1, 1, 0))  # fully transparent for values < vmin
-cmap.set_bad((1, 1, 1, 0))    # also transparent for NaNs / masked
+cmap.set_bad((1, 1, 1, 0))  # also transparent for NaNs / masked
 
 # define some of the figure params
 plot_params = dict(
     sensors=False,
     image_interp="linear",
-    extrapolate='local',
-    contours=0, #colorbar=False,
+    extrapolate="local",
+    contours=0,  # colorbar=False,
     sphere=sphere_coreg_pts,
     show=False,
-    cmap=cmap)
+    cmap=cmap,
+)
 
-# finally, mmake a convenience function for plotting the contrast data 
+
+# finally, mmake a convenience function for plotting the contrast data
 def plot2glmtttopos(condict, plot_params, thr_p, vlim):
     fig, axes = plt.subplots(1, 2, figsize=(18, 10))
-    for ax in axes: ax.set_facecolor('white')  # what shows through transparency
-    for con_it,(con_name,conest) in enumerate(condict.items()):    
+    for ax in axes:
+        ax.set_facecolor("white")  # what shows through transparency
+    for con_it, (con_name, conest) in enumerate(condict.items()):
         t_map = conest.data.stat()
         p_map = conest.data.p_value()
         t_map_masked = t_map.copy()
-        t_map_masked[p_map>thr_p] = np.ma.masked
+        t_map_masked[p_map > thr_p] = np.ma.masked
         chromo = str(np.unique(conest.get_channel_types())[0])
-        plot_topomap(t_map_masked,conest.info,axes=axes[con_it],
-                     vlim=vlim,ch_type=chromo,**plot_params)
+        plot_topomap(
+            t_map_masked,
+            conest.info,
+            axes=axes[con_it],
+            vlim=vlim,
+            ch_type=chromo,
+            **plot_params,
+        )
         axes[con_it].set_title(con_name, fontsize=15)
-    plt.tight_layout(rect=[0, 0.08, 1, 1])   
-    cbar_ax = fig.add_axes([0.25, 0.02, 0.5, 0.035]) # shared horizontal colorbar
-    norm = mcolors.Normalize(vmin=vlim[0], vmax=vlim[1]) 
-    fig.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=plot_params['cmap']),
-                 cax=cbar_ax, orientation='horizontal', label='Stat value');    
-    plt.tight_layout();
+    plt.tight_layout(rect=[0, 0.08, 1, 1])
+    cbar_ax = fig.add_axes([0.25, 0.02, 0.5, 0.035])  # shared horizontal colorbar
+    norm = mcolors.Normalize(vmin=vlim[0], vmax=vlim[1])
+    fig.colorbar(
+        plt.cm.ScalarMappable(norm=norm, cmap=plot_params["cmap"]),
+        cax=cbar_ax,
+        orientation="horizontal",
+        label="Stat value",
+    )
+    plt.tight_layout()
 
 
-# %% 
-# 
-# Now let's go through each of these computed results in turn.
-# Note that unlike the :ref:`tut-fnirs-hrf` tutorial, here we're following a 
-# standard approach in GLM neuroimaging analysis of only viewing the positive 
-# values of A>B and B>A contrast comparisons (equivalent to doing one-tailed rather 
-# than two-tailed t-tests). This is because the negative values of A>B are the 
-# same as the positive values of B>A, so viewing both the +ve and -ve sides of 
-# both contrasts is redundant.  
- 
 # %%
 #
-# Start with HbO activations relative to baseline for left-handed and right-handed 
-# tapping. We'll also employ another standard neuroimaging approach of viewing a 
-# result at various significance levels, and looking at how it 'resolves down' spatially.  
-# Here are topoplots of the effect sizes for L>baseline and R>baseline finger tapping, 
-# at three signifiance threshodling levels (p<0.01, p<0.0001, p0.0000001)
-plot2glmtttopos(condict_hboLR, plot_params, thr_p=0.01,vlim=(0.01,15));
-
-plot2glmtttopos(condict_hboLR, plot_params, thr_p=0.0001, vlim=(0.01,15));
-
-plot2glmtttopos(condict_hboLR, plot_params, thr_p=0.0000000001, vlim=(0.01,15));
+# Now let's go through each of these computed results in turn.
+# Note that unlike the :ref:`tut-fnirs-hrf` tutorial, here we're following a
+# standard approach in GLM neuroimaging analysis of only viewing the positive
+# values of A>B and B>A contrast comparisons (equivalent to doing one-tailed rather
+# than two-tailed t-tests). This is because the negative values of A>B are the
+# same as the positive values of B>A, so viewing both the +ve and -ve sides of
+# both contrasts is redundant.
 
 # %%
-# A few comments here. First, there are two consistent zones of activation - motor cortex 
-# and occipital cortex - with a core pattern that does not change with thresholding. 
-# The fact that the pattern is visible at high thresholding levels indicates this is a 
-# very strong effect. The motor activation is correctly located and lateralized, so 
-# right-handed tapping clearly activations left motor cortex, and left-handed tapping 
-# activates right motor cortex. Both of these conditions also produce a strong visual 
-# activation - which is expected, because the visual stimlus (see above description) 
-# is more complex than the inter-block fixation cross. 
+#
+# Start with HbO activations relative to baseline for left-handed and right-handed
+# tapping. We'll also employ another standard neuroimaging approach of viewing a
+# result at various significance levels, and looking at how it 'resolves down' spatially.
+# Here are topoplots of the effect sizes for L>baseline and R>baseline finger tapping,
+# at three signifiance threshodling levels (p<0.01, p<0.0001, p0.0000001)
+plot2glmtttopos(condict_hboLR, plot_params, thr_p=0.01, vlim=(0.01, 15))
+
+plot2glmtttopos(condict_hboLR, plot_params, thr_p=0.0001, vlim=(0.01, 15))
+
+plot2glmtttopos(condict_hboLR, plot_params, thr_p=0.0000000001, vlim=(0.01, 15))
+
+# %%
+# A few comments here. First, there are two consistent zones of activation - motor cortex
+# and occipital cortex - with a core pattern that does not change with thresholding.
+# The fact that the pattern is visible at high thresholding levels indicates this is a
+# very strong effect. The motor activation is correctly located and lateralized, so
+# right-handed tapping clearly activations left motor cortex, and left-handed tapping
+# activates right motor cortex. Both of these conditions also produce a strong visual
+# activation - which is expected, because the visual stimlus (see above description)
+# is more complex than the inter-block fixation cross.
 
 # %%
 #
 # When we then look at the contrast that compares left-handed tapping to right-handed
-# tapping directly, and vice versa, we see activation of the same motor hotspots, but 
-# now a much weaker contribution from the occipital lobe. This is because the visual 
-# component is now controlled between the two conditions being compared, and what is 
-# being isolated is the difference between right-handed and left-handed tapping, which 
-# should in principle be fairly well-localized to motor cortex 
-plot2glmtttopos(condict_hboLvsR, plot_params, thr_p = 1E-2, vlim=(0.01,5));
+# tapping directly, and vice versa, we see activation of the same motor hotspots, but
+# now a much weaker contribution from the occipital lobe. This is because the visual
+# component is now controlled between the two conditions being compared, and what is
+# being isolated is the difference between right-handed and left-handed tapping, which
+# should in principle be fairly well-localized to motor cortex
+plot2glmtttopos(condict_hboLvsR, plot_params, thr_p=1e-2, vlim=(0.01, 5))
 
 # %%
 #
-# When we look at the same comparions with the HbR signal, some of the above carries 
-# through, and some does not. 
-# 
+# When we look at the same comparions with the HbR signal, some of the above carries
+# through, and some does not.
+#
 # First, the basline comparisons do not replicate the patterns seen in HbO
-plot2glmtttopos(condict_hbrLR, plot_params, thr_p = 0.1, vlim=(0.001,2));
+plot2glmtttopos(condict_hbrLR, plot_params, thr_p=0.1, vlim=(0.001, 2))
 
 
 # %%
 #
-# However, for the hemispheric difference contrasts, we again see the hemispheric 
-# selectivity of the motor response according to which hand is being tapped.  
-plot2glmtttopos(condict_hbrLvsR, plot_params, thr_p = 0.1, vlim=(0.001,2));
-
-
+# However, for the hemispheric difference contrasts, we again see the hemispheric
+# selectivity of the motor response according to which hand is being tapped.
+plot2glmtttopos(condict_hbrLvsR, plot_params, thr_p=0.1, vlim=(0.001, 2))
