@@ -19,4 +19,4 @@ from . import utils
 from . import visualisation
 from . import visualisation as viz  # for MNE-Python users
 
-__all__ = ['__version__']
+__all__ = ["__version__"]
