@@ -29,6 +29,7 @@ def _plot_glm_topo(
     colorbar=True,
     figsize=(12, 7),
     sphere=None,
+    **kwargs,
 ):
     info = deepcopy(inst if isinstance(inst, Info) else inst.info)
 
@@ -97,6 +98,7 @@ def _plot_glm_topo(
                     show=False,
                     sphere=sphere,
                     **vlim_kwargs,
+                    **kwargs,
                 )
                 ax.set_title(label)
 
@@ -111,7 +113,7 @@ def _plot_glm_topo(
     return _get_fig_from_axes(axes)
 
 
-def _plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None):
+def _plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None, **kwargs):
     info = deepcopy(inst if isinstance(inst, Info) else inst.info)
 
     # Extract types. One subplot is created per type (hbo/hbr)
@@ -151,6 +153,7 @@ def _plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None):
             show=False,
             sphere=sphere,
             **vlim_kwargs,
+            **kwargs,
         )
         # Sets axes title
         if t == "hbo":
