@@ -58,7 +58,7 @@ def data_path(
     dataset_params = dict(
         archive_name="2021-fNIRS-Audio-visual-speech-Broad-vs-restricted-regions.zip",
         hash="md5:16cac6565880dae6aed9b69100399d0b",
-        url="https://osf.io/xwerv/download?version=1",
+        url="https://osf.io/download/xwerv?version=1",
         folder_name="fNIRS-audio-visual-speech",
         dataset_name="audio_or_visual_speech",
         config_key="MNE_DATASETS_FNIRSAUDIOVISUALSPEECH_PATH",
