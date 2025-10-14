@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>mne_nirs.experimental_design.make_first_level_design_matrix &#8212; MNE-NIRS 0.8.0.dev75+g8c5d24a58 documentation</title>
+    <title>mne_nirs.experimental_design.make_first_level_design_matrix &#8212; MNE-NIRS 0.8.0.dev77+gb358c6395 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../_static/documentation_options.js?v=92dccbf3"></script>
+    <script src="../_static/documentation_options.js?v=93a4dc6b"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -487,32 +487,32 @@ of the arguments see the nilearn documentation at <a class="reference external" 
 </dd>
 <dt><strong>stim_dur</strong><span class="classifier">Number</span></dt><dd><p>The length of your stimulus.</p>
 </dd>
-<dt><strong>hrf_model</strong><span class="classifier">{‘glover’, ‘spm’, ‘spm + derivative’,         ‘spm + derivative + dispersion’,        ‘glover + derivative’, ‘glover + derivative + dispersion’,        ‘fir’, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>}, optional</span></dt><dd><p>Specifies the hemodynamic response function. Default=’glover’.</p>
+<dt><strong>hrf_model</strong><span class="classifier">{‘glover’, ‘spm’, ‘spm + derivative’,         ‘spm + derivative + dispersion’,        ‘glover + derivative’, ‘glover + derivative + dispersion’,        ‘fir’, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>}, optional</span></dt><dd><p>Specifies the hemodynamic response function. Default=’glover’.</p>
 </dd>
-<dt><strong>drift_model</strong><span class="classifier">{‘cosine’, ‘polynomial’, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>}, optional</span></dt><dd><p>Specifies the desired drift model. Default=’cosine’.</p>
+<dt><strong>drift_model</strong><span class="classifier">{‘cosine’, ‘polynomial’, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>}, optional</span></dt><dd><p>Specifies the desired drift model. Default=’cosine’.</p>
 </dd>
-<dt><strong>high_pass</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a>, optional</span></dt><dd><p>High-pass frequency in case of a cosine model (in Hz).
+<dt><strong>high_pass</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a>, optional</span></dt><dd><p>High-pass frequency in case of a cosine model (in Hz).
 Default=0.01.</p>
 </dd>
-<dt><strong>drift_order</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>, optional</span></dt><dd><p>Order of the drift model (in case it is polynomial).
+<dt><strong>drift_order</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>, optional</span></dt><dd><p>Order of the drift model (in case it is polynomial).
 Default=1.</p>
 </dd>
-<dt><strong>fir_delays</strong><span class="classifier"><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4.dev0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a> of shape(n_onsets) or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a>, optional</span></dt><dd><p>In case of FIR design, yields the array of delays used in the FIR
+<dt><strong>fir_delays</strong><span class="classifier"><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4.dev0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a> of shape(n_onsets) or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a>, optional</span></dt><dd><p>In case of FIR design, yields the array of delays used in the FIR
 model (in scans). Default=[0].</p>
 </dd>
 <dt><strong>add_regs</strong><span class="classifier"><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4.dev0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a> of shape(n_frames, n_add_reg) or <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/index.html#module-pandas" title="(in pandas v2.3.3)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas</span></code></a> <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.3.3)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataFrame</span></code></a></span></dt><dd><p>Additional user-supplied regressors, e.g. data driven noise regressors
 or seed based regressors.</p>
 </dd>
-<dt><strong>add_reg_names</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of (n_add_reg,) <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, optional</span></dt><dd><p>If None, while add_regs was provided, these will be termed
+<dt><strong>add_reg_names</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of (n_add_reg,) <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, optional</span></dt><dd><p>If None, while add_regs was provided, these will be termed
 ‘reg_%i’, i = 0..n_add_reg - 1
 If add_regs is a DataFrame, the corresponding column names are used
 and add_reg_names is ignored.</p>
 </dd>
-<dt><strong>min_onset</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a>, optional</span></dt><dd><p>Minimal onset relative to frame_times[0] (in seconds)
+<dt><strong>min_onset</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a>, optional</span></dt><dd><p>Minimal onset relative to frame_times[0] (in seconds)
 events that start before frame_times[0] + min_onset are not considered.
 Default=-24.</p>
 </dd>
-<dt><strong>oversampling</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>, optional</span></dt><dd><p>Oversampling factor used in temporal convolutions. Default=50.</p>
+<dt><strong>oversampling</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>, optional</span></dt><dd><p>Oversampling factor used in temporal convolutions. Default=50.</p>
 </dd>
 </dl>
 </dd>
@@ -657,7 +657,7 @@ and each column a regressor.</p>
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-10-06T21:28:45.327947+00:00" class="localized">2025-10-06 21:28 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-10-14T00:53:48.413708+00:00" class="localized">2025-10-14 00:53 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
