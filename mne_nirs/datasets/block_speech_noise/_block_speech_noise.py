@@ -58,7 +58,7 @@ def data_path(
     dataset_params = dict(
         archive_name="2021-fNIRS-Analysis-Methods-Passive-Auditory.zip",
         hash="md5:569c0fbafa575e344e90698c808dfdd3",
-        url="https://osf.io/bjfu7/download?version=1",
+        url="https://osf.io/download/bjfu7?version=1",
         folder_name="fNIRS-block-speech-noise",
         dataset_name="block_speech_noise",
         config_key="MNE_DATASETS_FNIRSSPEECHNOISE_PATH",
