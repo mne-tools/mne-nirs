@@ -59,7 +59,6 @@ from mne import events_from_annotations as get_events_from_annotations
 from mne.channels import combine_channels, rename_channels
 from mne.io.snirf import read_raw_snirf
 from mne.viz import plot_compare_evokeds, plot_events, plot_topomap
-from mne.viz.utils import _check_sphere
 from nilearn.plotting import plot_design_matrix
 
 from mne_nirs.datasets import camh_kf_fnirs_fingertapping
@@ -87,8 +86,7 @@ snirf_file = os.path.join(
 
 # now load into an MNE object
 raw = read_raw_snirf(snirf_file).load_data().resample(1)
-sphere_coreg_pts = _check_sphere("auto", raw.copy().info.set_montage(raw.get_montage()))
-print(sphere_coreg_pts)
+sphere = (0.0, -0.02, 0.006, 0.1)  # approximate for the montage
 
 # %%
 # Get more info from the snirf file
@@ -217,6 +215,7 @@ epochs = Epochs(
     detrend=None,
     verbose=True,
 )
+del raw_filt  # save memory
 
 
 # %%
@@ -253,6 +252,7 @@ sds = np.sqrt(np.sum((source_positions - detector_positions) ** 2, axis=1))
 idx_channels = np.flatnonzero((sds > 15) & (sds < 30))
 left_evoked = epochs["Tapping/Left"].average(picks=idx_channels)
 right_evoked = epochs["Tapping/Right"].average(picks=idx_channels)
+del epochs  # save memory
 left_right_evoked = left_evoked.copy()
 left_right_evoked._data = left_evoked._data - right_evoked._data
 right_left_evoked = left_evoked.copy()
@@ -264,36 +264,39 @@ right_left_evoked._data = right_evoked._data - left_evoked._data
 # Now plot the evoked data
 chromophore = "hbo"
 times = [0, 10, 20, 30, 40]
-vlim = (-5e6, 5e6)  # vlim = (-2, 2)
+vlim = (-5e6, 5e6)
 
-plot_topo_kwargs = dict(
+plot_kwargs = dict(
     ch_type=chromophore,
+    vlim=vlim,
+    colorbar=False,
+)
+tm_kwargs = dict(
     sensors=False,
     image_interp="linear",
-    vlim=vlim,
     extrapolate="local",
     contours=0,
-    colorbar=False,
     show=False,
-    sphere=sphere_coreg_pts,
+    sphere=sphere,
 )
 
 fig, ax = plt.subplots(
-    figsize=(12, 8), nrows=4, ncols=len(times), sharex=True, sharey=True
+    figsize=(1.75 * len(times), 8),
+    nrows=4,
+    ncols=len(times),
+    sharex=True,
+    sharey=True,
+    layout="constrained",
 )
-
-for idx_time, time in enumerate(times):
-    _ = left_evoked.plot_topomap([time], axes=ax[0][idx_time], **plot_topo_kwargs)
-    _ = right_evoked.plot_topomap([time], axes=ax[1][idx_time], **plot_topo_kwargs)
-    _ = left_right_evoked.plot_topomap([time], axes=ax[2][idx_time], **plot_topo_kwargs)
-    _ = right_left_evoked.plot_topomap([time], axes=ax[3][idx_time], **plot_topo_kwargs)
-    if idx_time == 0:
-        ax[0][0].set_ylabel("LEFT")
-        ax[1][0].set_ylabel("RIGHT")
-        ax[2][0].set_ylabel("LEFT  < RIGHT")
-        ax[3][0].set_ylabel("RIGHT > LEFT")
+left_evoked.plot_topomap(times, axes=ax[0], **plot_kwargs, **tm_kwargs)
+right_evoked.plot_topomap(times, axes=ax[1], **plot_kwargs, **tm_kwargs)
+left_right_evoked.plot_topomap(times, axes=ax[2], **plot_kwargs, **tm_kwargs)
+right_left_evoked.plot_topomap(times, axes=ax[3], **plot_kwargs, **tm_kwargs)
+ax[0][0].set_ylabel("LEFT")
+ax[1][0].set_ylabel("RIGHT")
+ax[2][0].set_ylabel("LEFT  < RIGHT")
+ax[3][0].set_ylabel("RIGHT > LEFT")
 fig.suptitle(chromophore)
-
 
 # %%
 #
@@ -331,13 +334,15 @@ is_right_motor = is_selected_hbo & (
 # %%
 #
 # take a look at these and the rest of the KF2 channel locations on a montage plot
-fig, ax = plt.subplots(figsize=(20, 10))
-left_evoked.info.get_montage().plot(axes=ax, show_names=True, sphere="auto")
-plt.tight_layout()
+fig, ax = plt.subplots(figsize=(10, 10), layout="constrained")
+left_evoked.info.get_montage().plot(axes=ax, show_names=True, sphere=sphere)
+for text in ax.texts:
+    text.set_fontsize(8)
 
-fig, ax = plt.subplots(figsize=(20, 10))
-left_evoked.info.get_montage().plot(axes=ax, show_names=["S61", "S64"], sphere="auto")
-plt.tight_layout()
+# %%
+# And let's highlight just a couple channels of interest
+fig, ax = plt.subplots(figsize=(10, 10), layout="constrained")
+left_evoked.info.get_montage().plot(axes=ax, show_names=["S61", "S64"], sphere=sphere)
 
 
 # %%
@@ -362,7 +367,7 @@ left_evoked_combined = combine_channels(
 # %%
 #
 # and plot the evoked time series for these channel averages
-fig, axes = plt.subplots(figsize=(10, 5), ncols=2, sharey=True)
+fig, axes = plt.subplots(figsize=(10, 5), ncols=2, sharey=True, layout="constrained")
 plot_compare_evokeds(
     dict(
         left=left_evoked_combined.copy().pick_channels(["left_motor"]),
@@ -371,6 +376,7 @@ plot_compare_evokeds(
     legend="upper left",
     axes=axes[0],
     show=False,
+    show_sensors=False,
 )
 axes[0].set_title("Left motor cortex\n\n")
 plot_compare_evokeds(
@@ -381,9 +387,9 @@ plot_compare_evokeds(
     legend=False,
     axes=axes[1],
     show=False,
+    show_sensors=False,
 )
 axes[1].set_title("Right motor cortex\n\n")
-plt.tight_layout()
 
 
 # %%
@@ -399,39 +405,43 @@ plt.tight_layout()
 #
 # First show how the boxcar design looks
 s = create_boxcar(raw, stim_dur=(stim_dur := df_start_block["Duration"].mean()))
-fig, ax = plt.subplots(figsize=(15, 6), constrained_layout=True)
+fig, ax = plt.subplots(figsize=(8, 3), layout="constrained")
 ax.plot(raw.times, s)
 ax.legend(["Left", "Right"], loc="upper right")
 ax.set_xlabel("Time (s)")
-
 
 # %%
 #
 # Now make a design matrix, including drift regressors, and plot
 design_matrix = make_first_level_design_matrix(
     raw,
-    drift_model="cosine",
+    # a "cosine" model is better, but for speed we'll use polynomial here
+    drift_model="polynomial",
+    drift_order=1,
     high_pass=0.01,  # Must be specified per experiment
     hrf_model="glover",
     stim_dur=stim_dur,
 )
-
-fig, axes = plt.subplots(figsize=(10, 6), constrained_layout=True)
-plot_design_matrix(design_matrix, axes=axes)
+fig, ax = plt.subplots(figsize=(design_matrix.shape[1] * 0.5, 6), layout="constrained")
+plot_design_matrix(design_matrix, axes=ax)
 
 
 # %%
 #
 # Now estimate the GLM model and prepare the results for viewing
 
-# (clear channel names because mne_nirs plot_topo doesn't have the
+# (clear channel names because mne_nirs plot_topomap doesn't have the
 # option to hide sensor names, and we have a LOT)
 rename_channels(
     raw.info, {ch: "" for ch in raw.info["ch_names"]}, allow_duplicates=True
 )
+print("Running GLM (can take some time)...")
 glm_est = run_glm(raw, design_matrix, noise_model="auto")
+del raw  # save memory
 
-# compute simple contrasts: LEFT, RIGHT, LEFT>RIGHT, and RIGHT>LEFT
+# %%
+# Now compute simple contrasts: LEFT, RIGHT, LEFT>RIGHT, and RIGHT>LEFT
+
 contrast_matrix = np.eye(2)
 basic_conts = dict(
     [
@@ -469,21 +479,10 @@ cmap = plt.get_cmap("Reds").copy()
 cmap.set_under((1, 1, 1, 0))  # fully transparent for values < vmin
 cmap.set_bad((1, 1, 1, 0))  # also transparent for NaNs / masked
 
-# define some of the figure params
-plot_params = dict(
-    sensors=False,
-    image_interp="linear",
-    extrapolate="local",
-    contours=0,  # colorbar=False,
-    sphere=sphere_coreg_pts,
-    show=False,
-    cmap=cmap,
-)
-
 
 # finally, mmake a convenience function for plotting the contrast data
-def plot2glmtttopos(condict, plot_params, thr_p, vlim):
-    fig, axes = plt.subplots(1, 2, figsize=(18, 10))
+def plot2glmtttopos(condict, thr_p, vlim):
+    fig, axes = plt.subplots(1, 2, figsize=(10, 6), layout="constrained")
     for ax in axes:
         ax.set_facecolor("white")  # what shows through transparency
     for con_it, (con_name, conest) in enumerate(condict.items()):
@@ -498,19 +497,20 @@ def plot2glmtttopos(condict, plot_params, thr_p, vlim):
             axes=axes[con_it],
             vlim=vlim,
             ch_type=chromo,
-            **plot_params,
+            cmap=cmap,
+            **tm_kwargs,
         )
         axes[con_it].set_title(con_name, fontsize=15)
-    plt.tight_layout(rect=[0, 0.08, 1, 1])
-    cbar_ax = fig.add_axes([0.25, 0.02, 0.5, 0.035])  # shared horizontal colorbar
     norm = mcolors.Normalize(vmin=vlim[0], vmax=vlim[1])
     fig.colorbar(
-        plt.cm.ScalarMappable(norm=norm, cmap=plot_params["cmap"]),
-        cax=cbar_ax,
+        plt.cm.ScalarMappable(norm=norm, cmap=cmap),
+        ax=axes,
+        fraction=0.05,
+        shrink=0.5,
         orientation="horizontal",
         label="Stat value",
     )
-    plt.tight_layout()
+    return fig
 
 
 # %%
@@ -529,16 +529,19 @@ def plot2glmtttopos(condict, plot_params, thr_p, vlim):
 # tapping. We'll also employ another standard neuroimaging approach of viewing a result
 # at various significance levels, and looking at how it 'resolves down' spatially.
 # Here are topoplots of the effect sizes for L>baseline and R>baseline finger tapping,
-# at three signifiance threshodling levels (p<0.01, p<0.0001, p0.0000001)
-plot2glmtttopos(condict_hboLR, plot_params, thr_p=0.01, vlim=(0.01, 15))
+# at three signifiance threshodling levels (p<0.01, p<0.0001, p<1e-10)
+fig = plot2glmtttopos(condict_hboLR, thr_p=0.01, vlim=(0.01, 10))
+fig.suptitle("LR HBO p < 0.01", fontsize=16)
 
 # %%
 #
-plot2glmtttopos(condict_hboLR, plot_params, thr_p=0.0001, vlim=(0.01, 15))
+fig = plot2glmtttopos(condict_hboLR, thr_p=0.0001, vlim=(0.01, 10))
+fig.suptitle("LR HBO p < 0.0001", fontsize=16)
 
 # %%
 #
-plot2glmtttopos(condict_hboLR, plot_params, thr_p=0.0000000001, vlim=(0.01, 15))
+fig = plot2glmtttopos(condict_hboLR, thr_p=1e-10, vlim=(0.01, 10))
+fig.suptitle("LR HBO p < 1e-10", fontsize=16)
 
 # %%
 # A few comments here. First, there are two consistent zones of activation - motor
@@ -559,7 +562,8 @@ plot2glmtttopos(condict_hboLR, plot_params, thr_p=0.0000000001, vlim=(0.01, 15))
 # component is now controlled between the two conditions being compared, and what is
 # being isolated is the difference between right-handed and left-handed tapping, which
 # should in principle be fairly well-localized to motor cortex
-plot2glmtttopos(condict_hboLvsR, plot_params, thr_p=1e-2, vlim=(0.01, 5))
+fig = plot2glmtttopos(condict_hboLvsR, thr_p=1e-2, vlim=(0.01, 1.5))
+fig.suptitle("LvsR HbO", fontsize=16)
 
 # %%
 #
@@ -567,11 +571,13 @@ plot2glmtttopos(condict_hboLvsR, plot_params, thr_p=1e-2, vlim=(0.01, 5))
 # through, and some does not.
 #
 # First, the basline comparisons do not replicate the patterns seen in HbO
-plot2glmtttopos(condict_hbrLR, plot_params, thr_p=0.1, vlim=(0.001, 2))
+fig = plot2glmtttopos(condict_hbrLR, thr_p=0.1, vlim=(0.001, 1.5))
+fig.suptitle("LR HbR", fontsize=16)
 
 
 # %%
 #
 # However, for the hemispheric difference contrasts, we again see the hemispheric
 # selectivity of the motor response according to which hand is being tapped.
-plot2glmtttopos(condict_hbrLvsR, plot_params, thr_p=0.1, vlim=(0.001, 2))
+fig = plot2glmtttopos(condict_hbrLvsR, thr_p=0.1, vlim=(0.001, 1.5))
+fig.suptitle("LvsR HbR", fontsize=16)
