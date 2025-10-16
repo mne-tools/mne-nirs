@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>GLM Analysis (Measured) &#8212; MNE-NIRS 0.8.0.dev1+g82eda6487 documentation</title>
+    <title>GLM Analysis (Measured) &#8212; MNE-NIRS 0.8.0.dev2+g160300354 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../_static/documentation_options.js?v=5a2fec6b"></script>
+    <script src="../../_static/documentation_options.js?v=a549818b"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -65,7 +65,7 @@
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Group Level GLM Analysis" href="plot_12_group_glm.html" />
+    <link rel="next" title="Finger Tapping Analysis with Kernel Flow2 Data" href="plot_11b_kf2_fingertapping.html" />
     <link rel="prev" title="GLM Analysis (Simulated)" href="plot_10_hrf_simulation.html" />
     <link rel="canonical" href="https://mne.tools/mne-nirs/stable/index.html" />
     
@@ -371,6 +371,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="plot_06_gowerlabs.html">Read Gowerlabs LUMO data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_10_hrf_simulation.html">GLM Analysis (Simulated)</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">GLM Analysis (Measured)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_11b_kf2_fingertapping.html">Finger Tapping Analysis with Kernel Flow2 Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_12_group_glm.html">Group Level GLM Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_13_fir_glm.html">GLM FIR Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_14_glm_components.html">GLM and Design Matrix Parameters</a></li>
@@ -646,9 +647,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header general-b538b6e2-4e40-429f-b27b-2e16a9db2100"
+<tr class="mne-repr-section-header general-6357fbd2-2b71-47a7-9015-0233a490d9ce"
      title="Hide section"
-    onclick="toggleVisibility('general-b538b6e2-4e40-429f-b27b-2e16a9db2100')">
+    onclick="toggleVisibility('general-6357fbd2-2b71-47a7-9015-0233a490d9ce')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -660,7 +661,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element general-b538b6e2-4e40-429f-b27b-2e16a9db2100 ">
+<tr class="repr-element general-6357fbd2-2b71-47a7-9015-0233a490d9ce ">
     <td class="mne-repr-section-toggle"></td>
     <td>Filename(s)</td>
     <td>
@@ -671,19 +672,19 @@ this file apply (plus whatever default styling the IDE applies).
     </td>
 </tr>
 
-<tr class="repr-element general-b538b6e2-4e40-429f-b27b-2e16a9db2100 ">
+<tr class="repr-element general-6357fbd2-2b71-47a7-9015-0233a490d9ce ">
     <td class="mne-repr-section-toggle"></td>
     <td>MNE object type</td>
     <td>RawNIRX</td>
 </tr>
-<tr class="repr-element general-b538b6e2-4e40-429f-b27b-2e16a9db2100 ">
+<tr class="repr-element general-6357fbd2-2b71-47a7-9015-0233a490d9ce ">
     <td class="mne-repr-section-toggle"></td>
     <td>Measurement date</td>
 
     <td>2019-11-02 at 13:16:16 UTC</td>
 
 </tr>
-<tr class="repr-element general-b538b6e2-4e40-429f-b27b-2e16a9db2100 ">
+<tr class="repr-element general-6357fbd2-2b71-47a7-9015-0233a490d9ce ">
     <td class="mne-repr-section-toggle"></td>
     <td>Participant</td>
 
@@ -692,7 +693,7 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 </tr>
-<tr class="repr-element general-b538b6e2-4e40-429f-b27b-2e16a9db2100 ">
+<tr class="repr-element general-6357fbd2-2b71-47a7-9015-0233a490d9ce ">
     <td class="mne-repr-section-toggle"></td>
     <td>Experimenter</td>
 
@@ -707,9 +708,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header acquisition-744af839-aef3-4b4e-b60d-f9defc509782"
+<tr class="mne-repr-section-header acquisition-be8469b4-9770-473b-b6b2-990c20459a2d"
      title="Hide section"
-    onclick="toggleVisibility('acquisition-744af839-aef3-4b4e-b60d-f9defc509782')">
+    onclick="toggleVisibility('acquisition-be8469b4-9770-473b-b6b2-990c20459a2d')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -721,7 +722,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element acquisition-744af839-aef3-4b4e-b60d-f9defc509782 ">
+<tr class="repr-element acquisition-be8469b4-9770-473b-b6b2-990c20459a2d ">
     <td class="mne-repr-section-toggle"></td>
     <td>Duration</td>
     <td>00:49:35 (HH:MM:SS)</td>
@@ -734,14 +735,14 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="repr-element acquisition-744af839-aef3-4b4e-b60d-f9defc509782 ">
+<tr class="repr-element acquisition-be8469b4-9770-473b-b6b2-990c20459a2d ">
     <td class="mne-repr-section-toggle"></td>
     <td>Sampling frequency</td>
     <td>0.70 Hz</td>
 </tr>
 
 
-<tr class="repr-element acquisition-744af839-aef3-4b4e-b60d-f9defc509782 ">
+<tr class="repr-element acquisition-be8469b4-9770-473b-b6b2-990c20459a2d ">
     <td class="mne-repr-section-toggle"></td>
     <td>Time points</td>
     <td>2,082</td>
@@ -756,9 +757,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header channels-65dad0a1-1548-4702-adec-a672ab667cba"
+<tr class="mne-repr-section-header channels-b70606b5-5815-4872-ada5-2cf58948993f"
      title="Hide section"
-    onclick="toggleVisibility('channels-65dad0a1-1548-4702-adec-a672ab667cba')">
+    onclick="toggleVisibility('channels-b70606b5-5815-4872-ada5-2cf58948993f')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -771,7 +772,7 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="repr-element channels-65dad0a1-1548-4702-adec-a672ab667cba ">
+<tr class="repr-element channels-b70606b5-5815-4872-ada5-2cf58948993f ">
     <td class="mne-repr-section-toggle"></td>
     <td>fNIRS (CW amplitude)</td>
     <td>
@@ -784,7 +785,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element channels-65dad0a1-1548-4702-adec-a672ab667cba ">
+<tr class="repr-element channels-b70606b5-5815-4872-ada5-2cf58948993f ">
     <td class="mne-repr-section-toggle"></td>
     <td>Head & sensor digitization</td>
 
@@ -799,9 +800,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header filters-bb64e71a-72f7-4b72-b1a4-4f78e7719cac"
+<tr class="mne-repr-section-header filters-a3087692-3547-4c70-bf3d-c2f977181dea"
      title="Hide section"
-    onclick="toggleVisibility('filters-bb64e71a-72f7-4b72-b1a4-4f78e7719cac')">
+    onclick="toggleVisibility('filters-a3087692-3547-4c70-bf3d-c2f977181dea')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -813,14 +814,14 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element filters-bb64e71a-72f7-4b72-b1a4-4f78e7719cac ">
+<tr class="repr-element filters-a3087692-3547-4c70-bf3d-c2f977181dea ">
     <td class="mne-repr-section-toggle"></td>
     <td>Highpass</td>
     <td>0.00 Hz</td>
 </tr>
 
 
-<tr class="repr-element filters-bb64e71a-72f7-4b72-b1a4-4f78e7719cac ">
+<tr class="repr-element filters-a3087692-3547-4c70-bf3d-c2f977181dea ">
     <td class="mne-repr-section-toggle"></td>
     <td>Lowpass</td>
     <td>0.35 Hz</td>
@@ -1299,7 +1300,7 @@ cortical surface</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_11_hrf_measured_008.png" srcset="../../_images/sphx_glr_plot_11_hrf_measured_008.png" alt="plot 11 hrf measured" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne.viz._brain._brain.Brain object at 0x7f9e4dd43370&gt;
+<img src="../../_images/sphx_glr_plot_11_hrf_measured_008.png" srcset="../../_images/sphx_glr_plot_11_hrf_measured_008.png" alt="plot 11 hrf measured" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne.viz._brain._brain.Brain object at 0x7f5df08f9480&gt;
 </pre></div>
 </div>
 </section>
@@ -1725,8 +1726,8 @@ the tapping, but we do expect 5% or less for the false positive rate.</p>
 </div>
 </div>
 <br />
-<br /><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 18.953 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  726 MB</p>
+<br /><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 19.202 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  732 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-11-hrf-measured-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_11_hrf_measured.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
@@ -1767,11 +1768,11 @@ the tapping, but we do expect 5% or less for the false positive rate.</p>
       </div>
     </a>
     <a class="right-next"
-       href="plot_12_group_glm.html"
+       href="plot_11b_kf2_fingertapping.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Group Level GLM Analysis</p>
+        <p class="prev-next-title">Finger Tapping Analysis with Kernel Flow2 Data</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1846,7 +1847,7 @@ the tapping, but we do expect 5% or less for the false positive rate.</p>
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-10-14T01:05:25.946627+00:00" class="localized">2025-10-14 01:05 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-10-16T18:41:11.663954+00:00" class="localized">2025-10-16 18:41 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

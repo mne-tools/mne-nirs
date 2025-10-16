@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne_nirs.statistics._glm_level_first &#8212; MNE-NIRS 0.8.0.dev1+g82eda6487 documentation</title>
+    <title>mne_nirs.statistics._glm_level_first &#8212; MNE-NIRS 0.8.0.dev2+g160300354 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../_static/documentation_options.js?v=5a2fec6b"></script>
+    <script src="../../../_static/documentation_options.js?v=a549818b"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -742,6 +742,7 @@ document.write(`
         <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>
         <span class="n">sphere</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot 2D topography of GLM data.</span>
 
@@ -767,6 +768,10 @@ document.write(`
 <span class="sd">            Figure size.</span>
 <span class="sd">        sphere : As specified in MNE</span>
 <span class="sd">            Sphere parameter from mne.viz.topomap.plot_topomap.</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Additional keyword arguments to pass to :func:`mne:mne.viz.plot_topomap`.</span>
+
+<span class="sd">            .. versionadded:: 0.8</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -786,6 +791,7 @@ document.write(`
             <span class="n">colorbar</span><span class="o">=</span><span class="n">colorbar</span><span class="p">,</span>
             <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
             <span class="n">sphere</span><span class="o">=</span><span class="n">sphere</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
@@ -1054,7 +1060,7 @@ document.write(`
 
 <div class="viewcode-block" id="ContrastResults.plot_topo">
 <a class="viewcode-back" href="../../../generated/mne_nirs.statistics.ContrastResults.html#mne_nirs.statistics.ContrastResults.plot_topo">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">plot_topo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">sphere</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_topo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">sphere</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot topomap GLM contrast data.</span>
 
@@ -1064,6 +1070,10 @@ document.write(`
 <span class="sd">            TODO: Remove this, how does MNE usually deal with this.</span>
 <span class="sd">        sphere : numbers</span>
 <span class="sd">            As specified in MNE.</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Additional keyword arguments to pass to :func:`mne:mne.viz.plot_topomap`.</span>
+
+<span class="sd">            .. versionadded:: 0.8</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -1072,7 +1082,11 @@ document.write(`
 <span class="sd">            and hbr (bottom row).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">_plot_glm_contrast_topo</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span> <span class="n">sphere</span><span class="o">=</span><span class="n">sphere</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span>
+            <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
+            <span class="n">sphere</span><span class="o">=</span><span class="n">sphere</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span></div>
 </div>
 
@@ -1350,7 +1364,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-10-14T01:05:25.946627+00:00" class="localized">2025-10-14 01:05 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-10-16T18:41:11.663954+00:00" class="localized">2025-10-16 18:41 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
