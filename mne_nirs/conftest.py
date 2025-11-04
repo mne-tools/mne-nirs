@@ -64,6 +64,7 @@ def pytest_configure(config):
     ignore:np\.find_common_type is deprecated.*:DeprecationWarning
     # statsmodels
     ignore:The numpy\.linalg\.linalg has been made private.*:DeprecationWarning
+    ignore:The Dataframe Interchange Protocol is deprecated[/S/s]*:
     # sklearn
     ignore:KMeans is known to have a memory leak on Windows with MKL.*:UserWarning
     ignore:.*The `disp` and `iprint` options of the L-BFGS-B.*:DeprecationWarning
