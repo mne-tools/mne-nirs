@@ -4,8 +4,8 @@ version: 2.1
 
 jobs:
     build_docs:
-      docker:
-        - image: cimg/base:current-22.04
+      machine:
+        image: ubuntu-2404:current
       steps:
         - restore_cache:
             keys:
@@ -49,8 +49,8 @@ jobs:
               set -e
               set -o pipefail
               ./tools/setup_xvfb.sh
-              sudo apt install -qq graphviz optipng python3.10-venv python3-venv libxft2 ffmpeg
-              python3.10 -m venv ~/python_env
+              sudo apt install -qq graphviz optipng python3.12-venv python3-venv libxft2 ffmpeg
+              python3.12 -m venv ~/python_env
               echo "set -e" >> $BASH_ENV
               echo "export OPENBLAS_NUM_THREADS=4" >> $BASH_ENV
               echo "export XDG_RUNTIME_DIR=/tmp/runtime-circleci" >> $BASH_ENV
@@ -90,7 +90,7 @@ jobs:
         - save_cache:
             key: user-install-bin-cache-0
             paths:
-              - ~/.local/lib/python3.10/site-packages
+              - ~/.local/lib/python3.12/site-packages
               - ~/.local/bin
 
         - run:
@@ -163,8 +163,8 @@ jobs:
               - ~/mne_data
 
     deploy:
-      docker:
-        - image: cimg/base:current
+      machine:
+        image: ubuntu-2404:current
       steps:
         - add_ssh_keys:
             fingerprints:
