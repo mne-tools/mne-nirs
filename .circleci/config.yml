@@ -4,8 +4,8 @@ version: 2.1
 
 jobs:
     build_docs:
-      docker:
-        - image: cimg/base:current-24.04
+      machine:
+        image: ubuntu-2404:current
       steps:
         - restore_cache:
             keys:
@@ -163,8 +163,8 @@ jobs:
               - ~/mne_data
 
     deploy:
-      docker:
-        - image: cimg/base:current
+      machine:
+        image: ubuntu-2404:current
       steps:
         - add_ssh_keys:
             fingerprints:
