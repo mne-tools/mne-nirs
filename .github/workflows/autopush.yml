@@ -2,8 +2,8 @@ name: Bot auto-push
 on:  # yamllint disable-line rule:truthy
   push:
     branches:
-      - dependabot/*
-      - pre-commit-ci/*
+      - dependabot/**
+      - pre-commit-ci/**
 
 jobs:
   autobot:
