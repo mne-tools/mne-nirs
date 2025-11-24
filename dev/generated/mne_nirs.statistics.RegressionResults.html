@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>mne_nirs.statistics.RegressionResults &#8212; MNE-NIRS 0.8.0.dev4+gddcedfe85 documentation</title>
+    <title>mne_nirs.statistics.RegressionResults &#8212; MNE-NIRS 0.8.0.dev8+ge269e2303 documentation</title>
   
   
   
@@ -39,18 +39,12 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../_static/documentation_options.js?v=20ecc862"></script>
+    <script src="../_static/documentation_options.js?v=5043a36b"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-188272121-1"></script>
-    <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){ dataLayer.push(arguments); }
-                gtag('js', new Date());
-                gtag('config', 'UA-188272121-1');
-            </script>
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
@@ -475,12 +469,12 @@ document.write(`
 <h1>mne_nirs.statistics.RegressionResults<a class="headerlink" href="#mne-nirs-statistics-regressionresults" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="mne_nirs.statistics.RegressionResults">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mne_nirs.statistics.</span></span><span class="sig-name descname"><span class="pre">RegressionResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">design</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mne_nirs/statistics/_glm_level_first.html#RegressionResults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_nirs.statistics.RegressionResults" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mne_nirs.statistics.</span></span><span class="sig-name descname"><span class="pre">RegressionResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">design</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mne_nirs/statistics/_glm_level_first.html#RegressionResults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_nirs.statistics.RegressionResults" title="Link to this definition">#</a></dt>
 <dd><p>Class containing GLM regression results.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>info</strong><span class="classifier"><a class="reference external" href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="(in MNE v1.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mne.Info</span></code></a></span></dt><dd><p>Info.</p>
+<dt><strong>info</strong><span class="classifier"><a class="reference external" href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="(in MNE v1.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mne.Info</span></code></a></span></dt><dd><p>Info.</p>
 </dd>
 <dt><strong>data</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a></span></dt><dd><p>Dictionary.</p>
 </dd>
@@ -499,7 +493,7 @@ document.write(`
 </dd>
 </dl>
 <p class="rubric">Methods</p>
-<table class="autosummary longtable table autosummary">
+<table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#mne_nirs.statistics.RegressionResults.MSE" title="mne_nirs.statistics.RegressionResults.MSE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MSE</span></code></a>()</p></td>
 <td><p>Return the GLM MSE.</p></td>
@@ -585,9 +579,9 @@ document.write(`
 </dl>
 <p class="rubric">Examples</p>
 <p>Channel type membership can be tested as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;meg&#39;</span> <span class="ow">in</span> <span class="n">inst</span>  
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;meg&#39;</span> <span class="ow">in</span> <span class="n">inst</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;seeg&#39;</span> <span class="ow">in</span> <span class="n">inst</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;seeg&#39;</span> <span class="ow">in</span> <span class="n">inst</span>
 <span class="go">False</span>
 </pre></div>
 </div>
@@ -600,7 +594,7 @@ document.write(`
 
 <dl class="py property">
 <dt class="sig sig-object py" id="mne_nirs.statistics.RegressionResults.ch_names">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ch_names</span></span><a class="headerlink" href="#mne_nirs.statistics.RegressionResults.ch_names" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ch_names</span></span><a class="headerlink" href="#mne_nirs.statistics.RegressionResults.ch_names" title="Link to this definition">#</a></dt>
 <dd><p>Return the channel names.</p>
 <dl class="field-list">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -614,7 +608,7 @@ document.write(`
 
 <dl class="py property">
 <dt class="sig sig-object py" id="mne_nirs.statistics.RegressionResults.compensation_grade">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compensation_grade</span></span><a class="headerlink" href="#mne_nirs.statistics.RegressionResults.compensation_grade" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compensation_grade</span></span><a class="headerlink" href="#mne_nirs.statistics.RegressionResults.compensation_grade" title="Link to this definition">#</a></dt>
 <dd><p>The current gradient compensation grade.</p>
 </dd></dl>
 
@@ -669,7 +663,7 @@ channel indices. In lists, channel <em>type</em> strings (e.g., <code class="doc
 <span class="pre">'eeg']</span></code>) will pick channels of those types, channel <em>name</em> strings (e.g., 
 <code class="docutils literal notranslate"><span class="pre">['MEG0111',</span> <span class="pre">'MEG2623']</span></code> will pick the given channels. Can also be the 
 string values <code class="docutils literal notranslate"><span class="pre">'all'</span></code> to pick all channels, or <code class="docutils literal notranslate"><span class="pre">'data'</span></code> to pick 
-<a class="reference external" href="https://mne.tools/stable/documentation/glossary.html#term-data-channels" title="(in MNE v1.10)"><span class="xref std std-term">data channels</span></a>. None (default) will pick all channels. Note that 
+<a class="reference external" href="https://mne.tools/stable/documentation/glossary.html#term-data-channels" title="(in MNE v1.11)"><span class="xref std std-term">data channels</span></a>. None (default) will pick all channels. Note that 
 channels in <code class="docutils literal notranslate"><span class="pre">info['bads']</span></code> <em>will be included</em> if their names or indices 
 are explicitly provided.</p>
 </dd>
@@ -714,7 +708,7 @@ channel indices. In lists, channel <em>type</em> strings (e.g., <code class="doc
 <span class="pre">'eeg']</span></code>) will pick channels of those types, channel <em>name</em> strings (e.g., 
 <code class="docutils literal notranslate"><span class="pre">['MEG0111',</span> <span class="pre">'MEG2623']</span></code> will pick the given channels. Can also be the 
 string values <code class="docutils literal notranslate"><span class="pre">'all'</span></code> to pick all channels, or <code class="docutils literal notranslate"><span class="pre">'data'</span></code> to pick 
-<a class="reference external" href="https://mne.tools/stable/documentation/glossary.html#term-data-channels" title="(in MNE v1.10)"><span class="xref std std-term">data channels</span></a>. None (default) will pick all channels. Note that 
+<a class="reference external" href="https://mne.tools/stable/documentation/glossary.html#term-data-channels" title="(in MNE v1.11)"><span class="xref std std-term">data channels</span></a>. None (default) will pick all channels. Note that 
 channels in <code class="docutils literal notranslate"><span class="pre">info['bads']</span></code> <em>will be included</em> if their names or indices 
 are explicitly provided.</p>
 </dd>
@@ -734,7 +728,7 @@ types (e.g., exclude=”bads” when picks=”meg”).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mne_nirs.statistics.RegressionResults.plot_topo">
-<span class="sig-name descname"><span class="pre">plot_topo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conditions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(None,</span> <span class="pre">None)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(12,</span> <span class="pre">7)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sphere</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mne_nirs/statistics/_glm_level_first.html#RegressionResults.plot_topo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_nirs.statistics.RegressionResults.plot_topo" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_topo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conditions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">vlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(None,</span> <span class="pre">None)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(12,</span> <span class="pre">7)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sphere</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mne_nirs/statistics/_glm_level_first.html#RegressionResults.plot_topo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_nirs.statistics.RegressionResults.plot_topo" title="Link to this definition">#</a></dt>
 <dd><p>Plot 2D topography of GLM data.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -759,7 +753,7 @@ the data.</p>
 </dd>
 <dt><strong>sphere</strong><span class="classifier">As specified in MNE</span></dt><dd><p>Sphere parameter from mne.viz.topomap.plot_topomap.</p>
 </dd>
-<dt><strong>**kwargs</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a></span></dt><dd><p>Additional keyword arguments to pass to <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.plot_topomap.html#mne.viz.plot_topomap" title="(in MNE v1.10)"><code class="docutils literal notranslate"><span class="pre">mne.viz.plot_topomap()</span></code></a>.</p>
+<dt><strong>**kwargs</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a></span></dt><dd><p>Additional keyword arguments to pass to <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.plot_topomap.html#mne.viz.plot_topomap" title="(in MNE v1.11)"><code class="docutils literal notranslate"><span class="pre">mne.viz.plot_topomap()</span></code></a>.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.8.</span></p>
 </div>
@@ -902,18 +896,18 @@ Has no effect with mpl backend.</p>
 reconstructions. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, defaults to the <code class="docutils literal notranslate"><span class="pre">SUBJECTS_DIR</span></code> environment
 variable.</p>
 </dd>
-<dt><strong>src</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.SourceSpaces.html#mne.SourceSpaces" title="(in MNE v1.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SourceSpaces</span></code></a></span></dt><dd><p>The source space.</p>
+<dt><strong>src</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.SourceSpaces.html#mne.SourceSpaces" title="(in MNE v1.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SourceSpaces</span></code></a></span></dt><dd><p>The source space.</p>
 </dd>
 <dt><strong>verbose</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.14)"><span class="xref std std-ref">bool</span></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Control verbosity of the logging output. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, use the default
 verbosity level. See the <a class="reference external" href="https://docs.python.org/3/tutorial/stdlib2.html#tut-logging" title="(in Python v3.14)"><span class="xref std std-ref">logging documentation</span></a> and
-<a class="reference external" href="https://mne.tools/stable/generated/mne.verbose.html#mne.verbose" title="(in MNE v1.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.verbose()</span></code></a> for details. Should only be passed as a keyword
+<a class="reference external" href="https://mne.tools/stable/generated/mne.verbose.html#mne.verbose" title="(in MNE v1.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.verbose()</span></code></a> for details. Should only be passed as a keyword
 argument.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl>
-<dt><strong>figure</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="(in MNE v1.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mne.viz.Brain</span></code></a> | <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.10.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib.figure.Figure</span></code></a></span></dt><dd><p>An instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="(in MNE v1.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.viz.Brain</span></code></a> or matplotlib figure.</p>
+<dt><strong>figure</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="(in MNE v1.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mne.viz.Brain</span></code></a> | <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.10.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib.figure.Figure</span></code></a></span></dt><dd><p>An instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="(in MNE v1.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.viz.Brain</span></code></a> or matplotlib figure.</p>
 </dd>
 </dl>
 </dd>
@@ -1126,7 +1120,7 @@ info[“subject_info”].</p>
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-10-27T20:59:15.816711+00:00" class="localized">2025-10-27 20:59 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-11-24T18:53:59.898821+00:00" class="localized">2025-11-24 18:53 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

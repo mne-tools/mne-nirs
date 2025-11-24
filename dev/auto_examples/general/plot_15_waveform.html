@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Waveform Averaging Analysis &#8212; MNE-NIRS 0.8.0.dev4+gddcedfe85 documentation</title>
+    <title>Waveform Averaging Analysis &#8212; MNE-NIRS 0.8.0.dev8+ge269e2303 documentation</title>
   
   
   
@@ -39,18 +39,12 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../_static/documentation_options.js?v=20ecc862"></script>
+    <script src="../../_static/documentation_options.js?v=5043a36b"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-188272121-1"></script>
-    <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){ dataLayer.push(arguments); }
-                gtag('js', new Date());
-                gtag('config', 'UA-188272121-1');
-            </script>
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
@@ -445,7 +439,7 @@ relevant material is easily accessible to users.</p>
 (fNIRS) data from raw measurements to relative oxyhaemoglobin (HbO) and
 deoxyhaemoglobin (HbR) concentration, view the average waveform, and
 topographic representation of the response.</p>
-<p>Here we will work with the <a class="reference external" href="https://mne.tools/stable/documentation/datasets.html#fnirs-motor-dataset" title="(in MNE v1.10)"><span class="xref std std-ref">fNIRS motor data</span></a>.</p>
+<p>Here we will work with the <a class="reference external" href="https://mne.tools/stable/documentation/datasets.html#fnirs-motor-dataset" title="(in MNE v1.11)"><span class="xref std std-ref">fNIRS motor data</span></a>.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># sphinx_gallery_thumbnail_number = 14</span>
 
 <span class="c1"># Authors: Robert Luke &lt;mail@robertluke.net&gt;</span>
@@ -618,9 +612,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header general-232f8509-3e5a-460b-9417-4dacd02b8dbf"
+<tr class="mne-repr-section-header general-7cf4ea9e-6d6f-4831-95bc-4dd5a6585749"
      title="Hide section"
-    onclick="toggleVisibility('general-232f8509-3e5a-460b-9417-4dacd02b8dbf')">
+    onclick="toggleVisibility('general-7cf4ea9e-6d6f-4831-95bc-4dd5a6585749')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -632,7 +626,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element general-232f8509-3e5a-460b-9417-4dacd02b8dbf ">
+<tr class="repr-element general-7cf4ea9e-6d6f-4831-95bc-4dd5a6585749 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Filename(s)</td>
     <td>
@@ -643,19 +637,19 @@ this file apply (plus whatever default styling the IDE applies).
     </td>
 </tr>
 
-<tr class="repr-element general-232f8509-3e5a-460b-9417-4dacd02b8dbf ">
+<tr class="repr-element general-7cf4ea9e-6d6f-4831-95bc-4dd5a6585749 ">
     <td class="mne-repr-section-toggle"></td>
     <td>MNE object type</td>
     <td>RawNIRX</td>
 </tr>
-<tr class="repr-element general-232f8509-3e5a-460b-9417-4dacd02b8dbf ">
+<tr class="repr-element general-7cf4ea9e-6d6f-4831-95bc-4dd5a6585749 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Measurement date</td>
 
     <td>2019-11-02 at 13:16:16 UTC</td>
 
 </tr>
-<tr class="repr-element general-232f8509-3e5a-460b-9417-4dacd02b8dbf ">
+<tr class="repr-element general-7cf4ea9e-6d6f-4831-95bc-4dd5a6585749 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Participant</td>
 
@@ -664,7 +658,7 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 </tr>
-<tr class="repr-element general-232f8509-3e5a-460b-9417-4dacd02b8dbf ">
+<tr class="repr-element general-7cf4ea9e-6d6f-4831-95bc-4dd5a6585749 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Experimenter</td>
 
@@ -679,9 +673,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header acquisition-b1a2d32c-18f0-429d-b2b7-c9da7c8eabf5"
+<tr class="mne-repr-section-header acquisition-57f24ee5-0499-4a56-9511-b3f2ffb5d575"
      title="Hide section"
-    onclick="toggleVisibility('acquisition-b1a2d32c-18f0-429d-b2b7-c9da7c8eabf5')">
+    onclick="toggleVisibility('acquisition-57f24ee5-0499-4a56-9511-b3f2ffb5d575')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -693,7 +687,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element acquisition-b1a2d32c-18f0-429d-b2b7-c9da7c8eabf5 ">
+<tr class="repr-element acquisition-57f24ee5-0499-4a56-9511-b3f2ffb5d575 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Duration</td>
     <td>00:49:35 (HH:MM:SS)</td>
@@ -706,14 +700,14 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="repr-element acquisition-b1a2d32c-18f0-429d-b2b7-c9da7c8eabf5 ">
+<tr class="repr-element acquisition-57f24ee5-0499-4a56-9511-b3f2ffb5d575 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Sampling frequency</td>
     <td>7.81 Hz</td>
 </tr>
 
 
-<tr class="repr-element acquisition-b1a2d32c-18f0-429d-b2b7-c9da7c8eabf5 ">
+<tr class="repr-element acquisition-57f24ee5-0499-4a56-9511-b3f2ffb5d575 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Time points</td>
     <td>23,239</td>
@@ -728,9 +722,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header channels-f1ca1bfb-b5bd-47c1-8ff5-21bbe0585637"
+<tr class="mne-repr-section-header channels-f531ab45-d674-437b-a154-a55cf73b99c8"
      title="Hide section"
-    onclick="toggleVisibility('channels-f1ca1bfb-b5bd-47c1-8ff5-21bbe0585637')">
+    onclick="toggleVisibility('channels-f531ab45-d674-437b-a154-a55cf73b99c8')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -743,7 +737,7 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="repr-element channels-f1ca1bfb-b5bd-47c1-8ff5-21bbe0585637 ">
+<tr class="repr-element channels-f531ab45-d674-437b-a154-a55cf73b99c8 ">
     <td class="mne-repr-section-toggle"></td>
     <td>fNIRS (CW amplitude)</td>
     <td>
@@ -756,7 +750,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element channels-f1ca1bfb-b5bd-47c1-8ff5-21bbe0585637 ">
+<tr class="repr-element channels-f531ab45-d674-437b-a154-a55cf73b99c8 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Head & sensor digitization</td>
 
@@ -771,9 +765,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header filters-795c9703-0497-4de0-9ff4-af0351b570be"
+<tr class="mne-repr-section-header filters-01d55f9f-18ee-42f5-a8b4-cf1a9e53c6e4"
      title="Hide section"
-    onclick="toggleVisibility('filters-795c9703-0497-4de0-9ff4-af0351b570be')">
+    onclick="toggleVisibility('filters-01d55f9f-18ee-42f5-a8b4-cf1a9e53c6e4')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -785,14 +779,14 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element filters-795c9703-0497-4de0-9ff4-af0351b570be ">
+<tr class="repr-element filters-01d55f9f-18ee-42f5-a8b4-cf1a9e53c6e4 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Highpass</td>
     <td>0.00 Hz</td>
 </tr>
 
 
-<tr class="repr-element filters-795c9703-0497-4de0-9ff4-af0351b570be ">
+<tr class="repr-element filters-01d55f9f-18ee-42f5-a8b4-cf1a9e53c6e4 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Lowpass</td>
     <td>3.91 Hz</td>
@@ -858,7 +852,7 @@ To achieve this we pick all the channels that are not considered to be short.</p
 <span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_15_waveform_002.png" srcset="../../_images/sphx_glr_plot_15_waveform_002.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f29c590ecb0&gt;
+<img src="../../_images/sphx_glr_plot_15_waveform_002.png" srcset="../../_images/sphx_glr_plot_15_waveform_002.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x734481c09c70&gt;
 </pre></div>
 </div>
 </section>
@@ -869,7 +863,7 @@ To achieve this we pick all the channels that are not considered to be short.</p
 <span class="n">raw_od</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_channels</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">raw_od</span><span class="o">.</span><span class="n">ch_names</span><span class="p">),</span> <span class="n">duration</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">show_scrollbars</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_15_waveform_003.png" srcset="../../_images/sphx_glr_plot_15_waveform_003.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f29c5cc6ef0&gt;
+<img src="../../_images/sphx_glr_plot_15_waveform_003.png" srcset="../../_images/sphx_glr_plot_15_waveform_003.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x73441b9ee030&gt;
 </pre></div>
 </div>
 </section>
@@ -898,7 +892,7 @@ coupling index.</p>
 </div>
 <p>At this stage it is appropriate to inspect your data
 (for instructions on how to use the interactive data visualisation tool
-see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/raw/40_visualize_raw.html#tut-visualize-raw" title="(in MNE v1.10)"><span>Built-in plotting methods for Raw objects</span></a>)
+see <a class="reference external" href="https://mne.tools/stable/auto_tutorials/raw/40_visualize_raw.html#tut-visualize-raw" title="(in MNE v1.11)"><span>Built-in plotting methods for Raw objects</span></a>)
 to ensure that channels with poor scalp coupling have been removed.
 If your data contains lots of artifacts you may decide to apply
 artifact reduction techniques as described in <a class="reference internal" href="plot_21_artifacts.html#ex-fnirs-artifacts"><span class="std std-ref">Artifact Correction Techniques</span></a>.</p>
@@ -911,7 +905,7 @@ the modified Beer-Lambert law.</p>
 <span class="n">raw_haemo</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_channels</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">raw_haemo</span><span class="o">.</span><span class="n">ch_names</span><span class="p">),</span> <span class="n">duration</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">show_scrollbars</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_15_waveform_005.png" srcset="../../_images/sphx_glr_plot_15_waveform_005.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7f29a6ad05e0&gt;
+<img src="../../_images/sphx_glr_plot_15_waveform_005.png" srcset="../../_images/sphx_glr_plot_15_waveform_005.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x734408adcd70&gt;
 </pre></div>
 </div>
 </section>
@@ -1217,11 +1211,11 @@ driving the topographic plot above.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.legend.html#matplotlib.figure.Figure.legend" title="matplotlib.figure.Figure.legend" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-method"><span class="n">fig</span><span class="o">.</span><span class="n">legend</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">leg_lines</span></a><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Left&quot;</span><span class="p">,</span> <span class="s2">&quot;Right&quot;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_15_waveform_022.png" srcset="../../_images/sphx_glr_plot_15_waveform_022.png" alt="plot 15 waveform" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7f2a0ae88be0&gt;
+<img src="../../_images/sphx_glr_plot_15_waveform_022.png" srcset="../../_images/sphx_glr_plot_15_waveform_022.png" alt="plot 15 waveform" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x73441bdf0fe0&gt;
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 31.624 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  492 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 17.986 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  509 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-15-waveform-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_15_waveform.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
@@ -1342,7 +1336,7 @@ driving the topographic plot above.</p>
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-10-27T20:59:15.816711+00:00" class="localized">2025-10-27 20:59 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-11-24T18:53:59.898821+00:00" class="localized">2025-11-24 18:53 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

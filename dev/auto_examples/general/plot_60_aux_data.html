@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Utilising Auxiliary Data &#8212; MNE-NIRS 0.8.0.dev4+gddcedfe85 documentation</title>
+    <title>Utilising Auxiliary Data &#8212; MNE-NIRS 0.8.0.dev8+ge269e2303 documentation</title>
   
   
   
@@ -39,18 +39,12 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../_static/documentation_options.js?v=20ecc862"></script>
+    <script src="../../_static/documentation_options.js?v=5043a36b"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-188272121-1"></script>
-    <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){ dataLayer.push(arguments); }
-                gtag('js', new Date());
-                gtag('config', 'UA-188272121-1');
-            </script>
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
@@ -462,6 +456,22 @@ this can be incorporated in to your analysis.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mne_nirs.io.snirf</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/mne_nirs.io.read_snirf_aux_data.html#mne_nirs.io.read_snirf_aux_data" title="mne_nirs.io.read_snirf_aux_data" class="sphx-glr-backref-module-mne_nirs-io sphx-glr-backref-type-py-function"><span class="n">read_snirf_aux_data</span></a>
 </pre></div>
 </div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+</pre></div>
+</div>
 <section id="import-raw-nirs-data">
 <h2>Import raw NIRS data<a class="headerlink" href="#import-raw-nirs-data" title="Link to this heading">#</a></h2>
 <p>First we import the raw data. A different dataset is used from
@@ -469,6 +479,26 @@ the previous GLM example that contains auxiliary data.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_snirf_file</span></a> <span class="o">=</span> <span class="n">data_path</span><span class="p">()</span>
 <span class="n">raw_intensity</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="mne.io.read_raw_snirf" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_raw_snirf</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_snirf_file</span></a><span class="p">)</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
 <span class="n">raw_intensity</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="mf">0.7</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/home/circleci/project/mne_nirs/datasets/snirf_with_aux/snirf_with_aux.py:62: RuntimeWarning: Setting non-standard config type: &quot;MNE_DATASETS_SNIRFAUX_PATH&quot;
+  dpath = fetch_dataset(
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
@@ -619,9 +649,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header general-d21f7ecf-8cc0-4bfa-a39d-f322878b5197"
+<tr class="mne-repr-section-header general-1671e541-28e6-4310-9eaa-6febb58bba42"
      title="Hide section"
-    onclick="toggleVisibility('general-d21f7ecf-8cc0-4bfa-a39d-f322878b5197')">
+    onclick="toggleVisibility('general-1671e541-28e6-4310-9eaa-6febb58bba42')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -633,7 +663,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element general-d21f7ecf-8cc0-4bfa-a39d-f322878b5197 ">
+<tr class="repr-element general-1671e541-28e6-4310-9eaa-6febb58bba42 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Filename(s)</td>
     <td>
@@ -644,19 +674,19 @@ this file apply (plus whatever default styling the IDE applies).
     </td>
 </tr>
 
-<tr class="repr-element general-d21f7ecf-8cc0-4bfa-a39d-f322878b5197 ">
+<tr class="repr-element general-1671e541-28e6-4310-9eaa-6febb58bba42 ">
     <td class="mne-repr-section-toggle"></td>
     <td>MNE object type</td>
     <td>RawSNIRF</td>
 </tr>
-<tr class="repr-element general-d21f7ecf-8cc0-4bfa-a39d-f322878b5197 ">
+<tr class="repr-element general-1671e541-28e6-4310-9eaa-6febb58bba42 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Measurement date</td>
 
     <td>2022-08-05 at 13:10:58 UTC</td>
 
 </tr>
-<tr class="repr-element general-d21f7ecf-8cc0-4bfa-a39d-f322878b5197 ">
+<tr class="repr-element general-1671e541-28e6-4310-9eaa-6febb58bba42 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Participant</td>
 
@@ -665,7 +695,7 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 </tr>
-<tr class="repr-element general-d21f7ecf-8cc0-4bfa-a39d-f322878b5197 ">
+<tr class="repr-element general-1671e541-28e6-4310-9eaa-6febb58bba42 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Experimenter</td>
 
@@ -680,9 +710,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header acquisition-fe4d1d3c-5c8d-42bd-85c2-5f8caec44fe2"
+<tr class="mne-repr-section-header acquisition-987262a3-9d39-4422-91d5-a910e1371142"
      title="Hide section"
-    onclick="toggleVisibility('acquisition-fe4d1d3c-5c8d-42bd-85c2-5f8caec44fe2')">
+    onclick="toggleVisibility('acquisition-987262a3-9d39-4422-91d5-a910e1371142')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -694,7 +724,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element acquisition-fe4d1d3c-5c8d-42bd-85c2-5f8caec44fe2 ">
+<tr class="repr-element acquisition-987262a3-9d39-4422-91d5-a910e1371142 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Duration</td>
     <td>00:33:55 (HH:MM:SS)</td>
@@ -707,14 +737,14 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="repr-element acquisition-fe4d1d3c-5c8d-42bd-85c2-5f8caec44fe2 ">
+<tr class="repr-element acquisition-987262a3-9d39-4422-91d5-a910e1371142 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Sampling frequency</td>
     <td>0.70 Hz</td>
 </tr>
 
 
-<tr class="repr-element acquisition-fe4d1d3c-5c8d-42bd-85c2-5f8caec44fe2 ">
+<tr class="repr-element acquisition-987262a3-9d39-4422-91d5-a910e1371142 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Time points</td>
     <td>1,424</td>
@@ -729,9 +759,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header channels-7a518e50-06a7-44f0-96a4-163b342234ed"
+<tr class="mne-repr-section-header channels-2d5c4847-2667-47b3-8472-1e3e870ded2e"
      title="Hide section"
-    onclick="toggleVisibility('channels-7a518e50-06a7-44f0-96a4-163b342234ed')">
+    onclick="toggleVisibility('channels-2d5c4847-2667-47b3-8472-1e3e870ded2e')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -744,7 +774,7 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="repr-element channels-7a518e50-06a7-44f0-96a4-163b342234ed ">
+<tr class="repr-element channels-2d5c4847-2667-47b3-8472-1e3e870ded2e ">
     <td class="mne-repr-section-toggle"></td>
     <td>fNIRS (CW amplitude)</td>
     <td>
@@ -757,7 +787,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element channels-7a518e50-06a7-44f0-96a4-163b342234ed ">
+<tr class="repr-element channels-2d5c4847-2667-47b3-8472-1e3e870ded2e ">
     <td class="mne-repr-section-toggle"></td>
     <td>Head & sensor digitization</td>
 
@@ -772,9 +802,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header filters-a6417626-35e0-49a4-a0c7-5dde2963b892"
+<tr class="mne-repr-section-header filters-e8e923de-d24d-4e12-8e23-514f359d1318"
      title="Hide section"
-    onclick="toggleVisibility('filters-a6417626-35e0-49a4-a0c7-5dde2963b892')">
+    onclick="toggleVisibility('filters-e8e923de-d24d-4e12-8e23-514f359d1318')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -786,14 +816,14 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element filters-a6417626-35e0-49a4-a0c7-5dde2963b892 ">
+<tr class="repr-element filters-e8e923de-d24d-4e12-8e23-514f359d1318 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Highpass</td>
     <td>0.00 Hz</td>
 </tr>
 
 
-<tr class="repr-element filters-a6417626-35e0-49a4-a0c7-5dde2963b892 ">
+<tr class="repr-element filters-e8e923de-d24d-4e12-8e23-514f359d1318 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Lowpass</td>
     <td>0.35 Hz</td>
@@ -816,7 +846,36 @@ experimental conditions.</p>
 <span class="n">raw_intensity</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">set_durations</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Annotations | 60 segments: Control (20), Tapping_Left (20), Tapping_Right ...&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+
+&lt;Annotations | 60 segments: Control (20), Tapping_Left (20), Tapping_Right ...&gt;
 </pre></div>
 </div>
 </section>
@@ -827,11 +886,43 @@ experimental conditions.</p>
 <span class="n">raw_haemo</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.beer_lambert_law.html#mne.preprocessing.nirs.beer_lambert_law" title="mne.preprocessing.nirs.beer_lambert_law" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">nirs</span><span class="o">.</span><span class="n">beer_lambert_law</span></a><span class="p">(</span><span class="n">raw_od</span><span class="p">,</span> <span class="n">ppf</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+</pre></div>
+</div>
 <p>We then split the data in to
 short channels which predominantly contain systemic responses and
 long channels which have both neural and systemic contributions.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">short_chs</span> <span class="o">=</span> <a href="../../generated/mne_nirs.channels.get_short_channels.html#mne_nirs.channels.get_short_channels" title="mne_nirs.channels.get_short_channels" class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function"><span class="n">get_short_channels</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">)</span>
 <span class="n">raw_haemo</span> <span class="o">=</span> <a href="../../generated/mne_nirs.channels.get_long_channels.html#mne_nirs.channels.get_long_channels" title="mne_nirs.channels.get_long_channels" class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function"><span class="n">get_long_channels</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
 </pre></div>
 </div>
 </section>
@@ -855,6 +946,22 @@ contribute to the measured signal.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+</pre></div>
+</div>
 <p>We also add the mean of the short channels to the design matrix.
 In theory these channels contain only systemic components, so including
 them in the design matrix allows us to estimate the neural component
@@ -869,6 +976,22 @@ uncontaminated by systemic effects.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+</pre></div>
+</div>
 <p>We can view the design matrix by printing the variable
 and we see that it includes the standard regressors, but does
 not yet contain any auxiliary data.</p>
@@ -876,7 +999,23 @@ not yet contain any auxiliary data.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a> <span class="o">=</span> <a href="http://nilearn.github.io/stable/modules/generated/nilearn.plotting.plot_design_matrix.html#nilearn.plotting.plot_design_matrix" title="nilearn.plotting.plot_design_matrix" class="sphx-glr-backref-module-nilearn-plotting sphx-glr-backref-type-py-function"><span class="n">plot_design_matrix</span></a><span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.core.frame.DataFrame" class="sphx-glr-backref-module-pandas-core-frame sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">design_matrix</span></a><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax1</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_60_aux_data_001.png" srcset="../../_images/sphx_glr_plot_60_aux_data_001.png" alt="plot 60 aux data" class = "sphx-glr-single-img"/></section>
+<img src="../../_images/sphx_glr_plot_60_aux_data_001.png" srcset="../../_images/sphx_glr_plot_60_aux_data_001.png" alt="plot 60 aux data" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+</pre></div>
+</div>
+</section>
 <section id="load-auxiliary-data">
 <h2>Load auxiliary data<a class="headerlink" href="#load-auxiliary-data" title="Link to this heading">#</a></h2>
 <p>The design matrix is a pandas data frame. As such,
@@ -889,6 +1028,10 @@ fNIRS data.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.core.frame.DataFrame" class="sphx-glr-backref-module-pandas-core-frame sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aux_df</span></a> <span class="o">=</span> <a href="../../generated/mne_nirs.io.read_snirf_aux_data.html#mne_nirs.io.read_snirf_aux_data" title="mne_nirs.io.read_snirf_aux_data" class="sphx-glr-backref-module-mne_nirs-io sphx-glr-backref-type-py-function"><span class="n">read_snirf_aux_data</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_snirf_file</span></a><span class="p">,</span> <span class="n">raw_haemo</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+</pre></div>
+</div>
 <p>And you can verify the data looks reasonable by plotting
 individual fields.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html#matplotlib.pyplot.plot" title="matplotlib.pyplot.plot" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.core.frame.DataFrame" class="sphx-glr-backref-module-pandas-core-frame sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aux_df</span></a><span class="p">[</span><span class="s2">&quot;HR&quot;</span><span class="p">])</span>
@@ -896,7 +1039,36 @@ individual fields.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.ylabel.html#matplotlib.pyplot.ylabel" title="matplotlib.pyplot.ylabel" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span></a><span class="p">(</span><span class="s2">&quot;Heart Rate (bpm)&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_60_aux_data_002.png" srcset="../../_images/sphx_glr_plot_60_aux_data_002.png" alt="plot 60 aux data" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Text(38.347222222222214, 0.5, &#39;Heart Rate (bpm)&#39;)
+<img src="../../_images/sphx_glr_plot_60_aux_data_002.png" srcset="../../_images/sphx_glr_plot_60_aux_data_002.png" alt="plot 60 aux data" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+
+Text(38.347222222222214, 0.5, &#39;Heart Rate (bpm)&#39;)
 </pre></div>
 </div>
 </section>
@@ -907,13 +1079,45 @@ so that these can be included as regressors in a GLM analysis.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.core.frame.DataFrame" class="sphx-glr-backref-module-pandas-core-frame sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">design_matrix</span></a> <span class="o">=</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html#pandas.concat" title="pandas.concat" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-function"><span class="n">pd</span><span class="o">.</span><span class="n">concat</span></a><span class="p">([</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.core.frame.DataFrame" class="sphx-glr-backref-module-pandas-core-frame sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">design_matrix</span></a><span class="p">,</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.core.frame.DataFrame" class="sphx-glr-backref-module-pandas-core-frame sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aux_df</span></a><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+</pre></div>
+</div>
 <p>And we can visually display the design matrix and verify
 the data is included.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax1</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a> <span class="o">=</span> <a href="http://nilearn.github.io/stable/modules/generated/nilearn.plotting.plot_design_matrix.html#nilearn.plotting.plot_design_matrix" title="nilearn.plotting.plot_design_matrix" class="sphx-glr-backref-module-nilearn-plotting sphx-glr-backref-type-py-function"><span class="n">plot_design_matrix</span></a><span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.core.frame.DataFrame" class="sphx-glr-backref-module-pandas-core-frame sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">design_matrix</span></a><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax1</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_60_aux_data_003.png" srcset="../../_images/sphx_glr_plot_60_aux_data_003.png" alt="plot 60 aux data" class = "sphx-glr-single-img"/></section>
+<img src="../../_images/sphx_glr_plot_60_aux_data_003.png" srcset="../../_images/sphx_glr_plot_60_aux_data_003.png" alt="plot 60 aux data" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+</pre></div>
+</div>
+</section>
 <section id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
 <p>We have demonstrated how to load auxiliary data from a SNIRF
@@ -923,8 +1127,8 @@ instead the reader is directed to the dedicated <a class="reference internal" hr
 The auxiliary data may need to be treated before being included in your analysis,
 for example you may need to normalise before inclusion in statistical analysis etc,
 but this is beyond the scope of this tutorial.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 9.052 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  480 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 6.421 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  504 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-60-aux-data-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_60_aux_data.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
@@ -1039,7 +1243,7 @@ but this is beyond the scope of this tutorial.</p>
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-10-27T20:59:15.816711+00:00" class="localized">2025-10-27 20:59 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-11-24T18:53:59.898821+00:00" class="localized">2025-11-24 18:53 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

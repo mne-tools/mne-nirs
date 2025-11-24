@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>mne_nirs.statistics.ContrastResults &#8212; MNE-NIRS 0.8.0.dev4+gddcedfe85 documentation</title>
+    <title>mne_nirs.statistics.ContrastResults &#8212; MNE-NIRS 0.8.0.dev8+ge269e2303 documentation</title>
   
   
   
@@ -39,18 +39,12 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../_static/documentation_options.js?v=20ecc862"></script>
+    <script src="../_static/documentation_options.js?v=5043a36b"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-188272121-1"></script>
-    <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){ dataLayer.push(arguments); }
-                gtag('js', new Date());
-                gtag('config', 'UA-188272121-1');
-            </script>
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
@@ -475,12 +469,12 @@ document.write(`
 <h1>mne_nirs.statistics.ContrastResults<a class="headerlink" href="#mne-nirs-statistics-contrastresults" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="mne_nirs.statistics.ContrastResults">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mne_nirs.statistics.</span></span><span class="sig-name descname"><span class="pre">ContrastResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">design</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mne_nirs/statistics/_glm_level_first.html#ContrastResults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_nirs.statistics.ContrastResults" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mne_nirs.statistics.</span></span><span class="sig-name descname"><span class="pre">ContrastResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">design</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mne_nirs/statistics/_glm_level_first.html#ContrastResults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_nirs.statistics.ContrastResults" title="Link to this definition">#</a></dt>
 <dd><p>Class containing GLM contrast results.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>info</strong><span class="classifier"><a class="reference external" href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="(in MNE v1.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mne.Info</span></code></a></span></dt><dd><p>Info.</p>
+<dt><strong>info</strong><span class="classifier"><a class="reference external" href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="(in MNE v1.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mne.Info</span></code></a></span></dt><dd><p>Info.</p>
 </dd>
 <dt><strong>data</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a></span></dt><dd><p>Dictionary.</p>
 </dd>
@@ -499,7 +493,7 @@ document.write(`
 </dd>
 </dl>
 <p class="rubric">Methods</p>
-<table class="autosummary longtable table autosummary">
+<table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#mne_nirs.statistics.ContrastResults.copy" title="mne_nirs.statistics.ContrastResults.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a>()</p></td>
 <td><p>Return a copy of the GLM results.</p></td>
@@ -550,9 +544,9 @@ document.write(`
 </dl>
 <p class="rubric">Examples</p>
 <p>Channel type membership can be tested as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;meg&#39;</span> <span class="ow">in</span> <span class="n">inst</span>  
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;meg&#39;</span> <span class="ow">in</span> <span class="n">inst</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;seeg&#39;</span> <span class="ow">in</span> <span class="n">inst</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;seeg&#39;</span> <span class="ow">in</span> <span class="n">inst</span>
 <span class="go">False</span>
 </pre></div>
 </div>
@@ -565,7 +559,7 @@ document.write(`
 
 <dl class="py property">
 <dt class="sig sig-object py" id="mne_nirs.statistics.ContrastResults.ch_names">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ch_names</span></span><a class="headerlink" href="#mne_nirs.statistics.ContrastResults.ch_names" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ch_names</span></span><a class="headerlink" href="#mne_nirs.statistics.ContrastResults.ch_names" title="Link to this definition">#</a></dt>
 <dd><p>Return the channel names.</p>
 <dl class="field-list">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -579,7 +573,7 @@ document.write(`
 
 <dl class="py property">
 <dt class="sig sig-object py" id="mne_nirs.statistics.ContrastResults.compensation_grade">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compensation_grade</span></span><a class="headerlink" href="#mne_nirs.statistics.ContrastResults.compensation_grade" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compensation_grade</span></span><a class="headerlink" href="#mne_nirs.statistics.ContrastResults.compensation_grade" title="Link to this definition">#</a></dt>
 <dd><p>The current gradient compensation grade.</p>
 </dd></dl>
 
@@ -609,7 +603,7 @@ channel indices. In lists, channel <em>type</em> strings (e.g., <code class="doc
 <span class="pre">'eeg']</span></code>) will pick channels of those types, channel <em>name</em> strings (e.g., 
 <code class="docutils literal notranslate"><span class="pre">['MEG0111',</span> <span class="pre">'MEG2623']</span></code> will pick the given channels. Can also be the 
 string values <code class="docutils literal notranslate"><span class="pre">'all'</span></code> to pick all channels, or <code class="docutils literal notranslate"><span class="pre">'data'</span></code> to pick 
-<a class="reference external" href="https://mne.tools/stable/documentation/glossary.html#term-data-channels" title="(in MNE v1.10)"><span class="xref std std-term">data channels</span></a>. None (default) will pick all channels. Note that 
+<a class="reference external" href="https://mne.tools/stable/documentation/glossary.html#term-data-channels" title="(in MNE v1.11)"><span class="xref std std-term">data channels</span></a>. None (default) will pick all channels. Note that 
 channels in <code class="docutils literal notranslate"><span class="pre">info['bads']</span></code> <em>will be included</em> if their names or indices 
 are explicitly provided.</p>
 </dd>
@@ -639,7 +633,7 @@ are explicitly provided.</p>
 </dd>
 <dt><strong>sphere</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/numbers.html#module-numbers" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numbers</span></code></a></span></dt><dd><p>As specified in MNE.</p>
 </dd>
-<dt><strong>**kwargs</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a></span></dt><dd><p>Additional keyword arguments to pass to <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.plot_topomap.html#mne.viz.plot_topomap" title="(in MNE v1.10)"><code class="docutils literal notranslate"><span class="pre">mne.viz.plot_topomap()</span></code></a>.</p>
+<dt><strong>**kwargs</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a></span></dt><dd><p>Additional keyword arguments to pass to <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.plot_topomap.html#mne.viz.plot_topomap" title="(in MNE v1.11)"><code class="docutils literal notranslate"><span class="pre">mne.viz.plot_topomap()</span></code></a>.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.8.</span></p>
 </div>
@@ -835,7 +829,7 @@ then conditions starting with
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-10-27T20:59:15.816711+00:00" class="localized">2025-10-27 20:59 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-11-24T18:53:59.898821+00:00" class="localized">2025-11-24 18:53 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

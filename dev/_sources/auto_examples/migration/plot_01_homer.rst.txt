@@ -86,6 +86,25 @@ First the necessary libraries and functions are imported.
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+
 
 
 
@@ -114,6 +133,13 @@ to the correct directory.
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+
 
 
 
@@ -137,6 +163,13 @@ apply motion correction using the TDDR method.
 
 
 
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
 
 
 
@@ -164,6 +197,25 @@ To exactly match the results from Homer we can manually set the ppf value to
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+
 
 
 
@@ -182,9 +234,9 @@ https://github.com/mne-tools/mne-nirs/issues
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.815 seconds)
+   **Total running time of the script:** (0 minutes 1.570 seconds)
 
-**Estimated memory usage:**  480 MB
+**Estimated memory usage:**  504 MB
 
 
 .. _sphx_glr_download_auto_examples_migration_plot_01_homer.py:

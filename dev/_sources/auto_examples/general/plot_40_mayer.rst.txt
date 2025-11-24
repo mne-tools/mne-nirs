@@ -86,6 +86,18 @@ data for the purpose of extracting Mayer waves oscillation parameters.
     This version of `fooof` (1.1) is fully functional, but will not be further updated.
     New projects are recommended to update to using `specparam` (see Changelog for details).
       from fooof import FOOOF
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
 
 
 
@@ -122,7 +134,23 @@ We read in the data and convert to haemoglobin concentration.
 
  .. code-block:: none
 
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
     Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
 
 
 .. raw:: html
@@ -275,9 +303,9 @@ We read in the data and convert to haemoglobin concentration.
 
 
 
-    <tr class="mne-repr-section-header general-e5a706db-6ca1-451c-9c10-fe6cc1dbd926"
+    <tr class="mne-repr-section-header general-d9532845-7bf8-4b79-89f3-f9491cc1e717"
          title="Hide section" 
-        onclick="toggleVisibility('general-e5a706db-6ca1-451c-9c10-fe6cc1dbd926')">
+        onclick="toggleVisibility('general-d9532845-7bf8-4b79-89f3-f9491cc1e717')">
         <th class="mne-repr-section-toggle">
             <button >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -289,7 +317,7 @@ We read in the data and convert to haemoglobin concentration.
     </tr>
 
 
-    <tr class="repr-element general-e5a706db-6ca1-451c-9c10-fe6cc1dbd926 ">
+    <tr class="repr-element general-d9532845-7bf8-4b79-89f3-f9491cc1e717 ">
         <td class="mne-repr-section-toggle"></td>
         <td>Filename(s)</td>
         <td>
@@ -300,19 +328,19 @@ We read in the data and convert to haemoglobin concentration.
         </td>
     </tr>
 
-    <tr class="repr-element general-e5a706db-6ca1-451c-9c10-fe6cc1dbd926 ">
+    <tr class="repr-element general-d9532845-7bf8-4b79-89f3-f9491cc1e717 ">
         <td class="mne-repr-section-toggle"></td>
         <td>MNE object type</td>
         <td>RawNIRX</td>
     </tr>
-    <tr class="repr-element general-e5a706db-6ca1-451c-9c10-fe6cc1dbd926 ">
+    <tr class="repr-element general-d9532845-7bf8-4b79-89f3-f9491cc1e717 ">
         <td class="mne-repr-section-toggle"></td>
         <td>Measurement date</td>
     
         <td>2019-11-02 at 13:16:16 UTC</td>
     
     </tr>
-    <tr class="repr-element general-e5a706db-6ca1-451c-9c10-fe6cc1dbd926 ">
+    <tr class="repr-element general-d9532845-7bf8-4b79-89f3-f9491cc1e717 ">
         <td class="mne-repr-section-toggle"></td>
         <td>Participant</td>
     
@@ -321,7 +349,7 @@ We read in the data and convert to haemoglobin concentration.
     
     
     </tr>
-    <tr class="repr-element general-e5a706db-6ca1-451c-9c10-fe6cc1dbd926 ">
+    <tr class="repr-element general-d9532845-7bf8-4b79-89f3-f9491cc1e717 ">
         <td class="mne-repr-section-toggle"></td>
         <td>Experimenter</td>
     
@@ -336,9 +364,9 @@ We read in the data and convert to haemoglobin concentration.
 
 
 
-    <tr class="mne-repr-section-header acquisition-f7372fa4-a7ab-4ae7-8c13-30cf1303942b"
+    <tr class="mne-repr-section-header acquisition-5cfc5131-83dd-45d5-b734-0c2418b37d8d"
          title="Hide section" 
-        onclick="toggleVisibility('acquisition-f7372fa4-a7ab-4ae7-8c13-30cf1303942b')">
+        onclick="toggleVisibility('acquisition-5cfc5131-83dd-45d5-b734-0c2418b37d8d')">
         <th class="mne-repr-section-toggle">
             <button >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -350,7 +378,7 @@ We read in the data and convert to haemoglobin concentration.
     </tr>
 
 
-    <tr class="repr-element acquisition-f7372fa4-a7ab-4ae7-8c13-30cf1303942b ">
+    <tr class="repr-element acquisition-5cfc5131-83dd-45d5-b734-0c2418b37d8d ">
         <td class="mne-repr-section-toggle"></td>
         <td>Duration</td>
         <td>00:49:35 (HH:MM:SS)</td>
@@ -363,14 +391,14 @@ We read in the data and convert to haemoglobin concentration.
 
 
 
-    <tr class="repr-element acquisition-f7372fa4-a7ab-4ae7-8c13-30cf1303942b ">
+    <tr class="repr-element acquisition-5cfc5131-83dd-45d5-b734-0c2418b37d8d ">
         <td class="mne-repr-section-toggle"></td>
         <td>Sampling frequency</td>
         <td>2.00 Hz</td>
     </tr>
 
 
-    <tr class="repr-element acquisition-f7372fa4-a7ab-4ae7-8c13-30cf1303942b ">
+    <tr class="repr-element acquisition-5cfc5131-83dd-45d5-b734-0c2418b37d8d ">
         <td class="mne-repr-section-toggle"></td>
         <td>Time points</td>
         <td>5,949</td>
@@ -385,9 +413,9 @@ We read in the data and convert to haemoglobin concentration.
 
 
 
-    <tr class="mne-repr-section-header channels-692d2bc0-bc73-4c67-b759-98ca3e3858a4"
+    <tr class="mne-repr-section-header channels-9256e715-a454-4842-a801-86a279b761ca"
          title="Hide section" 
-        onclick="toggleVisibility('channels-692d2bc0-bc73-4c67-b759-98ca3e3858a4')">
+        onclick="toggleVisibility('channels-9256e715-a454-4842-a801-86a279b761ca')">
         <th class="mne-repr-section-toggle">
             <button >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -400,7 +428,7 @@ We read in the data and convert to haemoglobin concentration.
 
 
     
-    <tr class="repr-element channels-692d2bc0-bc73-4c67-b759-98ca3e3858a4 ">
+    <tr class="repr-element channels-9256e715-a454-4842-a801-86a279b761ca ">
         <td class="mne-repr-section-toggle"></td>
         <td>Oxyhemoglobin</td>
         <td>
@@ -413,7 +441,7 @@ We read in the data and convert to haemoglobin concentration.
     </tr>
 
 
-    <tr class="repr-element channels-692d2bc0-bc73-4c67-b759-98ca3e3858a4 ">
+    <tr class="repr-element channels-9256e715-a454-4842-a801-86a279b761ca ">
         <td class="mne-repr-section-toggle"></td>
         <td>Head & sensor digitization</td>
     
@@ -428,9 +456,9 @@ We read in the data and convert to haemoglobin concentration.
 
 
 
-    <tr class="mne-repr-section-header filters-af631cf8-0326-4ef2-831d-9126eb3423c6"
+    <tr class="mne-repr-section-header filters-3fbb15cb-471b-4b7e-bb94-ce0ae5c28122"
          title="Hide section" 
-        onclick="toggleVisibility('filters-af631cf8-0326-4ef2-831d-9126eb3423c6')">
+        onclick="toggleVisibility('filters-3fbb15cb-471b-4b7e-bb94-ce0ae5c28122')">
         <th class="mne-repr-section-toggle">
             <button >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -442,14 +470,14 @@ We read in the data and convert to haemoglobin concentration.
     </tr>
 
 
-    <tr class="repr-element filters-af631cf8-0326-4ef2-831d-9126eb3423c6 ">
+    <tr class="repr-element filters-3fbb15cb-471b-4b7e-bb94-ce0ae5c28122 ">
         <td class="mne-repr-section-toggle"></td>
         <td>Highpass</td>
         <td>0.00 Hz</td>
     </tr>
 
 
-    <tr class="repr-element filters-af631cf8-0326-4ef2-831d-9126eb3423c6 ">
+    <tr class="repr-element filters-3fbb15cb-471b-4b7e-bb94-ce0ae5c28122 ">
         <td class="mne-repr-section-toggle"></td>
         <td>Lowpass</td>
         <td>1.00 Hz</td>
@@ -531,8 +559,36 @@ it matches well to the data.
 
  .. code-block:: none
 
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
 
-    ([<matplotlib.axis.XTick object at 0x7f29a6a91ed0>, <matplotlib.axis.XTick object at 0x7f29a6a90430>, <matplotlib.axis.XTick object at 0x7f29dd0b0820>, <matplotlib.axis.XTick object at 0x7f29dd0b0730>, <matplotlib.axis.XTick object at 0x7f29dd0b27a0>, <matplotlib.axis.XTick object at 0x7f29dd0b1ae0>, <matplotlib.axis.XTick object at 0x7f29dd145510>], [Text(0, 0, '0.0'), Text(1, 0, '0.1'), Text(2, 0, '0.2'), Text(3, 0, '0.3'), Text(4, 0, '0.4'), Text(5, 0, '0.5'), Text(6, 0, '0.6')])
+    ([<matplotlib.axis.XTick object at 0x734450ce1a00>, <matplotlib.axis.XTick object at 0x734450ce1850>, <matplotlib.axis.XTick object at 0x73442ddda1b0>, <matplotlib.axis.XTick object at 0x73442cdd6930>, <matplotlib.axis.XTick object at 0x73442cdd5a00>, <matplotlib.axis.XTick object at 0x73442cdd4710>, <matplotlib.axis.XTick object at 0x73442cdd6fc0>], [Text(0, 0, '0.0'), Text(1, 0, '0.1'), Text(2, 0, '0.2'), Text(3, 0, '0.3'), Text(4, 0, '0.4'), Text(5, 0, '0.5'), Text(6, 0, '0.6')])
 
 
 
@@ -559,6 +615,39 @@ authors if you use this function.
 
 
 
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
+    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7062) is multi-threaded, use of fork() may lead to deadlocks in the child.
+      self.pid = os.fork()
 
 
 .. raw:: html
@@ -642,9 +731,9 @@ Bibliography
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.157 seconds)
+   **Total running time of the script:** (0 minutes 2.419 seconds)
 
-**Estimated memory usage:**  480 MB
+**Estimated memory usage:**  504 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_40_mayer.py:
