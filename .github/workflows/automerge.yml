@@ -11,11 +11,7 @@ jobs:
     if: (github.event.pull_request.user.login == 'dependabot[bot]' || github.event.pull_request.user.login == 'pre-commit-ci[bot]') && github.repository == 'mne-tools/mne-nirs'
     steps:
       - name: Enable auto-merge for bot PRs
-        run: |
-          set -xeo pipefail
-          git config --global user.name "mne[bot]"
-          git config --global user.email "50266005+mne-bot@users.noreply.github.com"
-          gh pr merge --auto --squash "$PR_URL"
+        run: gh pr merge --auto --squash "$PR_URL" -A "50266005+mne-bot@users.noreply.github.com"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
