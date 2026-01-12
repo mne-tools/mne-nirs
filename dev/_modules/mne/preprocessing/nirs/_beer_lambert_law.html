@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne.preprocessing.nirs._beer_lambert_law &#8212; MNE-NIRS 0.8.0.dev18+gc3ca58668 documentation</title>
+    <title>mne.preprocessing.nirs._beer_lambert_law &#8212; MNE-NIRS 0.8.0.dev19+gdcf460c10 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../../_static/documentation_options.js?v=9c46e594"></script>
+    <script src="../../../../_static/documentation_options.js?v=e4dd8d57"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -385,7 +385,7 @@ document.write(`
 <span class="kn">from</span><span class="w"> </span><span class="nn">..._fiff.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">FIFF</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseRaw</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_validate_type</span><span class="p">,</span> <span class="n">pinv</span><span class="p">,</span> <span class="n">warn</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..nirs</span><span class="w"> </span><span class="kn">import</span> <span class="n">_validate_nirs_info</span><span class="p">,</span> <span class="n">source_detector_distances</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..nirs</span><span class="w"> </span><span class="kn">import</span> <span class="n">_channel_frequencies</span><span class="p">,</span> <span class="n">_validate_nirs_info</span><span class="p">,</span> <span class="n">source_detector_distances</span>
 
 
 <div class="viewcode-block" id="beer_lambert_law">
@@ -412,23 +412,46 @@ document.write(`
     <span class="n">_validate_type</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">BaseRaw</span><span class="p">,</span> <span class="s2">&quot;raw&quot;</span><span class="p">)</span>
     <span class="n">_validate_type</span><span class="p">(</span><span class="n">ppf</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;numeric&quot;</span><span class="p">,</span> <span class="s2">&quot;array-like&quot;</span><span class="p">),</span> <span class="s2">&quot;ppf&quot;</span><span class="p">)</span>
     <span class="n">ppf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ppf</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">ppf</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># upcast single float to shape (2,)</span>
-        <span class="n">ppf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">ppf</span><span class="p">,</span> <span class="n">ppf</span><span class="p">])</span>
-    <span class="k">if</span> <span class="n">ppf</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;ppf must be float or array-like of shape (2,), got shape </span><span class="si">{</span><span class="n">ppf</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">)</span>
-    <span class="n">ppf</span> <span class="o">=</span> <span class="n">ppf</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>  <span class="c1"># shape (2, 1)</span>
     <span class="n">picks</span> <span class="o">=</span> <span class="n">_validate_nirs_info</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="s2">&quot;od&quot;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;Beer-lambert&quot;</span><span class="p">)</span>
-    <span class="c1"># This is the one place we *really* need the actual/accurate frequencies</span>
-    <span class="n">freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;chs&quot;</span><span class="p">][</span><span class="n">pick</span><span class="p">][</span><span class="s2">&quot;loc&quot;</span><span class="p">][</span><span class="mi">9</span><span class="p">]</span> <span class="k">for</span> <span class="n">pick</span> <span class="ow">in</span> <span class="n">picks</span><span class="p">],</span> <span class="nb">float</span><span class="p">)</span>
-    <span class="n">abs_coef</span> <span class="o">=</span> <span class="n">_load_absorption</span><span class="p">(</span><span class="n">freqs</span><span class="p">)</span>
+
+    <span class="c1"># Use nominal channel frequencies</span>
+    <span class="c1">#</span>
+    <span class="c1"># Notes on implementation:</span>
+    <span class="c1"># 1. Frequencies are calculated the same way as in nirs._validate_nirs_info().</span>
+    <span class="c1"># 2. Wavelength values in the info structure may contain actual frequencies,</span>
+    <span class="c1">#    which may be used for more accurate calculation in the future.</span>
+    <span class="c1"># 3. nirs._channel_frequencies uses both cw_amplitude and OD data to determine</span>
+    <span class="c1">#    frequencies, whereas we only need those from OD here. Is there any chance</span>
+    <span class="c1">#    that they&#39;re different?</span>
+    <span class="c1"># 4. If actual frequencies were used, using np.unique() like below will lead to</span>
+    <span class="c1">#    errors. Instead, absorption coefficients will need to be calculated for</span>
+    <span class="c1">#    each individual frequency.</span>
+    <span class="n">freqs</span> <span class="o">=</span> <span class="n">_channel_frequencies</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+
+    <span class="c1"># Get unique wavelengths and determine number of wavelengths</span>
+    <span class="n">unique_freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">freqs</span><span class="p">)</span>
+    <span class="n">n_wavelengths</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_freqs</span><span class="p">)</span>
+
+    <span class="c1"># PPF validation for multiple wavelengths</span>
+    <span class="k">if</span> <span class="n">ppf</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># single float</span>
+        <span class="c1"># same PPF for all wavelengths, shape (n_wavelengths, 1)</span>
+        <span class="n">ppf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">n_wavelengths</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ppf</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">ppf</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">ppf</span><span class="p">)</span> <span class="o">==</span> <span class="n">n_wavelengths</span><span class="p">:</span>
+        <span class="c1"># separate ppf for each wavelength</span>
+        <span class="n">ppf</span> <span class="o">=</span> <span class="n">ppf</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>  <span class="c1"># shape (n_wavelengths, 1)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;ppf must be a single float or an array-like of length </span><span class="si">{</span><span class="n">n_wavelengths</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;(number of wavelengths), got shape </span><span class="si">{</span><span class="n">ppf</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">abs_coef</span> <span class="o">=</span> <span class="n">_load_absorption</span><span class="p">(</span><span class="n">unique_freqs</span><span class="p">)</span>  <span class="c1"># shape (n_wavelengths, 2)</span>
     <span class="n">distances</span> <span class="o">=</span> <span class="n">source_detector_distances</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="n">picks</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
     <span class="n">bad</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">distances</span><span class="p">[</span><span class="n">picks</span><span class="p">])</span>
     <span class="n">bad</span> <span class="o">|=</span> <span class="n">distances</span><span class="p">[</span><span class="n">picks</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span>
     <span class="k">if</span> <span class="n">bad</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
         <span class="n">warn</span><span class="p">(</span>
-            <span class="s2">&quot;Source-detector distances are zero on NaN, some resulting &quot;</span>
+            <span class="s2">&quot;Source-detector distances are zero or NaN, some resulting &quot;</span>
             <span class="s2">&quot;concentrations will be zero. Consider setting a montage &quot;</span>
             <span class="s2">&quot;with raw.set_montage.&quot;</span>
         <span class="p">)</span>
@@ -440,20 +463,41 @@ document.write(`
             <span class="s2">&quot;likely due to optode locations being stored in a &quot;</span>
             <span class="s2">&quot; unit other than meters.&quot;</span>
         <span class="p">)</span>
-    <span class="n">rename</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">picks</span><span class="p">[::</span><span class="mi">2</span><span class="p">],</span> <span class="n">picks</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]):</span>
-        <span class="n">EL</span> <span class="o">=</span> <span class="n">abs_coef</span> <span class="o">*</span> <span class="n">distances</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">*</span> <span class="n">ppf</span>
-        <span class="n">iEL</span> <span class="o">=</span> <span class="n">pinv</span><span class="p">(</span><span class="n">EL</span><span class="p">)</span>
 
-        <span class="n">raw</span><span class="o">.</span><span class="n">_data</span><span class="p">[[</span><span class="n">ii</span><span class="p">,</span> <span class="n">jj</span><span class="p">]]</span> <span class="o">=</span> <span class="n">iEL</span> <span class="o">@</span> <span class="n">raw</span><span class="o">.</span><span class="n">_data</span><span class="p">[[</span><span class="n">ii</span><span class="p">,</span> <span class="n">jj</span><span class="p">]]</span> <span class="o">*</span> <span class="mf">1e-3</span>
+    <span class="n">rename</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">channels_to_drop_all</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Accumulate all channels to drop</span>
+
+    <span class="c1"># Iterate over channel groups ([Si_Di all wavelengths, Sj_Dj all wavelengths, ...])</span>
+    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">picks</span><span class="p">),</span> <span class="n">n_wavelengths</span><span class="p">):</span>
+        <span class="n">group_picks</span> <span class="o">=</span> <span class="n">picks</span><span class="p">[</span><span class="n">ii</span> <span class="p">:</span> <span class="n">ii</span> <span class="o">+</span> <span class="n">n_wavelengths</span><span class="p">]</span>
+        <span class="c1"># Calculate Δc based on the system: ΔOD = E * L * PPF * Δc</span>
+        <span class="c1"># where E is (n_wavelengths, 2), Δc is (2, n_timepoints)</span>
+        <span class="c1"># using pseudo-inverse</span>
+        <span class="n">EL</span> <span class="o">=</span> <span class="n">abs_coef</span> <span class="o">*</span> <span class="n">distances</span><span class="p">[</span><span class="n">group_picks</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">*</span> <span class="n">ppf</span>
+        <span class="n">iEL</span> <span class="o">=</span> <span class="n">pinv</span><span class="p">(</span><span class="n">EL</span><span class="p">)</span>
+        <span class="n">conc_data</span> <span class="o">=</span> <span class="n">iEL</span> <span class="o">@</span> <span class="n">raw</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">group_picks</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e-3</span>
+
+        <span class="c1"># Replace the first two channels with HbO and HbR</span>
+        <span class="n">raw</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">group_picks</span><span class="p">[:</span><span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">conc_data</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># HbO, HbR</span>
 
         <span class="c1"># Update channel information</span>
         <span class="n">coil_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">hbo</span><span class="o">=</span><span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_COIL_FNIRS_HBO</span><span class="p">,</span> <span class="n">hbr</span><span class="o">=</span><span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_COIL_FNIRS_HBR</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">ki</span><span class="p">,</span> <span class="n">kind</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">((</span><span class="n">ii</span><span class="p">,</span> <span class="n">jj</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span> <span class="s2">&quot;hbr&quot;</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">ki</span><span class="p">,</span> <span class="n">kind</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">group_picks</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="p">(</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span> <span class="s2">&quot;hbr&quot;</span><span class="p">)):</span>
             <span class="n">ch</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;chs&quot;</span><span class="p">][</span><span class="n">ki</span><span class="p">]</span>
             <span class="n">ch</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">coil_type</span><span class="o">=</span><span class="n">coil_dict</span><span class="p">[</span><span class="n">kind</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="n">FIFF</span><span class="o">.</span><span class="n">FIFF_UNIT_MOL</span><span class="p">)</span>
             <span class="n">new_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ch</span><span class="p">[</span><span class="s1">&#39;ch_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">kind</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="n">rename</span><span class="p">[</span><span class="n">ch</span><span class="p">[</span><span class="s2">&quot;ch_name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">new_name</span>
+
+        <span class="c1"># Accumulate extra wavelength channels to drop (keep only HbO and HbR)</span>
+        <span class="k">if</span> <span class="n">n_wavelengths</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">channels_to_drop</span> <span class="o">=</span> <span class="n">group_picks</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+            <span class="n">channel_names_to_drop</span> <span class="o">=</span> <span class="p">[</span><span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">channels_to_drop</span><span class="p">]</span>
+            <span class="n">channels_to_drop_all</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">channel_names_to_drop</span><span class="p">)</span>
+
+    <span class="c1"># Drop all accumulated extra wavelength channels after processing all groups</span>
+    <span class="k">if</span> <span class="n">channels_to_drop_all</span><span class="p">:</span>
+        <span class="n">raw</span><span class="o">.</span><span class="n">drop_channels</span><span class="p">(</span><span class="n">channels_to_drop_all</span><span class="p">)</span>
+
     <span class="n">raw</span><span class="o">.</span><span class="n">rename_channels</span><span class="p">(</span><span class="n">rename</span><span class="p">)</span>
 
     <span class="c1"># Validate the format of data after transformation is valid</span>
@@ -472,7 +516,9 @@ document.write(`
     <span class="c1"># save(&#39;extinction_coef.mat&#39;, &#39;extinct_coef&#39;)</span>
     <span class="c1">#</span>
     <span class="c1"># Returns data as [[HbO2(freq1), Hb(freq1)],</span>
-    <span class="c1">#                  [HbO2(freq2), Hb(freq2)]]</span>
+    <span class="c1">#                  [HbO2(freq2), Hb(freq2)],</span>
+    <span class="c1">#                  ...,</span>
+    <span class="c1">#                  [HbO2(freqN), Hb(freqN)]]</span>
     <span class="n">extinction_fname</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
         <span class="n">op</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;extinction_coef.mat&quot;</span>
     <span class="p">)</span>
@@ -481,14 +527,14 @@ document.write(`
     <span class="n">interp_hbo</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">a</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">)</span>
     <span class="n">interp_hb</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">a</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">)</span>
 
-    <span class="n">ext_coef</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="p">[</span><span class="n">interp_hbo</span><span class="p">(</span><span class="n">freqs</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">interp_hb</span><span class="p">(</span><span class="n">freqs</span><span class="p">[</span><span class="mi">0</span><span class="p">])],</span>
-            <span class="p">[</span><span class="n">interp_hbo</span><span class="p">(</span><span class="n">freqs</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">interp_hb</span><span class="p">(</span><span class="n">freqs</span><span class="p">[</span><span class="mi">1</span><span class="p">])],</span>
-        <span class="p">]</span>
-    <span class="p">)</span>
-    <span class="n">abs_coef</span> <span class="o">=</span> <span class="n">ext_coef</span> <span class="o">*</span> <span class="mf">0.2303</span>
+    <span class="c1"># Build coefficient matrix for all wavelengths</span>
+    <span class="c1"># Shape: (n_wavelengths, 2) where columns are [HbO2, Hb]</span>
+    <span class="n">ext_coef</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">freqs</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">freqs</span><span class="p">):</span>
+        <span class="n">ext_coef</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">interp_hbo</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span>  <span class="c1"># HbO2</span>
+        <span class="n">ext_coef</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">interp_hb</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span>  <span class="c1"># Hb</span>
 
+    <span class="n">abs_coef</span> <span class="o">=</span> <span class="n">ext_coef</span> <span class="o">*</span> <span class="mf">0.2303</span>
     <span class="k">return</span> <span class="n">abs_coef</span>
 </pre></div>
 
@@ -533,7 +579,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2025, MNE Developers. Last updated <time datetime="2025-12-22T21:09:24.001650+00:00" class="localized">2025-12-22 21:09 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-01-12T20:55:10.143689+00:00" class="localized">2026-01-12 20:55 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
