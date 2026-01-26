@@ -268,12 +268,12 @@ def plot_glm_group_topo(
     statsmodel_df = statsmodel_df.reindex(info.ch_names)
 
     # Extract estimate of interest to plot
-    estimates = statsmodel_df[value].values
+    estimates = statsmodel_df[value].values.copy()
 
     if threshold:
         p = statsmodel_df["P>|z|"].values
         t = p > 0.05
-        estimates[t] = 0.0
+        statsmodel_df.loc[t, value] = 0.0
 
     assert len(np.unique(statsmodel_df["Chroma"])) == 1, "Only one Chroma allowed"
 
