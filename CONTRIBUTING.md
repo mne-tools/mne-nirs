@@ -7,5 +7,5 @@ This project follows the same community guidelines as MNE-Python.
 
 Users and contributors to MNE-NIRS are expected to follow our [code of conduct](https://github.com/mne-tools/.github/blob/main/CODE_OF_CONDUCT.md).
 
-The [contributing guide](https://mne.tools/dev/install/contributing.html) has details on the preferred contribution workflow
+The [contributing guide](https://mne.tools/dev/development/contributing.html) has details on the preferred contribution workflow
 and the recommended system configuration for a smooth contribution/development experience.
