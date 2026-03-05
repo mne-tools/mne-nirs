@@ -28,7 +28,9 @@ fname_nirx_15_2_short = op.join(
 )
 
 fname_snirf_aux = aux.data_path()
-fname_snirf_aux_nirsport2 = op.join(op.dirname(aux.data_path()), "nirsport2_noise_w_aux.snirf")
+fname_snirf_aux_nirsport2 = op.join(
+    op.dirname(aux.data_path()), "nirsport2_noise_w_aux.snirf"
+)
 
 pytest.importorskip("h5py")
 
