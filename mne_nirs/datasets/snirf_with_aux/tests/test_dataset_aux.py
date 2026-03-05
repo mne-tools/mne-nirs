@@ -8,5 +8,6 @@ import mne_nirs
 
 def test_dataset_snirf_aux():
     datapath = mne_nirs.datasets.snirf_with_aux.data_path()
-    assert op.isfile(datapath)
-    assert "2022-08-05_002.snirf" in str(datapath)
+    assert op.isdir(datapath)
+    assert op.isfile(op.join(datapath, mne_nirs.datasets.snirf_with_aux.FNAME_SNIRF_AUX))
+    assert op.isfile(op.join(datapath, mne_nirs.datasets.snirf_with_aux.FNAME_SNIRF_AUX_NIRSPORT2))
