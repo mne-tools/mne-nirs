@@ -50,7 +50,7 @@ def read_snirf_aux_data(fname: str, raw: Raw):
             aux_data_interp = interpolate.interp1d(
                 aux_time, aux_data, axis=0, bounds_error=False, fill_value="extrapolate"
             )
-            aux_data_matched_to_raw = aux_data_interp(raw.times)
+            aux_data_matched_to_raw = aux_data_interp(raw.times).flatten()
             d[aux_names[idx]] = aux_data_matched_to_raw
 
         df = DataFrame(data=d)
@@ -60,4 +60,4 @@ def read_snirf_aux_data(fname: str, raw: Raw):
 
 
 def _decode_name(key):
-    return np.array(key)[0].decode()
+    return np.array(key).item().decode()

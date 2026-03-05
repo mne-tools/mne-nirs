@@ -26,7 +26,11 @@ fname_nirx_15_2 = op.join(
 fname_nirx_15_2_short = op.join(
     data_path(download=False), "NIRx", "nirscout", "nirx_15_2_recording_w_short"
 )
+
 fname_snirf_aux = aux.data_path()
+fname_snirf_aux_nirsport2 = op.join(
+    op.dirname(aux.data_path()), "nirsport2_noise_w_aux.snirf"
+)
 
 pytest.importorskip("h5py")
 
@@ -276,6 +280,15 @@ def test_aux_read():
     assert type(a) is pd.DataFrame
     assert "accelerometer_2_z" in a
     assert len(a["gyroscope_1_z"]) == len(raw.times)
+
+
+def test_aux_read_nirsport2():
+    """Test aux from non-standard NIRSport2 SNIRF file"""
+    raw = read_raw_snirf(fname_snirf_aux_nirsport2)
+    a = read_snirf_aux_data(fname_snirf_aux_nirsport2, raw)
+    assert "ACCEL_X" in a
+    assert "GYRO_X" in a
+    assert len(a["ACCEL_X"]) == len(raw.times)
 
 
 @requires_testing_data

@@ -70,7 +70,7 @@ jobs:
         working-directory: mne-python
       - uses: actions/cache@v5
         with:
-          key: ${{ env.TESTING_VERSION }}
+          key: ${{ env.TESTING_VERSION }}-1
           path: ~/mne_data
       - run: ./tools/github_actions_download.sh
       - run: pytest --cov=mne_nirs --cov-report xml -vv -m "not examples" "mne_nirs/"

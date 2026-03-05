@@ -51,9 +51,9 @@ def data_path(
         Path to dataset directory.
     """
     dataset_params = dict(
-        archive_name="2022-08-05_002.snirf.zip",
-        hash="md5:c012485b80d762a65b05d812761c0f4c",
-        url="https://osf.io/download/682ddabd4d28c665accacc7c?version=2",
+        archive_name="fnirs_snirf_aux.zip",
+        hash="md5:c127650330a4bc6399c1e6e78e634596",
+        url="https://osf.io/download/59hn6?version=1",
         folder_name="fNIRS-SNIRF-aux",
         dataset_name="snirf_with_aux",
         config_key="MNE_DATASETS_SNIRFAUX_PATH",
