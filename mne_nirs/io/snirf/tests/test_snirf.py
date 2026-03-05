@@ -281,7 +281,7 @@ def test_aux_read():
 
 
 def test_aux_read_nirsport2():
-    """Test reading auxiliary data from NIRSport2 SNIRF file, with improper dataTimeSeries and time shape."""
+    """Test aux from non-standard NIRSport2 SNIRF file"""
     raw = read_raw_snirf(fname_snirf_aux_nirsport2)
     a = read_snirf_aux_data(fname_snirf_aux_nirsport2, raw)
     assert "ACCEL_X" in a
