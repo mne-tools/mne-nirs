@@ -3,7 +3,6 @@
 #
 # This downloads SNIRF data that includes auxiliary channels.
 
-import os
 from functools import partial
 
 import pooch

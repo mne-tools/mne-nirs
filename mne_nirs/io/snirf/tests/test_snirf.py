@@ -34,6 +34,7 @@ pytest.importorskip("h5py")
 
 MNE_1_7 = check_version("mne", "1.7")
 
+
 @requires_testing_data
 @pytest.mark.parametrize(
     "fname", (fname_nirx_15_2_short, fname_nirx_15_2, fname_nirx_15_0)
@@ -278,6 +279,7 @@ def test_aux_read():
     assert "accelerometer_2_z" in a
     assert len(a["gyroscope_1_z"]) == len(raw.times)
 
+
 def test_aux_read_nirsport2():
     """Test reading auxiliary data from NIRSport2 SNIRF file, with improper dataTimeSeries and time shape."""
     raw = read_raw_snirf(fname_snirf_aux_nirsport2)
@@ -285,6 +287,7 @@ def test_aux_read_nirsport2():
     assert "ACCEL_X" in a
     assert "GYRO_X" in a
     assert len(a["ACCEL_X"]) == len(raw.times)
+
 
 @requires_testing_data
 @pytest.mark.parametrize(
