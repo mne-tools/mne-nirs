@@ -3,6 +3,7 @@
 #
 # This downloads SNIRF data that includes auxiliary channels.
 
+import os
 from functools import partial
 
 import pooch
@@ -68,4 +69,4 @@ def data_path(
     )
     dpath = str(dpath)
 
-    return _mne_path(dpath)
+    return _mne_path(os.path.join(dpath, "2022-08-05_002.snirf"))
