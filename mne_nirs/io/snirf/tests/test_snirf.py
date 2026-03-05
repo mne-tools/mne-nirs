@@ -283,6 +283,8 @@ def test_aux_read_nirsport2():
     raw = read_raw_snirf(fname_snirf_aux_nirsport2)
     a = read_snirf_aux_data(fname_snirf_aux_nirsport2, raw)
     assert "ACCEL_X" in a
+    assert "GYRO_X" in a
+    assert len(a["ACCEL_X"]) == len(raw.times)
 
 @requires_testing_data
 @pytest.mark.parametrize(
