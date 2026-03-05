@@ -22,7 +22,6 @@ this can be incorporated in to your analysis.
 #
 # License: BSD (3-clause)
 
-import os.path
 import matplotlib.pyplot as plt
 import mne
 import numpy as np
@@ -30,7 +29,7 @@ import pandas as pd
 from nilearn.plotting import plot_design_matrix
 
 from mne_nirs.channels import get_long_channels, get_short_channels
-from mne_nirs.datasets.snirf_with_aux import data_path, FNAME_SNIRF_AUX
+from mne_nirs.datasets.snirf_with_aux import data_path
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.io.snirf import read_snirf_aux_data
 
@@ -41,7 +40,7 @@ from mne_nirs.io.snirf import read_snirf_aux_data
 # First we import the raw data. A different dataset is used from
 # the previous GLM example that contains auxiliary data.
 
-fnirs_snirf_file = os.path.join(data_path(), FNAME_SNIRF_AUX)
+fnirs_snirf_file = data_path()
 raw_intensity = mne.io.read_raw_snirf(fnirs_snirf_file).load_data()
 raw_intensity.resample(0.7)
 
