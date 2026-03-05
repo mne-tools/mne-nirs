@@ -14,8 +14,9 @@ from ...fixes import _mne_path
 
 has_fnirs_snirf_aux_data = partial(has_dataset, name="snirf_with_aux")
 
-FNAME_SNIRF_AUX =  "2022-08-05_002.snirf"
-FNAME_SNIRF_AUX_NIRSPORT2 =  "nirsport2_noise_w_aux.snirf"
+FNAME_SNIRF_AUX = "2022-08-05_002.snirf"
+FNAME_SNIRF_AUX_NIRSPORT2 = "nirsport2_noise_w_aux.snirf"
+
 
 @verbose
 def data_path(

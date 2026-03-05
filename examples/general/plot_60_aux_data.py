@@ -23,6 +23,7 @@ this can be incorporated in to your analysis.
 # License: BSD (3-clause)
 
 import os.path
+
 import matplotlib.pyplot as plt
 import mne
 import numpy as np
@@ -30,7 +31,7 @@ import pandas as pd
 from nilearn.plotting import plot_design_matrix
 
 from mne_nirs.channels import get_long_channels, get_short_channels
-from mne_nirs.datasets.snirf_with_aux import data_path, FNAME_SNIRF_AUX
+from mne_nirs.datasets.snirf_with_aux import FNAME_SNIRF_AUX, data_path
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.io.snirf import read_snirf_aux_data
 
