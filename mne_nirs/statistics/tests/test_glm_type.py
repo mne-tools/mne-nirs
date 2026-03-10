@@ -295,6 +295,7 @@ def test_create_results_glm_contrast():
 
 
 def test_results_glm_io():
+    pytest.importorskip("tables")
     res = _get_glm_result(tmax=400)
     res.save("test-regression-glm.h5", overwrite=True)
     loaded_res = read_glm("test-regression-glm.h5")
