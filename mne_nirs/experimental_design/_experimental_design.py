@@ -4,7 +4,8 @@
 
 import mne
 import numpy as np
-
+from mne.utils import logger
+from statsmodels.stats.outliers_influence import variance_inflation_factor
 
 def make_first_level_design_matrix(
     raw,
@@ -110,7 +111,28 @@ def make_first_level_design_matrix(
         fir_delays=fir_delays,
     )
 
-    return dm
+
+    dm_no_const = dm.drop(columns=["constant"], errors="ignore")
+    predictor_names = list(dm_no_const.columns)
+
+    # VIF 1–4 shows low to moderate correlation between predictors 
+    # VIF > 4 is often though to indicate high multicollinearity, 
+    # which may hint that some varaiables may need to be dropped, combined etc
+
+    vif = [
+        variance_inflation_factor(dm_no_const.values, i)
+        for i in range(dm_no_const.shape[1])
+    ]
+
+    # alert userif high vif detected
+    for name, vif_idx in zip(predictor_names, vif):
+        msg = f"{name} with VIF of {vif_idx:.3f}"
+        if vif_idx > 4:
+            logger.warning("High collinearity " + msg)
+        else:
+            logger.info(msg)
+
+    return dm, dict(zip(predictor_names, vif))
 
 
 def create_boxcar(raw, event_id=None, stim_dur=1):
