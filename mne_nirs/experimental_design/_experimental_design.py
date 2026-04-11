@@ -7,6 +7,7 @@ import numpy as np
 from mne.utils import logger
 
 
+
 def make_first_level_design_matrix(
     raw,
     stim_dur=1.0,
@@ -112,12 +113,11 @@ def make_first_level_design_matrix(
         fir_delays=fir_delays,
     )
 
-
     dm_no_const = dm.drop(columns=["constant"], errors="ignore")
     predictor_names = list(dm_no_const.columns)
 
-    # VIF 1–4 shows low to moderate correlation between predictors 
-    # VIF > 4 is often though to indicate high multicollinearity, 
+    # VIF 1–4 shows low to moderate correlation between predictors
+    # VIF > 4 is often though to indicate high multicollinearity,
     # which may hint that some varaiables may need to be dropped, combined etc
     vif_all = []
     for i in range(dm_no_const.shape[1]):
