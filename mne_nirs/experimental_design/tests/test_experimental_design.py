@@ -7,6 +7,9 @@ import os
 import mne
 import numpy as np
 
+# for the comparison of vif we need these two libraries
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
 import mne_nirs
 from mne_nirs.experimental_design import (
     drift_high_pass,
@@ -15,8 +18,6 @@ from mne_nirs.experimental_design import (
 )
 from mne_nirs.simulation import simulate_nirs_raw
 
-# for the comparison of vif we need these two libraries
-from statsmodels.stats.outliers_influence import variance_inflation_factor
 
 def make_first_level_design_matrix_w_statsmodels_vif(
     raw,
@@ -31,9 +32,8 @@ def make_first_level_design_matrix_w_statsmodels_vif(
     min_onset=-24,
     oversampling=50,
 ):
-    """same test as make_first_level_design_matrix but ran with statsmodels"""
+    """Same test as make_first_level_design_matrix but ran with statsmodels"""
     from nilearn.glm.first_level import make_first_level_design_matrix
-    from nilearn.glm import regression
     from pandas import DataFrame
 
     frame_times = raw.times
@@ -71,9 +71,7 @@ def make_first_level_design_matrix_w_statsmodels_vif(
         for i in range(dm_no_const.shape[1])
     ]
 
-
     return dm, dict(zip(predictor_names, vif))
-
 
 
 def _load_dataset():
@@ -184,6 +182,7 @@ def test_high_pass_helpers():
     assert drift_high_pass(raw) >= 1 / (40 * 2)
     assert drift_high_pass(raw) <= 1 / (20 * 2)
 
+
 def test_statsmodels_vif_equality():
     # Ensure our custom code for vif calculation matches statsmodels
     raw_intensity = _load_dataset()
@@ -200,7 +199,11 @@ def test_statsmodels_vif_equality():
     # wheras statsmodel has their own implmentation before extracting the vif values
     # note vif will come with a level of uncertainity +/- 0.05 of what is reported
     for key in vif:
+<<<<<<< HEAD
             assert abs(vif[key] - vif_statsm[key]) < 0.05
 
 
 test_statsmodels_vif_equality()
+=======
+        assert abs(vif[key] - vif_statsm[key]) < 0.05
+>>>>>>> f7bd80045a5fc8b0a2c928b4997dbe42ab22ad42
