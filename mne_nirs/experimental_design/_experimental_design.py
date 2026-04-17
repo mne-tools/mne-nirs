@@ -7,7 +7,6 @@ import numpy as np
 from mne.utils import logger
 
 
-
 def make_first_level_design_matrix(
     raw,
     stim_dur=1.0,
@@ -87,8 +86,8 @@ def make_first_level_design_matrix(
     ----------
     .. footbibliography::
     """
-    from nilearn.glm.first_level import make_first_level_design_matrix
     from nilearn.glm import regression
+    from nilearn.glm.first_level import make_first_level_design_matrix
     from pandas import DataFrame
 
     frame_times = raw.times
@@ -130,17 +129,16 @@ def make_first_level_design_matrix(
         x_i = design_matrix[:, i]
         mask = np.arange(k_vars) != i
         x_noti = design_matrix[:, mask]
-        
-        #equivaent to r_squared_i = OLS(x_i, x_noti).fit().rsquared
-        #in statsmodels.regression.linear_model
+
+        # equivaent to r_squared_i = OLS(x_i, x_noti).fit().rsquared
+        # in statsmodels.regression.linear_model
         regression_out = regression.OLSModel(x_noti).fit(x_i)
-        rss = np.sum(regression_out.residuals ** 2)
+        rss = np.sum(regression_out.residuals**2)
         tss = np.sum((x_i - np.mean(x_i)) ** 2)
         r_squared_i = 1 - (rss / tss)
 
         vif = 1.0 / (1.0 - r_squared_i)
         vif_all.append(vif)
-    
 
     # alert user if high vif detected
     for name, vif_idx in zip(predictor_names, vif_all):
