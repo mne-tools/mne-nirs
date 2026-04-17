@@ -76,6 +76,7 @@ def make_first_level_design_matrix(
 
     vif export : bool, optional
         deafult set to false, if set to True will export vif values; 
+
     Returns
     -------
     design_matrix : DataFrame instance,
@@ -153,9 +154,8 @@ def make_first_level_design_matrix(
 
     if vif_export == True:
         return dm, dict(zip(predictor_names, vif_all))
-    else: 
+    else:
         return dm
-
 
 
 def create_boxcar(raw, event_id=None, stim_dur=1):
