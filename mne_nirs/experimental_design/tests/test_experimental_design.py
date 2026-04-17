@@ -15,6 +15,66 @@ from mne_nirs.experimental_design import (
 )
 from mne_nirs.simulation import simulate_nirs_raw
 
+# for the comparison of vif we need these two libraries
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+def make_first_level_design_matrix_w_statsmodels_vif(
+    raw,
+    stim_dur=1.0,
+    hrf_model="glover",
+    drift_model="cosine",
+    high_pass=0.01,
+    drift_order=1,
+    fir_delays=(0,),
+    add_regs=None,
+    add_reg_names=None,
+    min_onset=-24,
+    oversampling=50,
+):
+    """same test as make_first_level_design_matrix but ran with statsmodels"""
+    from nilearn.glm.first_level import make_first_level_design_matrix
+    from nilearn.glm import regression
+    from pandas import DataFrame
+
+    frame_times = raw.times
+    # Create events for nilearn
+    conditions = raw.annotations.description
+    onsets = raw.annotations.onset - raw.first_time
+    duration = stim_dur * np.ones(len(conditions))
+    events = DataFrame(
+        {"trial_type": conditions, "onset": onsets, "duration": duration}
+    )
+
+    dm = make_first_level_design_matrix(
+        frame_times,
+        events,
+        drift_model=drift_model,
+        drift_order=drift_order,
+        hrf_model=hrf_model,
+        min_onset=min_onset,
+        high_pass=high_pass,
+        add_regs=add_regs,
+        oversampling=oversampling,
+        add_reg_names=add_reg_names,
+        fir_delays=fir_delays,
+    )
+
+    dm_no_const = dm.drop(columns=["constant"], errors="ignore")
+    predictor_names = list(dm_no_const.columns)
+
+    # VIF 1–4 shows low to moderate correlation between predictors
+    # VIF > 4 is often though to indicate high multicollinearity,
+    # which may hint that some varaiables may need to be dropped, combined etc
+
+    vif = [
+        variance_inflation_factor(dm_no_const.values, i)
+        for i in range(dm_no_const.shape[1])
+    ]
+
+
+    return dm, dict(zip(predictor_names, vif))
+
+
 
 def _load_dataset():
     """Load data and tidy it a bit"""
@@ -70,7 +130,7 @@ def test_create_boxcar():
 def test_create_design():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
-    design_matrix = make_first_level_design_matrix(
+    design_matrix, vif = make_first_level_design_matrix(
         raw_intensity, drift_order=1, drift_model="polynomial"
     )
 
@@ -97,7 +157,7 @@ def test_cropped_raw():
     onsets_after_crop = [onsets[idx] for idx in np.where(onsets > 100)]
 
     raw.crop(tmin=100)
-    design_matrix = make_first_level_design_matrix(
+    design_matrix, vif = make_first_level_design_matrix(
         raw, drift_order=0, drift_model="polynomial"
     )
 
@@ -123,3 +183,23 @@ def test_high_pass_helpers():
     assert lisi <= 40
     assert drift_high_pass(raw) >= 1 / (40 * 2)
     assert drift_high_pass(raw) <= 1 / (20 * 2)
+
+def test_statsmodels_vif_equality():
+    # Ensure our custom code for vif calculation matches statsmodels
+    raw_intensity = _load_dataset()
+    raw_intensity.crop(450, 600)  # Keep the test fast
+    design_matrix, vif = make_first_level_design_matrix(
+        raw_intensity, drift_order=1, drift_model="polynomial"
+    )
+
+    design_matrix_statsm, vif_statsm = make_first_level_design_matrix_w_statsmodels_vif(
+        raw_intensity, drift_order=1, drift_model="polynomial"
+    )
+
+    # expect near identical results but not exact since ourrs is using glm from nii.learn
+    # wheras statsmodel has their own implmentation before extracting the vif values
+    # note vif will come with a level of uncertainity +/- 0.05 of what is reported
+    for key in vif:
+            assert abs(vif[key] - vif_statsm[key]) < 0.05
+
+

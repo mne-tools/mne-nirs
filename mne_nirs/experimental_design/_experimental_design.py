@@ -81,6 +81,8 @@ def make_first_level_design_matrix(
         Holding the computed design matrix, the index being the frames_times
         and each column a regressor.
 
+    vif scores: individual vif scores for each group
+
     References
     ----------
     .. footbibliography::
@@ -148,7 +150,7 @@ def make_first_level_design_matrix(
         else:
             logger.info(msg)
 
-    return dm, dict(zip(predictor_names, vif))
+    return dm, dict(zip(predictor_names, vif_all))
 
 
 def create_boxcar(raw, event_id=None, stim_dur=1):
