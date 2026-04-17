@@ -49,7 +49,7 @@ jobs:
         with:
           qt: true
           pyvista: false
-      - uses: mamba-org/setup-micromamba@v2
+      - uses: mamba-org/setup-micromamba@v3
         with:
           environment-file: environment.yml
           environment-name: mne-nirs
@@ -74,5 +74,5 @@ jobs:
           path: ~/mne_data
       - run: ./tools/github_actions_download.sh
       - run: pytest --cov=mne_nirs --cov-report xml -vv -m "not examples" "mne_nirs/"
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v6
         if: success()
