@@ -74,13 +74,15 @@ def make_first_level_design_matrix(
     oversampling : int, optional
         Oversampling factor used in temporal convolutions. Default=50.
 
+    vif export : bool, optional
+        deafult set to false, if set to True will export vif values; 
     Returns
     -------
     design_matrix : DataFrame instance,
         Holding the computed design matrix, the index being the frames_times
         and each column a regressor.
 
-    vif scores: individual vif scores for each group
+    vif scores: individual vif scores for each group (optional with vif export)
 
     References
     ----------
@@ -112,6 +114,7 @@ def make_first_level_design_matrix(
         oversampling=oversampling,
         add_reg_names=add_reg_names,
         fir_delays=fir_delays,
+        vif_export=False,
     )
 
     dm_no_const = dm.drop(columns=["constant"], errors="ignore")
@@ -148,7 +151,11 @@ def make_first_level_design_matrix(
         else:
             logger.info(msg)
 
-    return dm, dict(zip(predictor_names, vif_all))
+    if vif_export == True:
+        return dm, dict(zip(predictor_names, vif_all))
+    else: 
+        return dm
+
 
 
 def create_boxcar(raw, event_id=None, stim_dur=1):

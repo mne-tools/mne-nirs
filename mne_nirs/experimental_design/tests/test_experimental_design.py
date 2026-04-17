@@ -189,7 +189,7 @@ def test_statsmodels_vif_equality():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
     design_matrix, vif = make_first_level_design_matrix(
-        raw_intensity, drift_order=1, drift_model="polynomial"
+        raw_intensity, drift_order=1, drift_model="polynomial", vif_export=True
     )
 
     design_matrix_statsm, vif_statsm = make_first_level_design_matrix_w_statsmodels_vif(
@@ -203,3 +203,4 @@ def test_statsmodels_vif_equality():
             assert abs(vif[key] - vif_statsm[key]) < 0.05
 
 
+test_statsmodels_vif_equality()
