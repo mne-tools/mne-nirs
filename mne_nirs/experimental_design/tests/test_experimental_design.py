@@ -183,6 +183,7 @@ def test_high_pass_helpers():
     assert drift_high_pass(raw) <= 1 / (20 * 2)
 
 
+
 def test_statsmodels_vif_equality():
     # Ensure our custom code for vif calculation matches statsmodels
     raw_intensity = _load_dataset()
