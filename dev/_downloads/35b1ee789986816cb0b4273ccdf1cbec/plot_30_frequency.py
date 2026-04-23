@@ -236,7 +236,7 @@ fig.axes[0].set_title("")
 # ---------------------------------------------------------------------
 #
 # The effect of filtering on the neural signal is demonstrated below.
-# The green line illustrates the signal before filtering, and the red line
+# The red line illustrates the signal before filtering, and the green line
 # shows the signal after filtering.
 
 fig = raw_haemo.compute_psd(fmax=2).plot(
