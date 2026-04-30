@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne_nirs.preprocessing._peak_power &#8212; MNE-NIRS 0.8.0.dev40+g8a08fe6a9 documentation</title>
+    <title>mne_nirs.preprocessing._peak_power &#8212; MNE-NIRS 0.8.0.dev41+g8778e8d6a documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../_static/documentation_options.js?v=21c9adb0"></script>
+    <script src="../../../_static/documentation_options.js?v=7133bd0f"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -380,7 +380,7 @@ document.write(`
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mne.filter</span><span class="w"> </span><span class="kn">import</span> <span class="n">filter_data</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mne.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseRaw</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mne.preprocessing.nirs</span><span class="w"> </span><span class="kn">import</span> <span class="n">_validate_nirs_info</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mne.preprocessing.nirs</span><span class="w"> </span><span class="kn">import</span> <span class="n">_channel_frequencies</span><span class="p">,</span> <span class="n">_validate_nirs_info</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mne.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_validate_type</span><span class="p">,</span> <span class="n">verbose</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.signal</span><span class="w"> </span><span class="kn">import</span> <span class="n">periodogram</span>
 
@@ -431,6 +431,14 @@ document.write(`
 <span class="sd">        List of the start and end times of each window used to compute the</span>
 <span class="sd">        peak spectral power.</span>
 
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This implementation of peak power differs from Pollonini&#39;s original [1]_ [2]_,</span>
+<span class="sd">    in that the original calculates peak power on raw data, whereas multiple</span>
+<span class="sd">    types are allowed here; and while both implementations calculate a kind of</span>
+<span class="sd">    cosine similarity, the mathematical details are different. Users are</span>
+<span class="sd">    advised to check the results and adjust parameters as needed.</span>
+
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
 <span class="sd">    .. [1] Pollonini L et al., “PHOEBE: a method for real time mapping of</span>
@@ -440,11 +448,26 @@ document.write(`
 <span class="sd">           quality assessment of fNIRS scans.&quot; Optics and the Brain.</span>
 <span class="sd">           Optical Society of America, 2020.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Copy raw to avoid modifying original and load data into memory</span>
     <span class="n">raw</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+
+    <span class="c1"># Validate that the input contains raw fNIRS data</span>
+    <span class="c1"># Note that peak_power currently does not require a specific data type (e.g. OD)</span>
     <span class="n">_validate_type</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">BaseRaw</span><span class="p">,</span> <span class="s2">&quot;raw&quot;</span><span class="p">)</span>
 
+    <span class="c1"># `picks` returns a list of channels ordered alphanumerically, which may differ</span>
+    <span class="c1"># from the order of channels in `raw`. By virtue of being sorted, channels follow</span>
+    <span class="c1"># an ordered sequence of S-D pairs and wavelengths, e.g., S1_D1 760, S1_D1 850,</span>
+    <span class="c1"># S1_D2 760, S1_D2 850, S2_D1 760, S2_D1 850, etc. The algorithm below relies on</span>
+    <span class="c1"># this ordering.</span>
     <span class="n">picks</span> <span class="o">=</span> <span class="n">_validate_nirs_info</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
 
+    <span class="c1"># Number of wavelengths extracted from channel names</span>
+    <span class="n">n_wavelengths</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">_channel_frequencies</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">)))</span>
+
+    <span class="c1"># Bandpass filter data to extract heartbeat-related frequencies</span>
+    <span class="c1"># Note: filtering is applied only to the selected channels (picks),</span>
+    <span class="c1"># with channel order preserved, regardless of how the picks are ordered.</span>
     <span class="n">filtered_data</span> <span class="o">=</span> <span class="n">filter_data</span><span class="p">(</span>
         <span class="n">raw</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span>
         <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;sfreq&quot;</span><span class="p">],</span>
@@ -456,44 +479,51 @@ document.write(`
         <span class="n">h_trans_bandwidth</span><span class="o">=</span><span class="n">h_trans_bandwidth</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">window_samples</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">time_window</span> <span class="o">*</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;sfreq&quot;</span><span class="p">]))</span>
-    <span class="n">n_windows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span> <span class="o">/</span> <span class="n">window_samples</span><span class="p">))</span>
+    <span class="n">samples_per_window</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">time_window</span> <span class="o">*</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;sfreq&quot;</span><span class="p">]))</span>
+    <span class="n">n_windows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span> <span class="o">/</span> <span class="n">samples_per_window</span><span class="p">))</span>
 
     <span class="n">scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">picks</span><span class="p">),</span> <span class="n">n_windows</span><span class="p">))</span>
     <span class="n">times</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">window</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_windows</span><span class="p">):</span>
-        <span class="n">start_sample</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">window</span> <span class="o">*</span> <span class="n">window_samples</span><span class="p">)</span>
-        <span class="n">end_sample</span> <span class="o">=</span> <span class="n">start_sample</span> <span class="o">+</span> <span class="n">window_samples</span>
-        <span class="n">end_sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">([</span><span class="n">end_sample</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">start_sample</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">window</span> <span class="o">*</span> <span class="n">samples_per_window</span><span class="p">)</span>
+        <span class="n">end_sample</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">start_sample</span> <span class="o">+</span> <span class="n">samples_per_window</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="n">t_start</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">start_sample</span><span class="p">]</span>
         <span class="n">t_stop</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">end_sample</span><span class="p">]</span>
         <span class="n">times</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t_start</span><span class="p">,</span> <span class="n">t_stop</span><span class="p">))</span>
 
-        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">picks</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
-            <span class="n">c1</span> <span class="o">=</span> <span class="n">filtered_data</span><span class="p">[</span><span class="n">picks</span><span class="p">[</span><span class="n">ii</span><span class="p">]][</span><span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample</span><span class="p">]</span>
-            <span class="n">c2</span> <span class="o">=</span> <span class="n">filtered_data</span><span class="p">[</span><span class="n">picks</span><span class="p">[</span><span class="n">ii</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]][</span><span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample</span><span class="p">]</span>
+        <span class="c1"># pair indices for all channels pairs</span>
+        <span class="n">pair_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu_indices</span><span class="p">(</span><span class="n">n_wavelengths</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-            <span class="c1"># protect against zero</span>
-            <span class="n">c1</span> <span class="o">=</span> <span class="n">c1</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">c2</span> <span class="o">=</span> <span class="n">c2</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">gg</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">picks</span><span class="p">),</span> <span class="n">n_wavelengths</span><span class="p">):</span>
+            <span class="n">ch_group</span> <span class="o">=</span> <span class="n">picks</span><span class="p">[</span><span class="n">gg</span> <span class="p">:</span> <span class="n">gg</span> <span class="o">+</span> <span class="n">n_wavelengths</span><span class="p">]</span>
+            <span class="n">group_data</span> <span class="o">=</span> <span class="n">filtered_data</span><span class="p">[</span><span class="n">ch_group</span><span class="p">,</span> <span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample</span><span class="p">]</span>
 
-            <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="s2">&quot;full&quot;</span><span class="p">)</span>
-            <span class="n">c</span> <span class="o">=</span> <span class="n">c</span> <span class="o">/</span> <span class="p">(</span><span class="n">window_samples</span><span class="p">)</span>
-            <span class="p">[</span><span class="n">f</span><span class="p">,</span> <span class="n">pxx</span><span class="p">]</span> <span class="o">=</span> <span class="n">periodogram</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;sfreq&quot;</span><span class="p">],</span> <span class="n">window</span><span class="o">=</span><span class="s2">&quot;hamming&quot;</span><span class="p">)</span>
+            <span class="c1"># Calculate pairwise peak power within group</span>
+            <span class="n">group_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">ch</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">group_data</span><span class="p">])</span>
+            <span class="n">peak_powers</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">pair_indices</span><span class="p">):</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">group_data</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">group_data</span><span class="p">[</span><span class="n">jj</span><span class="p">],</span> <span class="s2">&quot;full&quot;</span><span class="p">)</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="n">c</span> <span class="o">/</span> <span class="n">samples_per_window</span>
+                <span class="p">[</span><span class="n">_</span><span class="p">,</span> <span class="n">pxx</span><span class="p">]</span> <span class="o">=</span> <span class="n">periodogram</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;sfreq&quot;</span><span class="p">],</span> <span class="n">window</span><span class="o">=</span><span class="s2">&quot;hamming&quot;</span><span class="p">)</span>
+                <span class="n">peak_powers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">pxx</span><span class="p">))</span>
 
-            <span class="n">scores</span><span class="p">[</span><span class="n">ii</span><span class="p">,</span> <span class="n">window</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">pxx</span><span class="p">)</span>
-            <span class="n">scores</span><span class="p">[</span><span class="n">ii</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">window</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">pxx</span><span class="p">)</span>
+            <span class="c1"># Use the minimum value in the group as peak power</span>
+            <span class="n">pp</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">peak_powers</span><span class="p">)</span> <span class="k">if</span> <span class="n">peak_powers</span> <span class="k">else</span> <span class="mf">0.0</span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="n">threshold</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">pxx</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">):</span>
+            <span class="c1"># Assign the same peak power value to all channels in the group</span>
+            <span class="n">scores</span><span class="p">[</span><span class="n">ch_group</span><span class="p">,</span> <span class="n">window</span><span class="p">]</span> <span class="o">=</span> <span class="n">pp</span>
+
+            <span class="c1"># Add BAD_PeakPower annotation to channels if below threshold</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">threshold</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">pp</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">):</span>
                 <span class="n">raw</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                     <span class="n">t_start</span><span class="p">,</span>
                     <span class="n">time_window</span><span class="p">,</span>
                     <span class="s2">&quot;BAD_PeakPower&quot;</span><span class="p">,</span>
-                    <span class="n">ch_names</span><span class="o">=</span><span class="p">[</span><span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span><span class="p">[</span><span class="n">ii</span> <span class="p">:</span> <span class="n">ii</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]],</span>
+                    <span class="n">ch_names</span><span class="o">=</span><span class="p">[[</span><span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">ch_group</span><span class="p">]],</span>
                 <span class="p">)</span>
-    <span class="n">scores</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">picks</span><span class="p">)]</span>
+
     <span class="k">return</span> <span class="n">raw</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">times</span></div>
 
 </pre></div>
@@ -539,7 +569,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-04-27T21:19:05.907289+00:00" class="localized">2026-04-27 21:19 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-04-30T17:03:38.787768+00:00" class="localized">2026-04-30 17:03 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

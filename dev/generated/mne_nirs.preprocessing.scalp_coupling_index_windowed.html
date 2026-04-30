@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>mne_nirs.preprocessing.scalp_coupling_index_windowed &#8212; MNE-NIRS 0.8.0.dev40+g8a08fe6a9 documentation</title>
+    <title>mne_nirs.preprocessing.scalp_coupling_index_windowed &#8212; MNE-NIRS 0.8.0.dev41+g8778e8d6a documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../_static/documentation_options.js?v=21c9adb0"></script>
+    <script src="../_static/documentation_options.js?v=7133bd0f"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -472,7 +472,7 @@ document.write(`
 <dl class="py function">
 <dt class="sig sig-object py" id="mne_nirs.preprocessing.scalp_coupling_index_windowed">
 <span class="sig-prename descclassname"><span class="pre">mne_nirs.preprocessing.</span></span><span class="sig-name descname"><span class="pre">scalp_coupling_index_windowed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l_freq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_freq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l_trans_bandwidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_trans_bandwidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mne_nirs/preprocessing/_scalp_coupling_segmented.html#scalp_coupling_index_windowed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_nirs.preprocessing.scalp_coupling_index_windowed" title="Link to this definition">#</a></dt>
-<dd><p>Compute scalp coupling index for each channel and time window.</p>
+<dd><p>Compute scalp coupling index (SCI) for each channel and time window.</p>
 <p>As described in <a class="reference internal" href="#rb8c50aa701f2-1" id="id1">[1]</a> and <a class="reference internal" href="#rb8c50aa701f2-2" id="id2">[2]</a>.
 This method provides a metric of data quality along the duration of
 the measurement. The user can specify the window over which the
@@ -518,26 +518,34 @@ argument.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl>
-<dt><strong>raw</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Raw</span></code></a></span></dt><dd><p>The Raw data. Optionally annotated with bad segments.</p>
+<dt><strong>raw</strong><span class="classifier">instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Raw</span></code></a></span></dt><dd><p>Copy of the input raw data. Optionally annotated with bad segments.</p>
 </dd>
-<dt><strong>scores</strong><span class="classifier"><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5.dev0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a> (n_nirs, n_windows)</span></dt><dd><p>Array of peak power values.</p>
+<dt><strong>scores</strong><span class="classifier"><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5.dev0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a> (n_nirs, n_windows)</span></dt><dd><p>Array of SCI values.</p>
 </dd>
-<dt><strong>times</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a></span></dt><dd><p>List of the start and end times of each window used to compute the
-peak spectral power.</p>
-</dd>
-</dl>
+<dt><strong>times</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a></span></dt><dd><p>List of the start and end times of each window used to compute SCI.</p>
 </dd>
 </dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This implementation of scalp coupling index differs from Pollonini’s
+original <a class="reference internal" href="#rb8c50aa701f2-1" id="id3">[1]</a> <a class="reference internal" href="#rb8c50aa701f2-2" id="id4">[2]</a>, in that the original calculates scalp coupling index on raw
+data, whereas optical density data is expected here; and while both
+implementations calculate a kind of cosine similarity, the mathematical
+details are different. Users are advised to check the results and adjust
+parameters as needed.</p>
 <p class="rubric">References</p>
 <div role="list" class="citation-list">
 <div class="citation" id="rb8c50aa701f2-1" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id3">2</a>)</span>
 <p>Pollonini L et al., “PHOEBE: a method for real time mapping of
 optodes-scalp coupling in functional near-infrared spectroscopy” in
 Biomed. Opt. Express 7, 5104-5119 (2016).</p>
 </div>
 <div class="citation" id="rb8c50aa701f2-2" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id2">1</a>,<a role="doc-backlink" href="#id4">2</a>)</span>
 <p>Hernandez, Samuel Montero, and Luca Pollonini. “NIRSplot: a tool for
 quality assessment of fNIRS scans.” Optics and the Brain.
 Optical Society of America, 2020.</p>
@@ -643,7 +651,7 @@ Optical Society of America, 2020.</p>
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-04-27T21:19:05.907289+00:00" class="localized">2026-04-27 21:19 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-04-30T17:03:38.787768+00:00" class="localized">2026-04-30 17:03 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
