@@ -53,6 +53,7 @@ jobs:
         with:
           environment-file: environment.yml
           environment-name: mne-nirs
+          micromamba-version: '2.6.0-0'  # workaround for https://github.com/mamba-org/micromamba-releases/issues/97
           create-args: >-
             python=${{ matrix.python }}
         if: matrix.kind == 'conda'
