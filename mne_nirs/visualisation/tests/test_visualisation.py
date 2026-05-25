@@ -174,7 +174,8 @@ def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020, ch_names):
         need = set(
             sum((ch_name.split()[0].split("_") for ch_name in raw.ch_names), list())
         )
-        mon = mne.channels.make_standard_montage("standard_1020")
+        name = "colin27" if check_version("mne", "1.13") else "standard"
+        mon = mne.channels.make_standard_montage(f"{name}_1020")
         mon.rename_channels({h: n for h, n in zip(mon.ch_names, need)})
         raw.set_montage(mon)
     n_labels = len(raw.ch_names) // 2

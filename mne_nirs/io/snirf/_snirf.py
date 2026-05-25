@@ -10,6 +10,7 @@ import numpy as np
 from mne.channels import make_standard_montage
 from mne.io.pick import _picks_to_idx
 from mne.transforms import _get_trans, apply_trans
+from mne.utils import check_version
 
 # The currently-implemented spec can be found here:
 # https://raw.githubusercontent.com/fNIRS/snirf/v1.1/snirf_specification.md
@@ -283,7 +284,8 @@ def _store_probe_landmarks(raw, probe, add_montage):
 
     if add_montage:
         # First, get the template positions in mni fsaverage space
-        montage = make_standard_montage("standard_1020", head_size=0.09700884729534559)
+        name = "colin27" if check_version("mne", "1.13") else "standard"
+        montage = make_standard_montage(f"{name}_1020", head_size=0.09700884729534559)
         ch_names = montage.ch_names
         montage_locs = np.array(list(montage._get_ch_pos().values()))
 
