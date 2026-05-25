@@ -10,7 +10,7 @@ from mne import Info, pick_info, pick_types
 from mne.channels import make_standard_montage
 from mne.channels.montage import transform_to_head
 from mne.transforms import _get_trans, apply_trans
-from mne.utils import _check_option, _validate_type, logger, verbose
+from mne.utils import _check_option, _validate_type, check_version, logger, verbose
 from mne.viz import Brain
 
 
@@ -121,8 +121,9 @@ def plot_3d_montage(
     if isinstance(src_det_names, str):
         _check_option("src_det_names", src_det_names, ("auto",), extra="when str")
         # Decide if we can map to 10-20 locations
+        name = "colin27" if check_version("mne", "1.13") else "standard"
         names, pos = zip(
-            *transform_to_head(make_standard_montage("standard_1020"))
+            *transform_to_head(make_standard_montage(f"{name}_1020"))
             .get_positions()["ch_pos"]
             .items()
         )
