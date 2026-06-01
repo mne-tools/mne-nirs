@@ -23,7 +23,7 @@ recordings with the same task are also available on the Kernel Website.
 The :ref:`experiment design <tut-fnirs-glm-components>` follows the usual
 structure for motor tasks of this kind: three conditions (left-handed tapping,
 right-handed tapping, and no tapping + fixation cross), alternating
-pseudo-randomly. For the tapping conditinos, a minimal hand diagram is
+pseudo-randomly. For the tapping conditions, a minimal hand diagram is
 displayed that shows red flashes on the fingertips, indicating which finger
 should be tapped on the thumb. The highlighted finger alternates every few
 seconds, with each finger change defining a trial. Here we do not make use
@@ -32,14 +32,14 @@ between the three conditions.
 
 As with the main ``mne-nirs`` finger tapping example, the following demonstrates
 an ‘Evoked’ (trial-averaging) and GLM-based analysis of this experiment.
-There are some modifications made to the visualization code to accomodate the
+There are some modifications made to the visualization code to accommodate the
 (substantially) higher channel density, and also to demonstrate an alternative
 (slightly cleaner) way of displaying symmetric contrasts.
 
 """
 # sphinx_gallery_thumbnail_number = 10
 
-# Authors: Julien DuBois     <https://github.com/julien-dubois-k>
+# Authors: Julien Dubois     <https://github.com/jcrdubois>
 #          John D Griffiths  <john.griffiths@utoronto.ca>
 #          Eric Larson       <https://larsoner.com>
 #
@@ -48,15 +48,13 @@ There are some modifications made to the visualization code to accomodate the
 # Importage
 import os
 
-import h5py
 import numpy as np
-import pandas as pd
 from matplotlib import colors as mcolors
 from matplotlib import pyplot as plt
 from mne import Epochs
-from mne import annotations_from_events as get_annotations_from_events
 from mne import events_from_annotations as get_events_from_annotations
-from mne.channels import combine_channels, rename_channels
+from mne.channels import combine_channels
+from mne.channels.layout import _find_topomap_coords
 from mne.io.snirf import read_raw_snirf
 from mne.viz import plot_compare_evokeds, plot_events, plot_topomap
 from nilearn.plotting import plot_design_matrix
@@ -89,97 +87,47 @@ raw = read_raw_snirf(snirf_file).load_data().resample(1)
 sphere = (0.0, -0.02, 0.006, 0.1)  # approximate for the montage
 
 # %%
-# Get more info from the snirf file
+# Probe information and source labels
 # ------------------------------------
 #
-# Unfortunately, a lot of useful information that is in the SNIRF file is not
-# yet read by the MNE SNIRF reader. For example, the actual source and detector
-# names (which reflect the modules they belong to).
-#
-# Fortunately, it's quite easy to find what you need in the SNIRF hdf archive from the
-# `SNIRF specification <https://github.com/fNIRS/snirf/blob/master/snirf_specification.md>`_
+# The MNE SNIRF reader stores source and detector 3D positions in each
+# channel's ``loc`` field, and reads the original SNIRF source/detector
+# labels (e.g. module-based names like ``M020S01``). We save the labels
+# now for use in identifying motor cortex modules later.
 
-probe_keys = [
-    ("detectorLabels", str),
-    ("sourceLabels", str),
-    ("sourcePos3D", float),
-    ("detectorPos3D", float),
-]
-with h5py.File(snirf_file, "r") as file:
-    probe_data = {
-        key: np.array(file["nirs"]["probe"][key]).astype(dtype)
-        for key, dtype in probe_keys
-    }
-print([*probe_data])
-
-
-# %%
-#
-# We also need data about the events.
-
-raw.annotations.to_data_frame()
-
-
-# %%
-#
-# Unfortunately MNE didn't load the block types so we don't know whether
-# a block is LEFT or RIGHT tapping. Fear not! the SNIRF file has it all,
-# albeit in a convoluted format. Let's reconstruct the information here:
-
-with h5py.File(snirf_file, "r") as file:
-    ctr = 1
-    while (stim := f"stim{ctr}") in file["nirs"]:
-        print(stim, np.array(file["nirs"][stim]["name"]))
-        ctr += 1
-
-
-# %%
-#
-# Looks like "stim1" has the StartBlock event information, let's dig in:
-
-with h5py.File(snirf_file, "r") as file:
-    df_start_block = pd.DataFrame(
-        data=np.array(file["nirs"]["stim1"]["data"]),
-        columns=[col.decode("UTF-8") for col in file["nirs"]["stim1"]["dataLabels"]],
-    )
-df_start_block
-
-
-# %%
-#
-# Ok, `BlockType.Left` and `BlockType.Right` look useful.
-# Alright, now we can make events from the MNE annotations and sort
-# them into two types, left and right tapping blocks.
+source_labels = raw._snirf_source_labels
+print(f"Source labels (first 5): {source_labels[:5]}")
 
 # %%
 # Define the events
 # ------------------------------------
 #
-events, _ = get_events_from_annotations(raw, {"StartBlock": 1})
-event_id = {"Tapping/Left": 1, "Tapping/Right": 2}
-events[df_start_block["BlockType.Left"] == 1.0, 2] = event_id["Tapping/Left"]
-events[df_start_block["BlockType.Right"] == 1.0, 2] = event_id["Tapping/Right"]
+# The SNIRF reader parses ``BlockType`` columns from the stim data,
+# giving us ``Left`` and ``Right`` annotations directly. The file also
+# contains individual finger tap events (~0.5 s) — we keep only the
+# block-level events (duration > 5 s) for block-wise analysis.
+
+raw.annotations.delete(
+    np.flatnonzero(
+        np.array(
+            [
+                a["description"] not in ("Left", "Right") or a["duration"] < 5
+                for a in raw.annotations
+            ]
+        )
+    )
+)
+
+# Rename to Tapping/Left and Tapping/Right for clarity
+raw.annotations.rename({"Left": "Tapping/Left", "Right": "Tapping/Right"})
+
+events, event_id = get_events_from_annotations(raw)
 events
 
 # %%
 #
 # Plot the events
 plot_events(events, event_id=event_id, sfreq=raw.info["sfreq"])
-
-
-# %%
-#
-# Convert useful events back to annotations...
-event_desc = {v: k for k, v in event_id.items()}
-annotations_from_events = get_annotations_from_events(
-    events, raw.info["sfreq"], event_desc=event_desc
-)
-
-
-# %%
-#
-# Set these annotations on the raw data
-raw.set_annotations(annotations_from_events)
 
 
 # %%
@@ -219,7 +167,7 @@ del raw_filt  # save memory
 
 
 # %%
-# Plot the evoked respones
+# Plot the evoked responses
 # ------------------------------------
 #
 
@@ -231,18 +179,11 @@ epochs.info["chs"][0]
 
 # %%
 #
-# Extract the indices of the sources and detectors from the "channel names"
-# and also the source and detector positions so we can access the source
-# detector distance for each channel.
-idx_sources = np.array(
-    [int(ch.split("_")[0][1:]) - 1 for ch in epochs.info["ch_names"]]
-)
-idx_detectors = np.array(
-    [int(ch.split("_")[1].split(" ")[0][1:]) - 1 for ch in epochs.info["ch_names"]]
-)
-source_positions = np.array(probe_data["sourcePos3D"])[idx_sources]
-detector_positions = np.array(probe_data["detectorPos3D"])[idx_detectors]
-sds = np.sqrt(np.sum((source_positions - detector_positions) ** 2, axis=1))
+# Compute source-detector distances from channel positions stored in
+# the ``loc`` field (positions are in meters, convert to mm).
+source_positions = np.array([ch["loc"][3:6] for ch in epochs.info["chs"]])
+detector_positions = np.array([ch["loc"][6:9] for ch in epochs.info["chs"]])
+sds = np.sqrt(np.sum((source_positions - detector_positions) ** 2, axis=1)) * 1000
 
 # %%
 #
@@ -264,7 +205,7 @@ right_left_evoked._data = right_evoked._data - left_evoked._data
 # Now plot the evoked data
 chromophore = "hbo"
 times = [0, 10, 20, 30, 40]
-vlim = (-5e6, 5e6)
+vlim = (-15, 15)
 
 plot_kwargs = dict(
     ch_type=chromophore,
@@ -294,7 +235,7 @@ left_right_evoked.plot_topomap(times, axes=ax[2], **plot_kwargs, **tm_kwargs)
 right_left_evoked.plot_topomap(times, axes=ax[3], **plot_kwargs, **tm_kwargs)
 ax[0][0].set_ylabel("LEFT")
 ax[1][0].set_ylabel("RIGHT")
-ax[2][0].set_ylabel("LEFT  < RIGHT")
+ax[2][0].set_ylabel("LEFT > RIGHT")
 ax[3][0].set_ylabel("RIGHT > LEFT")
 fig.suptitle(chromophore)
 
@@ -319,30 +260,50 @@ is_selected_hbo = np.array([ch.endswith("hbo") for ch in left_evoked.info["ch_na
 
 # %%
 #
-# MODULE 21 is in the left motor cortex, MODULE 20 in the right motor cortex
+# MODULE 21 is in the left motor cortex, MODULE 20 in the right motor cortex.
+# We use the SNIRF source labels (saved earlier) to find these modules.
 print("Channel numbers for module 20, sensor 01 and module 21, sensor 01")
-print(np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M020S01"))
-print(np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M021S01"))
+print(np.flatnonzero(np.array(source_labels) == "M020S01"))
+print(np.flatnonzero(np.array(source_labels) == "M021S01"))
 is_left_motor = is_selected_hbo & (
-    idx_sources == np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M021S01")[0]
+    idx_sources == np.flatnonzero(np.array(source_labels) == "M021S01")[0]
 )
 is_right_motor = is_selected_hbo & (
-    idx_sources == np.flatnonzero(np.array(probe_data["sourceLabels"]) == "M020S01")[0]
+    idx_sources == np.flatnonzero(np.array(source_labels) == "M020S01")[0]
 )
 
 
 # %%
 #
-# take a look at these and the rest of the KF2 channel locations on a montage plot
-fig, ax = plt.subplots(figsize=(10, 10), layout="constrained")
-left_evoked.info.get_montage().plot(axes=ax, show_names=True, sphere=sphere)
-for text in ax.texts:
-    text.set_fontsize(8)
+# Take a look at the KF2 channel locations, highlighting the motor cortex
+# modules. Source 62 (M020S01) is in the right motor cortex, source 65
+# (M021S01) is in the left motor cortex. We pick HbO only to avoid
+# duplicate positions (HbO and HbR share the same source-detector midpoint).
+evoked_hbo = left_evoked.copy().pick("hbo")
+pos_2d = _find_topomap_coords(evoked_hbo.info, picks=None, sphere=sphere)
+idx_src_hbo = np.array(
+    [int(ch.split("_")[0][1:]) - 1 for ch in evoked_hbo.info["ch_names"]]
+)
+motor_idx = np.flatnonzero(
+    np.isin(
+        idx_src_hbo,
+        [source_labels.index("M020S01"), source_labels.index("M021S01")],
+    )
+)
 
-# %%
-# And let's highlight just a couple channels of interest
-fig, ax = plt.subplots(figsize=(10, 10), layout="constrained")
-left_evoked.info.get_montage().plot(axes=ax, show_names=["S61", "S64"], sphere=sphere)
+fig, ax = plt.subplots(figsize=(8, 8), layout="constrained")
+ax.scatter(pos_2d[:, 0], pos_2d[:, 1], s=5, c="steelblue", alpha=0.3)
+ax.scatter(
+    pos_2d[motor_idx, 0],
+    pos_2d[motor_idx, 1],
+    s=30,
+    c="red",
+    zorder=5,
+    label="Motor cortex (M020, M021)",
+)
+ax.legend(loc="upper right")
+ax.set_aspect("equal")
+ax.set_title("KF2 Channel Locations — HbO, 15-30 mm")
 
 
 # %%
@@ -404,7 +365,8 @@ axes[1].set_title("Right motor cortex\n\n")
 # %%
 #
 # First show how the boxcar design looks
-s = create_boxcar(raw, stim_dur=(stim_dur := df_start_block["Duration"].mean()))
+stim_dur = np.mean(raw.annotations.duration)
+s = create_boxcar(raw, stim_dur=stim_dur)
 fig, ax = plt.subplots(figsize=(8, 3), layout="constrained")
 ax.plot(raw.times, s)
 ax.legend(["Left", "Right"], loc="upper right")
@@ -430,11 +392,6 @@ plot_design_matrix(design_matrix, axes=ax)
 #
 # Now estimate the GLM model and prepare the results for viewing
 
-# (clear channel names because mne_nirs plot_topomap doesn't have the
-# option to hide sensor names, and we have a LOT)
-rename_channels(
-    raw.info, {ch: "" for ch in raw.info["ch_names"]}, allow_duplicates=True
-)
 print("Running GLM (can take some time)...")
 glm_est = run_glm(raw, design_matrix, noise_model="auto")
 del raw  # save memory
@@ -480,7 +437,7 @@ cmap.set_under((1, 1, 1, 0))  # fully transparent for values < vmin
 cmap.set_bad((1, 1, 1, 0))  # also transparent for NaNs / masked
 
 
-# finally, mmake a convenience function for plotting the contrast data
+# finally, make a convenience function for plotting the contrast data
 def plot2glmtttopos(condict, thr_p, vlim):
     fig, axes = plt.subplots(1, 2, figsize=(10, 6), layout="constrained")
     for ax in axes:
@@ -529,7 +486,7 @@ def plot2glmtttopos(condict, thr_p, vlim):
 # tapping. We'll also employ another standard neuroimaging approach of viewing a result
 # at various significance levels, and looking at how it 'resolves down' spatially.
 # Here are topoplots of the effect sizes for L>baseline and R>baseline finger tapping,
-# at three signifiance threshodling levels (p<0.01, p<0.0001, p<1e-10)
+# at three significance thresholding levels (p<0.01, p<0.0001, p<1e-10)
 fig = plot2glmtttopos(condict_hboLR, thr_p=0.01, vlim=(0.01, 10))
 fig.suptitle("LR HBO p < 0.01", fontsize=16)
 
@@ -549,9 +506,9 @@ fig.suptitle("LR HBO p < 1e-10", fontsize=16)
 # thresholding. The fact that the pattern is visible at high thresholding levels
 # indicates this is a very strong effect.
 # The motor activation is correctly located and lateralized, so
-# right-handed tapping clearly activations left motor cortex, and left-handed tapping
+# right-handed tapping clearly activates left motor cortex, and left-handed tapping
 # activates right motor cortex. Both of these conditions also produce a strong visual
-# activation - which is expected, because the visual stimlus (see above description)
+# activation - which is expected, because the visual stimulus (see above description)
 # is more complex than the inter-block fixation cross.
 
 # %%
@@ -567,10 +524,10 @@ fig.suptitle("LvsR HbO", fontsize=16)
 
 # %%
 #
-# When we look at the same comparions with the HbR signal, some of the above carries
+# When we look at the same comparisons with the HbR signal, some of the above carries
 # through, and some does not.
 #
-# First, the basline comparisons do not replicate the patterns seen in HbO
+# First, the baseline comparisons do not replicate the patterns seen in HbO
 fig = plot2glmtttopos(condict_hbrLR, thr_p=0.1, vlim=(0.001, 1.5))
 fig.suptitle("LR HbR", fontsize=16)
 
