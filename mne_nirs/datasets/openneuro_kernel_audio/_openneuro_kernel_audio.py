@@ -8,9 +8,7 @@ from mne.utils import verbose
 
 
 @verbose
-def data_path(
-    path=None, force_update=False, download=True, verbose=None
-):  # noqa: D103
+def data_path(path=None, force_update=False, download=True, verbose=None):  # noqa: D103
     """
     OpenNeuro Kernel Audio Dataset (ds006545).
 

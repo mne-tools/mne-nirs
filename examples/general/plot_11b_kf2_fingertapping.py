@@ -294,7 +294,11 @@ motor_idx = np.flatnonzero(
 fig, ax = plt.subplots(figsize=(8, 8), layout="constrained")
 ax.scatter(pos_2d[:, 0], pos_2d[:, 1], s=5, c="steelblue", alpha=0.3)
 ax.scatter(
-    pos_2d[motor_idx, 0], pos_2d[motor_idx, 1], s=30, c="red", zorder=5,
+    pos_2d[motor_idx, 0],
+    pos_2d[motor_idx, 1],
+    s=30,
+    c="red",
+    zorder=5,
     label="Motor cortex (M020, M021)",
 )
 ax.legend(loc="upper right")

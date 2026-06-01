@@ -187,9 +187,7 @@ design_matrix = make_first_level_design_matrix(
     hrf_model="glover",
     stim_dur=stim_dur,
 )
-fig, ax = plt.subplots(
-    figsize=(design_matrix.shape[1] * 0.5, 6), layout="constrained"
-)
+fig, ax = plt.subplots(figsize=(design_matrix.shape[1] * 0.5, 6), layout="constrained")
 plot_design_matrix(design_matrix, axes=ax)
 
 # %%
@@ -262,15 +260,23 @@ for ax_i, (name, conest) in enumerate(contrasts.items()):
     t_map_masked[p_map > thr_p] = np.ma.masked
     ch_type = str(np.unique(conest.get_channel_types())[0])
     plot_topomap(
-        t_map_masked, conest.info, axes=ax, vlim=vlim,
-        ch_type=ch_type, cmap=cmap, **tm_kwargs,
+        t_map_masked,
+        conest.info,
+        axes=ax,
+        vlim=vlim,
+        ch_type=ch_type,
+        cmap=cmap,
+        **tm_kwargs,
     )
     ax.set_title(moment_labels[name], fontsize=14)
 
 norm = mcolors.Normalize(vmin=vlim[0], vmax=vlim[1])
 fig.colorbar(
     plt.cm.ScalarMappable(norm=norm, cmap=cmap),
-    ax=axes, fraction=0.03, shrink=0.5, orientation="horizontal",
+    ax=axes,
+    fraction=0.03,
+    shrink=0.5,
+    orientation="horizontal",
     label="t-statistic",
 )
 fig.suptitle(f"Story < Noise — 905 nm (p < {thr_p})", fontsize=16)
@@ -290,15 +296,23 @@ for ax_i, (name, conest) in enumerate(contrasts.items()):
     t_map_masked[p_map > thr_p] = np.ma.masked
     ch_type = str(np.unique(conest.get_channel_types())[0])
     plot_topomap(
-        t_map_masked, conest.info, axes=ax, vlim=vlim,
-        ch_type=ch_type, cmap=cmap, **tm_kwargs,
+        t_map_masked,
+        conest.info,
+        axes=ax,
+        vlim=vlim,
+        ch_type=ch_type,
+        cmap=cmap,
+        **tm_kwargs,
     )
     ax.set_title(moment_labels[name], fontsize=14)
 
 norm = mcolors.Normalize(vmin=vlim[0], vmax=vlim[1])
 fig.colorbar(
     plt.cm.ScalarMappable(norm=norm, cmap=cmap),
-    ax=axes, fraction=0.03, shrink=0.5, orientation="horizontal",
+    ax=axes,
+    fraction=0.03,
+    shrink=0.5,
+    orientation="horizontal",
     label="t-statistic",
 )
 fig.suptitle(f"Story < Noise — 905 nm (p < {thr_p})", fontsize=16)
