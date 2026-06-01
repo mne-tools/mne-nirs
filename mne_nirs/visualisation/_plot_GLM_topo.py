@@ -29,6 +29,7 @@ def _plot_glm_topo(
     colorbar=True,
     figsize=(12, 7),
     sphere=None,
+    show_names=True,
     **kwargs,
 ):
     info = deepcopy(inst if isinstance(inst, Info) else inst.info)
@@ -92,7 +93,7 @@ def _plot_glm_topo(
                     estmrg[:, idx],
                     pos,
                     extrapolate="local",
-                    names=chs,
+                    names=chs if show_names else None,
                     cmap=cmap,
                     axes=ax,
                     show=False,
@@ -113,7 +114,9 @@ def _plot_glm_topo(
     return _get_fig_from_axes(axes)
 
 
-def _plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None, **kwargs):
+def _plot_glm_contrast_topo(
+    inst, contrast, figsize=(12, 7), sphere=None, show_names=True, **kwargs
+):
     info = deepcopy(inst if isinstance(inst, Info) else inst.info)
 
     # Extract types. One subplot is created per type (hbo/hbr)
@@ -147,7 +150,7 @@ def _plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None, **kwar
             estmrg,
             pos,
             extrapolate="local",
-            names=chs,
+            names=chs if show_names else None,
             cmap=cmap,
             axes=ax,
             show=False,
