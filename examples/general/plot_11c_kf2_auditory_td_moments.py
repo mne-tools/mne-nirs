@@ -47,6 +47,7 @@ from matplotlib import colors as mcolors
 from matplotlib import pyplot as plt
 from mne import events_from_annotations as get_events_from_annotations
 from mne.io.snirf import read_raw_snirf
+from mne.preprocessing.nirs import optical_density
 from mne.viz import plot_events, plot_topomap
 from nilearn.plotting import plot_design_matrix
 
@@ -91,9 +92,13 @@ print(f"\nFirst 6 channel names: {raw.ch_names[:6]}")
 #
 # We pick 905 nm channels which have better sensitivity to HbO absorption
 # changes, and create a separate Raw object for each moment type.
+# For intensity (moment 0), we convert to optical density using
+# ``mne.preprocessing.nirs.optical_density``, which computes
+# :math:`OD = -\log(I / \bar{I})`. This requires temporarily retyping
+# the channels to ``fnirs_cw_amplitude``.
 
 moment_types = {
-    "intensity": "fnirs_td_moments_intensity",
+    "optical_density": "fnirs_td_moments_intensity",
     "mean_tof": "fnirs_td_moments_mean",
     "variance": "fnirs_td_moments_variance",
 }
@@ -101,6 +106,10 @@ moment_types = {
 raws = {}
 for name, ch_type in moment_types.items():
     r = raw.copy().pick(ch_type)
+    if name == "optical_density":
+        for ch in r.info["chs"]:
+            ch["coil_type"] = 302  # FIFFV_COIL_FNIRS_CW_AMPLITUDE
+        r = optical_density(r)
     r.pick([ch for ch in r.ch_names if "905" in ch])
     raws[name] = r
     print(f"  {name}: {len(r.ch_names)} channels")
@@ -203,8 +212,14 @@ for name, r in raws.items():
     glm_results[name] = run_glm(r, design_matrix, noise_model="auto")
 
 # %%
-# Compute Story < Noise contrast for each moment
+# Compute Story > Noise contrast for each moment
 # ------------------------------------------------
+#
+# For optical density (moment 0), activation increases OD, so the
+# natural contrast is Story minus Noise. For mean time of flight and
+# variance, activation *decreases* the signal, so we flip the contrast
+# to Noise minus Story. Either way, positive t-values mean "more
+# activation" for all three moments.
 
 contrast_matrix = np.eye(design_matrix.shape[1])
 basic_conts = dict(
@@ -214,19 +229,23 @@ basic_conts = dict(
         if column in ("Story", "Noise")
     ]
 )
+contrast_SvN = basic_conts["Story"] - basic_conts["Noise"]
 contrast_NvS = basic_conts["Noise"] - basic_conts["Story"]
 
 contrasts = {}
 for name, glm_est in glm_results.items():
-    contrasts[name] = glm_est.compute_contrast(contrast_NvS)
+    if name == "optical_density":
+        contrasts[name] = glm_est.compute_contrast(contrast_SvN)
+    else:
+        contrasts[name] = glm_est.compute_contrast(contrast_NvS)
 
 # %%
-# Visualize Story < Noise across all three moments
+# Visualize Story > Noise across all three moments
 # --------------------------------------------------
 #
-# We plot the thresholded t-statistic topomaps for the Story < Noise
-# contrast, one column per moment type. This allows direct comparison
-# of how each statistical moment captures the auditory response.
+# We plot the thresholded t-statistic topomaps for the Story > Noise
+# contrast, one column per moment type. Positive values indicate greater
+# auditory activation during Story, allowing direct comparison across moments.
 
 cmap = plt.get_cmap("Reds").copy()
 cmap.set_under((1, 1, 1, 0))
@@ -242,12 +261,11 @@ tm_kwargs = dict(
 )
 
 moment_labels = {
-    "intensity": "Intensity\n(moment 0)",
+    "optical_density": "Optical Density\n(moment 0)",
     "mean_tof": "Mean ToF\n(moment 1)",
     "variance": "Variance\n(moment 2)",
 }
 
-thr_p = 0.01
 vlim = (0.01, 5)
 
 fig, axes = plt.subplots(1, 3, figsize=(15, 6), layout="constrained")
@@ -255,12 +273,9 @@ for ax_i, (name, conest) in enumerate(contrasts.items()):
     ax = axes[ax_i]
     ax.set_facecolor("white")
     t_map = conest.data.stat()
-    p_map = conest.data.p_value()
-    t_map_masked = t_map.copy()
-    t_map_masked[p_map > thr_p] = np.ma.masked
     ch_type = str(np.unique(conest.get_channel_types())[0])
     plot_topomap(
-        t_map_masked,
+        t_map,
         conest.info,
         axes=ax,
         vlim=vlim,
@@ -279,12 +294,12 @@ fig.colorbar(
     orientation="horizontal",
     label="t-statistic",
 )
-fig.suptitle(f"Story < Noise — 905 nm (p < {thr_p})", fontsize=16)
+fig.suptitle("Story > Noise — 905 nm (unthresholded)", fontsize=16)
 
 # %%
 #
-# At a more stringent threshold:
-thr_p = 0.0001
+# At a statistical threshold of p < 0.01:
+thr_p = 0.01
 
 fig, axes = plt.subplots(1, 3, figsize=(15, 6), layout="constrained")
 for ax_i, (name, conest) in enumerate(contrasts.items()):
@@ -315,16 +330,16 @@ fig.colorbar(
     orientation="horizontal",
     label="t-statistic",
 )
-fig.suptitle(f"Story < Noise — 905 nm (p < {thr_p})", fontsize=16)
+fig.suptitle(f"Story > Noise — 905 nm (p < {thr_p})", fontsize=16)
 
 # %%
 #
 # Comparing the three moments reveals how different aspects of the photon
-# travel time distribution capture the hemodynamic response. For TD-fNIRS
-# moments, increased cortical absorption causes a *decrease* in photon
-# intensity and arrival times, so the effect sign is reversed compared to
-# hemoglobin concentration measures — hence we plot Noise minus Story
-# (Story < Noise). The mean time of flight (moment 1) is expected to show
-# enhanced sensitivity to cortical changes due to its depth selectivity,
-# while intensity (moment 0) behaves similarly to continuous-wave
-# measurements.
+# travel time distribution capture the hemodynamic response. Positive
+# t-values indicate stronger activation during Story listening. For
+# optical density (moment 0), this is the standard Story minus Noise
+# contrast. For mean time of flight and variance, increased cortical
+# absorption causes a *decrease* in the signal, so we use Noise minus
+# Story to keep the same "positive = more activation" convention. The
+# mean time of flight (moment 1) is expected to show enhanced sensitivity
+# to cortical changes due to its depth selectivity.
