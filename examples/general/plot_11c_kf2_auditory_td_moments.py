@@ -50,7 +50,7 @@ from mne.io.snirf import read_raw_snirf
 from mne.viz import plot_events, plot_topomap
 from nilearn.plotting import plot_design_matrix
 
-from mne_nirs.datasets import openneuro_kernel_audio
+from mne_nirs.datasets import openneuro_kf2_audio
 from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import run_glm
 
@@ -63,7 +63,7 @@ from mne_nirs.statistics import run_glm
 # and load it with MNE's SNIRF reader. After loading, we immediately
 # resample to 1 Hz to reduce memory usage (~520 MB raw).
 
-snirf_file = openneuro_kernel_audio.data_path()
+snirf_file = openneuro_kf2_audio.data_path()
 raw = read_raw_snirf(snirf_file).load_data().resample(1)
 sphere = (0.0, -0.02, 0.006, 0.1)
 

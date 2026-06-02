@@ -10,7 +10,7 @@ from mne.utils import verbose
 @verbose
 def data_path(path=None, force_update=False, download=True, verbose=None):  # noqa: D103
     """
-    OpenNeuro Kernel Audio Dataset (ds006545).
+    OpenNeuro Kernel Flow 2 Audio Dataset (ds006545).
 
     Downloads a single subject/session SNIRF file from the OpenNeuro
     Reliability-Dubois2024 dataset (TD-fNIRS moments, auditory task).
@@ -41,7 +41,7 @@ def data_path(path=None, force_update=False, download=True, verbose=None):  # no
     """
     if path is None:
         path = os.path.join(os.path.expanduser("~"), "mne_data")
-    dest = Path(path) / "openneuro_kernel_audio"
+    dest = Path(path) / "openneuro_kf2_audio"
 
     fname = "sub-bed8fefe_ses-1_task-audio_nirs.snirf"
     fpath = dest / fname

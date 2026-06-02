@@ -303,7 +303,7 @@ ax.scatter(
 )
 ax.legend(loc="upper right")
 ax.set_aspect("equal")
-ax.set_title("KF2 Channel Locations — HbO, 15-30 mm")
+ax.set_title("Kernel Flow 2 Channel Locations — HbO, 15-30 mm")
 
 
 # %%
