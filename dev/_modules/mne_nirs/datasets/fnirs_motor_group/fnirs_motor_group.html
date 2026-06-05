@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne_nirs.datasets.fnirs_motor_group.fnirs_motor_group &#8212; MNE-NIRS 0.8.0.dev44+g0fdab6818 documentation</title>
+    <title>mne_nirs.datasets.fnirs_motor_group.fnirs_motor_group &#8212; MNE-NIRS 0.8.0.dev45+g1fe25245f documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../../_static/documentation_options.js?v=2379f575"></script>
+    <script src="../../../../_static/documentation_options.js?v=b1ff7228"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -379,7 +379,6 @@ document.write(`
 <span class="c1"># This downloads my fnirs group tapping data. Once BIDS is finalised</span>
 <span class="c1"># and the dataset complies I will add this to the MNE-Python library.</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
 
@@ -387,8 +386,6 @@ document.write(`
 <span class="kn">from</span><span class="w"> </span><span class="nn">mne.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_dataset</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mne.datasets.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">has_dataset</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mne.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">verbose</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">...fixes</span><span class="w"> </span><span class="kn">import</span> <span class="n">_mne_path</span>
 
 <span class="n">has_fnirs_motor_group_data</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">has_dataset</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fnirs_motor_group&quot;</span><span class="p">)</span>
 
@@ -450,16 +447,15 @@ document.write(`
         <span class="n">download</span><span class="o">=</span><span class="n">download</span><span class="p">,</span>
         <span class="n">processor</span><span class="o">=</span><span class="n">pooch</span><span class="o">.</span><span class="n">Unzip</span><span class="p">(</span><span class="n">extract_dir</span><span class="o">=</span><span class="s2">&quot;./fNIRS-motor-group&quot;</span><span class="p">),</span>
     <span class="p">)</span>
-    <span class="n">dpath</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">dpath</span><span class="p">)</span>
 
     <span class="c1"># Do some wrangling to deal with nested directories</span>
-    <span class="n">bad_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dpath</span><span class="p">,</span> <span class="s2">&quot;BIDS-NIRS-Tapping-0.1.0&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">bad_name</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">bad_name</span><span class="p">,</span> <span class="n">dpath</span> <span class="o">+</span> <span class="s2">&quot;.true&quot;</span><span class="p">)</span>
+    <span class="n">bad_name</span> <span class="o">=</span> <span class="n">dpath</span> <span class="o">/</span> <span class="s2">&quot;BIDS-NIRS-Tapping-0.1.0&quot;</span>
+    <span class="k">if</span> <span class="n">bad_name</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+        <span class="n">bad_name</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">dpath</span><span class="o">.</span><span class="n">with_name</span><span class="p">(</span><span class="n">dpath</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.true&quot;</span><span class="p">))</span>
         <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">dpath</span><span class="p">)</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">dpath</span> <span class="o">+</span> <span class="s2">&quot;.true&quot;</span><span class="p">,</span> <span class="n">dpath</span><span class="p">)</span>
+        <span class="n">dpath</span><span class="o">.</span><span class="n">with_name</span><span class="p">(</span><span class="n">dpath</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.true&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">dpath</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">_mne_path</span><span class="p">(</span><span class="n">dpath</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">dpath</span></div>
 
 </pre></div>
 
@@ -504,7 +500,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-06-01T22:08:23.156255+00:00" class="localized">2026-06-01 22:08 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-06-05T21:11:45.038856+00:00" class="localized">2026-06-05 21:11 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

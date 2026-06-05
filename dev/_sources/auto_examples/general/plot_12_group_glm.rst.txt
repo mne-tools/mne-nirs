@@ -433,7 +433,7 @@ and that the responses look to be contralateral to the tapping hand.
  .. code-block:: none
 
 
-    <seaborn.axisgrid.FacetGrid object at 0x7a11fb3a6e10>
+    <seaborn.axisgrid.FacetGrid object at 0x77943cd62660>
 
 
 
@@ -711,7 +711,7 @@ Filled symbols represent HbO, unfilled symbols represent HbR.
     /home/circleci/python_env/lib/python3.12/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
       warnings.warn(msg, ConvergenceWarning)
 
-    <seaborn.axisgrid.FacetGrid object at 0x7a11fb4de900>
+    <seaborn.axisgrid.FacetGrid object at 0x7794593cc890>
 
 
 
@@ -1619,13 +1619,6 @@ To set up your system to use the fOLD functions, see the Notes section of
 
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:57: FutureWarning: Montage name 'standard_1005' is deprecated and will be removed in MNE 1.14. Use 'colin27_1005' instead.
-      montage = mne.channels.make_standard_montage(
-
 
 .. raw:: html
 
@@ -1794,9 +1787,9 @@ hand of tapping and most likely originate from the primary motor cortex.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 30.337 seconds)
+   **Total running time of the script:** (0 minutes 27.472 seconds)
 
-**Estimated memory usage:**  1040 MB
+**Estimated memory usage:**  1069 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_12_group_glm.py:
