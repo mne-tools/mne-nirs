@@ -95,7 +95,10 @@ sphere = (0.0, -0.02, 0.006, 0.1)  # approximate for the montage
 # labels (e.g. module-based names like ``M020S01``). We save the labels
 # now for use in identifying motor cortex modules later.
 
-source_labels = raw._snirf_source_labels
+import h5py
+
+with h5py.File(snirf_file, "r") as f:
+    source_labels = [s.decode("UTF-8") for s in f["nirs/probe/sourceLabels"]]
 print(f"Source labels (first 5): {source_labels[:5]}")
 
 # %%
