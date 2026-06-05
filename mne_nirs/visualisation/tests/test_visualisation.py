@@ -205,8 +205,6 @@ def test_plot_3d_montage(requires_pyvista, fname_raw, to_1020, ch_names):
         assert "could not" in log
 
 
-# surface arg
-@pytest.mark.skipif(not check_version("mne", "1.0"), reason="Needs MNE-Python 1.0")
 def test_glm_surface_projection(requires_pyvista):
     res = _get_glm_result(tmax=2974, tmin=0)
     with warnings.catch_warnings():
