@@ -10,7 +10,7 @@ import pandas as pd
 from mne.io import BaseRaw
 from mne.io.constants import FIFF
 from mne.transforms import _get_trans, apply_trans
-from mne.utils import _check_fname, _validate_type, warn
+from mne.utils import _check_fname, _validate_type, check_version, warn
 
 
 def _read_fold_xls(fname, atlas="Juelich"):
@@ -54,8 +54,9 @@ def _generate_montage_locations():
     """
     # standard_1020 and standard_1005 are in MNI (fsaverage) space already,
     # but we need to undo the scaling that head_scale will do
+    name = "colin" if check_version("mne", "1.13") else "standard"
     montage = mne.channels.make_standard_montage(
-        "standard_1005", head_size=0.09700884729534559
+        f"{name}_1005", head_size=0.09700884729534559
     )
     for d in montage.dig:
         d["coord_frame"] = FIFF.FIFFV_MNE_COORD_MNI_TAL
