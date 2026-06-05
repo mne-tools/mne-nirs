@@ -48,6 +48,7 @@ There are some modifications made to the visualization code to accommodate the
 # Importage
 import os
 
+import h5py
 import numpy as np
 from matplotlib import colors as mcolors
 from matplotlib import pyplot as plt
@@ -94,8 +95,6 @@ sphere = (0.0, -0.02, 0.006, 0.1)  # approximate for the montage
 # channel's ``loc`` field, and reads the original SNIRF source/detector
 # labels (e.g. module-based names like ``M020S01``). We save the labels
 # now for use in identifying motor cortex modules later.
-
-import h5py
 
 with h5py.File(snirf_file, "r") as f:
     source_labels = [s.decode("UTF-8") for s in f["nirs/probe/sourceLabels"]]
