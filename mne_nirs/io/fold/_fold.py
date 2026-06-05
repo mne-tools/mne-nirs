@@ -54,7 +54,7 @@ def _generate_montage_locations():
     """
     # standard_1020 and standard_1005 are in MNI (fsaverage) space already,
     # but we need to undo the scaling that head_scale will do
-    name = "colin" if check_version("mne", "1.13") else "standard"
+    name = "colin27" if check_version("mne", "1.13") else "standard"
     montage = mne.channels.make_standard_montage(
         f"{name}_1005", head_size=0.09700884729534559
     )
