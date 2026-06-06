@@ -29,12 +29,6 @@ reliability of TD-fNIRS brain metrics.
 
 .. footbibliography::
 
-    Dubois2024
-        Dubois, J., et al. (2024). Reliability of brain metrics derived from
-        a Time-Domain Functional Near-Infrared Spectroscopy System.
-        Scientific Reports, 14(1), 17500.
-        https://doi.org/10.1038/s41598-024-68555-9
-
 """
 # sphinx_gallery_thumbnail_number = 4
 
