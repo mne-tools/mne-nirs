@@ -112,6 +112,18 @@ for name, ch_type in moment_types.items():
     print(f"  {name}: {len(r.ch_names)} channels")
 
 # %%
+# Visualize raw traces for each moment type
+# ------------------------------------------
+#
+# Plot each processed moment type to check that the default display
+# scalings are reasonable. Intensity has been converted to optical
+# density; mean time of flight and variance are shown in their native
+# units.
+
+for name, r in raws.items():
+    r.plot(title=name)
+
+# %%
 # Read event data from the SNIRF stim groups
 # -------------------------------------------
 #
