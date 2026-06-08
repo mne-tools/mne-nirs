@@ -36,9 +36,12 @@ reliability of TD-fNIRS brain metrics.
 #
 # License: BSD (3-clause)
 
+import h5py
 import numpy as np
+import pandas as pd
 from matplotlib import colors as mcolors
 from matplotlib import pyplot as plt
+from mne import Annotations
 from mne import events_from_annotations as get_events_from_annotations
 from mne.io.snirf import read_raw_snirf
 from mne.preprocessing.nirs import optical_density
@@ -109,29 +112,59 @@ for name, ch_type in moment_types.items():
     print(f"  {name}: {len(r.ch_names)} channels")
 
 # %%
-# Inspect the events
-# ------------------
+# Read event data from the SNIRF stim groups
+# -------------------------------------------
 #
-# The SNIRF reader parses the ``BlockType`` columns from the stim groups,
-# giving us proper ``Story``, ``Noise``, and ``Silence`` annotations.
-# For the GLM, we only need Story and Noise.
+# MNE's SNIRF reader only loads the event name (e.g. ``StartBlock``),
+# not the block type. We use h5py to read the ``BlockType`` columns
+# from the stim groups directly.
 
 raw_ref = raws["mean_tof"]
 raw_ref.annotations.to_data_frame()[["onset", "duration", "description"]]
 
 # %%
 #
-# Drop non-stimulus annotations and plot the events.
+# Let's see what stim groups are in the file:
+
+with h5py.File(snirf_file, "r") as file:
+    ctr = 1
+    while (stim := f"stim{ctr}") in file["nirs"]:
+        print(stim, np.array(file["nirs"][stim]["name"]))
+        ctr += 1
+
+# %%
+#
+# ``stim1`` has the ``StartBlock`` events with ``BlockType`` columns:
+
+with h5py.File(snirf_file, "r") as file:
+    df_start_block = pd.DataFrame(
+        data=np.array(file["nirs"]["stim1"]["data"]),
+        columns=[col.decode("UTF-8") for col in file["nirs"]["stim1"]["dataLabels"]],
+    )
+df_start_block[
+    ["Timestamp", "Duration", "BlockType.Story", "BlockType.Noise", "BlockType.Silence"]
+]
+
+# %%
+#
+# Now create properly labeled annotations with durations preserved
+# from the stim data, keeping only Story and Noise blocks for the GLM.
+
+mask_story = df_start_block["BlockType.Story"] == 1.0
+mask_noise = df_start_block["BlockType.Noise"] == 1.0
+mask_block = mask_story | mask_noise
+descriptions = np.where(mask_story, "Story", "Noise")
+
+orig_time = raw_ref.annotations.orig_time
+block_annotations = Annotations(
+    onset=df_start_block["Timestamp"].values[mask_block],
+    duration=df_start_block["Duration"].values[mask_block],
+    description=descriptions[mask_block],
+    orig_time=orig_time,
+)
 
 for r in raws.values():
-    r.annotations.delete(
-        np.flatnonzero(
-            np.isin(
-                r.annotations.description,
-                ["Silence", "StartExperiment", "StartRest"],
-            )
-        )
-    )
+    r.set_annotations(block_annotations)
 
 events, event_id = get_events_from_annotations(raw_ref)
 plot_events(events, event_id=event_id, sfreq=raw_ref.info["sfreq"])

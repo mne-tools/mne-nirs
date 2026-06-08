@@ -50,9 +50,10 @@ import os
 
 import h5py
 import numpy as np
+import pandas as pd
 from matplotlib import colors as mcolors
 from matplotlib import pyplot as plt
-from mne import Epochs
+from mne import Annotations, Epochs
 from mne import events_from_annotations as get_events_from_annotations
 from mne.channels import combine_channels
 from mne.channels.layout import _find_topomap_coords
@@ -101,27 +102,56 @@ with h5py.File(snirf_file, "r") as f:
 print(f"Source labels (first 5): {source_labels[:5]}")
 
 # %%
+# Read event data from the SNIRF stim groups
+# -------------------------------------------
+#
+# Unfortunately MNE didn't load the block types so we don't know whether
+# a block is LEFT or RIGHT tapping. Fear not! the SNIRF file has it all,
+# albeit in a convoluted format. Let's reconstruct the information here:
+
+with h5py.File(snirf_file, "r") as file:
+    ctr = 1
+    while (stim := f"stim{ctr}") in file["nirs"]:
+        print(stim, np.array(file["nirs"][stim]["name"]))
+        ctr += 1
+
+
+# %%
+#
+# Looks like "stim1" has the StartBlock event information, let's dig in:
+
+with h5py.File(snirf_file, "r") as file:
+    df_start_block = pd.DataFrame(
+        data=np.array(file["nirs"]["stim1"]["data"]),
+        columns=[col.decode("UTF-8") for col in file["nirs"]["stim1"]["dataLabels"]],
+    )
+df_start_block
+
+
+# %%
+#
+# Ok, ``BlockType.Left`` and ``BlockType.Right`` look useful.
+# Now create properly labeled annotations with durations preserved
+# from the stim data, keeping only Left and Right tapping blocks.
+
+# %%
 # Define the events
 # ------------------------------------
 #
-# The SNIRF reader parses ``BlockType`` columns from the stim data,
-# giving us ``Left`` and ``Right`` annotations directly. The file also
-# contains individual finger tap events (~0.5 s) — we keep only the
-# block-level events (duration > 5 s) for block-wise analysis.
+mask_left = df_start_block["BlockType.Left"] == 1.0
+mask_right = df_start_block["BlockType.Right"] == 1.0
+mask_block = mask_left | mask_right
+descriptions = np.where(mask_left, "Tapping/Left", "Tapping/Right")
 
-raw.annotations.delete(
-    np.flatnonzero(
-        np.array(
-            [
-                a["description"] not in ("Left", "Right") or a["duration"] < 5
-                for a in raw.annotations
-            ]
-        )
+orig_time = raw.annotations.orig_time
+raw.set_annotations(
+    Annotations(
+        onset=df_start_block["Timestamp"].values[mask_block],
+        duration=df_start_block["Duration"].values[mask_block],
+        description=descriptions[mask_block],
+        orig_time=orig_time,
     )
 )
-
-# Rename to Tapping/Left and Tapping/Right for clarity
-raw.annotations.rename({"Left": "Tapping/Left", "Right": "Tapping/Right"})
 
 events, event_id = get_events_from_annotations(raw)
 events
