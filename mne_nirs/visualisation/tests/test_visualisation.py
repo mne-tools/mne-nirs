@@ -98,6 +98,9 @@ def test_run_plot_GLM_contrast_topo():
     fig = contrast.plot_topo()
     assert len(fig.axes) == 3
 
+    fig = contrast.plot_topo(vlim=(-10, 10))
+    assert len(fig.axes) == 3
+
 
 def test_run_plot_GLM_contrast_topo_single_chroma():
     raw_intensity = _load_dataset()
