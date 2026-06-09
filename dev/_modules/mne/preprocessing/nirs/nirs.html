@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne.preprocessing.nirs.nirs &#8212; MNE-NIRS 0.8.0.dev46+gee7695ccf documentation</title>
+    <title>mne.preprocessing.nirs.nirs &#8212; MNE-NIRS 0.8.0.dev47+gf3bd3b54e documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../../_static/documentation_options.js?v=9aa579d8"></script>
+    <script src="../../../../_static/documentation_options.js?v=4d6ea9a8"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -491,10 +491,33 @@ document.write(`
     <span class="c1"># All chromophore fNIRS data</span>
     <span class="n">picks_chroma</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span> <span class="s2">&quot;hbr&quot;</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">picks_wave</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">picks_chroma</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="c1"># All TD moments</span>
+    <span class="n">td_moments</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;fnirs_td_moments_intensity&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fnirs_td_moments_mean&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fnirs_td_moments_variance&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">picks_moments</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">td_moments</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># All TD gated</span>
+    <span class="n">picks_gated</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span>
+        <span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;fnirs_td_gated_amplitude&quot;</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="n">n_found</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="n">picks_wave</span><span class="p">,</span>
+            <span class="n">picks_chroma</span><span class="p">,</span>
+            <span class="n">picks_moments</span><span class="p">,</span>
+            <span class="n">picks_gated</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">n_found</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">picks</span> <span class="o">=</span> <span class="n">_throw_or_return_empty</span><span class="p">(</span>
-            <span class="s2">&quot;MNE does not support a combination of amplitude, optical &quot;</span>
-            <span class="s2">&quot;density, and haemoglobin data in the same raw structure.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;MNE supports exactly one of amplitude, optical density, &quot;</span>
+            <span class="s2">&quot;TD moments, TD gated, and haemoglobin data in a given raw &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;structure, found </span><span class="si">{</span><span class="n">n_found</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="n">throw_errors</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -503,10 +526,13 @@ document.write(`
         <span class="n">error_word</span> <span class="o">=</span> <span class="s2">&quot;frequencies&quot;</span>
         <span class="n">use_RE</span> <span class="o">=</span> <span class="n">_S_D_F_RE</span>
         <span class="n">picks</span> <span class="o">=</span> <span class="n">picks_wave</span>
-    <span class="k">else</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">picks_chroma</span><span class="p">):</span>
         <span class="n">error_word</span> <span class="o">=</span> <span class="s2">&quot;chromophore&quot;</span>
         <span class="n">use_RE</span> <span class="o">=</span> <span class="n">_S_D_H_RE</span>
         <span class="n">picks</span> <span class="o">=</span> <span class="n">picks_chroma</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">picks_moments</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">picks_gated</span><span class="p">)</span>
+        <span class="k">return</span>  <span class="c1"># nothing to check</span>
 
     <span class="n">pair_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pair_vals</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">pair_vals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
@@ -795,7 +821,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-06-08T20:54:12.243090+00:00" class="localized">2026-06-08 20:54 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-06-09T01:54:48.799177+00:00" class="localized">2026-06-09 01:54 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

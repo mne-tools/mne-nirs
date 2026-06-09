@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>mne_nirs.statistics.ContrastResults &#8212; MNE-NIRS 0.8.0.dev46+gee7695ccf documentation</title>
+    <title>mne_nirs.statistics.ContrastResults &#8212; MNE-NIRS 0.8.0.dev47+gf3bd3b54e documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../_static/documentation_options.js?v=9aa579d8"></script>
+    <script src="../_static/documentation_options.js?v=4d6ea9a8"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -503,7 +503,7 @@ document.write(`
 <tr class="row-even"><td><p><a class="reference internal" href="#mne_nirs.statistics.ContrastResults.get_channel_types" title="mne_nirs.statistics.ContrastResults.get_channel_types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_channel_types</span></code></a>([picks, unique, only_data_chs])</p></td>
 <td><p>Get a list of channel type for each channel.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#mne_nirs.statistics.ContrastResults.plot_topo" title="mne_nirs.statistics.ContrastResults.plot_topo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_topo</span></code></a>([figsize, sphere])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_nirs.statistics.ContrastResults.plot_topo" title="mne_nirs.statistics.ContrastResults.plot_topo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_topo</span></code></a>([figsize, sphere, show_names])</p></td>
 <td><p>Plot topomap GLM contrast data.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#mne_nirs.statistics.ContrastResults.save" title="mne_nirs.statistics.ContrastResults.save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save</span></code></a>(fname[, overwrite])</p></td>
@@ -626,7 +626,7 @@ included</em> if their names or indices are explicitly provided.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mne_nirs.statistics.ContrastResults.plot_topo">
-<span class="sig-name descname"><span class="pre">plot_topo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(12,</span> <span class="pre">7)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sphere</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mne_nirs/statistics/_glm_level_first.html#ContrastResults.plot_topo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_nirs.statistics.ContrastResults.plot_topo" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">plot_topo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(12,</span> <span class="pre">7)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sphere</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mne_nirs/statistics/_glm_level_first.html#ContrastResults.plot_topo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_nirs.statistics.ContrastResults.plot_topo" title="Link to this definition">#</a></dt>
 <dd><p>Plot topomap GLM contrast data.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -634,6 +634,8 @@ included</em> if their names or indices are explicitly provided.</p>
 <dt><strong>figsize</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/numbers.html#module-numbers" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numbers</span></code></a></span></dt><dd><p>TODO: Remove this, how does MNE usually deal with this.</p>
 </dd>
 <dt><strong>sphere</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/numbers.html#module-numbers" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numbers</span></code></a></span></dt><dd><p>As specified in MNE.</p>
+</dd>
+<dt><strong>show_names</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.14)"><span class="xref std std-ref">bool</span></a></span></dt><dd><p>Whether to display channel names on the topomap.</p>
 </dd>
 <dt><strong>**kwargs</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a></span></dt><dd><p>Additional keyword arguments to pass to <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.plot_topomap.html#mne.viz.plot_topomap" title="(in MNE v1.12)"><code class="docutils literal notranslate"><span class="pre">mne.viz.plot_topomap()</span></code></a>.</p>
 <div class="versionadded">
@@ -726,6 +728,9 @@ then conditions starting with
 <div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="In this example we analyse data from a real multichannel functional near-infrared spectroscopy (fNIRS) experiment (see tut-fnirs-hrf-sim for a simplified simulated analysis). The experiment consists of three conditions:"><img alt="" src="../_images/sphx_glr_plot_11_hrf_measured_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/general/plot_11_hrf_measured.html"><span class="doc">GLM Analysis (Measured)</span></a></p>
   <div class="sphx-glr-thumbnail-title">GLM Analysis (Measured)</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how to analyze time-domain (TD) functional near-infrared spectroscopy (fNIRS) data using the statistical moments representation. We run a GLM on all three moments — intensity, mean time of flight, and variance — and compare the Story &lt; Noise contrast across them."><img alt="" src="../_images/sphx_glr_plot_11c_kf2_auditory_td_moments_thumb.png" />
+<p><a class="reference internal" href="../auto_examples/general/plot_11c_kf2_auditory_td_moments.html"><span class="doc">Auditory GLM Analysis with TD-fNIRS Statistical Moments</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Auditory GLM Analysis with TD-fNIRS Statistical Moments</div>
 </div></div></section>
 </section>
 
@@ -831,7 +836,7 @@ then conditions starting with
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-06-08T20:54:12.243090+00:00" class="localized">2026-06-08 20:54 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-06-09T01:54:48.799177+00:00" class="localized">2026-06-09 01:54 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
