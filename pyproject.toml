@@ -36,7 +36,7 @@ classifiers = [
 dependencies = [
     "numpy>=1.11.3,<3",
     "scipy>=0.17.1",
-    "mne @ git+https://github.com/jcrdubois/mne-python.git@feature/TD-nirs_snirf",
+    "mne>=1.2",  # 2022/10/11
     "h5io>=0.1.7",
     "nilearn>=0.9",
     "seaborn",
@@ -51,9 +51,6 @@ Download = "https://github.com/mne-tools/mne-nirs"
 [project.optional-dependencies]
 tests = ["pytest", "pytest-cov"]
 docs = ["sphinx", "sphinx-gallery", "pydata_sphinx_theme", "numpydoc", "matplotlib"]
-
-[tool.hatch.metadata]
-allow-direct-references = true
 
 [tool.hatch.build]
 exclude = [
