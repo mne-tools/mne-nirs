@@ -69,7 +69,7 @@ jobs:
       - run: mne sys_info
       - run: ./tools/get_testing_version.sh
         working-directory: mne-python
-      - uses: actions/cache@v5
+      - uses: actions/cache@v6
         with:
           key: ${{ env.TESTING_VERSION }}-1
           path: ~/mne_data
