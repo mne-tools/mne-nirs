@@ -57,7 +57,7 @@ def test_channel_specificity(monkeypatch, tmp_path, fold_files):
     res = fold_channel_specificity(raw, **kwargs)
     assert len(res) == 2
     assert res[0].shape == (n_want, 14)
-    montage = make_standard_montage("standard_1005", head_size=0.09700884729534559)
+    montage = make_standard_montage("colin27_1005", head_size=0.09700884729534559)
     fids = read_fiducials(
         Path(mne.__file__).parent / "data" / "fsaverage" / "fsaverage-fiducials.fif"
     )[0]

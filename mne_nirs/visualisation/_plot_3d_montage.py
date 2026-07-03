@@ -238,8 +238,8 @@ def plot_3d_montage(
                         vp.GetOrigin()
                     )
                     actor = brain.plotter.add_text(
-                        name,
-                        ch_pos,
+                        text=name,
+                        position=ch_pos,
                         font_size=font_size,
                         color=(0.0, 0.0, 0.0),
                         **add_text_kwargs,
