@@ -13,6 +13,7 @@ from mne.channels import make_standard_montage
 from mne.channels.montage import transform_to_head
 from mne.datasets.testing import data_path, requires_testing_data
 from mne.io import read_fiducials, read_raw_nirx
+from mne.utils import check_version
 from numpy.testing import assert_allclose
 
 from mne_nirs.io import fold_landmark_specificity
@@ -57,7 +58,8 @@ def test_channel_specificity(monkeypatch, tmp_path, fold_files):
     res = fold_channel_specificity(raw, **kwargs)
     assert len(res) == 2
     assert res[0].shape == (n_want, 14)
-    montage = make_standard_montage("colin27_1005", head_size=0.09700884729534559)
+    name = "colin27" if check_version("mne", "1.13") else "standard"
+    montage = make_standard_montage(f"{name}_1005", head_size=0.09700884729534559)
     fids = read_fiducials(
         Path(mne.__file__).parent / "data" / "fsaverage" / "fsaverage-fiducials.fif"
     )[0]
