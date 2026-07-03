@@ -52,7 +52,7 @@ def _generate_montage_locations():
 
     Data is returned in the same format as the eeg_positions library.
     """
-    # standard_1020 and standard_1005 are in MNI (fsaverage) space already,
+    # standard_1020 and colin27_1005 are in MNI (fsaverage) space already,
     # but we need to undo the scaling that head_scale will do
     name = "colin27" if check_version("mne", "1.13") else "standard"
     montage = mne.channels.make_standard_montage(

@@ -57,4 +57,7 @@ def test_examples(fname, requires_pyvista):
     test_file_path = examples_path() + fname
     with open(test_file_path) as fid:
         code = fid.read()
-    exec(code, locals(), locals())
+    # Use a single namespace dict (not separate globals/locals) so that names
+    # defined at module level in the example (e.g. imports) are visible
+    # inside functions the example itself defines.
+    exec(code, {"__name__": "__main__"})
