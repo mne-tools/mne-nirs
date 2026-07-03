@@ -3,7 +3,6 @@
 #
 # This downloads my fnirs audio or video speech dataset.
 
-import os
 import shutil
 from functools import partial
 
@@ -11,8 +10,6 @@ import pooch
 from mne.datasets import fetch_dataset
 from mne.datasets.utils import has_dataset
 from mne.utils import verbose
-
-from ...fixes import _mne_path
 
 has_block_speech_noise_data = partial(has_dataset, name="audio_or_visual_speech")
 
@@ -72,15 +69,12 @@ def data_path(
         download=download,
         processor=pooch.Unzip(extract_dir="./fNIRS-audio-visual-speech"),
     )
-    dpath = str(dpath)
 
     # Do some wrangling to deal with nested directories
-    bad_name = os.path.join(
-        dpath, "2021-fNIRS-Audio-visual-speech-Broad-vs-restricted-regions"
-    )
-    if os.path.isdir(bad_name):
-        os.rename(bad_name, dpath + ".true")
+    bad_name = dpath / "2021-fNIRS-Audio-visual-speech-Broad-vs-restricted-regions"
+    if bad_name.is_dir():
+        bad_name.rename(dpath.with_name(dpath.name + ".true"))
         shutil.rmtree(dpath)
-        os.rename(dpath + ".true", dpath)
+        dpath.with_name(dpath.name + ".true").rename(dpath)
 
-    return _mne_path(dpath)
+    return dpath

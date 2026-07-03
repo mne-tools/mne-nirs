@@ -29,6 +29,7 @@ def _plot_glm_topo(
     colorbar=True,
     figsize=(12, 7),
     sphere=None,
+    show_names=True,
     **kwargs,
 ):
     info = deepcopy(inst if isinstance(inst, Info) else inst.info)
@@ -92,7 +93,7 @@ def _plot_glm_topo(
                     estmrg[:, idx],
                     pos,
                     extrapolate="local",
-                    names=chs,
+                    names=chs if show_names else None,
                     cmap=cmap,
                     axes=ax,
                     show=False,
@@ -113,7 +114,18 @@ def _plot_glm_topo(
     return _get_fig_from_axes(axes)
 
 
-def _plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None, **kwargs):
+def _plot_glm_contrast_topo(
+    inst,
+    contrast,
+    figsize=(12, 7),
+    sphere=None,
+    show_names=True,
+    *,
+    vlim=(None, None),
+    vmin=None,
+    vmax=None,
+    **kwargs,
+):
     info = deepcopy(inst if isinstance(inst, Info) else inst.info)
 
     # Extract types. One subplot is created per type (hbo/hbr)
@@ -129,7 +141,8 @@ def _plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None, **kwar
     # Create subplots for figures
     fig, axes = plt.subplots(nrows=1, ncols=len(types), figsize=figsize)
     # Create limits for colorbar
-    vlim, vlim_kwargs = _handle_vlim((None, None), None, None, estimates)
+    vlim, vlim_kwargs = _handle_vlim(vlim, vmin, vmax, estimates)
+    del vmin, vmax
     cmap = mpl.cm.RdBu_r
     norm = mpl.colors.Normalize(vmin=vlim[0], vmax=vlim[1])
 
@@ -147,7 +160,7 @@ def _plot_glm_contrast_topo(inst, contrast, figsize=(12, 7), sphere=None, **kwar
             estmrg,
             pos,
             extrapolate="local",
-            names=chs,
+            names=chs if show_names else None,
             cmap=cmap,
             axes=ax,
             show=False,
@@ -372,7 +385,7 @@ def _handle_vlim(vlim, vmin, vmax, estimates):
         vmax = np.max(np.abs(estimates))
     if vmin is None:
         vmin = vmax * -1.0
-    vlim = tuple(vlim)
+    vlim = (vmin, vmax)
     if "vlim" in inspect.signature(plot_topomap).parameters:
         kwargs = dict(vlim=(vmin, vmax))
     else:
