@@ -4,6 +4,7 @@
 
 import mne
 import numpy as np
+from mne.utils import logger
 
 
 def make_first_level_design_matrix(
@@ -73,16 +74,22 @@ def make_first_level_design_matrix(
     oversampling : int, optional
         Oversampling factor used in temporal convolutions. Default=50.
 
+    vif export : bool, optional
+        deafult set to false, if set to True will export vif values; 
+
     Returns
     -------
     design_matrix : DataFrame instance,
         Holding the computed design matrix, the index being the frames_times
         and each column a regressor.
 
+    vif scores: individual vif scores for each group (optional with vif export)
+
     References
     ----------
     .. footbibliography::
     """
+    from nilearn.glm import regression
     from nilearn.glm.first_level import make_first_level_design_matrix
     from pandas import DataFrame
 
@@ -108,9 +115,47 @@ def make_first_level_design_matrix(
         oversampling=oversampling,
         add_reg_names=add_reg_names,
         fir_delays=fir_delays,
+        vif_export=False,
     )
 
-    return dm
+    dm_no_const = dm.drop(columns=["constant"], errors="ignore")
+    predictor_names = list(dm_no_const.columns)
+
+    # VIF 1–4 shows low to moderate correlation between predictors
+    # VIF > 4 is often though to indicate high multicollinearity,
+    # which may hint that some varaiables may need to be dropped, combined etc
+    vif_all = []
+    for i in range(dm_no_const.shape[1]):
+        # closely inspired by statsmodels.stats.outliers_influence
+        design_matrix = dm_no_const.values
+        k_vars = (design_matrix).shape[1]
+        design_matrix = np.asarray(design_matrix)
+        x_i = design_matrix[:, i]
+        mask = np.arange(k_vars) != i
+        x_noti = design_matrix[:, mask]
+
+        # equivaent to r_squared_i = OLS(x_i, x_noti).fit().rsquared
+        # in statsmodels.regression.linear_model
+        regression_out = regression.OLSModel(x_noti).fit(x_i)
+        rss = np.sum(regression_out.residuals**2)
+        tss = np.sum((x_i - np.mean(x_i)) ** 2)
+        r_squared_i = 1 - (rss / tss)
+
+        vif = 1.0 / (1.0 - r_squared_i)
+        vif_all.append(vif)
+
+    # alert user if high vif detected
+    for name, vif_idx in zip(predictor_names, vif_all):
+        msg = f"{name} with VIF of {vif_idx:.3f}"
+        if vif_idx > 4:
+            logger.warning("High collinearity " + msg)
+        else:
+            logger.info(msg)
+
+    if vif_export == True:
+        return dm, dict(zip(predictor_names, vif_all))
+    else:
+        return dm
 
 
 def create_boxcar(raw, event_id=None, stim_dur=1):
