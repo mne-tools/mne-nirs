@@ -26,19 +26,19 @@ jobs:
           - os: ubuntu-latest
             mne: stable
             kind: pip
-            python: "3.10"  # oldest
+            python: "3.11"  # oldest
           - os: ubuntu-latest
             mne: dev
             kind: pip
-            python: "3.12"  # newest
+            python: "3.14"  # newest
           - os: macos-14
             mne: dev
             kind: conda
-            python: "3.12"
+            python: "3.13"
           - os: windows-latest
             mne: dev
             kind: conda
-            python: "3.10"
+            python: "3.12"
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
