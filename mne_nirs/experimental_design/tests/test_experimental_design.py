@@ -7,7 +7,8 @@ import os
 import mne
 import numpy as np
 import pytest
-from mne.utils import catch_logging, use_log_level
+from mne.utils import catch_logging
+from numpy.testing import assert_allclose
 
 import mne_nirs
 from mne_nirs.experimental_design import (
@@ -15,64 +16,11 @@ from mne_nirs.experimental_design import (
     longest_inter_annotation_interval,
     make_first_level_design_matrix,
 )
+from mne_nirs.experimental_design._experimental_design import (
+    _design_matrix_vif,
+    _vif_lstsq,
+)
 from mne_nirs.simulation import simulate_nirs_raw
-
-
-def make_first_level_design_matrix_w_statsmodels_vif(
-    raw,
-    stim_dur=1.0,
-    hrf_model="glover",
-    drift_model="cosine",
-    high_pass=0.01,
-    drift_order=1,
-    fir_delays=(0,),
-    add_regs=None,
-    add_reg_names=None,
-    min_onset=-24,
-    oversampling=50,
-):
-    from nilearn.glm.first_level import make_first_level_design_matrix
-    from pandas import DataFrame
-
-    # for the comparison of vif we need these two libraries
-    from statsmodels.stats.outliers_influence import variance_inflation_factor
-
-    frame_times = raw.times
-    # Create events for nilearn
-    conditions = raw.annotations.description
-    onsets = raw.annotations.onset - raw.first_time
-    duration = stim_dur * np.ones(len(conditions))
-    events = DataFrame(
-        {"trial_type": conditions, "onset": onsets, "duration": duration}
-    )
-
-    dm = make_first_level_design_matrix(
-        frame_times,
-        events,
-        drift_model=drift_model,
-        drift_order=drift_order,
-        hrf_model=hrf_model,
-        min_onset=min_onset,
-        high_pass=high_pass,
-        add_regs=add_regs,
-        oversampling=oversampling,
-        add_reg_names=add_reg_names,
-        fir_delays=fir_delays,
-    )
-
-    dm_no_const = dm.drop(columns=["constant"], errors="ignore")
-    predictor_names = list(dm_no_const.columns)
-
-    # VIF 1–4 shows low to moderate correlation between predictors
-    # VIF > 4 is often though to indicate high multicollinearity,
-    # which may hint that some varaiables may need to be dropped, combined etc
-
-    vif = [
-        variance_inflation_factor(dm_no_const.values, i)
-        for i in range(dm_no_const.shape[1])
-    ]
-
-    return dm, dict(zip(predictor_names, vif))
 
 
 def _load_dataset():
@@ -129,7 +77,7 @@ def test_create_boxcar():
 def test_create_design():
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
-    design_matrix, vif = make_first_level_design_matrix(
+    design_matrix = make_first_level_design_matrix(
         raw_intensity, drift_order=1, drift_model="polynomial"
     )
 
@@ -156,7 +104,7 @@ def test_cropped_raw():
     onsets_after_crop = [onsets[idx] for idx in np.where(onsets > 100)]
 
     raw.crop(tmin=100)
-    design_matrix, vif = make_first_level_design_matrix(
+    design_matrix = make_first_level_design_matrix(
         raw, drift_order=0, drift_model="polynomial"
     )
 
@@ -184,31 +132,120 @@ def test_high_pass_helpers():
     assert drift_high_pass(raw) <= 1 / (20 * 2)
 
 
-def test_statsmodels_vif_equality():
-    """Run the same test as make_first_level_design_matrix but with statsmodels."""
-    pytest.importorskip("statsmodels")
+def test_design_matrix_vif_statsmodels():
+    """Test that our VIF matches the statsmodels implementation."""
+    statsmodels = pytest.importorskip("statsmodels.stats.outliers_influence")
 
-    # Ensure our custom code for vif calculation matches statsmodels
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
+    kwargs = dict(drift_order=1, drift_model="polynomial")
+    design_matrix = make_first_level_design_matrix(raw_intensity, **kwargs)
+    assert "constant" in design_matrix.columns
 
-    with use_log_level("info"), catch_logging() as log:
-        _ = make_first_level_design_matrix(
-            raw_intensity, drift_order=1, drift_model="polynomial", vif_export=True
+    # return_vif=True returns the same design matrix plus the VIF
+    design_matrix_2, vif = make_first_level_design_matrix(
+        raw_intensity, return_vif=True, **kwargs
+    )
+    assert_allclose(design_matrix_2.values, design_matrix.values)
+    assert list(vif.index) == [
+        name for name in design_matrix.columns if name != "constant"
+    ]
+    # VIF is by construction at least 1
+    assert (vif >= 1).all()
+
+    # statsmodels wants the intercept to be part of the matrix it is given
+    want = np.array(
+        [
+            statsmodels.variance_inflation_factor(design_matrix.values, ii)
+            for ii, name in enumerate(design_matrix.columns)
+            if name != "constant"
+        ]
+    )
+    assert_allclose(vif.values, want, rtol=1e-7)
+
+
+def test_design_matrix_vif_collinear():
+    """Test VIF detection of collinear regressors."""
+    from pandas import DataFrame
+
+    rng = np.random.default_rng(0)
+    data = rng.standard_normal((500, 3))
+    design_matrix = DataFrame(
+        dict(
+            a=data[:, 0],
+            b=data[:, 1],
+            # c is a noisy copy of b, so both should have an elevated VIF
+            c=data[:, 1] + 0.1 * data[:, 2],
+            constant=np.ones(500),
         )
-
-    log_output = log.getvalue()
-    vif_mne = np.array(
-        [float(line.split()[-1]) for line in log_output.splitlines() if " VIF " in line]
     )
+    with catch_logging(verbose=True) as log:
+        vif = _design_matrix_vif(design_matrix)
+    log = log.getvalue()
+    assert "High collinearity" in log
+    assert "constant" not in vif.index
+    assert 1 <= vif["a"] < 1.1
+    assert vif["b"] > 5
+    assert vif["c"] > 5
 
-    _, vif_statsm = make_first_level_design_matrix_w_statsmodels_vif(
-        raw_intensity, drift_order=1, drift_model="polynomial"
-    )
+    # An exactly duplicated regressor is perfectly collinear
+    design_matrix["c"] = design_matrix["b"]
+    vif = _design_matrix_vif(design_matrix)
+    assert np.isinf(vif["b"])
+    assert np.isinf(vif["c"])
 
-    vif_statsm_array = np.array(list(vif_statsm.values()))
+    # As is a regressor that duplicates the intercept
+    design_matrix["c"] = 1.0
+    assert np.isinf(_design_matrix_vif(design_matrix)["c"])
 
-    # Expect near identical results, but not exact since ours uses nilearn.
-    # Note: VIF will come with an uncertainty of +/- 0.05 of what is reported.
-    for v_mne, v_stat in zip(vif_mne, vif_statsm_array):
-        assert abs(v_mne - v_stat) < 0.05
+    # Orthogonal regressors have a VIF of exactly 1
+    design_matrix = DataFrame(dict(a=[1.0, -1.0, 1.0, -1.0], b=[1.0, 1.0, -1.0, -1.0]))
+    assert_allclose(_design_matrix_vif(design_matrix).values, [1.0, 1.0])
+
+
+def test_design_matrix_vif_lstsq():
+    """Test the least squares fallback against the Cholesky fast path."""
+    from pandas import DataFrame
+
+    rng = np.random.default_rng(0)
+    data = rng.standard_normal((200, 5))
+    data[:, 4] = data[:, :4] @ [1.0, 2.0, 3.0, 4.0] + 0.01 * data[:, 4]
+    design_matrix = DataFrame({str(ii): data[:, ii] for ii in range(5)})
+    want = _design_matrix_vif(design_matrix)
+    assert want.max() > 5  # otherwise this is not a useful comparison
+
+    data = data - data.mean(0)
+    data /= np.linalg.norm(data, axis=0)
+    assert_allclose(_vif_lstsq(data), want.values, rtol=1e-6)
+
+
+def test_design_matrix_vif_degenerate():
+    """Test VIF of design matrices with no usable regressors."""
+    from pandas import DataFrame
+
+    # Nothing but an intercept
+    vif = _design_matrix_vif(DataFrame(dict(constant=np.ones(10))))
+    assert len(vif) == 0
+
+    # Regressors that are all intercepts
+    vif = _design_matrix_vif(DataFrame(dict(a=np.ones(10), b=2 * np.ones(10))))
+    assert_allclose(vif.values, [np.inf, np.inf])
+
+
+def test_design_matrix_vif_logging():
+    """Test that VIF logging can be controlled."""
+    raw = simulate_nirs_raw(sfreq=3.0, sig_dur=200.0, stim_dur=5.0)
+    # VIF is reported in the log even when it is not returned
+    with catch_logging(verbose=True) as log:
+        dm = make_first_level_design_matrix(raw)
+    assert not isinstance(dm, tuple)
+    assert "Maximum design matrix VIF" in log.getvalue()
+    with catch_logging(verbose="error") as log:
+        make_first_level_design_matrix(raw, verbose="error")
+    assert log.getvalue() == ""
+
+    # return_vif and verbose are keyword-only
+    with pytest.raises(TypeError, match="positional arguments"):
+        make_first_level_design_matrix(
+            raw, 1.0, "glover", "cosine", 0.01, 1, (0,), None, None, -24, 50, True
+        )
