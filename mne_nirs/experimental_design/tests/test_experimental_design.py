@@ -6,9 +6,8 @@ import os
 
 import mne
 import numpy as np
-
-# for the comparison of vif we need these two libraries
-from statsmodels.stats.outliers_influence import variance_inflation_factor
+import pytest
+from mne.utils import catch_logging, use_log_level
 
 import mne_nirs
 from mne_nirs.experimental_design import (
@@ -32,9 +31,11 @@ def make_first_level_design_matrix_w_statsmodels_vif(
     min_onset=-24,
     oversampling=50,
 ):
-    """Same test as make_first_level_design_matrix but ran with statsmodels"""
     from nilearn.glm.first_level import make_first_level_design_matrix
     from pandas import DataFrame
+
+    # for the comparison of vif we need these two libraries
+    from statsmodels.stats.outliers_influence import variance_inflation_factor
 
     frame_times = raw.times
     # Create events for nilearn
@@ -183,28 +184,31 @@ def test_high_pass_helpers():
     assert drift_high_pass(raw) <= 1 / (20 * 2)
 
 
-
 def test_statsmodels_vif_equality():
+    """Run the same test as make_first_level_design_matrix but with statsmodels."""
+    pytest.importorskip("statsmodels")
+
     # Ensure our custom code for vif calculation matches statsmodels
     raw_intensity = _load_dataset()
     raw_intensity.crop(450, 600)  # Keep the test fast
-    design_matrix, vif = make_first_level_design_matrix(
-        raw_intensity, drift_order=1, drift_model="polynomial", vif_export=True
+
+    with use_log_level("info"), catch_logging() as log:
+        _ = make_first_level_design_matrix(
+            raw_intensity, drift_order=1, drift_model="polynomial", vif_export=True
+        )
+
+    log_output = log.getvalue()
+    vif_mne = np.array(
+        [float(line.split()[-1]) for line in log_output.splitlines() if " VIF " in line]
     )
 
-    design_matrix_statsm, vif_statsm = make_first_level_design_matrix_w_statsmodels_vif(
+    _, vif_statsm = make_first_level_design_matrix_w_statsmodels_vif(
         raw_intensity, drift_order=1, drift_model="polynomial"
     )
 
-    # expect near identical results but not exact since ourrs is using glm from nii.learn
-    # wheras statsmodel has their own implmentation before extracting the vif values
-    # note vif will come with a level of uncertainity +/- 0.05 of what is reported
-    for key in vif:
-<<<<<<< HEAD
-            assert abs(vif[key] - vif_statsm[key]) < 0.05
+    vif_statsm_array = np.array(list(vif_statsm.values()))
 
-
-test_statsmodels_vif_equality()
-=======
-        assert abs(vif[key] - vif_statsm[key]) < 0.05
->>>>>>> f7bd80045a5fc8b0a2c928b4997dbe42ab22ad42
+    # Expect near identical results, but not exact since ours uses nilearn.
+    # Note: VIF will come with an uncertainty of +/- 0.05 of what is reported.
+    for v_mne, v_stat in zip(vif_mne, vif_statsm_array):
+        assert abs(v_mne - v_stat) < 0.05
