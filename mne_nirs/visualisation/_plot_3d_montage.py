@@ -10,7 +10,7 @@ from mne import Info, pick_info, pick_types
 from mne.channels import make_standard_montage
 from mne.channels.montage import transform_to_head
 from mne.transforms import _get_trans, apply_trans
-from mne.utils import _check_option, _validate_type, logger, verbose
+from mne.utils import _check_option, _validate_type, check_version, logger, verbose
 from mne.viz import Brain
 
 
@@ -101,7 +101,17 @@ def plot_3d_montage(
     _validate_type(view_map, dict, "views")
     _validate_type(src_det_names, (None, dict, str), "src_det_names")
     _validate_type(ch_names, (dict, str, None), "ch_names")
-    info = pick_info(info, pick_types(info, fnirs=True, exclude=())[::2])
+
+    # Filter to fNIRS data, and select one channel per source-detector pair.
+    # This method should work regardless of the ordering of channels in the info,
+    # and regardless of the number of members (e.g. number of wavelengths)
+    # for each source-detector pair. Channel names must be separated from the
+    # member designator (e.g. wavelength, HbO/HbR) by a space.
+    picks = pick_types(info, fnirs=True, exclude=())
+    prefixes = [info["ch_names"][p].split()[0] for p in picks]
+    _, first_idx = np.unique(prefixes, return_index=True)
+    info = pick_info(info, picks[first_idx])
+
     if isinstance(ch_names, str):
         _check_option("ch_names", ch_names, ("numbered",), extra="when str")
         ch_names = {
@@ -111,8 +121,9 @@ def plot_3d_montage(
     if isinstance(src_det_names, str):
         _check_option("src_det_names", src_det_names, ("auto",), extra="when str")
         # Decide if we can map to 10-20 locations
+        name = "colin27" if check_version("mne", "1.13") else "standard"
         names, pos = zip(
-            *transform_to_head(make_standard_montage("standard_1020"))
+            *transform_to_head(make_standard_montage(f"{name}_1020"))
             .get_positions()["ch_pos"]
             .items()
         )
@@ -227,8 +238,8 @@ def plot_3d_montage(
                         vp.GetOrigin()
                     )
                     actor = brain.plotter.add_text(
-                        name,
-                        ch_pos,
+                        text=name,
+                        position=ch_pos,
                         font_size=font_size,
                         color=(0.0, 0.0, 0.0),
                         **add_text_kwargs,

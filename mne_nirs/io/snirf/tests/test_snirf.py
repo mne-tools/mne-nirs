@@ -10,7 +10,7 @@ import pytest
 from mne.datasets.testing import data_path, requires_testing_data
 from mne.io import read_raw_nirx, read_raw_snirf
 from mne.preprocessing.nirs import beer_lambert_law, optical_density
-from mne.utils import check_version, object_diff
+from mne.utils import object_diff
 from numpy.testing import assert_allclose, assert_array_equal
 from snirf import Snirf, validateSnirf
 
@@ -34,8 +34,6 @@ fname_snirf_aux_nirsport2 = op.join(
 
 pytest.importorskip("h5py")
 
-MNE_1_7 = check_version("mne", "1.7")
-
 
 @requires_testing_data
 @pytest.mark.parametrize(
@@ -56,10 +54,6 @@ def test_snirf_write_raw(fname, tmpdir):
     raw = read_raw_snirf(test_file, preload=True)
     # Correct MNE bug with reading
     subj_info = raw.info["subject_info"]
-    if not MNE_1_7:
-        subj_info["first_name"] = subj_info["first_name"].split("_")[0]
-        assert "his_id" not in subj_info
-        subj_info["his_id"] = his_id
     assert subj_info["his_id"] == his_id
 
     result = validateSnirf(str(test_file))
@@ -105,10 +99,7 @@ def test_snirf_write_raw(fname, tmpdir):
     del raw.info["subject_info"]["his_id"]
     write_raw_snirf(raw, test_file)
     raw = read_raw_snirf(test_file)
-    if MNE_1_7:
-        assert raw.info["subject_info"]["his_id"] == his_id
-    else:
-        assert raw.info["subject_info"]["first_name"] == his_id
+    assert raw.info["subject_info"]["his_id"] == his_id
 
 
 @requires_testing_data

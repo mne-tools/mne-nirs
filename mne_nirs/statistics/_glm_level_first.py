@@ -344,6 +344,7 @@ class RegressionResults(_BaseGLM):
         colorbar=True,
         figsize=(12, 7),
         sphere=None,
+        show_names=True,
         **kwargs,
     ):
         """Plot 2D topography of GLM data.
@@ -370,6 +371,8 @@ class RegressionResults(_BaseGLM):
             Figure size.
         sphere : As specified in MNE
             Sphere parameter from mne.viz.topomap.plot_topomap.
+        show_names : bool
+            Whether to display channel names on the topomap.
         **kwargs : dict
             Additional keyword arguments to pass to :func:`mne:mne.viz.plot_topomap`.
 
@@ -393,6 +396,7 @@ class RegressionResults(_BaseGLM):
             colorbar=colorbar,
             figsize=figsize,
             sphere=sphere,
+            show_names=show_names,
             **kwargs,
         )
 
@@ -650,7 +654,7 @@ class ContrastResults(_BaseGLM):
 
         self._data = data
 
-    def plot_topo(self, figsize=(12, 7), sphere=None, **kwargs):
+    def plot_topo(self, figsize=(12, 7), sphere=None, show_names=True, **kwargs):
         """
         Plot topomap GLM contrast data.
 
@@ -660,6 +664,8 @@ class ContrastResults(_BaseGLM):
             TODO: Remove this, how does MNE usually deal with this.
         sphere : numbers
             As specified in MNE.
+        show_names : bool
+            Whether to display channel names on the topomap.
         **kwargs : dict
             Additional keyword arguments to pass to :func:`mne:mne.viz.plot_topomap`.
 
@@ -676,6 +682,7 @@ class ContrastResults(_BaseGLM):
             self._data,
             figsize=figsize,
             sphere=sphere,
+            show_names=show_names,
             **kwargs,
         )
 

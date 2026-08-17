@@ -5,7 +5,7 @@
 import numpy as np
 from mne.filter import filter_data
 from mne.io import BaseRaw
-from mne.preprocessing.nirs import _validate_nirs_info
+from mne.preprocessing.nirs import _channel_frequencies, _validate_nirs_info
 from mne.utils import _validate_type, verbose
 from scipy.signal import periodogram
 
@@ -54,6 +54,14 @@ def peak_power(
         List of the start and end times of each window used to compute the
         peak spectral power.
 
+    Notes
+    -----
+    This implementation of peak power differs from Pollonini's original [1]_ [2]_,
+    in that the original calculates peak power on raw data, whereas multiple
+    types are allowed here; and while both implementations calculate a kind of
+    cosine similarity, the mathematical details are different. Users are
+    advised to check the results and adjust parameters as needed.
+
     References
     ----------
     .. [1] Pollonini L et al., “PHOEBE: a method for real time mapping of
@@ -63,11 +71,26 @@ def peak_power(
            quality assessment of fNIRS scans." Optics and the Brain.
            Optical Society of America, 2020.
     """
+    # Copy raw to avoid modifying original and load data into memory
     raw = raw.copy().load_data()
+
+    # Validate that the input contains raw fNIRS data
+    # Note that peak_power currently does not require a specific data type (e.g. OD)
     _validate_type(raw, BaseRaw, "raw")
 
+    # `picks` returns a list of channels ordered alphanumerically, which may differ
+    # from the order of channels in `raw`. By virtue of being sorted, channels follow
+    # an ordered sequence of S-D pairs and wavelengths, e.g., S1_D1 760, S1_D1 850,
+    # S1_D2 760, S1_D2 850, S2_D1 760, S2_D1 850, etc. The algorithm below relies on
+    # this ordering.
     picks = _validate_nirs_info(raw.info)
 
+    # Number of wavelengths extracted from channel names
+    n_wavelengths = len(np.unique(_channel_frequencies(raw.info)))
+
+    # Bandpass filter data to extract heartbeat-related frequencies
+    # Note: filtering is applied only to the selected channels (picks),
+    # with channel order preserved, regardless of how the picks are ordered.
     filtered_data = filter_data(
         raw._data,
         raw.info["sfreq"],
@@ -79,42 +102,49 @@ def peak_power(
         h_trans_bandwidth=h_trans_bandwidth,
     )
 
-    window_samples = int(np.ceil(time_window * raw.info["sfreq"]))
-    n_windows = int(np.floor(len(raw) / window_samples))
+    samples_per_window = int(np.ceil(time_window * raw.info["sfreq"]))
+    n_windows = int(np.floor(len(raw) / samples_per_window))
 
     scores = np.zeros((len(picks), n_windows))
     times = []
 
     for window in range(n_windows):
-        start_sample = int(window * window_samples)
-        end_sample = start_sample + window_samples
-        end_sample = np.min([end_sample, len(raw) - 1])
+        start_sample = int(window * samples_per_window)
+        end_sample = min(start_sample + samples_per_window, len(raw) - 1)
 
         t_start = raw.times[start_sample]
         t_stop = raw.times[end_sample]
         times.append((t_start, t_stop))
 
-        for ii in range(0, len(picks), 2):
-            c1 = filtered_data[picks[ii]][start_sample:end_sample]
-            c2 = filtered_data[picks[ii + 1]][start_sample:end_sample]
+        # pair indices for all channels pairs
+        pair_indices = np.triu_indices(n_wavelengths, k=1)
 
-            # protect against zero
-            c1 = c1 / (np.std(c1) or 1)
-            c2 = c2 / (np.std(c2) or 1)
+        for gg in range(0, len(picks), n_wavelengths):
+            ch_group = picks[gg : gg + n_wavelengths]
+            group_data = filtered_data[ch_group, start_sample:end_sample]
 
-            c = np.correlate(c1, c2, "full")
-            c = c / (window_samples)
-            [f, pxx] = periodogram(c, fs=raw.info["sfreq"], window="hamming")
+            # Calculate pairwise peak power within group
+            group_data = np.array([ch / (np.std(ch) or 1) for ch in group_data])
+            peak_powers = []
+            for ii, jj in zip(*pair_indices):
+                c = np.correlate(group_data[ii], group_data[jj], "full")
+                c = c / samples_per_window
+                [_, pxx] = periodogram(c, fs=raw.info["sfreq"], window="hamming")
+                peak_powers.append(max(pxx))
 
-            scores[ii, window] = max(pxx)
-            scores[ii + 1, window] = max(pxx)
+            # Use the minimum value in the group as peak power
+            pp = min(peak_powers) if peak_powers else 0.0
 
-            if (threshold is not None) & (max(pxx) < threshold):
+            # Assign the same peak power value to all channels in the group
+            scores[ch_group, window] = pp
+
+            # Add BAD_PeakPower annotation to channels if below threshold
+            if (threshold is not None) & (pp < threshold):
                 raw.annotations.append(
                     t_start,
                     time_window,
                     "BAD_PeakPower",
-                    ch_names=[raw.ch_names[ii : ii + 2]],
+                    ch_names=[[raw.ch_names[ii] for ii in ch_group]],
                 )
-    scores = scores[np.argsort(picks)]
+
     return raw, scores, times
