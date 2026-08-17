@@ -4,8 +4,14 @@
 
 import mne
 import numpy as np
+from mne.utils import logger, verbose
+
+# Regressors above this VIF are reported to the user as problematic. Values
+# between 1 and 5 indicate low to moderate correlation between regressors.
+_VIF_THRESHOLD = 5.0
 
 
+@verbose
 def make_first_level_design_matrix(
     raw,
     stim_dur=1.0,
@@ -18,6 +24,9 @@ def make_first_level_design_matrix(
     add_reg_names=None,
     min_onset=-24,
     oversampling=50,
+    *,
+    return_vif=False,
+    verbose=None,
 ):
     """
     Generate a design matrix based on annotations and model HRF.
@@ -61,7 +70,7 @@ def make_first_level_design_matrix(
 
     add_reg_names : list of (n_add_reg,) str, optional
         If None, while add_regs was provided, these will be termed
-        'reg_%i', i = 0..n_add_reg - 1
+        'reg_%%i', i = 0..n_add_reg - 1
         If add_regs is a DataFrame, the corresponding column names are used
         and add_reg_names is ignored.
 
@@ -73,11 +82,38 @@ def make_first_level_design_matrix(
     oversampling : int, optional
         Oversampling factor used in temporal convolutions. Default=50.
 
+    return_vif : bool, optional
+        If True, also return the variance inflation factor (VIF) of each
+        regressor. Default=False. Should only be passed as a keyword argument.
+    %(verbose)s
+
     Returns
     -------
     design_matrix : DataFrame instance,
         Holding the computed design matrix, the index being the frames_times
         and each column a regressor.
+
+    vif : instance of pandas.Series
+        The VIF of each non-constant regressor, indexed by regressor name.
+        Only returned if ``return_vif=True``.
+
+    Notes
+    -----
+    The variance inflation factor (VIF) quantifies how much the variance of a
+    regressor's coefficient is inflated by collinearity with the other
+    regressors. It is defined as ``1 / (1 - R**2)``, where ``R**2`` is obtained
+    by regressing one regressor on all of the others (plus an intercept), and
+    is not defined for the ``"constant"`` regressor itself. Values are always
+    at least 1, and a perfectly collinear regressor yields ``np.inf``.
+
+    A VIF between 1 and 5 indicates low to moderate correlation between
+    regressors. Larger values indicate high multicollinearity, which suggests
+    that the offending regressors should be combined or dropped, and are
+    reported in the log output regardless of ``return_vif``.
+
+    These are the same values as
+    ``statsmodels.stats.outliers_influence.variance_inflation_factor`` gives
+    for a design matrix that contains an intercept column.
 
     References
     ----------
@@ -110,7 +146,86 @@ def make_first_level_design_matrix(
         fir_delays=fir_delays,
     )
 
-    return dm
+    vif = _design_matrix_vif(dm)
+
+    return (dm, vif) if return_vif else dm
+
+
+def _design_matrix_vif(design_matrix):
+    """Compute the variance inflation factor of each design matrix regressor."""
+    from pandas import Series
+    from scipy.linalg import cho_solve
+
+    names = [name for name in design_matrix.columns if name != "constant"]
+    # Centering the regressors is equivalent to including an intercept in each
+    # of the regressions below (Frisch-Waugh-Lovell), and lets us drop the
+    # "constant" column entirely. Normalizing does not change the VIF, but
+    # keeps the Gram matrix below well scaled.
+    data = np.asarray(design_matrix[names].values, float)
+    data = data - data.mean(0)
+    norms = np.linalg.norm(data, axis=0)
+    n_regressors = len(names)
+
+    # A regressor with no variance is a duplicate of the intercept, and one
+    # that the others reproduce exactly has an infinite VIF by definition
+    vif = np.full(n_regressors, np.inf)
+    use = norms > 0
+    data = data[:, use] / norms[use]
+
+    # For centered and normalized regressors the Gram matrix is the correlation
+    # matrix, and VIF is the diagonal of its inverse. This is much faster than
+    # regressing each column on all of the others in turn, but is only valid
+    # when the regressors are linearly independent, which the Cholesky
+    # decomposition tells us.
+    try:
+        chol = np.linalg.cholesky(data.T @ data)
+    except np.linalg.LinAlgError:  # singular, so fall back to least squares
+        logger.debug("Design matrix is rank deficient, computing VIF directly")
+        vif[use] = _vif_lstsq(data)
+    else:
+        vif[use] = np.diag(cho_solve((chol, True), np.eye(chol.shape[0])))
+    # Numerically, an exactly orthogonal regressor can come out just below 1.
+    # At the other end, a VIF above the resolution of the decomposition means
+    # the regressor is collinear with the others to within floating point
+    # error, which is as close to infinite as we can measure.
+    vif = np.maximum(vif, 1.0)
+    vif[vif > 1.0 / (np.finfo(float).eps * max(data.shape))] = np.inf
+
+    order = np.argsort(vif)[::-1]  # worst first
+    for ii in order:
+        logger.debug(f"    VIF of {names[ii]}: {vif[ii]:0.3f}")
+    bad = order[vif[order] > _VIF_THRESHOLD]
+    if len(bad):
+        show, extra = bad[:5], len(bad) - 5
+        logger.warning(
+            f"High collinearity (VIF > {_VIF_THRESHOLD:0.0f}) detected in "
+            f"{len(bad)}/{n_regressors} design matrix regressors: "
+            + ", ".join(f"{names[ii]} ({vif[ii]:0.3f})" for ii in show)
+            + (f", and {extra} more" if extra > 0 else "")
+        )
+    elif n_regressors:
+        worst = np.argmax(vif)
+        logger.info(f"Maximum design matrix VIF was {vif[worst]:0.3f} ({names[worst]})")
+
+    return Series(vif, index=names, name="vif")
+
+
+def _vif_lstsq(data):
+    """Compute VIF by regressing each column on all of the others."""
+    # A residual this small relative to the total means that the regressor is
+    # perfectly collinear with the others, up to floating point error
+    tol = np.finfo(float).eps * max(data.shape)
+    n_regressors = data.shape[1]
+    vif = np.zeros(n_regressors)
+    for ii in range(n_regressors):
+        x_i = data[:, ii]
+        x_noti = data[:, np.arange(n_regressors) != ii]
+        coef = np.linalg.lstsq(x_noti, x_i, rcond=None)[0]
+        rss = np.sum((x_i - x_noti @ coef) ** 2)
+        tss = np.sum(x_i**2)
+        # rss / tss is the unexplained fraction, and VIF is just its inverse
+        vif[ii] = np.inf if rss <= tss * tol else tss / rss
+    return vif
 
 
 def create_boxcar(raw, event_id=None, stim_dur=1):
