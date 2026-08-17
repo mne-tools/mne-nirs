@@ -2645,6 +2645,7 @@ Now make a design matrix, including drift regressors, and plot
 
  .. code-block:: none
 
+    Maximum design matrix VIF was 1.028 (Tapping/Right)
 
     <Axes: label='conditions', ylabel='scan number'>
 
@@ -2974,9 +2975,9 @@ selectivity of the motor response according to which hand is being tapped.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 45.448 seconds)
+   **Total running time of the script:** (0 minutes 44.557 seconds)
 
-**Estimated memory usage:**  573 MB
+**Estimated memory usage:**  519 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_11b_kf2_fingertapping.py:

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne_nirs.experimental_design._experimental_design &#8212; MNE-NIRS 0.8.0.dev62+ga94348db0 documentation</title>
+    <title>mne_nirs.experimental_design._experimental_design &#8212; MNE-NIRS 0.8.0.dev63+gb36104cea documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../_static/documentation_options.js?v=7a749144"></script>
+    <script src="../../../_static/documentation_options.js?v=1f48b4a5"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -379,15 +379,21 @@ document.write(`
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">mne</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mne.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span><span class="p">,</span> <span class="n">verbose</span>
+
+<span class="c1"># Regressors above this VIF are reported to the user as problematic. Values</span>
+<span class="c1"># between 1 and 5 indicate low to moderate correlation between regressors.</span>
+<span class="n">_VIF_THRESHOLD</span> <span class="o">=</span> <span class="mf">5.0</span>
 
 
 <div class="viewcode-block" id="make_first_level_design_matrix">
 <a class="viewcode-back" href="../../../generated/mne_nirs.experimental_design.make_first_level_design_matrix.html#mne_nirs.experimental_design.make_first_level_design_matrix">[docs]</a>
+<span class="nd">@verbose</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">make_first_level_design_matrix</span><span class="p">(</span>
     <span class="n">raw</span><span class="p">,</span>
     <span class="n">stim_dur</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-    <span class="n">hrf_model</span><span class="o">=</span><span class="s2">&quot;glover&quot;</span><span class="p">,</span>
-    <span class="n">drift_model</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">,</span>
+    <span class="n">hrf_model</span><span class="o">=</span><span class="s2">"glover"</span><span class="p">,</span>
+    <span class="n">drift_model</span><span class="o">=</span><span class="s2">"cosine"</span><span class="p">,</span>
     <span class="n">high_pass</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
     <span class="n">drift_order</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">fir_delays</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,),</span>
@@ -395,8 +401,11 @@ document.write(`
     <span class="n">add_reg_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">min_onset</span><span class="o">=-</span><span class="mi">24</span><span class="p">,</span>
     <span class="n">oversampling</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">return_vif</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Generate a design matrix based on annotations and model HRF.</span>
 
 <span class="sd">    This is a wrapper function for the nilearn :footcite:`abraham2014machine`</span>
@@ -411,14 +420,14 @@ document.write(`
 <span class="sd">    stim_dur : Number</span>
 <span class="sd">        The length of your stimulus.</span>
 
-<span class="sd">    hrf_model : {&#39;glover&#39;, &#39;spm&#39;, &#39;spm + derivative&#39;, \</span>
-<span class="sd">        &#39;spm + derivative + dispersion&#39;,\</span>
-<span class="sd">        &#39;glover + derivative&#39;, &#39;glover + derivative + dispersion&#39;,\</span>
-<span class="sd">        &#39;fir&#39;, None}, optional</span>
-<span class="sd">        Specifies the hemodynamic response function. Default=&#39;glover&#39;.</span>
+<span class="sd">    hrf_model : {'glover', 'spm', 'spm + derivative', \</span>
+<span class="sd">        'spm + derivative + dispersion',\</span>
+<span class="sd">        'glover + derivative', 'glover + derivative + dispersion',\</span>
+<span class="sd">        'fir', None}, optional</span>
+<span class="sd">        Specifies the hemodynamic response function. Default='glover'.</span>
 
-<span class="sd">    drift_model : {&#39;cosine&#39;, &#39;polynomial&#39;, None}, optional</span>
-<span class="sd">        Specifies the desired drift model. Default=&#39;cosine&#39;.</span>
+<span class="sd">    drift_model : {'cosine', 'polynomial', None}, optional</span>
+<span class="sd">        Specifies the desired drift model. Default='cosine'.</span>
 
 <span class="sd">    high_pass : float, optional</span>
 <span class="sd">        High-pass frequency in case of a cosine model (in Hz).</span>
@@ -438,7 +447,7 @@ document.write(`
 
 <span class="sd">    add_reg_names : list of (n_add_reg,) str, optional</span>
 <span class="sd">        If None, while add_regs was provided, these will be termed</span>
-<span class="sd">        &#39;reg_%i&#39;, i = 0..n_add_reg - 1</span>
+<span class="sd">        'reg_%%i', i = 0..n_add_reg - 1</span>
 <span class="sd">        If add_regs is a DataFrame, the corresponding column names are used</span>
 <span class="sd">        and add_reg_names is ignored.</span>
 
@@ -450,16 +459,43 @@ document.write(`
 <span class="sd">    oversampling : int, optional</span>
 <span class="sd">        Oversampling factor used in temporal convolutions. Default=50.</span>
 
+<span class="sd">    return_vif : bool, optional</span>
+<span class="sd">        If True, also return the variance inflation factor (VIF) of each</span>
+<span class="sd">        regressor. Default=False. Should only be passed as a keyword argument.</span>
+<span class="sd">    %(verbose)s</span>
+
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    design_matrix : DataFrame instance,</span>
 <span class="sd">        Holding the computed design matrix, the index being the frames_times</span>
 <span class="sd">        and each column a regressor.</span>
 
+<span class="sd">    vif : instance of pandas.Series</span>
+<span class="sd">        The VIF of each non-constant regressor, indexed by regressor name.</span>
+<span class="sd">        Only returned if ``return_vif=True``.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The variance inflation factor (VIF) quantifies how much the variance of a</span>
+<span class="sd">    regressor's coefficient is inflated by collinearity with the other</span>
+<span class="sd">    regressors. It is defined as ``1 / (1 - R**2)``, where ``R**2`` is obtained</span>
+<span class="sd">    by regressing one regressor on all of the others (plus an intercept), and</span>
+<span class="sd">    is not defined for the ``"constant"`` regressor itself. Values are always</span>
+<span class="sd">    at least 1, and a perfectly collinear regressor yields ``np.inf``.</span>
+
+<span class="sd">    A VIF between 1 and 5 indicates low to moderate correlation between</span>
+<span class="sd">    regressors. Larger values indicate high multicollinearity, which suggests</span>
+<span class="sd">    that the offending regressors should be combined or dropped, and are</span>
+<span class="sd">    reported in the log output regardless of ``return_vif``.</span>
+
+<span class="sd">    These are the same values as</span>
+<span class="sd">    ``statsmodels.stats.outliers_influence.variance_inflation_factor`` gives</span>
+<span class="sd">    for a design matrix that contains an intercept column.</span>
+
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
 <span class="sd">    .. footbibliography::</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">nilearn.glm.first_level</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_first_level_design_matrix</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataFrame</span>
 
@@ -470,7 +506,7 @@ document.write(`
     <span class="n">onsets</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">onset</span> <span class="o">-</span> <span class="n">raw</span><span class="o">.</span><span class="n">first_time</span>
     <span class="n">duration</span> <span class="o">=</span> <span class="n">stim_dur</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">conditions</span><span class="p">))</span>
     <span class="n">events</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span>
-        <span class="p">{</span><span class="s2">&quot;trial_type&quot;</span><span class="p">:</span> <span class="n">conditions</span><span class="p">,</span> <span class="s2">&quot;onset&quot;</span><span class="p">:</span> <span class="n">onsets</span><span class="p">,</span> <span class="s2">&quot;duration&quot;</span><span class="p">:</span> <span class="n">duration</span><span class="p">}</span>
+        <span class="p">{</span><span class="s2">"trial_type"</span><span class="p">:</span> <span class="n">conditions</span><span class="p">,</span> <span class="s2">"onset"</span><span class="p">:</span> <span class="n">onsets</span><span class="p">,</span> <span class="s2">"duration"</span><span class="p">:</span> <span class="n">duration</span><span class="p">}</span>
     <span class="p">)</span>
 
     <span class="n">dm</span> <span class="o">=</span> <span class="n">make_first_level_design_matrix</span><span class="p">(</span>
@@ -487,14 +523,93 @@ document.write(`
         <span class="n">fir_delays</span><span class="o">=</span><span class="n">fir_delays</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">dm</span></div>
+    <span class="n">vif</span> <span class="o">=</span> <span class="n">_design_matrix_vif</span><span class="p">(</span><span class="n">dm</span><span class="p">)</span>
 
+    <span class="k">return</span> <span class="p">(</span><span class="n">dm</span><span class="p">,</span> <span class="n">vif</span><span class="p">)</span> <span class="k">if</span> <span class="n">return_vif</span> <span class="k">else</span> <span class="n">dm</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_design_matrix_vif</span><span class="p">(</span><span class="n">design_matrix</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Compute the variance inflation factor of each design matrix regressor."""</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="kn">import</span> <span class="n">Series</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.linalg</span><span class="w"> </span><span class="kn">import</span> <span class="n">cho_solve</span>
+
+    <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">design_matrix</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">name</span> <span class="o">!=</span> <span class="s2">"constant"</span><span class="p">]</span>
+    <span class="c1"># Centering the regressors is equivalent to including an intercept in each</span>
+    <span class="c1"># of the regressions below (Frisch-Waugh-Lovell), and lets us drop the</span>
+    <span class="c1"># "constant" column entirely. Normalizing does not change the VIF, but</span>
+    <span class="c1"># keeps the Gram matrix below well scaled.</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">design_matrix</span><span class="p">[</span><span class="n">names</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">-</span> <span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">norms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">n_regressors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+
+    <span class="c1"># A regressor with no variance is a duplicate of the intercept, and one</span>
+    <span class="c1"># that the others reproduce exactly has an infinite VIF by definition</span>
+    <span class="n">vif</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">n_regressors</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+    <span class="n">use</span> <span class="o">=</span> <span class="n">norms</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="n">use</span><span class="p">]</span> <span class="o">/</span> <span class="n">norms</span><span class="p">[</span><span class="n">use</span><span class="p">]</span>
+
+    <span class="c1"># For centered and normalized regressors the Gram matrix is the correlation</span>
+    <span class="c1"># matrix, and VIF is the diagonal of its inverse. This is much faster than</span>
+    <span class="c1"># regressing each column on all of the others in turn, but is only valid</span>
+    <span class="c1"># when the regressors are linearly independent, which the Cholesky</span>
+    <span class="c1"># decomposition tells us.</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">chol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">LinAlgError</span><span class="p">:</span>  <span class="c1"># singular, so fall back to least squares</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Design matrix is rank deficient, computing VIF directly"</span><span class="p">)</span>
+        <span class="n">vif</span><span class="p">[</span><span class="n">use</span><span class="p">]</span> <span class="o">=</span> <span class="n">_vif_lstsq</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">vif</span><span class="p">[</span><span class="n">use</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">cho_solve</span><span class="p">((</span><span class="n">chol</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">chol</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+    <span class="c1"># Numerically, an exactly orthogonal regressor can come out just below 1.</span>
+    <span class="c1"># At the other end, a VIF above the resolution of the decomposition means</span>
+    <span class="c1"># the regressor is collinear with the others to within floating point</span>
+    <span class="c1"># error, which is as close to infinite as we can measure.</span>
+    <span class="n">vif</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">vif</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">vif</span><span class="p">[</span><span class="n">vif</span> <span class="o">&gt;</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">))]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+
+    <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">vif</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># worst first</span>
+    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">order</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">"    VIF of </span><span class="si">{</span><span class="n">names</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">vif</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="si">:</span><span class="s2">0.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">bad</span> <span class="o">=</span> <span class="n">order</span><span class="p">[</span><span class="n">vif</span><span class="p">[</span><span class="n">order</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">_VIF_THRESHOLD</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bad</span><span class="p">):</span>
+        <span class="n">show</span><span class="p">,</span> <span class="n">extra</span> <span class="o">=</span> <span class="n">bad</span><span class="p">[:</span><span class="mi">5</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">bad</span><span class="p">)</span> <span class="o">-</span> <span class="mi">5</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"High collinearity (VIF &gt; </span><span class="si">{</span><span class="n">_VIF_THRESHOLD</span><span class="si">:</span><span class="s2">0.0f</span><span class="si">}</span><span class="s2">) detected in "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">bad</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">n_regressors</span><span class="si">}</span><span class="s2"> design matrix regressors: "</span>
+            <span class="o">+</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">names</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">vif</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="si">:</span><span class="s2">0.3f</span><span class="si">}</span><span class="s2">)"</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">show</span><span class="p">)</span>
+            <span class="o">+</span> <span class="p">(</span><span class="sa">f</span><span class="s2">", and </span><span class="si">{</span><span class="n">extra</span><span class="si">}</span><span class="s2"> more"</span> <span class="k">if</span> <span class="n">extra</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">""</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">n_regressors</span><span class="p">:</span>
+        <span class="n">worst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">vif</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Maximum design matrix VIF was </span><span class="si">{</span><span class="n">vif</span><span class="p">[</span><span class="n">worst</span><span class="p">]</span><span class="si">:</span><span class="s2">0.3f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">names</span><span class="p">[</span><span class="n">worst</span><span class="p">]</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Series</span><span class="p">(</span><span class="n">vif</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"vif"</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_vif_lstsq</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Compute VIF by regressing each column on all of the others."""</span>
+    <span class="c1"># A residual this small relative to the total means that the regressor is</span>
+    <span class="c1"># perfectly collinear with the others, up to floating point error</span>
+    <span class="n">tol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">n_regressors</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">vif</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_regressors</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_regressors</span><span class="p">):</span>
+        <span class="n">x_i</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="n">ii</span><span class="p">]</span>
+        <span class="n">x_noti</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_regressors</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ii</span><span class="p">]</span>
+        <span class="n">coef</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">x_noti</span><span class="p">,</span> <span class="n">x_i</span><span class="p">,</span> <span class="n">rcond</span><span class="o">=</span><span class="kc">None</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">rss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x_i</span> <span class="o">-</span> <span class="n">x_noti</span> <span class="o">@</span> <span class="n">coef</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">tss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x_i</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># rss / tss is the unexplained fraction, and VIF is just its inverse</span>
+        <span class="n">vif</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span> <span class="k">if</span> <span class="n">rss</span> <span class="o">&lt;=</span> <span class="n">tss</span> <span class="o">*</span> <span class="n">tol</span> <span class="k">else</span> <span class="n">tss</span> <span class="o">/</span> <span class="n">rss</span>
+    <span class="k">return</span> <span class="n">vif</span>
 
 
 <div class="viewcode-block" id="create_boxcar">
 <a class="viewcode-back" href="../../../generated/mne_nirs.experimental_design.create_boxcar.html#mne_nirs.experimental_design.create_boxcar">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">create_boxcar</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">event_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stim_dur</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Generate boxcar representation of the experimental paradigm.</span>
 
 <span class="sd">    Parameters</span>
@@ -510,8 +625,8 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">    s : array</span>
 <span class="sd">        Returns an array for each annotation label.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">bc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;sfreq&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">stim_dur</span><span class="p">)))</span>
+<span class="sd">    """</span>
+    <span class="n">bc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"sfreq"</span><span class="p">]</span> <span class="o">*</span> <span class="n">stim_dur</span><span class="p">)))</span>
     <span class="n">events</span><span class="p">,</span> <span class="n">ids</span> <span class="o">=</span> <span class="n">mne</span><span class="o">.</span><span class="n">events_from_annotations</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">event_id</span><span class="o">=</span><span class="n">event_id</span><span class="p">)</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">times</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">)))</span>
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
@@ -527,7 +642,7 @@ document.write(`
 <div class="viewcode-block" id="longest_inter_annotation_interval">
 <a class="viewcode-back" href="../../../generated/mne_nirs.experimental_design.longest_inter_annotation_interval.html#mne_nirs.experimental_design.longest_inter_annotation_interval">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">longest_inter_annotation_interval</span><span class="p">(</span><span class="n">raw</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Compute longest ISI per annotation.</span>
 
 <span class="sd">    Specifically, longest period between two trials of</span>
@@ -544,7 +659,7 @@ document.write(`
 <span class="sd">        Longest ISI per annotation.</span>
 <span class="sd">    annotation_name : list</span>
 <span class="sd">        Annotation name corresponding to reported interval.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">annotation_name</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
     <span class="n">longest</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">desc</span> <span class="ow">in</span> <span class="n">annotation_name</span><span class="p">:</span>
@@ -557,7 +672,7 @@ document.write(`
 <div class="viewcode-block" id="drift_high_pass">
 <a class="viewcode-back" href="../../../generated/mne_nirs.experimental_design.drift_high_pass.html#mne_nirs.experimental_design.drift_high_pass">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">drift_high_pass</span><span class="p">(</span><span class="n">raw</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Compute cosine drift regressor high pass cut off.</span>
 
 <span class="sd">    Value computed according to Nilearn :footcite:`abraham2014machine`</span>
@@ -577,7 +692,7 @@ document.write(`
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
 <span class="sd">    .. footbibliography::</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">longest</span><span class="p">,</span> <span class="n">annotation_name</span> <span class="o">=</span> <span class="n">longest_inter_annotation_interval</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
     <span class="n">max_isi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">longest</span><span class="p">)</span>
     <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">max_isi</span><span class="p">)</span></div>
@@ -625,7 +740,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-08-10T23:32:48.198757+00:00" class="localized">2026-08-10 23:32 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-08-17T20:36:12.725996+00:00" class="localized">2026-08-17 20:36 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

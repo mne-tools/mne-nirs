@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Importing Data From fNIRS Devices &#8212; MNE-NIRS 0.8.0.dev62+ga94348db0 documentation</title>
+    <title>Importing Data From fNIRS Devices &#8212; MNE-NIRS 0.8.0.dev63+gb36104cea documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../_static/documentation_options.js?v=7a749144"></script>
+    <script src="../../_static/documentation_options.js?v=1f48b4a5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -597,11 +597,11 @@ have to adapt this depending on the system from which your CSV originated.</p>
 MNE-Python. This step would be skipped if you have actual data you wish to
 load. We simulate 16 channels with 100 samples of data and save this to a
 file called fnirs.csv.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class"><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span></a><span class="p">(</span><a href="https://numpy.org/devdocs/reference/random/generated/numpy.random.normal.html#numpy.random.normal" title="numpy.random.normal" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span></a><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">100</span><span class="p">)))</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;fnirs.csv&quot;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class"><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span></a><span class="p">(</span><a href="https://numpy.org/devdocs/reference/random/generated/numpy.random.normal.html#numpy.random.normal" title="numpy.random.normal" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span></a><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">100</span><span class="p">)))</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">"fnirs.csv"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Next, we will load the example CSV file.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a> <span class="o">=</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv" title="pandas.read_csv" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-function"><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span></a><span class="p">(</span><span class="s2">&quot;fnirs.csv&quot;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a> <span class="o">=</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv" title="pandas.read_csv" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-function"><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span></a><span class="p">(</span><span class="s2">"fnirs.csv"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Then, the metadata must be specified manually as the CSV file does not
@@ -614,40 +614,40 @@ detector numbers and type is either <code class="docutils literal notranslate"><
 wavelength.</p>
 </div>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_names</span></a> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;S1_D1 hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;S1_D1 hbr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;S2_D1 hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;S2_D1 hbr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;S3_D1 hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;S3_D1 hbr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;S4_D1 hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;S4_D1 hbr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;S5_D2 hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;S5_D2 hbr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;S6_D2 hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;S6_D2 hbr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;S7_D2 hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;S7_D2 hbr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;S8_D2 hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;S8_D2 hbr&quot;</span><span class="p">,</span>
+    <span class="s2">"S1_D1 hbo"</span><span class="p">,</span>
+    <span class="s2">"S1_D1 hbr"</span><span class="p">,</span>
+    <span class="s2">"S2_D1 hbo"</span><span class="p">,</span>
+    <span class="s2">"S2_D1 hbr"</span><span class="p">,</span>
+    <span class="s2">"S3_D1 hbo"</span><span class="p">,</span>
+    <span class="s2">"S3_D1 hbr"</span><span class="p">,</span>
+    <span class="s2">"S4_D1 hbo"</span><span class="p">,</span>
+    <span class="s2">"S4_D1 hbr"</span><span class="p">,</span>
+    <span class="s2">"S5_D2 hbo"</span><span class="p">,</span>
+    <span class="s2">"S5_D2 hbr"</span><span class="p">,</span>
+    <span class="s2">"S6_D2 hbo"</span><span class="p">,</span>
+    <span class="s2">"S6_D2 hbr"</span><span class="p">,</span>
+    <span class="s2">"S7_D2 hbo"</span><span class="p">,</span>
+    <span class="s2">"S7_D2 hbr"</span><span class="p">,</span>
+    <span class="s2">"S8_D2 hbo"</span><span class="p">,</span>
+    <span class="s2">"S8_D2 hbr"</span><span class="p">,</span>
 <span class="p">]</span>
 <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_types</span></a> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hbr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hbr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hbr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hbr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hbr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hbr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hbr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hbo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hbr&quot;</span><span class="p">,</span>
+    <span class="s2">"hbo"</span><span class="p">,</span>
+    <span class="s2">"hbr"</span><span class="p">,</span>
+    <span class="s2">"hbo"</span><span class="p">,</span>
+    <span class="s2">"hbr"</span><span class="p">,</span>
+    <span class="s2">"hbo"</span><span class="p">,</span>
+    <span class="s2">"hbr"</span><span class="p">,</span>
+    <span class="s2">"hbo"</span><span class="p">,</span>
+    <span class="s2">"hbr"</span><span class="p">,</span>
+    <span class="s2">"hbo"</span><span class="p">,</span>
+    <span class="s2">"hbr"</span><span class="p">,</span>
+    <span class="s2">"hbo"</span><span class="p">,</span>
+    <span class="s2">"hbr"</span><span class="p">,</span>
+    <span class="s2">"hbo"</span><span class="p">,</span>
+    <span class="s2">"hbr"</span><span class="p">,</span>
+    <span class="s2">"hbo"</span><span class="p">,</span>
+    <span class="s2">"hbr"</span><span class="p">,</span>
 <span class="p">]</span>
 <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sfreq</span></a> <span class="o">=</span> <span class="mf">10.0</span>  <span class="c1"># in Hz</span>
 </pre></div>
@@ -690,7 +690,7 @@ OctaMon device.</p>
 fNIRS with <a class="reference external" href="https://mne.tools/stable/generated/mne.channels.read_custom_montage.html#mne.channels.read_custom_montage" title="(in MNE v1.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.channels.read_custom_montage()</span></code></a> by setting
 <code class="docutils literal notranslate"><span class="pre">coord_frame</span></code> to <code class="docutils literal notranslate"><span class="pre">'mri'</span></code>.</p>
 </div>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.channels.DigMontage.html#mne.channels.DigMontage" title="mne.channels.DigMontage" class="sphx-glr-backref-module-mne-channels sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">montage</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.channels.make_standard_montage.html#mne.channels.make_standard_montage" title="mne.channels.make_standard_montage" class="sphx-glr-backref-module-mne-channels sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">make_standard_montage</span></a><span class="p">(</span><span class="s2">&quot;artinis-octamon&quot;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.channels.DigMontage.html#mne.channels.DigMontage" title="mne.channels.DigMontage" class="sphx-glr-backref-module-mne-channels sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">montage</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.channels.make_standard_montage.html#mne.channels.make_standard_montage" title="mne.channels.make_standard_montage" class="sphx-glr-backref-module-mne-channels sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">make_standard_montage</span></a><span class="p">(</span><span class="s2">"artinis-octamon"</span><span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray.set_montage" title="mne.io.RawArray.set_montage" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">raw</span><span class="o">.</span><span class="n">set_montage</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.channels.DigMontage.html#mne.channels.DigMontage" title="mne.channels.DigMontage" class="sphx-glr-backref-module-mne-channels sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">montage</span></a><span class="p">)</span>
 
 <span class="c1"># View the position of optodes in 2D to confirm the positions are correct.</span>
@@ -705,19 +705,228 @@ the location of the sources (red), detectors (black), and channels (white
 lines and orange dots) in a 3D representation.
 The ficiduals are marked in blue, green and red.
 See <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/20_source_alignment.html#tut-source-alignment" title="(in MNE v1.12)"><span>Source alignment and coordinate frames</span></a> for more details.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">op</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.datasets.sample.data_path.html#mne.datasets.sample.data_path" title="mne.datasets.sample.data_path" class="sphx-glr-backref-module-mne-datasets-sample sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">(),</span> <span class="s2">&quot;subjects&quot;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">op</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.datasets.sample.data_path.html#mne.datasets.sample.data_path" title="mne.datasets.sample.data_path" class="sphx-glr-backref-module-mne-datasets-sample sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">(),</span> <span class="s2">"subjects"</span><span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.datasets.fetch_fsaverage.html#mne.datasets.fetch_fsaverage" title="mne.datasets.fetch_fsaverage" class="sphx-glr-backref-module-mne-datasets sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fetch_fsaverage</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">)</span>
 
 <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span>
-    <span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s2">&quot;low_contrast&quot;</span>
+    <span class="s2">"fsaverage"</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s2">"low_contrast"</span>
 <span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_head" title="mne.viz.Brain.add_head" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_head</span></a><span class="p">()</span>
-<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">)</span>
+<a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s2">"fsaverage"</span><span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.show_view" title="mne.viz.Brain.show_view" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">show_view</span></a><span class="p">(</span><span class="n">azimuth</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_01_data_io_002.png" srcset="../../_images/sphx_glr_plot_01_data_io_002.png" alt="plot 01 data io" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>0 files missing from root.txt in /home/circleci/mne_data/MNE-sample-data/subjects
-0 files missing from bem.txt in /home/circleci/mne_data/MNE-sample-data/subjects/fsaverage
+<img src="../../_images/sphx_glr_plot_01_data_io_002.png" srcset="../../_images/sphx_glr_plot_01_data_io_002.png" alt="plot 01 data io" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Using default location ~/mne_data for sample...
+Fetching 1 file for the sample dataset ...
+
+  0%|                                              | 0.00/1.65G [00:00&lt;?, ?B/s]
+  0%|                                     | 3.82M/1.65G [00:00&lt;00:43, 38.2MB/s]
+  1%|▎                                    | 15.0M/1.65G [00:00&lt;00:20, 81.2MB/s]
+  2%|▌                                    | 26.0M/1.65G [00:00&lt;00:17, 94.6MB/s]
+  2%|▊                                    | 36.8M/1.65G [00:00&lt;00:16, 99.7MB/s]
+  3%|█                                     | 47.6M/1.65G [00:00&lt;00:15, 103MB/s]
+  4%|█▎                                    | 58.3M/1.65G [00:00&lt;00:15, 104MB/s]
+  4%|█▌                                    | 69.2M/1.65G [00:00&lt;00:14, 106MB/s]
+  5%|█▊                                    | 80.4M/1.65G [00:00&lt;00:14, 108MB/s]
+  6%|██                                    | 91.6M/1.65G [00:00&lt;00:14, 109MB/s]
+  6%|██▍                                    | 103M/1.65G [00:01&lt;00:14, 110MB/s]
+  7%|██▋                                    | 114M/1.65G [00:01&lt;00:13, 111MB/s]
+  8%|██▉                                    | 125M/1.65G [00:01&lt;00:13, 111MB/s]
+  8%|███▏                                   | 136M/1.65G [00:01&lt;00:13, 110MB/s]
+  9%|███▍                                   | 147M/1.65G [00:01&lt;00:13, 111MB/s]
+ 10%|███▋                                   | 158M/1.65G [00:01&lt;00:13, 111MB/s]
+ 10%|████                                   | 170M/1.65G [00:01&lt;00:13, 111MB/s]
+ 11%|████▎                                  | 181M/1.65G [00:01&lt;00:13, 111MB/s]
+ 12%|████▌                                  | 192M/1.65G [00:01&lt;00:13, 111MB/s]
+ 12%|████▊                                  | 203M/1.65G [00:01&lt;00:13, 111MB/s]
+ 13%|█████                                  | 214M/1.65G [00:02&lt;00:12, 111MB/s]
+ 14%|█████▎                                 | 225M/1.65G [00:02&lt;00:12, 111MB/s]
+ 14%|█████▌                                 | 236M/1.65G [00:02&lt;00:12, 111MB/s]
+ 15%|█████▊                                 | 248M/1.65G [00:02&lt;00:12, 111MB/s]
+ 16%|██████                                 | 259M/1.65G [00:02&lt;00:12, 111MB/s]
+ 16%|██████▎                                | 270M/1.65G [00:02&lt;00:12, 111MB/s]
+ 17%|██████▋                                | 281M/1.65G [00:02&lt;00:12, 110MB/s]
+ 18%|██████▉                                | 292M/1.65G [00:02&lt;00:12, 109MB/s]
+ 18%|███████▏                               | 303M/1.65G [00:02&lt;00:12, 109MB/s]
+ 19%|███████▍                               | 314M/1.65G [00:02&lt;00:12, 109MB/s]
+ 20%|███████▋                               | 325M/1.65G [00:03&lt;00:12, 109MB/s]
+ 20%|███████▉                               | 336M/1.65G [00:03&lt;00:12, 109MB/s]
+ 21%|████████▏                              | 346M/1.65G [00:03&lt;00:12, 108MB/s]
+ 22%|████████▍                              | 357M/1.65G [00:03&lt;00:11, 108MB/s]
+ 22%|████████▋                              | 368M/1.65G [00:03&lt;00:11, 109MB/s]
+ 23%|████████▉                              | 379M/1.65G [00:03&lt;00:11, 109MB/s]
+ 24%|█████████▏                             | 391M/1.65G [00:03&lt;00:11, 110MB/s]
+ 24%|█████████▍                             | 402M/1.65G [00:03&lt;00:11, 111MB/s]
+ 25%|█████████▋                             | 413M/1.65G [00:03&lt;00:11, 112MB/s]
+ 26%|██████████                             | 425M/1.65G [00:03&lt;00:10, 112MB/s]
+ 26%|██████████▎                            | 436M/1.65G [00:04&lt;00:10, 113MB/s]
+ 27%|██████████▌                            | 447M/1.65G [00:04&lt;00:10, 113MB/s]
+ 28%|██████████▊                            | 459M/1.65G [00:04&lt;00:10, 113MB/s]
+ 28%|███████████                            | 470M/1.65G [00:04&lt;00:10, 113MB/s]
+ 29%|███████████▎                           | 481M/1.65G [00:04&lt;00:10, 112MB/s]
+ 30%|███████████▌                           | 492M/1.65G [00:04&lt;00:10, 110MB/s]
+ 30%|███████████▉                           | 503M/1.65G [00:04&lt;00:10, 107MB/s]
+ 31%|████████████▏                          | 514M/1.65G [00:04&lt;00:10, 108MB/s]
+ 32%|████████████▍                          | 526M/1.65G [00:04&lt;00:10, 109MB/s]
+ 32%|████████████▋                          | 537M/1.65G [00:04&lt;00:10, 110MB/s]
+ 33%|████████████▌                         | 548M/1.65G [00:05&lt;00:11, 98.8MB/s]
+ 34%|████████████▊                         | 558M/1.65G [00:05&lt;00:11, 94.2MB/s]
+ 34%|█████████████                         | 569M/1.65G [00:05&lt;00:10, 99.5MB/s]
+ 35%|█████████████▋                         | 581M/1.65G [00:05&lt;00:10, 103MB/s]
+ 36%|█████████████▉                         | 592M/1.65G [00:05&lt;00:09, 107MB/s]
+ 37%|██████████████▏                        | 604M/1.65G [00:05&lt;00:09, 109MB/s]
+ 37%|██████████████▌                        | 615M/1.65G [00:05&lt;00:09, 110MB/s]
+ 38%|██████████████▊                        | 626M/1.65G [00:05&lt;00:09, 112MB/s]
+ 39%|███████████████                        | 638M/1.65G [00:05&lt;00:09, 112MB/s]
+ 39%|███████████████▎                       | 649M/1.65G [00:05&lt;00:09, 111MB/s]
+ 40%|███████████████▌                       | 660M/1.65G [00:06&lt;00:09, 109MB/s]
+ 41%|███████████████▊                       | 671M/1.65G [00:06&lt;00:08, 110MB/s]
+ 41%|████████████████                       | 683M/1.65G [00:06&lt;00:08, 111MB/s]
+ 42%|████████████████▍                      | 694M/1.65G [00:06&lt;00:08, 112MB/s]
+ 43%|████████████████▋                      | 706M/1.65G [00:06&lt;00:08, 112MB/s]
+ 43%|████████████████▉                      | 717M/1.65G [00:06&lt;00:08, 113MB/s]
+ 44%|█████████████████▏                     | 728M/1.65G [00:06&lt;00:08, 113MB/s]
+ 45%|█████████████████▍                     | 740M/1.65G [00:06&lt;00:08, 111MB/s]
+ 45%|█████████████████▋                     | 751M/1.65G [00:06&lt;00:08, 112MB/s]
+ 46%|█████████████████▉                     | 763M/1.65G [00:07&lt;00:07, 113MB/s]
+ 47%|██████████████████▎                    | 774M/1.65G [00:07&lt;00:07, 113MB/s]
+ 48%|██████████████████▌                    | 786M/1.65G [00:07&lt;00:07, 113MB/s]
+ 48%|██████████████████▊                    | 797M/1.65G [00:07&lt;00:07, 113MB/s]
+ 49%|███████████████████                    | 808M/1.65G [00:07&lt;00:07, 112MB/s]
+ 50%|███████████████████▎                   | 819M/1.65G [00:07&lt;00:07, 109MB/s]
+ 50%|███████████████████▌                   | 830M/1.65G [00:07&lt;00:07, 108MB/s]
+ 51%|███████████████████▊                   | 842M/1.65G [00:07&lt;00:07, 110MB/s]
+ 52%|████████████████████                   | 853M/1.65G [00:07&lt;00:07, 108MB/s]
+ 52%|████████████████████▍                  | 864M/1.65G [00:07&lt;00:07, 110MB/s]
+ 53%|████████████████████▋                  | 875M/1.65G [00:08&lt;00:07, 111MB/s]
+ 54%|████████████████████▉                  | 887M/1.65G [00:08&lt;00:06, 112MB/s]
+ 54%|█████████████████████▏                 | 898M/1.65G [00:08&lt;00:06, 112MB/s]
+ 55%|█████████████████████▍                 | 909M/1.65G [00:08&lt;00:06, 113MB/s]
+ 56%|█████████████████████▋                 | 921M/1.65G [00:08&lt;00:06, 113MB/s]
+ 56%|█████████████████████▉                 | 932M/1.65G [00:08&lt;00:06, 113MB/s]
+ 57%|██████████████████████▎                | 944M/1.65G [00:08&lt;00:06, 113MB/s]
+ 58%|██████████████████████▌                | 955M/1.65G [00:08&lt;00:06, 110MB/s]
+ 58%|██████████████████████▊                | 966M/1.65G [00:08&lt;00:06, 111MB/s]
+ 59%|███████████████████████                | 978M/1.65G [00:08&lt;00:06, 112MB/s]
+ 60%|███████████████████████▎               | 989M/1.65G [00:09&lt;00:05, 112MB/s]
+ 61%|██████████████████████▉               | 1.00G/1.65G [00:09&lt;00:05, 111MB/s]
+ 61%|███████████████████████▎              | 1.01G/1.65G [00:09&lt;00:05, 109MB/s]
+ 62%|███████████████████████▌              | 1.02G/1.65G [00:09&lt;00:05, 109MB/s]
+ 63%|███████████████████████▊              | 1.03G/1.65G [00:09&lt;00:05, 110MB/s]
+ 63%|████████████████████████              | 1.04G/1.65G [00:09&lt;00:05, 109MB/s]
+ 64%|████████████████████████▎             | 1.06G/1.65G [00:09&lt;00:05, 110MB/s]
+ 65%|████████████████████████▌             | 1.07G/1.65G [00:09&lt;00:05, 111MB/s]
+ 65%|████████████████████████▊             | 1.08G/1.65G [00:09&lt;00:05, 112MB/s]
+ 66%|█████████████████████████             | 1.09G/1.65G [00:09&lt;00:05, 112MB/s]
+ 67%|█████████████████████████▎            | 1.10G/1.65G [00:10&lt;00:04, 112MB/s]
+ 67%|█████████████████████████▌            | 1.11G/1.65G [00:10&lt;00:04, 112MB/s]
+ 68%|█████████████████████████▊            | 1.12G/1.65G [00:10&lt;00:04, 112MB/s]
+ 69%|██████████████████████████            | 1.14G/1.65G [00:10&lt;00:04, 109MB/s]
+ 69%|██████████████████████████▎           | 1.15G/1.65G [00:10&lt;00:04, 110MB/s]
+ 70%|██████████████████████████▌           | 1.16G/1.65G [00:10&lt;00:04, 110MB/s]
+ 71%|██████████████████████████▊           | 1.17G/1.65G [00:10&lt;00:04, 108MB/s]
+ 71%|███████████████████████████           | 1.18G/1.65G [00:10&lt;00:04, 107MB/s]
+ 72%|███████████████████████████▎          | 1.19G/1.65G [00:10&lt;00:04, 109MB/s]
+ 73%|███████████████████████████▌          | 1.20G/1.65G [00:10&lt;00:04, 110MB/s]
+ 73%|███████████████████████████▉          | 1.21G/1.65G [00:11&lt;00:03, 110MB/s]
+ 74%|████████████████████████████▏         | 1.22G/1.65G [00:11&lt;00:03, 111MB/s]
+ 75%|████████████████████████████▍         | 1.24G/1.65G [00:11&lt;00:03, 111MB/s]
+ 75%|████████████████████████████▋         | 1.25G/1.65G [00:11&lt;00:03, 109MB/s]
+ 76%|████████████████████████████▉         | 1.26G/1.65G [00:11&lt;00:03, 110MB/s]
+ 77%|█████████████████████████████▏        | 1.27G/1.65G [00:11&lt;00:03, 110MB/s]
+ 77%|█████████████████████████████▍        | 1.28G/1.65G [00:11&lt;00:03, 111MB/s]
+ 78%|█████████████████████████████▋        | 1.29G/1.65G [00:11&lt;00:03, 112MB/s]
+ 79%|█████████████████████████████▉        | 1.30G/1.65G [00:11&lt;00:03, 112MB/s]
+ 79%|██████████████████████████████▏       | 1.31G/1.65G [00:11&lt;00:03, 112MB/s]
+ 80%|██████████████████████████████▍       | 1.33G/1.65G [00:12&lt;00:02, 111MB/s]
+ 81%|██████████████████████████████▋       | 1.34G/1.65G [00:12&lt;00:03, 105MB/s]
+ 82%|██████████████████████████████▉       | 1.35G/1.65G [00:12&lt;00:02, 106MB/s]
+ 82%|███████████████████████████████▏      | 1.36G/1.65G [00:12&lt;00:02, 108MB/s]
+ 83%|███████████████████████████████▍      | 1.37G/1.65G [00:12&lt;00:02, 109MB/s]
+ 84%|███████████████████████████████▋      | 1.38G/1.65G [00:12&lt;00:02, 110MB/s]
+ 84%|████████████████████████████████      | 1.39G/1.65G [00:12&lt;00:02, 111MB/s]
+ 85%|████████████████████████████████▎     | 1.40G/1.65G [00:12&lt;00:02, 111MB/s]
+ 86%|████████████████████████████████▌     | 1.41G/1.65G [00:12&lt;00:02, 112MB/s]
+ 86%|████████████████████████████████▊     | 1.43G/1.65G [00:13&lt;00:02, 112MB/s]
+ 87%|█████████████████████████████████     | 1.44G/1.65G [00:13&lt;00:01, 109MB/s]
+ 88%|█████████████████████████████████▎    | 1.45G/1.65G [00:13&lt;00:01, 110MB/s]
+ 88%|█████████████████████████████████▌    | 1.46G/1.65G [00:13&lt;00:01, 111MB/s]
+ 89%|█████████████████████████████████▊    | 1.47G/1.65G [00:13&lt;00:01, 111MB/s]
+ 90%|██████████████████████████████████    | 1.48G/1.65G [00:13&lt;00:01, 112MB/s]
+ 90%|██████████████████████████████████▎   | 1.49G/1.65G [00:13&lt;00:01, 110MB/s]
+ 91%|██████████████████████████████████▌   | 1.50G/1.65G [00:13&lt;00:01, 107MB/s]
+ 92%|██████████████████████████████████▊   | 1.52G/1.65G [00:13&lt;00:01, 108MB/s]
+ 92%|███████████████████████████████████   | 1.53G/1.65G [00:13&lt;00:01, 109MB/s]
+ 93%|███████████████████████████████████▎  | 1.54G/1.65G [00:14&lt;00:01, 108MB/s]
+ 94%|███████████████████████████████████▌  | 1.55G/1.65G [00:14&lt;00:00, 109MB/s]
+ 94%|███████████████████████████████████▊  | 1.56G/1.65G [00:14&lt;00:00, 110MB/s]
+ 95%|████████████████████████████████████  | 1.57G/1.65G [00:14&lt;00:00, 111MB/s]
+ 96%|████████████████████████████████████▍ | 1.58G/1.65G [00:14&lt;00:00, 111MB/s]
+ 96%|████████████████████████████████████▋ | 1.59G/1.65G [00:14&lt;00:00, 111MB/s]
+ 97%|████████████████████████████████████▉ | 1.60G/1.65G [00:14&lt;00:00, 106MB/s]
+ 98%|████████████████████████████████████▏| 1.62G/1.65G [00:14&lt;00:00, 96.2MB/s]
+ 98%|████████████████████████████████████▍| 1.63G/1.65G [00:14&lt;00:00, 98.4MB/s]
+ 99%|█████████████████████████████████████▋| 1.64G/1.65G [00:14&lt;00:00, 102MB/s]
+100%|█████████████████████████████████████▉| 1.65G/1.65G [00:15&lt;00:00, 105MB/s]
+  0%|                                              | 0.00/1.65G [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 1.65G/1.65G [00:00&lt;00:00, 6.39TB/s]
+Download complete in 41s (1576.2 MB)
+16 files missing from root.txt in /home/circleci/mne_data/MNE-sample-data/subjects
+Downloading missing files remotely
+
+  0%|                                               | 0.00/196M [00:00&lt;?, ?B/s]
+  2%|▋                                     | 3.32M/196M [00:00&lt;00:05, 33.2MB/s]
+  7%|██▊                                   | 14.6M/196M [00:00&lt;00:02, 79.8MB/s]
+ 13%|█████                                 | 25.8M/196M [00:00&lt;00:01, 94.6MB/s]
+ 19%|███████▍                               | 37.1M/196M [00:00&lt;00:01, 102MB/s]
+ 24%|█████████▏                            | 47.3M/196M [00:00&lt;00:01, 76.5MB/s]
+ 30%|███████████▎                          | 58.5M/196M [00:00&lt;00:01, 86.6MB/s]
+ 36%|█████████████▌                        | 69.8M/196M [00:00&lt;00:01, 94.1MB/s]
+ 41%|███████████████▋                      | 81.1M/196M [00:00&lt;00:01, 99.6MB/s]
+ 47%|██████████████████▍                    | 92.4M/196M [00:00&lt;00:00, 104MB/s]
+ 53%|█████████████████████▏                  | 104M/196M [00:01&lt;00:00, 106MB/s]
+ 59%|███████████████████████▌                | 115M/196M [00:01&lt;00:00, 108MB/s]
+ 65%|█████████████████████████▊              | 126M/196M [00:01&lt;00:00, 110MB/s]
+ 70%|████████████████████████████▏           | 138M/196M [00:01&lt;00:00, 111MB/s]
+ 76%|██████████████████████████████▍         | 149M/196M [00:01&lt;00:00, 112MB/s]
+ 82%|████████████████████████████████▊       | 160M/196M [00:01&lt;00:00, 112MB/s]
+ 88%|███████████████████████████████████     | 172M/196M [00:01&lt;00:00, 112MB/s]
+ 93%|█████████████████████████████████████▍  | 183M/196M [00:01&lt;00:00, 113MB/s]
+ 99%|███████████████████████████████████████▋| 194M/196M [00:01&lt;00:00, 110MB/s]
+  0%|                                               | 0.00/196M [00:00&lt;?, ?B/s]
+100%|████████████████████████████████████████| 196M/196M [00:00&lt;00:00, 919GB/s]
+Extracting missing files
+Successfully extracted 16 files
+10 files missing from bem.txt in /home/circleci/mne_data/MNE-sample-data/subjects/fsaverage
+Downloading missing files remotely
+
+  0%|                                               | 0.00/239M [00:00&lt;?, ?B/s]
+  1%|▍                                     | 2.61M/239M [00:00&lt;00:09, 26.1MB/s]
+  6%|██▏                                   | 13.7M/239M [00:00&lt;00:02, 76.0MB/s]
+ 10%|███▉                                  | 24.7M/239M [00:00&lt;00:02, 91.7MB/s]
+ 15%|█████▋                                | 35.8M/239M [00:00&lt;00:02, 99.2MB/s]
+ 20%|███████▋                               | 47.0M/239M [00:00&lt;00:01, 104MB/s]
+ 24%|█████████▍                             | 58.0M/239M [00:00&lt;00:01, 106MB/s]
+ 29%|███████████▎                           | 69.4M/239M [00:00&lt;00:01, 108MB/s]
+ 34%|█████████████▏                         | 80.8M/239M [00:00&lt;00:01, 110MB/s]
+ 39%|███████████████                        | 92.0M/239M [00:00&lt;00:01, 111MB/s]
+ 43%|█████████████████▎                      | 103M/239M [00:01&lt;00:01, 112MB/s]
+ 48%|███████████████████▏                    | 115M/239M [00:01&lt;00:01, 112MB/s]
+ 53%|█████████████████████                   | 126M/239M [00:01&lt;00:01, 112MB/s]
+ 57%|██████████████████████▉                 | 137M/239M [00:01&lt;00:00, 111MB/s]
+ 62%|████████████████████████▊               | 148M/239M [00:01&lt;00:00, 111MB/s]
+ 67%|██████████████████████████▊             | 160M/239M [00:01&lt;00:00, 112MB/s]
+ 72%|████████████████████████████▋           | 171M/239M [00:01&lt;00:00, 107MB/s]
+ 76%|██████████████████████████████▌         | 182M/239M [00:01&lt;00:00, 109MB/s]
+ 81%|████████████████████████████████▍       | 193M/239M [00:01&lt;00:00, 110MB/s]
+ 86%|██████████████████████████████████▎     | 205M/239M [00:01&lt;00:00, 110MB/s]
+ 90%|████████████████████████████████████    | 216M/239M [00:02&lt;00:00, 110MB/s]
+ 95%|█████████████████████████████████████▉  | 227M/239M [00:02&lt;00:00, 110MB/s]
+100%|███████████████████████████████████████▊| 238M/239M [00:02&lt;00:00, 110MB/s]
+  0%|                                               | 0.00/239M [00:00&lt;?, ?B/s]
+100%|███████████████████████████████████████| 239M/239M [00:00&lt;00:00, 1.18TB/s]
+Extracting missing files
+Successfully extracted 10 files
 Using fsaverage-head-dense.fif for head surface.
     1 BEM surfaces found
     Reading a surface...
@@ -726,8 +935,8 @@ Using fsaverage-head-dense.fif for head surface.
 Channel types:: hbo: 8, hbr: 8
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 11.469 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  1074 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 3.395 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  1076 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-01-data-io-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_01_data_io.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
@@ -860,7 +1069,7 @@ Channel types:: hbo: 8, hbr: 8
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-08-10T23:32:48.198757+00:00" class="localized">2026-08-10 23:32 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-08-17T20:36:12.725996+00:00" class="localized">2026-08-17 20:36 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

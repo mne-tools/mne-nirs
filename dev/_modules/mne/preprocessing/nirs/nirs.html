@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne.preprocessing.nirs.nirs &#8212; MNE-NIRS 0.8.0.dev62+ga94348db0 documentation</title>
+    <title>mne.preprocessing.nirs.nirs &#8212; MNE-NIRS 0.8.0.dev63+gb36104cea documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../../_static/documentation_options.js?v=7a749144"></script>
+    <script src="../../../../_static/documentation_options.js?v=1f48b4a5"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -385,15 +385,15 @@ document.write(`
 <span class="kn">from</span><span class="w"> </span><span class="nn">...utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_check_option</span><span class="p">,</span> <span class="n">_validate_type</span><span class="p">,</span> <span class="n">fill_doc</span>
 
 <span class="c1"># Standardized fNIRS channel name regexs</span>
-<span class="n">_S_D_F_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;S(\d+)_D(\d+) (\d+\.?\d*)&quot;</span><span class="p">)</span>
-<span class="n">_S_D_H_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;S(\d+)_D(\d+) (\w+)&quot;</span><span class="p">)</span>
+<span class="n">_S_D_F_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"S(\d+)_D(\d+) (\d+\.?\d*)"</span><span class="p">)</span>
+<span class="n">_S_D_H_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"S(\d+)_D(\d+) (\w+)"</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="source_detector_distances">
 <a class="viewcode-back" href="../../../../generated/mne.preprocessing.nirs.source_detector_distances.html#mne.preprocessing.nirs.source_detector_distances">[docs]</a>
 <span class="nd">@fill_doc</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">source_detector_distances</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">picks</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Determine the distance between NIRS source and detectors.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Determine the distance between NIRS source and detectors.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -405,11 +405,11 @@ document.write(`
 <span class="sd">    dists : array of float</span>
 <span class="sd">        Array containing distances in meters.</span>
 <span class="sd">        Of shape equal to number of channels, or shape of picks if supplied.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
         <span class="p">[</span>
             <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;chs&quot;</span><span class="p">][</span><span class="n">pick</span><span class="p">][</span><span class="s2">&quot;loc&quot;</span><span class="p">][</span><span class="mi">3</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">"chs"</span><span class="p">][</span><span class="n">pick</span><span class="p">][</span><span class="s2">"loc"</span><span class="p">][</span><span class="mi">3</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="p">)</span>
             <span class="k">for</span> <span class="n">pick</span> <span class="ow">in</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">picks</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[])</span>
         <span class="p">],</span>
@@ -422,7 +422,7 @@ document.write(`
 <a class="viewcode-back" href="../../../../generated/mne.preprocessing.nirs.short_channels.html#mne.preprocessing.nirs.short_channels">[docs]</a>
 <span class="nd">@fill_doc</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">short_channels</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Determine which NIRS channels are short.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""Determine which NIRS channels are short.</span>
 
 <span class="sd">    Channels with a source to detector distance of less than</span>
 <span class="sd">    ``threshold`` are reported as short. The default threshold is 0.01 m.</span>
@@ -438,41 +438,41 @@ document.write(`
 <span class="sd">    short : array of bool</span>
 <span class="sd">        Array indicating which channels are short.</span>
 <span class="sd">        Of shape equal to number of channels.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">source_detector_distances</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">threshold</span></div>
 
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_has_source_detector_distances</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">picks</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return True if source-detector distances can be computed.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return True if source-detector distances can be computed."""</span>
     <span class="n">distances</span> <span class="o">=</span> <span class="n">source_detector_distances</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">picks</span><span class="o">=</span><span class="n">picks</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">distances</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_channel_frequencies</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the light frequency for each channel.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the light frequency for each channel."""</span>
     <span class="c1"># Only valid for fNIRS data before conversion to haemoglobin</span>
     <span class="n">picks</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span>
-        <span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;fnirs_cw_amplitude&quot;</span><span class="p">,</span> <span class="s2">&quot;fnirs_od&quot;</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">"fnirs_cw_amplitude"</span><span class="p">,</span> <span class="s2">"fnirs_od"</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
     <span class="n">freqs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">pick</span> <span class="ow">in</span> <span class="n">picks</span><span class="p">:</span>
-        <span class="n">freqs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">_S_D_F_RE</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;ch_names&quot;</span><span class="p">][</span><span class="n">pick</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">2</span><span class="p">])))</span>
+        <span class="n">freqs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">_S_D_F_RE</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">"ch_names"</span><span class="p">][</span><span class="n">pick</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">2</span><span class="p">])))</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">freqs</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_channel_chromophore</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the chromophore of each channel.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return the chromophore of each channel."""</span>
     <span class="c1"># Only valid for fNIRS data after conversion to haemoglobin</span>
-    <span class="n">picks</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span> <span class="s2">&quot;hbr&quot;</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">picks</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">"hbo"</span><span class="p">,</span> <span class="s2">"hbr"</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">chroma</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">picks</span><span class="p">:</span>
-        <span class="n">chroma</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;ch_names&quot;</span><span class="p">][</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">chroma</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">"ch_names"</span><span class="p">][</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">chroma</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_check_channels_ordered</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">pair_vals</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">throw_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check_bads</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check channels follow expected fNIRS format.</span>
+<span class="w">    </span><span class="sd">"""Check channels follow expected fNIRS format.</span>
 
 <span class="sd">    If the channels are correctly ordered then an array of valid picks</span>
 <span class="sd">    will be returned.</span>
@@ -480,28 +480,28 @@ document.write(`
 <span class="sd">    If throw_errors is True then any errors in fNIRS formatting will be</span>
 <span class="sd">    thrown to inform the user. If throw_errors is False then an empty array</span>
 <span class="sd">    will be returned if the channels are not sufficiently formatted.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># Every second channel should be same SD pair</span>
     <span class="c1"># and have the specified light frequencies.</span>
 
     <span class="c1"># All wavelength based fNIRS data.</span>
     <span class="n">picks_wave</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span>
-        <span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;fnirs_cw_amplitude&quot;</span><span class="p">,</span> <span class="s2">&quot;fnirs_od&quot;</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">"fnirs_cw_amplitude"</span><span class="p">,</span> <span class="s2">"fnirs_od"</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
     <span class="c1"># All chromophore fNIRS data</span>
-    <span class="n">picks_chroma</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span> <span class="s2">&quot;hbr&quot;</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">picks_chroma</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">"hbo"</span><span class="p">,</span> <span class="s2">"hbr"</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1"># All TD moments</span>
     <span class="n">td_moments</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;fnirs_td_moments_intensity&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;fnirs_td_moments_mean&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;fnirs_td_moments_variance&quot;</span><span class="p">,</span>
+        <span class="s2">"fnirs_td_moments_intensity"</span><span class="p">,</span>
+        <span class="s2">"fnirs_td_moments_mean"</span><span class="p">,</span>
+        <span class="s2">"fnirs_td_moments_variance"</span><span class="p">,</span>
     <span class="p">]</span>
     <span class="n">picks_moments</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">td_moments</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1"># All TD gated</span>
     <span class="n">picks_gated</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span>
-        <span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;fnirs_td_gated_amplitude&quot;</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">"fnirs_td_gated_amplitude"</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
     <span class="n">n_found</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
@@ -515,19 +515,19 @@ document.write(`
     <span class="p">)</span>
     <span class="k">if</span> <span class="n">n_found</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">picks</span> <span class="o">=</span> <span class="n">_throw_or_return_empty</span><span class="p">(</span>
-            <span class="s2">&quot;MNE supports exactly one of amplitude, optical density, &quot;</span>
-            <span class="s2">&quot;TD moments, TD gated, and haemoglobin data in a given raw &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;structure, found </span><span class="si">{</span><span class="n">n_found</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">"MNE supports exactly one of amplitude, optical density, "</span>
+            <span class="s2">"TD moments, TD gated, and haemoglobin data in a given raw "</span>
+            <span class="sa">f</span><span class="s2">"structure, found </span><span class="si">{</span><span class="n">n_found</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
             <span class="n">throw_errors</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="c1"># All continuous wave fNIRS data</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">picks_wave</span><span class="p">):</span>
-        <span class="n">error_word</span> <span class="o">=</span> <span class="s2">&quot;frequencies&quot;</span>
+        <span class="n">error_word</span> <span class="o">=</span> <span class="s2">"frequencies"</span>
         <span class="n">use_RE</span> <span class="o">=</span> <span class="n">_S_D_F_RE</span>
         <span class="n">picks</span> <span class="o">=</span> <span class="n">picks_wave</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">picks_chroma</span><span class="p">):</span>
-        <span class="n">error_word</span> <span class="o">=</span> <span class="s2">&quot;chromophore&quot;</span>
+        <span class="n">error_word</span> <span class="o">=</span> <span class="s2">"chromophore"</span>
         <span class="n">use_RE</span> <span class="o">=</span> <span class="n">_S_D_H_RE</span>
         <span class="n">picks</span> <span class="o">=</span> <span class="n">picks_chroma</span>
     <span class="k">else</span><span class="p">:</span>
@@ -537,33 +537,33 @@ document.write(`
     <span class="n">pair_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pair_vals</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">pair_vals</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;At least two </span><span class="si">{</span><span class="n">error_word</span><span class="si">}</span><span class="s2"> must exist in info, got </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">pair_vals</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">"At least two </span><span class="si">{</span><span class="n">error_word</span><span class="si">}</span><span class="s2"> must exist in info, got </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">pair_vals</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
         <span class="p">)</span>
     <span class="c1"># In principle we do not need to require that these be sorted --</span>
     <span class="c1"># all we need to do is change our sorted() below to make use of a</span>
     <span class="c1"># pair_vals.index(...) in a sort key -- but in practice we always want</span>
     <span class="c1"># (hbo, hbr) or (lowest_freq, higher_freq, ...) pairings, both of which will</span>
-    <span class="c1"># work with a naive string sort, so let&#39;s just enforce sorted-ness here</span>
-    <span class="n">is_str</span> <span class="o">=</span> <span class="n">pair_vals</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;U&quot;</span>
+    <span class="c1"># work with a naive string sort, so let's just enforce sorted-ness here</span>
+    <span class="n">is_str</span> <span class="o">=</span> <span class="n">pair_vals</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s2">"U"</span>
     <span class="k">if</span> <span class="n">is_str</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">pair_vals</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">!=</span> <span class="p">[</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span> <span class="s2">&quot;hbr&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">pair_vals</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">!=</span> <span class="p">[</span><span class="s2">"hbo"</span><span class="p">,</span> <span class="s2">"hbr"</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;The </span><span class="si">{</span><span class="n">error_word</span><span class="si">}</span><span class="s1"> in info must be [&quot;hbo&quot;, &quot;hbr&quot;], but got &#39;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pair_vals</span><span class="si">}</span><span class="s2"> instead&quot;</span>
+                <span class="sa">f</span><span class="s1">'The </span><span class="si">{</span><span class="n">error_word</span><span class="si">}</span><span class="s1"> in info must be ["hbo", "hbr"], but got '</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">pair_vals</span><span class="si">}</span><span class="s2"> instead"</span>
             <span class="p">)</span>
     <span class="k">elif</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">pair_vals</span><span class="p">),</span> <span class="n">pair_vals</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">error_word</span><span class="si">}</span><span class="s2"> in info must be unique and sorted, but got &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="n">pair_vals</span><span class="si">}</span><span class="s2"> instead&quot;</span>
+            <span class="sa">f</span><span class="s2">"The </span><span class="si">{</span><span class="n">error_word</span><span class="si">}</span><span class="s2"> in info must be unique and sorted, but got "</span>
+            <span class="sa">f</span><span class="s2">"got </span><span class="si">{</span><span class="n">pair_vals</span><span class="si">}</span><span class="s2"> instead"</span>
         <span class="p">)</span>
 
     <span class="c1"># Check that the total number of channels is divisible by the number of pair values</span>
     <span class="c1"># (e.g., for 2 wavelengths, we need an even number of channels)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">picks</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">pair_vals</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">picks</span> <span class="o">=</span> <span class="n">_throw_or_return_empty</span><span class="p">(</span>
-            <span class="s2">&quot;NIRS channels not ordered correctly. The number of channels &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;must be a multiple of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pair_vals</span><span class="p">)</span><span class="si">}</span><span class="s2"> values, but &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">picks</span><span class="p">)</span><span class="si">}</span><span class="s2"> channels were provided.&quot;</span><span class="p">,</span>
+            <span class="s2">"NIRS channels not ordered correctly. The number of channels "</span>
+            <span class="sa">f</span><span class="s2">"must be a multiple of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pair_vals</span><span class="p">)</span><span class="si">}</span><span class="s2"> values, but "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">picks</span><span class="p">)</span><span class="si">}</span><span class="s2"> channels were provided."</span><span class="p">,</span>
             <span class="n">throw_errors</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -571,23 +571,23 @@ document.write(`
     <span class="c1"># Note: currently, the only requirement for the wavelength field in info is</span>
     <span class="c1"># that it cannot be NaN. It depends on the data readers what is stored in it.</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">picks_wave</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">all_freqs</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;chs&quot;</span><span class="p">][</span><span class="n">ii</span><span class="p">][</span><span class="s2">&quot;loc&quot;</span><span class="p">][</span><span class="mi">9</span><span class="p">]</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">picks_wave</span><span class="p">]</span>
+        <span class="n">all_freqs</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s2">"chs"</span><span class="p">][</span><span class="n">ii</span><span class="p">][</span><span class="s2">"loc"</span><span class="p">][</span><span class="mi">9</span><span class="p">]</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">picks_wave</span><span class="p">]</span>
         <span class="c1"># test for nan values first as those mess up the output of set()</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">all_freqs</span><span class="p">)):</span>
             <span class="n">picks</span> <span class="o">=</span> <span class="n">_throw_or_return_empty</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;NIRS channels is missing wavelength information in the &quot;</span>
-                <span class="sa">f</span><span class="s1">&#39;info[&quot;chs&quot;] structure. The encoded wavelengths are </span><span class="si">{</span><span class="n">all_freqs</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"NIRS channels is missing wavelength information in the "</span>
+                <span class="sa">f</span><span class="s1">'info["chs"] structure. The encoded wavelengths are </span><span class="si">{</span><span class="n">all_freqs</span><span class="si">}</span><span class="s1">.'</span><span class="p">,</span>
                 <span class="n">throw_errors</span><span class="p">,</span>
             <span class="p">)</span>
 
     <span class="c1"># Validate the channel naming scheme</span>
     <span class="k">for</span> <span class="n">pick</span> <span class="ow">in</span> <span class="n">picks</span><span class="p">:</span>
-        <span class="n">ch_name_info</span> <span class="o">=</span> <span class="n">use_RE</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;chs&quot;</span><span class="p">][</span><span class="n">pick</span><span class="p">][</span><span class="s2">&quot;ch_name&quot;</span><span class="p">])</span>
+        <span class="n">ch_name_info</span> <span class="o">=</span> <span class="n">use_RE</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">"chs"</span><span class="p">][</span><span class="n">pick</span><span class="p">][</span><span class="s2">"ch_name"</span><span class="p">])</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">ch_name_info</span><span class="p">):</span>
             <span class="n">picks</span> <span class="o">=</span> <span class="n">_throw_or_return_empty</span><span class="p">(</span>
-                <span class="s2">&quot;NIRS channels have specified naming conventions. &quot;</span>
-                <span class="s2">&quot;The provided channel name can not be parsed: &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">[</span><span class="n">pick</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">"NIRS channels have specified naming conventions. "</span>
+                <span class="s2">"The provided channel name can not be parsed: "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">[</span><span class="n">pick</span><span class="p">])</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
                 <span class="n">throw_errors</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">break</span>
@@ -595,17 +595,17 @@ document.write(`
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">picks_wave</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>  <span class="c1"># picks_chroma</span>
-            <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span> <span class="s2">&quot;hbr&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"hbo"</span><span class="p">,</span> <span class="s2">"hbr"</span><span class="p">]:</span>
                 <span class="n">picks</span> <span class="o">=</span> <span class="n">_throw_or_return_empty</span><span class="p">(</span>
-                    <span class="s2">&quot;NIRS channels have specified naming conventions.&quot;</span>
-                    <span class="s2">&quot;Chromophore data must be labeled either hbo or hbr. &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;The failing channel is </span><span class="si">{</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;chs&#39;</span><span class="p">][</span><span class="n">pick</span><span class="p">][</span><span class="s1">&#39;ch_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="s2">"NIRS channels have specified naming conventions."</span>
+                    <span class="s2">"Chromophore data must be labeled either hbo or hbr. "</span>
+                    <span class="sa">f</span><span class="s2">"The failing channel is </span><span class="si">{</span><span class="n">info</span><span class="p">[</span><span class="s1">'chs'</span><span class="p">][</span><span class="n">pick</span><span class="p">][</span><span class="s1">'ch_name'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
                     <span class="n">throw_errors</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="k">break</span>
 
     <span class="c1"># Reorder to be paired (naive sort okay here given validation above)</span>
-    <span class="n">picks</span> <span class="o">=</span> <span class="n">picks</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">([</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;ch_names&quot;</span><span class="p">][</span><span class="n">pick</span><span class="p">]</span> <span class="k">for</span> <span class="n">pick</span> <span class="ow">in</span> <span class="n">picks</span><span class="p">])]</span>
+    <span class="n">picks</span> <span class="o">=</span> <span class="n">picks</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">([</span><span class="n">info</span><span class="p">[</span><span class="s2">"ch_names"</span><span class="p">][</span><span class="n">pick</span><span class="p">]</span> <span class="k">for</span> <span class="n">pick</span> <span class="ow">in</span> <span class="n">picks</span><span class="p">])]</span>
 
     <span class="c1"># Validate channel grouping (same source-detector pairs, all pair_vals match)</span>
     <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">picks</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">pair_vals</span><span class="p">)):</span>
@@ -614,7 +614,7 @@ document.write(`
 
         <span class="c1"># Parse channel names using regex to extract source, detector, and value info</span>
         <span class="n">group_info</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">(</span><span class="n">use_RE</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;ch_names&quot;</span><span class="p">][</span><span class="n">pick</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span> <span class="ow">or</span> <span class="p">(</span><span class="n">pick</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="p">(</span><span class="n">use_RE</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">"ch_names"</span><span class="p">][</span><span class="n">pick</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span> <span class="ow">or</span> <span class="p">(</span><span class="n">pick</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">pick</span> <span class="ow">in</span> <span class="n">group_picks</span>
         <span class="p">]</span>
 
@@ -634,10 +634,10 @@ document.write(`
             <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">val_group</span><span class="p">,</span> <span class="n">pair_vals</span><span class="p">)</span>
         <span class="p">):</span>
             <span class="n">picks</span> <span class="o">=</span> <span class="n">_throw_or_return_empty</span><span class="p">(</span>
-                <span class="s2">&quot;NIRS channels not ordered correctly. Channels must be &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;grouped by source-detector pairs with alternating </span><span class="si">{</span><span class="n">error_word</span><span class="si">}</span><span class="s2"> &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;values </span><span class="si">{</span><span class="n">pair_vals</span><span class="si">}</span><span class="s2">, but got mismatching names &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;ch_names&#39;</span><span class="p">][</span><span class="n">pick</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">pick</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">group_picks</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">,</span>
+                <span class="s2">"NIRS channels not ordered correctly. Channels must be "</span>
+                <span class="sa">f</span><span class="s2">"grouped by source-detector pairs with alternating </span><span class="si">{</span><span class="n">error_word</span><span class="si">}</span><span class="s2"> "</span>
+                <span class="sa">f</span><span class="s2">"values </span><span class="si">{</span><span class="n">pair_vals</span><span class="si">}</span><span class="s2">, but got mismatching names "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s1">'ch_names'</span><span class="p">][</span><span class="n">pick</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">pick</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">group_picks</span><span class="p">]</span><span class="si">}</span><span class="s2">."</span><span class="p">,</span>
                 <span class="n">throw_errors</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">break</span>
@@ -647,11 +647,11 @@ document.write(`
             <span class="n">group_picks</span> <span class="o">=</span> <span class="n">picks</span><span class="p">[</span><span class="n">ii</span> <span class="p">:</span> <span class="n">ii</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">pair_vals</span><span class="p">)]</span>
 
             <span class="n">want</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">[</span><span class="n">pick</span><span class="p">]</span> <span class="k">for</span> <span class="n">pick</span> <span class="ow">in</span> <span class="n">group_picks</span><span class="p">]</span>
-            <span class="n">got</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;bads&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">want</span><span class="p">))</span>
+            <span class="n">got</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">"bads"</span><span class="p">])</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">want</span><span class="p">))</span>
             <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">got</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">want</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                    <span class="s2">&quot;NIRS bad labelling is not consistent. &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="n">got</span><span class="si">}</span><span class="s2"> but needed </span><span class="si">{</span><span class="n">want</span><span class="si">}</span><span class="s2">. &quot;</span>
+                    <span class="s2">"NIRS bad labelling is not consistent. "</span>
+                    <span class="sa">f</span><span class="s2">"Found </span><span class="si">{</span><span class="n">got</span><span class="si">}</span><span class="s2"> but needed </span><span class="si">{</span><span class="n">want</span><span class="si">}</span><span class="s2">. "</span>
                 <span class="p">)</span>
     <span class="k">return</span> <span class="n">picks</span>
 
@@ -672,20 +672,20 @@ document.write(`
     <span class="n">check_bads</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply all checks to fNIRS info. Works on all continuous wave types.&quot;&quot;&quot;</span>
-    <span class="n">_validate_type</span><span class="p">(</span><span class="n">fnirs</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="s2">&quot;fnirs&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Apply all checks to fNIRS info. Works on all continuous wave types."""</span>
+    <span class="n">_validate_type</span><span class="p">(</span><span class="n">fnirs</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="s2">"fnirs"</span><span class="p">)</span>
     <span class="n">kinds</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
-        <span class="n">od</span><span class="o">=</span><span class="s2">&quot;optical density&quot;</span><span class="p">,</span>
-        <span class="n">cw_amplitude</span><span class="o">=</span><span class="s2">&quot;continuous wave&quot;</span><span class="p">,</span>
-        <span class="n">hb</span><span class="o">=</span><span class="s2">&quot;chromophore&quot;</span><span class="p">,</span>
+        <span class="n">od</span><span class="o">=</span><span class="s2">"optical density"</span><span class="p">,</span>
+        <span class="n">cw_amplitude</span><span class="o">=</span><span class="s2">"continuous wave"</span><span class="p">,</span>
+        <span class="n">hb</span><span class="o">=</span><span class="s2">"chromophore"</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">_check_option</span><span class="p">(</span><span class="s2">&quot;fnirs&quot;</span><span class="p">,</span> <span class="n">fnirs</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,)</span> <span class="o">+</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">kinds</span><span class="p">))</span>
+    <span class="n">_check_option</span><span class="p">(</span><span class="s2">"fnirs"</span><span class="p">,</span> <span class="n">fnirs</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,)</span> <span class="o">+</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">kinds</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">fnirs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">kind</span> <span class="o">=</span> <span class="n">kinds</span><span class="p">[</span><span class="n">fnirs</span><span class="p">]</span>
-        <span class="n">fnirs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span> <span class="s2">&quot;hbr&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">fnirs</span> <span class="o">==</span> <span class="s2">&quot;hb&quot;</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;fnirs_</span><span class="si">{</span><span class="n">fnirs</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">fnirs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"hbo"</span><span class="p">,</span> <span class="s2">"hbr"</span><span class="p">]</span> <span class="k">if</span> <span class="n">fnirs</span> <span class="o">==</span> <span class="s2">"hb"</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">"fnirs_</span><span class="si">{</span><span class="n">fnirs</span><span class="si">}</span><span class="s2">"</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">pick_types</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="n">fnirs</span><span class="p">)):</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">which</span><span class="si">}</span><span class="s2"> must operate on </span><span class="si">{</span><span class="n">kind</span><span class="si">}</span><span class="s2"> data, but none was found.&quot;</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">which</span><span class="si">}</span><span class="s2"> must operate on </span><span class="si">{</span><span class="n">kind</span><span class="si">}</span><span class="s2"> data, but none was found."</span>
             <span class="p">)</span>
     <span class="n">freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">_channel_frequencies</span><span class="p">(</span><span class="n">info</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">freqs</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -699,18 +699,18 @@ document.write(`
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_fnirs_spread_bads</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Spread bad labeling across fnirs channels.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Spread bad labeling across fnirs channels."""</span>
     <span class="c1"># For an optode pair if any component (light frequency or chroma) is marked</span>
     <span class="c1"># as bad, then they all should be. This function will find any pairs marked</span>
     <span class="c1"># as bad and spread the bad marking to all components of the optode pair.</span>
     <span class="n">picks</span> <span class="o">=</span> <span class="n">_validate_nirs_info</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">check_bads</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">new_bads</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;bads&quot;</span><span class="p">])</span>
+    <span class="n">new_bads</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">"bads"</span><span class="p">])</span>
 
     <span class="c1"># Extract SD pair groups from channel names</span>
     <span class="c1"># E.g. all channels belonging to S1D1, S1D2, etc.</span>
     <span class="c1"># Assumes valid channels (naming convention and number)</span>
     <span class="n">ch_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">picks</span><span class="p">]</span>
-    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^(S\d+_D\d+) &quot;</span><span class="p">)</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"^(S\d+_D\d+) "</span><span class="p">)</span>
 
     <span class="c1"># Create dict with keys corresponding to SD pairs</span>
     <span class="c1"># Defaultdict would require another import</span>
@@ -727,16 +727,16 @@ document.write(`
         <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">channel</span> <span class="ow">in</span> <span class="n">new_bads</span> <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="n">channels</span><span class="p">):</span>
             <span class="n">new_bads</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">channels</span><span class="p">)</span>
 
-    <span class="n">info</span><span class="p">[</span><span class="s2">&quot;bads&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">new_bads</span><span class="p">)</span>
+    <span class="n">info</span><span class="p">[</span><span class="s2">"bads"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">new_bads</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">info</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_fnirs_optode_names</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return list of unique optode names.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return list of unique optode names."""</span>
     <span class="n">picks_wave</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span>
-        <span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;fnirs_cw_amplitude&quot;</span><span class="p">,</span> <span class="s2">&quot;fnirs_od&quot;</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">"fnirs_cw_amplitude"</span><span class="p">,</span> <span class="s2">"fnirs_od"</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
-    <span class="n">picks_chroma</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span> <span class="s2">&quot;hbr&quot;</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">picks_chroma</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="p">[</span><span class="s2">"hbo"</span><span class="p">,</span> <span class="s2">"hbr"</span><span class="p">],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">allow_empty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">picks_wave</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">regex</span> <span class="o">=</span> <span class="n">_S_D_F_RE</span>
@@ -748,31 +748,31 @@ document.write(`
     <span class="n">sources</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">])</span>
     <span class="n">detectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">])</span>
 
-    <span class="n">src_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;S</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">]</span>
-    <span class="n">det_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;D</span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detectors</span><span class="p">]</span>
+    <span class="n">src_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"S</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">]</span>
+    <span class="n">det_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"D</span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">detectors</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">src_names</span><span class="p">,</span> <span class="n">det_names</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_optode_position</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">optode</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find the position of an optode.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Find the position of an optode."""</span>
     <span class="n">idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">optode</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="s2">&quot;S&quot;</span> <span class="ow">in</span> <span class="n">optode</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">"S"</span> <span class="ow">in</span> <span class="n">optode</span><span class="p">:</span>
         <span class="n">loc_idx</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="s2">&quot;D&quot;</span> <span class="ow">in</span> <span class="n">optode</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="s2">"D"</span> <span class="ow">in</span> <span class="n">optode</span><span class="p">:</span>
         <span class="n">loc_idx</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;chs&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s2">&quot;loc&quot;</span><span class="p">][</span><span class="n">loc_idx</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">info</span><span class="p">[</span><span class="s2">"chs"</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s2">"loc"</span><span class="p">][</span><span class="n">loc_idx</span><span class="p">]</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_reorder_nirx</span><span class="p">(</span><span class="n">raw</span><span class="p">):</span>
     <span class="c1"># Maybe someday we should make this public like</span>
-    <span class="c1"># mne.preprocessing.nirs.reorder_standard(raw, order=&#39;nirx&#39;)</span>
+    <span class="c1"># mne.preprocessing.nirs.reorder_standard(raw, order='nirx')</span>
     <span class="n">info</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span>
     <span class="n">picks</span> <span class="o">=</span> <span class="n">pick_types</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[])</span>
-    <span class="n">prefixes</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;ch_names&quot;</span><span class="p">][</span><span class="n">pick</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">pick</span> <span class="ow">in</span> <span class="n">picks</span><span class="p">]</span>
-    <span class="n">nirs_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;ch_names&quot;</span><span class="p">][</span><span class="n">pick</span><span class="p">]</span> <span class="k">for</span> <span class="n">pick</span> <span class="ow">in</span> <span class="n">picks</span><span class="p">]</span>
+    <span class="n">prefixes</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s2">"ch_names"</span><span class="p">][</span><span class="n">pick</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">pick</span> <span class="ow">in</span> <span class="n">picks</span><span class="p">]</span>
+    <span class="n">nirs_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s2">"ch_names"</span><span class="p">][</span><span class="n">pick</span><span class="p">]</span> <span class="k">for</span> <span class="n">pick</span> <span class="ow">in</span> <span class="n">picks</span><span class="p">]</span>
     <span class="n">nirs_sorted</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
         <span class="n">nirs_names</span><span class="p">,</span>
         <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">name</span><span class="p">:</span> <span class="p">(</span><span class="n">prefixes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">maxsplit</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]),</span>
@@ -821,7 +821,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-08-10T23:32:48.198757+00:00" class="localized">2026-08-10 23:32 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-08-17T20:36:12.725996+00:00" class="localized">2026-08-17 20:36 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

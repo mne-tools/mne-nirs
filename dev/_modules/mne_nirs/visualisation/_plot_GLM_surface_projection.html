@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne_nirs.visualisation._plot_GLM_surface_projection &#8212; MNE-NIRS 0.8.0.dev62+ga94348db0 documentation</title>
+    <title>mne_nirs.visualisation._plot_GLM_surface_projection &#8212; MNE-NIRS 0.8.0.dev63+gb36104cea documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../_static/documentation_options.js?v=7a749144"></script>
+    <script src="../../../_static/documentation_options.js?v=1f48b4a5"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -392,15 +392,15 @@ document.write(`
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_glm_surface_projection</span><span class="p">(</span>
     <span class="n">inst</span><span class="p">,</span>
     <span class="n">statsmodel_df</span><span class="p">,</span>
-    <span class="n">picks</span><span class="o">=</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span>
-    <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Coef.&quot;</span><span class="p">,</span>
-    <span class="n">background</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span>
+    <span class="n">picks</span><span class="o">=</span><span class="s2">"hbo"</span><span class="p">,</span>
+    <span class="n">value</span><span class="o">=</span><span class="s2">"Coef."</span><span class="p">,</span>
+    <span class="n">background</span><span class="o">=</span><span class="s2">"w"</span><span class="p">,</span>
     <span class="n">figure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">clim</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
-    <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;weighted&quot;</span><span class="p">,</span>
-    <span class="n">colormap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span>
-    <span class="n">surface</span><span class="o">=</span><span class="s2">&quot;pial&quot;</span><span class="p">,</span>
-    <span class="n">hemi</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span>
+    <span class="n">clim</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">,</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s2">"weighted"</span><span class="p">,</span>
+    <span class="n">colormap</span><span class="o">=</span><span class="s2">"RdBu_r"</span><span class="p">,</span>
+    <span class="n">surface</span><span class="o">=</span><span class="s2">"pial"</span><span class="p">,</span>
+    <span class="n">hemi</span><span class="o">=</span><span class="s2">"both"</span><span class="p">,</span>
     <span class="n">size</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
     <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -409,7 +409,7 @@ document.write(`
     <span class="n">src</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Project GLM results on to the surface of the brain.</span>
 
 <span class="sd">    Note: This function provides a convenient wrapper around low level</span>
@@ -438,22 +438,22 @@ document.write(`
 <span class="sd">        If None, a new figure will be created. If multiple views or a</span>
 <span class="sd">        split view is requested, this must be a list of the appropriate</span>
 <span class="sd">        length. If int is provided it will be used to identify the Mayavi</span>
-<span class="sd">        figure by it&#39;s id or create a new figure with the given id. If an</span>
+<span class="sd">        figure by it's id or create a new figure with the given id. If an</span>
 <span class="sd">        instance of matplotlib figure, mpl backend is used for plotting.</span>
 <span class="sd">    %(clim)s</span>
 <span class="sd">    mode : str</span>
-<span class="sd">        Can be &quot;sum&quot; to do a linear sum of weights, &quot;weighted&quot; to make this</span>
-<span class="sd">        a weighted sum, &quot;nearest&quot; to</span>
-<span class="sd">        use only the weight of the nearest sensor, or &quot;single&quot; to</span>
-<span class="sd">        do a distance-weight of the nearest sensor. Default is &quot;sum&quot;.</span>
+<span class="sd">        Can be "sum" to do a linear sum of weights, "weighted" to make this</span>
+<span class="sd">        a weighted sum, "nearest" to</span>
+<span class="sd">        use only the weight of the nearest sensor, or "single" to</span>
+<span class="sd">        do a distance-weight of the nearest sensor. Default is "sum".</span>
 <span class="sd">    colormap : str</span>
 <span class="sd">        Colormap to use.</span>
 <span class="sd">    surface : str</span>
 <span class="sd">        The type of surface (inflated, white etc.).</span>
 <span class="sd">    hemi : str</span>
-<span class="sd">        Hemisphere id (ie &#39;lh&#39;, &#39;rh&#39;, &#39;both&#39;, or &#39;split&#39;). In the case</span>
-<span class="sd">        of &#39;both&#39;, both hemispheres are shown in the same window.</span>
-<span class="sd">        In the case of &#39;split&#39; hemispheres are displayed side-by-side</span>
+<span class="sd">        Hemisphere id (ie 'lh', 'rh', 'both', or 'split'). In the case</span>
+<span class="sd">        of 'both', both hemispheres are shown in the same window.</span>
+<span class="sd">        In the case of 'split' hemispheres are displayed side-by-side</span>
 <span class="sd">        in different viewing panes.</span>
 <span class="sd">    size : float or tuple of float</span>
 <span class="sd">        The size of the window, in pixels. can be one number to specify</span>
@@ -464,7 +464,7 @@ document.write(`
 <span class="sd">    colorbar : bool</span>
 <span class="sd">        If True, display colorbar on scene.</span>
 <span class="sd">    distance : float</span>
-<span class="sd">        Distance (m) defining the activation &quot;ball&quot; of the sensor.</span>
+<span class="sd">        Distance (m) defining the activation "ball" of the sensor.</span>
 <span class="sd">    %(subjects_dir)s</span>
 <span class="sd">    src : instance of SourceSpaces</span>
 <span class="sd">        The source space.</span>
@@ -474,13 +474,13 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">    figure : instance of mne.viz.Brain | matplotlib.figure.Figure</span>
 <span class="sd">        An instance of :class:`mne.viz.Brain` or matplotlib figure.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">info</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">inst</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inst</span><span class="p">,</span> <span class="n">Info</span><span class="p">)</span> <span class="k">else</span> <span class="n">inst</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="n">statsmodel_df</span><span class="p">[</span><span class="s2">&quot;ch_name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="n">statsmodel_df</span><span class="p">[</span><span class="s2">"ch_name"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)):</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-            <span class="s2">&quot;MNE data structure does not match dataframe &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;results.</span><span class="se">\n</span><span class="s2">MNE = </span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;GLM = </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">statsmodel_df</span><span class="p">[</span><span class="s1">&#39;ch_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="s2">"MNE data structure does not match dataframe "</span>
+            <span class="sa">f</span><span class="s2">"results.</span><span class="se">\n</span><span class="s2">MNE = </span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">ch_names</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"GLM = </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">statsmodel_df</span><span class="p">[</span><span class="s1">'ch_name'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
         <span class="p">)</span>
 
     <span class="n">ea</span> <span class="o">=</span> <span class="n">EvokedArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">statsmodel_df</span><span class="p">[</span><span class="n">value</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
@@ -511,15 +511,15 @@ document.write(`
 <span class="k">def</span><span class="w"> </span><span class="nf">_plot_3d_evoked_array</span><span class="p">(</span>
     <span class="n">inst</span><span class="p">,</span>
     <span class="n">ea</span><span class="p">,</span>
-    <span class="n">picks</span><span class="o">=</span><span class="s2">&quot;hbo&quot;</span><span class="p">,</span>
-    <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Coef.&quot;</span><span class="p">,</span>
-    <span class="n">background</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span>
+    <span class="n">picks</span><span class="o">=</span><span class="s2">"hbo"</span><span class="p">,</span>
+    <span class="n">value</span><span class="o">=</span><span class="s2">"Coef."</span><span class="p">,</span>
+    <span class="n">background</span><span class="o">=</span><span class="s2">"w"</span><span class="p">,</span>
     <span class="n">figure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">clim</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
-    <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;weighted&quot;</span><span class="p">,</span>
-    <span class="n">colormap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span>
-    <span class="n">surface</span><span class="o">=</span><span class="s2">&quot;pial&quot;</span><span class="p">,</span>
-    <span class="n">hemi</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span>
+    <span class="n">clim</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">,</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s2">"weighted"</span><span class="p">,</span>
+    <span class="n">colormap</span><span class="o">=</span><span class="s2">"RdBu_r"</span><span class="p">,</span>
+    <span class="n">surface</span><span class="o">=</span><span class="s2">"pial"</span><span class="p">,</span>
+    <span class="n">hemi</span><span class="o">=</span><span class="s2">"both"</span><span class="p">,</span>
     <span class="n">size</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
     <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">colorbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -536,21 +536,21 @@ document.write(`
         <span class="n">subjects_dir</span> <span class="o">=</span> <span class="n">get_subjects_dir</span><span class="p">(</span><span class="n">raise_error</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">src</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">fname_src_fs</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="n">subjects_dir</span><span class="p">,</span> <span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="s2">&quot;bem&quot;</span><span class="p">,</span> <span class="s2">&quot;fsaverage-ico-5-src.fif&quot;</span>
+            <span class="n">subjects_dir</span><span class="p">,</span> <span class="s2">"fsaverage"</span><span class="p">,</span> <span class="s2">"bem"</span><span class="p">,</span> <span class="s2">"fsaverage-ico-5-src.fif"</span>
         <span class="p">)</span>
         <span class="n">src</span> <span class="o">=</span> <span class="n">read_source_spaces</span><span class="p">(</span><span class="n">fname_src_fs</span><span class="p">)</span>
 
-    <span class="n">picks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ea</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;ch_names&quot;</span><span class="p">]))</span>
+    <span class="n">picks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ea</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"ch_names"</span><span class="p">]))</span>
 
     <span class="c1"># Set coord frame</span>
     <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ea</span><span class="o">.</span><span class="n">ch_names</span><span class="p">)):</span>
-        <span class="n">ea</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;chs&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s2">&quot;coord_frame&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_COORD_HEAD</span>
+        <span class="n">ea</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"chs"</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s2">"coord_frame"</span><span class="p">]</span> <span class="o">=</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFFV_COORD_HEAD</span>
 
     <span class="c1"># Generate source estimate</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
         <span class="n">evoked</span><span class="o">=</span><span class="n">ea</span><span class="p">,</span>
-        <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span>
-        <span class="n">trans</span><span class="o">=</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span>
+        <span class="n">subject</span><span class="o">=</span><span class="s2">"fsaverage"</span><span class="p">,</span>
+        <span class="n">trans</span><span class="o">=</span><span class="s2">"fsaverage"</span><span class="p">,</span>
         <span class="n">distance</span><span class="o">=</span><span class="n">distance</span><span class="p">,</span>
         <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
         <span class="n">surface</span><span class="o">=</span><span class="n">surface</span><span class="p">,</span>
@@ -622,7 +622,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-08-10T23:32:48.198757+00:00" class="localized">2026-08-10 23:32 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-08-17T20:36:12.725996+00:00" class="localized">2026-08-17 20:36 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

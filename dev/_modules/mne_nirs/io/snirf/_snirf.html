@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne_nirs.io.snirf._snirf &#8212; MNE-NIRS 0.8.0.dev62+ga94348db0 documentation</title>
+    <title>mne_nirs.io.snirf._snirf &#8212; MNE-NIRS 0.8.0.dev63+gb36104cea documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../../_static/documentation_options.js?v=7a749144"></script>
+    <script src="../../../../_static/documentation_options.js?v=1f48b4a5"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -389,13 +389,13 @@ document.write(`
 
 <span class="c1"># The currently-implemented spec can be found here:</span>
 <span class="c1"># https://raw.githubusercontent.com/fNIRS/snirf/v1.1/snirf_specification.md</span>
-<span class="n">SPEC_FORMAT_VERSION</span> <span class="o">=</span> <span class="s2">&quot;1.1&quot;</span>
+<span class="n">SPEC_FORMAT_VERSION</span> <span class="o">=</span> <span class="s2">"1.1"</span>
 
 
 <div class="viewcode-block" id="write_raw_snirf">
 <a class="viewcode-back" href="../../../../generated/mne_nirs.io.write_raw_snirf.html#mne_nirs.io.write_raw_snirf">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">write_raw_snirf</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">add_montage</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write continuous wave data to disk in SNIRF format.</span>
+<span class="w">    </span><span class="sd">"""Write continuous wave data to disk in SNIRF format.</span>
 
 <span class="sd">    Writes the data from a raw object to a SNIRF file using</span>
 <span class="sd">    SNIRF specification version 1.1.</span>
@@ -415,30 +415,30 @@ document.write(`
 <span class="sd">    ----------</span>
 <span class="sd">    raw : instance of Raw</span>
 <span class="sd">        Data to write to file. Can be either continuous wave</span>
-<span class="sd">        (`fnirs_cw_amplitude`) or processed (`fnirs_od`, &#39;hbo&#39;, &#39;hbr&#39;).</span>
+<span class="sd">        (`fnirs_cw_amplitude`) or processed (`fnirs_od`, 'hbo', 'hbr').</span>
 <span class="sd">    fname : str</span>
 <span class="sd">        Path to the SNIRF data file.</span>
 <span class="sd">    add_montage : bool</span>
 <span class="sd">        Should the montage be added as landmarks to</span>
 <span class="sd">        facilitate compatibility with AtlasViewer.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">supported_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;fnirs_cw_amplitude&quot;</span><span class="p">,</span> <span class="s2">&quot;fnirs_od&quot;</span><span class="p">,</span> <span class="s2">&quot;hbo&quot;</span><span class="p">,</span> <span class="s2">&quot;hbr&quot;</span><span class="p">]</span>
+<span class="sd">    """</span>
+    <span class="n">supported_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"fnirs_cw_amplitude"</span><span class="p">,</span> <span class="s2">"fnirs_od"</span><span class="p">,</span> <span class="s2">"hbo"</span><span class="p">,</span> <span class="s2">"hbr"</span><span class="p">]</span>
     <span class="n">picks</span> <span class="o">=</span> <span class="n">_picks_to_idx</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="n">supported_types</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="p">[])</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">picks</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span><span class="p">),</span> <span class="p">(</span>
-        <span class="s2">&quot;Data must only be of type fnirs_cw_amplitude,  fnirs_od, hbo or hbr&quot;</span>
+        <span class="s2">"Data must only be of type fnirs_cw_amplitude,  fnirs_od, hbo or hbr"</span>
     <span class="p">)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;fnirs_cw_amplitude&quot;</span> <span class="ow">in</span> <span class="n">raw</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;fnirs_od&quot;</span> <span class="ow">in</span> <span class="n">raw</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s2">"fnirs_cw_amplitude"</span> <span class="ow">in</span> <span class="n">raw</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">"fnirs_od"</span> <span class="ow">in</span> <span class="n">raw</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">get_channel_types</span><span class="p">()))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span>
-            <span class="s2">&quot;All channels must be of the same type&quot;</span>
+            <span class="s2">"All channels must be of the same type"</span>
         <span class="p">)</span>
-    <span class="k">elif</span> <span class="p">(</span><span class="s2">&quot;hbo&quot;</span> <span class="ow">in</span> <span class="n">raw</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;hbr&quot;</span> <span class="ow">in</span> <span class="n">raw</span><span class="p">):</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="s2">"hbo"</span> <span class="ow">in</span> <span class="n">raw</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">"hbr"</span> <span class="ow">in</span> <span class="n">raw</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">get_channel_types</span><span class="p">()))</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span>
-            <span class="s2">&quot;Channels must be of type hbo and hbr&quot;</span>
+            <span class="s2">"Channels must be of type hbo and hbr"</span>
         <span class="p">)</span>
 
-    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">nirs</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s2">&quot;/nirs&quot;</span><span class="p">)</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;formatVersion&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">SPEC_FORMAT_VERSION</span><span class="p">))</span>
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">nirs</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s2">"/nirs"</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"formatVersion"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">SPEC_FORMAT_VERSION</span><span class="p">))</span>
 
         <span class="n">_add_metadata_tags</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">nirs</span><span class="p">)</span>
         <span class="n">_add_single_data_block</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">nirs</span><span class="p">)</span>
@@ -448,18 +448,18 @@ document.write(`
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_str_encode</span><span class="p">(</span><span class="n">str_val</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encode a string for use in an h5py Dataset.</span>
+<span class="w">    </span><span class="sd">"""Encode a string for use in an h5py Dataset.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    str_val : str</span>
 <span class="sd">        The string to encode.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">str_val</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">str_val</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"UTF-8"</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_add_metadata_tags</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">nirs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create and add elements to the nirs metaDataTags group.</span>
+<span class="w">    </span><span class="sd">"""Create and add elements to the nirs metaDataTags group.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -467,50 +467,50 @@ document.write(`
 <span class="sd">        Data to add to the snirf file.</span>
 <span class="sd">    nirs : hpy5.Group</span>
 <span class="sd">        The root hdf5 nirs group to which the metadata should beadded.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">metadata_tags</span> <span class="o">=</span> <span class="n">nirs</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s2">&quot;metaDataTags&quot;</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="n">metadata_tags</span> <span class="o">=</span> <span class="n">nirs</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s2">"metaDataTags"</span><span class="p">)</span>
 
     <span class="c1"># Store measurement</span>
-    <span class="n">datestr</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;meas_date&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">timestr</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;meas_date&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%SZ&quot;</span><span class="p">)</span>
-    <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;MeasurementDate&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">datestr</span><span class="p">))</span>
-    <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;MeasurementTime&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">timestr</span><span class="p">))</span>
+    <span class="n">datestr</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"meas_date"</span><span class="p">]</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">timestr</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"meas_date"</span><span class="p">]</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%H:%M:%SZ"</span><span class="p">)</span>
+    <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"MeasurementDate"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">datestr</span><span class="p">))</span>
+    <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"MeasurementTime"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">timestr</span><span class="p">))</span>
 
     <span class="c1"># Store demographic info</span>
-    <span class="n">subject_id</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-        <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;middle_name&quot;</span><span class="p">,</span> <span class="s2">&quot;last_name&quot;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">]</span>
+    <span class="n">subject_id</span> <span class="o">=</span> <span class="s2">"_"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"subject_info"</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"first_name"</span><span class="p">,</span> <span class="s2">"middle_name"</span><span class="p">,</span> <span class="s2">"last_name"</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"subject_info"</span><span class="p">]</span>
     <span class="p">)</span>
-    <span class="n">subject_id</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;his_id&quot;</span><span class="p">,</span> <span class="n">subject_id</span><span class="p">)</span>
-    <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;SubjectID&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">subject_id</span><span class="p">))</span>
+    <span class="n">subject_id</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"subject_info"</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"his_id"</span><span class="p">,</span> <span class="n">subject_id</span><span class="p">)</span>
+    <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"SubjectID"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">subject_id</span><span class="p">))</span>
 
     <span class="c1"># Store the units of measurement</span>
-    <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;LengthUnit&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="s2">&quot;m&quot;</span><span class="p">))</span>
-    <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;TimeUnit&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">))</span>
-    <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;FrequencyUnit&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="s2">&quot;Hz&quot;</span><span class="p">))</span>
+    <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"LengthUnit"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="s2">"m"</span><span class="p">))</span>
+    <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"TimeUnit"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="s2">"s"</span><span class="p">))</span>
+    <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"FrequencyUnit"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="s2">"Hz"</span><span class="p">))</span>
 
     <span class="c1"># Add non standard (but allowed) custom metadata tags</span>
-    <span class="k">if</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;birthday&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">birthday</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">][</span><span class="s2">&quot;birthday&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"subject_info"</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"birthday"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">birthday</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"subject_info"</span><span class="p">][</span><span class="s2">"birthday"</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">birthday</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="n">birthday</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="o">*</span><span class="n">birthday</span><span class="p">)</span>
-        <span class="n">birthstr</span> <span class="o">=</span> <span class="n">birthday</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;DateOfBirth&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">birthstr</span><span class="p">)])</span>
-    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="s2">&quot;middle&quot;</span><span class="p">,</span> <span class="s2">&quot;last&quot;</span><span class="p">):</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">_name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">birthstr</span> <span class="o">=</span> <span class="n">birthday</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"DateOfBirth"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">birthstr</span><span class="p">)])</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"first"</span><span class="p">,</span> <span class="s2">"middle"</span><span class="p">,</span> <span class="s2">"last"</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"subject_info"</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">_name"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">Name&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">name</span><span class="p">)])</span>
-    <span class="k">if</span> <span class="s2">&quot;sex&quot;</span> <span class="ow">in</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">]:</span>
-        <span class="n">sex</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;subject_info&quot;</span><span class="p">][</span><span class="s2">&quot;sex&quot;</span><span class="p">]))</span>
-        <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">sex</span><span class="p">)])</span>
-    <span class="k">if</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;dig&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">coord_frame_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;dig&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;coord_frame&quot;</span><span class="p">))</span>
-        <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;MNE_coordFrame&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">coord_frame_id</span><span class="p">])</span>
+            <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">Name"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">name</span><span class="p">)])</span>
+    <span class="k">if</span> <span class="s2">"sex"</span> <span class="ow">in</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"subject_info"</span><span class="p">]:</span>
+        <span class="n">sex</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"subject_info"</span><span class="p">][</span><span class="s2">"sex"</span><span class="p">]))</span>
+        <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"sex"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">sex</span><span class="p">)])</span>
+    <span class="k">if</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"dig"</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">coord_frame_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"dig"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"coord_frame"</span><span class="p">))</span>
+        <span class="n">metadata_tags</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"MNE_coordFrame"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">coord_frame_id</span><span class="p">])</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_add_single_data_block</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">nirs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add the data from raw to the nirs data1 group.</span>
+<span class="w">    </span><span class="sd">"""Add the data from raw to the nirs data1 group.</span>
 
 <span class="sd">    While SNIRF supports multiple datablocks, this writer only supports</span>
 <span class="sd">    a single data block named data1.</span>
@@ -521,16 +521,16 @@ document.write(`
 <span class="sd">        Data to add to the snirf file.</span>
 <span class="sd">    nirs : hpy5.Group</span>
 <span class="sd">        The root hdf5 nirs group to which the data should be added.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">data_block</span> <span class="o">=</span> <span class="n">nirs</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s2">&quot;data1&quot;</span><span class="p">)</span>
-    <span class="n">data_block</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;dataTimeSeries&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">raw</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-    <span class="n">data_block</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">raw</span><span class="o">.</span><span class="n">times</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="n">data_block</span> <span class="o">=</span> <span class="n">nirs</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s2">"data1"</span><span class="p">)</span>
+    <span class="n">data_block</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"dataTimeSeries"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">raw</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">data_block</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"time"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">raw</span><span class="o">.</span><span class="n">times</span><span class="p">)</span>
 
     <span class="n">_add_measurement_lists</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">data_block</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_add_measurement_lists</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">data_block</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add the measurement list groups to the nirs data1 group.</span>
+<span class="w">    </span><span class="sd">"""Add the measurement list groups to the nirs data1 group.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -538,47 +538,47 @@ document.write(`
 <span class="sd">        Data to add to the snirf file.</span>
 <span class="sd">    data_block : hpy5.Group</span>
 <span class="sd">        The hdf5 data1 group to which the measurement lists should be added.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">sources</span> <span class="o">=</span> <span class="n">_get_unique_source_list</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
     <span class="n">detectors</span> <span class="o">=</span> <span class="n">_get_unique_detector_list</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
     <span class="n">wavelengths</span> <span class="o">=</span> <span class="n">_get_unique_wavelength_list</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
 
     <span class="n">raw_types</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">get_channel_types</span><span class="p">()</span>
-    <span class="n">raw_wavelengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="s2">&quot;loc&quot;</span><span class="p">][</span><span class="mi">9</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;chs&quot;</span><span class="p">]]</span>
+    <span class="n">raw_wavelengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="s2">"loc"</span><span class="p">][</span><span class="mi">9</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"chs"</span><span class="p">]]</span>
 
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">ch_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">ml_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;measurementList</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">ml_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"measurementList</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">"</span>
         <span class="n">ch_group</span> <span class="o">=</span> <span class="n">data_block</span><span class="o">.</span><span class="n">require_group</span><span class="p">(</span><span class="n">ml_id</span><span class="p">)</span>
 
         <span class="n">source_idx</span> <span class="o">=</span> <span class="n">sources</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">_extract_source</span><span class="p">(</span><span class="n">ch_name</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="n">detector_idx</span> <span class="o">=</span> <span class="n">detectors</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">_extract_detector</span><span class="p">(</span><span class="n">ch_name</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="n">wavelength_idx</span> <span class="o">=</span> <span class="n">wavelengths</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">raw_wavelengths</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;sourceIndex&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">source_idx</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int32&quot;</span><span class="p">)</span>
-        <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;detectorIndex&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">detector_idx</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int32&quot;</span><span class="p">)</span>
-        <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;wavelengthIndex&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wavelength_idx</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int32&quot;</span><span class="p">)</span>
+        <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"sourceIndex"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">source_idx</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"int32"</span><span class="p">)</span>
+        <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"detectorIndex"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">detector_idx</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"int32"</span><span class="p">)</span>
+        <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"wavelengthIndex"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wavelength_idx</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"int32"</span><span class="p">)</span>
 
         <span class="c1"># The data type coding is described at</span>
         <span class="c1"># https://github.com/fNIRS/snirf/blob/master/snirf_specification.md#appendix</span>
         <span class="c1"># The currently implemented data types are:</span>
         <span class="c1"># 1 = Continuous Wave</span>
         <span class="c1"># 99999 = Processed</span>
-        <span class="n">data_type</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">raw_types</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;fnirs_cw_amplitude&quot;</span> <span class="k">else</span> <span class="mi">99999</span>
+        <span class="n">data_type</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">raw_types</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"fnirs_cw_amplitude"</span> <span class="k">else</span> <span class="mi">99999</span>
 
-        <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;dataType&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data_type</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int32&quot;</span><span class="p">)</span>
-        <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;dataTypeIndex&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int32&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">raw_types</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;fnirs_od&quot;</span><span class="p">:</span>
-            <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;dataTypeLabel&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s2">&quot;dOD&quot;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">raw_types</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;fnirs_cw_amplitude&quot;</span><span class="p">:</span>
+        <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"dataType"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data_type</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"int32"</span><span class="p">)</span>
+        <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"dataTypeIndex"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"int32"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">raw_types</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"fnirs_od"</span><span class="p">:</span>
+            <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"dataTypeLabel"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s2">"dOD"</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">raw_types</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"fnirs_cw_amplitude"</span><span class="p">:</span>
             <span class="c1"># The SNIRF specification does not specify a label for this type</span>
             <span class="k">continue</span>
-        <span class="k">elif</span> <span class="n">raw_types</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;hbo&quot;</span><span class="p">:</span>
-            <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;dataTypeLabel&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s2">&quot;HbO&quot;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">raw_types</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;hbr&quot;</span><span class="p">:</span>
-            <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;dataTypeLabel&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s2">&quot;HbR&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">raw_types</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"hbo"</span><span class="p">:</span>
+            <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"dataTypeLabel"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s2">"HbO"</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">raw_types</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"hbr"</span><span class="p">:</span>
+            <span class="n">ch_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"dataTypeLabel"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s2">"HbR"</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_add_probe_info</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">nirs</span><span class="p">,</span> <span class="n">add_montage</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add details of the probe to the nirs group.</span>
+<span class="w">    </span><span class="sd">"""Add details of the probe to the nirs group.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -589,19 +589,19 @@ document.write(`
 <span class="sd">    add_montage : bool</span>
 <span class="sd">        Should the montage be added as landmarks to</span>
 <span class="sd">        facilitate compatibility with AtlasViewer.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">sources</span> <span class="o">=</span> <span class="n">_get_unique_source_list</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
     <span class="n">detectors</span> <span class="o">=</span> <span class="n">_get_unique_detector_list</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
     <span class="n">wavelengths</span> <span class="o">=</span> <span class="n">_get_unique_wavelength_list</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
 
-    <span class="n">probe</span> <span class="o">=</span> <span class="n">nirs</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s2">&quot;probe&quot;</span><span class="p">)</span>
+    <span class="n">probe</span> <span class="o">=</span> <span class="n">nirs</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s2">"probe"</span><span class="p">)</span>
 
     <span class="c1"># Store source/detector/wavelength info</span>
-    <span class="n">encoded_source_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">_str_encode</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;S</span><span class="si">{</span><span class="n">src</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">src</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">]</span>
-    <span class="n">encoded_detector_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">_str_encode</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;D</span><span class="si">{</span><span class="n">det</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">detectors</span><span class="p">]</span>
-    <span class="n">probe</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;sourceLabels&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">encoded_source_labels</span><span class="p">)</span>
-    <span class="n">probe</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;detectorLabels&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">encoded_detector_labels</span><span class="p">)</span>
-    <span class="n">probe</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;wavelengths&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wavelengths</span><span class="p">)</span>
+    <span class="n">encoded_source_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">_str_encode</span><span class="p">(</span><span class="sa">f</span><span class="s2">"S</span><span class="si">{</span><span class="n">src</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="k">for</span> <span class="n">src</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">]</span>
+    <span class="n">encoded_detector_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">_str_encode</span><span class="p">(</span><span class="sa">f</span><span class="s2">"D</span><span class="si">{</span><span class="n">det</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">detectors</span><span class="p">]</span>
+    <span class="n">probe</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"sourceLabels"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">encoded_source_labels</span><span class="p">)</span>
+    <span class="n">probe</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"detectorLabels"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">encoded_detector_labels</span><span class="p">)</span>
+    <span class="n">probe</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"wavelengths"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wavelengths</span><span class="p">)</span>
 
     <span class="c1"># Create 3d locs and store</span>
     <span class="n">ch_sources</span> <span class="o">=</span> <span class="p">[</span><span class="n">_extract_source</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span><span class="p">]</span>
@@ -610,20 +610,20 @@ document.write(`
     <span class="n">detlocs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">detectors</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">src</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sources</span><span class="p">):</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="n">ch_sources</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
-        <span class="n">srclocs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;chs&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s2">&quot;loc&quot;</span><span class="p">][</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+        <span class="n">srclocs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"chs"</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s2">"loc"</span><span class="p">][</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">det</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">detectors</span><span class="p">):</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="n">ch_detectors</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">det</span><span class="p">)</span>
-        <span class="n">detlocs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;chs&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s2">&quot;loc&quot;</span><span class="p">][</span><span class="mi">6</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span>
-    <span class="n">probe</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;sourcePos3D&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">srclocs</span><span class="p">)</span>
-    <span class="n">probe</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;detectorPos3D&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">detlocs</span><span class="p">)</span>
+        <span class="n">detlocs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"chs"</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s2">"loc"</span><span class="p">][</span><span class="mi">6</span><span class="p">:</span><span class="mi">9</span><span class="p">]</span>
+    <span class="n">probe</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"sourcePos3D"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">srclocs</span><span class="p">)</span>
+    <span class="n">probe</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"detectorPos3D"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">detlocs</span><span class="p">)</span>
 
     <span class="c1"># Store probe landmarks</span>
-    <span class="k">if</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;dig&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"dig"</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">_store_probe_landmarks</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">probe</span><span class="p">,</span> <span class="n">add_montage</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_store_probe_landmarks</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">probe</span><span class="p">,</span> <span class="n">add_montage</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add the probe landmarks to the probe group.</span>
+<span class="w">    </span><span class="sd">"""Add the probe landmarks to the probe group.</span>
 
 <span class="sd">    The SNIRF specification provides flexibility around</span>
 <span class="sd">    what is stored in this field. Some software expect specific</span>
@@ -635,10 +635,10 @@ document.write(`
 <span class="sd">    Atlas Viewer expects a list of 10-20 locations to be provided</span>
 <span class="sd">    in the landmark fields.</span>
 
-<span class="sd">    We also store the values in `raw.info[&#39;dig&#39;]` as these</span>
+<span class="sd">    We also store the values in `raw.info['dig']` as these</span>
 <span class="sd">    may represent positions that have been digitised by the</span>
 <span class="sd">    researcher and should be retained. These are prepended</span>
-<span class="sd">    by the string &quot;HP&quot; to represent a head point.</span>
+<span class="sd">    by the string "HP" to represent a head point.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -649,38 +649,38 @@ document.write(`
 <span class="sd">    add_montage : bool</span>
 <span class="sd">        Should the montage be added as landmarks to</span>
 <span class="sd">        facilitate compatibility with AtlasViewer.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">diglocs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;dig&quot;</span><span class="p">]),</span> <span class="mi">3</span><span class="p">))</span>
+<span class="sd">    """</span>
+    <span class="n">diglocs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"dig"</span><span class="p">]),</span> <span class="mi">3</span><span class="p">))</span>
     <span class="n">digname</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">dig</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;dig&quot;</span><span class="p">]):</span>
-        <span class="n">ident</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\d+ \(FIFFV_POINT_(\w+)\)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">dig</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ident&quot;</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">dig</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"dig"</span><span class="p">]):</span>
+        <span class="n">ident</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\d+ \(FIFFV_POINT_(\w+)\)"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">dig</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"ident"</span><span class="p">)))</span>
         <span class="k">if</span> <span class="n">ident</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">digname</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ident</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">digname</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;HP_</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">dig</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ident&#39;</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">diglocs</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">dig</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+            <span class="n">digname</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"HP_</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">dig</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'ident'</span><span class="p">))</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">diglocs</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">dig</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"r"</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">add_montage</span><span class="p">:</span>
         <span class="c1"># First, get the template positions in mni fsaverage space</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;colin27&quot;</span> <span class="k">if</span> <span class="n">check_version</span><span class="p">(</span><span class="s2">&quot;mne&quot;</span><span class="p">,</span> <span class="s2">&quot;1.13&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;standard&quot;</span>
-        <span class="n">montage</span> <span class="o">=</span> <span class="n">make_standard_montage</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_1020&quot;</span><span class="p">,</span> <span class="n">head_size</span><span class="o">=</span><span class="mf">0.09700884729534559</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">"colin27"</span> <span class="k">if</span> <span class="n">check_version</span><span class="p">(</span><span class="s2">"mne"</span><span class="p">,</span> <span class="s2">"1.13"</span><span class="p">)</span> <span class="k">else</span> <span class="s2">"standard"</span>
+        <span class="n">montage</span> <span class="o">=</span> <span class="n">make_standard_montage</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_1020"</span><span class="p">,</span> <span class="n">head_size</span><span class="o">=</span><span class="mf">0.09700884729534559</span><span class="p">)</span>
         <span class="n">ch_names</span> <span class="o">=</span> <span class="n">montage</span><span class="o">.</span><span class="n">ch_names</span>
         <span class="n">montage_locs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">montage</span><span class="o">.</span><span class="n">_get_ch_pos</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
 
-        <span class="c1"># montage_locs = np.array([d[&#39;r&#39;] for d in montage.dig])</span>
-        <span class="n">head_mri_t</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_get_trans</span><span class="p">(</span><span class="s2">&quot;fsaverage&quot;</span><span class="p">,</span> <span class="s2">&quot;mri&quot;</span><span class="p">,</span> <span class="s2">&quot;head&quot;</span><span class="p">)</span>
+        <span class="c1"># montage_locs = np.array([d['r'] for d in montage.dig])</span>
+        <span class="n">head_mri_t</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_get_trans</span><span class="p">(</span><span class="s2">"fsaverage"</span><span class="p">,</span> <span class="s2">"mri"</span><span class="p">,</span> <span class="s2">"head"</span><span class="p">)</span>
         <span class="n">locations_head</span> <span class="o">=</span> <span class="n">apply_trans</span><span class="p">(</span><span class="n">head_mri_t</span><span class="p">,</span> <span class="n">montage_locs</span><span class="p">)</span>
 
         <span class="n">digname</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">ch_names</span><span class="p">)</span>
         <span class="n">diglocs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">diglocs</span><span class="p">,</span> <span class="n">locations_head</span><span class="p">))</span>
 
     <span class="n">digname</span> <span class="o">=</span> <span class="p">[</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">digname</span><span class="p">]</span>
-    <span class="n">probe</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;landmarkPos3D&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">diglocs</span><span class="p">)</span>
-    <span class="n">probe</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;landmarkLabels&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">digname</span><span class="p">)</span>
+    <span class="n">probe</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"landmarkPos3D"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">diglocs</span><span class="p">)</span>
+    <span class="n">probe</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"landmarkLabels"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">digname</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_add_stim_info</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">nirs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add details of the stimuli to the nirs group.</span>
+<span class="w">    </span><span class="sd">"""Add details of the stimuli to the nirs group.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -688,11 +688,11 @@ document.write(`
 <span class="sd">        Data to add to the snirf file.</span>
 <span class="sd">    nirs : hpy5.Group</span>
 <span class="sd">        The root hdf5 nirs group to which the stimuli info should be added.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># Convert MNE annotations to SNIRF stims</span>
     <span class="n">descriptions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">desc</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">descriptions</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">stim_group</span> <span class="o">=</span> <span class="n">nirs</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;stim</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">stim_group</span> <span class="o">=</span> <span class="n">nirs</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="sa">f</span><span class="s2">"stim</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         <span class="n">trgs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">description</span> <span class="o">==</span> <span class="n">desc</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">stims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">trgs</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">idx_t</span><span class="p">,</span> <span class="n">trg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">trgs</span><span class="p">):</span>
@@ -701,72 +701,72 @@ document.write(`
                 <span class="n">raw</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">duration</span><span class="p">[</span><span class="n">trg</span><span class="p">],</span>
                 <span class="n">idx</span><span class="p">,</span>
             <span class="p">]</span>
-        <span class="n">stim_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">stims</span><span class="p">)</span>
-        <span class="n">stim_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">desc</span><span class="p">))</span>
+        <span class="n">stim_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">stims</span><span class="p">)</span>
+        <span class="n">stim_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">"name"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_str_encode</span><span class="p">(</span><span class="n">desc</span><span class="p">))</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_get_unique_source_list</span><span class="p">(</span><span class="n">raw</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the sorted list of distinct source ids.</span>
+<span class="w">    </span><span class="sd">"""Return the sorted list of distinct source ids.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    raw : instance of Raw</span>
 <span class="sd">        Data object containing the list of channels.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">ch_sources</span> <span class="o">=</span> <span class="p">[</span><span class="n">_extract_source</span><span class="p">(</span><span class="n">ch_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">ch_name</span> <span class="ow">in</span> <span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span><span class="p">]</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ch_sources</span><span class="p">)))</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_get_unique_detector_list</span><span class="p">(</span><span class="n">raw</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the sorted list of distinct detector ids.</span>
+<span class="w">    </span><span class="sd">"""Return the sorted list of distinct detector ids.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    raw : instance of Raw</span>
 <span class="sd">        Data object containing the list of channels.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">ch_detectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">_extract_detector</span><span class="p">(</span><span class="n">ch_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">ch_name</span> <span class="ow">in</span> <span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span><span class="p">]</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ch_detectors</span><span class="p">)))</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_get_unique_wavelength_list</span><span class="p">(</span><span class="n">raw</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the sorted list of distinct wavelengths.</span>
+<span class="w">    </span><span class="sd">"""Return the sorted list of distinct wavelengths.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    raw : instance of Raw</span>
 <span class="sd">        Data object containing the list of channels.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ch_wavelengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="s2">&quot;loc&quot;</span><span class="p">][</span><span class="mi">9</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;chs&quot;</span><span class="p">]]</span>
+<span class="sd">    """</span>
+    <span class="n">ch_wavelengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="s2">"loc"</span><span class="p">][</span><span class="mi">9</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"chs"</span><span class="p">]]</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ch_wavelengths</span><span class="p">)))</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_match_channel_pattern</span><span class="p">(</span><span class="n">channel_name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a regex match against the expected channel name format.</span>
+<span class="w">    </span><span class="sd">"""Return a regex match against the expected channel name format.</span>
 
 <span class="sd">    The returned match object contains three named groups: source, detector,</span>
 <span class="sd">    and wavelength/type. If no match is found, a ValueError is raised.</span>
 
-<span class="sd">    For example, if the name is &quot;S1_D2 hbo&quot; the source is 1,</span>
+<span class="sd">    For example, if the name is "S1_D2 hbo" the source is 1,</span>
 <span class="sd">    the detector is 2, and the type is hbo.</span>
-<span class="sd">    If the name is &quot;S1_D2 850&quot; the source is 1,</span>
+<span class="sd">    If the name is "S1_D2 850" the source is 1,</span>
 <span class="sd">    the detector is 2, and the wavelength is 850.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    channel_name : str</span>
 <span class="sd">        The name of the channel.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">rgx</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^S(?P&lt;source&gt;\d+)_D(?P&lt;detector&gt;\d+) (?P&lt;wavelength_type&gt;[\w]+)$&quot;</span>
+<span class="sd">    """</span>
+    <span class="n">rgx</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">"^S(?P&lt;source&gt;\d+)_D(?P&lt;detector&gt;\d+) (?P&lt;wavelength_type&gt;[\w]+)$"</span>
     <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">rgx</span><span class="p">,</span> <span class="n">channel_name</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;channel name does not match expected pattern: </span><span class="si">{</span><span class="n">channel_name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"channel name does not match expected pattern: </span><span class="si">{</span><span class="n">channel_name</span><span class="si">}</span><span class="s2">"</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">match</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_extract_source</span><span class="p">(</span><span class="n">channel_name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract and return the source id from the channel name.</span>
+<span class="w">    </span><span class="sd">"""Extract and return the source id from the channel name.</span>
 
 <span class="sd">    The id is returned as an integer value.</span>
 
@@ -774,12 +774,12 @@ document.write(`
 <span class="sd">    ----------</span>
 <span class="sd">    channel_name : str</span>
 <span class="sd">        The name of the channel.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">_match_channel_pattern</span><span class="p">(</span><span class="n">channel_name</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">))</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">_match_channel_pattern</span><span class="p">(</span><span class="n">channel_name</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">"source"</span><span class="p">))</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_extract_detector</span><span class="p">(</span><span class="n">channel_name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract and return the detector id from the channel name.</span>
+<span class="w">    </span><span class="sd">"""Extract and return the detector id from the channel name.</span>
 
 <span class="sd">    The id is returned as an integer value.</span>
 
@@ -787,8 +787,8 @@ document.write(`
 <span class="sd">    ----------</span>
 <span class="sd">    channel_name : str</span>
 <span class="sd">        The name of the channel.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">_match_channel_pattern</span><span class="p">(</span><span class="n">channel_name</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;detector&quot;</span><span class="p">))</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">_match_channel_pattern</span><span class="p">(</span><span class="n">channel_name</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">"detector"</span><span class="p">))</span>
 </pre></div>
 
                 </article>
@@ -832,7 +832,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-08-10T23:32:48.198757+00:00" class="localized">2026-08-10 23:32 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-08-17T20:36:12.725996+00:00" class="localized">2026-08-17 20:36 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

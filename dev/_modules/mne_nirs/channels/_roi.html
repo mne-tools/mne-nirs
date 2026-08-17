@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne_nirs.channels._roi &#8212; MNE-NIRS 0.8.0.dev62+ga94348db0 documentation</title>
+    <title>mne_nirs.channels._roi &#8212; MNE-NIRS 0.8.0.dev63+gb36104cea documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../_static/documentation_options.js?v=7a749144"></script>
+    <script src="../../../_static/documentation_options.js?v=1f48b4a5"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -384,8 +384,8 @@ document.write(`
 
 <div class="viewcode-block" id="picks_pair_to_idx">
 <a class="viewcode-back" href="../../../generated/mne_nirs.channels.picks_pair_to_idx.html#mne_nirs.channels.picks_pair_to_idx">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">picks_pair_to_idx</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">sd_pairs</span><span class="p">,</span> <span class="n">on_missing</span><span class="o">=</span><span class="s2">&quot;error&quot;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">picks_pair_to_idx</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">sd_pairs</span><span class="p">,</span> <span class="n">on_missing</span><span class="o">=</span><span class="s2">"error"</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Return a list of picks for specified source detector pairs.</span>
 
 <span class="sd">    If multiple channel have the same source detector pair,</span>
@@ -404,9 +404,9 @@ document.write(`
 <span class="sd">    on_missing : str</span>
 <span class="sd">        What to do if one or several requested source detector are not found</span>
 <span class="sd">        in the recording.</span>
-<span class="sd">        Valid keys are &#39;error&#39; | &#39;warning&#39; | &#39;ignore&#39;</span>
-<span class="sd">        Default is &#39;error&#39;. If on_missing is &#39;warning&#39; it will proceed but</span>
-<span class="sd">        warn, if &#39;ignore&#39; it will proceed silently. Note.</span>
+<span class="sd">        Valid keys are 'error' | 'warning' | 'ignore'</span>
+<span class="sd">        Default is 'error'. If on_missing is 'warning' it will proceed but</span>
+<span class="sd">        warn, if 'ignore' it will proceed silently. Note.</span>
 <span class="sd">        If none of the event ids are found in the data, an error will be</span>
 <span class="sd">        automatically generated irrespective of this parameter.</span>
 
@@ -414,25 +414,25 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">    picks : list of integers</span>
 <span class="sd">        List of picks corresponding to requested source detector pairs.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">ch_names</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span>
     <span class="n">picks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 
     <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">sd_pairs</span><span class="p">:</span>
-        <span class="n">pair_name</span> <span class="o">=</span> <span class="s2">&quot;S&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;_D&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span>
+        <span class="n">pair_name</span> <span class="o">=</span> <span class="s2">"S"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">"_D"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">" "</span>
         <span class="n">pair_picks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">([</span><span class="n">pair_name</span> <span class="ow">in</span> <span class="n">ch</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">ch_names</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pair_picks</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;No matching channels found for source </span><span class="si">%s</span><span class="s2"> detector </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">"No matching channels found for source </span><span class="si">%s</span><span class="s2"> detector </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span>
                 <span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                 <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
             <span class="p">)</span>
-            <span class="k">if</span> <span class="n">on_missing</span> <span class="o">==</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">on_missing</span> <span class="o">==</span> <span class="s2">"error"</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">pair_picks</span><span class="p">)</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">on_missing</span> <span class="o">==</span> <span class="s2">&quot;warning&quot;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">on_missing</span> <span class="o">==</span> <span class="s2">"warning"</span><span class="p">:</span>
                 <span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># on_missing == &#39;ignore&#39;:</span>
+                <span class="c1"># on_missing == 'ignore':</span>
                 <span class="k">continue</span>
         <span class="p">[</span><span class="n">picks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pick</span><span class="p">)</span> <span class="k">for</span> <span class="n">pick</span> <span class="ow">in</span> <span class="n">pair_picks</span><span class="p">]</span>
 
@@ -481,7 +481,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-08-10T23:32:48.198757+00:00" class="localized">2026-08-10 23:32 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-08-17T20:36:12.725996+00:00" class="localized">2026-08-17 20:36 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

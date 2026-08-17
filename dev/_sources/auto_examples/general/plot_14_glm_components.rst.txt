@@ -163,7 +163,7 @@ Note that they differ in their peak timing and undershoot.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7bd4e247e8d0>
+    <matplotlib.legend.Legend object at 0x7a5fe3900d40>
 
 
 
@@ -351,7 +351,7 @@ resulting regressor varies as a function of this parameter.
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7bd4e2925e50>
+    <matplotlib.colorbar.Colorbar object at 0x7a5f7b500d10>
 
 
 
@@ -451,6 +451,12 @@ displayed differently with color representing amplitude.
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Maximum design matrix VIF was 1.001 (Control)
+
 
 
 
@@ -486,6 +492,12 @@ the resulting regressor for each annotation is elongated.
    :srcset: /auto_examples/general/images/sphx_glr_plot_14_glm_components_008.png
    :class: sphx-glr-single-img
 
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Maximum design matrix VIF was 1.014 (Control)
 
 
 
@@ -523,6 +535,12 @@ This is not an issue, the design matrix can handle overlapping responses.
    :srcset: /auto_examples/general/images/sphx_glr_plot_14_glm_components_009.png
    :class: sphx-glr-single-img
 
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Maximum design matrix VIF was 1.601 (Control)
 
 
 
@@ -586,6 +604,12 @@ higher frequency components will be regressed from the signal.
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Maximum design matrix VIF was 1.046 (Tapping/Left)
+
 
 
 
@@ -623,6 +647,12 @@ We observe that the function has included 6 drift regressors in the design matri
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Maximum design matrix VIF was 1.070 (Tapping/Left)
+
 
 
 
@@ -653,6 +683,12 @@ this should add more regressors.
    :srcset: /auto_examples/general/images/sphx_glr_plot_14_glm_components_012.png
    :class: sphx-glr-single-img
 
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Maximum design matrix VIF was 1.241 (Tapping/Right)
 
 
 
@@ -769,9 +805,9 @@ This would be achieved by renaming the triggers.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 16.888 seconds)
+   **Total running time of the script:** (0 minutes 16.391 seconds)
 
-**Estimated memory usage:**  482 MB
+**Estimated memory usage:**  425 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_14_glm_components.py:

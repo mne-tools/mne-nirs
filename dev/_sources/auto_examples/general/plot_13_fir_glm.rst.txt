@@ -224,10 +224,15 @@ group-level analysis below.
  .. code-block:: none
 
     Reading 0 ... 23238  =      0.000 ...  2974.464 secs...
+    Maximum design matrix VIF was 1.077 (Control_delay_5)
     Reading 0 ... 18877  =      0.000 ...  2416.256 secs...
+    Maximum design matrix VIF was 1.139 (Control_delay_6)
     Reading 0 ... 18874  =      0.000 ...  2415.872 secs...
+    Maximum design matrix VIF was 1.211 (drift_29)
     Reading 0 ... 23120  =      0.000 ...  2959.360 secs...
+    Maximum design matrix VIF was 1.211 (drift_43)
     Reading 0 ... 23006  =      0.000 ...  2944.768 secs...
+    Maximum design matrix VIF was 1.116 (drift_20)
 
 
 
@@ -586,7 +591,7 @@ per chromophore (HbR not shown in first two facets).
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7bd4e23aa420>
+    <matplotlib.legend.Legend object at 0x7a5f7b501c10>
 
 
 
@@ -659,9 +664,9 @@ Plot the response with confidence intervals
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 24.266 seconds)
+   **Total running time of the script:** (0 minutes 32.974 seconds)
 
-**Estimated memory usage:**  482 MB
+**Estimated memory usage:**  425 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_13_fir_glm.py:
