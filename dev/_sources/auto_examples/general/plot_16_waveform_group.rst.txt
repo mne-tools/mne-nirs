@@ -291,26 +291,26 @@ that is generated from the average of all 30 trials and epoched from -5 to
  .. code-block:: none
 
     defaultdict(<class 'list'>,
-                {np.str_('15.0'): [<Evoked | '15.0' (average, N=1), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                   <Evoked | '15.0' (average, N=2), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                   <Evoked | '15.0' (average, N=1), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                   <Evoked | '15.0' (average, N=2), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                   <Evoked | '15.0' (average, N=1), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>],
-                 np.str_('Control'): [<Evoked | 'Control' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                      <Evoked | 'Control' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                      <Evoked | 'Control' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                      <Evoked | 'Control' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                      <Evoked | 'Control' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>],
-                 np.str_('Tapping/Left'): [<Evoked | 'Tapping/Left' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                           <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                           <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                           <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                           <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>],
-                 np.str_('Tapping/Right'): [<Evoked | 'Tapping/Right' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                            <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                            <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                            <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
-                                            <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>]})
+                {'15.0': [<Evoked | '15.0' (average, N=1), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                          <Evoked | '15.0' (average, N=2), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                          <Evoked | '15.0' (average, N=1), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                          <Evoked | '15.0' (average, N=2), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                          <Evoked | '15.0' (average, N=1), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>],
+                 'Control': [<Evoked | 'Control' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                             <Evoked | 'Control' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                             <Evoked | 'Control' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                             <Evoked | 'Control' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                             <Evoked | 'Control' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>],
+                 'Tapping/Left': [<Evoked | 'Tapping/Left' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                                  <Evoked | 'Tapping/Left' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>],
+                 'Tapping/Right': [<Evoked | 'Tapping/Right' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>,
+                                   <Evoked | 'Tapping/Right' (average, N=30), -5 – 20 s, baseline -5 – 0 s, 40 ch, ~53 KiB>]})
 
 
 
@@ -364,7 +364,7 @@ as illustrated by the head inset in the top right corner of the figure.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7d21a3f4c860>
+    <matplotlib.legend.Legend object at 0x712c2b81aba0>
 
 
 
@@ -511,7 +511,7 @@ regions of the brain for each condition.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7d21a8d9a000>
+    <matplotlib.legend.Legend object at 0x712c4f5a9d00>
 
 
 
@@ -700,7 +700,7 @@ single ROI between conditions.
  .. code-block:: none
 
 
-    <seaborn.axisgrid.FacetGrid object at 0x7d21aa15c4d0>
+    <seaborn.axisgrid.FacetGrid object at 0x712c63afc6e0>
 
 
 
@@ -880,9 +880,9 @@ hand that is tapping.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 9.747 seconds)
+   **Total running time of the script:** (0 minutes 10.705 seconds)
 
-**Estimated memory usage:**  424 MB
+**Estimated memory usage:**  423 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_16_waveform_group.py:

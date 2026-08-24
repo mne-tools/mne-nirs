@@ -2065,7 +2065,7 @@ Define the events
 
  .. code-block:: none
 
-    Used Annotations descriptions: [np.str_('Tapping/Left'), np.str_('Tapping/Right')]
+    Used Annotations descriptions: ['Tapping/Left', 'Tapping/Right']
 
     array([[ 21,   0,   2],
            [ 62,   0,   1],
@@ -2605,7 +2605,7 @@ First show how the boxcar design looks
 
  .. code-block:: none
 
-    Used Annotations descriptions: [np.str_('Tapping/Left'), np.str_('Tapping/Right')]
+    Used Annotations descriptions: ['Tapping/Left', 'Tapping/Right']
 
     Text(0.5, 18.503588541666666, 'Time (s)')
 
@@ -2975,9 +2975,9 @@ selectivity of the motor response according to which hand is being tapped.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 44.384 seconds)
+   **Total running time of the script:** (0 minutes 43.157 seconds)
 
-**Estimated memory usage:**  516 MB
+**Estimated memory usage:**  565 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_11b_kf2_fingertapping.py:
