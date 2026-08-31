@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>GLM Analysis (Simulated) &#8212; MNE-NIRS 0.8.0.dev67+g48ffb0e4b documentation</title>
+    <title>GLM Analysis (Simulated) &#8212; MNE-NIRS 0.8.0.dev68+g08044002f documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../_static/documentation_options.js?v=35ad3e35"></script>
+    <script src="../../_static/documentation_options.js?v=ed53c8b4"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -470,7 +470,7 @@ The simulated signal is plotted below.</p>
 <a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray.plot" title="mne.io.RawArray.plot" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">raw</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">show_scrollbars</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_10_hrf_simulation_001.png" srcset="../../_images/sphx_glr_plot_10_hrf_simulation_001.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7b85581bb750&gt;
+<img src="../../_images/sphx_glr_plot_10_hrf_simulation_001.png" srcset="../../_images/sphx_glr_plot_10_hrf_simulation_001.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7364a2b642d0&gt;
 </pre></div>
 </div>
 </section>
@@ -583,7 +583,7 @@ However, the error is greater for the colored than white noise.</p>
 </div>
 <img src="../../_images/sphx_glr_plot_10_hrf_simulation_004.png" srcset="../../_images/sphx_glr_plot_10_hrf_simulation_004.png" alt="plot 10 hrf simulation" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Adding noise to 1/1 channels (1 channels in cov)
 Maximum design matrix VIF was 1.000 (A)
-Estimate: [4.85912682e-06]   MSE: 1.9741158379576125e-10   Error (uM): [0.85912682]
+Estimate: [2.81777441e-06]   MSE: 4.456356688990884e-10   Error (uM): [-1.18222559]
 </pre></div>
 </div>
 </section>
@@ -621,7 +621,7 @@ approximately 0.6 uM for 5 minutes of data to 0.25 uM for 30 minutes of data.</p
 </div>
 <img src="../../_images/sphx_glr_plot_10_hrf_simulation_005.png" srcset="../../_images/sphx_glr_plot_10_hrf_simulation_005.png" alt="plot 10 hrf simulation" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Adding noise to 1/1 channels (1 channels in cov)
 Maximum design matrix VIF was 1.000 (A)
-Estimate: [1.77294842e-06]   MSE: 9.74915961210662e-10   Error (uM): [-2.22705158]
+Estimate: [2.26983583e-06]   MSE: 8.392065378271591e-10   Error (uM): [-1.73016417]
 </pre></div>
 </div>
 </section>
@@ -651,7 +651,7 @@ but how does this affect the accuracy of the response estimate?</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">print_results</span><span class="p">(</span><a href="../../generated/mne_nirs.statistics.RegressionResults.html#mne_nirs.statistics.RegressionResults" title="mne_nirs.statistics.RegressionResults" class="sphx-glr-backref-module-mne_nirs-statistics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">glm_est</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">amp</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Estimate: [3.63024398e-06]   MSE: 1.0083175683833991e-11   Error (uM): [-0.36975602]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Estimate: [3.3659873e-06]   MSE: 1.0016435853504606e-11   Error (uM): [-0.6340127]
 </pre></div>
 </div>
 <p>The response estimate using the AR(5) model is more accurate than the
@@ -667,8 +667,8 @@ observed that as the measurement time was increased, the estimated
 error decreased.
 We also observed in this idealised example that including an appropriate
 model of the noise can improve the accuracy of the response estimate.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.775 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  414 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 5.110 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  415 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-10-hrf-simulation-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_10_hrf_simulation.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
@@ -784,7 +784,7 @@ model of the noise can improve the accuracy of the response estimate.</p>
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-08-29T10:22:35.191238+00:00" class="localized">2026-08-29 10:22 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-08-31T21:12:11.330990+00:00" class="localized">2026-08-31 21:12 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
