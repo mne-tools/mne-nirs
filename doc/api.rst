@@ -123,6 +123,20 @@ Data quality evaluation.
    quantify_mayer_fooof
 
 
+Motion artifact detection and correction.
+
+.. currentmodule:: mne_nirs.preprocessing
+
+.. autosummary::
+   :toctree: generated/
+
+   detect_motion_artifacts
+   detect_motion_artifacts_by_channel
+   motion_correct_spline
+   motion_correct_wavelet
+   motion_detect_and_correct_wavelet
+
+
 Experimental Design
 -------------------
 
