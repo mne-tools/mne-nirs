@@ -97,7 +97,7 @@ The simulated signal is plotted below.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7d8efa2bc5f0>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x738d145c22b0>
 
 
 
@@ -296,7 +296,7 @@ However, the error is greater for the colored than white noise.
 
     Adding noise to 1/1 channels (1 channels in cov)
     Maximum design matrix VIF was 1.000 (A)
-    Estimate: [4.35540261e-06]   MSE: 2.709192136997468e-10   Error (uM): [0.35540261]
+    Estimate: [1.77001418e-06]   MSE: 2.943718978623594e-10   Error (uM): [-2.22998582]
 
 
 
@@ -357,7 +357,7 @@ approximately 0.6 uM for 5 minutes of data to 0.25 uM for 30 minutes of data.
 
     Adding noise to 1/1 channels (1 channels in cov)
     Maximum design matrix VIF was 1.000 (A)
-    Estimate: [4.41509894e-06]   MSE: 7.785540561465515e-10   Error (uM): [0.41509894]
+    Estimate: [2.46932113e-06]   MSE: 6.015660826271509e-10   Error (uM): [-1.53067887]
 
 
 
@@ -427,7 +427,7 @@ but how does this affect the accuracy of the response estimate?
 
  .. code-block:: none
 
-    Estimate: [3.8380694e-06]   MSE: 9.618132624731202e-12   Error (uM): [-0.1619306]
+    Estimate: [3.07648895e-06]   MSE: 1.014652428382819e-11   Error (uM): [-0.92351105]
 
 
 
@@ -454,9 +454,9 @@ model of the noise can improve the accuracy of the response estimate.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 5.940 seconds)
+   **Total running time of the script:** (0 minutes 5.965 seconds)
 
-**Estimated memory usage:**  415 MB
+**Estimated memory usage:**  423 MB
 
 
 .. _sphx_glr_download_auto_examples_general_plot_10_hrf_simulation.py:
