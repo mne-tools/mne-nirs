@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Read Gowerlabs LUMO data &#8212; MNE-NIRS 0.8.0.dev70+g1ff61e1ed documentation</title>
+    <title>Read Gowerlabs LUMO data &#8212; MNE-NIRS 0.8.0.dev71+g4998adc9d documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../_static/documentation_options.js?v=8e86d985"></script>
+    <script src="../../_static/documentation_options.js?v=defdf1bb"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -473,18 +473,18 @@ tiles, and thus channels.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">mne_nirs.io</span>
 
 <a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">testing_path</span></a> <span class="o">=</span> <span class="n">data_path</span><span class="p">(</span><span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">op</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">testing_path</span></a><span class="p">,</span> <span class="s2">"SNIRF"</span><span class="p">,</span> <span class="s2">"GowerLabs"</span><span class="p">,</span> <span class="s2">"lumomat-1-1-0.snirf"</span><span class="p">)</span>
+<a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">op</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">testing_path</span></a><span class="p">,</span> <span class="s2">"SNIRF"</span><span class="p">,</span> <span class="s2">"GowerLabs"</span><span class="p">,</span> <span class="s2">"lumomat-1-1-0.snirf"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>We can view the path to the data by calling the variable <cite>fname</cite>.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>'/home/circleci/mne_data/MNE-testing-data/SNIRF/GowerLabs/lumomat-1-1-0.snirf'
 </pre></div>
 </div>
 <p>To load the file we call the function <a class="reference external" href="https://mne.tools/stable/generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="(in MNE v1.13)"><code class="docutils literal notranslate"><span class="pre">mne.io.read_raw_snirf()</span></code></a>.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="mne.io.read_raw_snirf" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_raw_snirf</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.read_raw_snirf.html#mne.io.read_raw_snirf" title="mne.io.read_raw_snirf" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_raw_snirf</span></a><span class="p">(</span><a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Loading /home/circleci/mne_data/MNE-testing-data/SNIRF/GowerLabs/lumomat-1-1-0.snirf
@@ -645,9 +645,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header general-87b5f3e8-59d5-4d2e-b799-8803367a2d0b"
+<tr class="mne-repr-section-header general-14aa860e-3858-4880-8124-c3b59d256c4d"
      title="Hide section"
-    onclick="toggleVisibility('general-87b5f3e8-59d5-4d2e-b799-8803367a2d0b')">
+    onclick="toggleVisibility('general-14aa860e-3858-4880-8124-c3b59d256c4d')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -659,7 +659,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element general-87b5f3e8-59d5-4d2e-b799-8803367a2d0b ">
+<tr class="repr-element general-14aa860e-3858-4880-8124-c3b59d256c4d ">
     <td class="mne-repr-section-toggle"></td>
     <td>Filename(s)</td>
     <td>
@@ -670,19 +670,19 @@ this file apply (plus whatever default styling the IDE applies).
     </td>
 </tr>
 
-<tr class="repr-element general-87b5f3e8-59d5-4d2e-b799-8803367a2d0b ">
+<tr class="repr-element general-14aa860e-3858-4880-8124-c3b59d256c4d ">
     <td class="mne-repr-section-toggle"></td>
     <td>MNE object type</td>
     <td>RawSNIRF</td>
 </tr>
-<tr class="repr-element general-87b5f3e8-59d5-4d2e-b799-8803367a2d0b ">
+<tr class="repr-element general-14aa860e-3858-4880-8124-c3b59d256c4d ">
     <td class="mne-repr-section-toggle"></td>
     <td>Measurement date</td>
 
     <td>2000-01-01 at 00:00:00 UTC</td>
 
 </tr>
-<tr class="repr-element general-87b5f3e8-59d5-4d2e-b799-8803367a2d0b ">
+<tr class="repr-element general-14aa860e-3858-4880-8124-c3b59d256c4d ">
     <td class="mne-repr-section-toggle"></td>
     <td>Participant</td>
 
@@ -691,7 +691,7 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 </tr>
-<tr class="repr-element general-87b5f3e8-59d5-4d2e-b799-8803367a2d0b ">
+<tr class="repr-element general-14aa860e-3858-4880-8124-c3b59d256c4d ">
     <td class="mne-repr-section-toggle"></td>
     <td>Experimenter</td>
 
@@ -706,9 +706,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header acquisition-9d0c5bf3-5c1c-422d-b293-d73caa1b5a98"
+<tr class="mne-repr-section-header acquisition-4ec27874-83af-44c7-9dd3-d7f9b47889c6"
      title="Hide section"
-    onclick="toggleVisibility('acquisition-9d0c5bf3-5c1c-422d-b293-d73caa1b5a98')">
+    onclick="toggleVisibility('acquisition-4ec27874-83af-44c7-9dd3-d7f9b47889c6')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -720,7 +720,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element acquisition-9d0c5bf3-5c1c-422d-b293-d73caa1b5a98 ">
+<tr class="repr-element acquisition-4ec27874-83af-44c7-9dd3-d7f9b47889c6 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Duration</td>
     <td>00:00:28 (HH:MM:SS)</td>
@@ -733,14 +733,14 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="repr-element acquisition-9d0c5bf3-5c1c-422d-b293-d73caa1b5a98 ">
+<tr class="repr-element acquisition-4ec27874-83af-44c7-9dd3-d7f9b47889c6 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Sampling frequency</td>
     <td>10.00 Hz</td>
 </tr>
 
 
-<tr class="repr-element acquisition-9d0c5bf3-5c1c-422d-b293-d73caa1b5a98 ">
+<tr class="repr-element acquisition-4ec27874-83af-44c7-9dd3-d7f9b47889c6 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Time points</td>
     <td>274</td>
@@ -755,9 +755,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header channels-f9ee157f-9a64-496b-93a5-fdcb980ffecc"
+<tr class="mne-repr-section-header channels-f7a9b4fa-ea3d-428c-9f68-168e8a156062"
      title="Hide section"
-    onclick="toggleVisibility('channels-f9ee157f-9a64-496b-93a5-fdcb980ffecc')">
+    onclick="toggleVisibility('channels-f7a9b4fa-ea3d-428c-9f68-168e8a156062')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -770,7 +770,7 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="repr-element channels-f9ee157f-9a64-496b-93a5-fdcb980ffecc ">
+<tr class="repr-element channels-f7a9b4fa-ea3d-428c-9f68-168e8a156062 ">
     <td class="mne-repr-section-toggle"></td>
     <td>fNIRS (CW amplitude)</td>
     <td>
@@ -783,7 +783,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element channels-f9ee157f-9a64-496b-93a5-fdcb980ffecc ">
+<tr class="repr-element channels-f7a9b4fa-ea3d-428c-9f68-168e8a156062 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Head & sensor digitization</td>
 
@@ -798,9 +798,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header filters-2cf8b32e-f8c2-4858-8d3d-0e07e25efe0d"
+<tr class="mne-repr-section-header filters-60472cad-0cf4-4920-9a6a-17031cd9e097"
      title="Hide section"
-    onclick="toggleVisibility('filters-2cf8b32e-f8c2-4858-8d3d-0e07e25efe0d')">
+    onclick="toggleVisibility('filters-60472cad-0cf4-4920-9a6a-17031cd9e097')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -812,14 +812,14 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element filters-2cf8b32e-f8c2-4858-8d3d-0e07e25efe0d ">
+<tr class="repr-element filters-60472cad-0cf4-4920-9a6a-17031cd9e097 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Highpass</td>
     <td>0.00 Hz</td>
 </tr>
 
 
-<tr class="repr-element filters-2cf8b32e-f8c2-4858-8d3d-0e07e25efe0d ">
+<tr class="repr-element filters-60472cad-0cf4-4920-9a6a-17031cd9e097 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Lowpass</td>
     <td>5.00 Hz</td>
@@ -837,7 +837,7 @@ and signal annotations.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_06_gowerlabs_001.png" srcset="../../_images/sphx_glr_plot_06_gowerlabs_001.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x738d231a47d0&gt;
+<img src="../../_images/sphx_glr_plot_06_gowerlabs_001.png" srcset="../../_images/sphx_glr_plot_06_gowerlabs_001.png" alt="Raw plot" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;mne_qt_browser._pg_figure.MNEQtBrowser object at 0x705b0671b070&gt;
 </pre></div>
 </div>
 <p>We observe valid data in each channel, and note that the file includes a
@@ -964,12 +964,12 @@ a collection of 40 MRI scans of real brains called
 <p>First, lets just look at the sensors in arbitrary space.
 Below we see that there are three LUMO tiles, each with three sources
 and four detectors.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">op</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.datasets.sample.data_path.html#mne.datasets.sample.data_path" title="mne.datasets.sample.data_path" class="sphx-glr-backref-module-mne-datasets-sample sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">(),</span> <span class="s2">"subjects"</span><span class="p">)</span>
-<a href="https://mne.tools/stable/generated/mne.datasets.fetch_fsaverage.html#mne.datasets.fetch_fsaverage" title="mne.datasets.fetch_fsaverage" class="sphx-glr-backref-module-mne-datasets sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fetch_fsaverage</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">op</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.datasets.sample.data_path.html#mne.datasets.sample.data_path" title="mne.datasets.sample.data_path" class="sphx-glr-backref-module-mne-datasets-sample sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">sample</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">(),</span> <span class="s2">"subjects"</span><span class="p">)</span>
+<a href="https://mne.tools/stable/generated/mne.datasets.fetch_fsaverage.html#mne.datasets.fetch_fsaverage" title="mne.datasets.fetch_fsaverage" class="sphx-glr-backref-module-mne-datasets sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fetch_fsaverage</span></a><span class="p">(</span><a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">)</span>
 
 <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span>
     <span class="s2">"fsaverage"</span><span class="p">,</span>
-    <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span>
+    <a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span>
     <span class="n">alpha</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
     <span class="n">cortex</span><span class="o">=</span><span class="s2">"low_contrast"</span><span class="p">,</span>
     <span class="n">background</span><span class="o">=</span><span class="s2">"w"</span><span class="p">,</span>
@@ -995,8 +995,8 @@ First, lets just look at the <cite>fsaverage</cite> head that we will use.</p>
 to coregistration. You can also use the MNE-Python
 coregistration GUI <a class="reference external" href="https://mne.tools/stable/generated/mne.gui.coregistration.html#mne.gui.coregistration" title="(in MNE v1.13)"><code class="docutils literal notranslate"><span class="pre">mne.gui.coregistration()</span></code></a>.</p>
 </div>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
-    <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span>
     <span class="n">surfaces</span><span class="o">=</span><span class="s2">"brain"</span><span class="p">,</span>
     <span class="n">dig</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">eeg</span><span class="o">=</span><span class="p">[],</span>
@@ -1006,7 +1006,7 @@ coregistration GUI <a class="reference external" href="https://mne.tools/stable/
     <span class="n">mri_fiducials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">fig</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.plot_alignment.html#mne.viz.plot_alignment" title="mne.viz.plot_alignment" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_alignment</span></a><span class="p">(</span><span class="n">trans</span><span class="o">=</span><span class="s2">"fsaverage"</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s2">"fsaverage"</span><span class="p">,</span> <span class="o">**</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.plot_alignment.html#mne.viz.plot_alignment" title="mne.viz.plot_alignment" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_alignment</span></a><span class="p">(</span><span class="n">trans</span><span class="o">=</span><span class="s2">"fsaverage"</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s2">"fsaverage"</span><span class="p">,</span> <span class="o">**</span><a href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a><span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.viz.set_3d_view.html#mne.viz.set_3d_view" title="mne.viz.set_3d_view" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">set_3d_view</span></a><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">azimuth</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1027,7 +1027,7 @@ data we wish to align to this head. This process is called
 coregistration and is described in several MNE-Python tutorials
 including <a class="reference external" href="https://mne.tools/stable/auto_tutorials/forward/25_automated_coreg.html#tut-auto-coreg" title="(in MNE v1.13)"><span>Using an automated approach to coregistration</span></a>.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.plot_alignment.html#mne.viz.plot_alignment" title="mne.viz.plot_alignment" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_alignment</span></a><span class="p">(</span>
-    <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s2">"fsaverage"</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s2">"fsaverage"</span><span class="p">,</span> <span class="o">**</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a>
+    <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s2">"fsaverage"</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s2">"fsaverage"</span><span class="p">,</span> <span class="o">**</span><a href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a>
 <span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.viz.set_3d_view.html#mne.viz.set_3d_view" title="mne.viz.set_3d_view" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">set_3d_view</span></a><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">azimuth</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
@@ -1042,12 +1042,12 @@ on the head. To coregister the optodes to the head we will perform
 a rotation and translation of the optode frame to minimise the
 distance between the fiducials.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration" title="mne.coreg.Coregistration" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">coreg</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration" title="mne.coreg.Coregistration" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">coreg</span><span class="o">.</span><span class="n">Coregistration</span></a><span class="p">(</span>
-    <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="s2">"fsaverage"</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">fiducials</span><span class="o">=</span><span class="s2">"estimated"</span>
+    <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="s2">"fsaverage"</span><span class="p">,</span> <a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">fiducials</span><span class="o">=</span><span class="s2">"estimated"</span>
 <span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration.fit_fiducials" title="mne.coreg.Coregistration.fit_fiducials" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-method"><span class="n">coreg</span><span class="o">.</span><span class="n">fit_fiducials</span></a><span class="p">(</span><span class="n">lpa_weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">nasion_weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">rpa_weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 
 <span class="n">fig</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.plot_alignment.html#mne.viz.plot_alignment" title="mne.viz.plot_alignment" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">plot_alignment</span></a><span class="p">(</span>
-    <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration.trans" title="mne.coreg.Coregistration.trans" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-property"><span class="n">coreg</span><span class="o">.</span><span class="n">trans</span></a><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s2">"fsaverage"</span><span class="p">,</span> <span class="o">**</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a>
+    <a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration.trans" title="mne.coreg.Coregistration.trans" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-property"><span class="n">coreg</span><span class="o">.</span><span class="n">trans</span></a><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s2">"fsaverage"</span><span class="p">,</span> <span class="o">**</span><a href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plot_kwargs</span></a>
 <span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.viz.set_3d_view.html#mne.viz.set_3d_view" title="mne.viz.set_3d_view" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-function"><span class="n">set_3d_view</span></a><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">azimuth</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
@@ -1068,7 +1068,7 @@ between the fiducial pairs, this is because we used a generic head rather than
 an individualised MRI scan. You can also <a class="reference external" href="https://mne.tools/stable/generated/mne.scale_mri.html#mne.scale_mri" title="(in MNE v1.13)"><code class="docutils literal notranslate"><span class="pre">mne.scale_mri()</span></code></a> to scale
 the generic MRI head.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span>
-    <span class="s2">"fsaverage"</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">"w"</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s2">"0.5"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span>
+    <span class="s2">"fsaverage"</span><span class="p">,</span> <a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">"w"</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s2">"0.5"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span>
 <span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><a href="https://mne.tools/stable/generated/mne.coreg.Coregistration.html#mne.coreg.Coregistration.trans" title="mne.coreg.Coregistration.trans" class="sphx-glr-backref-module-mne-coreg sphx-glr-backref-type-py-property"><span class="n">coreg</span><span class="o">.</span><span class="n">trans</span></a><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s2">"sources"</span><span class="p">,</span> <span class="s2">"detectors"</span><span class="p">])</span>
 <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.show_view" title="mne.viz.Brain.show_view" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">show_view</span></a><span class="p">(</span><span class="n">azimuth</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
@@ -1237,9 +1237,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header general-845c771f-6f45-4630-bb54-63ab448a94b3"
+<tr class="mne-repr-section-header general-24482d39-748d-435b-80c4-9b6efb3b3d4c"
      title="Hide section"
-    onclick="toggleVisibility('general-845c771f-6f45-4630-bb54-63ab448a94b3')">
+    onclick="toggleVisibility('general-24482d39-748d-435b-80c4-9b6efb3b3d4c')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -1251,7 +1251,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element general-845c771f-6f45-4630-bb54-63ab448a94b3 ">
+<tr class="repr-element general-24482d39-748d-435b-80c4-9b6efb3b3d4c ">
     <td class="mne-repr-section-toggle"></td>
     <td>Filename(s)</td>
     <td>
@@ -1262,19 +1262,19 @@ this file apply (plus whatever default styling the IDE applies).
     </td>
 </tr>
 
-<tr class="repr-element general-845c771f-6f45-4630-bb54-63ab448a94b3 ">
+<tr class="repr-element general-24482d39-748d-435b-80c4-9b6efb3b3d4c ">
     <td class="mne-repr-section-toggle"></td>
     <td>MNE object type</td>
     <td>RawSNIRF</td>
 </tr>
-<tr class="repr-element general-845c771f-6f45-4630-bb54-63ab448a94b3 ">
+<tr class="repr-element general-24482d39-748d-435b-80c4-9b6efb3b3d4c ">
     <td class="mne-repr-section-toggle"></td>
     <td>Measurement date</td>
 
     <td>2000-01-01 at 00:00:00 UTC</td>
 
 </tr>
-<tr class="repr-element general-845c771f-6f45-4630-bb54-63ab448a94b3 ">
+<tr class="repr-element general-24482d39-748d-435b-80c4-9b6efb3b3d4c ">
     <td class="mne-repr-section-toggle"></td>
     <td>Participant</td>
 
@@ -1283,7 +1283,7 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 </tr>
-<tr class="repr-element general-845c771f-6f45-4630-bb54-63ab448a94b3 ">
+<tr class="repr-element general-24482d39-748d-435b-80c4-9b6efb3b3d4c ">
     <td class="mne-repr-section-toggle"></td>
     <td>Experimenter</td>
 
@@ -1298,9 +1298,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header acquisition-84ec0d09-0282-44ce-8e87-456304fe0c5d"
+<tr class="mne-repr-section-header acquisition-88511623-9d1f-4e4b-ba7d-31a033113444"
      title="Hide section"
-    onclick="toggleVisibility('acquisition-84ec0d09-0282-44ce-8e87-456304fe0c5d')">
+    onclick="toggleVisibility('acquisition-88511623-9d1f-4e4b-ba7d-31a033113444')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -1312,7 +1312,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element acquisition-84ec0d09-0282-44ce-8e87-456304fe0c5d ">
+<tr class="repr-element acquisition-88511623-9d1f-4e4b-ba7d-31a033113444 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Duration</td>
     <td>00:00:28 (HH:MM:SS)</td>
@@ -1325,14 +1325,14 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="repr-element acquisition-84ec0d09-0282-44ce-8e87-456304fe0c5d ">
+<tr class="repr-element acquisition-88511623-9d1f-4e4b-ba7d-31a033113444 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Sampling frequency</td>
     <td>10.00 Hz</td>
 </tr>
 
 
-<tr class="repr-element acquisition-84ec0d09-0282-44ce-8e87-456304fe0c5d ">
+<tr class="repr-element acquisition-88511623-9d1f-4e4b-ba7d-31a033113444 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Time points</td>
     <td>274</td>
@@ -1347,9 +1347,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header channels-7219e882-904c-4ddd-bf13-5e713f67144b"
+<tr class="mne-repr-section-header channels-93e971f7-9897-4832-9866-ad9418e38bfe"
      title="Hide section"
-    onclick="toggleVisibility('channels-7219e882-904c-4ddd-bf13-5e713f67144b')">
+    onclick="toggleVisibility('channels-93e971f7-9897-4832-9866-ad9418e38bfe')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -1362,7 +1362,7 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="repr-element channels-7219e882-904c-4ddd-bf13-5e713f67144b ">
+<tr class="repr-element channels-93e971f7-9897-4832-9866-ad9418e38bfe ">
     <td class="mne-repr-section-toggle"></td>
     <td>fNIRS (CW amplitude)</td>
     <td>
@@ -1375,7 +1375,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element channels-7219e882-904c-4ddd-bf13-5e713f67144b ">
+<tr class="repr-element channels-93e971f7-9897-4832-9866-ad9418e38bfe ">
     <td class="mne-repr-section-toggle"></td>
     <td>Head & sensor digitization</td>
 
@@ -1390,9 +1390,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header filters-f1569e55-48fe-4ec2-a479-0fb6dfd78056"
+<tr class="mne-repr-section-header filters-f0bef5f7-db42-4ded-8abe-28bb2ec23bc3"
      title="Hide section"
-    onclick="toggleVisibility('filters-f1569e55-48fe-4ec2-a479-0fb6dfd78056')">
+    onclick="toggleVisibility('filters-f0bef5f7-db42-4ded-8abe-28bb2ec23bc3')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -1404,14 +1404,14 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element filters-f1569e55-48fe-4ec2-a479-0fb6dfd78056 ">
+<tr class="repr-element filters-f0bef5f7-db42-4ded-8abe-28bb2ec23bc3 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Highpass</td>
     <td>0.00 Hz</td>
 </tr>
 
 
-<tr class="repr-element filters-f1569e55-48fe-4ec2-a479-0fb6dfd78056 ">
+<tr class="repr-element filters-f0bef5f7-db42-4ded-8abe-28bb2ec23bc3 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Lowpass</td>
     <td>5.00 Hz</td>
@@ -1431,7 +1431,7 @@ already been coregistered to fsaverage.</p>
 
 <span class="c1"># Now you can simply use `trans = "fsaverage"`.</span>
 <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">brain</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain" title="mne.viz.Brain" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">Brain</span></a><span class="p">(</span>
-    <span class="s2">"fsaverage"</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">"w"</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s2">"0.5"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span>
+    <span class="s2">"fsaverage"</span><span class="p">,</span> <a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="o">=</span><a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects_dir</span></a><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">"w"</span><span class="p">,</span> <span class="n">cortex</span><span class="o">=</span><span class="s2">"0.5"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span>
 <span class="p">)</span>
 <a href="https://mne.tools/stable/generated/mne.viz.Brain.html#mne.viz.Brain.add_sensors" title="mne.viz.Brain.add_sensors" class="sphx-glr-backref-module-mne-viz sphx-glr-backref-type-py-method"><span class="n">brain</span><span class="o">.</span><span class="n">add_sensors</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="mne._fiff.meas_info.Info" class="sphx-glr-backref-module-mne-_fiff-meas_info sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw_w_coreg</span><span class="o">.</span><span class="n">info</span></a><span class="p">,</span> <span class="n">trans</span><span class="o">=</span><span class="s2">"fsaverage"</span><span class="p">,</span> <span class="n">fnirs</span><span class="o">=</span><span class="p">[</span><span class="s2">"sources"</span><span class="p">,</span> <span class="s2">"detectors"</span><span class="p">])</span>
 </pre></div>
@@ -1450,8 +1450,8 @@ Channel types:: fnirs_cw_amplitude: 216
 <p class="admonition-title">Note</p>
 <p>HD-DOT specific tutorials are currently under development.</p>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 40.450 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  577 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 38.833 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  533 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-06-gowerlabs-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_06_gowerlabs.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
@@ -1565,7 +1565,7 @@ Channel types:: fnirs_cw_amplitude: 216
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-09-12T10:19:22.851121+00:00" class="localized">2026-09-12 10:19 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-09-14T21:11:30.209452+00:00" class="localized">2026-09-14 21:11 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
