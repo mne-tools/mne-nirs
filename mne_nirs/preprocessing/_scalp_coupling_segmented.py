@@ -139,7 +139,7 @@ def scalp_coupling_index_windowed(
             c = min(correlations) if correlations else 0.0
 
             # Assign the same SCI value to all channels in the group
-            sci[ch_group, window] = c
+            sci[gg : gg + n_wavelengths, window] = c
 
             # Add BAD_SCI annotation to channels if below threshold
             if (threshold is not None) & (c < threshold):
@@ -149,5 +149,7 @@ def scalp_coupling_index_windowed(
                     "BAD_SCI",
                     ch_names=[[raw.ch_names[ii] for ii in ch_group]],
                 )
+
+    sci = sci[np.argsort(picks)]  # restore original channel order
 
     return raw, sci, times
