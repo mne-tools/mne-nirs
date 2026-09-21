@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Mayer Wave Parametrisation &#8212; MNE-NIRS 0.8.0.dev71+g4998adc9d documentation</title>
+    <title>Mayer Wave Parametrisation &#8212; MNE-NIRS 0.8.0.dev72+g4a66a23e7 documentation</title>
   
   
   
@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/pydata-sphinx-theme.css?v=3ab4e28d" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=c83e6b79" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../_static/documentation_options.js?v=defdf1bb"></script>
+    <script src="../../_static/documentation_options.js?v=50e8c7b5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -456,72 +456,70 @@ authors over at <a class="reference external" href="https://fooof-tools.github.i
 You should read their excellent documentation. Their work should be considered
 the primary resource, and this is just an example of how to apply it to fNIRS
 data for the purpose of extracting Mayer waves oscillation parameters.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Authors: Robert Luke &lt;mail@robertluke.net&gt;</span>
-<span class="c1">#</span>
-<span class="c1"># License: BSD (3-clause)</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">mne</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">fooof</span><span class="w"> </span><span class="kn">import</span> <span class="n">FOOOF</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mne.preprocessing.nirs</span><span class="w"> </span><span class="kn">import</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.beer_lambert_law.html#mne.preprocessing.nirs.beer_lambert_law" title="mne.preprocessing.nirs.beer_lambert_law" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">beer_lambert_law</span></a><span class="p">,</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.optical_density.html#mne.preprocessing.nirs.optical_density" title="mne.preprocessing.nirs.optical_density" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">optical_density</span></a>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">mne_nirs.channels</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/mne_nirs.channels.get_long_channels.html#mne_nirs.channels.get_long_channels" title="mne_nirs.channels.get_long_channels" class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function"><span class="n">get_long_channels</span></a>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mne_nirs.preprocessing</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/mne_nirs.preprocessing.quantify_mayer_fooof.html#mne_nirs.preprocessing.quantify_mayer_fooof" title="mne_nirs.preprocessing.quantify_mayer_fooof" class="sphx-glr-backref-module-mne_nirs-preprocessing sphx-glr-backref-type-py-function"><span class="n">quantify_mayer_fooof</span></a>
-</pre></div>
-</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span class="c1"># Authors: Robert Luke &lt;mail&#64;robertluke.net&gt;</span><span class="w">
+</span><span class="c1">#</span><span class="w">
+</span><span class="c1"># License: BSD (3-clause)</span><span class="w">
+</span><span class="w">
+</span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="w">
+</span><span class="w">
+</span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span><span class="nn">.</span><span class="nn">pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span><span class="w">
+</span><span class="kn">import</span><span class="w"> </span><span class="nn">mne</span><span class="w">
+</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span><span class="w">
+</span><span class="kn">from</span><span class="w"> </span><span class="nn">fooof</span><span class="w"> </span><span class="kn">import</span> <span class="n">FOOOF</span><span class="w">
+</span><span class="kn">from</span><span class="w"> </span><span class="nn">mne</span><span class="nn">.</span><span class="nn">preprocessing</span><span class="nn">.</span><span class="nn">nirs</span><span class="w"> </span><span class="kn">import</span> <a class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function reference internal" href="../../generated/mne.preprocessing.nirs.beer_lambert_law.html#mne.preprocessing.nirs.beer_lambert_law" title="mne.preprocessing.nirs.beer_lambert_law"><span class="n">beer_lambert_law</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function reference internal" href="../../generated/mne.preprocessing.nirs.optical_density.html#mne.preprocessing.nirs.optical_density" title="mne.preprocessing.nirs.optical_density"><span class="n">optical_density</span></a><span class="w">
+</span><span class="w">
+</span><span class="kn">from</span><span class="w"> </span><span class="nn">mne_nirs</span><span class="nn">.</span><span class="nn">channels</span><span class="w"> </span><span class="kn">import</span> <a class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function reference internal" href="../../generated/mne_nirs.channels.get_long_channels.html#mne_nirs.channels.get_long_channels" title="mne_nirs.channels.get_long_channels"><span class="n">get_long_channels</span></a><span class="w">
+</span><span class="kn">from</span><span class="w"> </span><span class="nn">mne_nirs</span><span class="nn">.</span><span class="nn">preprocessing</span><span class="w"> </span><span class="kn">import</span> <a class="sphx-glr-backref-module-mne_nirs-preprocessing sphx-glr-backref-type-py-function reference internal" href="../../generated/mne_nirs.preprocessing.quantify_mayer_fooof.html#mne_nirs.preprocessing.quantify_mayer_fooof" title="mne_nirs.preprocessing.quantify_mayer_fooof"><span class="n">quantify_mayer_fooof</span></a><span class="w">
+</span></pre></div></div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/circleci/project/examples/general/plot_40_mayer.py:47: DeprecationWarning:
 The `fooof` package is being deprecated and replaced by the `specparam` (spectral parameterization) package.
 This version of `fooof` (1.1) is fully functional, but will not be further updated.
 New projects are recommended to update to using `specparam` (see Changelog for details).
   from fooof import FOOOF
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
 </pre></div>
 </div>
 <section id="import-and-preprocess-data">
 <h2>Import and preprocess data<a class="headerlink" href="#import-and-preprocess-data" title="Link to this heading">#</a></h2>
 <p>We read in the data and convert to haemoglobin concentration.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_data_folder</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.datasets.fnirs_motor.data_path.html#mne.datasets.fnirs_motor.data_path" title="mne.datasets.fnirs_motor.data_path" class="sphx-glr-backref-module-mne-datasets-fnirs_motor sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fnirs_motor</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">()</span>
-<a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_raw_dir</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join" class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function"><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_data_folder</span></a><span class="p">,</span> <span class="s2">"Participant-1"</span><span class="p">)</span>
-<span class="n">raw</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.read_raw_nirx.html#mne.io.read_raw_nirx" title="mne.io.read_raw_nirx" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_raw_nirx</span></a><span class="p">(</span><a href="https://docs.python.org/3/builtins/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fnirs_raw_dir</span></a><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
-
-<span class="n">raw</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.optical_density.html#mne.preprocessing.nirs.optical_density" title="mne.preprocessing.nirs.optical_density" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">optical_density</span></a><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
-<span class="n">raw</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">raw</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.preprocessing.nirs.beer_lambert_law.html#mne.preprocessing.nirs.beer_lambert_law" title="mne.preprocessing.nirs.beer_lambert_law" class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function"><span class="n">beer_lambert_law</span></a><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">ppf</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="n">raw</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s2">"hbo"</span><span class="p">)</span>
-<span class="n">raw</span> <span class="o">=</span> <a href="../../generated/mne_nirs.channels.get_long_channels.html#mne_nirs.channels.get_long_channels" title="mne_nirs.channels.get_long_channels" class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function"><span class="n">get_long_channels</span></a><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">min_dist</span><span class="o">=</span><span class="mf">0.025</span><span class="p">,</span> <span class="n">max_dist</span><span class="o">=</span><span class="mf">0.045</span><span class="p">)</span>
-<span class="n">raw</span>
-</pre></div>
-</div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+<div class="highlight-Python notranslate"><div class="highlight"><pre><a class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath"><span class="n">fnirs_data_folder</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-mne-datasets-fnirs_motor sphx-glr-backref-type-py-function reference external" href="https://mne.tools/stable/generated/mne.datasets.fnirs_motor.data_path.html#mne.datasets.fnirs_motor.data_path" title="mne.datasets.fnirs_motor.data_path"><span class="n">mne</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fnirs_motor</span><span class="o">.</span><span class="n">data_path</span></a><span class="p">(</span><span class="p">)</span><span class="w">
+</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="str"><span class="n">fnirs_raw_dir</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-os-path sphx-glr-backref-type-py-function reference external" href="https://docs.python.org/3/library/os.path.html#os.path.join" title="os.path.join"><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span></a><span class="p">(</span><a class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath"><span class="n">fnirs_data_folder</span></a><span class="p">,</span> <span class="s2">&quot;</span><span class="s2">Participant-1</span><span class="s2">&quot;</span><span class="p">)</span><span class="w">
+</span><span class="n">raw</span> <span class="o">=</span> <a class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-function reference internal" href="../../generated/mne.io.read_raw_nirx.html#mne.io.read_raw_nirx" title="mne.io.read_raw_nirx"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_raw_nirx</span></a><span class="p">(</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="str"><span class="n">fnirs_raw_dir</span></a><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="p">)</span><span class="w">
+</span><span class="w">
+</span><span class="n">raw</span> <span class="o">=</span> <a class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function reference internal" href="../../generated/mne.preprocessing.nirs.optical_density.html#mne.preprocessing.nirs.optical_density" title="mne.preprocessing.nirs.optical_density"><span class="n">optical_density</span></a><span class="p">(</span><span class="n">raw</span><span class="p">)</span><span class="w">
+</span><span class="n">raw</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span><span class="n">raw</span> <span class="o">=</span> <a class="sphx-glr-backref-module-mne-preprocessing-nirs sphx-glr-backref-type-py-function reference internal" href="../../generated/mne.preprocessing.nirs.beer_lambert_law.html#mne.preprocessing.nirs.beer_lambert_law" title="mne.preprocessing.nirs.beer_lambert_law"><span class="n">beer_lambert_law</span></a><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">ppf</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span><span class="w">
+</span><span class="n">raw</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="n">picks</span><span class="o">=</span><span class="s2">&quot;</span><span class="s2">hbo</span><span class="s2">&quot;</span><span class="p">)</span><span class="w">
+</span><span class="n">raw</span> <span class="o">=</span> <a class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function reference internal" href="../../generated/mne_nirs.channels.get_long_channels.html#mne_nirs.channels.get_long_channels" title="mne_nirs.channels.get_long_channels"><span class="n">get_long_channels</span></a><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">min_dist</span><span class="o">=</span><span class="mf">0.025</span><span class="p">,</span> <span class="n">max_dist</span><span class="o">=</span><span class="mf">0.045</span><span class="p">)</span><span class="w">
+</span><span class="n">raw</span><span class="w">
+</span></pre></div></div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
 Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
 </pre></div>
 </div>
@@ -673,9 +671,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header general-afb32f73-2c83-4f70-9044-13cd7c121ad2"
+<tr class="mne-repr-section-header general-f109e803-a7f3-4269-b41f-0c5fdeee5471"
      title="Hide section"
-    onclick="toggleVisibility('general-afb32f73-2c83-4f70-9044-13cd7c121ad2')">
+    onclick="toggleVisibility('general-f109e803-a7f3-4269-b41f-0c5fdeee5471')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -687,7 +685,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element general-afb32f73-2c83-4f70-9044-13cd7c121ad2 ">
+<tr class="repr-element general-f109e803-a7f3-4269-b41f-0c5fdeee5471 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Filename(s)</td>
     <td>
@@ -698,19 +696,19 @@ this file apply (plus whatever default styling the IDE applies).
     </td>
 </tr>
 
-<tr class="repr-element general-afb32f73-2c83-4f70-9044-13cd7c121ad2 ">
+<tr class="repr-element general-f109e803-a7f3-4269-b41f-0c5fdeee5471 ">
     <td class="mne-repr-section-toggle"></td>
     <td>MNE object type</td>
     <td>RawNIRX</td>
 </tr>
-<tr class="repr-element general-afb32f73-2c83-4f70-9044-13cd7c121ad2 ">
+<tr class="repr-element general-f109e803-a7f3-4269-b41f-0c5fdeee5471 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Measurement date</td>
 
     <td>2019-11-02 at 13:16:16 UTC</td>
 
 </tr>
-<tr class="repr-element general-afb32f73-2c83-4f70-9044-13cd7c121ad2 ">
+<tr class="repr-element general-f109e803-a7f3-4269-b41f-0c5fdeee5471 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Participant</td>
 
@@ -719,7 +717,7 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 </tr>
-<tr class="repr-element general-afb32f73-2c83-4f70-9044-13cd7c121ad2 ">
+<tr class="repr-element general-f109e803-a7f3-4269-b41f-0c5fdeee5471 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Experimenter</td>
 
@@ -734,9 +732,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header acquisition-719d41f3-ae80-45ba-9956-a3e707e6fad8"
+<tr class="mne-repr-section-header acquisition-0b7d77af-3093-4ed2-8b28-bd4e705be3f3"
      title="Hide section"
-    onclick="toggleVisibility('acquisition-719d41f3-ae80-45ba-9956-a3e707e6fad8')">
+    onclick="toggleVisibility('acquisition-0b7d77af-3093-4ed2-8b28-bd4e705be3f3')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -748,7 +746,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element acquisition-719d41f3-ae80-45ba-9956-a3e707e6fad8 ">
+<tr class="repr-element acquisition-0b7d77af-3093-4ed2-8b28-bd4e705be3f3 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Duration</td>
     <td>00:49:35 (HH:MM:SS)</td>
@@ -761,14 +759,14 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="repr-element acquisition-719d41f3-ae80-45ba-9956-a3e707e6fad8 ">
+<tr class="repr-element acquisition-0b7d77af-3093-4ed2-8b28-bd4e705be3f3 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Sampling frequency</td>
     <td>2.00 Hz</td>
 </tr>
 
 
-<tr class="repr-element acquisition-719d41f3-ae80-45ba-9956-a3e707e6fad8 ">
+<tr class="repr-element acquisition-0b7d77af-3093-4ed2-8b28-bd4e705be3f3 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Time points</td>
     <td>5,949</td>
@@ -783,9 +781,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header channels-00fecc77-e7cc-4db8-afd6-cc56da025644"
+<tr class="mne-repr-section-header channels-cdf53ac6-9c4d-46a1-a2d2-617781761a8f"
      title="Hide section"
-    onclick="toggleVisibility('channels-00fecc77-e7cc-4db8-afd6-cc56da025644')">
+    onclick="toggleVisibility('channels-cdf53ac6-9c4d-46a1-a2d2-617781761a8f')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -798,7 +796,7 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="repr-element channels-00fecc77-e7cc-4db8-afd6-cc56da025644 ">
+<tr class="repr-element channels-cdf53ac6-9c4d-46a1-a2d2-617781761a8f ">
     <td class="mne-repr-section-toggle"></td>
     <td>Oxyhemoglobin</td>
     <td>
@@ -811,7 +809,7 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element channels-00fecc77-e7cc-4db8-afd6-cc56da025644 ">
+<tr class="repr-element channels-cdf53ac6-9c4d-46a1-a2d2-617781761a8f ">
     <td class="mne-repr-section-toggle"></td>
     <td>Head & sensor digitization</td>
 
@@ -826,9 +824,9 @@ this file apply (plus whatever default styling the IDE applies).
 
 
 
-<tr class="mne-repr-section-header filters-819ea98d-1807-4419-9836-144c0c636c47"
+<tr class="mne-repr-section-header filters-047d297e-c788-486c-b5d1-89806765c826"
      title="Hide section"
-    onclick="toggleVisibility('filters-819ea98d-1807-4419-9836-144c0c636c47')">
+    onclick="toggleVisibility('filters-047d297e-c788-486c-b5d1-89806765c826')">
     <th class="mne-repr-section-toggle">
         <button >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -840,14 +838,14 @@ this file apply (plus whatever default styling the IDE applies).
 </tr>
 
 
-<tr class="repr-element filters-819ea98d-1807-4419-9836-144c0c636c47 ">
+<tr class="repr-element filters-047d297e-c788-486c-b5d1-89806765c826 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Highpass</td>
     <td>0.00 Hz</td>
 </tr>
 
 
-<tr class="repr-element filters-819ea98d-1807-4419-9836-144c0c636c47 ">
+<tr class="repr-element filters-047d297e-c788-486c-b5d1-89806765c826 ">
     <td class="mne-repr-section-toggle"></td>
     <td>Lowpass</td>
     <td>1.00 Hz</td>
@@ -874,64 +872,63 @@ across neighbouring frequencies. Additionally, the peak does not occur
 at exactly 0.1 Hz, but instead seems to peak at approximately 0.09 Hz.
 The shaded area illustrates the oscillation fitted by the FOOOF algorithm,
 it matches well to the data.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">scale_up_spectra</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">spectra</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    FOOOF requires the frequency values to be higher than the fNIRS data</span>
-<span class="sd">    permits, so we scale the values up by 10 here, and then will scale</span>
-<span class="sd">    the frequency values down by 10 later.</span>
-<span class="sd">    """</span>
-    <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a> <span class="o">=</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a> <span class="o">*</span> <span class="mi">10</span>
-    <span class="k">return</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">spectra</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span class="k">def</span><span class="w"> </span><span class="nf">scale_up_spectra</span><span class="p">(</span><a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">spectra</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">freqs</span></a><span class="p">)</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;
+    FOOOF requires the frequency values to be higher than the fNIRS data
+    permits, so we scale the values up by 10 here, and then will scale
+    the frequency values down by 10 later.
+    &quot;&quot;&quot;</span><span class="w">
+</span>    <a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">freqs</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">freqs</span></a> <span class="o">*</span> <span class="mi">10</span><span class="w">
+</span>    <span class="k">return</span> <a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">spectra</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">freqs</span></a><span class="w">
+</span><span class="w">
+</span><span class="w">
+</span><span class="c1"># Prepare data for FOOOF</span><span class="w">
+</span><a class="sphx-glr-backref-module-mne-time_frequency sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://mne.tools/stable/generated/mne.time_frequency.Spectrum.html#mne.time_frequency.Spectrum" title="mne.time_frequency.Spectrum"><span class="n">psd</span></a> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">compute_psd</span><span class="p">(</span><span class="n">fmin</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">fmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_overlap</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">n_fft</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span><span class="w">
+</span><a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">spectra</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">freqs</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-mne-time_frequency sphx-glr-backref-type-py-method reference external" href="https://mne.tools/stable/generated/mne.time_frequency.Spectrum.html#mne.time_frequency.Spectrum.get_data" title="mne.time_frequency.Spectrum.get_data"><span class="n">psd</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">(</span><span class="n">return_freqs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="w">
+</span><a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">spectra</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">freqs</span></a> <span class="o">=</span> <span class="n">scale_up_spectra</span><span class="p">(</span><a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">spectra</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">freqs</span></a><span class="p">)</span><span class="w">
+</span><span class="w">
+</span><span class="c1"># Specify the model, note that frequency values here are times 10</span><span class="w">
+</span><span class="n">fm</span> <span class="o">=</span> <span class="n">FOOOF</span><span class="p">(</span><span class="n">peak_width_limits</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">12.0</span><span class="p">)</span><span class="p">)</span><span class="w">
+</span><span class="c1"># Set the frequency range to fit the model, again these are times 10</span><span class="w">
+</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="list"><span class="n">freq_range</span></a> <span class="o">=</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span><span class="w">
+</span><span class="w">
+</span><span class="n">fm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">freqs</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function reference external" href="https://numpy.org/devdocs/reference/generated/numpy.mean.html#numpy.mean" title="numpy.mean"><span class="n">np</span><span class="o">.</span><span class="n">mean</span></a><span class="p">(</span><a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">spectra</span></a><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="p">,</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="list"><span class="n">freq_range</span></a><span class="p">)</span><span class="w">
+</span><span class="w">
+</span><a class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure"><span class="n">fig</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes"><span class="n">axs</span></a> <span class="o">=</span> <a class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="p">)</span><span class="w">
+</span><span class="n">fm</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">plot_peaks</span><span class="o">=</span><span class="s2">&quot;</span><span class="s2">shade</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">data_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;</span><span class="s2">color</span><span class="s2">&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="s2">orange</span><span class="s2">&quot;</span><span class="p">}</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><a class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes"><span class="n">axs</span></a><span class="p">)</span><span class="w">
+</span><span class="c1"># Correct for x10 scaling above</span><span class="w">
+</span><a class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xticks.html#matplotlib.pyplot.xticks" title="matplotlib.pyplot.xticks"><span class="n">plt</span><span class="o">.</span><span class="n">xticks</span></a><span class="p">(</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">]</span><span class="p">)</span><span class="w">
+</span></pre></div></div>
+<img src="../../_images/sphx_glr_plot_40_mayer_001.png" srcset="../../_images/sphx_glr_plot_40_mayer_001.png" alt="plot 40 mayer" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  self.pid = os.fork()
 
-
-<span class="c1"># Prepare data for FOOOF</span>
-<a href="https://mne.tools/stable/generated/mne.time_frequency.Spectrum.html#mne.time_frequency.Spectrum" title="mne.time_frequency.Spectrum" class="sphx-glr-backref-module-mne-time_frequency sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">psd</span></a> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">compute_psd</span><span class="p">(</span><span class="n">fmin</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">fmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_overlap</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">n_fft</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
-<a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">spectra</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.time_frequency.Spectrum.html#mne.time_frequency.Spectrum.get_data" title="mne.time_frequency.Spectrum.get_data" class="sphx-glr-backref-module-mne-time_frequency sphx-glr-backref-type-py-method"><span class="n">psd</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">(</span><span class="n">return_freqs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">spectra</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a> <span class="o">=</span> <span class="n">scale_up_spectra</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">spectra</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a><span class="p">)</span>
-
-<span class="c1"># Specify the model, note that frequency values here are times 10</span>
-<span class="n">fm</span> <span class="o">=</span> <span class="n">FOOOF</span><span class="p">(</span><span class="n">peak_width_limits</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">12.0</span><span class="p">))</span>
-<span class="c1"># Set the frequency range to fit the model, again these are times 10</span>
-<a href="https://docs.python.org/3/builtins/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freq_range</span></a> <span class="o">=</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
-
-<span class="n">fm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a><span class="p">,</span> <a href="https://numpy.org/devdocs/reference/generated/numpy.mean.html#numpy.mean" title="numpy.mean" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">mean</span></a><span class="p">(</span><a href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">spectra</span></a><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <a href="https://docs.python.org/3/builtins/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freq_range</span></a><span class="p">)</span>
-
-<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axs</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">fm</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">plot_peaks</span><span class="o">=</span><span class="s2">"shade"</span><span class="p">,</span> <span class="n">data_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">"color"</span><span class="p">:</span> <span class="s2">"orange"</span><span class="p">},</span> <span class="n">ax</span><span class="o">=</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axs</span></a><span class="p">)</span>
-<span class="c1"># Correct for x10 scaling above</span>
-<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xticks.html#matplotlib.pyplot.xticks" title="matplotlib.pyplot.xticks" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">xticks</span></a><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">])</span>
-</pre></div>
-</div>
-<img src="../../_images/sphx_glr_plot_40_mayer_001.png" srcset="../../_images/sphx_glr_plot_40_mayer_001.png" alt="plot 40 mayer" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
-  self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
-  self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
-  self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
-  self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
-  self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
-  self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
-  self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
-  self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
-  self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
-  self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
-  self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
-  self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
-  self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
-  self.pid = os.fork()
-
-([&lt;matplotlib.axis.XTick object at 0x705ada4ff6e0&gt;, &lt;matplotlib.axis.XTick object at 0x705adabe6a20&gt;, &lt;matplotlib.axis.XTick object at 0x705ada813a70&gt;, &lt;matplotlib.axis.XTick object at 0x705ada810bc0&gt;, &lt;matplotlib.axis.XTick object at 0x705ada932660&gt;, &lt;matplotlib.axis.XTick object at 0x705adaa3deb0&gt;, &lt;matplotlib.axis.XTick object at 0x705adaa3d070&gt;], [Text(0, 0, '0.0'), Text(1, 0, '0.1'), Text(2, 0, '0.2'), Text(3, 0, '0.3'), Text(4, 0, '0.4'), Text(5, 0, '0.5'), Text(6, 0, '0.6')])
+([&lt;matplotlib.axis.XTick object at 0x71221c275e50&gt;, &lt;matplotlib.axis.XTick object at 0x712200bc2e10&gt;, &lt;matplotlib.axis.XTick object at 0x712200bc3d10&gt;, &lt;matplotlib.axis.XTick object at 0x712200bc3fe0&gt;, &lt;matplotlib.axis.XTick object at 0x712200da53a0&gt;, &lt;matplotlib.axis.XTick object at 0x712209c21040&gt;, &lt;matplotlib.axis.XTick object at 0x712209c20d10&gt;], [Text(0, 0, '0.0'), Text(1, 0, '0.1'), Text(2, 0, '0.2'), Text(3, 0, '0.3'), Text(4, 0, '0.4'), Text(5, 0, '0.5'), Text(6, 0, '0.6')])
 </pre></div>
 </div>
 </section>
@@ -943,36 +940,35 @@ most likely associated with the Mayer wave. It returns this data in a pandas
 dataframe for your convenience.
 It uses the FOOOF algorithm under the hood, so ensure you cite the original
 authors if you use this function.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../../generated/mne_nirs.preprocessing.quantify_mayer_fooof.html#mne_nirs.preprocessing.quantify_mayer_fooof" title="mne_nirs.preprocessing.quantify_mayer_fooof" class="sphx-glr-backref-module-mne_nirs-preprocessing sphx-glr-backref-type-py-function"><span class="n">quantify_mayer_fooof</span></a><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="s2">"hbo"</span><span class="p">),</span> <span class="n">extra_df_fields</span><span class="o">=</span><span class="p">{</span><span class="s2">"Study"</span><span class="p">:</span> <span class="s2">"Online tutorial"</span><span class="p">})</span>
-</pre></div>
-</div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+<div class="highlight-Python notranslate"><div class="highlight"><pre><a class="sphx-glr-backref-module-mne_nirs-preprocessing sphx-glr-backref-type-py-function reference internal" href="../../generated/mne_nirs.preprocessing.quantify_mayer_fooof.html#mne_nirs.preprocessing.quantify_mayer_fooof" title="mne_nirs.preprocessing.quantify_mayer_fooof"><span class="n">quantify_mayer_fooof</span></a><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">pick</span><span class="p">(</span><span class="s2">&quot;</span><span class="s2">hbo</span><span class="s2">&quot;</span><span class="p">)</span><span class="p">,</span> <span class="n">extra_df_fields</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;</span><span class="s2">Study</span><span class="s2">&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="s2">Online tutorial</span><span class="s2">&quot;</span><span class="p">}</span><span class="p">)</span><span class="w">
+</span></pre></div></div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
-/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7103) is multi-threaded, use of fork() may lead to deadlocks in the child.
+/usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7113) is multi-threaded, use of fork() may lead to deadlocks in the child.
   self.pid = os.fork()
 </pre></div>
 </div>
@@ -1054,7 +1050,7 @@ for how to use short channels in either a GLM or averaging analysis with MNE-NIR
 </aside>
 </aside>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.932 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.738 seconds)</p>
 <p><strong>Estimated memory usage:</strong>  420 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-40-mayer-py">
 <div class="binder-badge docutils container">
@@ -1168,7 +1164,7 @@ for how to use short channels in either a GLM or averaging analysis with MNE-NIR
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-09-14T21:11:30.209452+00:00" class="localized">2026-09-14 21:11 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-09-21T20:57:57.519758+00:00" class="localized">2026-09-21 20:57 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

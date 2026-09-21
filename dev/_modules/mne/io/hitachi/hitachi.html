@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne.io.hitachi.hitachi &#8212; MNE-NIRS 0.8.0.dev71+g4998adc9d documentation</title>
+    <title>mne.io.hitachi.hitachi &#8212; MNE-NIRS 0.8.0.dev72+g4a66a23e7 documentation</title>
   
   
   
@@ -30,7 +30,7 @@
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/pydata-sphinx-theme.css?v=3ab4e28d" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=c83e6b79" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../../_static/documentation_options.js?v=defdf1bb"></script>
+    <script src="../../../../_static/documentation_options.js?v=50e8c7b5"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -385,14 +385,21 @@ document.write(`
 <span class="kn">from</span><span class="w"> </span><span class="nn">..._fiff.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">FIFF</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..._fiff.meas_info</span><span class="w"> </span><span class="kn">import</span> <span class="n">_merge_info</span><span class="p">,</span> <span class="n">create_info</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..._fiff.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_mult_cal_one</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">...utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_check_fname</span><span class="p">,</span> <span class="n">_check_option</span><span class="p">,</span> <span class="n">fill_doc</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">warn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_check_fname</span><span class="p">,</span>
+    <span class="n">_check_option</span><span class="p">,</span>
+    <span class="n">_verbose_control</span><span class="p">,</span>
+    <span class="n">fill_doc_static</span><span class="p">,</span>
+    <span class="n">logger</span><span class="p">,</span>
+    <span class="n">warn</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseRaw</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..nirx.nirx</span><span class="w"> </span><span class="kn">import</span> <span class="n">_read_csv_rows_cols</span>
 
 
 <div class="viewcode-block" id="read_raw_hitachi">
 <a class="viewcode-back" href="../../../../generated/mne.io.read_raw_hitachi.html#mne.io.read_raw_hitachi">[docs]</a>
-<span class="nd">@fill_doc</span>
+<span class="nd">@fill_doc_static</span><span class="p">(</span><span class="s2">"hitachi_fname"</span><span class="p">,</span> <span class="s2">"preload"</span><span class="p">,</span> <span class="s2">"verbose"</span><span class="p">,</span> <span class="s2">"hitachi_notes"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">read_raw_hitachi</span><span class="p">(</span>
     <span class="n">fname</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">preload</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -402,9 +409,31 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    %(hitachi_fname)s</span>
-<span class="sd">    %(preload)s</span>
-<span class="sd">    %(verbose)s</span>
+<span class="sd">    fname : list | str</span>
+<span class="sd">        Path(s) to the Hitachi CSV file(s). This should only be a list for</span>
+<span class="sd">        multiple probes that were acquired simultaneously.</span>
+
+<span class="sd">        .. versionchanged:: 1.2</span>
+<span class="sd">            Added support for list-of-str.</span>
+<span class="sd">    preload : bool | str</span>
+<span class="sd">        Preload data into memory for data manipulation and faster indexing.</span>
+<span class="sd">        If True, the data will be preloaded into memory (fast, requires</span>
+<span class="sd">        large amount of memory). If preload is a string, it is the name of a</span>
+<span class="sd">        freshly created memory-mapped file used to store the data on the hard</span>
+<span class="sd">        drive (slower, requires less memory). An existing file is overwritten.</span>
+<span class="sd">        The caller owns the file and is responsible for removing it after the</span>
+<span class="sd">        Raw object is no longer in use. For supported Raw readers, the exact string</span>
+<span class="sd">        ``"auto"`` instead reuses decoded data below the directory configured by</span>
+<span class="sd">        :func:`mne.set_cache_dir`. Entries persist without a size limit and are mapped</span>
+<span class="sd">        copy-on-write. Use ``Path("auto")`` for a literal filename.</span>
+
+<span class="sd">        .. versionchanged:: 1.13</span>
+<span class="sd">           Support for the ``"auto"`` decoded-data cache was added.</span>
+<span class="sd">    verbose : bool | str | int | None</span>
+<span class="sd">        Control verbosity of the logging output. If ``None``, use the default</span>
+<span class="sd">        verbosity level. See the :ref:`logging documentation &lt;tut-logging&gt;` and</span>
+<span class="sd">        :func:`mne.verbose` for details. Should only be passed as a keyword</span>
+<span class="sd">        argument.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -418,7 +447,55 @@ document.write(`
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    %(hitachi_notes)s</span>
+<span class="sd">    Hitachi does not encode their channel positions, so you will need to</span>
+<span class="sd">    create a suitable mapping using :func:`mne.channels.make_standard_montage`</span>
+<span class="sd">    or :func:`mne.channels.make_dig_montage` like (for a 3x5/ETG-7000 example):</span>
+
+<span class="sd">    &gt;&gt;&gt; mon = mne.channels.make_standard_montage('spherical_1005')</span>
+<span class="sd">    &gt;&gt;&gt; need = 'S1 D1 S2 D2 S3 D3 S4 D4 S5 D5 S6 D6 S7 D7 S8'.split()</span>
+<span class="sd">    &gt;&gt;&gt; have = 'F3 FC3 C3 CP3 P3 F5 FC5 C5 CP5 P5 F7 FT7 T7 TP7 P7'.split()</span>
+<span class="sd">    &gt;&gt;&gt; mon.rename_channels(dict(zip(have, need)))  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; raw.set_montage(mon)  # doctest: +SKIP</span>
+
+<span class="sd">    The 3x3 (ETG-100) is laid out as two separate layouts::</span>
+
+<span class="sd">        S1--D1--S2    S6--D6--S7</span>
+<span class="sd">        |   |   |     |   |   |</span>
+<span class="sd">        D2--S3--D3    D7--S8--D8</span>
+<span class="sd">        |   |   |     |   |   |</span>
+<span class="sd">        S4--D4--S5    S9--D9--S10</span>
+
+<span class="sd">    The 3x5 (ETG-7000) is laid out as::</span>
+
+<span class="sd">        S1--D1--S2--D2--S3</span>
+<span class="sd">        |   |   |   |   |</span>
+<span class="sd">        D3--S4--D4--S5--D5</span>
+<span class="sd">        |   |   |   |   |</span>
+<span class="sd">        S6--D6--S7--D7--S8</span>
+
+<span class="sd">    The 4x4 (ETG-7000) is laid out as::</span>
+
+<span class="sd">        S1--D1--S2--D2</span>
+<span class="sd">        |   |   |   |</span>
+<span class="sd">        D3--S3--D4--S4</span>
+<span class="sd">        |   |   |   |</span>
+<span class="sd">        S5--D5--S6--D6</span>
+<span class="sd">        |   |   |   |</span>
+<span class="sd">        D7--S7--D8--S8</span>
+
+<span class="sd">    The 3x11 (ETG-4000) is laid out as::</span>
+
+<span class="sd">        S1--D1--S2--D2--S3--D3--S4--D4--S5--D5--S6</span>
+<span class="sd">        |   |   |   |   |   |   |   |   |   |   |</span>
+<span class="sd">        D6--S7--D7--S8--D8--S9--D9--S10-D10-S11-D11</span>
+<span class="sd">        |   |   |   |   |   |   |   |   |   |   |</span>
+<span class="sd">        S12-D12-S13-D13-S14-D14-S16-D16-S17-D17-S18</span>
+
+<span class="sd">    For each layout, the channels come from the (left-to-right) neighboring</span>
+<span class="sd">    source-detector pairs in the first row, then between the first and second row,</span>
+<span class="sd">    then the second row, etc.</span>
+
+<span class="sd">    .. versionadded:: 0.24</span>
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="n">RawHitachi</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">preload</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span></div>
 
@@ -429,15 +506,37 @@ document.write(`
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Could not parse file: </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 
-<span class="nd">@fill_doc</span>
+<span class="nd">@fill_doc_static</span><span class="p">(</span><span class="s2">"hitachi_fname"</span><span class="p">,</span> <span class="s2">"preload"</span><span class="p">,</span> <span class="s2">"verbose"</span><span class="p">,</span> <span class="s2">"hitachi_notes"</span><span class="p">)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">RawHitachi</span><span class="p">(</span><span class="n">BaseRaw</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Raw object from a Hitachi fNIRS file.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    %(hitachi_fname)s</span>
-<span class="sd">    %(preload)s</span>
-<span class="sd">    %(verbose)s</span>
+<span class="sd">    fname : list | str</span>
+<span class="sd">        Path(s) to the Hitachi CSV file(s). This should only be a list for</span>
+<span class="sd">        multiple probes that were acquired simultaneously.</span>
+
+<span class="sd">        .. versionchanged:: 1.2</span>
+<span class="sd">            Added support for list-of-str.</span>
+<span class="sd">    preload : bool | str</span>
+<span class="sd">        Preload data into memory for data manipulation and faster indexing.</span>
+<span class="sd">        If True, the data will be preloaded into memory (fast, requires</span>
+<span class="sd">        large amount of memory). If preload is a string, it is the name of a</span>
+<span class="sd">        freshly created memory-mapped file used to store the data on the hard</span>
+<span class="sd">        drive (slower, requires less memory). An existing file is overwritten.</span>
+<span class="sd">        The caller owns the file and is responsible for removing it after the</span>
+<span class="sd">        Raw object is no longer in use. For supported Raw readers, the exact string</span>
+<span class="sd">        ``"auto"`` instead reuses decoded data below the directory configured by</span>
+<span class="sd">        :func:`mne.set_cache_dir`. Entries persist without a size limit and are mapped</span>
+<span class="sd">        copy-on-write. Use ``Path("auto")`` for a literal filename.</span>
+
+<span class="sd">        .. versionchanged:: 1.13</span>
+<span class="sd">           Support for the ``"auto"`` decoded-data cache was added.</span>
+<span class="sd">    verbose : bool | str | int | None</span>
+<span class="sd">        Control verbosity of the logging output. If ``None``, use the default</span>
+<span class="sd">        verbosity level. See the :ref:`logging documentation &lt;tut-logging&gt;` and</span>
+<span class="sd">        :func:`mne.verbose` for details. Should only be passed as a keyword</span>
+<span class="sd">        argument.</span>
 
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
@@ -445,10 +544,58 @@ document.write(`
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    %(hitachi_notes)s</span>
+<span class="sd">    Hitachi does not encode their channel positions, so you will need to</span>
+<span class="sd">    create a suitable mapping using :func:`mne.channels.make_standard_montage`</span>
+<span class="sd">    or :func:`mne.channels.make_dig_montage` like (for a 3x5/ETG-7000 example):</span>
+
+<span class="sd">    &gt;&gt;&gt; mon = mne.channels.make_standard_montage('spherical_1005')</span>
+<span class="sd">    &gt;&gt;&gt; need = 'S1 D1 S2 D2 S3 D3 S4 D4 S5 D5 S6 D6 S7 D7 S8'.split()</span>
+<span class="sd">    &gt;&gt;&gt; have = 'F3 FC3 C3 CP3 P3 F5 FC5 C5 CP5 P5 F7 FT7 T7 TP7 P7'.split()</span>
+<span class="sd">    &gt;&gt;&gt; mon.rename_channels(dict(zip(have, need)))  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; raw.set_montage(mon)  # doctest: +SKIP</span>
+
+<span class="sd">    The 3x3 (ETG-100) is laid out as two separate layouts::</span>
+
+<span class="sd">        S1--D1--S2    S6--D6--S7</span>
+<span class="sd">        |   |   |     |   |   |</span>
+<span class="sd">        D2--S3--D3    D7--S8--D8</span>
+<span class="sd">        |   |   |     |   |   |</span>
+<span class="sd">        S4--D4--S5    S9--D9--S10</span>
+
+<span class="sd">    The 3x5 (ETG-7000) is laid out as::</span>
+
+<span class="sd">        S1--D1--S2--D2--S3</span>
+<span class="sd">        |   |   |   |   |</span>
+<span class="sd">        D3--S4--D4--S5--D5</span>
+<span class="sd">        |   |   |   |   |</span>
+<span class="sd">        S6--D6--S7--D7--S8</span>
+
+<span class="sd">    The 4x4 (ETG-7000) is laid out as::</span>
+
+<span class="sd">        S1--D1--S2--D2</span>
+<span class="sd">        |   |   |   |</span>
+<span class="sd">        D3--S3--D4--S4</span>
+<span class="sd">        |   |   |   |</span>
+<span class="sd">        S5--D5--S6--D6</span>
+<span class="sd">        |   |   |   |</span>
+<span class="sd">        D7--S7--D8--S8</span>
+
+<span class="sd">    The 3x11 (ETG-4000) is laid out as::</span>
+
+<span class="sd">        S1--D1--S2--D2--S3--D3--S4--D4--S5--D5--S6</span>
+<span class="sd">        |   |   |   |   |   |   |   |   |   |   |</span>
+<span class="sd">        D6--S7--D7--S8--D8--S9--D9--S10-D10-S11-D11</span>
+<span class="sd">        |   |   |   |   |   |   |   |   |   |   |</span>
+<span class="sd">        S12-D12-S13-D13-S14-D14-S16-D16-S17-D17-S18</span>
+
+<span class="sd">    For each layout, the channels come from the (left-to-right) neighboring</span>
+<span class="sd">    source-detector pairs in the first row, then between the first and second row,</span>
+<span class="sd">    then the second row, etc.</span>
+
+<span class="sd">    .. versionadded:: 0.24</span>
 <span class="sd">    """</span>
 
-    <span class="nd">@verbose</span>
+    <span class="nd">@_verbose_control</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="n">fname</span> <span class="o">=</span> <span class="p">[</span><span class="n">fname</span><span class="p">]</span>
@@ -524,7 +671,8 @@ document.write(`
     <span class="n">subject_info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="n">ch_wavelengths</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="n">fnirs_wavelengths</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">meas_date</span> <span class="o">=</span> <span class="n">age</span> <span class="o">=</span> <span class="n">ch_names</span> <span class="o">=</span> <span class="n">sfreq</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">meas_date</span> <span class="o">=</span> <span class="n">age</span> <span class="o">=</span> <span class="n">ch_names</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">sfreq</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="n">fid</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
     <span class="n">lines</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">"latin-1"</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">"</span><span class="se">\r\n</span><span class="s2">"</span><span class="p">)</span>
@@ -688,6 +836,7 @@ document.write(`
     <span class="k">if</span> <span class="n">subject_info</span><span class="p">:</span>
         <span class="n">info_extra</span><span class="p">[</span><span class="s2">"subject_info"</span><span class="p">]</span> <span class="o">=</span> <span class="n">subject_info</span>
 
+    <span class="k">assert</span> <span class="n">sfreq</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">"failed to determine sampling frequency from file header"</span>
     <span class="c1"># Create mne structure</span>
     <span class="n">info</span> <span class="o">=</span> <span class="n">create_info</span><span class="p">(</span><span class="n">ch_names</span><span class="p">,</span> <span class="n">sfreq</span><span class="p">,</span> <span class="n">ch_types</span><span class="o">=</span><span class="n">ch_types</span><span class="p">)</span>
     <span class="k">with</span> <span class="n">info</span><span class="o">.</span><span class="n">_unlock</span><span class="p">():</span>
@@ -770,7 +919,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-09-14T21:11:30.209452+00:00" class="localized">2026-09-14 21:11 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-09-21T20:57:57.519758+00:00" class="localized">2026-09-21 20:57 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
