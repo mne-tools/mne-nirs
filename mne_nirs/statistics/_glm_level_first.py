@@ -5,7 +5,6 @@
 import warnings
 from copy import deepcopy
 from inspect import getfullargspec
-from pathlib import PosixPath
 
 import numpy as np
 import pandas as pd
@@ -112,8 +111,7 @@ class _BaseGLM(ContainsMixin):
         %(overwrite)s
         """
         _validate_type(fname, "path-like", "fname")
-        if isinstance(fname, PosixPath):
-            fname = str(fname)
+        fname = str(fname)
         if not fname.endswith("glm.h5"):
             raise OSError(
                 f"The filename must end with glm.h5, instead received {fname}"
