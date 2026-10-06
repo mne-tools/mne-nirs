@@ -5,7 +5,13 @@ version: 2.1
 jobs:
     build_docs:
       machine:
-        image: ubuntu-2404:current
+        # gen3 resource classes are only valid with the `current` tag, not a pinned
+        # dated tag -- a pinned tag is rejected with "is not a valid resource class"
+        image: ubuntu-2604:current
+      # large.gen3 4 vCPUs 16GiB mem -- gen3 is an open beta, and is both faster
+      # and cheaper per minute than gen1 large (14 vs 20 credits/min); revert to
+      # `large` if beta queue times or reliability become a problem
+      resource_class: large.gen3
       steps:
         - restore_cache:
             keys:
@@ -48,11 +54,13 @@ jobs:
             command: |
               set -e
               set -o pipefail
-              ./tools/setup_xvfb.sh
-              sudo apt install -qq graphviz optipng python3.12-venv python3-venv libxft2 ffmpeg
-              python3.12 -m venv ~/python_env
+              curl -fsSL https://raw.githubusercontent.com/mne-tools/mne-tools/main/tools/setup_xvfb.sh | timeout 600 bash
+              sudo apt install -qq graphviz libgvplugin-neato-layout8 optipng python3-venv libxft2 ffmpeg
+              python3 -m venv ~/python_env
               echo "set -e" >> $BASH_ENV
-              echo "export OPENBLAS_NUM_THREADS=4" >> $BASH_ENV
+              # Run 4 gallery examples at once (one per vCPU), each single-threaded
+              echo "export OPENBLAS_NUM_THREADS=1" >> $BASH_ENV
+              echo "export MNE_DOC_BUILD_N_JOBS=4" >> $BASH_ENV
               echo "export XDG_RUNTIME_DIR=/tmp/runtime-circleci" >> $BASH_ENV
               echo "export MNE_FULL_DATE=true" >> $BASH_ENV
               echo "export MNE_3D_BACKEND=pyvistaqt" >> $BASH_ENV
@@ -73,9 +81,6 @@ jobs:
         - restore_cache:
             keys:
               - pip-cache-0
-        - restore_cache:
-            keys:
-              - user-install-bin-cache-0
 
         # Hack in uninstalls of libraries as necessary if pip doesn't do the right thing in upgrading for us...
         - run:
@@ -87,11 +92,6 @@ jobs:
             key: pip-cache-0
             paths:
               - ~/.cache/pip
-        - save_cache:
-            key: user-install-bin-cache-0
-            paths:
-              - ~/.local/lib/python3.12/site-packages
-              - ~/.local/bin
 
         - run:
             name: Download fOLD data

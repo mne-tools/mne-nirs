@@ -13,13 +13,10 @@
 
 import os
 import sys
-import warnings
 from datetime import datetime, timezone
 
 import mne
 import sphinx.util.logging
-from mne.fixes import _compare_version
-from sphinx_gallery.sorting import FileNameSortKey
 
 import mne_nirs
 
@@ -378,35 +375,21 @@ intersphinx_mapping = {
     "statsmodels": ("https://www.statsmodels.org/stable", None),
 }
 
-scrapers = ("matplotlib",)
-try:
-    mne.viz.set_3d_backend(mne.viz.get_3d_backend())
-except Exception:
-    report_scraper = None
-else:
-    backend = mne.viz.get_3d_backend()
-    if backend in ("notebook", "pyvistaqt"):
-        with warnings.catch_warnings():
-            warnings.filterwarnings("ignore", category=DeprecationWarning)
-            import pyvista
-        pyvista.OFF_SCREEN = False
-        pyvista.BUILDING_GALLERY = True
-        scrapers += (
-            mne.gui._GUIScraper(),
-            mne.viz._brain._BrainScraper(),
-            "pyvista",
-        )
-    report_scraper = mne.report._ReportScraper()
-    scrapers += (report_scraper,)
-    del backend
-try:
-    import mne_qt_browser
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "sphinxext"))
+from mne_nirs_doc_utils import _has_3d_backend  # noqa: E402
 
-    _min_ver = _compare_version(mne_qt_browser.__version__, ">=", "0.2")
-    if mne.viz.get_browser_backend() == "qt" and _min_ver:
-        scrapers += (mne.viz._scraper._MNEQtBrowserScraper(),)
-except ImportError:
-    pass
+# Scrapers are given by name so that parallel gallery workers can import them
+scrapers = ("matplotlib",)
+if _has_3d_backend():
+    scrapers += (
+        "mne_nirs_doc_utils.gui_scraper",
+        "mne_nirs_doc_utils.brain_scraper",
+        "pyvista",
+    )
+scrapers += ("mne_nirs_doc_utils.report_scraper",)
+if mne.viz.get_browser_backend() == "qt":
+    scrapers += ("mne_nirs_doc_utils.mne_qt_browser_scraper",)
+sphinx_gallery_parallel = int(os.getenv("MNE_DOC_BUILD_N_JOBS", "1"))
 
 # Resolve binder filepath_prefix. From the docs:
 # "A prefix to append to the filepath in the Binder links. You should use this
@@ -426,8 +409,9 @@ sphinx_gallery_conf = {
     "image_scrapers": scrapers,
     "reference_url": {"mne_nirs": None},
     "download_all_examples": False,
-    "show_memory": sys.platform.startswith("linux"),
-    "within_subsection_order": FileNameSortKey,
+    "show_memory": sys.platform.startswith("linux") and sphinx_gallery_parallel == 1,
+    "within_subsection_order": "FileNameSortKey",
+    "reset_modules": ("matplotlib", "seaborn", "mne_nirs_doc_utils.reset_modules"),
     "junit": os.path.join("..", "test-results", "sphinx-gallery", "junit.xml"),
     "binder": {
         # Required keys
@@ -442,4 +426,5 @@ sphinx_gallery_conf = {
         ],
     },
     "plot_gallery": "True",  # Avoid annoying str/bool default warning
+    "parallel": sphinx_gallery_parallel,
 }
