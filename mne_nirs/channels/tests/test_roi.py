@@ -9,9 +9,10 @@ import pytest
 
 from mne_nirs.channels import picks_pair_to_idx
 
+fnirs_data_folder = mne.datasets.fnirs_motor.data_path(download=False)
+
 
 def test_roi_picks():
-    fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
     fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
     raw = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
 

@@ -4,6 +4,7 @@
 
 import os
 import warnings
+from contextlib import suppress
 from unittest import mock
 
 import mne
@@ -12,18 +13,31 @@ from packaging.version import Version
 
 # most of this adapted from MNE-Python
 
+# Resolved at import time from the real config (tests use a fake home)
+_has_testing_data = mne.datasets.has_dataset("testing")
+
 
 def pytest_configure(config):
     """Configure pytest options."""
-    # Markers
-    for marker in ("examples",):
-        config.addinivalue_line("markers", marker)
-    for fixture in ("matplotlib_config", "close_all"):
+    for fixture in ("matplotlib_config", "close_all", "protect_config"):
         config.addinivalue_line("usefixtures", fixture)
+
+    # Cap the number of threads each pytest-xdist worker uses, adapted from SciPy
+    if os.getenv("OMP_NUM_THREADS") is None:
+        try:
+            from threadpoolctl import threadpool_limits
+        except Exception:
+            pass
+        else:
+            xdist_worker_count = int(os.getenv("PYTEST_XDIST_WORKER_COUNT", "1"))
+            max_threads = (os.cpu_count() or 2) // 2  # number of physical cores
+            threads_per_worker = max(max_threads // xdist_worker_count, 1)
+            # suppress e.g. AttributeError raised by older versions of OpenBLAS
+            with suppress(Exception):
+                threadpool_limits(threads_per_worker, user_api="blas")
 
     warning_lines = r"""
     error::
-    ignore:.*np\.MachAr.*:DeprecationWarning
     ignore:.*sysconfig module is deprecated.*:DeprecationWarning
     ignore:.*nilearn.glm module is experimental.*:
     ignore:.*Using or importing the ABCs from.*:
@@ -33,7 +47,6 @@ def pytest_configure(config):
     ignore:.*Setting non-standard config type.*:
     ignore:.*The MLE may be on the boundary.*:
     ignore:.*The Hessian matrix at the estimated parameter values.*:
-    always:`np\..*is a deprecated alias for the builtin.*:DeprecationWarning
     ignore:.*data_path functions now return.*
     ignore:.*default value of `n_init`*
     ignore:.*get_cmap function will be deprecated`*
@@ -47,8 +60,6 @@ def pytest_configure(config):
     ignore:The register_cmap function.*:
     ignore:The get_cmap function.*:
     ignore:The figure layout has changed.*:UserWarning
-    # H5py
-    ignore:`product` is deprecated as of NumPy.*:DeprecationWarning
     # seaborn
     ignore:is_categorical_dtype is deprecated.*:FutureWarning
     ignore:use_inf_as_na option is deprecated.*:FutureWarning
@@ -61,8 +72,8 @@ def pytest_configure(config):
     ignore:.*mne\.io\.pick.* is deprecated.*:FutureWarning
     # MESA
     ignore:Mesa version 10\.2\.4 is too old.*:RuntimeWarning
-    # Pandas
-    ignore:np\.find_common_type is deprecated.*:DeprecationWarning
+    # PyTables (via pandas.to_hdf in h5io)
+    ignore:serializing objects with pickle creates data.*:
     # statsmodels
     ignore:The numpy\.linalg\.linalg has been made private.*:DeprecationWarning
     ignore:The Dataframe Interchange Protocol is deprecated[/S/s]*:
@@ -119,6 +130,19 @@ def matplotlib_config():
     cbook.CallbackRegistry = CallbackRegistryReraise
 
 
+@pytest.fixture(scope="session")
+def protect_config(tmp_path_factory):
+    """Protect ~/.mne.
+
+    Test data paths are resolved at module level (during collection) from the real
+    config, while anything written during tests goes to a per-process fake home, so
+    parallel workers never write the real config file.
+    """
+    home = tmp_path_factory.mktemp("home")
+    with mock.patch.dict(os.environ, {"_MNE_FAKE_HOME_DIR": str(home)}):
+        yield
+
+
 @pytest.fixture(autouse=True)
 def close_all():
     """Close all matplotlib plots, regardless of test status."""
@@ -149,7 +173,7 @@ def options_3d():
 @pytest.fixture
 def requires_pyvista(options_3d):
     """Require pyvista."""
-    if not mne.datasets.has_dataset("testing"):
+    if not _has_testing_data:
         pytest.skip("Requires mne-testing-data")
     pyvista = pytest.importorskip("pyvista")
     pytest.importorskip("pyvistaqt")

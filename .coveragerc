@@ -3,9 +3,6 @@
 [run]
 branch = True
 source = mne_nirs
-include = */mne_nirs/*
-omit =
-    */setup.py
 
 [report]
 exclude_lines =

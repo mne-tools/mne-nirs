@@ -10,6 +10,8 @@ import pytest
 
 from mne_nirs.preprocessing import quantify_mayer_fooof
 
+fnirs_data_folder = mne.datasets.fnirs_motor.data_path(download=False)
+
 pytest.importorskip("fooof")
 
 
@@ -17,7 +19,6 @@ pytest.importorskip("fooof")
 @pytest.mark.filterwarnings("ignore:divide by zero encountered in divide.*:")
 @pytest.mark.filterwarnings("ignore:invalid value encountered in.*:")
 def test_mayer():
-    fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
     fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
     raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir, verbose=True).load_data()
 

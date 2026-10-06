@@ -12,9 +12,10 @@ from mne.preprocessing.nirs import source_detector_distances
 
 from mne_nirs.channels import get_long_channels, get_short_channels
 
+fnirs_data_folder = mne.datasets.fnirs_motor.data_path(download=False)
+
 
 def test_short_extraction():
-    fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
     fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
     raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
 
@@ -48,7 +49,6 @@ def test_short_extraction():
 
 
 def test_long_extraction():
-    fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
     fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
     raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
 

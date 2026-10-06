@@ -18,21 +18,22 @@ from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import RegressionResults, read_glm, run_glm
 
 data_path = testing.data_path(download=False)
+fnirs_data_folder = mne.datasets.fnirs_motor.data_path(download=False)
 subjects_dir = data_path / "/subjects"
 
 
 def _get_minimal_haemo_data(tmin=0, tmax=60):
     raw = mne.io.read_raw_nirx(
-        os.path.join(mne.datasets.fnirs_motor.data_path(), "Participant-1"),
+        os.path.join(fnirs_data_folder, "Participant-1"),
         preload=False,
     )
     raw.crop(tmax=tmax, tmin=tmin)
     raw = mne.preprocessing.nirs.optical_density(raw)
     raw = mne.preprocessing.nirs.beer_lambert_law(raw, ppf=0.1)
     raw.resample(0.3)
-    raw.annotations.description[:] = [
-        "e" + d.replace(".", "p") for d in raw.annotations.description
-    ]
+    raw.annotations.rename(
+        {d: "e" + d.replace(".", "p") for d in set(raw.annotations.description)}
+    )
     return raw
 
 
@@ -56,8 +57,8 @@ def _get_glm_contrast_result(tmin=60, tmax=400):
     basic_conts = dict(
         [(column, contrast_matrix[i]) for i, column in enumerate(design_matrix.columns)]
     )
-    assert "e1p" in basic_conts, sorted(basic_conts)
-    contrast_LvR = basic_conts["e1p"] - basic_conts["e2p"]
+    assert "e1p0" in basic_conts, sorted(basic_conts)
+    contrast_LvR = basic_conts["e1p0"] - basic_conts["e2p0"]
 
     return glm_est.compute_contrast(contrast_LvR)
 
@@ -294,28 +295,28 @@ def test_create_results_glm_contrast():
     assert src.dtype.kind == "i"
 
 
-def test_results_glm_io():
+def test_results_glm_io(tmp_path):
     pytest.importorskip("tables", exc_type=Exception)
     res = _get_glm_result(tmax=400)
-    res.save("test-regression-glm.h5", overwrite=True)
-    loaded_res = read_glm("test-regression-glm.h5")
+    res.save(tmp_path / "test-regression-glm.h5", overwrite=True)
+    loaded_res = read_glm(tmp_path / "test-regression-glm.h5")
     assert loaded_res.to_dataframe().equals(res.to_dataframe())
     assert res == loaded_res
 
     res = _get_glm_result(tmax=400, noise_model="ols")
-    res.save("test-regression-ols_glm.h5", overwrite=True)
-    loaded_res = read_glm("test-regression-ols_glm.h5")
+    res.save(tmp_path / "test-regression-ols_glm.h5", overwrite=True)
+    loaded_res = read_glm(tmp_path / "test-regression-ols_glm.h5")
     assert loaded_res.to_dataframe().equals(res.to_dataframe())
     assert res == loaded_res
 
     res = _get_glm_contrast_result()
-    res.save("test-contrast-glm.h5", overwrite=True)
-    loaded_res = read_glm("test-contrast-glm.h5")
+    res.save(tmp_path / "test-contrast-glm.h5", overwrite=True)
+    loaded_res = read_glm(tmp_path / "test-contrast-glm.h5")
     assert loaded_res.to_dataframe().equals(res.to_dataframe())
     assert res == loaded_res
 
     with pytest.raises(IOError, match="must end with glm.h5"):
-        res.save("test-contrast-glX.h5", overwrite=True)
+        res.save(tmp_path / "test-contrast-glX.h5", overwrite=True)
 
 
 def _take(n, mydict):

@@ -15,11 +15,12 @@ from mne_nirs.statistics import run_glm
 from mne_nirs.statistics._glm_level_first import _compute_contrast
 from mne_nirs.utils._io import _tidy_long_to_wide, glm_to_tidy
 
+fnirs_data_folder = mne.datasets.fnirs_motor.data_path(download=False)
+
 
 @pytest.mark.filterwarnings("ignore:.*more comprehensive.*:")
 def test_io():
     num_chans = 6
-    fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
     fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
     raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
     raw_intensity.resample(0.2)
