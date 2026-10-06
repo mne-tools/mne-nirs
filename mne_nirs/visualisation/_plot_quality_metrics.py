@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from mne.preprocessing.nirs import _validate_nirs_info
 
 
 def plot_timechannel_quality_metric(raw, scores, times, threshold=0.1, title=None):
@@ -32,7 +33,9 @@ def plot_timechannel_quality_metric(raw, scores, times, threshold=0.1, title=Non
     fig : figure
         Matplotlib figure displaying raw scores and thresholded scores.
     """
-    ch_names = raw.ch_names
+    # `scores` holds one row per fNIRS channel, in `raw` order.
+    picks = np.sort(_validate_nirs_info(raw.info))
+    ch_names = [raw.ch_names[pick] for pick in picks]
     cols = [np.round(t[0]) for t in times]
 
     if title is None:
@@ -63,7 +66,7 @@ def plot_timechannel_quality_metric(raw, scores, times, threshold=0.1, title=Non
         for x in range(1, len(times))
     ]
     ax[0].set_title("All Scores", fontweight="bold")
-    markbad(raw, ax[0])
+    markbad(ax[0], ch_names, raw.info["bads"])
 
     # Now, adjust the color range to highlight segments that exceeded the
     # limit.
@@ -86,15 +89,15 @@ def plot_timechannel_quality_metric(raw, scores, times, threshold=0.1, title=Non
         for x in range(1, len(times))
     ]
     ax[1].set_title("Scores < Limit", fontweight="bold")
-    markbad(raw, ax[1])
+    markbad(ax[1], ch_names, raw.info["bads"])
 
     return fig
 
 
-def markbad(raw, ax):
+def markbad(ax, ch_names, bads):
     [
         ax.axhline(y + 0.5, ls="solid", lw=2, color="black")
-        for y in np.where([ch in raw.info["bads"] for ch in raw.ch_names])[0]
+        for y in np.where([ch in bads for ch in ch_names])[0]
     ]
 
     return ax

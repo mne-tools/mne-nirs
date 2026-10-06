@@ -547,3 +547,70 @@ def test_pp_windowed_annotations_target_correct_channels() -> None:
     assert bad_channels == {("S2_D1 760", "S2_D1 850")}, (
         "BAD_PeakPower annotations were assigned to the wrong channels."
     )
+
+
+@pytest.mark.parametrize(
+    "metric, description",
+    [
+        (scalp_coupling_index_windowed, "BAD_SCI"),
+        (peak_power, "BAD_PeakPower"),
+    ],
+)
+def test_quality_metrics_ignore_non_fnirs_channels(metric, description) -> None:
+    """Test that quality metrics handle Raws holding other channel types.
+
+    The scores hold one row per fNIRS channel, in Raw order, matching
+    `mne.preprocessing.nirs.scalp_coupling_index`. Channels of other types
+    should not affect the fNIRS rows.
+    """
+    sfreq = 10.0
+    n_samples = 400  # 40 s at 10 Hz -> 4 windows of 10 s
+
+    ch_names = [
+        "Trig",
+        "S1_D1 760",
+        "S1_D1 850",
+        "Cz",
+        "Pz",
+        "S10_D10 760",
+        "S10_D10 850",
+    ]
+    ch_types = ["stim", "fnirs_od", "fnirs_od", "eeg", "eeg", "fnirs_od", "fnirs_od"]
+    info = mne.create_info(ch_names=ch_names, sfreq=sfreq, ch_types=ch_types)
+    for ch in info["chs"]:
+        if ch["kind"] == mne.io.constants.FIFF.FIFFV_FNIRS_CH:
+            ch["loc"][9] = float(ch["ch_name"].split(" ")[1])
+
+    rng = np.random.default_rng(0)
+    t = np.arange(n_samples) / sfreq
+    signal = np.sin(2 * np.pi * 1.0 * t)  # base "heartbeat", 1 Hz
+    # 0.1 Hz + 3 Hz, outside the band both metrics look at
+    noheart = np.sin(2 * np.pi * 0.1 * t) + np.sin(2 * np.pi * 3 * t)
+
+    # S1_D1 (score rows 0, 1): identical -> good score
+    # S10_D10 (score rows 2, 3): no shared heartbeat -> bad score
+    data = np.array(
+        [
+            np.zeros(n_samples),
+            signal,
+            signal,
+            rng.standard_normal(n_samples),
+            rng.standard_normal(n_samples),
+            signal,
+            noheart,
+        ]
+    )
+
+    raw = mne.io.RawArray(data, info)
+    raw_out, scores, times_out = metric(raw, time_window=10, threshold=0.7)
+
+    # One row per fNIRS channel, so scores pair with the fNIRS channels of `raw`
+    assert scores.shape == (4, len(times_out))
+    assert np.all(scores[[0, 1], :] > scores[[2, 3], :])  # S1_D1 beats S10_D10
+
+    bad_channels = {
+        ann["ch_names"]
+        for ann in raw_out.annotations
+        if ann["description"] == description
+    }
+    assert bad_channels == {("S10_D10 760", "S10_D10 850")}

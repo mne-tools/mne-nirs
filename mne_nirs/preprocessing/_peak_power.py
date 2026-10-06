@@ -136,7 +136,7 @@ def peak_power(
             pp = min(peak_powers) if peak_powers else 0.0
 
             # Assign the same peak power value to all channels in the group
-            scores[ch_group, window] = pp
+            scores[gg : gg + n_wavelengths, window] = pp
 
             # Add BAD_PeakPower annotation to channels if below threshold
             if (threshold is not None) & (pp < threshold):
@@ -146,5 +146,7 @@ def peak_power(
                     "BAD_PeakPower",
                     ch_names=[[raw.ch_names[ii] for ii in ch_group]],
                 )
+
+    scores = scores[np.argsort(picks)]  # restore original channel order
 
     return raw, scores, times
