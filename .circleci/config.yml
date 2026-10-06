@@ -119,9 +119,12 @@ jobs:
             command: python -m pip list
 
         # Restore data cache
+        - run:
+            name: Get data cache key
+            command: ./tools/get_data_key.sh
         - restore_cache:
             keys:
-              - data-cache-2
+              - data-cache-3-{{ checksum "data_key.txt" }}
 
         - run:
             name: list packages
@@ -168,9 +171,8 @@ jobs:
               - html
         # Cache the data
         - save_cache:
-            key: data-cache-2
+            key: data-cache-3-{{ checksum "data_key.txt" }}
             paths:
-              - ~/.mne
               - ~/mne_data
 
     deploy:
