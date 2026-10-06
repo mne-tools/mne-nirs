@@ -23,7 +23,6 @@ def pytest_configure(config):
 
     warning_lines = r"""
     error::
-    ignore:.*np\.MachAr.*:DeprecationWarning
     ignore:.*sysconfig module is deprecated.*:DeprecationWarning
     ignore:.*nilearn.glm module is experimental.*:
     ignore:.*Using or importing the ABCs from.*:
@@ -33,7 +32,6 @@ def pytest_configure(config):
     ignore:.*Setting non-standard config type.*:
     ignore:.*The MLE may be on the boundary.*:
     ignore:.*The Hessian matrix at the estimated parameter values.*:
-    always:`np\..*is a deprecated alias for the builtin.*:DeprecationWarning
     ignore:.*data_path functions now return.*
     ignore:.*default value of `n_init`*
     ignore:.*get_cmap function will be deprecated`*
@@ -47,8 +45,6 @@ def pytest_configure(config):
     ignore:The register_cmap function.*:
     ignore:The get_cmap function.*:
     ignore:The figure layout has changed.*:UserWarning
-    # H5py
-    ignore:`product` is deprecated as of NumPy.*:DeprecationWarning
     # seaborn
     ignore:is_categorical_dtype is deprecated.*:FutureWarning
     ignore:use_inf_as_na option is deprecated.*:FutureWarning
@@ -61,8 +57,8 @@ def pytest_configure(config):
     ignore:.*mne\.io\.pick.* is deprecated.*:FutureWarning
     # MESA
     ignore:Mesa version 10\.2\.4 is too old.*:RuntimeWarning
-    # Pandas
-    ignore:np\.find_common_type is deprecated.*:DeprecationWarning
+    # PyTables (via pandas.to_hdf in h5io)
+    ignore:serializing objects with pickle creates data.*:
     # statsmodels
     ignore:The numpy\.linalg\.linalg has been made private.*:DeprecationWarning
     ignore:The Dataframe Interchange Protocol is deprecated[/S/s]*:
