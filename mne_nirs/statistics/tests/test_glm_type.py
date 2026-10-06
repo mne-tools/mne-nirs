@@ -294,28 +294,28 @@ def test_create_results_glm_contrast():
     assert src.dtype.kind == "i"
 
 
-def test_results_glm_io():
+def test_results_glm_io(tmp_path):
     pytest.importorskip("tables", exc_type=Exception)
     res = _get_glm_result(tmax=400)
-    res.save("test-regression-glm.h5", overwrite=True)
-    loaded_res = read_glm("test-regression-glm.h5")
+    res.save(tmp_path / "test-regression-glm.h5", overwrite=True)
+    loaded_res = read_glm(tmp_path / "test-regression-glm.h5")
     assert loaded_res.to_dataframe().equals(res.to_dataframe())
     assert res == loaded_res
 
     res = _get_glm_result(tmax=400, noise_model="ols")
-    res.save("test-regression-ols_glm.h5", overwrite=True)
-    loaded_res = read_glm("test-regression-ols_glm.h5")
+    res.save(tmp_path / "test-regression-ols_glm.h5", overwrite=True)
+    loaded_res = read_glm(tmp_path / "test-regression-ols_glm.h5")
     assert loaded_res.to_dataframe().equals(res.to_dataframe())
     assert res == loaded_res
 
     res = _get_glm_contrast_result()
-    res.save("test-contrast-glm.h5", overwrite=True)
-    loaded_res = read_glm("test-contrast-glm.h5")
+    res.save(tmp_path / "test-contrast-glm.h5", overwrite=True)
+    loaded_res = read_glm(tmp_path / "test-contrast-glm.h5")
     assert loaded_res.to_dataframe().equals(res.to_dataframe())
     assert res == loaded_res
 
     with pytest.raises(IOError, match="must end with glm.h5"):
-        res.save("test-contrast-glX.h5", overwrite=True)
+        res.save(tmp_path / "test-contrast-glX.h5", overwrite=True)
 
 
 def _take(n, mydict):
