@@ -118,13 +118,16 @@ jobs:
             name: List packages
             command: python -m pip list
 
-        # Restore data cache
+        # Restore data caches
         - run:
-            name: Get data cache key
-            command: ./tools/get_data_key.sh
+            name: Get dataset versions
+            command: ./tools/get_dataset_versions.sh
         - restore_cache:
             keys:
-              - data-cache-3-{{ checksum "data_key.txt" }}
+              - data-cache-testing-{{ checksum "testing_version.txt" }}
+        - restore_cache:
+            keys:
+              - data-cache-other-1-{{ checksum "other_data_version.txt" }}
 
         - run:
             name: list packages
@@ -171,9 +174,22 @@ jobs:
               - html
         # Cache the data
         - save_cache:
-            key: data-cache-3-{{ checksum "data_key.txt" }}
+            key: data-cache-testing-{{ checksum "testing_version.txt" }}
             paths:
-              - ~/mne_data
+              - ~/mne_data/MNE-testing-data
+        # CircleCI caches cannot exclude paths, so list every non-testing dataset
+        # used by the tests and examples (see tools/get_dataset_versions.sh)
+        - save_cache:
+            key: data-cache-other-1-{{ checksum "other_data_version.txt" }}
+            paths:
+              - ~/mne_data/MNE-fNIRS-motor-data
+              - ~/mne_data/MNE-sample-data
+              - ~/mne_data/camh_kf_fnirs_fingertapping
+              - ~/mne_data/fNIRS-SNIRF-aux
+              - ~/mne_data/fNIRS-audio-visual-speech
+              - ~/mne_data/fNIRS-block-speech-noise
+              - ~/mne_data/fNIRS-motor-group
+              - ~/mne_data/openneuro_kf2_audio
 
     deploy:
       machine:

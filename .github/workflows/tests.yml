@@ -84,20 +84,38 @@ jobs:
         name: Install numpy, scipy, nilearn pre
       - run: pip install -ve .
       - run: mne sys_info
-      - run: ./tools/get_data_key.sh
-      - uses: actions/cache/restore@v6
-        id: data-cache
+      - run: ./tools/get_dataset_versions.sh
+      - name: Restore testing data
+        uses: actions/cache/restore@v6
+        id: testing-cache
         with:
-          key: mne_data-${{ hashFiles('data_key.txt') }}-1
-          path: ~/mne_data
+          key: mne_data-testing-${{ env.TESTING_VERSION }}-1
+          path: ~/mne_data/MNE-testing-data
+      - name: Restore other data
+        uses: actions/cache/restore@v6
+        id: other-cache
+        with:
+          key: mne_data-other-${{ env.OTHER_DATA_VERSION }}-1
+          path: |
+            ~/mne_data
+            !~/mne_data/MNE-testing-data
       - run: ./tools/github_actions_download.sh
       # Save right after downloading (rather than at the end of a successful job) so
       # that a failing test does not mean downloading everything again next time
-      - uses: actions/cache/save@v6
-        if: steps.data-cache.outputs.cache-hit != 'true'
+      - name: Save testing data
+        uses: actions/cache/save@v6
+        if: steps.testing-cache.outputs.cache-hit != 'true'
         with:
-          key: ${{ steps.data-cache.outputs.cache-primary-key }}
-          path: ~/mne_data
+          key: ${{ steps.testing-cache.outputs.cache-primary-key }}
+          path: ~/mne_data/MNE-testing-data
+      - name: Save other data
+        uses: actions/cache/save@v6
+        if: steps.other-cache.outputs.cache-hit != 'true'
+        with:
+          key: ${{ steps.other-cache.outputs.cache-primary-key }}
+          path: |
+            ~/mne_data
+            !~/mne_data/MNE-testing-data
       - run: pytest -n "$PYTEST_XDIST_N" --dist loadscope --timeout=120 --timeout-method=thread -o faulthandler_timeout=110 --cov=mne_nirs --cov-report=xml -vv "mne_nirs/"
       - uses: codecov/codecov-action@v7
         if: success()
