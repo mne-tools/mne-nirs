@@ -5,7 +5,13 @@ version: 2.1
 jobs:
     build_docs:
       machine:
-        image: ubuntu-2404:current
+        # gen3 resource classes are only valid with the `current` tag, not a pinned
+        # dated tag -- a pinned tag is rejected with "is not a valid resource class"
+        image: ubuntu-2604:current
+      # large.gen3 4 vCPUs 16GiB mem -- gen3 is an open beta, and is both faster
+      # and cheaper per minute than gen1 large (14 vs 20 credits/min); revert to
+      # `large` if beta queue times or reliability become a problem
+      resource_class: large.gen3
       steps:
         - restore_cache:
             keys:
@@ -48,11 +54,13 @@ jobs:
             command: |
               set -e
               set -o pipefail
-              ./tools/setup_xvfb.sh
-              sudo apt install -qq graphviz optipng python3.12-venv python3-venv libxft2 ffmpeg
-              python3.12 -m venv ~/python_env
+              curl -fsSL https://raw.githubusercontent.com/mne-tools/mne-tools/main/tools/setup_xvfb.sh | timeout 600 bash
+              sudo apt install -qq graphviz libgvplugin-neato-layout8 optipng python3-venv libxft2 ffmpeg
+              python3 -m venv ~/python_env
               echo "set -e" >> $BASH_ENV
-              echo "export OPENBLAS_NUM_THREADS=4" >> $BASH_ENV
+              # Run 4 gallery examples at once (one per vCPU), each single-threaded
+              echo "export OPENBLAS_NUM_THREADS=1" >> $BASH_ENV
+              echo "export MNE_DOC_BUILD_N_JOBS=4" >> $BASH_ENV
               echo "export XDG_RUNTIME_DIR=/tmp/runtime-circleci" >> $BASH_ENV
               echo "export MNE_FULL_DATE=true" >> $BASH_ENV
               echo "export MNE_3D_BACKEND=pyvistaqt" >> $BASH_ENV
@@ -73,9 +81,6 @@ jobs:
         - restore_cache:
             keys:
               - pip-cache-0
-        - restore_cache:
-            keys:
-              - user-install-bin-cache-0
 
         # Hack in uninstalls of libraries as necessary if pip doesn't do the right thing in upgrading for us...
         - run:
@@ -87,11 +92,6 @@ jobs:
             key: pip-cache-0
             paths:
               - ~/.cache/pip
-        - save_cache:
-            key: user-install-bin-cache-0
-            paths:
-              - ~/.local/lib/python3.12/site-packages
-              - ~/.local/bin
 
         - run:
             name: Download fOLD data
@@ -118,10 +118,16 @@ jobs:
             name: List packages
             command: python -m pip list
 
-        # Restore data cache
+        # Restore data caches
+        - run:
+            name: Get dataset versions
+            command: ./tools/get_dataset_versions.sh
         - restore_cache:
             keys:
-              - data-cache-2
+              - data-cache-testing-{{ checksum "testing_version.txt" }}
+        - restore_cache:
+            keys:
+              - data-cache-other-1-{{ checksum "other_data_version.txt" }}
 
         - run:
             name: list packages
@@ -138,9 +144,20 @@ jobs:
             name: make html
             command: |
               git branch
-              make -C doc html
+              # Measure coverage of the gallery examples (see doc/coveragerc)
+              export COVERAGE_RCFILE=$PWD/doc/coveragerc COVERAGE_FILE=$PWD/.coverage
+              make -C doc html SPHINXBUILD="python -m coverage run -m sphinx"
+              python -m coverage combine
+              python -m coverage xml
               du -hs ~/mne_data
 
+        # Upload coverage of the gallery examples to Codecov
+        - run:
+            name: Upload coverage to Codecov
+            command: |
+              if [[ -f coverage.xml ]]; then
+                bash <(curl -s https://codecov.io/bash) -f coverage.xml || true
+              fi
         # Save the JUnit file
         - store_test_results:
             path: doc/_build/test-results
@@ -157,10 +174,22 @@ jobs:
               - html
         # Cache the data
         - save_cache:
-            key: data-cache-2
+            key: data-cache-testing-{{ checksum "testing_version.txt" }}
             paths:
-              - ~/.mne
-              - ~/mne_data
+              - ~/mne_data/MNE-testing-data
+        # CircleCI caches cannot exclude paths, so list every non-testing dataset
+        # used by the tests and examples (see tools/get_dataset_versions.sh)
+        - save_cache:
+            key: data-cache-other-1-{{ checksum "other_data_version.txt" }}
+            paths:
+              - ~/mne_data/MNE-fNIRS-motor-data
+              - ~/mne_data/MNE-sample-data
+              - ~/mne_data/camh_kf_fnirs_fingertapping
+              - ~/mne_data/fNIRS-SNIRF-aux
+              - ~/mne_data/fNIRS-audio-visual-speech
+              - ~/mne_data/fNIRS-block-speech-noise
+              - ~/mne_data/fNIRS-motor-group
+              - ~/mne_data/openneuro_kf2_audio
 
     deploy:
       machine:

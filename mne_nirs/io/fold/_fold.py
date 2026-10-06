@@ -222,7 +222,7 @@ def fold_channel_specificity(raw, fold_files=None, atlas="Juelich", interpolate=
     ``~/mne_data/fOLD/fOLD-public-master``, and then set the config value
     on your machine by using :func:`mne:mne.set_config` like::
 
-        >>> mne.set_config('MNE_NIRS_FOLD_PATH', '~/mne_data/fOLD/fOLD-public-master/Supplementary')
+        >>> mne.set_config('MNE_NIRS_FOLD_PATH', '~/mne_data/fOLD/fOLD-public-master/Supplementary')  # doctest: +SKIP
 
     From then on, :func:`~mne_nirs.io.fold_channel_specificity` and
     :func:`~mne_nirs.io.fold_landmark_specificity` will automatically use this

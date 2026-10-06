@@ -19,6 +19,7 @@ from mne_nirs.preprocessing import (
 # Results of Homer3 v1.80.2 on two testing dataset files, see the gist
 # https://gist.github.com/leonardozaggia/9d7b02c0fc854dd7ba0df4fbaae69a9c
 REFERENCE = Path(__file__).parent / "data" / "homer3_motion_correction.npz"
+testing_path = data_path(download=False)
 pytestmark = pytest.mark.filterwarnings("ignore:.*only contains 2D:RuntimeWarning")
 
 
@@ -29,7 +30,7 @@ def test_motion_homer3(key, spline_atol):
     """Test detection and correction against Homer3."""
     pytest.importorskip("pywt")
     ref = np.load(REFERENCE)
-    raw = mne.io.read_raw_snirf(data_path() / str(ref[f"{key}__file"]))
+    raw = mne.io.read_raw_snirf(testing_path / str(ref[f"{key}__file"]))
     raw_od = mne.preprocessing.nirs.optical_density(raw).pick("fnirs_od")
     rows = [raw_od.ch_names.index(name) for name in ref[f"{key}__ch_names"]]
     stdev_thresh, amp_thresh, smoothing, iqr = ref[f"{key}__params"]
@@ -48,7 +49,7 @@ def test_motion_homer3(key, spline_atol):
 @requires_testing_data
 def test_motion_api():
     """Test default mask, hemoglobin data, and errors."""
-    fname = data_path() / "SNIRF" / "SfNIRS" / "snirf_homer3" / "1.0.3"
+    fname = testing_path / "SNIRF" / "SfNIRS" / "snirf_homer3" / "1.0.3"
     raw = mne.io.read_raw_snirf(fname / "nirx_15_3_recording.snirf").load_data()
     raw_od = mne.preprocessing.nirs.optical_density(raw)
     orig = raw_od.get_data()

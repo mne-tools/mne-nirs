@@ -85,6 +85,7 @@ def plot_3d_montage(
     one on each side of the head, showing 1-12 on the left and 13-24 on the
     right can be accomplished using the following ``view_map``::
 
+        >>> import numpy as np
         >>> view_map = {
         ...     'left-lat': np.arange(1, 13),
         ...     'right-lat': np.arange(13, 25),
