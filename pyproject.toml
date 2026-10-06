@@ -49,8 +49,24 @@ Download = "https://github.com/mne-tools/mne-nirs"
 "Source Code" = "https://github.com/mne-tools/mne-nirs/"
 
 [project.optional-dependencies]
-tests = ["pytest", "pytest-cov", "pytest-xdist"]
 docs = ["sphinx", "sphinx-gallery", "pydata_sphinx_theme", "numpydoc", "matplotlib"]
+
+[dependency-groups]
+test = [
+    "numpydoc",
+    "pytest",
+    "pytest-cov",
+    "pytest-timeout",
+    "pytest-xdist",
+    # mne-nirs specific requirements
+    # redundancy with docs as all doc notebooks are tested
+    "fooof",
+    "mne-bids",
+    "seaborn",
+    "snirf",
+    "statsmodels",
+    "tables",
+]
 
 [tool.hatch.build]
 exclude = [

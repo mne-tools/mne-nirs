@@ -9,7 +9,7 @@ pip install -e .
 cd ..
 echo "Installing dependencies"
 python -m pip install --upgrade --progress-bar off \
-    -r requirements.txt -r requirements_testing.txt -r requirements_doc.txt \
+    -r requirements.txt -r requirements_doc.txt --group test \
     "mne-qt-browser[opengl] @ git+https://github.com/mne-tools/mne-qt-browser.git@main" \
     "mne-bids @ git+https://github.com/mne-tools/mne-bids.git@main" \
     --only-binary="numpy,scipy,scikit-learn,matplotlib,pandas,ndindex,tables" \

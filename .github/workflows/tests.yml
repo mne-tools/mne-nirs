@@ -74,7 +74,7 @@ jobs:
           create-args: >-
             python=${{ matrix.python }}
         if: matrix.kind == 'conda'
-      - run: pip install -r requirements_testing.txt
+      - run: python -m pip install --upgrade pip && python -m pip install --group test
       - run: git clone https://github.com/mne-tools/mne-python
       - run: pip install --upgrade --pre -e ./mne-python "git+https://github.com/nilearn/nilearn"
         if: matrix.mne == 'dev'
