@@ -30,9 +30,9 @@ def _get_minimal_haemo_data(tmin=0, tmax=60):
     raw = mne.preprocessing.nirs.optical_density(raw)
     raw = mne.preprocessing.nirs.beer_lambert_law(raw, ppf=0.1)
     raw.resample(0.3)
-    raw.annotations.description[:] = [
-        "e" + d.replace(".", "p") for d in raw.annotations.description
-    ]
+    raw.annotations.rename(
+        {d: "e" + d.replace(".", "p") for d in set(raw.annotations.description)}
+    )
     return raw
 
 
@@ -56,8 +56,8 @@ def _get_glm_contrast_result(tmin=60, tmax=400):
     basic_conts = dict(
         [(column, contrast_matrix[i]) for i, column in enumerate(design_matrix.columns)]
     )
-    assert "e1p" in basic_conts, sorted(basic_conts)
-    contrast_LvR = basic_conts["e1p"] - basic_conts["e2p"]
+    assert "e1p0" in basic_conts, sorted(basic_conts)
+    contrast_LvR = basic_conts["e1p0"] - basic_conts["e2p0"]
 
     return glm_est.compute_contrast(contrast_LvR)
 
