@@ -49,6 +49,7 @@ Download = "https://github.com/mne-tools/mne-nirs"
 "Source Code" = "https://github.com/mne-tools/mne-nirs/"
 
 [project.optional-dependencies]
+full = ["PyWavelets"]  # motion_correct_wavelet
 tests = ["pytest", "pytest-cov", "PyWavelets"]
 docs = ["sphinx", "sphinx-gallery", "pydata_sphinx_theme", "numpydoc", "matplotlib"]
 

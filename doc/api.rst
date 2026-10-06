@@ -131,10 +131,8 @@ Motion artifact detection and correction.
    :toctree: generated/
 
    detect_motion_artifacts
-   detect_motion_artifacts_by_channel
    motion_correct_spline
    motion_correct_wavelet
-   motion_detect_and_correct_wavelet
 
 
 Experimental Design

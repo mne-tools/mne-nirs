@@ -23,10 +23,9 @@ from mne.preprocessing.nirs import (
 )
 
 from mne_nirs.preprocessing import (
-    detect_motion_artifacts_by_channel,
+    detect_motion_artifacts,
     motion_correct_spline,
     motion_correct_wavelet,
-    motion_detect_and_correct_wavelet,
 )
 
 # %%
@@ -104,7 +103,7 @@ corrected_tddr.plot(n_channels=15, duration=400, show_scrollbars=False)
 # :footcite:`HuppertEtAl2009` and reproduce their output. They work in two
 # stages: the motion artifacts are first detected and the flagged segments
 # are then corrected.
-# :func:`~mne_nirs.preprocessing.detect_motion_artifacts_by_channel` flags a
+# :func:`~mne_nirs.preprocessing.detect_motion_artifacts` flags a
 # sample when, within a window of ``t_motion`` seconds, the signal changes by
 # more than ``stdev_thresh`` times the standard deviation of its first
 # derivative, or by more than ``amp_thresh`` optical density units.
@@ -115,9 +114,7 @@ corrected_tddr.plot(n_channels=15, duration=400, show_scrollbars=False)
 # stricter values here that pick up the artifacts in this resampled data.
 # The returned mask is ``True`` for clean samples and ``False`` for motion.
 
-mask = detect_motion_artifacts_by_channel(
-    corrupted_od, stdev_thresh=10, amp_thresh=0.05
-)
+mask = detect_motion_artifacts(corrupted_od, stdev_thresh=10, amp_thresh=0.05)
 print(f"{100 * (~mask).mean():.1f}% of samples flagged as motion artifacts")
 
 
@@ -132,8 +129,8 @@ print(f"{100 * (~mask).mean():.1f}% of samples flagged as motion artifacts")
 # MATLAB's ``csaps``; the default of ``0.99`` is the value recommended in the
 # literature. The correction is applied channel by channel using the mask
 # computed above.
-# If no mask is passed, existing ``BAD`` annotations are used, or the
-# artifacts are detected with the default parameters.
+# If no mask is passed, the artifacts are detected with the default
+# parameters.
 
 corrected_spline = motion_correct_spline(corrupted_od, mask=mask)
 corrected_spline.plot(n_channels=15, duration=400, show_scrollbars=False)
@@ -165,22 +162,6 @@ corrected_wavelet.plot(n_channels=15, duration=400, show_scrollbars=False)
 # The spike at 100 seconds is removed while the baseline shift remains,
 # so the spline and wavelet methods are complementary and are often applied
 # one after the other.
-
-
-# %%
-# Detect and correct in one step
-# ------------------------------
-#
-# :func:`~mne_nirs.preprocessing.motion_detect_and_correct_wavelet` runs the
-# detection and the wavelet correction in one call, the usual Homer3
-# processing stream. The detected segments are added to the annotations as
-# ``BAD_motion`` so that they can be inspected or excluded from later
-# analysis.
-
-corrected_auto, mask_global = motion_detect_and_correct_wavelet(
-    corrupted_od, stdev_thresh=10, amp_thresh=0.05
-)
-corrected_auto.plot(n_channels=15, duration=400, show_scrollbars=False)
 
 
 # %%

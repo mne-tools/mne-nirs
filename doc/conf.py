@@ -184,7 +184,7 @@ numpydoc_xref_aliases = {
 numpydoc_xref_ignore = {
     # words (some of these should be fixed)
     "instance",
-    "n_picks",
+    "n_channels",
     "n_times",
     "of",
     "or",
