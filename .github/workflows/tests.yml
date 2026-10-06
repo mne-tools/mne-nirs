@@ -31,7 +31,7 @@ jobs:
             mne: dev
             kind: pip
             python: "3.14"  # newest
-          - os: macos-14
+          - os: macos-latest
             mne: dev
             kind: conda
             python: "3.13"
