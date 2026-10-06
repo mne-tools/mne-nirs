@@ -15,7 +15,6 @@ import os
 import sys
 from datetime import datetime, timezone
 
-import mne
 import sphinx.util.logging
 
 import mne_nirs
@@ -376,19 +375,16 @@ intersphinx_mapping = {
 }
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "sphinxext"))
-from mne_nirs_doc_utils import _has_3d_backend  # noqa: E402
 
 # Scrapers are given by name so that parallel gallery workers can import them
-scrapers = ("matplotlib",)
-if _has_3d_backend():
-    scrapers += (
-        "mne_nirs_doc_utils.gui_scraper",
-        "mne_nirs_doc_utils.brain_scraper",
-        "pyvista",
-    )
-scrapers += ("mne_nirs_doc_utils.report_scraper",)
-if mne.viz.get_browser_backend() == "qt":
-    scrapers += ("mne_nirs_doc_utils.mne_qt_browser_scraper",)
+scrapers = (
+    "matplotlib",
+    "mne_nirs_doc_utils.gui_scraper",
+    "mne_nirs_doc_utils.brain_scraper",
+    "pyvista",
+    "mne_nirs_doc_utils.report_scraper",
+    "mne_nirs_doc_utils.mne_qt_browser_scraper",
+)
 sphinx_gallery_parallel = int(os.getenv("MNE_DOC_BUILD_N_JOBS", "1"))
 
 # Resolve binder filepath_prefix. From the docs:

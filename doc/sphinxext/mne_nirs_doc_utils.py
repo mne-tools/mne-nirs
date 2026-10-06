@@ -10,23 +10,15 @@ import warnings
 import mne
 
 
-def _has_3d_backend():
-    try:
-        mne.viz.set_3d_backend(mne.viz.get_3d_backend())
-    except Exception:
-        return False
-    return mne.viz.get_3d_backend() in ("notebook", "pyvistaqt")
-
-
 def reset_modules(gallery_conf, fname):
     """Set up the 3D backend before each example (also in parallel workers)."""
-    if _has_3d_backend():
-        with warnings.catch_warnings():
-            warnings.filterwarnings("ignore", category=DeprecationWarning)
-            import pyvista
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=DeprecationWarning)
+        import pyvista
 
-        pyvista.OFF_SCREEN = False
-        pyvista.BUILDING_GALLERY = True
+    mne.viz.set_3d_backend("pyvistaqt")
+    pyvista.OFF_SCREEN = False
+    pyvista.BUILDING_GALLERY = True
 
 
 report_scraper = mne.report._ReportScraper()
