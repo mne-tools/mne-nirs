@@ -91,6 +91,6 @@ jobs:
           key: ${{ env.TESTING_VERSION }}-1
           path: ~/mne_data
       - run: ./tools/github_actions_download.sh
-      - run: pytest -n "$PYTEST_XDIST_N" --dist loadscope --timeout=120 --timeout-method=thread -o faulthandler_timeout=110 --cov=mne_nirs --cov-report=xml -vv -m "not examples" "mne_nirs/"
+      - run: pytest -n "$PYTEST_XDIST_N" --dist loadscope --timeout=120 --timeout-method=thread -o faulthandler_timeout=110 --cov=mne_nirs --cov-report=xml -vv "mne_nirs/"
       - uses: codecov/codecov-action@v7
         if: success()

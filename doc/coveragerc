@@ -1,0 +1,8 @@
+# Coverage config for the doc build (see .circleci/config.yml): the gallery examples
+# run in forked Sphinx and loky (sphinx-gallery) worker processes, which "patch" measures
+[run]
+branch = True
+source = mne_nirs
+omit = */tests/*
+parallel = True
+patch = subprocess, fork, _exit

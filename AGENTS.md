@@ -50,8 +50,10 @@ What does *not* carry over from MNE-Python:
 
 ## Tests and docs
 
-`pytest mne_nirs/ -m "not examples"` is what CI runs. `mne_nirs/tests/test_examples.py`
-(marker `examples`) executes the gallery scripts in `examples/general/`; it is slow and
-needs the example datasets. The docs (Sphinx + sphinx-gallery) are built on CircleCI
-with `make -C doc html`. Run `pre-commit run --all-files` (ruff and ruff-format) before
+`pytest -n auto mne_nirs/` runs the unit tests (CI uses pytest-xdist). Tests write to a
+per-process fake home (the `protect_config` fixture), so resolve test data paths at
+module level, e.g. `data_path(download=False)`, rather than inside test functions. The
+gallery examples in `examples/` are not unit tests: they run when the docs (Sphinx +
+sphinx-gallery) are built on CircleCI with `make -C doc html`, which also reports
+coverage. Run `pre-commit run --all-files` (ruff and ruff-format) before
 handing work back.

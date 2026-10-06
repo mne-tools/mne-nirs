@@ -138,9 +138,20 @@ jobs:
             name: make html
             command: |
               git branch
-              make -C doc html
+              # Measure coverage of the gallery examples (see doc/coveragerc)
+              export COVERAGE_RCFILE=$PWD/doc/coveragerc COVERAGE_FILE=$PWD/.coverage
+              make -C doc html SPHINXBUILD="python -m coverage run -m sphinx"
+              python -m coverage combine
+              python -m coverage xml
               du -hs ~/mne_data
 
+        # Upload coverage of the gallery examples to Codecov
+        - run:
+            name: Upload coverage to Codecov
+            command: |
+              if [[ -f coverage.xml ]]; then
+                bash <(curl -s https://codecov.io/bash) -f coverage.xml || true
+              fi
         # Save the JUnit file
         - store_test_results:
             path: doc/_build/test-results
