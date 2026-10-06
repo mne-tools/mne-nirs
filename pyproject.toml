@@ -48,10 +48,27 @@ Homepage = "https://mne.tools/mne-nirs/"
 Download = "https://github.com/mne-tools/mne-nirs"
 "Source Code" = "https://github.com/mne-tools/mne-nirs/"
 
-[project.optional-dependencies]
-docs = ["sphinx", "sphinx-gallery", "pydata_sphinx_theme", "numpydoc", "matplotlib"]
-
 [dependency-groups]
+doc = [
+    "memory_profiler",
+    "numpydoc",
+    "pydata_sphinx_theme==0.13.3",
+    "sphinx",
+    "sphinx-gallery",
+    "sphinx_copybutton",
+    "sphinxcontrib-bibtex>=2.3",
+    # mne-nirs specific requirements
+    "fooof",
+    "h5py",
+    "ipython",
+    "matplotlib",
+    "mne-bids",
+    "mne-qt-browser",
+    "pillow",
+    "seaborn",
+    "snirf",
+    "statsmodels",
+]
 test = [
     "numpydoc",
     "pytest",

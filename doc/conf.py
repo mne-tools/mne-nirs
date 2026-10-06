@@ -418,7 +418,6 @@ sphinx_gallery_conf = {
         "filepath_prefix": filepath_prefix,  # noqa: E501 A prefix to prepend to any filepaths in Binder links.
         "dependencies": [
             "../requirements.txt",
-            "../requirements_doc.txt",
         ],
     },
     "plot_gallery": "True",  # Avoid annoying str/bool default warning
