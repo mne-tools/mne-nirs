@@ -13,13 +13,13 @@ from packaging.version import Version
 
 # most of this adapted from MNE-Python
 
+# Resolved at import time from the real config (tests use a fake home)
+_has_testing_data = mne.datasets.has_dataset("testing")
+
 
 def pytest_configure(config):
     """Configure pytest options."""
-    # Markers
-    for marker in ("examples",):
-        config.addinivalue_line("markers", marker)
-    for fixture in ("matplotlib_config", "close_all"):
+    for fixture in ("matplotlib_config", "close_all", "protect_config"):
         config.addinivalue_line("usefixtures", fixture)
 
     # Cap the number of threads each pytest-xdist worker uses, adapted from SciPy
@@ -130,6 +130,19 @@ def matplotlib_config():
     cbook.CallbackRegistry = CallbackRegistryReraise
 
 
+@pytest.fixture(scope="session")
+def protect_config(tmp_path_factory):
+    """Protect ~/.mne.
+
+    Test data paths are resolved at module level (during collection) from the real
+    config, while anything written during tests goes to a per-process fake home, so
+    parallel workers never write the real config file.
+    """
+    home = tmp_path_factory.mktemp("home")
+    with mock.patch.dict(os.environ, {"_MNE_FAKE_HOME_DIR": str(home)}):
+        yield
+
+
 @pytest.fixture(autouse=True)
 def close_all():
     """Close all matplotlib plots, regardless of test status."""
@@ -160,7 +173,7 @@ def options_3d():
 @pytest.fixture
 def requires_pyvista(options_3d):
     """Require pyvista."""
-    if not mne.datasets.has_dataset("testing"):
+    if not _has_testing_data:
         pytest.skip("Requires mne-testing-data")
     pyvista = pytest.importorskip("pyvista")
     pytest.importorskip("pyvistaqt")

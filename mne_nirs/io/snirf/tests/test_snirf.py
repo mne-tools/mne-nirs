@@ -27,9 +27,9 @@ fname_nirx_15_2_short = op.join(
     data_path(download=False), "NIRx", "nirscout", "nirx_15_2_recording_w_short"
 )
 
-fname_snirf_aux = aux.data_path()
+fname_snirf_aux = aux.data_path(download=False)
 fname_snirf_aux_nirsport2 = op.join(
-    op.dirname(aux.data_path()), "nirsport2_noise_w_aux.snirf"
+    op.dirname(fname_snirf_aux), "nirsport2_noise_w_aux.snirf"
 )
 
 pytest.importorskip("h5py")

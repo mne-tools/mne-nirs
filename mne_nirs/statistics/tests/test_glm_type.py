@@ -18,12 +18,13 @@ from mne_nirs.experimental_design import make_first_level_design_matrix
 from mne_nirs.statistics import RegressionResults, read_glm, run_glm
 
 data_path = testing.data_path(download=False)
+fnirs_data_folder = mne.datasets.fnirs_motor.data_path(download=False)
 subjects_dir = data_path / "/subjects"
 
 
 def _get_minimal_haemo_data(tmin=0, tmax=60):
     raw = mne.io.read_raw_nirx(
-        os.path.join(mne.datasets.fnirs_motor.data_path(), "Participant-1"),
+        os.path.join(fnirs_data_folder, "Participant-1"),
         preload=False,
     )
     raw.crop(tmax=tmax, tmin=tmin)

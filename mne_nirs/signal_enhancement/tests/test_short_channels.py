@@ -11,10 +11,11 @@ import pytest
 from mne_nirs.channels import get_long_channels, get_short_channels
 from mne_nirs.signal_enhancement import short_channel_regression
 
+fnirs_data_folder = mne.datasets.fnirs_motor.data_path(download=False)
+
 
 def _load_dataset():
     """Load data and tidy it a bit"""
-    fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
     fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
     raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir, verbose=True).load_data()
 

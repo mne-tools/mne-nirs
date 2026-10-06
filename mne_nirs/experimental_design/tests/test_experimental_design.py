@@ -22,10 +22,11 @@ from mne_nirs.experimental_design._experimental_design import (
 )
 from mne_nirs.simulation import simulate_nirs_raw
 
+fnirs_data_folder = mne.datasets.fnirs_motor.data_path(download=False)
+
 
 def _load_dataset():
     """Load data and tidy it a bit"""
-    fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
     fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
     raw_intensity = mne.io.read_raw_nirx(fnirs_raw_dir, verbose=True).load_data()
 

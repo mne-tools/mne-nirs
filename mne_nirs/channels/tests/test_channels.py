@@ -17,9 +17,10 @@ from mne_nirs.channels import (
     pick_sources,
 )
 
+fnirs_data_folder = mne.datasets.fnirs_motor.data_path(download=False)
+
 
 def _get_raw():
-    fnirs_data_folder = mne.datasets.fnirs_motor.data_path()
     fnirs_raw_dir = os.path.join(fnirs_data_folder, "Participant-1")
     raw = mne.io.read_raw_nirx(fnirs_raw_dir).load_data()
     return raw

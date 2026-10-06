@@ -11,11 +11,14 @@ from numpy.testing import assert_allclose, assert_array_equal
 
 from mne_nirs.preprocessing import peak_power, scalp_coupling_index_windowed
 
+fnirs_data_folder = Path(mne.datasets.fnirs_motor.data_path(download=False))
+has_testing_data = mne.datasets.has_dataset("testing")
+testing_path = mne.datasets.testing.data_path(download=False)
+
 
 @pytest.fixture(name="fnirs_motor_data")
 def fixture_fnirs_motor_data() -> mne.io.BaseRaw:
     """Read and return motor experiment data."""
-    fnirs_data_folder = Path(mne.datasets.fnirs_motor.data_path())
     fnirs_raw_dir = fnirs_data_folder / "Participant-1"
     raw = mne.io.read_raw_nirx(str(fnirs_raw_dir), verbose=True).load_data()
     return mne.preprocessing.nirs.optical_density(raw)
@@ -24,13 +27,10 @@ def fixture_fnirs_motor_data() -> mne.io.BaseRaw:
 @pytest.fixture(name="fnirs_labnirs_3wl_data")
 def fixture_fnirs_labnirs_3wl_data() -> mne.io.BaseRaw:
     """Read and return 3-wavelength testing data."""
-    if not mne.datasets.has_dataset("testing"):
+    if not has_testing_data:
         pytest.skip("Requires testing dataset")
     fname_labnirs_3wl = (
-        mne.datasets.testing.data_path(download=False)
-        / "SNIRF"
-        / "Labnirs"
-        / "labnirs_3wl_raw_recording.snirf"
+        testing_path / "SNIRF" / "Labnirs" / "labnirs_3wl_raw_recording.snirf"
     )
     raw = mne.io.read_raw_snirf(fname_labnirs_3wl)
     ch_names = [
