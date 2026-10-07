@@ -5,3 +5,8 @@
 from ._peak_power import peak_power
 from ._scalp_coupling_segmented import scalp_coupling_index_windowed
 from ._mayer import quantify_mayer_fooof
+from ._motion import (
+    detect_motion_artifacts,
+    motion_correct_spline,
+    motion_correct_wavelet,
+)
