@@ -207,6 +207,13 @@ def motion_correct_spline(raw, mask=None, smoothing=0.99, *, verbose=None):
     -----
     Motion segments shorter than five samples are not detrended.
 
+    Homer3 differs from :footcite:t:`ScholkmannEtAl2010` in the number of
+    samples over which the segment means used for the shifts are taken
+    (0.3 s and 3 s rather than 1/3 s and 2 s as the limits between the
+    cases). The paper also describes ``p`` with the reverse of the ``csaps``
+    convention used here, so its recommended value of 0.01 corresponds to the
+    default of 0.99.
+
     References
     ----------
     .. footbibliography::
@@ -274,9 +281,10 @@ def motion_correct_wavelet(raw, iqr=1.5, *, verbose=None):
     Each channel is decomposed with a translation-invariant wavelet transform,
     detail coefficients that are outliers with respect to the interquartile
     range are set to zero, and the signal is reconstructed. The method targets
-    spike artifacts :footcite:`MolaviDumont2012`. This is a port of Homer3's
-    ``hmrR_MotionCorrectWavelet`` :footcite:`HuppertEtAl2009` and reproduces
-    its output to numerical precision.
+    spike artifacts and is adapted from :footcite:t:`MolaviDumont2012`. This is
+    a port of Homer3's ``hmrR_MotionCorrectWavelet``
+    :footcite:`HuppertEtAl2009` and reproduces its output to numerical
+    precision.
 
     Parameters
     ----------
@@ -296,6 +304,13 @@ def motion_correct_wavelet(raw, iqr=1.5, *, verbose=None):
     -----
     Requires the optional dependency ``PyWavelets``, which can be installed
     with ``pip install mne-nirs[full]``.
+
+    Like Homer3, this differs from :footcite:t:`MolaviDumont2012`, who used a
+    Daubechies 5 wavelet, set a coefficient to zero when its probability under
+    a Gaussian fit to its level was below a threshold (0.1), and only
+    corrected the most contaminated levels. Here a Daubechies 2 wavelet is
+    used, coefficients outside ``iqr`` times the interquartile range of their
+    level are set to zero, and all but the coarsest levels are corrected.
 
     References
     ----------
