@@ -1,0 +1,789 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-theme="auto">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mne_nirs.preprocessing._motion &#8212; MNE-NIRS 0.8.0.dev78+g6fc3739bb documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "auto";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/pydata-sphinx-theme.css?v=3ab4e28d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=c83e6b79" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script src="../../../_static/documentation_options.js?v=4efb081e"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-188272121-1"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-188272121-1');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/mne_nirs/preprocessing/_motion';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://mne.tools/mne-nirs/dev/_static/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.8';
+        </script>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="canonical" href="https://mne.tools/mne-nirs/stable/index.html" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="auto">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/mne_nirs_logo_small.svg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../../_static/mne_nirs_logo_small.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../auto_examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../api.html">
+                        API
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../changelog.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      0.8  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="External Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mne-tools/mne-nirs" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../auto_examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../api.html">
+                        API
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../changelog.html">
+                        Changelog
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      0.8  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="External Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/mne-tools/mne-nirs" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <h1>Source code for mne_nirs.preprocessing._motion</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Authors: The MNE-Python contributors.</span>
+<span class="c1"># License: BSD-3-Clause</span>
+<span class="c1"># Copyright the MNE-Python contributors.</span>
+
+<span class="c1"># Adapted from Homer3 v1.80.2 (https://github.com/BUNPC/Homer3) functions</span>
+<span class="c1"># hmrR_MotionArtifactByChannel, hmrR_MotionCorrectSpline and</span>
+<span class="c1"># hmrR_MotionCorrectWavelet, Copyright (c) 2015, David Boas, Jay Dubb,</span>
+<span class="c1"># Ted Huppert, released under the BSD-2-Clause license (BSD-compatible).</span>
+<span class="c1"># The index bookkeeping mirrors the MATLAB code so that the outputs match.</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mne.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseRaw</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mne.preprocessing.nirs</span><span class="w"> </span><span class="kn">import</span> <span class="n">_validate_nirs_info</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mne.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_validate_type</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">verbose</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.interpolate</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_smoothing_spline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.ndimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">binary_dilation</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_raw</span><span class="p">(</span><span class="n">raw</span><span class="p">):</span>
+    <span class="n">_validate_type</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">BaseRaw</span><span class="p">,</span> <span class="s2">"raw"</span><span class="p">)</span>
+    <span class="n">raw</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">raw</span><span class="p">,</span> <span class="n">_validate_nirs_info</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_detect_group</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">t_motion</span><span class="p">,</span> <span class="n">t_mask</span><span class="p">,</span> <span class="n">stdev_thresh</span><span class="p">,</span> <span class="n">amp_thresh</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Get the motion mask shared by a group of channels (hmrR_MotionArtifact)."""</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># MATLAB round() rounds halves away from zero, NumPy to even</span>
+    <span class="n">n_motion</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">t_motion</span> <span class="o">*</span> <span class="n">fs</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">n_mask</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">t_mask</span> <span class="o">*</span> <span class="n">fs</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">thresh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stdev_thresh</span>
+    <span class="c1"># maximum |x[t + k] - x[t]| over k = 1 .. n_motion for t = 0 .. n - 2</span>
+    <span class="n">max_diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_motion</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">change</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="n">k</span><span class="p">:]</span> <span class="o">-</span> <span class="n">data</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="n">k</span><span class="p">])</span>
+        <span class="n">max_diff</span><span class="p">[:,</span> <span class="p">:</span> <span class="n">n</span> <span class="o">-</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">max_diff</span><span class="p">[:,</span> <span class="p">:</span> <span class="n">n</span> <span class="o">-</span> <span class="n">k</span><span class="p">],</span> <span class="n">change</span><span class="p">)</span>
+    <span class="n">art</span> <span class="o">=</span> <span class="p">((</span><span class="n">max_diff</span> <span class="o">&gt;</span> <span class="n">thresh</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">|</span> <span class="p">(</span><span class="n">max_diff</span> <span class="o">&gt;</span> <span class="n">amp_thresh</span><span class="p">))</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">art</span> <span class="o">=</span> <span class="n">binary_dilation</span><span class="p">(</span><span class="n">art</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n_mask</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">bool</span><span class="p">))</span>
+    <span class="c1"># Homer3 attributes the change between t and t + k to sample t + 1</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">mask</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="o">~</span><span class="n">art</span>
+    <span class="k">return</span> <span class="n">mask</span>
+
+
+<div class="viewcode-block" id="detect_motion_artifacts">
+<a class="viewcode-back" href="../../../generated/mne_nirs.preprocessing.detect_motion_artifacts.html#mne_nirs.preprocessing.detect_motion_artifacts">[docs]</a>
+<span class="nd">@verbose</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">detect_motion_artifacts</span><span class="p">(</span>
+    <span class="n">raw</span><span class="p">,</span> <span class="n">t_motion</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">t_mask</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">stdev_thresh</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span> <span class="n">amp_thresh</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Detect motion artifacts in fNIRS data.</span>
+
+<span class="sd">    A sample is flagged when, within the following ``t_motion`` seconds, the</span>
+<span class="sd">    signal changes by more than ``stdev_thresh`` times the standard deviation</span>
+<span class="sd">    of its first derivative or by more than ``amp_thresh``. Flagged samples are</span>
+<span class="sd">    padded by ``t_mask`` seconds on each side. The channels of a</span>
+<span class="sd">    source-detector pair are evaluated together and share one mask. This is a</span>
+<span class="sd">    port of Homer3's ``hmrR_MotionArtifactByChannel``</span>
+<span class="sd">    :footcite:`HuppertEtAl2009` and gives identical masks.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    raw : instance of Raw</span>
+<span class="sd">        The raw fNIRS data (optical density or hemoglobin).</span>
+<span class="sd">    t_motion : float</span>
+<span class="sd">        Duration (s) of the window over which changes are evaluated.</span>
+<span class="sd">    t_mask : float</span>
+<span class="sd">        Duration (s) to pad around each flagged sample.</span>
+<span class="sd">    stdev_thresh : float</span>
+<span class="sd">        Threshold as a multiple of the standard deviation of the first</span>
+<span class="sd">        derivative.</span>
+<span class="sd">    amp_thresh : float</span>
+<span class="sd">        Absolute threshold on the amplitude change.</span>
+<span class="sd">    %(verbose)s</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    mask : ndarray of bool, shape (n_channels, n_times)</span>
+<span class="sd">        Per-channel mask (``tIncCh`` in Homer3) for the fNIRS channels, where</span>
+<span class="sd">        ``True`` means a clean sample. Use ``mask.all(axis=0)`` to get the</span>
+<span class="sd">        global mask of Homer3's ``hmrR_MotionArtifact`` (``tInc``).</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The default thresholds are those of Homer3. Suitable values depend on the</span>
+<span class="sd">    sampling rate and the units of the data.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    .. footbibliography::</span>
+<span class="sd">    """</span>
+    <span class="n">raw</span><span class="p">,</span> <span class="n">picks</span> <span class="o">=</span> <span class="n">_check_raw</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">picks</span><span class="p">)</span>
+    <span class="n">pairs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">raw</span><span class="o">.</span><span class="n">ch_names</span><span class="p">[</span><span class="n">pick</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">pick</span> <span class="ow">in</span> <span class="n">picks</span><span class="p">])</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">pairs</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">pairs</span> <span class="o">==</span> <span class="n">pair</span><span class="p">)</span>
+        <span class="n">mask</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">_detect_group</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"sfreq"</span><span class="p">],</span> <span class="n">t_motion</span><span class="p">,</span> <span class="n">t_mask</span><span class="p">,</span> <span class="n">stdev_thresh</span><span class="p">,</span> <span class="n">amp_thresh</span>
+        <span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Flagged </span><span class="si">{</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="o">~</span><span class="n">mask</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">0.1f</span><span class="si">}</span><span class="s2">% of samples as motion"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">mask</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_csaps</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Evaluate a cubic smoothing spline with MATLAB csaps semantics."""</span>
+    <span class="c1"># make_smoothing_spline needs at least five points; leaving short</span>
+    <span class="c1"># segments uncorrected is the interpolating (p = 1) limit</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span> <span class="ow">or</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">y</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">polyval</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">t</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">make_smoothing_spline</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="o">/</span> <span class="n">p</span><span class="p">)(</span><span class="n">t</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_window</span><span class="p">(</span><span class="n">seg_length</span><span class="p">,</span> <span class="n">fs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Get the number of samples over which segment means are taken."""</span>
+    <span class="k">if</span> <span class="n">seg_length</span> <span class="o">&lt;</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">fs</span><span class="p">:</span>
+        <span class="n">wind</span> <span class="o">=</span> <span class="n">seg_length</span>
+    <span class="k">elif</span> <span class="n">seg_length</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">fs</span><span class="p">:</span>
+        <span class="n">wind</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="mf">0.3</span> <span class="o">*</span> <span class="n">fs</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">wind</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">seg_length</span> <span class="o">/</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">wind</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Homer3 would take mean([]) = NaN</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_sl</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Convert the 1-based inclusive MATLAB range first:last to a slice."""</span>
+    <span class="k">return</span> <span class="nb">slice</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">last</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_shift_segment</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">prev_length</span><span class="p">,</span> <span class="n">fs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Shift src[first:last] to continue from the preceding output segment."""</span>
+    <span class="n">mean_prev</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="n">_sl</span><span class="p">(</span><span class="n">first</span> <span class="o">-</span> <span class="n">_window</span><span class="p">(</span><span class="n">prev_length</span><span class="p">,</span> <span class="n">fs</span><span class="p">),</span> <span class="n">first</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="n">last</span> <span class="o">-</span> <span class="n">first</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">mean_curr</span> <span class="o">=</span> <span class="n">src</span><span class="p">[</span><span class="n">_sl</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">first</span> <span class="o">+</span> <span class="n">_window</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">out</span><span class="p">[</span><span class="n">_sl</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">)]</span> <span class="o">=</span> <span class="n">src</span><span class="p">[</span><span class="n">_sl</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">)]</span> <span class="o">-</span> <span class="n">mean_curr</span> <span class="o">+</span> <span class="n">mean_prev</span>
+    <span class="k">return</span> <span class="n">length</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_spline_channel</span><span class="p">(</span><span class="n">dod</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Correct one channel (one pass of hmrR_MotionCorrectSpline's loop)."""</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dod</span><span class="p">)</span>
+    <span class="c1"># 1-based starts and ends of the motion segments</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+    <span class="n">starts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">d</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">stops</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">d</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">starts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">stops</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">starts</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">starts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">stops</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">stops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">dod</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">starts</span><span class="p">,</span> <span class="n">stops</span><span class="p">):</span>
+        <span class="n">seg</span> <span class="o">=</span> <span class="n">_sl</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">[</span><span class="n">seg</span><span class="p">]</span> <span class="o">=</span> <span class="n">dod</span><span class="p">[</span><span class="n">seg</span><span class="p">]</span> <span class="o">-</span> <span class="n">_csaps</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">seg</span><span class="p">],</span> <span class="n">dod</span><span class="p">[</span><span class="n">seg</span><span class="p">],</span> <span class="n">p</span><span class="p">)</span>
+
+    <span class="c1"># first motion segment: match the preceding clean data, else the next</span>
+    <span class="n">first</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">starts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stops</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">first</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">_shift_segment</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">first</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">next_stop</span> <span class="o">=</span> <span class="n">starts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">starts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">n</span>
+        <span class="n">mean_curr</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="n">_sl</span><span class="p">(</span><span class="n">last</span> <span class="o">-</span> <span class="n">_window</span><span class="p">(</span><span class="n">last</span><span class="p">,</span> <span class="n">fs</span><span class="p">),</span> <span class="n">last</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">wind_next</span> <span class="o">=</span> <span class="n">_window</span><span class="p">(</span><span class="n">next_stop</span> <span class="o">-</span> <span class="n">last</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+        <span class="n">mean_next</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="n">_sl</span><span class="p">(</span><span class="n">last</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">last</span> <span class="o">+</span> <span class="n">wind_next</span><span class="p">)]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">out</span><span class="p">[</span><span class="n">_sl</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">)]</span> <span class="o">+=</span> <span class="n">mean_next</span> <span class="o">-</span> <span class="n">mean_curr</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">last</span>
+    <span class="c1"># following clean and motion segments, each matched to the previous one</span>
+    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">starts</span><span class="p">)):</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">_shift_segment</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">dod</span><span class="p">,</span> <span class="n">stops</span><span class="p">[</span><span class="n">kk</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">starts</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">_shift_segment</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">starts</span><span class="p">[</span><span class="n">kk</span><span class="p">],</span> <span class="n">stops</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+    <span class="c1"># Homer3 starts the last clean segment one sample early</span>
+    <span class="k">if</span> <span class="n">stops</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">_shift_segment</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">dod</span><span class="p">,</span> <span class="n">stops</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<div class="viewcode-block" id="motion_correct_spline">
+<a class="viewcode-back" href="../../../generated/mne_nirs.preprocessing.motion_correct_spline.html#mne_nirs.preprocessing.motion_correct_spline">[docs]</a>
+<span class="nd">@verbose</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">motion_correct_spline</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">smoothing</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Apply spline interpolation motion correction to fNIRS data.</span>
+
+<span class="sd">    Each motion segment is detrended with a cubic smoothing spline and the</span>
+<span class="sd">    segments are then shifted so that the signal is continuous across their</span>
+<span class="sd">    boundaries :footcite:`ScholkmannEtAl2010`. This is a port of Homer3's</span>
+<span class="sd">    ``hmrR_MotionCorrectSpline`` :footcite:`HuppertEtAl2009` and reproduces</span>
+<span class="sd">    its output to numerical precision.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    raw : instance of Raw</span>
+<span class="sd">        The raw fNIRS data (optical density or hemoglobin).</span>
+<span class="sd">    mask : ndarray of bool, shape (n_channels, n_times) | None</span>
+<span class="sd">        Per-channel motion mask for the fNIRS channels, where ``True`` means a</span>
+<span class="sd">        clean sample, as returned by :func:`detect_motion_artifacts`. If</span>
+<span class="sd">        ``None``, :func:`detect_motion_artifacts` is called with its default</span>
+<span class="sd">        parameters.</span>
+<span class="sd">    smoothing : float</span>
+<span class="sd">        Smoothing parameter of the spline between 0 and 1 (``p`` in Homer3 and</span>
+<span class="sd">        MATLAB's ``csaps``), where 1 interpolates the data (no correction) and</span>
+<span class="sd">        0 fits a straight line.</span>
+<span class="sd">    %(verbose)s</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    raw : instance of Raw</span>
+<span class="sd">        The corrected data (a copy).</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Motion segments shorter than five samples are not detrended.</span>
+
+<span class="sd">    Homer3 differs from :footcite:t:`ScholkmannEtAl2010` in the number of</span>
+<span class="sd">    samples over which the segment means used for the shifts are taken</span>
+<span class="sd">    (0.3 s and 3 s rather than 1/3 s and 2 s as the limits between the</span>
+<span class="sd">    cases). The paper also describes ``p`` with the reverse of the ``csaps``</span>
+<span class="sd">    convention used here, so its recommended value of 0.01 corresponds to the</span>
+<span class="sd">    default of 0.99.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    .. footbibliography::</span>
+<span class="sd">    """</span>
+    <span class="n">raw</span><span class="p">,</span> <span class="n">picks</span> <span class="o">=</span> <span class="n">_check_raw</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">smoothing</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"smoothing must be between 0 and 1, got </span><span class="si">{</span><span class="n">smoothing</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">detect_motion_artifacts</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mask</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">picks</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">times</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"mask must have shape </span><span class="si">{</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">picks</span><span class="p">),</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">times</span><span class="p">))</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="n">mask</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span>
+        <span class="p">)</span>
+    <span class="k">for</span> <span class="n">pick</span><span class="p">,</span> <span class="n">ch_mask</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">picks</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ch_mask</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="n">raw</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">pick</span><span class="p">]</span> <span class="o">=</span> <span class="n">_spline_channel</span><span class="p">(</span>
+                <span class="n">raw</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">pick</span><span class="p">],</span> <span class="n">raw</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="n">raw</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"sfreq"</span><span class="p">],</span> <span class="n">ch_mask</span><span class="p">,</span> <span class="n">smoothing</span>
+            <span class="p">)</span>
+    <span class="k">return</span> <span class="n">raw</span></div>
+
+
+
+<span class="c1"># Homer3 hard-codes the coarsest scale (2 ** 4 samples) left in the analysis</span>
+<span class="n">_LOWEST_SCALE</span> <span class="o">=</span> <span class="mi">4</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_wavelet_transform</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n_levels</span><span class="p">,</span> <span class="n">pywt</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Translation-invariant wavelet table (Homer3's WT_inv).</span>
+
+<span class="sd">    At every level each block is replaced by the DWT of the block and of the</span>
+<span class="sd">    block circularly shifted by one sample. Column 0 holds the approximation</span>
+<span class="sd">    and column d + 1 the details of level d (0 being the finest).</span>
+<span class="sd">    """</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="n">n_levels</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,))</span>
+    <span class="n">approx</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_levels</span><span class="p">):</span>
+        <span class="n">blocks</span> <span class="o">=</span> <span class="n">approx</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="mi">2</span><span class="o">**</span><span class="n">d</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">coefs</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">pywt</span><span class="o">.</span><span class="n">dwt</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="s2">"db2"</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"periodization"</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="p">(</span><span class="n">blocks</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">blocks</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">cd</span><span class="p">),</span> <span class="p">(</span><span class="n">ca_shift</span><span class="p">,</span> <span class="n">cd_shift</span><span class="p">)</span> <span class="o">=</span> <span class="n">coefs</span>
+        <span class="n">approx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">ca</span><span class="p">,</span> <span class="n">ca_shift</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">table</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">d</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">cd</span><span class="p">,</span> <span class="n">cd_shift</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">table</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">approx</span>
+    <span class="k">return</span> <span class="n">table</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_inverse_wavelet_transform</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">pywt</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Invert _wavelet_transform (Homer3's IWT_inv)."""</span>
+    <span class="n">approx</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">ca</span> <span class="o">=</span> <span class="n">approx</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="p">),</span> <span class="mi">2</span><span class="o">**</span><span class="n">d</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">cd</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">d</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ca</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">sig</span> <span class="o">=</span> <span class="n">pywt</span><span class="o">.</span><span class="n">idwt</span><span class="p">(</span><span class="n">ca</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">cd</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">],</span> <span class="s2">"db2"</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"periodization"</span><span class="p">)</span>
+        <span class="n">sig_shift</span> <span class="o">=</span> <span class="n">pywt</span><span class="o">.</span><span class="n">idwt</span><span class="p">(</span><span class="n">ca</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">cd</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">"db2"</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"periodization"</span><span class="p">)</span>
+        <span class="n">approx</span> <span class="o">=</span> <span class="p">((</span><span class="n">sig</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">sig_shift</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">approx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">approx</span>
+
+
+<div class="viewcode-block" id="motion_correct_wavelet">
+<a class="viewcode-back" href="../../../generated/mne_nirs.preprocessing.motion_correct_wavelet.html#mne_nirs.preprocessing.motion_correct_wavelet">[docs]</a>
+<span class="nd">@verbose</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">motion_correct_wavelet</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">iqr</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Apply wavelet motion correction to fNIRS data.</span>
+
+<span class="sd">    Each channel is decomposed with a translation-invariant wavelet transform,</span>
+<span class="sd">    detail coefficients that are outliers with respect to the interquartile</span>
+<span class="sd">    range are set to zero, and the signal is reconstructed. The method targets</span>
+<span class="sd">    spike artifacts and is adapted from :footcite:t:`MolaviDumont2012`. This is</span>
+<span class="sd">    a port of Homer3's ``hmrR_MotionCorrectWavelet``</span>
+<span class="sd">    :footcite:`HuppertEtAl2009` and reproduces its output to numerical</span>
+<span class="sd">    precision.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    raw : instance of Raw</span>
+<span class="sd">        The raw fNIRS data (optical density or hemoglobin).</span>
+<span class="sd">    iqr : float</span>
+<span class="sd">        Interquartile-range multiplier used as the outlier threshold for the</span>
+<span class="sd">        wavelet coefficients. Larger values remove fewer coefficients.</span>
+<span class="sd">    %(verbose)s</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    raw : instance of Raw</span>
+<span class="sd">        The corrected data (a copy).</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Requires the optional dependency ``PyWavelets``, which can be installed</span>
+<span class="sd">    with ``pip install mne-nirs[full]``.</span>
+
+<span class="sd">    Like Homer3, this differs from :footcite:t:`MolaviDumont2012`, who used a</span>
+<span class="sd">    Daubechies 5 wavelet, set a coefficient to zero when its probability under</span>
+<span class="sd">    a Gaussian fit to its level was below a threshold (0.1), and only</span>
+<span class="sd">    corrected the most contaminated levels. Here a Daubechies 2 wavelet is</span>
+<span class="sd">    used, coefficients outside ``iqr`` times the interquartile range of their</span>
+<span class="sd">    level are set to zero, and all but the coarsest levels are corrected.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    .. footbibliography::</span>
+<span class="sd">    """</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pywt</span>
+
+    <span class="n">raw</span><span class="p">,</span> <span class="n">picks</span> <span class="o">=</span> <span class="n">_check_raw</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">picks</span><span class="p">)</span>
+    <span class="n">n_times</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># zero-pad to a power of 2 and remove the mean (including the padding)</span>
+    <span class="n">n_levels</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">n_times</span><span class="p">)))</span>
+    <span class="n">padded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="mi">2</span><span class="o">**</span><span class="n">n_levels</span><span class="p">))</span>
+    <span class="n">padded</span><span class="p">[:,</span> <span class="p">:</span><span class="n">n_times</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="n">dc</span> <span class="o">=</span> <span class="n">padded</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">_wavelet_transform</span><span class="p">(</span><span class="n">padded</span> <span class="o">-</span> <span class="n">dc</span><span class="p">,</span> <span class="n">n_levels</span> <span class="o">-</span> <span class="n">_LOWEST_SCALE</span><span class="p">,</span> <span class="n">pywt</span><span class="p">)</span>
+    <span class="c1"># zero outlier detail coefficients (Homer3's WaveletAnalysis), with</span>
+    <span class="c1"># quartiles computed from the coefficients that stem from unpadded data</span>
+    <span class="n">n_valid</span> <span class="o">=</span> <span class="n">n_times</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_levels</span> <span class="o">-</span> <span class="n">_LOWEST_SCALE</span><span class="p">):</span>
+        <span class="n">n_valid</span> <span class="o">//=</span> <span class="mi">2</span>
+        <span class="n">coefs</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="mi">2</span><span class="o">**</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">q1</span><span class="p">,</span> <span class="n">q3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span>
+            <span class="n">coefs</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="n">n_valid</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">"hazen"</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="n">spread</span> <span class="o">=</span> <span class="n">iqr</span> <span class="o">*</span> <span class="p">(</span><span class="n">q3</span> <span class="o">-</span> <span class="n">q1</span><span class="p">)</span>
+        <span class="n">coefs</span><span class="p">[(</span><span class="n">coefs</span> <span class="o">&gt;</span> <span class="n">q3</span> <span class="o">+</span> <span class="n">spread</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">coefs</span> <span class="o">&lt;</span> <span class="n">q1</span> <span class="o">-</span> <span class="n">spread</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">table</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">coefs</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">raw</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">picks</span><span class="p">]</span> <span class="o">=</span> <span class="n">_inverse_wavelet_transform</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">pywt</span><span class="p">)[:,</span> <span class="p">:</span><span class="n">n_times</span><span class="p">]</span> <span class="o">+</span> <span class="n">dc</span>
+    <span class="k">return</span> <span class="n">raw</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+    <script src="https://mne.tools/mne-nirs/versionwarning.js"></script>
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-10-07T16:47:52.702821+00:00" class="localized">2026-10-07 16:47 UTC</time>
+<script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

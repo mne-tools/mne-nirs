@@ -84,25 +84,6 @@ information about triggers, condition names, etc.
 
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-
 
 
 
@@ -135,35 +116,7 @@ We first define the root directory of our dataset.
 
  .. code-block:: none
 
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
     /home/circleci/mne_data/fNIRS-motor-group
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
 
 
 
@@ -190,35 +143,7 @@ This helps to handle all the path wrangling.
 
  .. code-block:: none
 
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
     /home/circleci/mne_data/fNIRS-motor-group
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
 
 
 
@@ -244,35 +169,7 @@ For example we can automatically query the subjects, tasks, and sessions.
 
  .. code-block:: none
 
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
     ['01', '02', '03', '04', '05']
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
 
 
 
@@ -291,25 +188,6 @@ But for this example we will only process the first two subjects
 
 
 
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
 
 
 
@@ -345,25 +223,6 @@ so this example will skim over the individual level details.
 
 
 
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
 
 
 
@@ -417,8 +276,8 @@ on each. We will then save the GLM results to disk as ``.h5`` files.
 
  .. code-block:: none
 
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
+    Maximum design matrix VIF was 1.037 (Control)
+    Maximum design matrix VIF was 1.042 (Tapping/Left)
 
 
 
@@ -459,13 +318,6 @@ Next we loop through the five measurements and reload all the results.
 
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-
 
 
 
@@ -486,39 +338,6 @@ subjects.
 
 
 
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
-    /usr/lib/python3.12/multiprocessing/popen_fork.py:66: DeprecationWarning: This process (pid=7133) is multi-threaded, use of fork() may lead to deadlocks in the child.
-      self.pid = os.fork()
 
 
 .. raw:: html
@@ -745,9 +564,7 @@ subjects.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 7.377 seconds)
-
-**Estimated memory usage:**  427 MB
+   **Total running time of the script:** (0 minutes 1.068 seconds)
 
 
 .. _sphx_glr_download_auto_examples_general_plot_80_save_read_glm.py:

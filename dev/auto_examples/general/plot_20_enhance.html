@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Signal Enhancement Techniques &#8212; MNE-NIRS 0.8.0.dev76+g91f4de244 documentation</title>
+    <title>Signal Enhancement Techniques &#8212; MNE-NIRS 0.8.0.dev78+g6fc3739bb documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../_static/documentation_options.js?v=992b150c"></script>
+    <script src="../../_static/documentation_options.js?v=4efb081e"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -467,6 +467,22 @@ for more details.</p>
 </span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="dict"><span class="n">event_dict</span></a> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;</span><span class="s2">Control</span><span class="s2">&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s2">Tapping/Left</span><span class="s2">&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s2">Tapping/Right</span><span class="s2">&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span><span class="w">
 </span></pre></div></div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
+Reading 0 ... 23238  =      0.000 ...  2974.464 secs...
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 0.05 - 0.7 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 0.05
+- Lower transition bandwidth: 0.02 Hz (-6 dB cutoff frequency: 0.04 Hz)
+- Upper passband edge: 0.70 Hz
+- Upper transition bandwidth: 0.20 Hz (-6 dB cutoff frequency: 0.80 Hz)
+- Filter length: 1291 samples (165.248 s)
+
+Used Annotations descriptions: ['1.0', '2.0', '3.0']
 </pre></div>
 </div>
 </section>
@@ -594,7 +610,21 @@ Using data from preloaded Raw for 90 events and 157 original time points ...
 </span><span class="k">for</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="str"><span class="n">condition</span></a> <span class="ow">in</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="dict"><span class="n">evoked_dict_corr</span></a><span class="p">:</span><span class="w">
 </span>    <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="dict"><span class="n">evoked_dict_corr</span></a><span class="p">[</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="str"><span class="n">condition</span></a><span class="p">]</span><span class="o">.</span><span class="n">rename_channels</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span><span class="p">)</span><span class="w">
 </span></pre></div></div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Not setting metadata
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 0.05 - 0.7 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 0.05
+- Lower transition bandwidth: 0.02 Hz (-6 dB cutoff frequency: 0.04 Hz)
+- Upper passband edge: 0.70 Hz
+- Upper transition bandwidth: 0.20 Hz (-6 dB cutoff frequency: 0.80 Hz)
+- Filter length: 1291 samples (165.248 s)
+
+Not setting metadata
 90 matching events found
 Setting baseline interval to [-4.992, 0.0] s
 Applying baseline correction (mode: mean)
@@ -650,7 +680,21 @@ Using data from preloaded Raw for 90 events and 157 original time points ...
 </span><span class="p">)</span><span class="p">:</span><span class="w">
 </span>    <a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">axes</span></a><span class="p">[</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="int"><span class="n">column</span></a><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="str"><span class="n">condition</span></a><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="w">
 </span></pre></div></div>
-<img src="../../_images/sphx_glr_plot_20_enhance_001.png" srcset="../../_images/sphx_glr_plot_20_enhance_001.png" alt="Original Data, With Enhanced Anticorrelation, With Short Regression" class = "sphx-glr-single-img"/></section>
+<img src="../../_images/sphx_glr_plot_20_enhance_001.png" srcset="../../_images/sphx_glr_plot_20_enhance_001.png" alt="Original Data, With Enhanced Anticorrelation, With Short Regression" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+</pre></div>
+</div>
+</section>
 <section id="plot-hemisphere-for-each-approach">
 <h2>Plot hemisphere for each approach<a class="headerlink" href="#plot-hemisphere-for-each-approach" title="Link to this heading">#</a></h2>
 <p>Plot the epoch image for each approach. First we specify the source
@@ -768,11 +812,36 @@ detector pairs for analysis.</p>
 </span>    <span class="k">for</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="int"><span class="n">column</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="str"><span class="n">hemi</span></a> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="p">[</span><span class="s2">&quot;</span><span class="s2">Left</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="s2">Right</span><span class="s2">&quot;</span><span class="p">]</span><span class="p">)</span><span class="p">:</span><span class="w">
 </span>        <a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">axes</span></a><span class="p">[</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="int"><span class="n">row</span></a><span class="p">,</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="int"><span class="n">column</span></a><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="str"><span class="n">condition</span></a><span class="si">}</span><span class="s2">: </span><span class="si">{</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="str"><span class="n">hemi</span></a><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="w">
 </span></pre></div></div>
-<img src="../../_images/sphx_glr_plot_20_enhance_002.png" srcset="../../_images/sphx_glr_plot_20_enhance_002.png" alt="Original: Left, Original: Right, Anticorrelation: Left, Anticorrelation: Right, Short Regression: Left, Short Regression: Right" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.064 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  420 MB</p>
+<img src="../../_images/sphx_glr_plot_20_enhance_002.png" srcset="../../_images/sphx_glr_plot_20_enhance_002.png" alt="Original: Left, Original: Right, Anticorrelation: Left, Anticorrelation: Right, Short Regression: Left, Short Regression: Right" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+combining channels using "mean"
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.059 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-20-enhance-py">
 <div class="binder-badge docutils container">
-<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_20_enhance.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_20_enhance.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo1.svg" style="width: 150px;" />
 </a>
 </div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
@@ -883,7 +952,7 @@ detector pairs for analysis.</p>
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-10-03T10:21:10.069322+00:00" class="localized">2026-10-03 10:21 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-10-07T16:47:52.702821+00:00" class="localized">2026-10-07 16:47 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

@@ -2765,7 +2765,7 @@ Now compute simple contrasts: LEFT, RIGHT, LEFT>RIGHT, and RIGHT>LEFT
 
  .. code-block:: none
 
-    /home/circleci/project/mne_nirs/statistics/_glm_level_first.py:814: UserWarning: t contrasts should be of length P=4, but it has length 2. The rest of the contrast was padded with zeros.
+    /home/circleci/project/mne_nirs/statistics/_glm_level_first.py:812: UserWarning: t contrasts should be of length P=4, but it has length 2. The rest of the contrast was padded with zeros.
       return _cc(
 
 
@@ -2975,9 +2975,7 @@ selectivity of the motor response according to which hand is being tapped.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 43.920 seconds)
-
-**Estimated memory usage:**  512 MB
+   **Total running time of the script:** (0 minutes 22.067 seconds)
 
 
 .. _sphx_glr_download_auto_examples_general_plot_11b_kf2_fingertapping.py:

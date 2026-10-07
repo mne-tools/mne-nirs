@@ -90,6 +90,13 @@ First we import some example data recorded with a NIRX device.
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
+    Reading 0 ... 23238  =      0.000 ...  2974.464 secs...
+
 
 
 
@@ -134,6 +141,13 @@ Next we can read back the snirf file.
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Loading /home/circleci/project/examples/general/test_raw.snirf
+    Found jitter of 0.000000% in sample times.
+
 
 
 
@@ -169,7 +183,7 @@ ensure that the values are the same.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7109da2ae670>
+    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x744f502d1c70>
 
 
 
@@ -202,7 +216,7 @@ by MNE-NIRS are compliant with the specification.
 
  .. code-block:: none
 
-    <snirf.pysnirf2.ValidationResult object at 0x710a102d5c40>
+    <snirf.pysnirf2.ValidationResult object at 0x744f54656ba0>
 
     Found 304 OK      (hidden)
     Found 522 INFO    (hidden)
@@ -242,7 +256,7 @@ MNE-NIRS cal also be used to write optical density data to SNIRF files.
 
  .. code-block:: none
 
-    <snirf.pysnirf2.ValidationResult object at 0x7109b1e11400>
+    <snirf.pysnirf2.ValidationResult object at 0x744f53a40050>
 
     Found 360 OK      (hidden)
     Found 466 INFO    (hidden)
@@ -280,7 +294,7 @@ And it can write valid haemoglobin data to SNIRF files.
 
  .. code-block:: none
 
-    <snirf.pysnirf2.ValidationResult object at 0x7109d8482240>
+    <snirf.pysnirf2.ValidationResult object at 0x744f539db890>
 
     Found 360 OK      (hidden)
     Found 466 INFO    (hidden)
@@ -295,9 +309,7 @@ And it can write valid haemoglobin data to SNIRF files.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.431 seconds)
-
-**Estimated memory usage:**  420 MB
+   **Total running time of the script:** (0 minutes 1.163 seconds)
 
 
 .. _sphx_glr_download_auto_examples_general_plot_19_snirf.py:
