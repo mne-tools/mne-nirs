@@ -138,6 +138,9 @@ jobs:
             name: Download data
             command: |
               ./tools/github_actions_download.sh
+              # Fetch up front what the examples share, since they run in parallel and
+              # would otherwise race to download it. This also sets SUBJECTS_DIR.
+              python -c "import mne; subjects_dir = mne.datasets.sample.data_path() / 'subjects'; mne.datasets.fetch_fsaverage(subjects_dir); mne.datasets.fetch_hcp_mmp_parcellation(subjects_dir=subjects_dir, accept=True)"
 
         # Build docs
         - run:
