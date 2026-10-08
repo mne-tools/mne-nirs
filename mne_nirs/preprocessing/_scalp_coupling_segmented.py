@@ -144,7 +144,7 @@ def scalp_coupling_index_windowed(
             # Add BAD_SCI annotation to channels if below threshold
             if (threshold is not None) & (c < threshold):
                 raw.annotations.append(
-                    t_start,
+                    t_start + raw.first_time,
                     time_window,
                     "BAD_SCI",
                     ch_names=[[raw.ch_names[ii] for ii in ch_group]],

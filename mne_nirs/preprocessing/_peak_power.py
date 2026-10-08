@@ -141,7 +141,7 @@ def peak_power(
             # Add BAD_PeakPower annotation to channels if below threshold
             if (threshold is not None) & (pp < threshold):
                 raw.annotations.append(
-                    t_start,
+                    t_start + raw.first_time,
                     time_window,
                     "BAD_PeakPower",
                     ch_names=[[raw.ch_names[ii] for ii in ch_group]],
