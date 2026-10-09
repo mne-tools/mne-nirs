@@ -110,10 +110,10 @@ def peak_power(
 
     for window in range(n_windows):
         start_sample = int(window * samples_per_window)
-        end_sample = min(start_sample + samples_per_window, len(raw) - 1)
+        end_sample = start_sample + samples_per_window
 
         t_start = raw.times[start_sample]
-        t_stop = raw.times[end_sample]
+        t_stop = t_start + samples_per_window / raw.info["sfreq"]
         times.append((t_start, t_stop))
 
         # pair indices for all channels pairs
