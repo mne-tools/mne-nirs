@@ -183,7 +183,7 @@ ensure that the values are the same.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x744f502d1c70>
+    <MNEQtBrowser | RawSNIRF, browsing 56 channels, 2974.6 s>
 
 
 
@@ -216,7 +216,7 @@ by MNE-NIRS are compliant with the specification.
 
  .. code-block:: none
 
-    <snirf.pysnirf2.ValidationResult object at 0x744f54656ba0>
+    <snirf.pysnirf2.ValidationResult object at 0x78980b82dbe0>
 
     Found 304 OK      (hidden)
     Found 522 INFO    (hidden)
@@ -256,7 +256,7 @@ MNE-NIRS cal also be used to write optical density data to SNIRF files.
 
  .. code-block:: none
 
-    <snirf.pysnirf2.ValidationResult object at 0x744f53a40050>
+    <snirf.pysnirf2.ValidationResult object at 0x7897f8b20050>
 
     Found 360 OK      (hidden)
     Found 466 INFO    (hidden)
@@ -294,7 +294,7 @@ And it can write valid haemoglobin data to SNIRF files.
 
  .. code-block:: none
 
-    <snirf.pysnirf2.ValidationResult object at 0x744f539db890>
+    <snirf.pysnirf2.ValidationResult object at 0x7897f8b07750>
 
     Found 360 OK      (hidden)
     Found 466 INFO    (hidden)
@@ -309,7 +309,7 @@ And it can write valid haemoglobin data to SNIRF files.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.163 seconds)
+   **Total running time of the script:** (0 minutes 1.184 seconds)
 
 
 .. _sphx_glr_download_auto_examples_general_plot_19_snirf.py:

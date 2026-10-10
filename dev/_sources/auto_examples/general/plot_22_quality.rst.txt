@@ -131,7 +131,7 @@ We then convert the data to optical density and plot the raw signal.
     Reading 0 ... 23238  =      0.000 ...  2974.464 secs...
     Using qt as 2D backend.
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x759202ce8050>
+    <MNEQtBrowser | RawNIRX, browsing 56 channels, 2974.5 s>
 
 
 
@@ -244,7 +244,7 @@ channels are now displayed in grey to indicate they are bad.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7592332f68f0>
+    <MNEQtBrowser | RawNIRX, browsing 56 channels, 2974.5 s>
 
 
 
@@ -472,7 +472,7 @@ has been added.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7591db9d7250>
+    <MNEQtBrowser | RawNIRX, browsing 4 channels, 2974.5 s>
 
 
 
@@ -564,7 +564,7 @@ on S2-D4).
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7591db4ce710>
+    <MNEQtBrowser | RawNIRX, browsing 4 channels, 2974.5 s>
 
 
 
@@ -599,7 +599,7 @@ and bad time segments are marked in red.
  .. code-block:: none
 
 
-    <mne_qt_browser._pg_figure.MNEQtBrowser object at 0x7591daadc0f0>
+    <MNEQtBrowser | RawNIRX, browsing 56 channels, 2974.5 s>
 
 
 
@@ -619,7 +619,7 @@ are treated in downstream analysis.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 8.176 seconds)
+   **Total running time of the script:** (0 minutes 8.284 seconds)
 
 
 .. _sphx_glr_download_auto_examples_general_plot_22_quality.py:

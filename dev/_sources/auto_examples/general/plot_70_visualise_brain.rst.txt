@@ -111,6 +111,8 @@ Download the ``audio_or_visual_speech`` dataset and load the first measurement.
 
  .. code-block:: none
 
+    Loading /home/circleci/mne_data/fNIRS-audio-visual-speech/sub-04/ses-01/nirs/sub-04_ses-01_task-AudioVisualBroadVsRestricted_nirs.snirf
+    Found jitter of 0.000000% in sample times.
 
     <Annotations | 48 segments: Audio (18), Control (10), Ends (2), Video (18)>
 
@@ -142,6 +144,15 @@ Download the HCP-MMP parcellation.
 
 
 
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Reading labels from parcellation...
+       read 181 labels from /home/circleci/mne_data/MNE-sample-data/subjects/fsaverage/label/lh.HCPMMP1.annot
+    Reading labels from parcellation...
+       read 23 labels from /home/circleci/mne_data/MNE-sample-data/subjects/fsaverage/label/lh.HCPMMP1_combined.annot
 
 
 
@@ -180,6 +191,12 @@ auditory cortex, planum temporale, and occipital lobe.
    :srcset: /auto_examples/general/images/sphx_glr_plot_70_visualise_brain_001.png
    :class: sphx-glr-single-img
 
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Channel types:: fnirs_cw_amplitude: 104
 
 
 
@@ -220,6 +237,16 @@ specify which views to use to show each channel pair:
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Could not automatically map source/detector names to 10-20 locations.
+    Using outer_skin.surf for head surface.
+    Channel types:: fnirs_cw_amplitude: 52
+    Channel types:: fnirs_cw_amplitude: 52
+    Channel types:: fnirs_cw_amplitude: 52
+
 
 
 
@@ -259,6 +286,12 @@ and we can see that a number of channels are placed over this structure.
    :srcset: /auto_examples/general/images/sphx_glr_plot_70_visualise_brain_003.png
    :class: sphx-glr-single-img
 
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Channel types:: fnirs_cw_amplitude: 104
 
 
 
@@ -324,318 +357,7 @@ To see more details about how to use the fOLD data see
 
  .. code-block:: none
 
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
+    Channel types:: fnirs_cw_amplitude: 6
 
 
 
@@ -749,270 +471,8 @@ for the weighted region of interest function call.
 
  .. code-block:: none
 
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
-    /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
-    As an alternative, you can create a new view using np.reshape (with copy=False if needed).
-      p0.shape = (-1, 3)
+    Reading 0 ... 7340  =      0.000 ...  1879.040 secs...
+    Maximum design matrix VIF was 1.258 (Ends)
 
 
 .. raw:: html
@@ -1205,6 +665,21 @@ analysis. The details will not be described here, instead view the
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Reading 0 ... 23238  =      0.000 ...  2974.464 secs...
+    Maximum design matrix VIF was 1.050 (Control)
+    Reading 0 ... 18877  =      0.000 ...  2416.256 secs...
+    Maximum design matrix VIF was 1.055 (Tapping_Right)
+    Reading 0 ... 18874  =      0.000 ...  2415.872 secs...
+    Maximum design matrix VIF was 1.068 (Control)
+    Reading 0 ... 23120  =      0.000 ...  2959.360 secs...
+    Maximum design matrix VIF was 1.067 (Tapping_Left)
+    Reading 0 ... 23006  =      0.000 ...  2944.768 secs...
+    Maximum design matrix VIF was 1.060 (Control)
+
 
 
 
@@ -1257,6 +732,12 @@ in green and blue respectively.
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Channel types:: hbo: 20, hbr: 20
+
 
 
 
@@ -1270,7 +751,7 @@ Bibliography
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 15.078 seconds)
+   **Total running time of the script:** (0 minutes 15.208 seconds)
 
 
 .. _sphx_glr_download_auto_examples_general_plot_70_visualise_brain.py:
