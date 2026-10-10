@@ -608,6 +608,11 @@ def test_quality_metrics_ignore_non_fnirs_channels(metric, description) -> None:
     assert scores.shape == (4, len(times_out))
     assert np.all(scores[[0, 1], :] > scores[[2, 3], :])  # S1_D1 beats S10_D10
 
+    # Windows tile the data, so the periodic S1_D1 scores the same in each,
+    # up to filter edge effects
+    assert_allclose(times_out, [(0, 10), (10, 20), (20, 30), (30, 40)])
+    assert_allclose(scores[[0, 1], :], scores[0, 0], rtol=0.01)
+
     bad_channels = {
         ann["ch_names"]
         for ann in raw_out.annotations
