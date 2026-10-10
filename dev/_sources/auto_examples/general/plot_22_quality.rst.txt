@@ -129,7 +129,6 @@ We then convert the data to optical density and plot the raw signal.
 
     Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
     Reading 0 ... 23238  =      0.000 ...  2974.464 secs...
-    Using qt as 2D backend.
 
     <MNEQtBrowser | RawNIRX, browsing 56 channels, 2974.5 s>
 
@@ -619,7 +618,7 @@ are treated in downstream analysis.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 8.284 seconds)
+   **Total running time of the script:** (0 minutes 8.184 seconds)
 
 
 .. _sphx_glr_download_auto_examples_general_plot_22_quality.py:

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Frequency and Filter Commentary &#8212; MNE-NIRS 0.8.0.dev79+g830557684 documentation</title>
+    <title>Frequency and Filter Commentary &#8212; MNE-NIRS 0.8.0.dev80+g8872606cd documentation</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../_static/documentation_options.js?v=9b6cd384"></script>
+    <script src="../../_static/documentation_options.js?v=43e716ff"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -483,6 +483,7 @@ for a detailed introduction to processing NIRS with MNE.</p>
 </span><span class="n">raw_haemo</span> <span class="o">=</span> <a class="sphx-glr-backref-module-mne_nirs-channels sphx-glr-backref-type-py-function reference internal" href="../../generated/mne_nirs.channels.get_long_channels.html#mne_nirs.channels.get_long_channels" title="mne_nirs.channels.get_long_channels"><span class="n">mne_nirs</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">get_long_channels</span></a><span class="p">(</span><span class="n">raw_haemo</span><span class="p">)</span><span class="w">
 </span></pre></div></div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
+Reading 0 ... 23238  =      0.000 ...  2974.464 secs...
 </pre></div>
 </div>
 </section>
@@ -510,7 +511,11 @@ the repetition rate of the experiment.</p>
 </span>    <span class="n">average</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;</span><span class="s2">log</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;</span><span class="s2">r</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="kc">False</span><span class="w">
 </span><span class="p">)</span><span class="w">
 </span></pre></div></div>
-<img src="../../_images/sphx_glr_plot_30_frequency_001.png" srcset="../../_images/sphx_glr_plot_30_frequency_001.png" alt="Oxyhemoglobin" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;MNELineFigure size 1000x350 with 1 Axes&gt;
+<img src="../../_images/sphx_glr_plot_30_frequency_001.png" srcset="../../_images/sphx_glr_plot_30_frequency_001.png" alt="Oxyhemoglobin" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Maximum design matrix VIF was 1.050 (Tapping_Right)
+Effective window size : 262.144 (s)
+Plotting power spectral density (dB=True).
+
+&lt;MNELineFigure size 1000x350 with 1 Axes&gt;
 </pre></div>
 </div>
 </section>
@@ -532,7 +537,10 @@ There is also a small bump around 0.3 Hz that is likely the breathing rate.</p>
 </span>    <span class="n">average</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;</span><span class="s2">log</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="kc">False</span><span class="w">
 </span><span class="p">)</span><span class="w">
 </span></pre></div></div>
-<img src="../../_images/sphx_glr_plot_30_frequency_002.png" srcset="../../_images/sphx_glr_plot_30_frequency_002.png" alt="Oxyhemoglobin" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;MNELineFigure size 1000x350 with 1 Axes&gt;
+<img src="../../_images/sphx_glr_plot_30_frequency_002.png" srcset="../../_images/sphx_glr_plot_30_frequency_002.png" alt="Oxyhemoglobin" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Effective window size : 262.144 (s)
+Plotting power spectral density (dB=True).
+
+&lt;MNELineFigure size 1000x350 with 1 Axes&gt;
 </pre></div>
 </div>
 </section>
@@ -565,13 +573,17 @@ is still visible.</p>
 </span>    <span class="n">average</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;</span><span class="s2">g</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;</span><span class="s2">log</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="kc">False</span><span class="w">
 </span><span class="p">)</span><span class="w">
 </span></pre></div></div>
-<img src="../../_images/sphx_glr_plot_30_frequency_003.png" srcset="../../_images/sphx_glr_plot_30_frequency_003.png" alt="Oxyhemoglobin" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Not setting metadata
+<img src="../../_images/sphx_glr_plot_30_frequency_003.png" srcset="../../_images/sphx_glr_plot_30_frequency_003.png" alt="Oxyhemoglobin" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Used Annotations descriptions: ['Tapping_Left', 'Tapping_Right']
+Not setting metadata
 60 matching events found
 Setting baseline interval to [-4.992, 0.0] s
 Applying baseline correction (mode: mean)
 0 projection items activated
 Using data from preloaded Raw for 60 events and 157 original time points ...
 0 bad epochs dropped
+    Using multitaper spectrum estimation with 7 DPSS windows
+Plotting power spectral density (dB=True).
+Averaging across epochs before plotting...
 
 &lt;MNELineFigure size 1000x350 with 1 Axes&gt;
 </pre></div>
@@ -601,7 +613,19 @@ after epoching.</p>
 </span>    <span class="n">plot</span><span class="o">=</span><span class="s2">&quot;</span><span class="s2">magnitude</span><span class="s2">&quot;</span><span class="p">,</span><span class="w">
 </span><span class="p">)</span><span class="w">
 </span></pre></div></div>
-<img src="../../_images/sphx_glr_plot_30_frequency_004.png" srcset="../../_images/sphx_glr_plot_30_frequency_004.png" alt="plot 30 frequency" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 640x480 with 1 Axes&gt;
+<img src="../../_images/sphx_glr_plot_30_frequency_004.png" srcset="../../_images/sphx_glr_plot_30_frequency_004.png" alt="plot 30 frequency" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Setting up low-pass filter at 0.4 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal lowpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Upper passband edge: 0.40 Hz
+- Upper transition bandwidth: 0.20 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Filter length: 129 samples (16.512 s)
+
+
+&lt;Figure size 640x480 with 1 Axes&gt;
 </pre></div>
 </div>
 </section>
@@ -651,7 +675,15 @@ epoched data.</p>
 </span><a class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-property reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.axes.html#matplotlib.figure.Figure.axes" title="matplotlib.figure.Figure.axes"><span class="n">fig</span><span class="o">.</span><span class="n">axes</span></a><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;</span><span class="s2">Filter Magnitude (dB) [invalid for other lines]</span><span class="s2">&quot;</span><span class="p">)</span><span class="w">
 </span><a class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-property reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.axes.html#matplotlib.figure.Figure.axes" title="matplotlib.figure.Figure.axes"><span class="n">fig</span><span class="o">.</span><span class="n">axes</span></a><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;</span><span class="s2">&quot;</span><span class="p">)</span><span class="w">
 </span></pre></div></div>
-<img src="../../_images/sphx_glr_plot_30_frequency_005.png" srcset="../../_images/sphx_glr_plot_30_frequency_005.png" alt="plot 30 frequency" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, '')
+<img src="../../_images/sphx_glr_plot_30_frequency_005.png" srcset="../../_images/sphx_glr_plot_30_frequency_005.png" alt="plot 30 frequency" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Effective window size : 262.144 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 262.144 (s)
+Plotting power spectral density (dB=True).
+    Using multitaper spectrum estimation with 7 DPSS windows
+Plotting power spectral density (dB=True).
+Averaging across epochs before plotting...
+
+Text(0.5, 1.0, '')
 </pre></div>
 </div>
 </section>
@@ -668,7 +700,24 @@ shows the signal after filtering.</p>
 </span>    <span class="n">average</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;</span><span class="s2">log</span><span class="s2">&quot;</span><span class="p">,</span> <a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">axes</span></a><span class="o">=</span><a class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-property reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.axes.html#matplotlib.figure.Figure.axes" title="matplotlib.figure.Figure.axes"><span class="n">fig</span><span class="o">.</span><span class="n">axes</span></a><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;</span><span class="s2">g</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="kc">False</span><span class="w">
 </span><span class="p">)</span><span class="w">
 </span></pre></div></div>
-<img src="../../_images/sphx_glr_plot_30_frequency_006.png" srcset="../../_images/sphx_glr_plot_30_frequency_006.png" alt="Oxyhemoglobin" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;MNELineFigure size 1000x350 with 1 Axes&gt;
+<img src="../../_images/sphx_glr_plot_30_frequency_006.png" srcset="../../_images/sphx_glr_plot_30_frequency_006.png" alt="Oxyhemoglobin" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Effective window size : 262.144 (s)
+Plotting power spectral density (dB=True).
+Filtering raw data in 1 contiguous segment
+Setting up low-pass filter at 0.4 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal lowpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Upper passband edge: 0.40 Hz
+- Upper transition bandwidth: 0.20 Hz (-6 dB cutoff frequency: 0.50 Hz)
+- Filter length: 129 samples (16.512 s)
+
+Effective window size : 262.144 (s)
+Plotting power spectral density (dB=True).
+
+&lt;MNELineFigure size 1000x350 with 1 Axes&gt;
 </pre></div>
 </div>
 </section>
@@ -710,7 +759,41 @@ Some common high pass filter values from literature are shown in red.</p>
 </span>        <a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">axes</span></a><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="int"><span class="n">column</span></a><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;</span><span class="s2">Frequency (Hz)</span><span class="s2">&quot;</span><span class="p">)</span><span class="w">
 </span>    <a class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.colorbar.html#matplotlib.pyplot.colorbar" title="matplotlib.pyplot.colorbar"><span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span></a><span class="p">(</span><a class="sphx-glr-backref-module-matplotlib-colorizer sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://matplotlib.org/stable/api/colorizer_api.html#matplotlib.colorizer._ScalarMappable" title="matplotlib.colorizer._ScalarMappable"><span class="n">sm</span></a><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><a class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray"><span class="n">axes</span></a><span class="p">[</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="int"><span class="n">rep</span></a><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;</span><span class="s2">Max ISI (s)</span><span class="s2">&quot;</span><span class="p">)</span><span class="w">
 </span></pre></div></div>
-<img src="../../_images/sphx_glr_plot_30_frequency_007.png" srcset="../../_images/sphx_glr_plot_30_frequency_007.png" alt="ISI: 0 (s) to Max ISI, ISI: 15 (s) to Max ISI, ISI: 0 (s) to Max ISI, ISI: 15 (s) to Max ISI" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 9.607 seconds)</p>
+<img src="../../_images/sphx_glr_plot_30_frequency_007.png" srcset="../../_images/sphx_glr_plot_30_frequency_007.png" alt="ISI: 0 (s) to Max ISI, ISI: 15 (s) to Max ISI, ISI: 0 (s) to Max ISI, ISI: 15 (s) to Max ISI" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+Effective window size : 512.000 (s)
+Plotting power spectral density (dB=True).
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 9.442 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-general-plot-30-frequency-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/mne-tools/mne-nirs/gh-pages?filepath=stable/notebooks/auto_examples/general/plot_30_frequency.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo1.svg" style="width: 150px;" />
@@ -826,7 +909,7 @@ Some common high pass filter values from literature are shown in red.</p>
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-10-10T00:56:05.926464+00:00" class="localized">2026-10-10 00:56 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-10-10T01:07:02.696870+00:00" class="localized">2026-10-10 01:07 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>

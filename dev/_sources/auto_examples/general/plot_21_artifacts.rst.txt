@@ -101,7 +101,6 @@ and plot these signals.
  .. code-block:: none
 
     Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
-    Reading 0 ... 23238  =      0.000 ...  2974.464 secs...
 
     <MNEQtBrowser | RawNIRX, browsing 56 channels, 2974.7 s>
 
@@ -156,9 +155,6 @@ seconds to the data.
 
  .. code-block:: none
 
-    Creating RawArray with float64 data, n_channels=56, n_times=8924
-        Range : 0 ... 8923 =      0.000 ...  2974.333 secs
-    Ready.
 
     <MNEQtBrowser | RawArray, browsing 56 channels, 2974.7 s>
 
@@ -242,7 +238,6 @@ The returned mask is ``True`` for clean samples and ``False`` for motion.
 
  .. code-block:: none
 
-    Flagged 0.4% of samples as motion
     0.4% of samples flagged as motion artifacts
 
 
@@ -399,15 +394,6 @@ suitable value could be found by tuning it for the data at hand.
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    Loading /home/circleci/mne_data/fNIRS-SNIRF-aux/2022-08-05_002.snirf
-    Found jitter of 0.000000% in sample times.
-    Reading 0 ... 20696  =      0.000 ...  2034.500 secs...
-    Flagged 0.4% of samples as motion
-
 
 
 
@@ -435,7 +421,7 @@ References
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.833 seconds)
+   **Total running time of the script:** (0 minutes 2.818 seconds)
 
 
 .. _sphx_glr_download_auto_examples_general_plot_21_artifacts.py:

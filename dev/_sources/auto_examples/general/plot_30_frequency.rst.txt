@@ -107,6 +107,7 @@ for a detailed introduction to processing NIRS with MNE.
  .. code-block:: none
 
     Loading /home/circleci/mne_data/MNE-fNIRS-motor-data/Participant-1
+    Reading 0 ... 23238  =      0.000 ...  2974.464 secs...
 
 
 
@@ -160,6 +161,9 @@ the repetition rate of the experiment.
 
  .. code-block:: none
 
+    Maximum design matrix VIF was 1.050 (Tapping_Right)
+    Effective window size : 262.144 (s)
+    Plotting power spectral density (dB=True).
 
     <MNELineFigure size 1000x350 with 1 Axes>
 
@@ -208,6 +212,8 @@ There is also a small bump around 0.3 Hz that is likely the breathing rate.
 
  .. code-block:: none
 
+    Effective window size : 262.144 (s)
+    Plotting power spectral density (dB=True).
 
     <MNELineFigure size 1000x350 with 1 Axes>
 
@@ -266,6 +272,7 @@ is still visible.
 
  .. code-block:: none
 
+    Used Annotations descriptions: ['Tapping_Left', 'Tapping_Right']
     Not setting metadata
     60 matching events found
     Setting baseline interval to [-4.992, 0.0] s
@@ -273,6 +280,9 @@ is still visible.
     0 projection items activated
     Using data from preloaded Raw for 60 events and 157 original time points ...
     0 bad epochs dropped
+        Using multitaper spectrum estimation with 7 DPSS windows
+    Plotting power spectral density (dB=True).
+    Averaging across epochs before plotting...
 
     <MNELineFigure size 1000x350 with 1 Axes>
 
@@ -325,6 +335,17 @@ after epoching.
 .. rst-class:: sphx-glr-script-out
 
  .. code-block:: none
+
+    Setting up low-pass filter at 0.4 Hz
+
+    FIR filter parameters
+    ---------------------
+    Designing a one-pass, zero-phase, non-causal lowpass filter:
+    - Windowed time-domain design (firwin) method
+    - Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+    - Upper passband edge: 0.40 Hz
+    - Upper transition bandwidth: 0.20 Hz (-6 dB cutoff frequency: 0.50 Hz)
+    - Filter length: 129 samples (16.512 s)
 
 
     <Figure size 640x480 with 1 Axes>
@@ -402,6 +423,13 @@ epoched data.
 
  .. code-block:: none
 
+    Effective window size : 262.144 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 262.144 (s)
+    Plotting power spectral density (dB=True).
+        Using multitaper spectrum estimation with 7 DPSS windows
+    Plotting power spectral density (dB=True).
+    Averaging across epochs before plotting...
 
     Text(0.5, 1.0, '')
 
@@ -443,6 +471,22 @@ shows the signal after filtering.
 
  .. code-block:: none
 
+    Effective window size : 262.144 (s)
+    Plotting power spectral density (dB=True).
+    Filtering raw data in 1 contiguous segment
+    Setting up low-pass filter at 0.4 Hz
+
+    FIR filter parameters
+    ---------------------
+    Designing a one-pass, zero-phase, non-causal lowpass filter:
+    - Windowed time-domain design (firwin) method
+    - Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+    - Upper passband edge: 0.40 Hz
+    - Upper transition bandwidth: 0.20 Hz (-6 dB cutoff frequency: 0.50 Hz)
+    - Filter length: 129 samples (16.512 s)
+
+    Effective window size : 262.144 (s)
+    Plotting power spectral density (dB=True).
 
     <MNELineFigure size 1000x350 with 1 Axes>
 
@@ -504,13 +548,50 @@ Some common high pass filter values from literature are shown in red.
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+    Effective window size : 512.000 (s)
+    Plotting power spectral density (dB=True).
+
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 9.607 seconds)
+   **Total running time of the script:** (0 minutes 9.442 seconds)
 
 
 .. _sphx_glr_download_auto_examples_general_plot_30_frequency.py:
