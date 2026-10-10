@@ -608,6 +608,11 @@ def test_quality_metrics_annotations_on_mixed_raw(metric, description) -> None:
     assert scores.shape == (4, len(times_out))
     assert np.all(scores[[0, 1], :] > scores[[2, 3], :])  # S1_D1 beats S10_D10
 
+    # Windows tile the data, so the periodic S1_D1 scores the same in each,
+    # up to filter edge effects
+    assert_allclose(times_out, [(0, 10), (10, 20), (20, 30), (30, 40)])
+    assert_allclose(scores[[0, 1], :], scores[0, 0], rtol=0.01)
+
     bad_annotations = [
         ann for ann in raw_out.annotations if ann["description"] == description
     ]
