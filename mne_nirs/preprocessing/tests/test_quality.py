@@ -556,12 +556,12 @@ def test_pp_windowed_annotations_target_correct_channels() -> None:
         (peak_power, "BAD_PeakPower"),
     ],
 )
-def test_quality_metrics_ignore_non_fnirs_channels(metric, description) -> None:
-    """Test that quality metrics handle Raws holding other channel types.
+def test_quality_metrics_annotations_on_mixed_raw(metric, description) -> None:
+    """Test quality metrics on a Raw with other channel types and first_samp > 0.
 
     The scores hold one row per fNIRS channel, in Raw order, matching
     `mne.preprocessing.nirs.scalp_coupling_index`. Channels of other types
-    should not affect the fNIRS rows.
+    should not affect the fNIRS rows. Annotation onsets are offset by `raw.first_time`.
     """
     sfreq = 10.0
     n_samples = 400  # 40 s at 10 Hz -> 4 windows of 10 s
@@ -601,7 +601,7 @@ def test_quality_metrics_ignore_non_fnirs_channels(metric, description) -> None:
         ]
     )
 
-    raw = mne.io.RawArray(data, info)
+    raw = mne.io.RawArray(data, info, first_samp=100)
     raw_out, scores, times_out = metric(raw, time_window=10, threshold=0.7)
 
     # One row per fNIRS channel, so scores pair with the fNIRS channels of `raw`
@@ -613,9 +613,12 @@ def test_quality_metrics_ignore_non_fnirs_channels(metric, description) -> None:
     assert_allclose(times_out, [(0, 10), (10, 20), (20, 30), (30, 40)])
     assert_allclose(scores[[0, 1], :], scores[0, 0], rtol=0.01)
 
-    bad_channels = {
-        ann["ch_names"]
-        for ann in raw_out.annotations
-        if ann["description"] == description
-    }
+    bad_annotations = [
+        ann for ann in raw_out.annotations if ann["description"] == description
+    ]
+    bad_channels = {ann["ch_names"] for ann in bad_annotations}
     assert bad_channels == {("S10_D10 760", "S10_D10 850")}
+
+    bad_starts = [start for (start, _), sc in zip(times_out, scores[2]) if sc < 0.7]
+    onsets = [ann["onset"] for ann in bad_annotations]
+    assert_allclose(onsets, raw.first_time + np.array(bad_starts))
