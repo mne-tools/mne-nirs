@@ -540,7 +540,7 @@ brain.add_text(0.05, 0.95, "Left-Right", "title", font_size=16, color="k")
 clim = dict(kind="value", pos_lims=(0, 11.5, 17))
 for idx, cond in enumerate(["Tapping_Left", "Tapping_Right"]):
     # Run same model as explained in the sections above
-    ch_summary = df_cha.query("Condition in [@cond]")
+    ch_summary = df_cha.query("Condition == @cond")
     ch_summary = ch_summary.query("Chroma in ['hbo']")
     ch_model = smf.mixedlm(
         "theta ~ -1 + ch_name", ch_summary, groups=ch_summary["ID"]
