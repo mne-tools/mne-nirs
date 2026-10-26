@@ -357,6 +357,10 @@ To see more details about how to use the fOLD data see
 
  .. code-block:: none
 
+    /home/circleci/project/mne_nirs/io/fold/_fold.py:32: Pandas4Warning: The xlrd engine is deprecated and will be removed in a future version. Use the calamine engine instead, by setting engine='calamine'.
+      tbl = pd.read_excel(fname, sheet_name=page_reference[atlas])
+    /home/circleci/project/mne_nirs/io/fold/_fold.py:32: Pandas4Warning: The xlrd engine is deprecated and will be removed in a future version. Use the calamine engine instead, by setting engine='calamine'.
+      tbl = pd.read_excel(fname, sheet_name=page_reference[atlas])
     /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
     As an alternative, you can create a new view using np.reshape (with copy=False if needed).
       p0.shape = (-1, 3)
@@ -785,6 +789,10 @@ for the weighted region of interest function call.
 
     Reading 0 ... 7340  =      0.000 ...  1879.040 secs...
     Maximum design matrix VIF was 1.258 (Ends)
+    /home/circleci/project/mne_nirs/io/fold/_fold.py:32: Pandas4Warning: The xlrd engine is deprecated and will be removed in a future version. Use the calamine engine instead, by setting engine='calamine'.
+      tbl = pd.read_excel(fname, sheet_name=page_reference[atlas])
+    /home/circleci/project/mne_nirs/io/fold/_fold.py:32: Pandas4Warning: The xlrd engine is deprecated and will be removed in a future version. Use the calamine engine instead, by setting engine='calamine'.
+      tbl = pd.read_excel(fname, sheet_name=page_reference[atlas])
     /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
     As an alternative, you can create a new view using np.reshape (with copy=False if needed).
       p0.shape = (-1, 3)
@@ -917,6 +925,10 @@ for the weighted region of interest function call.
     /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
     As an alternative, you can create a new view using np.reshape (with copy=False if needed).
       p0.shape = (-1, 3)
+    /home/circleci/project/mne_nirs/io/fold/_fold.py:32: Pandas4Warning: The xlrd engine is deprecated and will be removed in a future version. Use the calamine engine instead, by setting engine='calamine'.
+      tbl = pd.read_excel(fname, sheet_name=page_reference[atlas])
+    /home/circleci/project/mne_nirs/io/fold/_fold.py:32: Pandas4Warning: The xlrd engine is deprecated and will be removed in a future version. Use the calamine engine instead, by setting engine='calamine'.
+      tbl = pd.read_excel(fname, sheet_name=page_reference[atlas])
     /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
     As an alternative, you can create a new view using np.reshape (with copy=False if needed).
       p0.shape = (-1, 3)
@@ -1049,6 +1061,12 @@ for the weighted region of interest function call.
     /home/circleci/project/mne_nirs/io/fold/_fold.py:88: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
     As an alternative, you can create a new view using np.reshape (with copy=False if needed).
       p0.shape = (-1, 3)
+    /home/circleci/project/mne_nirs/statistics/_roi.py:151: Pandas4Warning: The inplace keyword in DataFrame.reset_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      df.reset_index(inplace=True, drop=True)
+    /home/circleci/project/mne_nirs/statistics/_roi.py:151: Pandas4Warning: The inplace keyword in DataFrame.reset_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      df.reset_index(inplace=True, drop=True)
 
 
 .. raw:: html
@@ -1247,14 +1265,65 @@ analysis. The details will not be described here, instead view the
 
     Reading 0 ... 23238  =      0.000 ...  2974.464 secs...
     Maximum design matrix VIF was 1.050 (Control)
+    /home/circleci/project/mne_nirs/utils/_io.py:215: Pandas4Warning: The inplace keyword in DataFrame.reset_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      d.reset_index(inplace=True)
+    /home/circleci/project/mne_nirs/utils/_io.py:61: Pandas4Warning: The inplace keyword in DataFrame.drop is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      df.drop(columns="old_index", inplace=True)
+    /home/circleci/project/mne_nirs/utils/_io.py:62: Pandas4Warning: The inplace keyword in DataFrame.rename_axis is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      df.rename_axis(None, inplace=True)
     Reading 0 ... 18877  =      0.000 ...  2416.256 secs...
     Maximum design matrix VIF was 1.055 (Tapping_Right)
+    /home/circleci/project/mne_nirs/utils/_io.py:215: Pandas4Warning: The inplace keyword in DataFrame.reset_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      d.reset_index(inplace=True)
+    /home/circleci/project/mne_nirs/utils/_io.py:61: Pandas4Warning: The inplace keyword in DataFrame.drop is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      df.drop(columns="old_index", inplace=True)
+    /home/circleci/project/mne_nirs/utils/_io.py:62: Pandas4Warning: The inplace keyword in DataFrame.rename_axis is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      df.rename_axis(None, inplace=True)
     Reading 0 ... 18874  =      0.000 ...  2415.872 secs...
     Maximum design matrix VIF was 1.068 (Control)
+    /home/circleci/project/mne_nirs/utils/_io.py:215: Pandas4Warning: The inplace keyword in DataFrame.reset_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      d.reset_index(inplace=True)
+    /home/circleci/project/mne_nirs/utils/_io.py:61: Pandas4Warning: The inplace keyword in DataFrame.drop is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      df.drop(columns="old_index", inplace=True)
+    /home/circleci/project/mne_nirs/utils/_io.py:62: Pandas4Warning: The inplace keyword in DataFrame.rename_axis is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      df.rename_axis(None, inplace=True)
     Reading 0 ... 23120  =      0.000 ...  2959.360 secs...
     Maximum design matrix VIF was 1.067 (Tapping_Left)
+    /home/circleci/project/mne_nirs/utils/_io.py:215: Pandas4Warning: The inplace keyword in DataFrame.reset_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      d.reset_index(inplace=True)
+    /home/circleci/project/mne_nirs/utils/_io.py:61: Pandas4Warning: The inplace keyword in DataFrame.drop is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      df.drop(columns="old_index", inplace=True)
+    /home/circleci/project/mne_nirs/utils/_io.py:62: Pandas4Warning: The inplace keyword in DataFrame.rename_axis is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      df.rename_axis(None, inplace=True)
     Reading 0 ... 23006  =      0.000 ...  2944.768 secs...
     Maximum design matrix VIF was 1.060 (Control)
+    /home/circleci/project/mne_nirs/utils/_io.py:215: Pandas4Warning: The inplace keyword in DataFrame.reset_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      d.reset_index(inplace=True)
+    /home/circleci/project/mne_nirs/utils/_io.py:61: Pandas4Warning: The inplace keyword in DataFrame.drop is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      df.drop(columns="old_index", inplace=True)
+    /home/circleci/project/mne_nirs/utils/_io.py:62: Pandas4Warning: The inplace keyword in DataFrame.rename_axis is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      df.rename_axis(None, inplace=True)
+    /home/circleci/project/mne_nirs/statistics/_statsmodels.py:142: Pandas4Warning: The inplace keyword in DataFrame.drop is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      df.drop(columns="old_index", inplace=True)
+    /home/circleci/project/mne_nirs/statistics/_statsmodels.py:143: Pandas4Warning: The inplace keyword in DataFrame.rename_axis is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      df.rename_axis(None, inplace=True)
 
 
 
@@ -1327,7 +1396,7 @@ Bibliography
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 14.992 seconds)
+   **Total running time of the script:** (0 minutes 14.493 seconds)
 
 
 .. _sphx_glr_download_auto_examples_general_plot_70_visualise_brain.py:

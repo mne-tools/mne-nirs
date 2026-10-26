@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mne._fiff.meas_info &#8212; MNE-NIRS 0.8.0.dev83+g25914efcd documentation</title>
+    <title>mne._fiff.meas_info &#8212; MNE-NIRS 0.8.0.dev84+g72810e466 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../../../_static/documentation_options.js?v=140ddbef"></script>
+    <script src="../../../_static/documentation_options.js?v=ef7b9f6f"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -1438,7 +1438,9 @@ document.write(`
 <span class="sd">        ----------</span>
 <span class="sd">        meas_date : datetime | float | tuple | None</span>
 <span class="sd">            The new measurement date.</span>
-<span class="sd">            If datetime object, it must be timezone-aware and in UTC.</span>
+<span class="sd">            If datetime object, it must be timezone-aware. If not in UTC,</span>
+<span class="sd">            it will be converted to UTC and ``info['utc_offset']`` will be</span>
+<span class="sd">            set accordingly.</span>
 <span class="sd">            A tuple of (seconds, microseconds) or float (alias for</span>
 <span class="sd">            ``(meas_date, 0)``) can also be passed and a datetime</span>
 <span class="sd">            object will be automatically created. If None, will remove</span>
@@ -1469,9 +1471,21 @@ document.write(`
 
         <span class="n">info</span> <span class="o">=</span> <span class="n">_get_info_or_self</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
+        <span class="c1"># Determine UTC offset string (sHH:MM) if non-UTC timezone-aware datetime</span>
+        <span class="n">utc_offset</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">meas_date</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">)</span> <span class="ow">and</span> <span class="n">meas_date</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="n">meas_date</span><span class="o">.</span><span class="n">utcoffset</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">offset</span> <span class="o">!=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">0</span><span class="p">):</span>
+                <span class="n">total_seconds</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+                <span class="n">sign</span> <span class="o">=</span> <span class="s2">"+"</span> <span class="k">if</span> <span class="n">total_seconds</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">"-"</span>
+                <span class="n">total_seconds</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">total_seconds</span><span class="p">)</span>
+                <span class="n">hours</span><span class="p">,</span> <span class="n">minutes</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">total_seconds</span> <span class="o">//</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+                <span class="n">utc_offset</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">sign</span><span class="si">}{</span><span class="n">hours</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">minutes</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">"</span>
+
         <span class="n">meas_date</span> <span class="o">=</span> <span class="n">_handle_meas_date</span><span class="p">(</span><span class="n">meas_date</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">info</span><span class="o">.</span><span class="n">_unlock</span><span class="p">():</span>
             <span class="n">info</span><span class="p">[</span><span class="s2">"meas_date"</span><span class="p">]</span> <span class="o">=</span> <span class="n">meas_date</span>
+            <span class="n">info</span><span class="p">[</span><span class="s2">"utc_offset"</span><span class="p">]</span> <span class="o">=</span> <span class="n">utc_offset</span>
 
         <span class="c1"># clear file_id and meas_id if needed</span>
         <span class="k">if</span> <span class="n">meas_date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -2672,6 +2686,14 @@ document.write(`
                     <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">prepend_error</span><span class="si">}</span><span class="s1">info["meas_date"] must be a datetime object in UTC'</span>
                     <span class="sa">f</span><span class="s2">" or None, got </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">'meas_date'</span><span class="p">])</span><span class="si">!r}</span><span class="s2">"</span>
                 <span class="p">)</span>
+        <span class="n">utc_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"utc_offset"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">utc_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">utc_offset</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[+-]\d</span><span class="si">{2}</span><span class="s2">:\d</span><span class="si">{2}</span><span class="s2">"</span><span class="p">,</span> <span class="n">utc_offset</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">prepend_error</span><span class="si">}</span><span class="s1">info["utc_offset"] must be a str of the form sHH:MM '</span>
+                <span class="sa">f</span><span class="s2">"or None, got </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">utc_offset</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+            <span class="p">)</span>
 
         <span class="n">chs</span> <span class="o">=</span> <span class="p">[</span><span class="n">ch</span><span class="p">[</span><span class="s2">"ch_name"</span><span class="p">]</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">[</span><span class="s2">"chs"</span><span class="p">]]</span>
         <span class="k">if</span> <span class="p">(</span>
@@ -3174,6 +3196,9 @@ document.write(`
         <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFF_UTC_OFFSET</span><span class="p">:</span>
             <span class="n">tag</span> <span class="o">=</span> <span class="n">read_tag</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
             <span class="n">utc_offset</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+            <span class="c1"># MNE &lt; 1.14 wrote sHHMM instead of sHH:MM for EGI and MEF data</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[+-]\d</span><span class="si">{4}</span><span class="s2">"</span><span class="p">,</span> <span class="n">utc_offset</span><span class="p">):</span>
+                <span class="n">utc_offset</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">utc_offset</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">utc_offset</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span><span class="si">}</span><span class="s2">"</span>
         <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="n">FIFF</span><span class="o">.</span><span class="n">FIFF_COORD_TRANS</span><span class="p">:</span>
             <span class="n">tag</span> <span class="o">=</span> <span class="n">read_tag</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
             <span class="n">cand</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">data</span>
@@ -4997,7 +5022,7 @@ document.write(`
   
     <div class="footer-items__start">
       
-        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-10-19T21:37:36.288631+00:00" class="localized">2026-10-19 21:37 UTC</time>
+        <div class="footer-item"><p class="text-center text-muted small">&copy; Copyright 2012–2026, MNE Developers. Last updated <time datetime="2026-10-26T14:09:46.679736+00:00" class="localized">2026-10-26 14:09 UTC</time>
 <script type="text/javascript">$(function () { $("time.localized").each(function () { var el = $(this); el.text(new Date(el.attr("datetime")).toLocaleString([], {dateStyle: "medium", timeStyle: "long"})); }); } )</script></p></div>
       
     </div>
