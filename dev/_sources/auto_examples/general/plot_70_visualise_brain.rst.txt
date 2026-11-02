@@ -242,7 +242,11 @@ specify which views to use to show each channel pair:
  .. code-block:: none
 
     Could not automatically map source/detector names to 10-20 locations.
-    Using outer_skin.surf for head surface.
+    Using fsaverage-head.fif for head surface.
+        1 BEM surfaces found
+        Reading a surface...
+    [done]
+        1 BEM surfaces read
     Channel types:: fnirs_cw_amplitude: 52
     Channel types:: fnirs_cw_amplitude: 52
     Channel types:: fnirs_cw_amplitude: 52
@@ -1396,7 +1400,7 @@ Bibliography
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 14.470 seconds)
+   **Total running time of the script:** (0 minutes 14.164 seconds)
 
 
 .. _sphx_glr_download_auto_examples_general_plot_70_visualise_brain.py:
