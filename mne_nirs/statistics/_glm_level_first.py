@@ -4,7 +4,7 @@
 
 import warnings
 from copy import deepcopy
-from inspect import getfullargspec
+from inspect import getfullargspec, signature
 
 import numpy as np
 import pandas as pd
@@ -830,7 +830,11 @@ def read_glm(fname):
         which stores the GLM results.
     """
     check_fname(fname, "path-like", "glm.h5")
-    glm = read_hdf5(fname, title="mnepython")
+    # h5io 0.2.6+ refuses to unpickle (e.g., pandas objects) unless told to
+    kwargs = dict()
+    if "allow_pickle" in signature(read_hdf5).parameters:
+        kwargs["allow_pickle"] = True
+    glm = read_hdf5(fname, title="mnepython", **kwargs)
     return _state_to_glm(glm)
 
 
