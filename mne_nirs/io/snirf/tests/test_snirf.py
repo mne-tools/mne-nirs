@@ -303,6 +303,36 @@ def test_snirf_stim_roundtrip(fname, tmpdir):
     assert_array_equal(raw_orig.annotations.description, raw.annotations.description)
 
 
+def test_snirf_stim_roundtrip_cropped(tmpdir):
+    """Ensure stimuli keep their position in the data after cropping."""
+    import mne
+    import numpy as np
+
+    info = mne.create_info(["S1_D1 760", "S1_D1 850"], 10.0, "fnirs_cw_amplitude")
+    for ch in info["chs"]:
+        ch["loc"][3:6] = (0.0, 0.0, 0.0)  # source
+        ch["loc"][6:9] = (0.03, 0.0, 0.0)  # detector
+        ch["loc"][:3] = (0.015, 0.0, 0.0)
+        ch["loc"][9] = float(ch["ch_name"].split()[1])
+    rng = np.random.default_rng(0)
+    raw = mne.io.RawArray(1 + 0.1 * rng.random((2, 1000)), info)
+    raw.set_meas_date(datetime.datetime(2024, 1, 1, tzinfo=datetime.timezone.utc))
+    with raw.info._unlock():
+        raw.info["subject_info"] = dict(his_id="test")
+    raw.set_annotations(mne.Annotations([20.0, 50.0], [1.0, 1.0], ["A", "A"]))
+    raw.crop(10, None)
+
+    test_file = tmpdir.join("test_cropped.snirf")
+    write_raw_snirf(raw, test_file)
+    raw_read = read_raw_snirf(test_file)
+
+    events, _ = mne.events_from_annotations(raw)
+    events_read, _ = mne.events_from_annotations(raw_read)
+    assert_array_equal(
+        events[:, 0] - raw.first_samp, events_read[:, 0] - raw_read.first_samp
+    )
+
+
 @requires_testing_data
 @pytest.mark.parametrize(
     "fname",
