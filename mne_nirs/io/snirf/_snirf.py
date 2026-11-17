@@ -93,18 +93,23 @@ def _add_metadata_tags(raw, nirs):
     metadata_tags = nirs.create_group("metaDataTags")
 
     # Store measurement
-    datestr = raw.info["meas_date"].strftime("%Y-%m-%d")
-    timestr = raw.info["meas_date"].strftime("%H:%M:%SZ")
+    # The SNIRF specification uses "unknown" when the date or time is not known
+    if raw.info["meas_date"] is None:
+        datestr = timestr = "unknown"
+    else:
+        datestr = raw.info["meas_date"].strftime("%Y-%m-%d")
+        timestr = raw.info["meas_date"].strftime("%H:%M:%SZ")
     metadata_tags.create_dataset("MeasurementDate", data=_str_encode(datestr))
     metadata_tags.create_dataset("MeasurementTime", data=_str_encode(timestr))
 
     # Store demographic info
+    subject_info = raw.info["subject_info"] or dict()
     subject_id = "_".join(
-        raw.info["subject_info"][key]
+        subject_info[key]
         for key in ["first_name", "middle_name", "last_name"]
-        if key in raw.info["subject_info"]
+        if key in subject_info
     )
-    subject_id = raw.info["subject_info"].get("his_id", subject_id)
+    subject_id = subject_info.get("his_id", subject_id) or "unknown"
     metadata_tags.create_dataset("SubjectID", data=_str_encode(subject_id))
 
     # Store the units of measurement
@@ -113,18 +118,18 @@ def _add_metadata_tags(raw, nirs):
     metadata_tags.create_dataset("FrequencyUnit", data=_str_encode("Hz"))
 
     # Add non standard (but allowed) custom metadata tags
-    if raw.info["subject_info"].get("birthday", None) is not None:
-        birthday = raw.info["subject_info"]["birthday"]
+    if subject_info.get("birthday", None) is not None:
+        birthday = subject_info["birthday"]
         if isinstance(birthday, tuple):
             birthday = datetime.date(*birthday)
         birthstr = birthday.strftime("%Y-%m-%d")
         metadata_tags.create_dataset("DateOfBirth", data=[_str_encode(birthstr)])
     for key in ("first", "middle", "last"):
-        name = raw.info["subject_info"].get(f"{key}_name", None)
+        name = subject_info.get(f"{key}_name", None)
         if name is not None:
             metadata_tags.create_dataset(f"{key}Name", data=[_str_encode(name)])
-    if "sex" in raw.info["subject_info"]:
-        sex = str(int(raw.info["subject_info"]["sex"]))
+    if "sex" in subject_info:
+        sex = str(int(subject_info["sex"]))
         metadata_tags.create_dataset("sex", data=[_str_encode(sex)])
     if raw.info["dig"] is not None:
         coord_frame_id = int(raw.info["dig"][0].get("coord_frame"))
