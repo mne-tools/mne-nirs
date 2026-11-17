@@ -249,8 +249,9 @@ def create_boxcar(raw, event_id=None, stim_dur=1):
     bc = np.ones(int(round(raw.info["sfreq"] * stim_dur)))
     events, ids = mne.events_from_annotations(raw, event_id=event_id)
     s = np.zeros((len(raw.times), len(ids)))
-    for idx, _ in enumerate(ids):
-        id_idx = [e[2] == idx + 1 for e in events]
+    for idx, event_code in enumerate(ids.values()):
+        # match the code of this condition, which is not always idx + 1
+        id_idx = events[:, 2] == event_code
         id_evt = events[id_idx]
         event_samples = [e[0] for e in id_evt]
         s[event_samples, idx] = 1.0
