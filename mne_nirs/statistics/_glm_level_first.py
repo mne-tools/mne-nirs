@@ -479,7 +479,7 @@ class RegressionResults(_BaseGLM):
                 else:
                     sex = "unknown"
                 tidy["Sex"] = sex
-            if "Hand" in self.info["subject_info"].keys():
+            if "hand" in self.info["subject_info"].keys():
                 tidy["Hand"] = self.info["subject_info"]["hand"]
 
         return tidy
