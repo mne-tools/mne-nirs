@@ -74,3 +74,39 @@ def test_run_GLM_order():
     # Auto should be 4 times sample rate
     glm_estimates = run_glm(raw, design_matrix, noise_model="auto")
     assert glm_estimates.pick("Simulated").model()[0].order == 2 * 4
+
+
+@pytest.mark.parametrize(
+    "weighted, expected_theta",
+    [
+        (False, 2.0e-6),  # simple mean of 1, 2 and 3
+        (dict(roi=[1.0, 1.0, 1.0]), 2.0e-6),
+        (dict(roi=[2.0, 1.0, 1.0]), 1.75e-6),
+        (True, 2.0e-6),  # equal standard errors, so the same as the mean
+    ],
+)
+def test_region_of_interest_weights(weighted, expected_theta):
+    """Test that region of interest values are weighted averages."""
+    from mne_nirs.statistics._roi import _glm_region_of_interest
+
+    class _Result:
+        """Minimal stand-in for one channel's regression result."""
+
+        def __init__(self, theta, se):
+            self.theta = np.array([[theta], [0.0]])
+            self.se = se
+            self.df_model = 2
+            self.df_residuals = 20
+
+        def vcov(self):
+            return np.diag([self.se**2, 1.0])
+
+    stats = {
+        f"S{idx}_D1 hbo": _Result(theta, 0.5e-6)
+        for idx, theta in enumerate((1.0e-6, 2.0e-6, 3.0e-6), start=1)
+    }
+    df = _glm_region_of_interest(stats, dict(roi=[0, 1, 2]), 0, "A", weighted=weighted)
+    assert len(df) == 1
+    assert np.isclose(df.theta[0], expected_theta, rtol=1e-6, atol=0)
+    assert np.isclose(df.se[0], 0.5, rtol=1e-6, atol=0)
+    assert np.isclose(df.t[0], expected_theta * 1e6 / 0.5, rtol=1e-6, atol=0)
