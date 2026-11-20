@@ -15,6 +15,39 @@ from mne_nirs.statistics import run_GLM, run_glm
 iir_filter = [1.0, -0.58853134, -0.29575669, -0.52246482, 0.38735476, 0.024286]
 
 
+def test_glm_p_values_use_residual_degrees_of_freedom():
+    """Test that p-values match ordinary least squares computed by hand."""
+    from scipy import stats
+
+    np.random.seed(0)
+    raw = simulate_nirs_raw(
+        sfreq=3.0, sig_dur=600.0, amplitude=0.25, stim_dur=5.0, ch_name="S1_D1 hbo"
+    )
+    raw._data += np.random.default_rng(0).normal(0, 1e-6, raw._data.shape)
+    design_matrix = make_first_level_design_matrix(
+        raw, stim_dur=5.0, drift_order=1, drift_model="polynomial"
+    )
+    glm_est = run_glm(raw, design_matrix, noise_model="ols")
+    row = glm_est.to_dataframe().query("Condition == 'A'").iloc[0]
+
+    X, y = design_matrix.values, raw.get_data()[0]
+    n_samples, n_regressors = X.shape
+    beta = np.linalg.lstsq(X, y, rcond=None)[0]
+    resid = y - X @ beta
+    idx = list(design_matrix.columns).index("A")
+    sigma2 = resid @ resid / (n_samples - n_regressors)
+    t = beta[idx] / np.sqrt(sigma2 * np.linalg.inv(X.T @ X)[idx, idx])
+    p = 2 * stats.t.sf(np.abs(t), n_samples - n_regressors)
+
+    assert np.isclose(row["t"], t)
+    assert row["df"] == n_samples - n_regressors
+    assert np.isclose(row["p_value"], p, rtol=1e-6, atol=0)
+
+    roi = glm_est.to_dataframe_region_of_interest(dict(roi=[0]), "A")
+    assert roi["dfe"][0] == n_samples - n_regressors
+    assert np.isclose(roi["p"][0], p, rtol=1e-6, atol=0)
+
+
 def test_run_GLM():
     raw = simulate_nirs_raw(sig_dur=200, stim_dur=5.0)
     design_matrix = make_first_level_design_matrix(
