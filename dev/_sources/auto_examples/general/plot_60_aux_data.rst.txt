@@ -85,6 +85,14 @@ the previous GLM example that contains auxiliary data.
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Loading /home/circleci/mne_data/fNIRS-SNIRF-aux/2022-08-05_002.snirf
+    Found jitter of 0.000000% in sample times.
+    Reading 0 ... 20696  =      0.000 ...  2034.500 secs...
+
 
 .. raw:: html
 
@@ -236,9 +244,9 @@ the previous GLM example that contains auxiliary data.
 
 
 
-    <tr class="mne-repr-section-header general-1c7b3395-2d7e-4bc3-a75b-521b8ded31ce"
+    <tr class="mne-repr-section-header general-efa1bae2-6230-44f2-8dc7-392cb1ed74bd"
          title="Hide section" 
-        onclick="toggleVisibility('general-1c7b3395-2d7e-4bc3-a75b-521b8ded31ce')">
+        onclick="toggleVisibility('general-efa1bae2-6230-44f2-8dc7-392cb1ed74bd')">
         <th class="mne-repr-section-toggle">
             <button >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -250,7 +258,7 @@ the previous GLM example that contains auxiliary data.
     </tr>
 
 
-    <tr class="repr-element general-1c7b3395-2d7e-4bc3-a75b-521b8ded31ce ">
+    <tr class="repr-element general-efa1bae2-6230-44f2-8dc7-392cb1ed74bd ">
         <td class="mne-repr-section-toggle"></td>
         <td>Filename(s)</td>
         <td>
@@ -261,19 +269,19 @@ the previous GLM example that contains auxiliary data.
         </td>
     </tr>
 
-    <tr class="repr-element general-1c7b3395-2d7e-4bc3-a75b-521b8ded31ce ">
+    <tr class="repr-element general-efa1bae2-6230-44f2-8dc7-392cb1ed74bd ">
         <td class="mne-repr-section-toggle"></td>
         <td>MNE object type</td>
         <td>RawSNIRF</td>
     </tr>
-    <tr class="repr-element general-1c7b3395-2d7e-4bc3-a75b-521b8ded31ce ">
+    <tr class="repr-element general-efa1bae2-6230-44f2-8dc7-392cb1ed74bd ">
         <td class="mne-repr-section-toggle"></td>
         <td>Measurement date</td>
     
         <td>2022-08-05 at 13:10:58 UTC</td>
     
     </tr>
-    <tr class="repr-element general-1c7b3395-2d7e-4bc3-a75b-521b8ded31ce ">
+    <tr class="repr-element general-efa1bae2-6230-44f2-8dc7-392cb1ed74bd ">
         <td class="mne-repr-section-toggle"></td>
         <td>Participant</td>
     
@@ -282,7 +290,7 @@ the previous GLM example that contains auxiliary data.
     
     
     </tr>
-    <tr class="repr-element general-1c7b3395-2d7e-4bc3-a75b-521b8ded31ce ">
+    <tr class="repr-element general-efa1bae2-6230-44f2-8dc7-392cb1ed74bd ">
         <td class="mne-repr-section-toggle"></td>
         <td>Experimenter</td>
     
@@ -297,9 +305,9 @@ the previous GLM example that contains auxiliary data.
 
 
 
-    <tr class="mne-repr-section-header acquisition-37bae4df-16f7-4277-a20a-8ebb51af66b2"
+    <tr class="mne-repr-section-header acquisition-0d06f671-e4af-49fd-a4e2-b0370e4580bf"
          title="Hide section" 
-        onclick="toggleVisibility('acquisition-37bae4df-16f7-4277-a20a-8ebb51af66b2')">
+        onclick="toggleVisibility('acquisition-0d06f671-e4af-49fd-a4e2-b0370e4580bf')">
         <th class="mne-repr-section-toggle">
             <button >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -311,7 +319,7 @@ the previous GLM example that contains auxiliary data.
     </tr>
 
 
-    <tr class="repr-element acquisition-37bae4df-16f7-4277-a20a-8ebb51af66b2 ">
+    <tr class="repr-element acquisition-0d06f671-e4af-49fd-a4e2-b0370e4580bf ">
         <td class="mne-repr-section-toggle"></td>
         <td>Duration</td>
         <td>00:33:55 (HH:MM:SS)</td>
@@ -324,14 +332,14 @@ the previous GLM example that contains auxiliary data.
 
 
 
-    <tr class="repr-element acquisition-37bae4df-16f7-4277-a20a-8ebb51af66b2 ">
+    <tr class="repr-element acquisition-0d06f671-e4af-49fd-a4e2-b0370e4580bf ">
         <td class="mne-repr-section-toggle"></td>
         <td>Sampling frequency</td>
         <td>0.70 Hz</td>
     </tr>
 
 
-    <tr class="repr-element acquisition-37bae4df-16f7-4277-a20a-8ebb51af66b2 ">
+    <tr class="repr-element acquisition-0d06f671-e4af-49fd-a4e2-b0370e4580bf ">
         <td class="mne-repr-section-toggle"></td>
         <td>Time points</td>
         <td>1,424</td>
@@ -346,9 +354,9 @@ the previous GLM example that contains auxiliary data.
 
 
 
-    <tr class="mne-repr-section-header channels-ae7b8e82-65eb-425e-b20f-cfe524fab833"
+    <tr class="mne-repr-section-header channels-7020867d-7aea-484e-9010-82a8c9d91c6c"
          title="Hide section" 
-        onclick="toggleVisibility('channels-ae7b8e82-65eb-425e-b20f-cfe524fab833')">
+        onclick="toggleVisibility('channels-7020867d-7aea-484e-9010-82a8c9d91c6c')">
         <th class="mne-repr-section-toggle">
             <button >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -361,7 +369,7 @@ the previous GLM example that contains auxiliary data.
 
 
     
-    <tr class="repr-element channels-ae7b8e82-65eb-425e-b20f-cfe524fab833 ">
+    <tr class="repr-element channels-7020867d-7aea-484e-9010-82a8c9d91c6c ">
         <td class="mne-repr-section-toggle"></td>
         <td>fNIRS (CW amplitude)</td>
         <td>
@@ -374,7 +382,7 @@ the previous GLM example that contains auxiliary data.
     </tr>
 
 
-    <tr class="repr-element channels-ae7b8e82-65eb-425e-b20f-cfe524fab833 ">
+    <tr class="repr-element channels-7020867d-7aea-484e-9010-82a8c9d91c6c ">
         <td class="mne-repr-section-toggle"></td>
         <td>Head & sensor digitization</td>
     
@@ -389,9 +397,9 @@ the previous GLM example that contains auxiliary data.
 
 
 
-    <tr class="mne-repr-section-header filters-9a0d282d-deba-43dd-b50d-b7c0cbe9b749"
+    <tr class="mne-repr-section-header filters-09d14df4-3b9f-4063-86bc-b1918490b50d"
          title="Hide section" 
-        onclick="toggleVisibility('filters-9a0d282d-deba-43dd-b50d-b7c0cbe9b749')">
+        onclick="toggleVisibility('filters-09d14df4-3b9f-4063-86bc-b1918490b50d')">
         <th class="mne-repr-section-toggle">
             <button >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
@@ -403,14 +411,14 @@ the previous GLM example that contains auxiliary data.
     </tr>
 
 
-    <tr class="repr-element filters-9a0d282d-deba-43dd-b50d-b7c0cbe9b749 ">
+    <tr class="repr-element filters-09d14df4-3b9f-4063-86bc-b1918490b50d ">
         <td class="mne-repr-section-toggle"></td>
         <td>Highpass</td>
         <td>0.00 Hz</td>
     </tr>
 
 
-    <tr class="repr-element filters-9a0d282d-deba-43dd-b50d-b7c0cbe9b749 ">
+    <tr class="repr-element filters-09d14df4-3b9f-4063-86bc-b1918490b50d ">
         <td class="mne-repr-section-toggle"></td>
         <td>Lowpass</td>
         <td>0.35 Hz</td>
@@ -532,6 +540,12 @@ contribute to the measured signal.
 
 
 
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Maximum design matrix VIF was 1.067 (Tapping_Left)
 
 
 
@@ -718,7 +732,7 @@ but this is beyond the scope of this tutorial.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.825 seconds)
+   **Total running time of the script:** (0 minutes 2.207 seconds)
 
 
 .. _sphx_glr_download_auto_examples_general_plot_60_aux_data.py:
