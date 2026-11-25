@@ -133,7 +133,9 @@ def _tidy_RegressionResults(data, glm_est, design_matrix):
 
     for idx, name in enumerate(glm_est.keys()):
         theta_estimates[idx, :] = glm_est[name].theta.T
-        df_estimates[idx, :] = glm_est[name].df_model
+        # the t statistic follows a t distribution with the residual degrees of
+        # freedom (n_samples - rank of the design), not the model ones
+        df_estimates[idx, :] = glm_est[name].df_residuals
         mse_estimates[idx, :] = glm_est[name].MSE[0]
         for cond_idx, cond in enumerate(design_matrix.columns):
             t_estimates[idx, cond_idx] = glm_est[name].t(column=cond_idx).item()

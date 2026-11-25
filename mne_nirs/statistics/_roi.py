@@ -111,7 +111,7 @@ def _glm_region_of_interest(stats, group_by, cond_idx, cond_name, weighted=True)
             for pick in chroma_picks:
                 thetas.append(1e6 * (stats[ch_names[pick]].theta)[cond_idx][0])
                 ses.append(_se(stats[ch_names[pick]])[cond_idx])
-                dfe = stats[ch_names[pick]].df_model
+                dfe = stats[ch_names[pick]].df_residuals
 
             # Apply weighting by standard error or custom values
             if weighted is True:
