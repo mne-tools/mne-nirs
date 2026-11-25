@@ -312,9 +312,11 @@ Apply Scholkmann et al 2014 and extract epochs.
     0 projection items activated
     Using data from preloaded Raw for 90 events and 157 original time points ...
         Rejecting  epoch based on HBO : ['S4_D4 hbo', 'S8_D8 hbo']
-        Rejecting  epoch based on HBO : ['S1_D1 hbo', 'S7_D6 hbo', 'S7_D7 hbo', 'S8_D8 hbo']
         Rejecting  epoch based on HBO : ['S4_D4 hbo', 'S8_D8 hbo']
-    3 bad epochs dropped
+        Rejecting  epoch based on HBO : ['S4_D4 hbo', 'S8_D8 hbo']
+        Rejecting  epoch based on HBO : ['S1_D1 hbo', 'S5_D5 hbo', 'S5_D7 hbo', 'S7_D6 hbo', 'S7_D7 hbo', 'S8_D8 hbo']
+        Rejecting  epoch based on HBO : ['S4_D4 hbo', 'S8_D8 hbo']
+    5 bad epochs dropped
 
 
 
@@ -570,7 +572,7 @@ detector pairs for analysis.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.272 seconds)
+   **Total running time of the script:** (0 minutes 1.294 seconds)
 
 
 .. _sphx_glr_download_auto_examples_general_plot_20_enhance.py:
