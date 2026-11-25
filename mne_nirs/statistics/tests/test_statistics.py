@@ -38,6 +38,22 @@ def test_run_GLM():
     assert isinstance(glm_estimates._data, type(ni_est))
 
 
+def test_region_of_interest_demographic_info():
+    """Test that sex and handedness are added to region of interest results."""
+    np.random.seed(0)
+    raw = simulate_nirs_raw(sfreq=3.0, sig_dur=300.0, ch_name="S1_D1 hbo")
+    with raw.info._unlock():
+        raw.info["subject_info"] = dict(sex=2, hand=2)
+    design_matrix = make_first_level_design_matrix(raw, stim_dur=5.0)
+    glm_est = run_glm(raw, design_matrix)
+
+    df = glm_est.to_dataframe_region_of_interest(
+        dict(roi=[0]), "A", demographic_info=True
+    )
+    assert df["Sex"][0] == "female"
+    assert df["Hand"][0] == 2
+
+
 def test_run_GLM_order():
     raw = simulate_nirs_raw(sig_dur=200, stim_dur=5.0, sfreq=3)
     design_matrix = make_first_level_design_matrix(
