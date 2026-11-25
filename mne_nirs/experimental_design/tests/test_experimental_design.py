@@ -250,3 +250,29 @@ def test_design_matrix_vif_logging():
         make_first_level_design_matrix(
             raw, 1.0, "glover", "cosine", 0.01, 1, (0,), None, None, -24, 50, True
         )
+
+
+@pytest.mark.parametrize(
+    "event_id", [None, dict(A=1, B=2), dict(A=5, B=7), dict(B=3, A=10)]
+)
+def test_create_boxcar_event_codes(event_id):
+    """Test that the boxcar does not depend on the event codes used."""
+    raw = mne.io.RawArray(
+        np.zeros((1, 1000)), mne.create_info(["S1_D1 hbo"], 10.0, "hbo")
+    )
+    raw.set_annotations(
+        mne.Annotations([10, 30, 50, 70], [1] * 4, ["A", "B", "A", "B"])
+    )
+    boxcar = mne_nirs.experimental_design.create_boxcar(
+        raw, event_id=event_id, stim_dur=5
+    )
+    assert boxcar.shape == (1000, 2)
+    # one column per condition, in the order returned by events_from_annotations
+    order = list(mne.events_from_annotations(raw, event_id=event_id)[1])
+    assert sorted(order) == ["A", "B"]
+    onsets = dict(A=[100, 500], B=[300, 700])
+    for column, condition in zip(boxcar.T, order):
+        expected = np.zeros(1000)
+        for onset in onsets[condition]:
+            expected[onset : onset + 50] = 1.0
+        np.testing.assert_array_equal(column, expected)
