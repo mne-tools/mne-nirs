@@ -398,3 +398,27 @@ def test_haemoglobin_roundtrip(fname, tmpdir):
     # assert_array_equal(hbr.get_data(), hb.get_data())
     # assert_array_equal(hbr.info.get_channel_types(),
     #                    hb.info.get_channel_types())
+
+
+def test_snirf_write_without_metadata(tmpdir):
+    """Ensure data without measurement date or subject info can be written."""
+    import mne
+    import numpy as np
+
+    info = mne.create_info(["S1_D1 760", "S1_D1 850"], 10.0, "fnirs_cw_amplitude")
+    for ch in info["chs"]:
+        ch["loc"][3:6] = (0.0, 0.0, 0.0)  # source
+        ch["loc"][6:9] = (0.03, 0.0, 0.0)  # detector
+        ch["loc"][:3] = (0.015, 0.0, 0.0)
+        ch["loc"][9] = float(ch["ch_name"].split()[1])
+    raw = mne.io.RawArray(1 + 0.1 * np.random.default_rng(0).random((2, 300)), info)
+    assert raw.info["meas_date"] is None
+    assert raw.info["subject_info"] is None
+
+    test_file = tmpdir.join("test_no_metadata.snirf")
+    write_raw_snirf(raw, test_file)
+    assert validateSnirf(str(test_file)).is_valid()
+    # the measurement date is written as "unknown", which MNE warns about
+    with pytest.warns(RuntimeWarning, match="measurement date"):
+        raw_read = read_raw_snirf(test_file)
+    assert_allclose(raw_read.get_data(), raw.get_data())
