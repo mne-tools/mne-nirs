@@ -114,13 +114,15 @@ def _glm_region_of_interest(stats, group_by, cond_idx, cond_name, weighted=True)
                 dfe = stats[ch_names[pick]].df_model
 
             # Apply weighting by standard error or custom values
+            # weights must be 1D, like thetas and ses: a column vector would
+            # broadcast to a matrix and sum, rather than average, the channels
             if weighted is True:
                 weights = 1.0 / np.asarray(ses)
             elif weighted is False:
-                weights = np.ones((len(ses), 1))
+                weights = np.ones(len(ses))
             elif isinstance(weighted, dict):
                 weights = [float(weights_region[ci]) for ci in chroma_idxs]
-                weights = np.asarray(weights).reshape((len(ses), 1))
+                weights = np.asarray(weights)
             else:
                 raise ValueError("Weighted parameter is not bool or dict")
             # Ensure weights sum to one
