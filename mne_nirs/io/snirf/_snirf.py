@@ -319,7 +319,8 @@ def _add_stim_info(raw, nirs):
         stims = np.zeros((len(trgs), 3))
         for idx_t, trg in enumerate(trgs):
             stims[idx_t, :] = [
-                raw.annotations.onset[trg],
+                # time relative to the first sample, which is time 0 in the file
+                raw.annotations.onset[trg] - raw.first_time,
                 raw.annotations.duration[trg],
                 idx,
             ]
