@@ -85,3 +85,6 @@ def test_short_channel_regression_matches_wavelength():
         assert abs(np.corrcoef(raw.get_data(name)[0], noise)[0, 1]) > 0.9
         assert abs(np.corrcoef(corrected.get_data(name)[0], noise)[0, 1]) < 0.05
         assert np.corrcoef(corrected.get_data(name)[0], brain)[0, 1] > 0.9
+
+    with pytest.warns(RuntimeWarning, match="S1_D1 850.*850.0 nm"):
+        short_channel_regression(raw.copy().drop_channels("S1_D2 850"))

@@ -6,7 +6,7 @@ import numpy as np
 from mne import pick_types
 from mne.io import BaseRaw
 from mne.preprocessing.nirs import source_detector_distances
-from mne.utils import _validate_type
+from mne.utils import _validate_type, warn
 from scipy import linalg
 
 
@@ -96,6 +96,11 @@ def _find_nearest_short(raw, pick, short_picks):
     ]
     if len(same_wavelength) > 0:
         short_picks = np.array(same_wavelength)
+    else:
+        warn(
+            f"No short channel with the wavelength of {raw.ch_names[pick]} "
+            f"({wavelength} nm), using the nearest short channel of any wavelength."
+        )
 
     dist = [
         linalg.norm(raw.info["chs"][pick]["loc"][:3] - raw.info["chs"][p_sh]["loc"][:3])
