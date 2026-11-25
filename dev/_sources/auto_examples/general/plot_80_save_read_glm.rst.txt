@@ -318,29 +318,6 @@ Next we loop through the five measurements and reload all the results.
 
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/circleci/project/mne_nirs/utils/_io.py:215: Pandas4Warning: The inplace keyword in DataFrame.reset_index is deprecated and will be removed in a future version (PDEP-8).
-    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
-      d.reset_index(inplace=True)
-    /home/circleci/project/mne_nirs/utils/_io.py:61: Pandas4Warning: The inplace keyword in DataFrame.drop is deprecated and will be removed in a future version (PDEP-8).
-    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
-      df.drop(columns="old_index", inplace=True)
-    /home/circleci/project/mne_nirs/utils/_io.py:62: Pandas4Warning: The inplace keyword in DataFrame.rename_axis is deprecated and will be removed in a future version (PDEP-8).
-    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
-      df.rename_axis(None, inplace=True)
-    /home/circleci/project/mne_nirs/utils/_io.py:215: Pandas4Warning: The inplace keyword in DataFrame.reset_index is deprecated and will be removed in a future version (PDEP-8).
-    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
-      d.reset_index(inplace=True)
-    /home/circleci/project/mne_nirs/utils/_io.py:61: Pandas4Warning: The inplace keyword in DataFrame.drop is deprecated and will be removed in a future version (PDEP-8).
-    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
-      df.drop(columns="old_index", inplace=True)
-    /home/circleci/project/mne_nirs/utils/_io.py:62: Pandas4Warning: The inplace keyword in DataFrame.rename_axis is deprecated and will be removed in a future version (PDEP-8).
-    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
-      df.rename_axis(None, inplace=True)
-
 
 
 
@@ -403,9 +380,9 @@ subjects.
         <tr>
           <th>0</th>
           <td>Control</td>
-          <td>59.0</td>
+          <td>773.0</td>
           <td>1.869524e-10</td>
-          <td>5.993412e-01</td>
+          <td>5.975116e-01</td>
           <td>7.698598e-06</td>
           <td>-0.528201</td>
           <td>-4.066406e-06</td>
@@ -419,9 +396,9 @@ subjects.
         <tr>
           <th>1</th>
           <td>Tapping/Left</td>
-          <td>59.0</td>
+          <td>773.0</td>
           <td>1.869524e-10</td>
-          <td>6.043981e-09</td>
+          <td>2.184578e-11</td>
           <td>7.413595e-06</td>
           <td>6.793526</td>
           <td>5.036445e-05</td>
@@ -435,9 +412,9 @@ subjects.
         <tr>
           <th>2</th>
           <td>Tapping/Right</td>
-          <td>59.0</td>
+          <td>773.0</td>
           <td>1.869524e-10</td>
-          <td>7.593816e-14</td>
+          <td>4.067259e-21</td>
           <td>7.530295e-06</td>
           <td>9.712051</td>
           <td>7.313461e-05</td>
@@ -451,9 +428,9 @@ subjects.
         <tr>
           <th>3</th>
           <td>constant</td>
-          <td>59.0</td>
+          <td>773.0</td>
           <td>1.869524e-10</td>
-          <td>3.294925e-01</td>
+          <td>3.257851e-01</td>
           <td>9.559640e-07</td>
           <td>-0.983264</td>
           <td>-9.399650e-07</td>
@@ -467,9 +444,9 @@ subjects.
         <tr>
           <th>4</th>
           <td>drift_1</td>
-          <td>59.0</td>
+          <td>773.0</td>
           <td>1.869524e-10</td>
-          <td>5.296594e-11</td>
+          <td>4.267841e-15</td>
           <td>2.727251e-05</td>
           <td>8.008358</td>
           <td>2.184080e-04</td>
@@ -499,9 +476,9 @@ subjects.
         <tr>
           <th>2135</th>
           <td>drift_5</td>
-          <td>48.0</td>
+          <td>617.0</td>
           <td>1.877388e-11</td>
-          <td>4.550922e-01</td>
+          <td>4.517016e-01</td>
           <td>5.775801e-06</td>
           <td>-0.753059</td>
           <td>-4.349520e-06</td>
@@ -515,9 +492,9 @@ subjects.
         <tr>
           <th>2136</th>
           <td>drift_6</td>
-          <td>48.0</td>
+          <td>617.0</td>
           <td>1.877388e-11</td>
-          <td>4.718397e-03</td>
+          <td>3.155681e-03</td>
           <td>5.773074e-06</td>
           <td>2.963815</td>
           <td>1.711032e-05</td>
@@ -531,9 +508,9 @@ subjects.
         <tr>
           <th>2137</th>
           <td>drift_7</td>
-          <td>48.0</td>
+          <td>617.0</td>
           <td>1.877388e-11</td>
-          <td>1.512092e-03</td>
+          <td>8.124349e-04</td>
           <td>5.779047e-06</td>
           <td>-3.365168</td>
           <td>-1.944746e-05</td>
@@ -547,9 +524,9 @@ subjects.
         <tr>
           <th>2138</th>
           <td>drift_8</td>
-          <td>48.0</td>
+          <td>617.0</td>
           <td>1.877388e-11</td>
-          <td>2.830068e-02</td>
+          <td>2.407953e-02</td>
           <td>5.772148e-06</td>
           <td>-2.261437</td>
           <td>-1.305335e-05</td>
@@ -563,9 +540,9 @@ subjects.
         <tr>
           <th>2139</th>
           <td>drift_9</td>
-          <td>48.0</td>
+          <td>617.0</td>
           <td>1.877388e-11</td>
-          <td>1.224099e-04</td>
+          <td>3.324896e-05</td>
           <td>5.773596e-06</td>
           <td>4.180832</td>
           <td>2.413844e-05</td>
@@ -587,7 +564,7 @@ subjects.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.265 seconds)
+   **Total running time of the script:** (0 minutes 1.340 seconds)
 
 
 .. _sphx_glr_download_auto_examples_general_plot_80_save_read_glm.py:
