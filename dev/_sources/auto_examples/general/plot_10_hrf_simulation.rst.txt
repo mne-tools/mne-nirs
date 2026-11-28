@@ -297,7 +297,7 @@ However, the error is greater for the colored than white noise.
 
     Adding noise to 1/1 channels (1 channels in cov)
     Maximum design matrix VIF was 1.000 (A)
-    Estimate: [3.60779127e-06]   MSE: 2.1619791462569302e-10   Error (uM): [-0.39220873]
+    Estimate: [6.29508179e-06]   MSE: 2.1369739077754275e-10   Error (uM): [2.29508179]
 
 
 
@@ -358,7 +358,7 @@ approximately 0.6 uM for 5 minutes of data to 0.25 uM for 30 minutes of data.
 
     Adding noise to 1/1 channels (1 channels in cov)
     Maximum design matrix VIF was 1.000 (A)
-    Estimate: [2.66398837e-06]   MSE: 7.303252118671781e-10   Error (uM): [-1.33601163]
+    Estimate: [2.30955606e-06]   MSE: 8.44337229253091e-10   Error (uM): [-1.69044394]
 
 
 
@@ -428,7 +428,7 @@ but how does this affect the accuracy of the response estimate?
 
  .. code-block:: none
 
-    Estimate: [3.85544862e-06]   MSE: 9.888657536277128e-12   Error (uM): [-0.14455138]
+    Estimate: [4.61727915e-06]   MSE: 9.901726772577056e-12   Error (uM): [0.61727915]
 
 
 
@@ -455,7 +455,7 @@ model of the noise can improve the accuracy of the response estimate.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.959 seconds)
+   **Total running time of the script:** (0 minutes 1.746 seconds)
 
 
 .. _sphx_glr_download_auto_examples_general_plot_10_hrf_simulation.py:
